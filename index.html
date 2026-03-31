@@ -1,12 +1,1338 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>よへラボ | 手取り計算デモ埋め込み</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>よへラボ — フリーランスの「めんどくさい」を秒で解決するツール群</title>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Zen+Maru+Gothic:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0f;
+  --bg-card: #12121a;
+  --bg-card-hover: #1a1a28;
+  --surface: #1e1e2e;
+  --border: #2a2a3e;
+  --text: #e8e6f0;
+  --text-dim: #8b89a0;
+  --text-muted: #5c5a70;
+  --accent: #6ee7b7;
+  --accent-dim: #34d399;
+  --accent-glow: rgba(110, 231, 183, 0.15);
+  --accent2: #fbbf24;
+  --accent3: #f472b6;
+  --danger: #f87171;
+  --font-display: 'Zen Maru Gothic', sans-serif;
+  --font-body: 'Zen Kaku Gothic New', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* ===== NOISE OVERLAY ===== */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ===== LAYOUT ===== */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ===== HERO ===== */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  padding: 120px 0 80px;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -200px;
+  right: -300px;
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(circle, rgba(110,231,183,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -100px;
+  left: -200px;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(244,114,182,0.04) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  font-size: 13px;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  letter-spacing: 0.02em;
+  margin-bottom: 32px;
+  background: var(--accent-glow);
+  animation: fadeUp 0.8s ease both;
+}
+
+.hero-badge::before {
+  content: '';
+  width: 6px; height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  animation: pulse 2s ease infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 5vw, 3.6rem);
+  font-weight: 900;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  margin-bottom: 24px;
+  animation: fadeUp 0.8s ease 0.1s both;
+}
+
+.hero h1 .highlight {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-sub {
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  color: var(--text-dim);
+  max-width: 600px;
+  margin-bottom: 40px;
+  animation: fadeUp 0.8s ease 0.2s both;
+}
+
+.hero-cta-row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  animation: fadeUp 0.8s ease 0.3s both;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  background: var(--accent);
+  color: var(--bg);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 15px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  box-shadow: 0 0 30px rgba(110, 231, 183, 0.2);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 50px rgba(110, 231, 183, 0.35);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  background: transparent;
+  color: var(--text);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 15px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.btn-secondary:hover {
+  border-color: var(--text-dim);
+  background: var(--surface);
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 24px;
+  background: transparent;
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 15px;
+  border: 1px solid rgba(110, 231, 183, 0.28);
+  border-radius: 12px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.btn-ghost:hover {
+  transform: translateY(-2px);
+  background: rgba(110,231,183,0.08);
+  border-color: var(--accent);
+}
+
+/* ===== SOCIAL PROOF ===== */
+.social-proof {
+  padding: 40px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.proof-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 32px;
+  text-align: center;
+}
+
+.proof-item .num {
+  font-family: var(--font-mono);
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.proof-item .label {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* ===== PAIN SECTION ===== */
+.pain {
+  padding: 100px 0 60px;
+}
+
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--accent);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+  font-weight: 900;
+  margin-bottom: 48px;
+  line-height: 1.4;
+}
+
+.pain-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.pain-card {
+  padding: 28px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  transition: all 0.3s ease;
+}
+
+.pain-card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--text-muted);
+  transform: translateY(-3px);
+}
+
+.pain-card .icon {
+  font-size: 28px;
+  margin-bottom: 16px;
+}
+
+.pain-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.pain-card p {
+  font-size: 14px;
+  color: var(--text-dim);
+  line-height: 1.7;
+}
+
+/* ===== PRODUCTS ===== */
+.products {
+  padding: 80px 0;
+}
+
+.product-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+  padding: 60px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.product-card:nth-child(even) {
+  direction: rtl;
+}
+
+.product-card:nth-child(even) > * {
+  direction: ltr;
+}
+
+.product-info .product-tag {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  margin-bottom: 16px;
+}
+
+.tag-best { background: rgba(110,231,183,0.15); color: var(--accent); }
+.tag-popular { background: rgba(251,191,36,0.15); color: var(--accent2); }
+.tag-new { background: rgba(244,114,182,0.15); color: var(--accent3); }
+
+.product-info h3 {
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 2.5vw, 1.7rem);
+  font-weight: 900;
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+.product-info .desc {
+  color: var(--text-dim);
+  font-size: 15px;
+  margin-bottom: 20px;
+}
+
+.feature-list {
+  list-style: none;
+  margin-bottom: 28px;
+}
+
+.feature-list li {
+  padding: 6px 0;
+  font-size: 14px;
+  color: var(--text-dim);
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.feature-list li::before {
+  content: '✓';
+  color: var(--accent);
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.product-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.price {
+  font-family: var(--font-mono);
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.price-note {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* Product visual / mock */
+.product-visual {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 32px;
+  position: relative;
+  overflow: hidden;
+  min-height: 340px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.product-visual::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  border-radius: 20px 20px 0 0;
+}
+
+.pv-1::before { background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+.pv-2::before { background: linear-gradient(90deg, var(--accent2), var(--accent3)); }
+.pv-3::before { background: linear-gradient(90deg, var(--accent3), #818cf8); }
+.pv-4::before { background: linear-gradient(90deg, #818cf8, var(--accent)); }
+.pv-5::before { background: linear-gradient(90deg, var(--accent), var(--accent3)); }
+
+.mock-bar {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.mock-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--border);
+}
+
+.mock-dot:nth-child(1) { background: #f87171; }
+.mock-dot:nth-child(2) { background: #fbbf24; }
+.mock-dot:nth-child(3) { background: #34d399; }
+
+.mock-content {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-dim);
+  line-height: 2;
+}
+
+.mock-content .line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 12px;
+  border-radius: 6px;
+  margin-bottom: 4px;
+}
+
+.mock-content .line-highlight {
+  background: var(--accent-glow);
+  color: var(--accent);
+}
+
+.mock-content .line-warn {
+  background: rgba(251,191,36,0.1);
+  color: var(--accent2);
+}
+
+.mock-content .line-danger {
+  background: rgba(248,113,113,0.1);
+  color: var(--danger);
+}
+
+.mock-result {
+  margin-top: 16px;
+  padding: 16px;
+  background: var(--surface);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+.mock-result-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  font-size: 13px;
+  font-family: var(--font-mono);
+  border-bottom: 1px solid var(--border);
+}
+
+.mock-result-row:last-child {
+  border-bottom: none;
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.mock-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  height: 120px;
+  margin-top: 16px;
+  padding: 0 12px;
+}
+
+.mock-chart-bar {
+  flex: 1;
+  border-radius: 6px 6px 0 0;
+  position: relative;
+  transition: all 0.3s ease;
+  cursor: default;
+}
+
+.mock-chart-bar:hover { opacity: 0.8; }
+
+.mock-chart-bar .bar-label {
+  position: absolute;
+  bottom: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.mock-chart-bar .bar-val {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+}
+
+/* ===== BUNDLE ===== */
+.bundle {
+  padding: 80px 0;
+}
+
+.bundle-box {
+  background: linear-gradient(135deg, rgba(110,231,183,0.05), rgba(251,191,36,0.05));
+  border: 2px solid var(--accent);
+  border-radius: 24px;
+  padding: 48px;
+  position: relative;
+  overflow: hidden;
+}
+
+.bundle-box::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -30%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(110,231,183,0.08), transparent 70%);
+  pointer-events: none;
+}
+
+.bundle-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.bundle-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 900;
+}
+
+.bundle-price-area {
+  text-align: right;
+}
+
+.bundle-original {
+  font-size: 14px;
+  color: var(--text-muted);
+  text-decoration: line-through;
+}
+
+.bundle-price {
+  font-family: var(--font-mono);
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.bundle-save {
+  display: inline-block;
+  padding: 4px 12px;
+  background: rgba(248,113,113,0.15);
+  color: var(--danger);
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  margin-top: 4px;
+}
+
+.bundle-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.bundle-item {
+  padding: 20px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.bundle-item .bi-icon {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.bi-1 { background: rgba(110,231,183,0.12); }
+.bi-2 { background: rgba(251,191,36,0.12); }
+.bi-3 { background: rgba(244,114,182,0.12); }
+.bi-4 { background: rgba(129,140,248,0.12); }
+.bi-5 { background: rgba(110,231,183,0.12); }
+
+.bundle-item h4 {
+  font-size: 14px;
+  font-weight: 700;
+  font-family: var(--font-display);
+}
+
+.bundle-item .bi-price {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+.bundle-cta {
+  text-align: center;
+}
+
+.coming-soon {
+  padding: 70px 0;
+}
+
+.coming-box {
+  padding: 32px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+}
+
+.coming-box p {
+  color: var(--text-dim);
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+/* ===== GUARANTEE ===== */
+.guarantee {
+  padding: 60px 0;
+}
+
+.guarantee-box {
+  padding: 40px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.guarantee-icon {
+  font-size: 40px;
+  flex-shrink: 0;
+}
+
+.guarantee-box h3 {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.guarantee-box p {
+  color: var(--text-dim);
+  font-size: 14px;
+}
+
+/* ===== FAQ ===== */
+.faq {
+  padding: 80px 0;
+}
+
+.faq-item {
+  border-bottom: 1px solid var(--border);
+  padding: 24px 0;
+}
+
+.faq-q {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.faq-q::after {
+  content: '+';
+  font-family: var(--font-mono);
+  font-size: 1.3rem;
+  color: var(--text-muted);
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.faq-item.open .faq-q::after {
+  transform: rotate(45deg);
+  color: var(--accent);
+}
+
+.faq-a {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.3s ease;
+  color: var(--text-dim);
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.faq-item.open .faq-a {
+  max-height: 300px;
+  padding-top: 16px;
+}
+
+/* ===== FOOTER ===== */
+.site-footer {
+  padding: 60px 0 40px;
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+
+.footer-logo {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 900;
+  margin-bottom: 12px;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 20px;
+}
+
+.footer-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 13px;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover { color: var(--text); }
+
+.footer-copy {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.7s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== IFRAME DEMO ===== */
+.iframe-demo {
+  padding: 24px 0 12px;
+}
+
+.iframe-demo-box {
+  margin-top: 20px;
+  border-radius: 24px;
+  border: 1px solid rgba(110, 231, 183, 0.12);
+  background: linear-gradient(180deg, rgba(18,18,26,0.92), rgba(10,10,15,0.98));
+  padding: 20px;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
+}
+
+.iframe-demo-frame {
+  width: 100%;
+  height: 920px;
+  border: none;
+  border-radius: 20px;
+  background: #111111;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .iframe-demo-box { padding: 12px; }
+  .iframe-demo-frame { height: 980px; }
+  .product-card {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .product-card:nth-child(even) { direction: ltr; }
+  .product-links {
+    flex-direction: column;
+  }
+  .product-links a {
+    width: 100%;
+    justify-content: center;
+  }
+  .bundle-box { padding: 28px; }
+  .bundle-header { flex-direction: column; }
+  .bundle-price-area { text-align: left; }
+  .guarantee-box { flex-direction: column; }
+  .hero { padding: 80px 0 60px; min-height: auto; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-badge">
+      <span>2026年4月 — 5ツール同時リリース</span>
+    </div>
+    <h1>
+      フリーランスの<br>
+      <span class="highlight">「めんどくさい」を秒で解決</span>する<br>
+      マイクロツール群
+    </h1>
+    <p class="hero-sub">
+      見積もりの金額に迷う。契約書が怖い。特商法って何を書けばいいの？——<br>
+      よへラボは、個人で稼ぐ人の「地味だけど致命的な困りごと」を、<br>
+      ブラウザだけで・買い切りで・今すぐ解決します。
+    </p>
+    <div class="hero-cta-row">
+      <a href="#products" class="btn-primary">ツールを見る ↓</a>
+      <a href="#bundle" class="btn-secondary">全部セットで買う → おトク</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SOCIAL PROOF ===== -->
+<section class="social-proof">
+  <div class="container">
+    <div class="proof-grid">
+      <div class="proof-item">
+        <div class="num">5</div>
+        <div class="label">ツールをラインナップ</div>
+      </div>
+      <div class="proof-item">
+        <div class="num">¥0</div>
+        <div class="label">月額費用・サーバー代</div>
+      </div>
+      <div class="proof-item">
+        <div class="num">30秒</div>
+        <div class="label">で結果が出る操作性</div>
+      </div>
+      <div class="proof-item">
+        <div class="num">買い切り</div>
+        <div class="label">サブスクなし。一度買えば永久</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PAIN ===== -->
+<section class="pain">
+  <div class="container">
+    <div class="section-label">PROBLEMS</div>
+    <h2 class="section-title reveal">こんな経験、ありませんか？</h2>
+    <div class="pain-grid">
+      <div class="pain-card reveal">
+        <div class="icon">💸</div>
+        <h3>手取りが思ったより少ない</h3>
+        <p>年収600万のはずが、税金・保険・年金を引くと手元に残るのは…？フリーランスの「見えない出費」を把握できていない。</p>
+      </div>
+      <div class="pain-card reveal">
+        <div class="icon">📋</div>
+        <h3>特商法の表記、何を書けばいいかわからない</h3>
+        <p>自サイトでデジタル商品を売りたいけど、法律違反が怖い。テンプレをコピペしたけど、自分のビジネスに合ってるのか不安。</p>
+      </div>
+      <div class="pain-card reveal">
+        <div class="icon">🤝</div>
+        <h3>契約書なしで仕事を受けてしまった</h3>
+        <p>納品後に「やっぱり修正して」が無限に来る。著作権は？支払い遅延は？口約束で痛い目に遭ったことがある。</p>
+      </div>
+      <div class="pain-card reveal">
+        <div class="icon">💰</div>
+        <h3>自分のスキル、いくらで売ればいいの？</h3>
+        <p>安すぎて消耗、高すぎて受注ゼロ。相場が分からないまま「とりあえず○万円で…」と値段を決めていませんか。</p>
+      </div>
+      <div class="pain-card reveal">
+        <div class="icon">⚠️</div>
+        <h3>広告表現、法律に引っかかってない？</h3>
+        <p>「効果抜群」「必ず痩せる」——その一言が薬機法・景表法違反に。知らなかったでは済まされないリスク。</p>
+      </div>
+      <div class="pain-card reveal">
+        <div class="icon">⏰</div>
+        <h3>事務作業に時間を取られすぎ</h3>
+        <p>本来の制作時間を、見積もり・書類作成・法律調べで潰している。稼ぐための作業に集中できない。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 無料デモ埋め込み（最新版） ===== -->
+<div style="margin: 80px 0 60px;">
+  <div style="text-align:center; margin-bottom:20px;">
+    <span style="background:#1a1a28; color:#6ee7b7; padding:8px 20px; border-radius:9999px; font-size:14px; font-weight:700; letter-spacing:1.5px;">
+      FREE DEMO
+    </span>
+  </div>
+     
+  <h2 style="text-align:center; margin-bottom:28px; color:#6ee7b7; font-size:1.9rem;">
+    無料で今すぐ手取りを計算してみる（2026年版）
+  </h2>
+     
+  <iframe 
+    src="https://yohelab-demo.netlify.app/" 
+    width="100%" 
+    height="980" 
+    style="border: 4px solid #2a2a3e; border-radius: 28px; box-shadow: 0 25px 60px rgba(110,231,183,0.25); overflow: hidden;"
+    allowfullscreen>
+  </iframe>
+</div>
+
+<!-- ===== PRODUCTS ===== -->
+<div id="pricing"></div>
+<section class="products" id="products">
+  <div class="container">
+    <div class="section-label">TOOLS</div>
+    <h2 class="section-title reveal">よへラボのツール一覧</h2>
+
+    <!-- Product 1 -->
+    <div class="product-card reveal">
+      <div class="product-info">
+        <span class="product-tag tag-best">BEST SELLER</span>
+        <h3>フリーランス手取りシミュレーター</h3>
+        <p class="desc">年収を入れるだけ。所得税・住民税・国保・年金・消費税・青色控除・iDeCo・小規模企業共済——全部まとめて「本当の手取り」を即計算。</p>
+        <ul class="feature-list">
+          <li>所得税（累進5%〜45%）＋復興特別所得税を完全計算</li>
+          <li>国民健康保険は市区町村の料率で概算</li>
+          <li>インボイス登録者の消費税（2割特例/簡易課税対応）</li>
+          <li>青色申告65万控除、iDeCo、小規模企業共済の節税シミュレーション</li>
+          <li>円グラフ＋内訳表でひと目で把握</li>
+        </ul>
+        <div class="price-row">
+          <span class="price">¥1,980</span>
+          <span class="price-note">買い切り・税込</span>
+        </div>
+        <div class="product-links">
+          <a href="https://yohelab-demo.netlify.app/" class="btn-ghost">無料デモ版を試す →</a>
+          <a href="#" class="btn-primary">フル機能版を購入する →</a>
+        </div>
+      </div>
+      <div class="product-visual pv-1">
+        <div class="mock-bar">
+          <div class="mock-dot"></div><div class="mock-dot"></div><div class="mock-dot"></div>
+        </div>
+        <div class="mock-result">
+          <div class="mock-result-row"><span>売上</span><span>¥8,000,000</span></div>
+          <div class="mock-result-row"><span>経費</span><span>-¥1,200,000</span></div>
+          <div class="mock-result-row"><span>税金・保険料</span><span>-¥2,463,554</span></div>
+          <div class="mock-result-row"><span>実質手取り</span><span>¥4,336,446</span></div>
+        </div>
+        <div class="mock-chart">
+          <div class="mock-chart-bar" style="height: 100%; background: var(--accent);"><span class="bar-label">手取り</span></div>
+          <div class="mock-chart-bar" style="height: 45%; background: var(--danger);"><span class="bar-label">税・保険</span></div>
+          <div class="mock-chart-bar" style="height: 25%; background: var(--text-muted);"><span class="bar-label">経費</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product 2 -->
+    <div class="product-card reveal">
+      <div class="product-info">
+        <span class="product-tag tag-popular">POPULAR</span>
+        <h3>特商法・プラポリ・利用規約<br>一括ジェネレーター</h3>
+        <p class="desc">ビジネス類型を選んで情報を入力するだけ。特定商取引法表記・プライバシーポリシー・利用規約の3文書をまとめて自動生成。</p>
+        <ul class="feature-list">
+          <li>デジタル商品/サブスク/コーチング/物販の4類型対応</li>
+          <li>特商法は動作環境・返品特約・最終確認画面まで網羅</li>
+          <li>HTML/Markdown/PDFの3形式で出力</li>
+          <li>消費者庁ガイドラインに準拠したチェックリスト付き</li>
+        </ul>
+        <div class="price-row">
+          <span class="price">¥2,980</span>
+          <span class="price-note">買い切り・税込</span>
+        </div>
+        <div class="product-links">
+          <a href="#" class="btn-secondary">このツールは準備中 →</a>
+        </div>
+      </div>
+      <div class="product-visual pv-2">
+        <div class="mock-bar">
+          <div class="mock-dot"></div><div class="mock-dot"></div><div class="mock-dot"></div>
+        </div>
+        <div class="mock-content">
+          <div class="line">✓ 販売事業者名</div>
+          <div class="line">✓ 所在地</div>
+          <div class="line">✓ 販売価格（税込表記）</div>
+          <div class="line">✓ 支払方法・支払時期</div>
+          <div class="line">✓ 商品引渡し時期</div>
+          <div class="line">✓ 返品・キャンセルポリシー</div>
+          <div class="line">✓ 動作環境（デジタル商品）</div>
+          <div class="line line-highlight">⚡ 3文書を一括生成完了</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product 3 -->
+    <div class="product-card reveal">
+      <div class="product-info">
+        <span class="product-tag tag-new">NEW</span>
+        <h3>薬機法NGワードチェッカー Lite</h3>
+        <p class="desc">広告文・LP・商品説明を貼り付けるだけ。500以上のNGパターンで薬機法・景表法のリスク箇所を即座に検出＆代替表現を提案。</p>
+        <ul class="feature-list">
+          <li>医薬品的効能効果の標榜 / 誇大表現 / 要注意ワードを3段階で検出</li>
+          <li>NGワード辞書500パターン以上を内蔵</li>
+          <li>各問題箇所に代替表現の提案付き</li>
+          <li>リスクスコアを数値表示（SNSシェア用に最適）</li>
+        </ul>
+        <div class="price-row">
+          <span class="price">¥3,980</span>
+          <span class="price-note">買い切り・税込</span>
+        </div>
+        <div class="product-links">
+          <a href="#" class="btn-secondary">このツールは準備中 →</a>
+        </div>
+      </div>
+      <div class="product-visual pv-3">
+        <div class="mock-bar">
+          <div class="mock-dot"></div><div class="mock-dot"></div><div class="mock-dot"></div>
+        </div>
+        <div class="mock-content">
+          <div class="line line-danger">❌「確実に痩せる」→ 医薬品的効能効果</div>
+          <div class="line line-danger">❌「シミが消える」→ 化粧品の効能範囲外</div>
+          <div class="line line-warn">⚠️「業界No.1」→ 根拠が必要（景表法）</div>
+          <div class="line line-warn">⚠️「驚きの効果」→ 誇大表現の可能性</div>
+          <div class="line line-highlight">💡 提案:「理想の体型を目指す方へ」</div>
+        </div>
+        <div style="text-align:center; margin-top:20px;">
+          <div style="font-size:10px; color:var(--text-muted);">リスクスコア</div>
+          <div style="font-size:32px; font-weight:900; color:var(--danger);">72 <span style="font-size:14px; color:var(--text-muted);">/ 100</span></div>
+          <div style="font-size:12px; color:var(--danger); font-weight:700;">要修正</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product 4 -->
+    <div class="product-card reveal">
+      <div class="product-info">
+        <span class="product-tag tag-popular">POPULAR</span>
+        <h3>クリエイター値付けシミュレーター</h3>
+        <p class="desc">職種×スキルレベル×作業時間で、あなたの制作物の適正価格を算出。安売り地獄からの脱出をサポート。</p>
+        <ul class="feature-list">
+          <li>デザイン/イラスト/ライティング/動画/Web制作の5職種対応</li>
+          <li>時間単価×工数＋経費＋利益率で算出</li>
+          <li>日本の市場相場レンジ（下限〜中央値〜上限）を表示</li>
+          <li>「この金額で提案する」用の見積もり文テンプレ付き</li>
+        </ul>
+        <div class="price-row">
+          <span class="price">¥1,480</span>
+          <span class="price-note">買い切り・税込</span>
+        </div>
+        <div class="product-links">
+          <a href="#" class="btn-secondary">このツールは準備中 →</a>
+        </div>
+      </div>
+      <div class="product-visual pv-4">
+        <div class="mock-bar">
+          <div class="mock-dot"></div><div class="mock-dot"></div><div class="mock-dot"></div>
+        </div>
+        <div style="padding:0 20px;">
+          <div style="font-size:11px; color:var(--text-muted); margin-bottom:12px;">🎨 イラスト制作の適正価格:</div>
+          <div style="height:8px; background:var(--border); border-radius:4px; position:relative; margin-bottom:30px;">
+            <div style="position:absolute; left:20%; top:-4px; width:16px; height:16px; background:var(--accent); border-radius:50%; border:3px solid var(--bg-card);"></div>
+            <div style="position:absolute; left:0; bottom:-20px; font-size:9px; color:var(--text-muted);">¥15,000<br>安売り</div>
+            <div style="position:absolute; left:40%; bottom:-20px; font-size:9px; color:var(--text-muted);">¥35,000<br>相場下限</div>
+            <div style="position:absolute; left:70%; bottom:-20px; font-size:9px; color:var(--text-muted);">¥80,000<br>上限</div>
+          </div>
+          <div style="background:var(--surface); padding:12px; border-radius:8px; text-align:center;">
+            <div style="font-size:10px; color:var(--text-dim);">あなたの適正価格</div>
+            <div style="font-size:20px; font-weight:700; color:var(--accent);">¥55,000</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product 5 -->
+    <div class="product-card reveal">
+      <div class="product-info">
+        <span class="product-tag tag-new">NEW</span>
+        <h3>フリーランス契約書ジェネレーター</h3>
+        <p class="desc">質問に答えるだけで業務委託契約書が完成。2024年11月施行のフリーランス保護法に対応。</p>
+        <ul class="feature-list">
+          <li>デザイン/開発/ライティング/コンサルの4業種テンプレート</li>
+          <li>著作権帰属・秘密保持・競業避止を選択式で設定</li>
+          <li>源泉徴収・支払サイトの条件も自動反映</li>
+          <li>PDF＋テキストで出力、そのまま印刷・メール送付可</li>
+        </ul>
+        <div class="price-row">
+          <span class="price">¥2,980</span>
+          <span class="price-note">買い切り・税込</span>
+        </div>
+        <div class="product-links">
+          <a href="#" class="btn-secondary">このツールは準備中 →</a>
+        </div>
+      </div>
+      <div class="product-visual pv-5">
+        <div class="mock-bar">
+          <div class="mock-dot"></div><div class="mock-dot"></div><div class="mock-dot"></div>
+        </div>
+        <div class="mock-content" style="font-size:10px;">
+          <div style="border-bottom:1px solid var(--border); padding-bottom:8px; margin-bottom:8px; font-weight:700;">📄 業務委託契約書</div>
+          <div>第1条（業務内容）Webデザイン制作</div>
+          <div>第2条（納品物）デザインデータ一式</div>
+          <div>第3条（報酬）¥550,000（税込）</div>
+          <div>第4条（支払）納品翌月末日</div>
+          <div>第5条（著作権）納品・入金後に委託者に移転</div>
+          <div>第6条（秘密保持）あり</div>
+          <div style="margin-top:10px; color:var(--accent);">⚡ フリーランス保護法対応済み</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== BUNDLE ===== -->
+<section class="bundle" id="bundle">
+  <div class="container">
+    <div class="bundle-box reveal">
+      <div class="bundle-header">
+        <div>
+          <span class="product-tag tag-best">BEST VALUE</span>
+          <h2 class="bundle-title">全5ツール まとめてパック</h2>
+          <p style="color:var(--text-dim); margin-top:8px; font-size:15px;">単品で全部買うと ¥13,400。まとめて買えば ¥4,980。<br>一度の決済で、フリーランスに必要な武器が全部そろう。</p>
+        </div>
+        <div class="bundle-price-area">
+          <div class="bundle-original">通常 ¥13,400</div>
+          <div class="bundle-price">¥4,980</div>
+          <div class="bundle-save">63% OFF</div>
+        </div>
+      </div>
+
+      <div class="bundle-items">
+        <div class="bundle-item">
+          <div class="bi-icon bi-1">💸</div>
+          <div>
+            <h4>手取りシミュレーター</h4>
+            <div class="bi-price">単品 ¥1,980</div>
+          </div>
+        </div>
+        <div class="bundle-item">
+          <div class="bi-icon bi-2">📋</div>
+          <div>
+            <h4>特商法・プラポリ ジェネレーター</h4>
+            <div class="bi-price">単品 ¥2,980</div>
+          </div>
+        </div>
+        <div class="bundle-item">
+          <div class="bi-icon bi-3">⚠️</div>
+          <div>
+            <h4>薬機法NGワードチェッカー</h4>
+            <div class="bi-price">単品 ¥3,980</div>
+          </div>
+        </div>
+        <div class="bundle-item">
+          <div class="bi-icon bi-4">💰</div>
+          <div>
+            <h4>値付けシミュレーター</h4>
+            <div class="bi-price">単品 ¥1,480</div>
+          </div>
+        </div>
+        <div class="bundle-item">
+          <div class="bi-icon bi-5">🤝</div>
+          <div>
+            <h4>契約書ジェネレーター</h4>
+            <div class="bi-price">単品 ¥2,980</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bundle-cta">
+        <a href="#" class="btn-primary" style="padding: 18px 60px; font-size: 18px;">まとめて購入する →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== COMING SOON LIST ===== -->
+<section class="coming-soon">
+  <div class="container">
+    <div class="coming-box reveal">
+      <div class="section-label">WAITING LIST</div>
+      <h3 style="font-family:var(--font-display); font-weight:900; font-size:1.4rem;">未公開ツールはまだ準備中</h3>
+      <p>今すぐ動くのは「フリーランス手取りシミュレーター」のフル機能版と無料デモ版。ほかの購入ボタンや法務ページ系の導線は、公開準備ができるまでこの案内に集約してある。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== GUARANTEE ===== -->
+<section class="guarantee">
+  <div class="container">
+    <div class="guarantee-box reveal">
+      <div class="guarantee-icon">🛡️</div>
+      <div>
+        <h3>7日間の返金保証</h3>
+        <p>購入後7日以内であれば、理由を問わず全額返金いたします。ツールが合わなかった場合、メール一本でOKです。安心してお試しください。返金はStripe経由で3〜5営業日以内に処理されます。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section class="faq">
+  <div class="container">
+    <div class="section-label">FAQ</div>
+    <h2 class="section-title">よくある質問</h2>
+
+    <div class="faq-item reveal">
+      <div class="faq-q">サブスク（月額課金）ですか？</div>
+      <div class="faq-a">いいえ、すべて買い切りです。一度の支払いで、アップデートも含めて永久にご利用いただけます。月額費用は一切発生しません。</div>
+    </div>
+
+    <div class="faq-item reveal">
+      <div class="faq-q">ツールはどこで使えますか？ インストールは必要ですか？</div>
+      <div class="faq-a">すべてブラウザで動作します。PC・スマホ・タブレットのどれからでもアクセス可能です。ソフトのインストールは一切不要です。</div>
+    </div>
+
+    <div class="faq-item reveal">
+      <div class="faq-q">特商法ジェネレーターや契約書ジェネレーターは法的に有効ですか？</div>
+      <div class="faq-a">はい、一般的なフリーランスの商取引を網羅するように設計されています。ただし、特殊な契約条件や大規模な取引の場合は、必要に応じて弁護士のリーガルチェックを受けることをお勧めします。</div>
+    </div>
+
+    <div class="faq-item reveal">
+      <div class="faq-q">薬機法チェッカーの精度はどのくらいですか？</div>
+      <div class="faq-a">500以上のNGパターンを網羅していますが、AIによる判定のため100%の保証はできません。あくまで「リスク箇所のあぶり出し」と「改善案のヒント」としてご活用ください。</div>
+    </div>
+
+    <div class="faq-item reveal">
+      <div class="faq-q">領収書は発行されますか？</div>
+      <div class="faq-a">はい、購入完了後にStripeから自動でメール送付されます。また、管理画面からもいつでもダウンロード可能です。</div>
+    </div>
+
+    <div class="faq-item reveal">
+      <div class="faq-q">バンドルパックと単品、どちらがおすすめですか？</div>
+      <div class="faq-a">これから本格的に事業を始める方、または事務作業をすべて自動化したい方は、圧倒的におトクな「全5ツール まとめてパック」をお勧めします。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-logo">よへラボ</div>
+    <div class="footer-links">
+      <a href="#">特定商取引法に基づく表記</a>
+      <a href="#">プライバシーポリシー</a>
+      <a href="#">利用規約</a>
+      <a href="#">お問い合わせ</a>
+      <a href="https://x.com/yohelab" target="_blank">X (@yohelab)</a>
+    </div>
+    <div class="footer-copy">
+      &copy; 2026 YOHELAB. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+<script>
+// Reveal on scroll
+const observerOptions = {
+  threshold: 0.1
+};
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, observerOptions);
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// FAQ Toggle
+document.querySelectorAll('.faq-q').forEach(q => {
+  q.addEventListener('click', () => {
+    const item = q.parentElement;
+    item.classList.toggle('open');
+  });
+});
+</script>
+
+</body>
 </html>
