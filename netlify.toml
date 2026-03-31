@@ -1,0 +1,20 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[functions]
+  directory = "netlify/functions"
+
+[dev]
+  functions = "netlify/functions"
+  functionsPort = 9999
+
+[[redirects]]
+  from = "/api/track-event"
+  to = "/.netlify/functions/track-event"
+  status = 200
+
+[[redirects]]
+  from = "/api/analytics-summary"
+  to = "/.netlify/functions/analytics-summary"
+  status = 200
