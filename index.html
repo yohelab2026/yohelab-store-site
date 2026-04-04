@@ -4,6 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>よへラボ — フリーランスの「めんどくさい」を秒で解決するツール群</title>
+<meta name="description" content="フリーランス向けの手取り計算、特商法・プラポリ・利用規約作成、薬機法表現チェック、値付け設計、契約書ドラフト作成を支えるブラウザツール群。">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="website">
+<meta property="og:title" content="よへラボ — フリーランスの面倒を減らす5ツール">
+<meta property="og:description" content="手取り計算、法務文書、広告表現、値付け、契約書づくりをまとめて支えるブラウザツール群。">
+<meta property="og:url" content="https://yohelab-store-site.netlify.app">
+<meta property="og:image" content="https://yohelab-store-site.netlify.app/og-card.svg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="よへラボ — フリーランスの面倒を減らす5ツール">
+<meta name="twitter:description" content="手取り計算、法務文書、広告表現、値付け、契約書づくりを支えるブラウザツール群。">
+<meta name="twitter:image" content="https://yohelab-store-site.netlify.app/og-card.svg">
 <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Zen+Maru+Gothic:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -881,25 +892,25 @@ body::before {
   </div>
 </section>
 
-<!-- ===== SOCIAL PROOF ===== -->
+<!-- ===== POSITIONING ===== -->
 <section class="social-proof">
   <div class="container">
     <div class="proof-grid">
       <div class="proof-item">
         <div class="num">5</div>
-        <div class="label">ツールをラインナップ</div>
-      </div>
-      <div class="proof-item">
-        <div class="num">¥0</div>
-        <div class="label">月額費用・サーバー代</div>
-      </div>
-      <div class="proof-item">
-        <div class="num">30秒</div>
-        <div class="label">で結果が出る操作性</div>
+        <div class="label">公開中ツール</div>
       </div>
       <div class="proof-item">
         <div class="num">買い切り</div>
-        <div class="label">サブスクなし。一度買えば永久</div>
+        <div class="label">月額課金なし</div>
+      </div>
+      <div class="proof-item">
+        <div class="num">30秒</div>
+        <div class="label">初回結果の目安</div>
+      </div>
+      <div class="proof-item">
+        <div class="num">ブラウザ</div>
+        <div class="label">インストール不要</div>
       </div>
     </div>
   </div>
@@ -945,26 +956,20 @@ body::before {
   </div>
 </section>
 
-<!-- ===== 無料デモ埋め込み（新URL対応版） ===== -->
-<div style="margin: 80px 0 60px;">
-  <div style="text-align:center; margin-bottom:20px;">
-    <span style="background:#1a1a28; color:#6ee7b7; padding:8px 20px; border-radius:9999px; font-size:14px; font-weight:700; letter-spacing:1.5px;">
-      FREE DEMO
-    </span>
+<!-- ===== DEMO ===== -->
+<section class="iframe-demo">
+  <div class="container">
+    <div class="section-label">DEMO</div>
+    <h2 class="section-title reveal">無料デモは「試せる範囲」だけに絞る</h2>
+    <div class="coming-box reveal" style="display:grid; gap:18px;">
+      <p style="margin:0;">手取りシミュレーターには無料デモを残しつつ、保存・共有・詳細な出力はフル版向けに分けた。ストアページ上では埋め込まず、デモは別ページで試す形に変更。</p>
+      <div class="product-links">
+        <a href="https://yohelab-demo.pages.dev/" class="btn-ghost" target="_blank" rel="noreferrer">無料デモを試す →</a>
+        <a href="mailto:yohelab2026@gmail.com?subject=%E3%83%95%E3%83%AA%E3%83%BC%E3%83%A9%E3%83%B3%E3%82%B9%E6%89%8B%E5%8F%96%E3%82%8A%E3%82%B7%E3%83%9F%E3%83%A5%E3%83%AC%E3%83%BC%E3%82%BF%E3%83%BC%E8%B3%BC%E5%85%A5%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6" class="btn-primary">購入について問い合わせる →</a>
+      </div>
+    </div>
   </div>
-
-  <h2 style="text-align:center; margin-bottom:28px; color:#6ee7b7; font-size:1.9rem;">
-    無料で今すぐ手取りを計算してみる（2026年版）
-  </h2>
-
-  <iframe
-    src="https://yohelab-demo.netlify.app/"
-    width="100%"
-    height="980"
-    style="border: 4px solid #2a2a3e; border-radius: 28px; box-shadow: 0 25px 60px rgba(110,231,183,0.25); overflow: hidden;"
-    allowfullscreen>
-  </iframe>
-</div>
+</section>
 
 <!-- ===== PRODUCTS ===== -->
 <div id="pricing"></div>
@@ -976,7 +981,7 @@ body::before {
     <!-- Product 1 -->
     <div class="product-card reveal">
       <div class="product-info">
-        <span class="product-tag tag-best">BEST SELLER</span>
+        <span class="product-tag tag-best">公開中</span>
         <h3>フリーランス手取りシミュレーター</h3>
         <p class="desc">年収を入れるだけ。所得税・住民税・国保・年金・消費税・青色控除・iDeCo・小規模企業共済——全部まとめて「本当の手取り」を即計算。</p>
         <ul class="feature-list">
@@ -991,8 +996,8 @@ body::before {
           <span class="price-note">買い切り・税込</span>
         </div>
         <div class="product-links">
-          <a href="https://yohelab-demo.netlify.app/" class="btn-ghost">無料デモ版を試す →</a>
-          <a href="#" class="btn-primary">フル機能版を購入する →</a>
+          <a href="https://yohelab-demo.pages.dev/" class="btn-ghost" target="_blank" rel="noreferrer">無料デモ版を試す →</a>
+          <a href="mailto:yohelab2026@gmail.com?subject=%E3%83%95%E3%83%AA%E3%83%BC%E3%83%A9%E3%83%B3%E3%82%B9%E6%89%8B%E5%8F%96%E3%82%8A%E3%82%B7%E3%83%9F%E3%83%A5%E3%83%AC%E3%83%BC%E3%82%BF%E3%83%BC%E8%B3%BC%E5%85%A5%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6" class="btn-primary">購入について問い合わせる →</a>
         </div>
       </div>
       <div class="product-visual pv-1">
@@ -1017,7 +1022,7 @@ body::before {
     <!-- Product 2 -->
     <div class="product-card reveal">
       <div class="product-info">
-        <span class="product-tag tag-popular">POPULAR</span>
+        <span class="product-tag tag-popular">法務文書</span>
         <h3>特商法・プラポリ・利用規約<br>一括ジェネレーター</h3>
         <p class="desc">ビジネス類型を選んで情報を入力するだけ。特定商取引法表記・プライバシーポリシー・利用規約の3文書をまとめて自動生成。</p>
         <ul class="feature-list">
@@ -1031,7 +1036,8 @@ body::before {
           <span class="price-note">買い切り・税込</span>
         </div>
         <div class="product-links">
-          <a href="#" class="btn-ghost btn-disabled">このツールは準備中 →</a>
+          <a href="https://yohelab-legal-docs-app.netlify.app" class="btn-ghost" target="_blank" rel="noreferrer">画面プレビューを見る →</a>
+          <a href="mailto:yohelab2026@gmail.com?subject=%E7%89%B9%E5%95%86%E6%B3%95%E3%83%BB%E3%83%97%E3%83%A9%E3%83%9D%E3%83%AA%E3%83%BB%E5%88%A9%E7%94%A8%E8%A6%8F%E7%B4%84%E3%82%B8%E3%82%A7%E3%83%8D%E3%83%AC%E3%83%BC%E3%82%BF%E3%83%BC%E8%B3%BC%E5%85%A5%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6" class="btn-primary">購入について問い合わせる →</a>
         </div>
       </div>
       <div class="product-visual pv-2">
@@ -1055,7 +1061,7 @@ body::before {
     <!-- Product 3 -->
     <div class="product-card reveal">
       <div class="product-info">
-        <span class="product-tag tag-new">NEW</span>
+        <span class="product-tag tag-new">広告表現</span>
         <h3>薬機法NGワードチェッカー Lite</h3>
         <p class="desc">広告文・LP・商品説明を貼り付けるだけ。500以上のNGパターンで薬機法・景表法のリスク箇所を即座に検出＆代替表現を提案。</p>
         <ul class="feature-list">
@@ -1069,7 +1075,8 @@ body::before {
           <span class="price-note">買い切り・税込</span>
         </div>
         <div class="product-links">
-          <a href="#" class="btn-ghost btn-disabled">このツールは準備中 →</a>
+          <a href="https://yohelab-yakki-checker-lite.netlify.app" class="btn-ghost" target="_blank" rel="noreferrer">画面プレビューを見る →</a>
+          <a href="mailto:yohelab2026@gmail.com?subject=%E8%96%AC%E6%A9%9F%E6%B3%95NG%E3%83%AF%E3%83%BC%E3%83%89%E3%83%81%E3%82%A7%E3%83%83%E3%82%AB%E3%83%BC%E8%B3%BC%E5%85%A5%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6" class="btn-primary">購入について問い合わせる →</a>
         </div>
       </div>
       <div class="product-visual pv-3">
@@ -1095,7 +1102,7 @@ body::before {
     <!-- Product 4 -->
     <div class="product-card reveal">
       <div class="product-info">
-        <span class="product-tag tag-popular">POPULAR</span>
+        <span class="product-tag tag-popular">価格設計</span>
         <h3>クリエイター値付けシミュレーター</h3>
         <p class="desc">職種×スキルレベル×作業時間で、あなたの制作物の適正価格を算出。安売り地獄からの脱出をサポート。</p>
         <ul class="feature-list">
@@ -1109,7 +1116,8 @@ body::before {
           <span class="price-note">買い切り・税込</span>
         </div>
         <div class="product-links">
-          <a href="#" class="btn-ghost btn-disabled">このツールは準備中 →</a>
+          <a href="https://yohelab-pricing-simulator.netlify.app" class="btn-ghost" target="_blank" rel="noreferrer">画面プレビューを見る →</a>
+          <a href="mailto:yohelab2026@gmail.com?subject=%E3%82%AF%E3%83%AA%E3%82%A8%E3%82%A4%E3%82%BF%E3%83%BC%E5%80%A4%E4%BB%98%E3%81%91%E3%82%B7%E3%83%9F%E3%83%A5%E3%83%AC%E3%83%BC%E3%82%BF%E3%83%BC%E8%B3%BC%E5%85%A5%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6" class="btn-primary">購入について問い合わせる →</a>
         </div>
       </div>
       <div class="product-visual pv-4">
@@ -1134,9 +1142,9 @@ body::before {
     <!-- Product 5 -->
     <div class="product-card reveal">
       <div class="product-info">
-        <span class="product-tag tag-new">NEW</span>
+        <span class="product-tag tag-new">契約</span>
         <h3>フリーランス契約書ジェネレーター</h3>
-        <p class="desc">質問に答えるだけで業務委託契約書が完成。2024年11月施行のフリーランス保護法に対応。</p>
+        <p class="desc">質問に答えるだけで業務委託契約書が完成。2024年11月施行のフリーランス保護法に対応済み。</p>
         <ul class="feature-list">
           <li>デザイン/開発/ライティング/コンサルの4業種テンプレート</li>
           <li>著作権帰属・秘密保持・競業避止を選択式で設定</li>
@@ -1148,7 +1156,8 @@ body::before {
           <span class="price-note">買い切り・税込</span>
         </div>
         <div class="product-links">
-          <a href="#" class="btn-ghost btn-disabled">このツールは準備中 →</a>
+          <a href="https://yohelab-contract-generator.netlify.app" class="btn-ghost" target="_blank" rel="noreferrer">画面プレビューを見る →</a>
+          <a href="mailto:yohelab2026@gmail.com?subject=%E3%83%95%E3%83%AA%E3%83%BC%E3%83%A9%E3%83%B3%E3%82%B9%E5%A5%91%E7%B4%84%E6%9B%B8%E3%82%B8%E3%82%A7%E3%83%8D%E3%83%AC%E3%83%BC%E3%82%BF%E3%83%BC%E8%B3%BC%E5%85%A5%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6" class="btn-primary">購入について問い合わせる →</a>
         </div>
       </div>
       <div class="product-visual pv-5">
@@ -1176,7 +1185,7 @@ body::before {
     <div class="bundle-box reveal">
       <div class="bundle-header">
         <div class="bundle-title">
-          <span class="tag-best" style="font-size:12px; padding:4px 12px; border-radius:6px; margin-bottom:12px; display:inline-block;">BEST VALUE</span>
+          <span class="tag-best" style="font-size:12px; padding:4px 12px; border-radius:6px; margin-bottom:12px; display:inline-block;">BUNDLE</span>
           <h2>全5ツール まとめてパック</h2>
           <p style="font-size:15px; color:var(--text-dim); margin-top:8px;">単品で全部買うと ¥13,400。まとめて買えば ¥4,980。<br>一度の決済で、フリーランスに必要な武器が全部そろう。</p>
         </div>
@@ -1226,19 +1235,19 @@ body::before {
       </div>
 
       <div class="bundle-cta">
-        <a href="#" class="btn-primary" style="padding:18px 60px; font-size:18px;">全5ツールをまとめて手に入れる →</a>
+        <a href="mailto:yohelab2026@gmail.com?subject=%E5%85%A85%E3%83%84%E3%83%BC%E3%83%AB%E3%81%BE%E3%81%A8%E3%82%81%E8%B3%BC%E5%85%A5%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6" class="btn-primary" style="padding:18px 60px; font-size:18px;">5ツールまとめ買いを相談する →</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ===== COMING SOON / WAITING LIST ===== -->
+<!-- ===== STATUS ===== -->
 <section class="coming-soon">
   <div class="container">
     <div class="coming-box reveal" style="text-align:center;">
-      <div class="section-label">WAITING LIST</div>
-      <h2 style="font-family:var(--font-display); font-weight:900; margin-bottom:16px;">未公開ツールはまだ準備中</h2>
-      <p>今すぐ動くのは「フリーランス手取りシミュレーター」のフル機能版と無料デモ版。ほかの購入ボタンや法務ページ系の導線は、公開準備ができるまでこの案内に集約してある。</p>
+      <div class="section-label">SALES STATUS</div>
+      <h2 style="font-family:var(--font-display); font-weight:900; margin-bottom:16px;">無料デモと有料版の導線を分離した</h2>
+      <p>手取りシミュレーターは無料デモを別ページに分離し、各有料ツールはストアからの案内前提に整理した。今の課題は Stripe の実購入リンク未設定だけ。</p>
     </div>
   </div>
 </section>
@@ -1249,8 +1258,8 @@ body::before {
     <div class="guarantee-box reveal">
       <div class="guarantee-icon">🛡️</div>
       <div>
-        <h3>7日間の返金保証</h3>
-        <p>購入後7日以内であれば、理由を問わず全額返金いたします。ツールが合わなかった場合、メール一本でOKです。安心してお試しください。返金はStripe経由で3〜5営業日以内に処理されます。</p>
+        <h3>購入導線を優先して整備中</h3>
+        <p>現時点でコード上から確認できた Stripe の実購入リンクは未設定。デモ分離、法的ページ、プレビュー導線までは先に整え、決済リンクが入り次第そのまま接続できる状態にしてある。</p>
       </div>
     </div>
   </div>
@@ -1284,12 +1293,12 @@ body::before {
 
     <div class="faq-item reveal">
       <div class="faq-q">領収書は発行されますか？</div>
-      <div class="faq-a">はい、決済完了後に自動送信されるメールから領収書をダウンロードいただけます。経費精算にご利用ください。</div>
+      <div class="faq-a">今は Stripe の実購入リンクがまだ未接続だから、自動発行までは入っていない。購入導線をつないだあとに、領収書の出し方もこのページで案内する。</div>
     </div>
 
     <div class="faq-item reveal">
       <div class="faq-q">バンドルパックと単品、どちらがおすすめですか？</div>
-      <div class="faq-a">今後リリースされるツールもすべて含めると、バンドルパックの方が圧倒的にお得です。一つ一つのツールを使いこなして事務作業をゼロにしたい方は、ぜひパックをご検討ください。</div>
+      <div class="faq-a">今はストアから無料デモとプレビュー導線を分けています。実購入リンクは Stripe の設定が入り次第、このページから直接つなぎます。</div>
     </div>
   </div>
 </section>
@@ -1298,10 +1307,10 @@ body::before {
   <div class="container">
     <div class="footer-logo">よへラボ</div>
     <div class="footer-links">
-      <a href="#">特定商取引法に基づく表記</a>
-      <a href="#">プライバシーポリシー</a>
-      <a href="#">利用規約</a>
-      <a href="#">お問い合わせ</a>
+      <a href="/legal-commercial-transactions.html">特定商取引法に基づく表記</a>
+      <a href="/privacy-policy.html">プライバシーポリシー</a>
+      <a href="/terms.html">利用規約</a>
+      <a href="mailto:yohelab2026@gmail.com">お問い合わせ</a>
       <a href="https://x.com/yohelab" target="_blank">X (@yohelab)</a>
     </div>
     <div class="footer-copy">© 2026 よへラボ. Built for Freelancers.</div>
