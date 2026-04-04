@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>よへラボ — フリーランスの「めんどくさい」を秒で解決するツール群</title>
 <meta name="description" content="フリーランス向けの手取り計算、特商法・プラポリ・利用規約作成、薬機法表現チェック、値付け設計、契約書ドラフト作成を支えるブラウザツール群。">
-<meta name="robots" content="index,follow">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://yohelab.pages.dev/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="よへラボ — フリーランスの面倒を減らす5ツール">
 <meta property="og:description" content="手取り計算、法務文書、広告表現、値付け、契約書づくりをまとめて支えるブラウザツール群。">
@@ -18,6 +19,79 @@
 <link rel="icon" type="image/png" href="./yohelab-icon.png">
 <link rel="apple-touch-icon" href="./yohelab-icon.png">
 <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Zen+Maru+Gothic:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://yohelab.pages.dev/#organization",
+      "name": "よへラボ",
+      "url": "https://yohelab.pages.dev/",
+      "logo": "https://yohelab.pages.dev/yohelab-icon.png",
+      "email": "mailto:yohelab2026@gmail.com",
+      "sameAs": [
+        "https://x.com/yohelab"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://yohelab.pages.dev/#website",
+      "url": "https://yohelab.pages.dev/",
+      "name": "よへラボ",
+      "inLanguage": "ja",
+      "publisher": {
+        "@id": "https://yohelab.pages.dev/#organization"
+      }
+    },
+    {
+      "@type": "CollectionPage",
+      "@id": "https://yohelab.pages.dev/#store",
+      "url": "https://yohelab.pages.dev/",
+      "name": "よへラボ ツールストア",
+      "description": "フリーランス向けの手取り計算、法務文書、広告表現チェック、値付け、契約書ドラフト作成を支えるブラウザツール一覧。",
+      "isPartOf": {
+        "@id": "https://yohelab.pages.dev/#website"
+      }
+    },
+    {
+      "@type": "ItemList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "url": "https://yohelab.pages.dev/#tool-takehome",
+          "name": "フリーランス手取りシミュレーター"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "url": "https://yohelab.pages.dev/#tool-legal-docs",
+          "name": "特商法・プラポリ・利用規約 一括ジェネレーター"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "url": "https://yohelab.pages.dev/#tool-yakki",
+          "name": "薬機法NGワードチェッカー Lite"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "url": "https://yohelab.pages.dev/#tool-pricing",
+          "name": "クリエイター値付けシミュレーター"
+        },
+        {
+          "@type": "ListItem",
+          "position": 5,
+          "url": "https://yohelab.pages.dev/#tool-contract",
+          "name": "フリーランス契約書ジェネレーター"
+        }
+      ]
+    }
+  ]
+}
+</script>
 <style>
 :root {
   --bg: #0a0a0f;
@@ -219,6 +293,13 @@ body::before {
   animation: fadeUp 0.8s ease 0.3s both;
 }
 
+.cta-note {
+  margin-top: 18px;
+  color: var(--text-dim);
+  font-size: 0.92rem;
+  animation: fadeUp 0.8s ease 0.35s both;
+}
+
 .btn-primary {
   display: inline-flex;
   align-items: center;
@@ -334,6 +415,57 @@ body::before {
   font-weight: 900;
   margin-bottom: 48px;
   line-height: 1.4;
+}
+
+.buy-flow,
+.trust {
+  padding: 70px 0;
+}
+
+.buy-grid,
+.trust-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+}
+
+.buy-card,
+.trust-card {
+  padding: 24px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--bg-card);
+}
+
+.buy-step {
+  display: inline-flex;
+  width: 36px;
+  height: 36px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+  border-radius: 50%;
+  background: var(--accent-glow);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
+
+.buy-card h3,
+.trust-card h3 {
+  margin-bottom: 10px;
+  font-family: var(--font-display);
+  font-size: 1.02rem;
+}
+
+.buy-card p,
+.trust-card p {
+  color: var(--text-dim);
+  font-size: 0.95rem;
+}
+
+.trust-card strong {
+  color: var(--text);
 }
 
 .pain-grid {
@@ -942,6 +1074,13 @@ body::before {
   .bundle-price-area { text-align: left; }
   .guarantee-box { flex-direction: column; }
   .hero { padding: 128px 0 60px; min-height: auto; }
+  .hero-cta-row a {
+    width: 100%;
+    justify-content: center;
+  }
+  .cta-note {
+    font-size: 0.88rem;
+  }
 }
 </style>
 </head>
@@ -977,9 +1116,10 @@ body::before {
       ブラウザだけで・買い切りで・今すぐ解決します。
     </p>
     <div class="hero-cta-row">
-      <a href="#products" class="btn-primary">ツールを見る ↓</a>
-      <a href="#bundle" class="btn-secondary">全部セットで買う → おトク</a>
+      <a href="#products" class="btn-primary">ツールを選ぶ ↓</a>
+      <a href="mailto:yohelab2026@gmail.com?subject=%E5%85%A85%E3%83%84%E3%83%BC%E3%83%AB%E3%81%BE%E3%81%A8%E3%82%81%E8%B3%BC%E5%85%A5%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6" class="btn-secondary">5ツールまとめ買いを相談する →</a>
     </div>
+    <p class="cta-note">無料デモか画面プレビューで確認して、そのままメールで購入案内を受け取れる。</p>
   </div>
 </section>
 
@@ -1062,6 +1202,30 @@ body::before {
   </div>
 </section>
 
+<section class="buy-flow">
+  <div class="container">
+    <div class="section-label">HOW TO BUY</div>
+    <h2 class="section-title reveal">買い方は3ステップで終わる</h2>
+    <div class="buy-grid">
+      <div class="buy-card reveal">
+        <div class="buy-step">01</div>
+        <h3>無料デモか画面プレビューを見る</h3>
+        <p>いきなり買わせず、先に触って確認できる。合わないものを避けやすい。</p>
+      </div>
+      <div class="buy-card reveal">
+        <div class="buy-step">02</div>
+        <h3>単品か5ツールセットか決める</h3>
+        <p>ひとつの悩みだけなら単品、複数まとめて潰すならセットの方が安い。</p>
+      </div>
+      <div class="buy-card reveal">
+        <div class="buy-step">03</div>
+        <h3>メールで購入案内を受け取る</h3>
+        <p>今の購入導線はメール案内方式。必要な商品を選んでそのまま連絡できる。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ===== PRODUCTS ===== -->
 <div id="pricing"></div>
 <section class="products" id="products">
@@ -1070,17 +1234,17 @@ body::before {
     <h2 class="section-title reveal">よへラボのツール一覧</h2>
 
     <!-- Product 1 -->
-    <div class="product-card reveal">
+    <div class="product-card reveal" id="tool-takehome">
       <div class="product-info">
         <span class="product-tag tag-best">公開中</span>
         <h3>フリーランス手取りシミュレーター</h3>
-        <p class="desc">年収を入れるだけ。所得税・住民税・国保・年金・消費税・青色控除・iDeCo・小規模企業共済——全部まとめて「本当の手取り」を即計算。</p>
+        <p class="desc">売上と経費を入れるだけ。税金・保険・積立までまとめて見て、手元に残る金額の目安をその場でつかめる。</p>
         <ul class="feature-list">
-          <li>所得税（累進5%〜45%）＋復興特別所得税を完全計算</li>
-          <li>国民健康保険は市区町村の料率で概算</li>
-          <li>インボイス登録者の消費税（2割特例/簡易課税対応）</li>
-          <li>青色申告65万控除、iDeCo、小規模企業共済の節税シミュレーション</li>
-          <li>円グラフ＋内訳表でひと目で把握</li>
+          <li>売上・経費・扶養・iDeCo・小規模企業共済をまとめて試算</li>
+          <li>国保や住民税は概算で先に全体像をつかめる</li>
+          <li>インボイス登録時の消費税モード切替に対応</li>
+          <li>円グラフと内訳表でどこで減るかが見やすい</li>
+          <li>無料デモで感触を確かめてから判断できる</li>
         </ul>
         <div class="price-row">
           <span class="price">¥1,980</span>
@@ -1111,16 +1275,17 @@ body::before {
     </div>
 
     <!-- Product 2 -->
-    <div class="product-card reveal">
+    <div class="product-card reveal" id="tool-legal-docs">
       <div class="product-info">
         <span class="product-tag tag-popular">法務文書</span>
         <h3>特商法・プラポリ・利用規約<br>一括ジェネレーター</h3>
-        <p class="desc">ビジネス類型を選んで情報を入力するだけ。特定商取引法表記・プライバシーポリシー・利用規約の3文書をまとめて自動生成。</p>
+        <p class="desc">販売形態を選んで必要項目を入れるだけ。特商法・プライバシーポリシー・利用規約の叩き台をまとめて整える。</p>
         <ul class="feature-list">
           <li>デジタル商品/サブスク/コーチング/物販の4類型対応</li>
-          <li>特商法は動作環境・返品特約・最終確認画面まで網羅</li>
-          <li>HTML/Markdown/PDFの3形式で出力</li>
-          <li>消費者庁ガイドラインに準拠したチェックリスト付き</li>
+          <li>入力項目を絞って、公開前に必要な文面を先に作れる</li>
+          <li>3文書を切り替えながらその場で確認できる</li>
+          <li>コピペ前の叩き台づくりに向いたシンプル設計</li>
+          <li>最初の公開で止まりやすい法務文面を一気に整えやすい</li>
         </ul>
         <div class="price-row">
           <span class="price">¥2,980</span>
@@ -1150,16 +1315,16 @@ body::before {
     </div>
 
     <!-- Product 3 -->
-    <div class="product-card reveal">
+    <div class="product-card reveal" id="tool-yakki">
       <div class="product-info">
         <span class="product-tag tag-new">広告表現</span>
         <h3>薬機法NGワードチェッカー Lite</h3>
-        <p class="desc">広告文・LP・商品説明を貼り付けるだけ。500以上のNGパターンで薬機法・景表法のリスク箇所を即座に検出＆代替表現を提案。</p>
+        <p class="desc">広告文・LP・商品説明を貼るだけ。危ない表現を先に拾って、言い換えの方向までその場で見直せる。</p>
         <ul class="feature-list">
-          <li>医薬品的効能効果の標榜 / 誇大表現 / 要注意ワードを3段階で検出</li>
-          <li>NGワード辞書500パターン以上を内蔵</li>
-          <li>各問題箇所に代替表現の提案付き</li>
-          <li>リスクスコアを数値表示（SNSシェア用に最適）</li>
+          <li>高・中・低の3段階で直す優先度がわかる</li>
+          <li>効能断定や強すぎる表現を先に洗える</li>
+          <li>指摘ごとに言い換えの方向を表示</li>
+          <li>リスクスコアで公開前の荒いチェックがしやすい</li>
         </ul>
         <div class="price-row">
           <span class="price">¥3,980</span>
@@ -1191,16 +1356,16 @@ body::before {
     </div>
 
     <!-- Product 4 -->
-    <div class="product-card reveal">
+    <div class="product-card reveal" id="tool-pricing">
       <div class="product-info">
         <span class="product-tag tag-popular">価格設計</span>
         <h3>クリエイター値付けシミュレーター</h3>
-        <p class="desc">職種×スキルレベル×作業時間で、あなたの制作物の適正価格を算出。安売り地獄からの脱出をサポート。</p>
+        <p class="desc">職種と工数を入れると、安売りを避けるための基準額をその場で出せる。提案の根拠づくり向け。</p>
         <ul class="feature-list">
           <li>デザイン/イラスト/ライティング/動画/Web制作の5職種対応</li>
           <li>時間単価×工数＋経費＋利益率で算出</li>
-          <li>日本の市場相場レンジ（下限〜中央値〜上限）を表示</li>
-          <li>「この金額で提案する」用の見積もり文テンプレ付き</li>
+          <li>守る下限・基本提案・強気提案の3段で考えやすい</li>
+          <li>見積もり文のプレビューまでその場で確認できる</li>
         </ul>
         <div class="price-row">
           <span class="price">¥1,480</span>
@@ -1231,16 +1396,16 @@ body::before {
     </div>
 
     <!-- Product 5 -->
-    <div class="product-card reveal">
+    <div class="product-card reveal" id="tool-contract">
       <div class="product-info">
         <span class="product-tag tag-new">契約</span>
         <h3>フリーランス契約書ジェネレーター</h3>
-        <p class="desc">質問に答えるだけで業務委託契約書が完成。2024年11月施行のフリーランス保護法に対応済み。</p>
+        <p class="desc">商談内容を入れるだけで業務委託契約書の叩き台を作れる。報酬や納期の抜け漏れを減らしたい人向け。</p>
         <ul class="feature-list">
           <li>デザイン/開発/ライティング/コンサルの4業種テンプレート</li>
-          <li>著作権帰属・秘密保持・競業避止を選択式で設定</li>
-          <li>源泉徴収・支払サイトの条件も自動反映</li>
-          <li>PDF＋テキストで出力、そのまま印刷・メール送付可</li>
+          <li>報酬・納期・権利・修正・解除条件を整理しやすい</li>
+          <li>入力した内容がそのまま条文プレビューに反映される</li>
+          <li>商談後すぐに叩き台を作って確認に回しやすい</li>
         </ul>
         <div class="price-row">
           <span class="price">¥2,980</span>
@@ -1263,7 +1428,7 @@ body::before {
           <div class="line">第4条（支払）納品翌月末日</div>
           <div class="line">第5条（著作権）納品・入金後に委託者に移転</div>
           <div class="line">第6条（秘密保持）あり</div>
-          <div class="line line-highlight">⚡ フリーランス保護法対応済み</div>
+          <div class="line line-highlight">⚡ 商談メモから条文プレビューへ</div>
         </div>
       </div>
     </div>
@@ -1332,6 +1497,27 @@ body::before {
   </div>
 </section>
 
+<section class="trust">
+  <div class="container">
+    <div class="section-label">TRUST</div>
+    <h2 class="section-title reveal">何を作っていて、どこまで面倒を見るか</h2>
+    <div class="trust-grid">
+      <div class="trust-card reveal">
+        <h3>運営</h3>
+        <p><strong>よへラボ / 加古洋平</strong><br>フリーランスの事務・法務・見積もり周りで止まりやすい作業を、小さく早く片づけるためのツールをまとめている。</p>
+      </div>
+      <div class="trust-card reveal">
+        <h3>公開方針</h3>
+        <p>無料デモは試せる範囲だけを公開し、保存や詳細出力は分けている。ページ上の説明は今の公開内容に合わせて整理している。</p>
+      </div>
+      <div class="trust-card reveal">
+        <h3>注意点</h3>
+        <p>税務・法務・薬機法まわりは最終判断そのものを代替しない。まず叩き台や初回チェックを速く作る用途に寄せている。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ===== STATUS ===== -->
 <section class="coming-soon">
   <div class="container">
@@ -1364,7 +1550,7 @@ body::before {
     
     <div class="faq-item reveal">
       <div class="faq-q">サブスク（月額課金）ですか？</div>
-      <div class="faq-a">いいえ、すべて買い切りです。一度の支払いで、アップデートも含めて永久にご利用いただけます。月額費用は一切発生しません。</div>
+      <div class="faq-a">月額課金ではなく買い切りで案内している。今はメール経由で購入案内を出す形。</div>
     </div>
     
     <div class="faq-item reveal">
@@ -1374,12 +1560,12 @@ body::before {
     
     <div class="faq-item reveal">
       <div class="faq-q">特商法ジェネレーターや契約書ジェネレーターは法的に有効ですか？</div>
-      <div class="faq-a">はい、一般的なフリーランス・個人事業主のビジネスに即した法的な網羅性を備えています。ただし、個別の特殊なケースについては弁護士等にご相談いただくことを推奨します。</div>
+      <div class="faq-a">公開用の叩き台を作る用途として組んでいる。個別案件の最終判断や特殊条件の確認は専門家チェックを前提にしてほしい。</div>
     </div>
 
     <div class="faq-item reveal">
       <div class="faq-q">薬機法チェッカーの精度はどのくらいですか？</div>
-      <div class="faq-a">最新のガイドラインに基づいた500以上のNGパターンを網羅していますが、最終的な判断は各プラットフォームの審査基準や行政の判断に委ねられます。あくまでリスク箇所の早期発見ツールとしてご活用ください。</div>
+      <div class="faq-a">公開前の粗いふるい落とし向け。危ない言い回しを先に見つけるのが目的で、最終判断そのものを置き換えるものではない。</div>
     </div>
 
     <div class="faq-item reveal">
@@ -1389,7 +1575,7 @@ body::before {
 
     <div class="faq-item reveal">
       <div class="faq-q">バンドルパックと単品、どちらがおすすめですか？</div>
-      <div class="faq-a">今はストアから無料デモとプレビュー導線を分けています。実購入リンクは Stripe の設定が入り次第、このページから直接つなぎます。</div>
+      <div class="faq-a">2つ以上気になるならバンドルの方が早い。1つだけ困りごとを潰したいなら単品で十分。</div>
     </div>
   </div>
 </section>
@@ -1402,7 +1588,7 @@ body::before {
       <a href="./privacy-policy.html">プライバシーポリシー</a>
       <a href="./terms.html">利用規約</a>
       <a href="mailto:yohelab2026@gmail.com">お問い合わせ</a>
-      <a href="https://x.com/yohelab" target="_blank">X (@yohelab)</a>
+      <a href="https://x.com/yohelab" target="_blank" rel="noopener noreferrer">X (@yohelab)</a>
     </div>
     <div class="footer-copy">© 2026 よへラボ. Built for Freelancers.</div>
   </div>
