@@ -16,6 +16,8 @@ export default defineConfig({
         goYakki: 'go-yakki.html',
         goPricing: 'go-pricing.html',
         goContract: 'go-contract.html',
+        goBuyPricing: 'go-buy-pricing.html',
+        goBuyContract: 'go-buy-contract.html',
         goContactTakehome: 'go-contact-takehome.html',
         goContactLegalDocs: 'go-contact-legal-docs.html',
         goContactYakki: 'go-contact-yakki.html',
