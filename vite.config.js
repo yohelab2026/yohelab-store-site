@@ -9,6 +9,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: 'index.html',
+        freelancerTools: 'freelancer-tools.html',
         demoPreview: 'demo-preview.html',
         goDemo: 'go-demo.html',
         goLegalDocs: 'go-legal-docs.html',
