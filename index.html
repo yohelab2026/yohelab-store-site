@@ -66,6 +66,59 @@ body::before {
   padding: 0 24px;
 }
 
+.site-header {
+  position: absolute;
+  top: 28px;
+  left: 0;
+  width: 100%;
+  z-index: 5;
+}
+
+.brand-lockup {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.brand-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  width: fit-content;
+  padding: 10px 18px;
+  border: 1px solid rgba(110, 231, 183, 0.18);
+  border-radius: 999px;
+  background: rgba(12, 12, 18, 0.78);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.24);
+}
+
+.brand-mark::before {
+  content: 'Y';
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+  color: var(--bg);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.brand-name {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
+.brand-note {
+  color: var(--text-dim);
+  font-size: 0.84rem;
+  letter-spacing: 0.08em;
+}
+
 /* ===== HERO ===== */
 .hero {
   min-height: 100vh;
@@ -112,6 +165,17 @@ body::before {
   margin-bottom: 32px;
   background: var(--accent-glow);
   animation: fadeUp 0.8s ease both;
+}
+
+.hero-kicker {
+  margin: 0 0 18px;
+  color: var(--accent2);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  animation: fadeUp 0.8s ease 0.05s both;
 }
 
 .hero-badge::before {
@@ -847,6 +911,20 @@ body::before {
 @media (max-width: 768px) {
   .iframe-demo-box { padding: 12px; }
   .iframe-demo-frame { height: 980px; }
+  .site-header {
+    top: 18px;
+  }
+  .brand-mark {
+    padding: 9px 14px;
+  }
+  .brand-name {
+    font-size: 1rem;
+    letter-spacing: 0.05em;
+  }
+  .brand-note {
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+  }
   .product-card {
     grid-template-columns: 1fr;
     gap: 32px;
@@ -863,11 +941,22 @@ body::before {
   .bundle-header { flex-direction: column; }
   .bundle-price-area { text-align: left; }
   .guarantee-box { flex-direction: column; }
-  .hero { padding: 80px 0 60px; min-height: auto; }
+  .hero { padding: 128px 0 60px; min-height: auto; }
 }
 </style>
 </head>
 <body>
+
+<header class="site-header">
+  <div class="container">
+    <div class="brand-lockup">
+      <div class="brand-mark">
+        <span class="brand-name">よへラボ</span>
+      </div>
+      <div class="brand-note">FREELANCE MICRO TOOLS</div>
+    </div>
+  </div>
+</header>
 
 <!-- ===== HERO ===== -->
 <section class="hero">
@@ -875,6 +964,7 @@ body::before {
     <div class="hero-badge">
       <span>2026年4月 — 5ツール同時リリース</span>
     </div>
+    <div class="hero-kicker">YOHELAB TOOL STORE</div>
     <h1>
       フリーランスの<br>
       <span class="highlight">「めんどくさい」を秒で解決</span>する<br>
