@@ -9,8 +9,11 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: 'index.html',
-        standalone: 'standalone.html',
-        analytics: 'analytics.html',
+        demoPreview: 'demo-preview.html',
+        legalDocsPreview: 'legal-docs-preview.html',
+        yakkiCheckerPreview: 'yakki-checker-preview.html',
+        pricingSimulatorPreview: 'pricing-simulator-preview.html',
+        contractGeneratorPreview: 'contract-generator-preview.html',
         legalCommercialTransactions: 'legal-commercial-transactions.html',
         privacyPolicy: 'privacy-policy.html',
         terms: 'terms.html',
