@@ -88,6 +88,90 @@
           "name": "フリーランス契約書ジェネレーター"
         }
       ]
+    },
+    {
+      "@type": "Product",
+      "name": "フリーランス手取りシミュレーター",
+      "description": "売上と経費を入れるだけで、税金・保険・積立までまとめて手取り感をつかめるブラウザツール。",
+      "category": "BusinessApplication",
+      "brand": { "@type": "Brand", "name": "よへラボ" },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "JPY",
+        "price": "1980",
+        "availability": "https://schema.org/InStock",
+        "url": "https://buy.stripe.com/dRm14f5f9ehW3Gybvb73G00"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "特商法・プラポリ・利用規約 一括ジェネレーター",
+      "description": "販売者情報を入れるだけで、特商法・プライバシーポリシー・利用規約の叩き台をまとめて作れるブラウザツール。",
+      "category": "BusinessApplication",
+      "brand": { "@type": "Brand", "name": "よへラボ" },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "JPY",
+        "price": "2980",
+        "availability": "https://schema.org/InStock",
+        "url": "https://buy.stripe.com/bJe7sD9vp2ze3Gyar773G01"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "薬機法NGワードチェッカー Lite",
+      "description": "広告文や商品説明を貼るだけで、危ない表現を先に見つけて言い換えの方向まで確認できるブラウザツール。",
+      "category": "BusinessApplication",
+      "brand": { "@type": "Brand", "name": "よへラボ" },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "JPY",
+        "price": "3980",
+        "availability": "https://schema.org/InStock",
+        "url": "https://buy.stripe.com/4gM00bdLFc9O7WOeHn73G02"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "クリエイター値付けシミュレーター",
+      "description": "職種、工数、利益率、利用範囲を入れるだけで、安売りを避けるための提案額の目安を出せるブラウザツール。",
+      "category": "BusinessApplication",
+      "brand": { "@type": "Brand", "name": "よへラボ" },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "JPY",
+        "price": "1480",
+        "availability": "https://schema.org/InStock",
+        "url": "https://buy.stripe.com/3cI3cnePJ4Hmfpg7eV73G03"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "フリーランス契約書ジェネレーター",
+      "description": "委託者名、報酬、納期、著作権の条件などを入れるだけで、業務委託契約書の叩き台を作れるブラウザツール。",
+      "category": "BusinessApplication",
+      "brand": { "@type": "Brand", "name": "よへラボ" },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "JPY",
+        "price": "2980",
+        "availability": "https://schema.org/InStock",
+        "url": "https://buy.stripe.com/7sY8wHcHBb5K6SKar773G04"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "フリーランス5ツール まとめてパック",
+      "description": "手取り計算、法務文書、薬機法表現チェック、値付け、契約書ドラフト作成の5ツールをまとめて使えるセット。",
+      "category": "BusinessApplication",
+      "brand": { "@type": "Brand", "name": "よへラボ" },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "JPY",
+        "price": "4980",
+        "availability": "https://schema.org/InStock",
+        "url": "https://buy.stripe.com/aFa5kv4b5fm02Cu42J73G05"
+      }
     }
   ]
 }
@@ -446,6 +530,13 @@ a.brand-mark {
   background: var(--bg-card);
 }
 
+.buy-card .card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+
 .buy-step {
   display: inline-flex;
   width: 36px;
@@ -475,6 +566,10 @@ a.brand-mark {
 
 .trust-card strong {
   color: var(--text);
+}
+
+.chooser {
+  padding: 70px 0 10px;
 }
 
 .pain-grid {
@@ -1129,6 +1224,39 @@ a.brand-mark {
   </div>
 </section>
 
+<section class="chooser">
+  <div class="container">
+    <div class="section-label">START HERE</div>
+    <h2 class="section-title reveal">30秒でどれを買うか決める</h2>
+    <div class="buy-grid">
+      <div class="buy-card reveal">
+        <div class="buy-step">A</div>
+        <h3>まず無料で試したい</h3>
+        <p>触ってから決めたいなら、まず手取りデモ。いちばん判断しやすい入口になってる。</p>
+        <div class="card-actions">
+          <a href="./go-demo.html" class="btn-ghost">無料デモへ →</a>
+        </div>
+      </div>
+      <div class="buy-card reveal">
+        <div class="buy-step">B</div>
+        <h3>1つの悩みだけ解決したい</h3>
+        <p>値付けだけ、契約書だけ、法務だけ、みたいに1本だけ欲しいならこのまま下で選べばいい。</p>
+        <div class="card-actions">
+          <a href="#products" class="btn-ghost">単品を比較する →</a>
+        </div>
+      </div>
+      <div class="buy-card reveal">
+        <div class="buy-step">C</div>
+        <h3>最短で全部そろえたい</h3>
+        <p>迷う時間ごと減らしたいなら、5ツールセットがいちばん早い。単品合計よりかなり安い。</p>
+        <div class="card-actions">
+          <a href="./go-contact-bundle.html" class="btn-primary">5ツールセットを買う →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ===== PAIN ===== -->
 <section class="pain">
   <div class="container">
@@ -1514,7 +1642,7 @@ a.brand-mark {
 
     <div class="faq-item reveal">
       <div class="faq-q">購入後はどうやって使い始めますか？</div>
-      <div class="faq-a">単品も5ツールセットも、そのままStripe決済へ進める。</div>
+      <div class="faq-a">決済完了後はStripeの完了画面で購入内容を確認できる。購入前に、商品ページの動画とプレビューで使いどころを先に見て判断できるようにしている。</div>
     </div>
 
     <div class="faq-item reveal">
