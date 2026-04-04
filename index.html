@@ -3,18 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>よへラボ | ツールの総合トップ</title>
-<meta name="description" content="よへラボの総合トップ。フリーランス向けツール、無料プレビュー、個人向けツールや事業者向けツールの入口をまとめた案内ページ。">
+<title>よへラボ | 今すぐ使えるツールの総合トップ</title>
+<meta name="description" content="今すぐ使えるフリーランス向けツールと無料プレビューを最短で選べる、よへラボの総合トップ。">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <link rel="canonical" href="https://yohelab.pages.dev/">
 <meta property="og:type" content="website">
-<meta property="og:title" content="よへラボ | ツールの総合トップ">
-<meta property="og:description" content="フリーランス向け、個人向け、事業者向けの入口をまとめたよへラボの総合トップ。">
+<meta property="og:title" content="よへラボ | 今すぐ使えるツールの総合トップ">
+<meta property="og:description" content="フリーランス向けツールと無料プレビューを最短で選べる、よへラボの総合トップ。">
 <meta property="og:url" content="https://yohelab.pages.dev/">
 <meta property="og:image" content="https://yohelab.pages.dev/og-card.svg">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="よへラボ | ツールの総合トップ">
-<meta name="twitter:description" content="フリーランス向け、個人向け、事業者向けの入口をまとめたよへラボの総合トップ。">
+<meta name="twitter:title" content="よへラボ | 今すぐ使えるツールの総合トップ">
+<meta name="twitter:description" content="フリーランス向けツールと無料プレビューを最短で選べる、よへラボの総合トップ。">
 <meta name="twitter:image" content="https://yohelab.pages.dev/og-card.svg">
 <link rel="icon" type="image/png" href="./yohelab-icon.png">
 <link rel="apple-touch-icon" href="./yohelab-icon.png">
@@ -47,7 +47,7 @@
       "@id": "https://yohelab.pages.dev/#portal",
       "url": "https://yohelab.pages.dev/",
       "name": "よへラボ 総合トップ",
-      "description": "よへラボのカテゴリ別入口をまとめた総合トップページ。",
+      "description": "今すぐ使えるツールと無料プレビューを最短で選べる総合トップページ。",
       "isPartOf": {
         "@id": "https://yohelab.pages.dev/#website"
       }
@@ -149,11 +149,29 @@ a { color: inherit; text-decoration: none; }
   grid-template-columns: 1.2fr 0.8fr;
   gap: 22px;
 }
+.hero-copy {
+  position: relative;
+  overflow: hidden;
+}
+.hero-copy::after {
+  content: "";
+  position: absolute;
+  right: -80px;
+  bottom: -80px;
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(125,211,252,0.18) 0%, transparent 72%);
+  pointer-events: none;
+}
 .hero-copy,
 .hero-side,
 .section-box,
 .nav-card,
-.quick-card {
+.quick-card,
+.mini-card,
+.roadmap-card,
+.buy-card {
   border: 1px solid var(--border);
   background: var(--surface);
   backdrop-filter: blur(16px);
@@ -220,6 +238,30 @@ a { color: inherit; text-decoration: none; }
   font-size: 0.96rem;
 }
 .hero-side strong { color: var(--text); }
+.hero-proof {
+  margin-top: 22px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+.proof-chip {
+  padding: 14px;
+  border-radius: 18px;
+  border: 1px solid rgba(159,180,203,0.18);
+  background: rgba(8, 18, 30, 0.66);
+}
+.proof-chip strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+}
+.proof-chip span {
+  display: block;
+  margin-top: 6px;
+  color: var(--text-dim);
+  font-size: 0.83rem;
+  line-height: 1.6;
+}
 .section {
   padding-bottom: 56px;
 }
@@ -231,14 +273,72 @@ a { color: inherit; text-decoration: none; }
   letter-spacing: 0.16em;
   text-transform: uppercase;
 }
-.nav-grid {
+.nav-grid,
+.mini-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 18px;
 }
 .nav-card {
   border-radius: 28px;
   padding: 24px;
+}
+.nav-card.live-card {
+  display: grid;
+  gap: 18px;
+}
+.live-card .live-actions,
+.mini-card .card-actions,
+.buy-card .card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.mini-grid,
+.buy-grid {
+  margin-top: 18px;
+}
+.mini-card,
+.roadmap-card,
+.buy-card {
+  border-radius: 24px;
+  padding: 22px;
+}
+.mini-card strong,
+.roadmap-card strong,
+.buy-card strong {
+  display: block;
+  font-family: var(--font-display);
+}
+.mini-card strong,
+.roadmap-card strong {
+  font-size: 1.1rem;
+}
+.mini-card p,
+.roadmap-card p,
+.buy-card p {
+  margin-top: 10px;
+  color: var(--text-dim);
+  line-height: 1.8;
+  font-size: 0.94rem;
+}
+.roadmap-list {
+  list-style: none;
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
+}
+.roadmap-list li {
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: rgba(9, 25, 39, 0.62);
+  color: var(--text-dim);
+  line-height: 1.75;
+}
+.roadmap-list strong {
+  display: inline;
+  font-size: 0.98rem;
+  color: var(--text);
 }
 .nav-card .status {
   display: inline-flex;
@@ -299,6 +399,11 @@ a { color: inherit; text-decoration: none; }
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 14px;
 }
+.buy-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
 .quick-card {
   border-radius: 22px;
   padding: 18px;
@@ -312,6 +417,27 @@ a { color: inherit; text-decoration: none; }
   color: var(--text-dim);
   font-size: 0.92rem;
   line-height: 1.75;
+}
+.buy-card .status {
+  display: inline-flex;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: rgba(134,239,172,0.16);
+  color: var(--mint);
+}
+.buy-card strong {
+  margin-top: 14px;
+  font-size: 1.24rem;
+}
+.buy-card .price {
+  margin-top: 12px;
+  color: var(--accent-warm);
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
 }
 .footer {
   padding: 24px 0 52px;
@@ -332,15 +458,23 @@ a { color: inherit; text-decoration: none; }
 @media (max-width: 980px) {
   .hero-grid,
   .nav-grid,
-  .quick-grid {
+  .quick-grid,
+  .mini-grid,
+  .buy-grid {
     grid-template-columns: 1fr;
   }
   .hero-copy,
   .hero-side,
   .nav-card,
   .section-box,
-  .quick-card {
+  .quick-card,
+  .mini-card,
+  .roadmap-card,
+  .buy-card {
     border-radius: 24px;
+  }
+  .hero-proof {
+    grid-template-columns: 1fr;
   }
 }
 </style>
@@ -363,19 +497,33 @@ a { color: inherit; text-decoration: none; }
     <div class="container hero-grid">
       <div class="hero-copy">
         <div class="eyebrow">Tool Navigation</div>
-        <h1>使う人ごとに入口を分けた<br>よへラボの総合トップ</h1>
-        <p>フリーランス向けの仕事用ツール、これから増やす個人向けツール、事業者向けツール、無料プレビューの入口をここにまとめた。必要なカテゴリだけ開けばいい形にしてある。</p>
+        <h1>今すぐ使えるツールを<br>最短で選べるトップにした</h1>
+        <p>いま買えるのは、フリーランス向けの5本とまとめ買いセット。総合トップでは準備中のカテゴリを主役にせず、まず使えるものへすぐ入れる形に寄せてある。</p>
         <div class="cta-row">
-          <a class="btn-primary" href="./freelancer-tools.html">フリーランス向けを見る</a>
-          <a class="btn-secondary" href="#categories">カテゴリ一覧を見る</a>
+          <a class="btn-primary" href="./freelancer-tools.html">フリーランス向けストアへ</a>
+          <a class="btn-secondary" href="#buy-now">今すぐ買えるものを見る</a>
+        </div>
+        <div class="hero-proof">
+          <div class="proof-chip">
+            <strong>6導線</strong>
+            <span>単品5本とまとめ買い1本が、そのまま決済に進める。</span>
+          </div>
+          <div class="proof-chip">
+            <strong>無料確認</strong>
+            <span>無料デモと画面プレビューを先に見てから判断できる。</span>
+          </div>
+          <div class="proof-chip">
+            <strong>買い切り</strong>
+            <span>月額なし。インストールなし。ブラウザでそのまま使う。</span>
+          </div>
         </div>
       </div>
       <aside class="hero-side">
-        <h2>今の公開状況</h2>
+        <h2>いま見るべきページ</h2>
         <ul>
-          <li><strong>フリーランス向けストア:</strong> 公開中。手取り、法務、薬機、値付け、契約書の5本を並べている。</li>
-          <li><strong>本番決済:</strong> 単品5本も、5ツールセットもそのまま購入できる。</li>
-          <li><strong>無料確認:</strong> デモと画面プレビューはカテゴリをまたいで見に行ける。</li>
+          <li><strong>フリーランス向けストア:</strong> まずここ。比較、動画、価格、決済導線が全部まとまっている。</li>
+          <li><strong>無料デモ:</strong> 手取りシミュレーターはその場で触って判断できる。</li>
+          <li><strong>まとめ買い:</strong> 5ツールセットは単品合計より安く、そのまま決済に進める。</li>
         </ul>
       </aside>
     </div>
@@ -383,48 +531,66 @@ a { color: inherit; text-decoration: none; }
 
   <section class="section" id="categories">
     <div class="container">
-      <div class="section-title">Categories</div>
+      <div class="section-title">Live Category</div>
       <div class="nav-grid">
-        <article class="nav-card">
+        <article class="nav-card live-card">
           <div class="status live">Live Now</div>
           <h3>フリーランス向けツール</h3>
-          <p>見積もり、法務、広告表現、契約まわりで止まりやすい人向け。今ある主力ツールはここにまとめた。</p>
+          <p>見積もり、法務、広告表現、契約まわりで止まりやすい人向け。今売るべきものはここだから、総合トップでもここを主役にしてある。</p>
           <ul>
             <li>本番ストアは別ページに切り出し済み</li>
-            <li>無料デモと30秒動画つき</li>
+            <li>無料デモと30秒デモ動画つき</li>
             <li>単品5本と5ツールセットを本番決済済み</li>
           </ul>
-          <div class="card-actions">
+          <div class="live-actions">
             <a class="pill-link primary" href="./freelancer-tools.html">ストアへ進む</a>
+            <a class="pill-link" href="./go-contact-bundle.html">5ツールセットを購入</a>
             <a class="pill-link" href="./demo-preview.html">無料デモ</a>
           </div>
         </article>
-
-        <article class="nav-card">
-          <div class="status soon">Coming Soon</div>
-          <h3>個人向けツール</h3>
-          <p>家計、日常の判断、個人の作業整理みたいな、仕事以外にも使える小さめツールをここに増やしていく想定。</p>
-          <ul>
-            <li>生活整理や個人の判断補助向け</li>
-            <li>重い説明なしで使える軽いUI向け</li>
-            <li>今は入口だけ先に確保</li>
+        <div class="roadmap-card">
+          <div class="status soon">Roadmap</div>
+          <strong>準備中カテゴリは薄く置く</strong>
+          <p>個人向けと事業者向けは消したわけじゃない。ただ、まだ売ってないものを主役にしない方が強いから、ここでは予定だけ短く見せる。</p>
+          <ul class="roadmap-list">
+            <li><strong>個人向けツール</strong> 家計、日常の判断、個人の作業整理みたいな軽いツールを追加予定。</li>
+            <li><strong>事業者向けツール</strong> ECや店舗運営の実務補助ツールを別カテゴリで追加予定。</li>
           </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container section-box" id="buy-now">
+      <div class="section-title">Buy Now</div>
+      <h2>今すぐ買えるもの</h2>
+      <div class="buy-grid">
+        <article class="buy-card">
+          <div class="status">Bundle</div>
+          <strong>5ツールまとめてパック</strong>
+          <p>最短で整えるならこれ。見積もり、法務、薬機、値付け、契約を一気にそろえられる。</p>
+          <div class="price">¥4,980 / 通常合計 ¥13,400</div>
           <div class="card-actions">
-            <span class="pill-link">準備中</span>
+            <a class="pill-link primary" href="./go-contact-bundle.html">まとめて購入</a>
           </div>
         </article>
-
-        <article class="nav-card">
-          <div class="status soon">Coming Soon</div>
-          <h3>事業者向けツール</h3>
-          <p>EC、店舗、事業者向けの実務補助ツールを後から追加しやすいように、総合トップの中に別枠を用意した。</p>
-          <ul>
-            <li>運営者向けの実務導線を分離できる</li>
-            <li>将来の商品追加でもトップが崩れにくい</li>
-            <li>今はカテゴリ導線だけ先に配置</li>
-          </ul>
+        <article class="buy-card">
+          <div class="status">Store</div>
+          <strong>単品5本を比較して選ぶ</strong>
+          <p>動画、特徴、価格、無料デモの有無を見ながら、自分に必要な1本だけ選べる。</p>
+          <div class="price">単品 ¥1,480 から</div>
           <div class="card-actions">
-            <span class="pill-link">準備中</span>
+            <a class="pill-link primary" href="./freelancer-tools.html">ストアを見る</a>
+          </div>
+        </article>
+        <article class="buy-card">
+          <div class="status">Free Demo</div>
+          <strong>まずは無料で試す</strong>
+          <p>手取りシミュレーターは公開デモでその場で動かせる。触ってから買う判断ができる。</p>
+          <div class="price">無料</div>
+          <div class="card-actions">
+            <a class="pill-link primary" href="./demo-preview.html">無料デモへ</a>
           </div>
         </article>
       </div>
@@ -452,6 +618,28 @@ a { color: inherit; text-decoration: none; }
           <strong>値付けプレビュー</strong>
           <p>提案額の動き方だけ先に見て判断できる。</p>
         </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-title">Next Step</div>
+      <div class="mini-grid">
+        <article class="mini-card">
+          <strong>比較してから決めたいなら</strong>
+          <p>フリーランス向けストアで、5本の動画、用途、価格、無料確認の有無をまとめて見た方が早い。</p>
+          <div class="card-actions">
+            <a class="pill-link primary" href="./freelancer-tools.html">比較ページへ</a>
+          </div>
+        </article>
+        <article class="mini-card">
+          <strong>最短で全部そろえたいなら</strong>
+          <p>5ツールセットを選んだ方が、単品で迷うより早い。いまはそのまま決済に進める。</p>
+          <div class="card-actions">
+            <a class="pill-link primary" href="./go-contact-bundle.html">セットを購入</a>
+          </div>
+        </article>
       </div>
     </div>
   </section>
