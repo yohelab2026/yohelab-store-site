@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AI応募文アシスタント β版 | よへラボ</title>
-    <meta name="description" content="応募文の複数案・文体違い・再編集まで広げるβ版。無料版で骨組みが合った人向け。" />
+    <title>AI応募文アシスタント プロプラン | よへラボ</title>
+    <meta name="description" content="複数案・文体違い・再編集まで対応。フリーランスの応募文を、もう一段精度を上げるAIツール。月額980円。" />
     <meta name="robots" content="index,follow" />
     <meta name="theme-color" content="#0d6b58" />
     <link rel="canonical" href="https://yohelab.com/products/proposal-beta/" />
@@ -16,12 +16,17 @@
       .product-hero h1 { color: #fff; margin-bottom: 20px; }
       .product-hero h1 em { color: #4fd1b8; font-style: normal; }
       .product-hero .hero-sub { color: rgba(255,255,255,.75); }
-      .product-hero .hero-note { color: rgba(255,255,255,.5); margin-top: 20px; }
       .benefit-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
       .benefit-card { padding: 28px; border-radius: 16px; background: var(--white); border: 1px solid var(--border); }
       .benefit-icon { font-size: 28px; margin-bottom: 14px; }
       .benefit-card h3 { font-size: 17px; font-weight: 800; margin-bottom: 10px; }
       .benefit-card p { font-size: 15px; color: var(--muted); line-height: 1.75; }
+      .plan-box { max-width: 480px; margin: 0 auto 56px; background: var(--white); border: 2px solid var(--green); border-radius: 20px; padding: 36px; text-align: center; }
+      .plan-price { font-size: 52px; font-weight: 900; letter-spacing: -0.03em; color: var(--green); line-height: 1; }
+      .plan-price span { font-size: 20px; font-weight: 600; color: var(--muted); }
+      .plan-features { text-align: left; margin: 24px 0; display: grid; gap: 10px; }
+      .plan-features li { font-size: 15px; color: var(--text); display: flex; gap: 8px; align-items: flex-start; }
+      .plan-features li::before { content: "✓"; color: var(--green); font-weight: 800; flex-shrink: 0; }
       .apply-section { padding: 80px 0; background: var(--bg); }
       .apply-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; max-width: 900px; margin: 0 auto; }
       .apply-form { background: var(--white); border: 1px solid var(--border); border-radius: 20px; padding: 36px; }
@@ -50,9 +55,9 @@
         </a>
         <nav class="nav-links">
           <a href="/">トップ</a>
-          <a href="/apps/proposal/">無料版を試す</a>
+          <a href="/apps/proposal/">無料で試す</a>
           <a href="/contact/">問い合わせ</a>
-          <a class="btn btn-primary btn-sm" href="#apply">β版に申し込む</a>
+          <a class="btn btn-primary btn-sm" href="#apply">今すぐ申し込む</a>
         </nav>
       </div>
     </header>
@@ -61,22 +66,39 @@
 
       <section class="product-hero">
         <div class="container">
-          <p class="hero-eyebrow">AI応募文アシスタント β版</p>
+          <p class="hero-eyebrow">AI応募文アシスタント プロプラン</p>
           <h1>応募文を<em>1本で終わらせない</em>。<br>複数案から、一番使えるものを選ぶ。</h1>
-          <p class="hero-sub" style="max-width:520px;margin:0 auto 36px;">文体違い・複数案・再編集。無料版で骨組みが合った人が、応募文の精度をもう一段上げるためのβ版。</p>
+          <p class="hero-sub" style="max-width:520px;margin:0 auto 36px;">文体違い・複数案・再編集。無料版で手応えを感じた人が、応募文の精度をもう一段上げるためのプロプラン。</p>
           <div class="hero-actions">
-            <a class="btn btn-white btn-lg" href="#apply">β版に申し込む</a>
-            <a class="btn btn-lg" style="color:rgba(255,255,255,.8);border:1.5px solid rgba(255,255,255,.25);" href="/apps/proposal/">まず無料版を試す</a>
+            <a class="btn btn-white btn-lg" href="#apply">今すぐ申し込む</a>
+            <a class="btn btn-lg" style="color:rgba(255,255,255,.8);border:1.5px solid rgba(255,255,255,.25);" href="/apps/proposal/">まず無料で試す</a>
           </div>
-          <p class="hero-note">まず無料版で相性を確認してから申し込める・料金は申込み後に案内</p>
         </div>
       </section>
 
       <section class="section">
         <div class="container">
-          <p class="section-label">What you get</p>
-          <h2 class="section-title">β版で増えること</h2>
-          <p class="section-sub">無料版は1本の骨組みを確認するためのもの。β版は、出した下書きをそのまま精度を上げていくためのもの。</p>
+          <p class="section-label">Pricing</p>
+          <h2 class="section-title">シンプルな料金</h2>
+          <div class="plan-box">
+            <div class="plan-price">¥980<span> / 月</span></div>
+            <p style="color:var(--muted);font-size:14px;margin-top:8px;">初月無料・いつでも解約可</p>
+            <ul class="plan-features">
+              <li>応募文の複数案生成（毎回3パターン）</li>
+              <li>文体を案件ごとに出し分け</li>
+              <li>出た下書きをその場で再編集</li>
+              <li>生成回数の上限なし</li>
+              <li>新機能が追加されても料金変わらず</li>
+            </ul>
+            <a class="btn btn-primary" style="width:100%;height:52px;display:flex;align-items:center;justify-content:center;" href="#apply">プロプランに申し込む</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" style="background:var(--bg);padding:64px 0;">
+        <div class="container">
+          <p class="section-label">Features</p>
+          <h2 class="section-title">プロプランでできること</h2>
           <div class="benefit-grid">
             <div class="benefit-card">
               <div class="benefit-icon">📝</div>
@@ -101,21 +123,21 @@
         <div class="container">
           <div style="text-align:center;margin-bottom:48px;">
             <p class="section-label">Apply</p>
-            <h2 class="section-title">β版に申し込む</h2>
-            <p style="color:var(--muted);font-size:17px;">送信後、利用内容と料金をお返しします。内容を見てから進めるか決めてください。</p>
+            <h2 class="section-title">プロプランに申し込む</h2>
+            <p style="color:var(--muted);font-size:17px;">フォームを送信後、利用開始の案内をメールでお送りします。</p>
           </div>
           <div class="apply-wrap">
             <div class="apply-form">
               <h2>申し込みフォーム</h2>
-              <p class="sub">確定ではないので気軽にどうぞ。</p>
+              <p class="sub">初月無料・いつでも解約できます。</p>
               <div id="success-msg" class="success-msg">
                 <h3>受け取りました。ありがとうございます。</h3>
-                <p>内容を確認して、利用内容と料金をお返しします。</p>
+                <p>内容を確認して、利用開始の案内をメールでお送りします。</p>
               </div>
               <form class="form-stack" id="beta-form">
                 <label>お名前<input id="name" name="name" autocomplete="name" placeholder="山田 太郎" required /></label>
                 <label>返信先メール<input id="email" name="email" type="email" autocomplete="email" placeholder="example@email.com" required /></label>
-                <label>いちばん改善したいこと
+                <label>いちばん使いたい機能
                   <select id="focus" name="focus" required>
                     <option value="複数案の比較">複数案を比べて選びたい</option>
                     <option value="文体の出し分け">案件ごとに文体を変えたい</option>
@@ -124,8 +146,8 @@
                 </label>
                 <label>ひとこと（任意）<textarea id="message" name="message" placeholder="無料版を使ってみた感想など。"></textarea></label>
                 <input type="text" name="website" style="display:none;" tabindex="-1" autocomplete="off" />
-                <button class="btn btn-primary" style="width:100%;height:52px;" type="submit">β版に申し込む</button>
-                <p style="font-size:13px;color:var(--muted);text-align:center;">送信内容はβ版案内のみに使用します</p>
+                <button class="btn btn-primary" style="width:100%;height:52px;" type="submit">プロプランに申し込む</button>
+                <p style="font-size:13px;color:var(--muted);text-align:center;">送信内容はプラン案内のみに使用します</p>
               </form>
             </div>
             <div class="apply-info">
@@ -133,14 +155,18 @@
                 <h4>申し込み後の流れ</h4>
                 <ul>
                   <li>フォームを送る（今ここ）</li>
-                  <li>利用内容と料金をメールでお返しする</li>
-                  <li>内容を見て、進めるか決める</li>
-                  <li>問題なければそのまま使い始める</li>
+                  <li>利用開始の案内をメールでお送りする</li>
+                  <li>初月無料で使い始める</li>
+                  <li>継続する場合は翌月から月額980円</li>
                 </ul>
               </div>
               <div class="info-block">
-                <h4>申し込む前の確認</h4>
-                <p>まだ無料版を試していないなら、先に<a href="/apps/proposal/" style="color:var(--green);font-weight:700;">無料版</a>で骨組みの出方を確認してから判断するのがおすすめです。</p>
+                <h4>まだ試してない方へ</h4>
+                <p>まず<a href="/apps/proposal/" style="color:var(--green);font-weight:700;">無料版</a>で応募文の出方を確認してから申し込むのがおすすめです。</p>
+              </div>
+              <div class="info-block">
+                <h4>よくある質問</h4>
+                <p><strong>いつでも解約できますか？</strong><br>はい、メール1本で解約できます。違約金などはありません。</p>
               </div>
             </div>
           </div>
@@ -151,17 +177,17 @@
 
     <div class="sticky-cta">
       <div class="sticky-cta-inner">
-        <a class="btn btn-primary" href="#apply">β版に申し込む</a>
-        <a class="btn btn-outline" href="/apps/proposal/">まず無料版を試す</a>
+        <a class="btn btn-primary" href="#apply">プロプランに申し込む</a>
+        <a class="btn btn-outline" href="/apps/proposal/">まず無料で試す</a>
       </div>
     </div>
 
     <footer class="footer">
       <div class="footer-inner">
-        <div>© よへラボ / AI応募文アシスタント β版</div>
+        <div>© よへラボ / AI応募文アシスタント</div>
         <div class="footer-links">
           <a href="/">トップ</a>
-          <a href="/apps/proposal/">無料版</a>
+          <a href="/apps/proposal/">無料で試す</a>
           <a href="/contact/">問い合わせ</a>
           <a href="/legal/privacy/">プライバシーポリシー</a>
         </div>
@@ -178,12 +204,12 @@
         if (honeypot && honeypot.value.trim()) return;
         const btn = form.querySelector("button[type=submit]");
         btn.disabled = true; btn.textContent = "送信中...";
-        const payload = { tool: "AI応募文アシスタント β版", name: document.getElementById("name").value.trim(), email: document.getElementById("email").value.trim(), focus: document.getElementById("focus").value, message: document.getElementById("message").value.trim() || "なし", _subject: "よへラボ 応募文β版申込み", _template: "table", _captcha: "false" };
+        const payload = { tool: "AI応募文アシスタント プロプラン", name: document.getElementById("name").value.trim(), email: document.getElementById("email").value.trim(), focus: document.getElementById("focus").value, message: document.getElementById("message").value.trim() || "なし", _subject: "よへラボ 応募文プロプラン申込み", _template: "table", _captcha: "false" };
         try {
           const res = await fetch(`https://formsubmit.co/ajax/${endpoint.join("@")}`, { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify(payload) });
           if (!res.ok) throw new Error();
           form.style.display = "none"; successMsg.style.display = "block";
-        } catch { alert("送信できませんでした。時間を置いてもう一度お試しください。"); btn.disabled = false; btn.textContent = "β版に申し込む"; }
+        } catch { alert("送信できませんでした。時間を置いてもう一度お試しください。"); btn.disabled = false; btn.textContent = "プロプランに申し込む"; }
       });
     </script>
   </body>
