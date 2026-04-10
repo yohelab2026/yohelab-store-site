@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chrome拡張 Labs | よへラボ</title>
+    <link rel="icon" type="image/png" href="../../yohelab-icon.png" />
+    <link rel="stylesheet" href="../../shared/site.css" />
+  </head>
+  <body>
+    <header class="shell topbar">
+      <a class="brand" href="../../index.html">
+        <img src="../../yohelab-icon.png" alt="よへラボのアイコン" />
+        <span>よへラボ</span>
+      </a>
+      <nav class="mini-nav">
+        <a href="../../index.html">トップへ戻る</a>
+        <a href="../wordpress/index.html">WordPressプラグイン Labs</a>
+      </nav>
+    </header>
+    <main class="shell">
+      <section class="hero">
+        <div class="eyebrow">Labs</div>
+        <h1>Chrome拡張のひな形をすぐ出す。</h1>
+        <p class="lead">拡張名と何を減らしたいかを入れると、manifest.json と content script の叩き台を返す。</p>
+      </section>
+      <section class="grid">
+        <form class="panel stack" id="chrome-form">
+          <h2>拡張情報</h2>
+          <label>拡張名<input id="ext-name" value="yohe-review-helper" /></label>
+          <label>何を減らしたいか<textarea id="ext-goal">Googleビジネスプロフィール上で、口コミ返信の下書きを横に出したい。</textarea></label>
+          <label>対象サイト<input id="match" value="https://business.google.com/*" /></label>
+          <button class="button primary" type="submit">叩き台を作る</button>
+        </form>
+        <div class="results">
+          <article class="result-card">
+            <h3>manifest.json</h3>
+            <div class="code-box" id="manifest-output"></div>
+          </article>
+          <article class="result-card">
+            <h3>content.js</h3>
+            <div class="code-box" id="script-output"></div>
+          </article>
+        </div>
+      </section>
+    </main>
+    <footer class="shell footer">よへラボ / Chrome拡張 Labs</footer>
+    <script>
+      function renderExtension() {
+        const name = document.getElementById("ext-name").value.trim();
+        const goal = document.getElementById("ext-goal").value.trim();
+        const match = document.getElementById("match").value.trim();
+        document.getElementById("manifest-output").textContent = `{\n  "manifest_version": 3,\n  "name": "${name}",\n  "version": "0.1.0",\n  "description": "${goal}",\n  "content_scripts": [\n    {\n      "matches": ["${match}"],\n      "js": ["content.js"]\n    }\n  ]\n}`;
+        document.getElementById("script-output").textContent = `const panel = document.createElement('div');\npanel.textContent = '返信の下書きをここに出す';\npanel.style.position = 'fixed';\npanel.style.right = '24px';\npanel.style.bottom = '24px';\npanel.style.padding = '16px';\npanel.style.background = '#fffaf2';\npanel.style.border = '1px solid rgba(31,23,17,0.12)';\npanel.style.zIndex = '99999';\ndocument.body.appendChild(panel);`;
+      }
+      document.getElementById("chrome-form").addEventListener("submit", (event) => {
+        event.preventDefault();
+        renderExtension();
+      });
+      renderExtension();
+    </script>
+  </body>
+</html>

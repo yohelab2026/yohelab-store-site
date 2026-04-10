@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AIOミニ診断 | よへラボ</title>
+    <link rel="icon" type="image/png" href="../../yohelab-icon.png" />
+    <link rel="stylesheet" href="../../shared/site.css" />
+  </head>
+  <body>
+    <header class="shell topbar">
+      <a class="brand" href="../../index.html">
+        <img src="../../yohelab-icon.png" alt="よへラボのアイコン" />
+        <span>よへラボ</span>
+      </a>
+      <nav class="mini-nav">
+        <a href="../../index.html">トップへ戻る</a>
+        <a href="../ec-copy/index.html">EC商品説明</a>
+      </nav>
+    </header>
+    <main class="shell">
+      <section class="hero">
+        <div class="eyebrow">見つけられやすさを整える</div>
+        <h1>自分のページが拾われやすいかを見る。</h1>
+        <p class="lead">URLと内容の情報を入れると、FAQ、比較、実例、プロフィールの足りなさをざっくり診断する。</p>
+      </section>
+      <section class="grid">
+        <form class="panel stack" id="aio-form">
+          <h2>ページ情報を入れる</h2>
+          <label>ページURL<input id="url" value="https://example.com/my-service" /></label>
+          <label>何を売っているか<textarea id="summary">個人向けに応募文や発信を助けるツールをまとめている。</textarea></label>
+          <div class="row">
+            <label>FAQがある
+              <select id="faq">
+                <option value="1">ある</option>
+                <option value="0">ない</option>
+              </select>
+            </label>
+            <label>比較表がある
+              <select id="compare">
+                <option value="0">ない</option>
+                <option value="1">ある</option>
+              </select>
+            </label>
+          </div>
+          <div class="row">
+            <label>実例や数字がある
+              <select id="proof">
+                <option value="0">ない</option>
+                <option value="1">少しある</option>
+                <option value="2">十分ある</option>
+              </select>
+            </label>
+            <label>プロフィールが明確
+              <select id="profile">
+                <option value="1">明確</option>
+                <option value="0">弱い</option>
+              </select>
+            </label>
+          </div>
+          <button class="button primary" type="submit">診断する</button>
+        </form>
+        <div class="results">
+          <article class="result-card">
+            <h3>診断結果</h3>
+            <div class="score" id="score"></div>
+            <p class="muted" id="summary-output"></p>
+          </article>
+          <article class="result-card">
+            <h3>改善ポイント</h3>
+            <div class="output-box" id="advice-output"></div>
+          </article>
+        </div>
+      </section>
+    </main>
+    <footer class="shell footer">よへラボ / AIOミニ診断</footer>
+    <script>
+      function renderAIO() {
+        const faq = Number(document.getElementById("faq").value);
+        const compare = Number(document.getElementById("compare").value);
+        const proof = Number(document.getElementById("proof").value);
+        const profile = Number(document.getElementById("profile").value);
+        const url = document.getElementById("url").value.trim();
+        const summary = document.getElementById("summary").value.trim();
+        const score = 42 + faq * 16 + compare * 16 + proof * 13 + profile * 13;
+        const scoreEl = document.getElementById("score");
+        scoreEl.textContent = `${score} / 100`;
+        scoreEl.className = `score ${score >= 75 ? "good" : "warn"}`;
+        document.getElementById("summary-output").textContent = `${url} をもとに、FAQ・比較・実例・プロフィールの4点から見た簡易診断。${summary}`;
+        const advice = [];
+        if (!faq) advice.push("FAQがない。購入前によく出る質問を3〜5個だけでも入れると、意図が拾われやすくなる。");
+        if (!compare) advice.push("比較表がない。誰向けか、何が違うか、何を先に始めるべきかを並べると理解されやすい。");
+        if (!proof) advice.push("実例や数字が弱い。使う前後、作業時間、件数、変化などを短く入れると強い。");
+        if (!profile) advice.push("プロフィールが弱い。誰が作っているか、どんな人向けか、なぜ作ったかを明確にする。");
+        if (!advice.length) advice.push("大きな穴は少ない。次は見出しの分かりやすさと事例の増やし方を詰める段階。");
+        document.getElementById("advice-output").textContent = advice.join("\n\n");
+      }
+      document.getElementById("aio-form").addEventListener("submit", (event) => {
+        event.preventDefault();
+        renderAIO();
+      });
+      renderAIO();
+    </script>
+  </body>
+</html>
