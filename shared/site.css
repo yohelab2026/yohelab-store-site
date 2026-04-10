@@ -448,6 +448,20 @@ tr:last-child td {
   font-size: 16px;
 }
 
+.contact-grid {
+  align-items: start;
+}
+
+.success-box {
+  border-color: rgba(31, 122, 83, 0.2);
+  background: rgba(232, 249, 240, 0.86);
+}
+
+.hidden-field {
+  position: absolute;
+  left: -9999px;
+}
+
 @media (max-width: 980px) {
   .grid,
   .row,
