@@ -1,660 +1,481 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>よへラボ | 今すぐ使えるツールの総合トップ</title>
-<meta name="description" content="今すぐ使えるフリーランス向けツールと無料プレビューを最短で選べる、よへラボの総合トップ。">
-<meta name="robots" content="index,follow,max-image-preview:large">
-<link rel="canonical" href="https://yohelab.pages.dev/">
-<meta property="og:type" content="website">
-<meta property="og:title" content="よへラボ | 今すぐ使えるツールの総合トップ">
-<meta property="og:description" content="フリーランス向けツールと無料プレビューを最短で選べる、よへラボの総合トップ。">
-<meta property="og:url" content="https://yohelab.pages.dev/">
-<meta property="og:image" content="https://yohelab.pages.dev/og-card.svg">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="よへラボ | 今すぐ使えるツールの総合トップ">
-<meta name="twitter:description" content="フリーランス向けツールと無料プレビューを最短で選べる、よへラボの総合トップ。">
-<meta name="twitter:image" content="https://yohelab.pages.dev/og-card.svg">
-<link rel="icon" type="image/png" href="./yohelab-icon.png">
-<link rel="apple-touch-icon" href="./yohelab-icon.png">
-<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Zen+Maru+Gothic:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "Organization",
-      "@id": "https://yohelab.pages.dev/#organization",
-      "name": "よへラボ",
-      "url": "https://yohelab.pages.dev/",
-      "logo": "https://yohelab.pages.dev/yohelab-icon.png",
-      "email": "mailto:yohelab2026@gmail.com",
-      "sameAs": ["https://x.com/yohelab"]
-    },
-    {
-      "@type": "WebSite",
-      "@id": "https://yohelab.pages.dev/#website",
-      "url": "https://yohelab.pages.dev/",
-      "name": "よへラボ",
-      "inLanguage": "ja",
-      "publisher": {
-        "@id": "https://yohelab.pages.dev/#organization"
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>yohelab | ひとりで稼ぐ人のための実務ツール</title>
+    <meta
+      name="description"
+      content="yohelabは、ひとりで稼ぐ人のための実務ツールブランド。まずは今日応募すべき案件が届く案件レーダーβから始める。"
+    />
+    <meta property="og:title" content="yohelab | ひとりで稼ぐ人のための実務ツール" />
+    <meta
+      property="og:description"
+      content="今日応募すべき案件が届く。yohelabの案件レーダーβを中心に、応募文・発信・販売を助けるツールをまとめる。"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://yohelab.com/" />
+    <link rel="icon" type="image/png" href="./yohelab-icon.png" />
+    <style>
+      :root {
+        --bg: #f4efe6;
+        --bg-alt: #fffaf2;
+        --text: #1f1711;
+        --muted: #6d5a4b;
+        --line: rgba(31, 23, 17, 0.12);
+        --card: rgba(255, 250, 242, 0.72);
+        --accent: #ca5f34;
+        --accent-strong: #a84620;
+        --accent-soft: rgba(202, 95, 52, 0.12);
+        --shadow: 0 24px 70px rgba(69, 39, 24, 0.12);
       }
-    },
-    {
-      "@type": "CollectionPage",
-      "@id": "https://yohelab.pages.dev/#portal",
-      "url": "https://yohelab.pages.dev/",
-      "name": "よへラボ 総合トップ",
-      "description": "今すぐ使えるツールと無料プレビューを最短で選べる総合トップページ。",
-      "isPartOf": {
-        "@id": "https://yohelab.pages.dev/#website"
+
+      * {
+        box-sizing: border-box;
       }
-    }
-  ]
-}
-</script>
-<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "64ce14b187484759bd4c5c5acc72e361"}'></script>
-<style>
-:root {
-  --bg: #08111a;
-  --surface: rgba(11, 18, 28, 0.78);
-  --surface-strong: #0f1b2a;
-  --border: rgba(147, 197, 253, 0.18);
-  --text: #ecf3ff;
-  --text-dim: #9fb4cb;
-  --accent: #7dd3fc;
-  --accent-strong: #38bdf8;
-  --accent-warm: #fbbf24;
-  --mint: #86efac;
-  --danger: #fb7185;
-  --font-display: 'Zen Maru Gothic', sans-serif;
-  --font-body: 'Zen Kaku Gothic New', sans-serif;
-  --font-mono: 'IBM Plex Mono', monospace;
-}
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body {
-  font-family: var(--font-body);
-  color: var(--text);
-  background:
-    radial-gradient(circle at top left, rgba(56,189,248,0.16), transparent 36%),
-    radial-gradient(circle at 85% 15%, rgba(134,239,172,0.14), transparent 26%),
-    linear-gradient(180deg, #061018 0%, #0a111b 50%, #08111a 100%);
-  min-height: 100vh;
-}
-a { color: inherit; text-decoration: none; }
-.container { width: min(1120px, calc(100% - 40px)); margin: 0 auto; }
-.site-header { padding: 28px 0 10px; }
-.brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 14px;
-  padding: 12px 18px 12px 12px;
-  border-radius: 999px;
-  border: 1px solid var(--border);
-  background: rgba(6, 16, 24, 0.78);
-  box-shadow: 0 22px 60px rgba(0,0,0,0.28);
-}
-.brand img {
-  width: 54px;
-  height: 54px;
-  object-fit: cover;
-  border-radius: 18px;
-}
-.brand-name {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-.brand-name strong {
-  font-family: var(--font-display);
-  font-size: 1.2rem;
-  letter-spacing: 0.08em;
-}
-.brand-name span {
-  color: var(--text-dim);
-  font-size: 0.82rem;
-  letter-spacing: 0.14em;
-}
-.hero {
-  padding: 46px 0 72px;
-}
-.eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 7px 14px;
-  border-radius: 999px;
-  border: 1px solid rgba(125,211,252,0.26);
-  background: rgba(9, 25, 39, 0.74);
-  color: var(--accent);
-  font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-.eyebrow::before {
-  content: "";
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--mint);
-}
-.hero-grid {
-  margin-top: 28px;
-  display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
-  gap: 22px;
-}
-.hero-copy {
-  position: relative;
-  overflow: hidden;
-}
-.hero-copy::after {
-  content: "";
-  position: absolute;
-  right: -80px;
-  bottom: -80px;
-  width: 260px;
-  height: 260px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(125,211,252,0.18) 0%, transparent 72%);
-  pointer-events: none;
-}
-.hero-copy,
-.hero-side,
-.section-box,
-.nav-card,
-.quick-card,
-.mini-card,
-.roadmap-card,
-.buy-card {
-  border: 1px solid var(--border);
-  background: var(--surface);
-  backdrop-filter: blur(16px);
-  box-shadow: 0 28px 70px rgba(0,0,0,0.24);
-}
-.hero-copy,
-.hero-side,
-.section-box {
-  border-radius: 30px;
-  padding: 28px;
-}
-.hero h1 {
-  margin-top: 18px;
-  font-family: var(--font-display);
-  font-size: clamp(2.4rem, 5vw, 4.2rem);
-  line-height: 1.22;
-}
-.hero p {
-  margin-top: 18px;
-  color: var(--text-dim);
-  font-size: 1rem;
-  line-height: 1.9;
-}
-.cta-row {
-  margin-top: 26px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-.btn-primary,
-.btn-secondary,
-.pill-link {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  border-radius: 14px;
-  font-weight: 700;
-}
-.btn-primary {
-  padding: 15px 24px;
-  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-strong) 100%);
-  color: #04111a;
-}
-.btn-secondary {
-  padding: 15px 24px;
-  border: 1px solid rgba(159,180,203,0.26);
-  color: var(--text);
-}
-.hero-side h2,
-.section-box h2 {
-  font-family: var(--font-display);
-  font-size: 1.12rem;
-}
-.hero-side ul {
-  list-style: none;
-  display: grid;
-  gap: 14px;
-  margin-top: 18px;
-}
-.hero-side li {
-  color: var(--text-dim);
-  line-height: 1.8;
-  font-size: 0.96rem;
-}
-.hero-side strong { color: var(--text); }
-.hero-proof {
-  margin-top: 22px;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
-}
-.proof-chip {
-  padding: 14px;
-  border-radius: 18px;
-  border: 1px solid rgba(159,180,203,0.18);
-  background: rgba(8, 18, 30, 0.66);
-}
-.proof-chip strong {
-  display: block;
-  font-family: var(--font-display);
-  font-size: 1.15rem;
-}
-.proof-chip span {
-  display: block;
-  margin-top: 6px;
-  color: var(--text-dim);
-  font-size: 0.83rem;
-  line-height: 1.6;
-}
-.section {
-  padding-bottom: 56px;
-}
-.section-title {
-  margin-bottom: 16px;
-  color: var(--accent);
-  font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
-.nav-grid,
-.mini-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px;
-}
-.nav-card {
-  border-radius: 28px;
-  padding: 24px;
-}
-.nav-card.live-card {
-  display: grid;
-  gap: 18px;
-}
-.live-card .live-actions,
-.mini-card .card-actions,
-.buy-card .card-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-.mini-grid,
-.buy-grid {
-  margin-top: 18px;
-}
-.mini-card,
-.roadmap-card,
-.buy-card {
-  border-radius: 24px;
-  padding: 22px;
-}
-.mini-card strong,
-.roadmap-card strong,
-.buy-card strong {
-  display: block;
-  font-family: var(--font-display);
-}
-.mini-card strong,
-.roadmap-card strong {
-  font-size: 1.1rem;
-}
-.mini-card p,
-.roadmap-card p,
-.buy-card p {
-  margin-top: 10px;
-  color: var(--text-dim);
-  line-height: 1.8;
-  font-size: 0.94rem;
-}
-.roadmap-list {
-  list-style: none;
-  display: grid;
-  gap: 12px;
-  margin-top: 16px;
-}
-.roadmap-list li {
-  padding: 12px 14px;
-  border-radius: 16px;
-  background: rgba(9, 25, 39, 0.62);
-  color: var(--text-dim);
-  line-height: 1.75;
-}
-.roadmap-list strong {
-  display: inline;
-  font-size: 0.98rem;
-  color: var(--text);
-}
-.nav-card .status {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 12px;
-  border-radius: 999px;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  margin-bottom: 16px;
-}
-.status.live { background: rgba(134,239,172,0.16); color: var(--mint); }
-.status.soon { background: rgba(251,191,36,0.16); color: var(--accent-warm); }
-.status.free { background: rgba(125,211,252,0.16); color: var(--accent); }
-.nav-card h3 {
-  font-family: var(--font-display);
-  font-size: 1.4rem;
-  line-height: 1.45;
-}
-.nav-card p {
-  margin-top: 12px;
-  color: var(--text-dim);
-  line-height: 1.85;
-  min-height: 108px;
-}
-.nav-card ul {
-  list-style: none;
-  margin-top: 16px;
-  display: grid;
-  gap: 10px;
-  color: var(--text-dim);
-  font-size: 0.94rem;
-}
-.nav-card li::before {
-  content: "•";
-  margin-right: 8px;
-  color: var(--accent);
-}
-.nav-card .card-actions {
-  margin-top: 20px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-.pill-link {
-  padding: 12px 18px;
-  border: 1px solid rgba(159,180,203,0.24);
-}
-.pill-link.primary {
-  background: rgba(125,211,252,0.14);
-  border-color: rgba(125,211,252,0.22);
-}
-.quick-grid {
-  margin-top: 18px;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 14px;
-}
-.buy-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
-}
-.quick-card {
-  border-radius: 22px;
-  padding: 18px;
-}
-.quick-card strong {
-  display: block;
-  font-family: var(--font-display);
-  margin-bottom: 8px;
-}
-.quick-card p {
-  color: var(--text-dim);
-  font-size: 0.92rem;
-  line-height: 1.75;
-}
-.buy-card .status {
-  display: inline-flex;
-  padding: 6px 12px;
-  border-radius: 999px;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  background: rgba(134,239,172,0.16);
-  color: var(--mint);
-}
-.buy-card strong {
-  margin-top: 14px;
-  font-size: 1.24rem;
-}
-.buy-card .price {
-  margin-top: 12px;
-  color: var(--accent-warm);
-  font-family: var(--font-mono);
-  font-size: 0.9rem;
-}
-.footer {
-  padding: 24px 0 52px;
-}
-.footer-bar {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 12px;
-  color: var(--text-dim);
-  font-size: 0.92rem;
-}
-.footer-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-}
-@media (max-width: 980px) {
-  .hero-grid,
-  .nav-grid,
-  .quick-grid,
-  .mini-grid,
-  .buy-grid {
-    grid-template-columns: 1fr;
-  }
-  .hero-copy,
-  .hero-side,
-  .nav-card,
-  .section-box,
-  .quick-card,
-  .mini-card,
-  .roadmap-card,
-  .buy-card {
-    border-radius: 24px;
-  }
-  .hero-proof {
-    grid-template-columns: 1fr;
-  }
-}
-</style>
-</head>
-<body>
-<header class="site-header">
-  <div class="container">
-    <a class="brand" href="./index.html" aria-label="よへラボの総合トップ">
-      <img src="./yohelab-icon.png" alt="よへラボ アイコン">
-      <div class="brand-name">
-        <strong>よへラボ</strong>
-        <span>TOOL PORTAL</span>
-      </div>
-    </a>
-  </div>
-</header>
+      html {
+        scroll-behavior: smooth;
+      }
 
-<main>
-  <section class="hero">
-    <div class="container hero-grid">
-      <div class="hero-copy">
-        <div class="eyebrow">Tool Navigation</div>
-        <h1>今すぐ使えるツールを<br>最短で選べるトップにした</h1>
-        <p>いま買えるのは、フリーランス向けの5本とまとめ買いセット。総合トップでは準備中のカテゴリを主役にせず、まず使えるものへすぐ入れる形に寄せてある。</p>
-        <div class="cta-row">
-          <a class="btn-primary" href="./freelancer-tools.html">フリーランス向けストアへ</a>
-          <a class="btn-secondary" href="#buy-now">今すぐ買えるものを見る</a>
+      body {
+        margin: 0;
+        font-family: "Hiragino Sans", "Yu Gothic", "Noto Sans JP", sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(circle at top left, rgba(202, 95, 52, 0.18), transparent 28%),
+          linear-gradient(180deg, #f9f3ea 0%, #f4efe6 38%, #efe7da 100%);
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      img {
+        display: block;
+        max-width: 100%;
+      }
+
+      .shell {
+        width: min(1120px, calc(100% - 32px));
+        margin: 0 auto;
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 20px 0 14px;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+      }
+
+      .brand img {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(31, 23, 17, 0.16);
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 18px;
+        flex-wrap: wrap;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .hero {
+        padding: 34px 0 28px;
+      }
+
+      .hero-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+        gap: 28px;
+        align-items: stretch;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 14px;
+        border-radius: 999px;
+        background: rgba(255, 250, 242, 0.7);
+        border: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 13px;
+        letter-spacing: 0.02em;
+      }
+
+      h1 {
+        margin: 18px 0 18px;
+        font-size: clamp(40px, 7vw, 78px);
+        line-height: 0.95;
+        letter-spacing: -0.04em;
+      }
+
+      .hero-lead {
+        max-width: 680px;
+        color: var(--muted);
+        font-size: 18px;
+        line-height: 1.8;
+      }
+
+      .hero-actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: 26px;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 52px;
+        padding: 0 22px;
+        border-radius: 999px;
+        border: 1px solid transparent;
+        font-weight: 700;
+        transition:
+          transform 0.18s ease,
+          background-color 0.18s ease,
+          border-color 0.18s ease;
+      }
+
+      .button:hover {
+        transform: translateY(-1px);
+      }
+
+      .button.primary {
+        color: #fffaf2;
+        background: linear-gradient(135deg, var(--accent) 0%, var(--accent-strong) 100%);
+        box-shadow: 0 18px 40px rgba(168, 70, 32, 0.28);
+      }
+
+      .button.secondary {
+        border-color: var(--line);
+        background: rgba(255, 250, 242, 0.68);
+      }
+
+      .panel {
+        height: 100%;
+        padding: 26px;
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        background: var(--card);
+        backdrop-filter: blur(10px);
+        box-shadow: var(--shadow);
+      }
+
+      .panel h2,
+      .section h2 {
+        margin: 0 0 10px;
+        font-size: clamp(28px, 4vw, 42px);
+        line-height: 1.08;
+        letter-spacing: -0.03em;
+      }
+
+      .panel p,
+      .section p,
+      .card p {
+        color: var(--muted);
+        line-height: 1.8;
+      }
+
+      .metric-list,
+      .bullet-list {
+        display: grid;
+        gap: 12px;
+        padding: 0;
+        margin: 22px 0 0;
+        list-style: none;
+      }
+
+      .metric-list li,
+      .bullet-list li {
+        padding: 14px 16px;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.58);
+        border: 1px solid rgba(31, 23, 17, 0.08);
+      }
+
+      .metric-label {
+        color: var(--muted);
+        font-size: 13px;
+        margin-bottom: 6px;
+      }
+
+      .metric-value {
+        font-size: 19px;
+        font-weight: 700;
+      }
+
+      .section {
+        padding: 42px 0 0;
+      }
+
+      .section-head {
+        max-width: 760px;
+        margin-bottom: 22px;
+      }
+
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .card {
+        padding: 22px;
+        border-radius: 24px;
+        border: 1px solid var(--line);
+        background: rgba(255, 250, 242, 0.72);
+        box-shadow: 0 18px 46px rgba(69, 39, 24, 0.08);
+      }
+
+      .tag {
+        display: inline-flex;
+        margin-bottom: 14px;
+        padding: 7px 12px;
+        border-radius: 999px;
+        background: var(--accent-soft);
+        color: var(--accent-strong);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+      }
+
+      .card h3 {
+        margin: 0 0 10px;
+        font-size: 22px;
+        line-height: 1.2;
+      }
+
+      .card strong {
+        display: block;
+        margin-top: 16px;
+        font-size: 14px;
+      }
+
+      .labs {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .footer {
+        padding: 56px 0 70px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      @media (max-width: 920px) {
+        .hero-grid,
+        .cards,
+        .labs {
+          grid-template-columns: 1fr;
+        }
+
+        .nav {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+      }
+
+      @media (max-width: 640px) {
+        body {
+          background:
+            radial-gradient(circle at top left, rgba(202, 95, 52, 0.16), transparent 26%),
+            linear-gradient(180deg, #fbf6ee 0%, #f5eee4 45%, #eee3d3 100%);
+        }
+
+        .shell {
+          width: min(100% - 24px, 1120px);
+        }
+
+        .panel,
+        .card {
+          padding: 20px;
+          border-radius: 22px;
+        }
+
+        h1 {
+          line-height: 1.02;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="shell nav">
+      <a class="brand" href="/">
+        <img src="./yohelab-icon.png" alt="yohelab icon" />
+        <span>yohelab</span>
+      </a>
+      <nav class="nav-links">
+        <a href="#radar">案件レーダーβ</a>
+        <a href="#tools">関連ツール</a>
+        <a href="#labs">Labs</a>
+      </nav>
+    </header>
+
+    <main class="shell">
+      <section class="hero">
+        <div class="hero-grid">
+          <div>
+            <div class="eyebrow">ひとりで稼ぐ人のための実務ツール</div>
+            <h1>今日応募すべき案件が届く。</h1>
+            <p class="hero-lead">
+              yohelabは、案件を探す、応募文を書く、発信する、売るまでを少しずつラクにするための道具をまとめる。
+              まずは、条件に合う案件だけを毎日絞って届ける案件レーダーβから始める。
+            </p>
+            <div class="hero-actions">
+              <a class="button primary" href="mailto:hello@yohelab.com?subject=%E6%A1%88%E4%BB%B6%E3%83%AC%E3%83%BC%E3%83%80%E3%83%BC%CE%B2%E3%81%AE%E5%85%88%E8%A1%8C%E6%A1%88%E5%86%85%E3%82%92%E5%B8%8C%E6%9C%9B">β版をみる</a>
+              <a class="button secondary" href="#radar">今わかっていること</a>
+            </div>
+          </div>
+
+          <aside class="panel" id="radar">
+            <h2>案件レーダーβ</h2>
+            <p>
+              条件に合う案件だけを絞り、応募しやすい順に並べて、提案文の下書きまで返す。
+              最初は小さく始めて、反応が出た部分から自動化を広げる。
+            </p>
+            <ul class="metric-list">
+              <li>
+                <div class="metric-label">価値</div>
+                <div class="metric-value">今日応募すべき案件が届く</div>
+              </li>
+              <li>
+                <div class="metric-label">はじめ方</div>
+                <div class="metric-value">最初はβ版の月額で先行案内</div>
+              </li>
+              <li>
+                <div class="metric-label">関連する動き</div>
+                <div class="metric-value">応募文の下書きと発信補助をあとから足せる</div>
+              </li>
+            </ul>
+          </aside>
         </div>
-        <div class="hero-proof">
-          <div class="proof-chip">
-            <strong>6導線</strong>
-            <span>単品5本とまとめ買い1本が、そのまま決済に進める。</span>
-          </div>
-          <div class="proof-chip">
-            <strong>無料確認</strong>
-            <span>無料デモと画面プレビューを先に見てから判断できる。</span>
-          </div>
-          <div class="proof-chip">
-            <strong>買い切り</strong>
-            <span>月額なし。インストールなし。ブラウザでそのまま使う。</span>
-          </div>
+      </section>
+
+      <section class="section" id="tools">
+        <div class="section-head">
+          <h2>関連ツール</h2>
+          <p>
+            いきなり全部を同列で売らず、案件レーダーの周りに自然につながるものだけ置く。
+            今のyohelabは、主役1本とその周辺から組み直す。
+          </p>
         </div>
-      </div>
-      <aside class="hero-side">
-        <h2>いま見るべきページ</h2>
-        <ul>
-          <li><strong>フリーランス向けストア:</strong> まずここ。比較、動画、価格、決済導線が全部まとまっている。</li>
-          <li><strong>無料デモ:</strong> 手取りシミュレーターはその場で触って判断できる。</li>
-          <li><strong>まとめ買い:</strong> 5ツールセットは単品合計より安く、そのまま決済に進める。</li>
+
+        <div class="cards">
+          <article class="card">
+            <div class="tag">関連</div>
+            <h3>提案文・応募文ジェネレーター</h3>
+            <p>
+              案件内容を入れると、応募文の叩き台を返す。案件レーダーの次に一番つながりやすい補助ツール。
+            </p>
+            <strong>役割: 応募の手間を減らす</strong>
+          </article>
+
+          <article class="card">
+            <div class="tag">関連</div>
+            <h3>X返信・投稿補助</h3>
+            <p>
+              発信のネタ切れを防ぎ、返信文や短い投稿文を整える。Xで売る時に、そのままデモにも使える。
+            </p>
+            <strong>役割: 集客と発信を回しやすくする</strong>
+          </article>
+
+          <article class="card">
+            <div class="tag">追加</div>
+            <h3>EC商品説明・Q&amp;A整備</h3>
+            <p>
+              BASEやSTORESのような小さなショップ向けに、商品説明や問い合わせ文面を整える。個人販売向きの軽い実務ツール。
+            </p>
+            <strong>役割: 売るための文章を早く作る</strong>
+          </article>
+
+          <article class="card">
+            <div class="tag">追加</div>
+            <h3>AIOミニ診断</h3>
+            <p>
+              note、ブログ、ポートフォリオ、自分のサイトがAI検索で拾われやすいかを見るための軽い診断。
+            </p>
+            <strong>役割: 見つけられやすさを整える</strong>
+          </article>
+
+          <article class="card">
+            <div class="tag">方針</div>
+            <h3>売り方は絞る</h3>
+            <p>
+              最初は案件レーダーだけを前に出し、他は関連ツールとして置く。商品数ではなく、看板の強さで勝負する。
+            </p>
+            <strong>役割: 何のサイトかを迷わせない</strong>
+          </article>
+
+          <article class="card">
+            <div class="tag">価格感</div>
+            <h3>最初はβ価格で小さく始める</h3>
+            <p>
+              案件レーダーは月額βで先行案内。関連ツールは買い切りで始めて、使われたものだけあとで深くする。
+            </p>
+            <strong>役割: 最初の課金実績を作る</strong>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2>yohelabの考え方</h2>
+          <p>
+            ブラウザでそのまま使えることを中心にしつつ、必要なら自動化や拡張もあとから足す。
+            先に完成品を作るより、売れた体験から育てる。
+          </p>
+        </div>
+        <ul class="bullet-list">
+          <li>主役は1本だけ。最初は案件レーダーβ。</li>
+          <li>関連ツールは、同じ客に自然につながるものだけ置く。</li>
+          <li>月額にするのは、時間が経つほど価値が増えるものだけ。</li>
+          <li>WordPressプラグインやChrome拡張は、本体ではなくLabsで扱う。</li>
         </ul>
-      </aside>
-    </div>
-  </section>
+      </section>
 
-  <section class="section" id="categories">
-    <div class="container">
-      <div class="section-title">Live Category</div>
-      <div class="nav-grid">
-        <article class="nav-card live-card">
-          <div class="status live">Live Now</div>
-          <h3>フリーランス向けツール</h3>
-          <p>見積もり、法務、広告表現、契約まわりで止まりやすい人向け。今売るべきものはここだから、総合トップでもここを主役にしてある。</p>
-          <ul>
-            <li>本番ストアは別ページに切り出し済み</li>
-            <li>無料デモと30秒デモ動画つき</li>
-            <li>単品5本と5ツールセットを本番決済済み</li>
-          </ul>
-          <div class="live-actions">
-            <a class="pill-link primary" href="./freelancer-tools.html">ストアへ進む</a>
-            <a class="pill-link" href="./go-buy-bundle.html">5ツールセットを購入</a>
-            <a class="pill-link" href="./demo-preview.html">無料デモ</a>
-          </div>
-        </article>
-        <div class="roadmap-card">
-          <div class="status soon">Roadmap</div>
-          <strong>準備中カテゴリは薄く置く</strong>
-          <p>個人向けと事業者向けは消したわけじゃない。ただ、まだ売ってないものを主役にしない方が強いから、ここでは予定だけ短く見せる。</p>
-          <ul class="roadmap-list">
-            <li><strong>個人向けツール</strong> 家計、日常の判断、個人の作業整理みたいな軽いツールを追加予定。</li>
-            <li><strong>事業者向けツール</strong> ECや店舗運営の実務補助ツールを別カテゴリで追加予定。</li>
-          </ul>
+      <section class="section" id="labs">
+        <div class="section-head">
+          <h2>Labs</h2>
+          <p>
+            ここは主役商品ではなく、拡張や実験用の棚。WordPressやChromeに置くものは、ここで別扱いにする。
+          </p>
         </div>
-      </div>
-    </div>
-  </section>
+        <div class="labs">
+          <article class="card">
+            <div class="tag">Labs</div>
+            <h3>WordPressプラグイン</h3>
+            <p>インストール前提のツールは、本体のブラウザ商品とは切り分けて扱う。</p>
+          </article>
+          <article class="card">
+            <div class="tag">Labs</div>
+            <h3>Chrome拡張</h3>
+            <p>特定作業を減らす拡張系は、ここで紹介する。必要なら別ページで育てる。</p>
+          </article>
+        </div>
+      </section>
+    </main>
 
-  <section class="section">
-    <div class="container section-box" id="buy-now">
-      <div class="section-title">Buy Now</div>
-      <h2>今すぐ買えるもの</h2>
-      <div class="buy-grid">
-        <article class="buy-card">
-          <div class="status">Bundle</div>
-          <strong>5ツールまとめてパック</strong>
-          <p>最短で整えるならこれ。見積もり、法務、薬機、値付け、契約を一気にそろえられる。</p>
-          <div class="price">¥4,980 / 通常合計 ¥13,400</div>
-          <div class="card-actions">
-            <a class="pill-link primary" href="./go-buy-bundle.html">まとめて購入</a>
-          </div>
-        </article>
-        <article class="buy-card">
-          <div class="status">Store</div>
-          <strong>単品5本を比較して選ぶ</strong>
-          <p>動画、特徴、価格、無料デモの有無を見ながら、自分に必要な1本だけ選べる。</p>
-          <div class="price">単品 ¥1,480 から</div>
-          <div class="card-actions">
-            <a class="pill-link primary" href="./freelancer-tools.html">ストアを見る</a>
-          </div>
-        </article>
-        <article class="buy-card">
-          <div class="status">Free Demo</div>
-          <strong>まずは無料で試す</strong>
-          <p>手取りシミュレーターは公開デモでその場で動かせる。触ってから買う判断ができる。</p>
-          <div class="price">無料</div>
-          <div class="card-actions">
-            <a class="pill-link primary" href="./demo-preview.html">無料デモへ</a>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container section-box">
-      <div class="section-title">Free Preview</div>
-      <h2>無料で見られる入口</h2>
-      <div class="quick-grid">
-        <a class="quick-card" href="./demo-preview.html">
-          <strong>手取りデモ</strong>
-          <p>実際に数字を入れて無料で試せる。</p>
-        </a>
-        <a class="quick-card" href="./legal-docs-preview.html">
-          <strong>法務3文書プレビュー</strong>
-          <p>特商法、プラポリ、利用規約の画面を先に見られる。</p>
-        </a>
-        <a class="quick-card" href="./yakki-checker-preview.html">
-          <strong>薬機チェック</strong>
-          <p>危ない表現の見え方をプレビューで確認できる。</p>
-        </a>
-        <a class="quick-card" href="./pricing-simulator-preview.html">
-          <strong>値付けプレビュー</strong>
-          <p>提案額の動き方だけ先に見て判断できる。</p>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container">
-      <div class="section-title">Next Step</div>
-      <div class="mini-grid">
-        <article class="mini-card">
-          <strong>比較してから決めたいなら</strong>
-          <p>フリーランス向けストアで、5本の動画、用途、価格、無料確認の有無をまとめて見た方が早い。</p>
-          <div class="card-actions">
-            <a class="pill-link primary" href="./freelancer-tools.html">比較ページへ</a>
-          </div>
-        </article>
-        <article class="mini-card">
-          <strong>最短で全部そろえたいなら</strong>
-          <p>5ツールセットを選んだ方が、単品で迷うより早い。いまはそのまま決済に進める。</p>
-          <div class="card-actions">
-            <a class="pill-link primary" href="./go-buy-bundle.html">セットを購入</a>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-</main>
-
-<footer class="footer">
-  <div class="container footer-bar">
-    <div>© 2026 よへラボ</div>
-    <div class="footer-links">
-      <a href="./freelancer-tools.html">フリーランス向け</a>
-      <a href="./legal-commercial-transactions.html">特定商取引法に基づく表記</a>
-      <a href="./privacy-policy.html">プライバシーポリシー</a>
-      <a href="./terms.html">利用規約</a>
-    </div>
-  </div>
-</footer>
-</body>
+    <footer class="shell footer">
+      <div>yohelab.com</div>
+      <div>ひとりで稼ぐ人のための実務ツールを、ゼロから組み直し中。</div>
+    </footer>
+  </body>
 </html>
