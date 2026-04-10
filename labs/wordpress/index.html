@@ -16,17 +16,32 @@
       <nav class="mini-nav">
         <a href="../../index.html">トップへ戻る</a>
         <a href="../chrome/index.html">Chrome拡張 Labs</a>
+        <a href="../../contact/index.html#labs">問い合わせ</a>
       </nav>
     </header>
     <main class="shell">
       <section class="hero">
-        <div class="eyebrow">Labs</div>
-        <h1>WordPressプラグインの土台を先に作る。</h1>
-        <p class="lead">プラグイン名と機能の要点を入れると、ヘッダーとショートコードの叩き台を返す。</p>
+        <div class="hero-grid">
+          <div>
+            <div class="eyebrow">Labs</div>
+            <h1>WordPress向けの叩き台を先に作る。</h1>
+            <p class="lead">
+              ここは本体商品ではなく、必要な人向けのทดลอง棚。プラグイン名と機能の要点を入れると、plugin.php の叩き台を返す。
+            </p>
+          </div>
+          <aside class="panel stack">
+            <h2>Labsの位置づけ</h2>
+            <ul class="detail-list">
+              <li><strong>向いている人</strong>WordPressを使っていて、自分で試作したい人。</li>
+              <li><strong>前提</strong>インストール前提なので、本体のブラウザツールとは別棚。</li>
+              <li><strong>問い合わせ</strong><a href="../../contact/index.html#labs">Labsの案内</a></li>
+            </ul>
+          </aside>
+        </div>
       </section>
       <section class="grid">
         <form class="panel stack" id="wp-form">
-          <h2>プラグイン情報</h2>
+          <h2>叩き台を作る</h2>
           <label>プラグイン名<input id="plugin-name" value="yohe-faq-blocks" /></label>
           <label>説明<textarea id="plugin-desc">FAQを見やすく出す。構造化データも付けやすくする。</textarea></label>
           <label>ショートコード名<input id="shortcode" value="yohe_faq" /></label>
@@ -40,18 +55,28 @@
         </div>
       </section>
     </main>
-    <footer class="shell footer">よへラボ / WordPressプラグイン Labs</footer>
+    <footer class="shell footer">
+      <div>よへラボ / WordPressプラグイン Labs</div>
+      <div class="footer-links">
+        <a href="../../index.html">トップ</a>
+        <a href="../../contact/index.html">問い合わせ</a>
+        <a href="../../legal/terms/index.html">利用規約</a>
+      </div>
+    </footer>
     <script>
       function renderPlugin() {
         const name = document.getElementById("plugin-name").value.trim();
         const desc = document.getElementById("plugin-desc").value.trim();
         const shortcode = document.getElementById("shortcode").value.trim();
+
         document.getElementById("wp-output").textContent = `<?php\n/**\n * Plugin Name: ${name}\n * Description: ${desc}\n * Version: 0.1.0\n */\n\nif (!defined('ABSPATH')) exit;\n\nfunction ${shortcode}_render($atts = array()) {\n  $content = '<div class="yohe-lab-box">FAQ block preview</div>';\n  return $content;\n}\nadd_shortcode('${shortcode}', '${shortcode}_render');`;
       }
+
       document.getElementById("wp-form").addEventListener("submit", (event) => {
         event.preventDefault();
         renderPlugin();
       });
+
       renderPlugin();
     </script>
   </body>

@@ -3,329 +3,32 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>よへラボ | ひとりで稼ぐ人のための実務ツール</title>
+    <title>よへラボ | 今日応募しやすい案件から進める実務ツール</title>
     <meta
       name="description"
-      content="よへラボは、ひとりで稼ぐ人のための実務ツールブランド。今日応募すべき案件が届く案件レーダーを中心に、応募文・発信・販売を助ける。"
+      content="よへラボは、ひとりで稼ぐ人向けの実務ツール。主役は案件レーダー。応募しやすい案件を先に見つけて、応募文づくりや発信までブラウザで進めやすくする。"
     />
-    <meta property="og:title" content="よへラボ | ひとりで稼ぐ人のための実務ツール" />
+    <meta property="og:title" content="よへラボ | 今日応募しやすい案件から進める実務ツール" />
     <meta
       property="og:description"
-      content="今日応募すべき案件が届く。よへラボの案件レーダーを中心に、応募文・発信・販売を助けるツールをまとめる。"
+      content="今日応募しやすい案件だけ、先に見る。案件レーダーを中心に、応募文・X発信・EC説明・AIOミニ診断までまとめたよへラボ。"
     />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://yohelab.com/" />
     <link rel="icon" type="image/png" href="./yohelab-icon.png" />
-    <style>
-      :root {
-        --bg: #f4efe6;
-        --bg-alt: #fffaf2;
-        --text: #1f1711;
-        --muted: #6d5a4b;
-        --line: rgba(31, 23, 17, 0.12);
-        --card: rgba(255, 250, 242, 0.72);
-        --accent: #ca5f34;
-        --accent-strong: #a84620;
-        --accent-soft: rgba(202, 95, 52, 0.12);
-        --shadow: 0 24px 70px rgba(69, 39, 24, 0.12);
-      }
-
-      * {
-        box-sizing: border-box;
-      }
-
-      html {
-        scroll-behavior: smooth;
-      }
-
-      body {
-        margin: 0;
-        font-family: "Hiragino Sans", "Yu Gothic", "Noto Sans JP", sans-serif;
-        color: var(--text);
-        background:
-          radial-gradient(circle at top left, rgba(202, 95, 52, 0.18), transparent 28%),
-          linear-gradient(180deg, #f9f3ea 0%, #f4efe6 38%, #efe7da 100%);
-      }
-
-      a {
-        color: inherit;
-        text-decoration: none;
-      }
-
-      img {
-        display: block;
-        max-width: 100%;
-      }
-
-      .shell {
-        width: min(1120px, calc(100% - 32px));
-        margin: 0 auto;
-      }
-
-      .nav {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 16px;
-        padding: 20px 0 14px;
-      }
-
-      .brand {
-        display: inline-flex;
-        align-items: center;
-        gap: 12px;
-        font-weight: 700;
-        letter-spacing: 0.02em;
-      }
-
-      .brand img {
-        width: 42px;
-        height: 42px;
-        border-radius: 12px;
-        box-shadow: 0 10px 30px rgba(31, 23, 17, 0.16);
-      }
-
-      .nav-links {
-        display: flex;
-        gap: 18px;
-        flex-wrap: wrap;
-        color: var(--muted);
-        font-size: 14px;
-      }
-
-      .hero {
-        padding: 34px 0 28px;
-      }
-
-      .hero-grid {
-        display: grid;
-        grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
-        gap: 28px;
-        align-items: stretch;
-      }
-
-      .eyebrow {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 8px 14px;
-        border-radius: 999px;
-        background: rgba(255, 250, 242, 0.7);
-        border: 1px solid var(--line);
-        color: var(--muted);
-        font-size: 13px;
-        letter-spacing: 0.02em;
-      }
-
-      h1 {
-        margin: 18px 0 18px;
-        font-size: clamp(40px, 7vw, 78px);
-        line-height: 0.95;
-        letter-spacing: -0.04em;
-      }
-
-      .hero-lead {
-        max-width: 680px;
-        color: var(--muted);
-        font-size: 18px;
-        line-height: 1.8;
-      }
-
-      .hero-actions {
-        display: flex;
-        gap: 12px;
-        flex-wrap: wrap;
-        margin-top: 26px;
-      }
-
-      .button {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 52px;
-        padding: 0 22px;
-        border-radius: 999px;
-        border: 1px solid transparent;
-        font-weight: 700;
-        transition:
-          transform 0.18s ease,
-          background-color 0.18s ease,
-          border-color 0.18s ease;
-      }
-
-      .button:hover {
-        transform: translateY(-1px);
-      }
-
-      .button.primary {
-        color: #fffaf2;
-        background: linear-gradient(135deg, var(--accent) 0%, var(--accent-strong) 100%);
-        box-shadow: 0 18px 40px rgba(168, 70, 32, 0.28);
-      }
-
-      .button.secondary {
-        border-color: var(--line);
-        background: rgba(255, 250, 242, 0.68);
-      }
-
-      .panel {
-        height: 100%;
-        padding: 26px;
-        border: 1px solid var(--line);
-        border-radius: 28px;
-        background: var(--card);
-        backdrop-filter: blur(10px);
-        box-shadow: var(--shadow);
-      }
-
-      .panel h2,
-      .section h2 {
-        margin: 0 0 10px;
-        font-size: clamp(28px, 4vw, 42px);
-        line-height: 1.08;
-        letter-spacing: -0.03em;
-      }
-
-      .panel p,
-      .section p,
-      .card p {
-        color: var(--muted);
-        line-height: 1.8;
-      }
-
-      .metric-list,
-      .bullet-list {
-        display: grid;
-        gap: 12px;
-        padding: 0;
-        margin: 22px 0 0;
-        list-style: none;
-      }
-
-      .metric-list li,
-      .bullet-list li {
-        padding: 14px 16px;
-        border-radius: 18px;
-        background: rgba(255, 255, 255, 0.58);
-        border: 1px solid rgba(31, 23, 17, 0.08);
-      }
-
-      .metric-label {
-        color: var(--muted);
-        font-size: 13px;
-        margin-bottom: 6px;
-      }
-
-      .metric-value {
-        font-size: 19px;
-        font-weight: 700;
-      }
-
-      .section {
-        padding: 42px 0 0;
-      }
-
-      .section-head {
-        max-width: 760px;
-        margin-bottom: 22px;
-      }
-
-      .cards {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 18px;
-      }
-
-      .card {
-        padding: 22px;
-        border-radius: 24px;
-        border: 1px solid var(--line);
-        background: rgba(255, 250, 242, 0.72);
-        box-shadow: 0 18px 46px rgba(69, 39, 24, 0.08);
-      }
-
-      .tag {
-        display: inline-flex;
-        margin-bottom: 14px;
-        padding: 7px 12px;
-        border-radius: 999px;
-        background: var(--accent-soft);
-        color: var(--accent-strong);
-        font-size: 12px;
-        font-weight: 700;
-        letter-spacing: 0.02em;
-      }
-
-      .card h3 {
-        margin: 0 0 10px;
-        font-size: 22px;
-        line-height: 1.2;
-      }
-
-      .card strong {
-        display: block;
-        margin-top: 16px;
-        font-size: 14px;
-      }
-
-      .labs {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 18px;
-      }
-
-      .footer {
-        padding: 56px 0 70px;
-        color: var(--muted);
-        font-size: 14px;
-      }
-
-      @media (max-width: 920px) {
-        .hero-grid,
-        .cards,
-        .labs {
-          grid-template-columns: 1fr;
-        }
-
-        .nav {
-          align-items: flex-start;
-          flex-direction: column;
-        }
-      }
-
-      @media (max-width: 640px) {
-        body {
-          background:
-            radial-gradient(circle at top left, rgba(202, 95, 52, 0.16), transparent 26%),
-            linear-gradient(180deg, #fbf6ee 0%, #f5eee4 45%, #eee3d3 100%);
-        }
-
-        .shell {
-          width: min(100% - 24px, 1120px);
-        }
-
-        .panel,
-        .card {
-          padding: 20px;
-          border-radius: 22px;
-        }
-
-        h1 {
-          line-height: 1.02;
-        }
-      }
-    </style>
+    <link rel="stylesheet" href="./shared/site.css" />
   </head>
   <body>
-    <header class="shell nav">
-      <a class="brand" href="/">
+    <header class="shell topbar">
+      <a class="brand" href="./index.html">
         <img src="./yohelab-icon.png" alt="よへラボのアイコン" />
         <span>よへラボ</span>
       </a>
-      <nav class="nav-links">
+      <nav class="mini-nav">
         <a href="#radar">案件レーダー</a>
-        <a href="#tools">できること</a>
-        <a href="#labs">Labs</a>
+        <a href="#tools">無料で試せるツール</a>
+        <a href="#trust">安心して使うために</a>
+        <a href="./contact/index.html">問い合わせ</a>
       </nav>
     </header>
 
@@ -333,48 +36,137 @@
       <section class="hero">
         <div class="hero-grid">
           <div>
-            <div class="eyebrow">ひとりで稼ぐ人のための実務ツール</div>
-            <h1>今日応募すべき案件が届く。</h1>
-            <p class="hero-lead">
-              よへラボは、案件を探す、応募文を書く、発信する、売るまでを少しずつラクにするための道具をまとめる。
-              条件に合う案件だけを毎日絞って届ける案件レーダーを中心に、ひとりで稼ぐ流れを整える。
+            <div class="eyebrow">ひとりで稼ぐ人向けの実務ツール</div>
+            <h1>今日応募しやすい案件だけ、先に見る。</h1>
+            <p class="lead">
+              案件探しで止まる。応募文で止まる。発信が続かない。よへラボは、その3つで止まりやすいところを、ブラウザだけで進めやすくする。
+              まず使うのは案件レーダー。条件に合う案件だけを絞って、応募文の下書きまでつなげる。
             </p>
-            <div class="hero-actions">
-              <a class="button primary" href="./apps/radar/index.html">案件レーダーを試す</a>
-              <a class="button secondary" href="#radar">何ができるか見る</a>
+            <div class="inline-actions" style="margin-top: 24px;">
+              <a class="button primary" href="./apps/radar/index.html">無料で試してみる</a>
             </div>
+            <div class="chip-row" style="margin-top: 16px;">
+              <span class="chip">ブラウザでそのまま使える</span>
+              <span class="chip">入力内容はこのブラウザ内だけで処理</span>
+              <span class="chip">まず無料版で確認できる</span>
+            </div>
+            <p class="mini-note">
+              主役は案件レーダー。有料版は条件保存、上位候補の通知、提案文の複数案に広げる予定。
+            </p>
           </div>
 
-          <aside class="panel" id="radar">
-            <h2>案件レーダー</h2>
-            <p>
-              条件に合う案件だけを絞り、応募しやすい順に並べて、提案文の下書きまで返す。
-              毎日の案件探しと最初の応募の面倒を、できるだけ減らすための道具。
-            </p>
-            <ul class="metric-list">
+          <aside class="panel stack" id="radar">
+            <h2>案件レーダーで返るもの</h2>
+            <ul class="detail-list">
               <li>
-                <div class="metric-label">価値</div>
-                <div class="metric-value">今日応募すべき案件が届く</div>
+                <strong>向いている人</strong>
+                副業を始めたい人、クラウドソーシングで探す時間が長い人、応募まで勢いを切らしたくない人。
               </li>
               <li>
-                <div class="metric-label">できること</div>
-                <div class="metric-value">条件に合う案件だけを絞って見られる</div>
+                <strong>入力するもの</strong>
+                欲しい案件のキーワード、最低予算、外したい条件、自分の強み。
               </li>
               <li>
-                <div class="metric-label">もう一歩ラクになること</div>
-                <div class="metric-value">応募文の下書きまでまとめて進められる</div>
+                <strong>返ってくるもの</strong>
+                条件に近い案件候補、応募しやすさの点数、おすすめ理由、提案文の下書き。
+              </li>
+              <li>
+                <strong>使うタイミング</strong>
+                朝に案件を探す前、応募するか迷う時、何から手を付けるか決めたい時。
               </li>
             </ul>
+            <div class="notice">
+              <strong>案内を受け取った後の流れ</strong><br />
+              1. まず無料版で使い心地を確かめる。<br />
+              2. 有料版が必要なら、案内ページか問い合わせから連絡する。<br />
+              3. 利用案内とアクセス方法をメールで受け取って、そのままブラウザで使う。
+            </div>
           </aside>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2>最初に触るなら、案件レーダー</h2>
+          <p>
+            案件探しに時間を使いすぎると、そのあとに必要な応募文や発信まで止まりやすい。だから、最初に減らすのは「全部見る時間」。
+          </p>
+        </div>
+
+        <div class="cards">
+          <article class="card">
+            <div class="tag">結果</div>
+            <h3>今日見る案件が減る</h3>
+            <p>
+              条件に合わない案件を先に外して、応募しやすい順に候補を見る。迷う時間を減らしやすい。
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="tag">出力例</div>
+            <h3>提案文の叩き台まで続く</h3>
+            <div class="output-box">はじめまして。LP文章の構成と執筆の募集を拝見し、内容を見てすぐ力になれそうだと思いご連絡しました。
+
+個人向けサービスの内容整理と構成づくりが得意で、方向性を先に言語化してから初稿まで進める形をよくやっています。
+
+依頼内容を整理しつつ、申し込みにつながる文章へ整える流れで進めます。</div>
+          </article>
+        </div>
+
+        <div class="section" style="padding-top: 18px;">
+          <div class="section-head">
+            <h2>無料版と有料版の違い</h2>
+            <p>まず無料版で使い心地を見て、必要なら有料版の案内を受け取る形にしている。</p>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>項目</th>
+                  <th>無料版</th>
+                  <th>有料版の案内</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>使い始め</td>
+                  <td>今すぐブラウザで試せる</td>
+                  <td>案内後にアクセス方法をメールで受け取る</td>
+                </tr>
+                <tr>
+                  <td>案件候補</td>
+                  <td>サンプル候補をその場で見られる</td>
+                  <td>条件保存と候補の絞り込みを広げる予定</td>
+                </tr>
+                <tr>
+                  <td>応募文</td>
+                  <td>下書き1案を確認できる</td>
+                  <td>提案文の複数案と調整を広げる予定</td>
+                </tr>
+                <tr>
+                  <td>料金</td>
+                  <td>無料</td>
+                  <td>月額 980円〜1,480円を予定</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="cta-box" style="margin-top: 18px;">
+          <strong>まずは無料版で、案件の絞り方と提案文の出方を確認する。</strong>
+          <div class="inline-actions">
+            <a class="button primary" href="./apps/radar/index.html">案件レーダーを無料で試す</a>
+            <a class="button secondary" href="./contact/index.html#radar">有料版の案内を受け取る</a>
+          </div>
         </div>
       </section>
 
       <section class="section" id="tools">
         <div class="section-head">
-          <h2>できること</h2>
+          <h2>一緒に使うと進みやすいツール</h2>
           <p>
-            案件を見つけるだけで終わらず、応募、発信、販売までをつなげてラクにする。
-            よへラボでは、その流れに自然につながるものだけまとめる。
+            案件を見つけたあとに止まりやすいところだけを、そのままブラウザで進められるようにしている。
           </p>
         </div>
 
@@ -382,106 +174,122 @@
           <article class="card">
             <div class="tag">関連</div>
             <h3>提案文・応募文ジェネレーター</h3>
-            <p>
-              案件内容を入れると、応募文の叩き台を返す。案件レーダーの次に一番つながりやすい補助ツール。
-            </p>
-            <strong>役割: 応募の手間を減らす</strong>
-            <p><a href="./apps/proposal/index.html">このツールを開く</a></p>
+            <ul class="detail-list">
+              <li><strong>向いている人</strong>応募文の書き出しで止まりやすい人。</li>
+              <li><strong>返るもの</strong>直しやすい応募文の骨組み。</li>
+            </ul>
+            <div class="inline-actions" style="margin-top: 16px;">
+              <a class="button secondary" href="./apps/proposal/index.html">無料で試す</a>
+            </div>
           </article>
 
           <article class="card">
             <div class="tag">関連</div>
             <h3>X返信・投稿補助</h3>
-            <p>
-              発信のネタ切れを防ぎ、返信文や短い投稿文を整える。Xで売る時に、そのままデモにも使える。
-            </p>
-            <strong>役割: 集客と発信を回しやすくする</strong>
-            <p><a href="./apps/x-helper/index.html">このツールを開く</a></p>
+            <ul class="detail-list">
+              <li><strong>向いている人</strong>Xで発信したいけど、投稿文で止まりやすい人。</li>
+              <li><strong>返るもの</strong>短い投稿案と返信案。</li>
+            </ul>
+            <div class="inline-actions" style="margin-top: 16px;">
+              <a class="button secondary" href="./apps/x-helper/index.html">無料で試す</a>
+            </div>
           </article>
 
           <article class="card">
             <div class="tag">追加</div>
             <h3>EC商品説明・Q&amp;A整備</h3>
-            <p>
-              BASEやSTORESのような小さなショップ向けに、商品説明や問い合わせ文面を整える。個人販売向きの軽い実務ツール。
-            </p>
-            <strong>役割: 売るための文章を早く作る</strong>
-            <p><a href="./apps/ec-copy/index.html">このツールを開く</a></p>
+            <ul class="detail-list">
+              <li><strong>向いている人</strong>BASEやSTORESで商品説明を整えたい人。</li>
+              <li><strong>返るもの</strong>商品説明とQ&amp;Aの叩き台。</li>
+            </ul>
+            <div class="inline-actions" style="margin-top: 16px;">
+              <a class="button secondary" href="./apps/ec-copy/index.html">無料で試す</a>
+            </div>
           </article>
 
           <article class="card">
             <div class="tag">追加</div>
             <h3>AIOミニ診断</h3>
-            <p>
-              note、ブログ、ポートフォリオ、自分のサイトがAI検索で拾われやすいかを見るための軽い診断。
-            </p>
-            <strong>役割: 見つけられやすさを整える</strong>
-            <p><a href="./apps/aio-mini/index.html">このツールを開く</a></p>
-          </article>
-
-          <article class="card">
-            <div class="tag">流れ</div>
-            <h3>探したあとも止まらない</h3>
-            <p>
-              案件を見つけたあとに、そのまま応募文づくりや発信までつなげやすいように道具を並べる。
-            </p>
-            <strong>役割: 案件探しから次の行動まで進める</strong>
-          </article>
-
-          <article class="card">
-            <div class="tag">使い方</div>
-            <h3>その場で使えて、すぐ前に進める</h3>
-            <p>
-              難しい設定や長い準備より、今の悩みをすぐ処理できることを優先する。迷わず触れて、すぐ使える形を目指す。
-            </p>
-            <strong>役割: 面倒な準備を減らして早く使う</strong>
+            <ul class="detail-list">
+              <li><strong>向いている人</strong>自分のブログやサイトの見つけられやすさを見たい人。</li>
+              <li><strong>返るもの</strong>FAQ・比較・実例・プロフィールの簡易診断。</li>
+            </ul>
+            <div class="inline-actions" style="margin-top: 16px;">
+              <a class="button secondary" href="./apps/aio-mini/index.html">無料で試す</a>
+            </div>
           </article>
         </div>
       </section>
 
-      <section class="section">
+      <section class="section" id="trust">
         <div class="section-head">
-          <h2>よへラボの考え方</h2>
-          <p>
-            ブラウザでそのまま使えて、できるだけ早く前に進めることを大事にする。
-            面倒な作業は減らして、稼ぐための行動に時間を回しやすくする。
-          </p>
+          <h2>安心して使うために</h2>
+          <p>何が返るか、どこまで無料か、困った時にどこを見るかを先に見える形にしている。</p>
         </div>
-        <ul class="bullet-list">
-          <li>案件探し、応募、発信、販売がひとつながりで進めやすいこと。</li>
-          <li>今ほしい結果が、ブラウザですぐ返ってくること。</li>
-          <li>余計な設定より、まず使えて役に立つこと。</li>
-          <li>WordPressプラグインやChrome拡張は、必要な人向けにLabsで案内すること。</li>
-        </ul>
+
+        <div class="cards">
+          <article class="card">
+            <div class="tag">入力情報</div>
+            <h3>無料版の入力はブラウザ内だけで処理</h3>
+            <p>
+              このサイトで公開している無料版は、入力した内容をその場でブラウザ内処理する構成にしている。ページを閉じたあとに自動保存はしない。
+            </p>
+          </article>
+          <article class="card">
+            <div class="tag">問い合わせ</div>
+            <h3>有料版の案内と問い合わせ先</h3>
+            <p>有料版の案内、使い方の確認、リンク切れの連絡はメールで受けている。</p>
+            <p><a href="./contact/index.html">問い合わせページを見る</a></p>
+          </article>
+          <article class="card">
+            <div class="tag">更新日</div>
+            <h3>現在の更新状況</h3>
+            <p>トップと各ツールの案内は 2026年4月10日 更新。販売条件や法務ページも同日に見直している。</p>
+          </article>
+          <article class="card">
+            <div class="tag">法務</div>
+            <h3>利用前に見られるページ</h3>
+            <div class="link-list">
+              <a href="./legal/commerce/index.html">特定商取引法に関する表示</a>
+              <a href="./legal/privacy/index.html">プライバシーポリシー</a>
+              <a href="./legal/terms/index.html">利用規約</a>
+            </div>
+          </article>
+        </div>
       </section>
 
       <section class="section" id="labs">
         <div class="section-head">
           <h2>Labs</h2>
-          <p>
-            WordPressやChromeで使うものは、ここにまとめる。本体のブラウザツールとは別に、必要な人だけ見に来られる棚にする。
-          </p>
+          <p>WordPressプラグインとChrome拡張は、必要な人だけ見に来られる棚に分けている。</p>
         </div>
-        <div class="labs">
+
+        <div class="cards">
           <article class="card">
             <div class="tag">Labs</div>
             <h3>WordPressプラグイン</h3>
-            <p>インストール前提のツールは、本体のブラウザ商品とは切り分けて扱う。</p>
-            <p><a href="./labs/wordpress/index.html">Labsを見る</a></p>
+            <p>インストール前提のものは、本体とは別に整理している。</p>
+            <p><a href="./labs/wordpress/index.html">見る</a></p>
           </article>
           <article class="card">
             <div class="tag">Labs</div>
             <h3>Chrome拡張</h3>
-            <p>特定作業を減らす拡張系は、ここで紹介する。必要なら別ページで育てる。</p>
-            <p><a href="./labs/chrome/index.html">Labsを見る</a></p>
+            <p>特定作業を減らす拡張の叩き台をここに置いている。</p>
+            <p><a href="./labs/chrome/index.html">見る</a></p>
           </article>
         </div>
       </section>
     </main>
 
     <footer class="shell footer">
-      <div>yohelab.com</div>
-      <div>ひとりで稼ぐ人のための実務ツールを、ゼロから組み直し中。</div>
+      <div>よへラボ / yohelab.com</div>
+      <div class="footer-links">
+        <a href="./contact/index.html">問い合わせ</a>
+        <a href="./legal/commerce/index.html">特定商取引法に関する表示</a>
+        <a href="./legal/privacy/index.html">プライバシーポリシー</a>
+        <a href="./legal/terms/index.html">利用規約</a>
+        <a href="mailto:hello@yohelab.com">hello@yohelab.com</a>
+      </div>
     </footer>
   </body>
 </html>

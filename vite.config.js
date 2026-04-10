@@ -5,6 +5,10 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: "index.html",
+        contact: "contact/index.html",
+        commerce: "legal/commerce/index.html",
+        privacy: "legal/privacy/index.html",
+        terms: "legal/terms/index.html",
         radar: "apps/radar/index.html",
         proposal: "apps/proposal/index.html",
         xHelper: "apps/x-helper/index.html",
