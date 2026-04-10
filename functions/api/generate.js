@@ -131,22 +131,22 @@ export async function onRequestPost(context) {
   try {
     const apiKey = context.env.GEMINI_API_KEY;
     if (!apiKey) {
-      return json200({ result: "[DEBUG] APIキー未設定" });
+      return json200({ error: "API key not configured" }, 500);
     }
 
     let body;
     try { body = await context.request.json(); }
-    catch { return json200({ result: "[DEBUG] リクエストのJSONパース失敗" }); }
+    catch { return json200({ error: "Invalid JSON" }, 400); }
 
     const { tool, data } = body || {};
-    if (!tool || !data) return json200({ result: "[DEBUG] tool/dataが未指定" });
+    if (!tool || !data) return json200({ error: "Missing tool or data" }, 400);
 
     const systemPrompt = SYSTEM_PROMPTS[tool];
-    if (!systemPrompt) return json200({ result: `[DEBUG] 不明なtool: ${tool}` });
+    if (!systemPrompt) return json200({ error: `Unknown tool: ${tool}` }, 400);
 
     let userPrompt;
     try { userPrompt = buildUserPrompt(tool, data); }
-    catch (e) { return json200({ result: `[DEBUG] promptビルドエラー: ${e.message}` }); }
+    catch (e) { return json200({ error: e.message }, 400); }
 
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${apiKey}`;
     let response;
@@ -161,24 +161,20 @@ export async function onRequestPost(context) {
         }),
       });
     } catch (e) {
-      return json200({ result: `[DEBUG] Gemini fetchエラー: ${e.message}` });
+      return json200({ error: `Network error: ${e.message}` }, 502);
     }
 
     if (!response.ok) {
       const err = await response.text();
-      return json200({ result: `[DEBUG] Gemini HTTPエラー ${response.status}: ${err}` });
+      return json200({ error: `Gemini error ${response.status}: ${err}` }, 502);
     }
 
-    let geminiJson;
-    try { geminiJson = await response.json(); }
-    catch (e) { return json200({ result: `[DEBUG] GeminiレスポンスのJSONパース失敗: ${e.message}` }); }
-
-    const result = geminiJson.candidates?.[0]?.content?.parts?.[0]?.text ?? `[DEBUG] candidatesが空: ${JSON.stringify(geminiJson).slice(0, 200)}`;
-
+    const geminiJson = await response.json();
+    const result = geminiJson.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
     return json200({ result });
 
   } catch (e) {
-    return json200({ result: `[DEBUG] 予期せぬエラー: ${e.message}` });
+    return json200({ error: e.message }, 500);
   }
 }
 
