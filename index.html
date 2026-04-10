@@ -42,8 +42,7 @@
             "@type": "Organization",
             "name": "よへラボ",
             "url": "https://yohelab.com/",
-            "logo": "https://yohelab.com/yohelab-icon.png",
-            "email": "hello@yohelab.com"
+            "logo": "https://yohelab.com/yohelab-icon.png"
           },
           {
             "@type": "SoftwareApplication",
@@ -105,107 +104,131 @@
     </header>
 
     <main class="shell">
-      <section class="hero">
+      <section class="hero hero-frame">
         <div class="hero-grid">
-          <div>
+          <div class="hero-copy">
             <div class="eyebrow">ひとりで稼ぐ人向けの実務ツール</div>
             <h1>探す時間を減らして、今日応募する案件を決める。</h1>
             <p class="lead">
-              案件を見すぎて止まる。応募文の最初で止まる。よへラボは、そこを先に減らす。主役は案件レーダー。条件に合う候補だけを先に見て、そのまま応募文の下書きまで進める。
+              案件を見すぎて止まる。応募文の最初で止まる。その2つを先に減らすための主役が、案件レーダー。
             </p>
-            <div class="inline-actions" style="margin-top: 24px;">
+            <div class="hero-bullets">
+              <div class="mini-card">
+                <strong>先に絞る</strong>
+                条件に近い候補だけを先に見る。
+              </div>
+              <div class="mini-card">
+                <strong>先に除外する</strong>
+                低単価や避けたい条件を先に外す。
+              </div>
+              <div class="mini-card">
+                <strong>そのまま応募文へ</strong>
+                下書きまで続けて止まりにくくする。
+              </div>
+            </div>
+            <div class="inline-actions hero-actions">
               <a class="button primary" href="./apps/radar/index.html">無料で試してみる</a>
               <a class="button secondary" href="./products/radar-beta/index.html">β版に申し込む</a>
             </div>
-            <div class="chip-row" style="margin-top: 16px;">
+            <div class="chip-row hero-chips">
               <span class="chip">ブラウザでそのまま使える</span>
               <span class="chip">入力内容はこのブラウザ内だけで処理</span>
-              <span class="chip">まず無料版で確認できる</span>
+              <span class="chip">まず無料版で相性を見られる</span>
             </div>
-            <p class="mini-note">
-              主役は案件レーダー。β版は、条件保存、通知、提案文の広げ方が必要な人向け。
-            </p>
           </div>
 
-          <aside class="panel stack" id="radar">
-            <h2>案件レーダーで返るもの</h2>
-            <ul class="detail-list">
-              <li>
-                <strong>向いている人</strong>
-                副業を始めたい人、クラウドソーシングで探す時間が長い人、応募まで勢いを切らしたくない人。
-              </li>
-              <li>
-                <strong>入力するもの</strong>
-                欲しい案件のキーワード、最低予算、外したい条件、自分の強み。
-              </li>
-              <li>
-                <strong>返ってくるもの</strong>
-                条件に近い案件候補、応募しやすさの点数、おすすめ理由、提案文の下書き。
-              </li>
-              <li>
-                <strong>使うタイミング</strong>
-                朝に案件を探す前、応募するか迷う時、何から手を付けるか決めたい時。
-              </li>
-            </ul>
-            <div class="notice">
-              <strong>β版に申し込んだ後の流れ</strong><br />
-              1. まず無料版で使い心地を確かめる。<br />
-              2. 必要なら、案件レーダーβの案内ページから申し込む。<br />
-              3. アクセス方法と利用内容を受け取って、そのままブラウザで使う。
+          <aside class="hero-preview" id="radar">
+            <div class="preview-head">
+              <span class="preview-pill">案件レーダー</span>
+              <span class="preview-status">主役ツール</span>
+            </div>
+            <div class="preview-score">
+              <div>
+                <small>応募しやすさ</small>
+                <strong>88 / 100</strong>
+              </div>
+              <div>
+                <small>おすすめ理由</small>
+                <p>予算、リモート可否、得意分野の近さが強い。</p>
+              </div>
+            </div>
+            <div class="preview-stack">
+              <article class="preview-card">
+                <div class="preview-label">上に来た候補</div>
+                <strong>LP文章の構成と執筆</strong>
+                <p>予算 80,000円 / リモート可 / ライティング・LP・集客</p>
+              </article>
+              <article class="preview-card">
+                <div class="preview-label">除外された例</div>
+                <strong>低単価・条件不一致・避けたいカテゴリ</strong>
+                <p>最初から見ない候補を落として、今日見る件数を減らす。</p>
+              </article>
+              <article class="preview-card">
+                <div class="preview-label">提案文の下書き</div>
+                <p>
+                  個人向けサービスの内容整理と構成づくりが得意で、方向性を先に言語化してから初稿まで進める形をよくやっています。
+                </p>
+              </article>
             </div>
           </aside>
         </div>
       </section>
 
+      <section class="section impact-strip">
+        <div class="metric-grid">
+          <article class="metric-card">
+            <span>無料版で確認すること</span>
+            <strong>候補の並び方</strong>
+            <p>自分の条件に近い案件が上に来るか。</p>
+          </article>
+          <article class="metric-card">
+            <span>無料版で確認すること</span>
+            <strong>除外の効き方</strong>
+            <p>避けたい条件がちゃんと外れるか。</p>
+          </article>
+          <article class="metric-card">
+            <span>無料版で確認すること</span>
+            <strong>応募文の使いやすさ</strong>
+            <p>少し直せば出せる骨組みになるか。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section section-band">
+        <div class="split-grid">
+          <div class="section-head">
+            <h2>最初に触るなら、案件レーダー</h2>
+            <p>最初に減らすのは、全部見る時間。案件探しが長いと、そのあとに必要な応募文や発信まで止まりやすい。</p>
+          </div>
+          <div class="stack">
+            <article class="mini-panel">
+              <div class="tag">向いている人</div>
+              <ul class="compact-list">
+                <li>案件が多すぎて、何から見ればいいか決めにくい</li>
+                <li>応募したい気持ちはあるのに、応募文で勢いが切れる</li>
+                <li>副業を始めたいけど、毎日の案件探しを短くしたい</li>
+              </ul>
+            </article>
+            <article class="mini-panel">
+              <div class="tag">β版の流れ</div>
+              <ol class="flow-list">
+                <li>無料版で使い心地を確かめる</li>
+                <li>必要なら案件レーダーβに申し込む</li>
+                <li>利用内容とアクセス方法を受け取って進める</li>
+              </ol>
+            </article>
+          </div>
+        </div>
+      </section>
+
       <section class="section">
         <div class="section-head">
-          <h2>最初に触るなら、案件レーダー</h2>
-          <p>
-            案件探しに時間を使いすぎると、そのあとに必要な応募文や発信まで止まりやすい。だから、最初に減らすのは「全部見る時間」。
-          </p>
+          <h2>無料版で見えることを、先に見せる</h2>
+          <p>長い説明より先に、何が返るかをそのまま見える形で置いている。</p>
         </div>
-
-        <div class="cards">
+        <div class="cards cards-3">
           <article class="card">
-            <div class="tag">向いている人</div>
-            <h3>こういう人向け</h3>
-            <ul class="detail-list">
-              <li>案件が多すぎて、何から見ればいいか決めにくい人</li>
-              <li>応募したい気持ちはあるのに、応募文で勢いが切れる人</li>
-              <li>副業を始めたいけど、毎日の案件探しを短くしたい人</li>
-            </ul>
-          </article>
-
-          <article class="card">
-            <div class="tag">結果</div>
-            <h3>今日見る案件が減る</h3>
-            <p>
-              条件に合わない案件を先に外して、応募しやすい順に候補を見る。迷う時間を減らしやすい。
-            </p>
-          </article>
-
-          <article class="card">
-            <div class="tag">出力例</div>
-            <h3>提案文の叩き台まで続く</h3>
-            <div class="output-box">はじめまして。LP文章の構成と執筆の募集を拝見し、内容を見てすぐ力になれそうだと思いご連絡しました。
-
-個人向けサービスの内容整理と構成づくりが得意で、方向性を先に言語化してから初稿まで進める形をよくやっています。
-
-依頼内容を整理しつつ、申し込みにつながる文章へ整える流れで進めます。</div>
-          </article>
-
-          <article class="card">
-            <div class="tag">無料版で見るところ</div>
-            <h3>相性はここで判断できる</h3>
-            <ul class="detail-list">
-              <li><strong>候補の並び方</strong>自分の条件に近い案件が上に来るか</li>
-              <li><strong>除外の効き方</strong>避けたい条件をちゃんと外せるか</li>
-              <li><strong>応募文の使いやすさ</strong>少し直せば出せる骨組みになるか</li>
-            </ul>
-          </article>
-
-          <article class="card">
-            <div class="tag">案件の出方</div>
+            <div class="tag">案件候補</div>
             <h3>無料版で見える候補の例</h3>
             <div class="output-box">LP文章の構成と執筆
 予算 80,000円 / リモート可 / ライティング・LP・集客
@@ -216,88 +239,65 @@ STORES商品ページ改善
 AI記事リライトと監修
 予算 70,000円 / リモート可 / AI・ライティング・監修</div>
           </article>
+          <article class="card">
+            <div class="tag">提案文</div>
+            <h3>そのまま叩き台まで続く</h3>
+            <div class="output-box">はじめまして。LP文章の構成と執筆の募集を拝見し、内容を見てすぐ力になれそうだと思いご連絡しました。
 
+個人向けサービスの内容整理と構成づくりが得意で、方向性を先に言語化してから初稿まで進める形をよくやっています。
+
+依頼内容を整理しつつ、申し込みにつながる文章へ整える流れで進めます。</div>
+          </article>
           <article class="card">
             <div class="tag">除外の効き方</div>
-            <h3>外したい案件も先に見分ける</h3>
+            <h3>見たくない案件も先に落とす</h3>
             <ul class="detail-list">
               <li><strong>除外例</strong>低単価、条件不一致、避けたいカテゴリ。</li>
-              <li><strong>上に来る理由</strong>予算、リモート可否、得意分野との近さ、急ぎ度を見て並べる。</li>
-              <li><strong>見るポイント</strong>自分が避けたい案件がちゃんと落ちるかを無料版で確認する。</li>
+              <li><strong>上に来る理由</strong>予算、リモート可否、得意分野との近さ、急ぎ度。</li>
+              <li><strong>見るポイント</strong>避けたい案件がちゃんと落ちるかを無料版で見る。</li>
             </ul>
           </article>
         </div>
+      </section>
 
-        <div class="section" style="padding-top: 18px;">
-          <div class="section-head">
-          <h2>無料版とβ版の違い</h2>
-            <p>まず無料版で使い心地を見て、必要ならβ版に申し込む形にしている。</p>
-          </div>
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>項目</th>
-                  <th>無料版</th>
-                  <th>β版</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>使い始め</td>
-                  <td>今すぐブラウザで試せる</td>
-                  <td>申し込み後にアクセス方法をメールで受け取る</td>
-                </tr>
-                <tr>
-                  <td>案件候補</td>
-                  <td>サンプル候補をその場で見られる</td>
-                  <td>条件保存と候補整理を優先して案内</td>
-                </tr>
-                <tr>
-                  <td>応募文</td>
-                  <td>下書き1案を確認できる</td>
-                  <td>提案文の複数案や調整パターンを優先して案内</td>
-                </tr>
-                <tr>
-                  <td>料金</td>
-                  <td>無料</td>
-                  <td>申込み時に案内</td>
-                </tr>
-                <tr>
-                  <td>向いている人</td>
-                  <td>まず出力だけ見たい人</td>
-                  <td>案件探しを毎回短くしたい人</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <div class="cta-box" style="margin-top: 18px;">
-          <strong>まずは無料版で、案件の絞り方と提案文の出方を確認する。</strong>
-          <div class="inline-actions">
-            <a class="button primary" href="./apps/radar/index.html">案件レーダーを無料で試す</a>
-            <a class="button secondary" href="./products/radar-beta/index.html">β版に申し込む</a>
-          </div>
+      <section class="section">
+        <div class="comparison-grid">
+          <article class="plan-card free">
+            <div class="tag">無料版</div>
+            <h3>まずは相性を見る</h3>
+            <ul class="list-check">
+              <li>今すぐブラウザで試せる</li>
+              <li>サンプル候補をその場で見られる</li>
+              <li>下書き1案を確認できる</li>
+              <li>料金はかからない</li>
+            </ul>
+            <a class="button secondary" href="./apps/radar/index.html">無料で試す</a>
+          </article>
+          <article class="plan-card beta">
+            <div class="tag">β版</div>
+            <h3>毎日の探す時間を減らす</h3>
+            <ul class="list-check">
+              <li>申し込み後に利用内容を案内</li>
+              <li>条件保存と候補整理を優先して案内</li>
+              <li>提案文の複数案や調整パターンを優先して案内</li>
+              <li>料金は申込み時に案内</li>
+            </ul>
+            <a class="button primary" href="./products/radar-beta/index.html">β版に申し込む</a>
+          </article>
         </div>
       </section>
 
       <section class="section" id="tools">
         <div class="section-head">
           <h2>一緒に使うと進みやすいツール</h2>
-          <p>
-            案件を見つけたあとに止まりやすいところだけを、そのままブラウザで進められるようにしている。
-          </p>
+          <p>案件を見つけたあとに止まりやすいところだけを、短いカードで分けている。</p>
         </div>
 
-        <div class="cards">
+        <div class="cards cards-4">
           <article class="card">
             <div class="tag">関連</div>
             <h3>提案文・応募文ジェネレーター</h3>
-            <ul class="detail-list">
-              <li><strong>向いている人</strong>応募文の書き出しで止まりやすい人。</li>
-              <li><strong>返るもの</strong>直しやすい応募文の骨組み。</li>
-            </ul>
+            <p>応募文の書き出しで止まりやすい人向け。直しやすい応募文の骨組みを返す。</p>
             <div class="inline-actions" style="margin-top: 16px;">
               <a class="button secondary" href="./apps/proposal/index.html">無料で試す</a>
             </div>
@@ -306,10 +306,7 @@ AI記事リライトと監修
           <article class="card">
             <div class="tag">関連</div>
             <h3>X返信・投稿補助</h3>
-            <ul class="detail-list">
-              <li><strong>向いている人</strong>Xで発信したいけど、投稿文で止まりやすい人。</li>
-              <li><strong>返るもの</strong>短い投稿案と返信案。</li>
-            </ul>
+            <p>Xで発信したいけど、投稿文で止まりやすい人向け。短い投稿案と返信案を返す。</p>
             <div class="inline-actions" style="margin-top: 16px;">
               <a class="button secondary" href="./apps/x-helper/index.html">無料で試す</a>
             </div>
@@ -318,10 +315,7 @@ AI記事リライトと監修
           <article class="card">
             <div class="tag">追加</div>
             <h3>EC商品説明・Q&amp;A整備</h3>
-            <ul class="detail-list">
-              <li><strong>向いている人</strong>BASEやSTORESで商品説明を整えたい人。</li>
-              <li><strong>返るもの</strong>商品説明とQ&amp;Aの叩き台。</li>
-            </ul>
+            <p>BASEやSTORESで商品説明を整えたい人向け。説明文とQ&amp;Aの叩き台を返す。</p>
             <div class="inline-actions" style="margin-top: 16px;">
               <a class="button secondary" href="./apps/ec-copy/index.html">無料で試す</a>
             </div>
@@ -330,10 +324,7 @@ AI記事リライトと監修
           <article class="card">
             <div class="tag">追加</div>
             <h3>AIOミニ診断</h3>
-            <ul class="detail-list">
-              <li><strong>向いている人</strong>自分のブログやサイトの見つけられやすさを見たい人。</li>
-              <li><strong>返るもの</strong>FAQ・比較・実例・プロフィールの簡易診断。</li>
-            </ul>
+            <p>自分のブログやサイトの見つけられやすさを見たい人向け。FAQ・比較・実例の簡易診断を返す。</p>
             <div class="inline-actions" style="margin-top: 16px;">
               <a class="button secondary" href="./apps/aio-mini/index.html">無料で試す</a>
             </div>
@@ -347,11 +338,11 @@ AI記事リライトと監修
           <p>何が返るか、どこまで無料か、困った時にどこを見るかを先に見える形にしている。</p>
         </div>
 
-        <div class="cards">
+        <div class="cards cards-3">
           <article class="card">
             <div class="tag">β版で増えること</div>
             <h3>無料版の次に欲しくなるところだけ広げる</h3>
-            <ul class="detail-list">
+            <ul class="compact-list">
               <li>毎回条件を入れ直さなくていい</li>
               <li>候補を見たあと、そのまま応募文まで続けやすい</li>
               <li>無料版で相性を見てから判断できる</li>
@@ -360,7 +351,7 @@ AI記事リライトと監修
           <article class="card">
             <div class="tag">今申し込む理由</div>
             <h3>β版が向いている人</h3>
-            <ul class="detail-list">
+            <ul class="compact-list">
               <li>毎朝の案件探しを短くしたい</li>
               <li>候補を見たあと、そのまま応募文まで進みたい</li>
               <li>無料版で相性が合って、続きをそのまま使いたい</li>
@@ -428,7 +419,7 @@ AI記事リライトと監修
           <p>WordPressプラグインとChrome拡張は、必要な人だけ見に来られる棚に分けている。</p>
         </div>
 
-        <div class="cards">
+        <div class="cards cards-2">
           <article class="card">
             <div class="tag">Labs</div>
             <h3>WordPressプラグイン</h3>
@@ -472,7 +463,6 @@ AI記事リライトと監修
         <a href="./legal/commerce/index.html">特定商取引法に関する表示</a>
         <a href="./legal/privacy/index.html">プライバシーポリシー</a>
         <a href="./legal/terms/index.html">利用規約</a>
-        <a href="mailto:hello@yohelab.com">hello@yohelab.com</a>
       </div>
     </footer>
   </body>
