@@ -15,8 +15,80 @@
     />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://yohelab.com/" />
+    <meta property="og:image" content="https://yohelab.com/yohelab-icon.png" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="よへラボ | 今日応募しやすい案件から進める実務ツール" />
+    <meta
+      name="twitter:description"
+      content="探す時間を減らして、今日応募する案件を決める。案件レーダーを中心に、応募文づくりや発信まで進めやすくする。"
+    />
+    <meta name="twitter:image" content="https://yohelab.com/yohelab-icon.png" />
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
+    <meta name="theme-color" content="#ca5f34" />
+    <link rel="canonical" href="https://yohelab.com/" />
     <link rel="icon" type="image/png" href="./yohelab-icon.png" />
     <link rel="stylesheet" href="./shared/site.css" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "name": "よへラボ",
+            "url": "https://yohelab.com/"
+          },
+          {
+            "@type": "Organization",
+            "name": "よへラボ",
+            "url": "https://yohelab.com/",
+            "logo": "https://yohelab.com/yohelab-icon.png",
+            "email": "hello@yohelab.com"
+          },
+          {
+            "@type": "SoftwareApplication",
+            "name": "案件レーダー",
+            "applicationCategory": "BusinessApplication",
+            "operatingSystem": "Web",
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "JPY"
+            },
+            "description": "条件に合う案件候補と提案文の下書きを返す、ひとりで稼ぐ人向けのWebツール。"
+          },
+          {
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "案件レーダーは何が返ってくる？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "条件に近い案件候補、応募しやすさの点数、おすすめ理由、提案文の下書きが返る。"
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "無料版とβ版の違いは？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "無料版はその場で出力を確認するためのもの。β版は条件保存や通知など、毎日の案件探しを短くするための機能を広げる予定。"
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "スマホでも使える？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "トップページや案内ページはスマホでも見やすくしている。本格的な入力や比較はパソコンのほうが使いやすい。"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    </script>
   </head>
   <body>
     <header class="shell topbar">
@@ -314,6 +386,31 @@ AI記事リライトと監修
         </div>
       </section>
 
+      <section class="section" id="faq">
+        <div class="section-head">
+          <h2>よくある質問</h2>
+          <p>申し込む前に止まりやすいところだけ、先に見える形で置いている。</p>
+        </div>
+        <div class="faq-grid">
+          <article class="faq-item">
+            <strong>案件レーダーは何が返ってくる？</strong>
+            条件に近い案件候補、応募しやすさの点数、おすすめ理由、提案文の下書きが返る。
+          </article>
+          <article class="faq-item">
+            <strong>無料版とβ版の違いは？</strong>
+            無料版はその場で出力を確認するためのもの。β版は条件保存や通知など、毎日の案件探しを短くするための機能を広げる予定。
+          </article>
+          <article class="faq-item">
+            <strong>スマホでも使える？</strong>
+            トップページや案内ページはスマホでも見やすくしている。本格的な入力や比較はパソコンのほうが使いやすい。
+          </article>
+          <article class="faq-item">
+            <strong>入力した内容は保存される？</strong>
+            無料版はブラウザ内だけで処理する構成にしていて、ページを閉じたあとに自動保存はしない。
+          </article>
+        </div>
+      </section>
+
       <section class="section" id="labs">
         <div class="section-head">
           <h2>Labs</h2>
@@ -346,6 +443,16 @@ AI記事リライトと監修
         </div>
       </section>
     </main>
+
+    <div class="shell sticky-cta">
+      <div class="cta-box">
+        <strong>スマホでは、まず無料版で相性を見る。</strong>
+        <div class="inline-actions">
+          <a class="button primary" href="./apps/radar/index.html">無料で試す</a>
+          <a class="button secondary" href="./contact/index.html#radar">β版に申し込む</a>
+        </div>
+      </div>
+    </div>
 
     <footer class="shell footer">
       <div>よへラボ / yohelab.com</div>
