@@ -128,81 +128,63 @@ export async function onRequestOptions() {
 }
 
 export async function onRequestPost(context) {
-  const apiKey = context.env.GEMINI_API_KEY;
-  if (!apiKey) {
-    return new Response(JSON.stringify({ result: "[DEBUG] API key not configured. Please set GEMINI_API_KEY in Cloudflare Pages environment variables." }), {
-      status: 200,
-      headers: { "Content-Type": "application/json", ...CORS_HEADERS },
-    });
-  }
-
-  let body;
   try {
-    body = await context.request.json();
-  } catch {
-    return new Response(JSON.stringify({ error: "Invalid JSON" }), {
-      status: 400,
-      headers: { "Content-Type": "application/json", ...CORS_HEADERS },
-    });
-  }
+    const apiKey = context.env.GEMINI_API_KEY;
+    if (!apiKey) {
+      return json200({ result: "[DEBUG] APIキー未設定" });
+    }
 
-  const { tool, data } = body;
-  if (!tool || !data) {
-    return new Response(JSON.stringify({ error: "Missing tool or data" }), {
-      status: 400,
-      headers: { "Content-Type": "application/json", ...CORS_HEADERS },
-    });
-  }
+    let body;
+    try { body = await context.request.json(); }
+    catch { return json200({ result: "[DEBUG] リクエストのJSONパース失敗" }); }
 
-  const systemPrompt = SYSTEM_PROMPTS[tool];
-  if (!systemPrompt) {
-    return new Response(JSON.stringify({ error: "Unknown tool" }), {
-      status: 400,
-      headers: { "Content-Type": "application/json", ...CORS_HEADERS },
-    });
-  }
+    const { tool, data } = body || {};
+    if (!tool || !data) return json200({ result: "[DEBUG] tool/dataが未指定" });
 
-  let userPrompt;
-  try {
-    userPrompt = buildUserPrompt(tool, data);
-  } catch (e) {
-    return new Response(JSON.stringify({ error: e.message }), {
-      status: 400,
-      headers: { "Content-Type": "application/json", ...CORS_HEADERS },
-    });
-  }
+    const systemPrompt = SYSTEM_PROMPTS[tool];
+    if (!systemPrompt) return json200({ result: `[DEBUG] 不明なtool: ${tool}` });
 
-  try {
+    let userPrompt;
+    try { userPrompt = buildUserPrompt(tool, data); }
+    catch (e) { return json200({ result: `[DEBUG] promptビルドエラー: ${e.message}` }); }
+
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${apiKey}`;
-    const response = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        systemInstruction: { parts: [{ text: systemPrompt }] },
-        contents: [{ role: "user", parts: [{ text: userPrompt }] }],
-        generationConfig: { temperature: 0.7, maxOutputTokens: 800 },
-      }),
-    });
+    let response;
+    try {
+      response = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          systemInstruction: { parts: [{ text: systemPrompt }] },
+          contents: [{ role: "user", parts: [{ text: userPrompt }] }],
+          generationConfig: { temperature: 0.7, maxOutputTokens: 800 },
+        }),
+      });
+    } catch (e) {
+      return json200({ result: `[DEBUG] Gemini fetchエラー: ${e.message}` });
+    }
 
     if (!response.ok) {
       const err = await response.text();
-      return new Response(JSON.stringify({ error: `Gemini error: ${err}` }), {
-        status: 502,
-        headers: { "Content-Type": "application/json", ...CORS_HEADERS },
-      });
+      return json200({ result: `[DEBUG] Gemini HTTPエラー ${response.status}: ${err}` });
     }
 
-    const json = await response.json();
-    const result = json.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
+    let geminiJson;
+    try { geminiJson = await response.json(); }
+    catch (e) { return json200({ result: `[DEBUG] GeminiレスポンスのJSONパース失敗: ${e.message}` }); }
 
-    return new Response(JSON.stringify({ result }), {
-      status: 200,
-      headers: { "Content-Type": "application/json", ...CORS_HEADERS },
-    });
+    const result = geminiJson.candidates?.[0]?.content?.parts?.[0]?.text ?? `[DEBUG] candidatesが空: ${JSON.stringify(geminiJson).slice(0, 200)}`;
+
+    return json200({ result });
+
   } catch (e) {
-    return new Response(JSON.stringify({ error: e.message }), {
-      status: 500,
-      headers: { "Content-Type": "application/json", ...CORS_HEADERS },
-    });
+    return json200({ result: `[DEBUG] 予期せぬエラー: ${e.message}` });
   }
+}
+
+function json200(body) {
+  return new Response(JSON.stringify(body), {
+    status: 200,
+    headers: { "Content-Type": "application/json", ...CORS_HEADERS },
+  });
 }
