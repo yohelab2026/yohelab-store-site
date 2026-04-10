@@ -153,7 +153,7 @@
             body: JSON.stringify({ tool: "proposal", data: { project, needs, strength, tone, close } }),
           });
           const json = await res.json();
-          output.textContent = json.result || "生成に失敗しました。もう一度お試しください。";
+          output.textContent = json.result || `エラー: ${json.error || "不明なエラー"} (status: ${res.status})`;
         } catch {
           output.textContent = "通信エラーが発生しました。もう一度お試しください。";
         } finally {
