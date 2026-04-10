@@ -3,316 +3,301 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>案件レーダーβ | よへラボ</title>
-    <meta
-      name="description"
-      content="案件レーダーβの案内ページ。無料版で相性を見たあと、条件保存や候補整理を使いたい人向けに申込みを受け付ける。"
-    />
-    <meta property="og:title" content="案件レーダーβ | よへラボ" />
-    <meta
-      property="og:description"
-      content="無料版で相性を見たあと、そのまま案件探しを短くしたい人向けの案件レーダーβ。"
-    />
+    <title>案件レーダー β版 | よへラボ</title>
+    <meta name="description" content="案件レーダーβは、毎日の案件探しを10分に変えるAIツール。条件保存・候補整理・提案文の複数案。無料版で相性を確認してから申し込める。" />
+    <meta property="og:title" content="案件レーダー β版 | よへラボ" />
+    <meta property="og:description" content="毎日の案件探しを10分に変えるAIツール。無料版で相性を見てから申し込める。" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://yohelab.com/products/radar-beta/" />
     <meta property="og:image" content="https://yohelab.com/yohelab-icon.png" />
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="案件レーダーβ | よへラボ" />
-    <meta
-      name="twitter:description"
-      content="案件レーダーβの案内ページ。条件保存、候補整理、通知を使いたい人向け。"
-    />
-    <meta name="twitter:image" content="https://yohelab.com/yohelab-icon.png" />
     <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
-    <meta name="theme-color" content="#ca5f34" />
+    <meta name="theme-color" content="#0d6b58" />
     <link rel="canonical" href="https://yohelab.com/products/radar-beta/" />
     <link rel="icon" type="image/png" href="/yohelab-icon.png" />
     <link rel="stylesheet" href="/shared/site.css" />
+    <style>
+      .product-hero {
+        padding: 80px 0 64px;
+        background: linear-gradient(160deg, #0d1a16 0%, #0d2b24 100%);
+        color: #fff;
+        text-align: center;
+      }
+      .product-hero .hero-eyebrow {
+        background: rgba(255,255,255,.1);
+        border-color: rgba(255,255,255,.2);
+        color: rgba(255,255,255,.9);
+      }
+      .product-hero h1 { color: #fff; margin-bottom: 20px; }
+      .product-hero h1 em { color: #4fd1b8; font-style: normal; }
+      .product-hero .hero-sub { color: rgba(255,255,255,.75); }
+      .product-hero .hero-note { color: rgba(255,255,255,.5); }
+      .benefit-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+      .benefit-card {
+        padding: 28px;
+        border-radius: 16px;
+        background: var(--white);
+        border: 1px solid var(--border);
+      }
+      .benefit-icon { font-size: 28px; margin-bottom: 14px; }
+      .benefit-card h3 { font-size: 17px; font-weight: 800; margin-bottom: 10px; }
+      .benefit-card p { font-size: 15px; color: var(--muted); line-height: 1.75; }
+      .apply-section { padding: 80px 0; background: var(--bg); }
+      .apply-wrap {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 32px;
+        align-items: start;
+        max-width: 900px;
+        margin: 0 auto;
+      }
+      .apply-form {
+        background: var(--white);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 36px;
+      }
+      .apply-form h2 { font-size: 22px; margin-bottom: 8px; }
+      .apply-form .sub { color: var(--muted); font-size: 15px; margin-bottom: 28px; }
+      .form-stack { display: grid; gap: 18px; }
+      .apply-info { display: grid; gap: 16px; }
+      .info-block {
+        padding: 24px;
+        border-radius: 16px;
+        background: var(--white);
+        border: 1px solid var(--border);
+      }
+      .info-block h4 { font-size: 15px; font-weight: 800; margin-bottom: 8px; }
+      .info-block p, .info-block li { font-size: 14px; color: var(--muted); line-height: 1.75; }
+      .info-block ul { display: grid; gap: 6px; }
+      .info-block li::before { content: "→ "; color: var(--green); font-weight: 700; }
+      .success-msg {
+        display: none;
+        padding: 28px;
+        border-radius: 16px;
+        background: var(--green-light);
+        border: 1px solid var(--green-mid);
+        text-align: center;
+      }
+      .success-msg h3 { font-size: 20px; margin-bottom: 10px; color: var(--green-dark); }
+      .success-msg p { color: var(--muted); font-size: 15px; }
+      @media (max-width: 768px) {
+        .benefit-grid, .apply-wrap { grid-template-columns: 1fr; }
+      }
+    </style>
   </head>
   <body>
-    <header class="shell topbar">
-      <a class="brand" href="/">
-        <img src="/yohelab-icon.png" alt="よへラボのアイコン" />
-        <span>よへラボ</span>
-      </a>
-      <nav class="mini-nav">
-        <a href="/">トップ</a>
-        <a href="/apps/radar/">無料版</a>
-        <a href="/contact/">問い合わせ</a>
-        <a href="/#labs">Labs</a>
-        <a href="#apply">申し込む</a>
-      </nav>
+
+    <header class="nav">
+      <div class="nav-inner">
+        <a class="brand" href="/">
+          <img src="/yohelab-icon.png" alt="よへラボのアイコン" />
+          <span>よへラボ</span>
+        </a>
+        <nav class="nav-links">
+          <a href="/">トップ</a>
+          <a href="/apps/radar/">無料版を試す</a>
+          <a href="/contact/">問い合わせ</a>
+          <a class="btn btn-primary btn-sm" href="#apply">β版に申し込む</a>
+        </nav>
+      </div>
     </header>
 
-    <main class="shell">
-      <section class="hero hero-frame">
-        <div class="hero-grid">
-          <div class="hero-copy">
-            <div class="eyebrow">案件レーダーβ</div>
-            <h1>無料版が合ったなら、そのまま案件探しを短くする段階に進む。</h1>
-            <p class="lead">
-              条件保存、候補整理、通知、提案文の広げ方。無料版の続きをそのまま使いたい人向けに、必要なところだけ先に案内する。
-            </p>
-            <div class="hero-bullets">
-              <div class="mini-card">
-                <strong>条件保存</strong>
-                毎回同じ条件を入れ直さない。
-              </div>
-              <div class="mini-card">
-                <strong>通知</strong>
-                合いそうな候補を見逃しにくくする。
-              </div>
-              <div class="mini-card">
-                <strong>提案文の広げ方</strong>
-                1案だけで止めずに進めやすくする。
-              </div>
+    <main>
+
+      <!-- ヒーロー -->
+      <section class="product-hero">
+        <div class="container">
+          <p class="hero-eyebrow">案件レーダー β版</p>
+          <h1>毎朝の案件探しを、<em>10分</em>に変える。</h1>
+          <p class="hero-sub" style="max-width:520px;margin:0 auto 36px;">条件を保存して毎日すぐ使える。候補の整理から提案文の複数案まで、案件探しのルーティンを丸ごと短くする。</p>
+          <div class="hero-actions">
+            <a class="btn btn-white btn-lg" href="#apply">β版に申し込む</a>
+            <a class="btn btn-lg" style="color:rgba(255,255,255,.8);border:1.5px solid rgba(255,255,255,.25);" href="/apps/radar/">まず無料版を試す</a>
+          </div>
+          <p class="hero-note" style="margin-top:20px;">まず無料版で相性を確認してから申し込める・料金は申込み後に案内</p>
+        </div>
+      </section>
+
+      <!-- β版で増えること -->
+      <section class="section">
+        <div class="container">
+          <p class="section-label">What you get</p>
+          <h2 class="section-title">β版で増えること</h2>
+          <p class="section-sub">無料版はその場で試すためのもの。β版は、毎日続けて使うための機能が揃う。</p>
+          <div class="benefit-grid">
+            <div class="benefit-card">
+              <div class="benefit-icon">💾</div>
+              <h3>条件を保存して、毎日すぐ使える</h3>
+              <p>毎回同じ条件を入れ直さなくていい。朝開いたらすぐ案件候補が出る状態にする。</p>
             </div>
-            <div class="inline-actions hero-actions">
-              <a class="button primary" href="#apply">β版に申し込む</a>
-              <a class="button secondary" href="/apps/radar/">まず無料版を試す</a>
+            <div class="benefit-card">
+              <div class="benefit-icon">📋</div>
+              <h3>候補を整理して、見る量を減らす</h3>
+              <p>今日見る案件をさらに絞り込める。条件に近い順に並んで、判断が早くなる。</p>
             </div>
-            <div class="chip-row hero-chips">
-              <span class="chip">主役ツール</span>
-              <span class="chip">ブラウザで使う</span>
-              <span class="chip">申込み後に利用内容を案内</span>
+            <div class="benefit-card">
+              <div class="benefit-icon">✍️</div>
+              <h3>提案文を複数案出して、比較できる</h3>
+              <p>1案だけで終わらず、文体違いや切り口違いの複数案を出して選べるようにする。</p>
+            </div>
+            <div class="benefit-card">
+              <div class="benefit-icon">🔔</div>
+              <h3>合いそうな候補を見逃しにくくする</h3>
+              <p>条件に近い案件が出たタイミングで知らせる。毎日チェックしなくても拾いやすくなる。</p>
+            </div>
+            <div class="benefit-card">
+              <div class="benefit-icon">🔄</div>
+              <h3>提案文を調整して、精度を上げる</h3>
+              <p>出た下書きをもとに、強みの出し方や文体をその場で調整できる。</p>
+            </div>
+            <div class="benefit-card">
+              <div class="benefit-icon">💬</div>
+              <h3>個別サポートで、止まったら聞ける</h3>
+              <p>使い方で詰まったところを直接聞ける。自分の使い方に合わせてもらえる。</p>
             </div>
           </div>
-
-          <aside class="hero-preview">
-            <div class="preview-head">
-              <span class="preview-pill">β版で増えること</span>
-              <span class="preview-status">無料版の続き</span>
-            </div>
-            <div class="preview-score">
-              <div>
-                <small>このページで決めること</small>
-                <strong>合うなら進む</strong>
-              </div>
-              <div>
-                <small>申し込み後</small>
-                <p>利用内容とアクセス方法を見て、そのまま進めるか決められる。</p>
-              </div>
-            </div>
-            <div class="preview-stack">
-              <article class="preview-card">
-                <div class="preview-label">向いている人</div>
-                <p>毎朝の案件探しを短くしたい人、無料版だけだと足りない人。</p>
-              </article>
-              <article class="preview-card">
-                <div class="preview-label">今案内するもの</div>
-                <p>条件保存、候補整理、通知、提案文の広げ方。</p>
-              </article>
-              <article class="preview-card">
-                <div class="preview-label">先に無料版を試す理由</div>
-                <p>候補の並び方、除外の効き方、提案文の下書きが自分に合うかを先に見るため。</p>
-              </article>
-            </div>
-          </aside>
         </div>
       </section>
 
-      <section class="section impact-strip">
-        <div class="metric-grid">
-          <article class="metric-card">
-            <span>β版で増えること</span>
-            <strong>条件保存</strong>
-            <p>毎回同じ条件を入れ直さない。</p>
-          </article>
-          <article class="metric-card">
-            <span>β版で増えること</span>
-            <strong>候補整理と通知</strong>
-            <p>今日見る候補をさらに短くする。</p>
-          </article>
-          <article class="metric-card">
-            <span>β版で増えること</span>
-            <strong>提案文の複数案</strong>
-            <p>下書きからそのまま広げやすくする。</p>
-          </article>
-        </div>
-      </section>
-
-      <section class="section">
-        <div class="section-head">
-          <h2>β版で増えること</h2>
-          <p>無料版の出力が合った人にだけ必要な部分を、今の段階で絞って案内している。</p>
-        </div>
-        <div class="cards cards-4">
-          <article class="card">
-            <div class="tag">候補整理</div>
-            <h3>毎回同じ条件を入れ直さない</h3>
-            <p>条件保存を前提にして、候補を見る前の手間を減らす。</p>
-          </article>
-          <article class="card">
-            <div class="tag">通知</div>
-            <h3>合いそうな候補を見逃しにくくする</h3>
-            <p>条件に近い候補を、毎日の案件探しの流れに乗せやすくする。</p>
-          </article>
-          <article class="card">
-            <div class="tag">応募文</div>
-            <h3>下書きをそのまま広げる</h3>
-            <p>1案だけで止めずに、複数案や調整パターンまで進めやすくする。</p>
-          </article>
-          <article class="card">
-            <div class="tag">判断材料</div>
-            <h3>申込み前に決めすぎなくていい</h3>
-            <p>申し込んだあとに、利用内容とアクセス方法を見てから進めるか決められる。</p>
-          </article>
-        </div>
-      </section>
-
-      <section class="section">
-        <div class="section-head">
-          <h2>無料版とβ版の違い</h2>
-          <p>無料版は相性確認。β版は、そのまま使い続けたい人向け。</p>
-        </div>
-        <div class="comparison-grid">
-          <article class="plan-card free">
-            <div class="tag">無料版</div>
-            <h3>相性だけを見る</h3>
-            <ul class="list-check">
-              <li>その場で試せる</li>
-              <li>サンプル候補を確認</li>
-              <li>下書き1案を見る</li>
-              <li>料金はかからない</li>
-            </ul>
-            <a class="button secondary" href="/apps/radar/">無料版を見る</a>
-          </article>
-          <article class="plan-card beta">
-            <div class="tag">β版</div>
-            <h3>使い続ける段階に進む</h3>
-            <ul class="list-check">
-              <li>申込み後に利用内容を案内</li>
-              <li>条件保存と候補整理を優先して案内</li>
-              <li>複数案や調整パターンを優先して案内</li>
-              <li>料金は申込み時に案内</li>
-            </ul>
-            <a class="button primary" href="#apply">申し込む</a>
-          </article>
-        </div>
-      </section>
-
-      <section class="section">
-        <div class="cards cards-3">
-          <article class="card">
-            <div class="tag">向いている人</div>
-            <ul class="compact-list">
-              <li>毎朝の案件探しを短くしたい</li>
-              <li>無料版の並び方が自分に合っていた</li>
-              <li>提案文を毎回ゼロから考えたくない</li>
-            </ul>
-          </article>
-          <article class="card">
-            <div class="tag">向いていない人</div>
-            <ul class="compact-list">
-              <li>まだ無料版を試していない</li>
-              <li>その場の出力だけ見られれば十分</li>
-              <li>案件探しを毎回手でやりたい</li>
-            </ul>
-          </article>
-          <article class="card">
-            <div class="tag">申し込み後</div>
-            <div class="steps">
-              <div class="step"><strong>1. 送る</strong>下のフォームから使いたい内容を送る。</div>
-              <div class="step"><strong>2. 受け取る</strong>利用内容とアクセス方法を返す。</div>
-              <div class="step"><strong>3. 判断する</strong>内容を見て、そのまま進めるか決める。</div>
-            </div>
-          </article>
-          <article class="card card-span-2">
-            <div class="tag">無料版の確認</div>
-            <p>まだ試していないなら、先に <a href="/apps/radar/">無料版</a> で候補の並び方と除外の効き方を見たほうが早い。</p>
-          </article>
-        </div>
-      </section>
-
-      <section class="section" id="apply">
-        <div class="section-head">
-          <h2>案件レーダーβに申し込む</h2>
-          <p>このページだけで送れるようにしている。送信後に、利用内容とアクセス方法を順番に返す。</p>
-        </div>
-        <div class="grid contact-grid">
-          <form class="panel stack" id="beta-form">
-            <label>名前
-              <input id="name" name="name" autocomplete="name" required />
-            </label>
-            <label>返信先メール
-              <input id="email" name="email" type="email" autocomplete="email" required />
-            </label>
-            <label>今いちばん減らしたいこと
-              <select id="focus" name="focus" required>
-                <option value="案件探しの時間">案件探しの時間</option>
-                <option value="候補整理の手間">候補整理の手間</option>
-                <option value="提案文づくり">提案文づくり</option>
-                <option value="通知で見逃しを減らしたい">通知で見逃しを減らしたい</option>
-              </select>
-            </label>
-            <label>ひとこと
-              <textarea id="message" name="message" placeholder="無料版を使ってみて感じたことがあれば短く書く。"></textarea>
-            </label>
-            <input class="hidden-field" type="text" name="website" tabindex="-1" autocomplete="off" />
-            <button class="button primary" type="submit">案件レーダーβに申し込む</button>
-            <p class="mini-note">送信内容はβ版案内のために使う。ページ上にメールアドレスは出さない。</p>
-          </form>
-
-          <div class="stack">
-            <div class="card success-box" id="thanks-box" hidden>
-              <div class="tag">送信完了</div>
-              <h3>ありがとう。内容を受け取った。</h3>
-              <p>順番に確認して、案件レーダーβの利用内容やアクセス方法を返す。入力内容を直したい時は、もう一度送って大丈夫。</p>
-            </div>
-            <article class="card">
-              <div class="tag">送る前の確認</div>
-              <ul class="detail-list">
-                <li>無料版の候補の並び方が自分に合っていたか</li>
-                <li>除外したい条件がちゃんと落ちていたか</li>
-                <li>提案文の下書きが使えそうだったか</li>
+      <!-- こんな人向け -->
+      <section class="section section-alt">
+        <div class="container">
+          <p class="section-label">For who</p>
+          <h2 class="section-title">こんな人に向いている</h2>
+          <div class="plan-grid" style="max-width:800px;margin:0 auto;">
+            <div class="plan">
+              <div class="plan-name" style="color:var(--green);">向いている人</div>
+              <ul>
+                <li>毎朝の案件探しに30分以上かけている</li>
+                <li>応募文で止まって、結局応募しないことがある</li>
+                <li>無料版を試して、並び方が自分の感覚と合った</li>
+                <li>副業を本格化したいが、探す時間が取れない</li>
               </ul>
-            </article>
+            </div>
+            <div class="plan">
+              <div class="plan-name" style="color:var(--muted);">まだ早い人</div>
+              <ul style="opacity:.7;">
+                <li>無料版をまだ試していない</li>
+                <li>案件探しはたまにしかしない</li>
+                <li>その場で確認できれば十分</li>
+                <li>毎日使う習慣がまだない</li>
+              </ul>
+              <p style="margin-top:16px;font-size:14px;color:var(--muted);">→ まずは<a href="/apps/radar/" style="color:var(--green);font-weight:700;">無料版</a>から試してみてください。</p>
+            </div>
           </div>
         </div>
       </section>
+
+      <!-- 申し込みフォーム -->
+      <section class="apply-section" id="apply">
+        <div class="container">
+          <div style="text-align:center;margin-bottom:48px;">
+            <p class="section-label">Apply</p>
+            <h2 class="section-title">β版に申し込む</h2>
+            <p style="color:var(--muted);font-size:17px;">送信後、利用内容と料金をお返しします。内容を見てから進めるか決めてください。</p>
+          </div>
+          <div class="apply-wrap">
+            <div class="apply-form">
+              <h2>申し込みフォーム</h2>
+              <p class="sub">送るだけでOK。確定ではないので気軽に。</p>
+              <div id="success-msg" class="success-msg">
+                <h3>受け取りました。ありがとうございます。</h3>
+                <p>内容を確認して、利用内容と料金をお返しします。<br>見てから進めるか決めてください。</p>
+              </div>
+              <form class="form-stack" id="beta-form">
+                <label>お名前
+                  <input id="name" name="name" autocomplete="name" placeholder="山田 太郎" required />
+                </label>
+                <label>返信先メール
+                  <input id="email" name="email" type="email" autocomplete="email" placeholder="example@email.com" required />
+                </label>
+                <label>いちばん減らしたいこと
+                  <select id="focus" name="focus" required>
+                    <option value="案件探しの時間">毎朝の案件探しの時間</option>
+                    <option value="候補整理の手間">候補を絞り込む手間</option>
+                    <option value="提案文づくり">応募文を書く時間</option>
+                    <option value="通知で見逃しを減らしたい">案件の見逃し</option>
+                  </select>
+                </label>
+                <label>ひとこと（任意）
+                  <textarea id="message" name="message" placeholder="無料版を使ってみた感想や、こう使いたいという希望があれば。"></textarea>
+                </label>
+                <input type="text" name="website" style="display:none;" tabindex="-1" autocomplete="off" />
+                <button class="btn btn-primary" style="width:100%;height:52px;" type="submit">β版に申し込む</button>
+                <p style="font-size:13px;color:var(--muted);text-align:center;">送信内容はβ版案内のみに使用します</p>
+              </form>
+            </div>
+
+            <div class="apply-info">
+              <div class="info-block">
+                <h4>申し込み後の流れ</h4>
+                <ul>
+                  <li>フォームを送る（今ここ）</li>
+                  <li>利用内容と料金をメールでお返しする</li>
+                  <li>内容を見て、進めるか決める</li>
+                  <li>問題なければそのまま使い始める</li>
+                </ul>
+              </div>
+              <div class="info-block">
+                <h4>申し込む前の確認</h4>
+                <ul>
+                  <li>無料版の候補の並び方が自分に合っていたか</li>
+                  <li>除外したい条件がちゃんと落ちていたか</li>
+                  <li>提案文の下書きが使えそうだったか</li>
+                </ul>
+                <p style="margin-top:12px;"><a href="/apps/radar/" style="color:var(--green);font-weight:700;">まだなら → 無料版を試す</a></p>
+              </div>
+              <div class="info-block">
+                <h4>よくある質問</h4>
+                <p><strong>料金はいくら？</strong><br>申し込み後にメールでお知らせします。内容を見てから決めてください。</p>
+                <p style="margin-top:10px;"><strong>すぐ使い始められる？</strong><br>確認メールをお返しした後、アクセス方法をお伝えします。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
     </main>
 
-    <div class="shell sticky-cta">
-      <div class="cta-box">
-        <strong>無料版が合ったなら、そのままβ版に進む。</strong>
-        <div class="inline-actions">
-          <a class="button primary" href="#apply">申し込む</a>
-          <a class="button secondary" href="/apps/radar/">無料版を見る</a>
-        </div>
+    <div class="sticky-cta">
+      <div class="sticky-cta-inner">
+        <a class="btn btn-primary" href="#apply">β版に申し込む</a>
+        <a class="btn btn-outline" href="/apps/radar/">まず無料版を試す</a>
       </div>
     </div>
 
-    <footer class="shell footer">
-      <div>よへラボ / 案件レーダーβ</div>
-      <div class="footer-links">
-        <a href="/">トップ</a>
-        <a href="/apps/radar/">案件レーダー無料版</a>
-        <a href="/contact/">問い合わせ</a>
-        <a href="/legal/privacy/">プライバシーポリシー</a>
-        <a href="/legal/terms/">利用規約</a>
+    <footer class="footer">
+      <div class="footer-inner">
+        <div>© よへラボ / 案件レーダー β版</div>
+        <div class="footer-links">
+          <a href="/">トップ</a>
+          <a href="/apps/radar/">無料版</a>
+          <a href="/contact/">問い合わせ</a>
+          <a href="/legal/privacy/">プライバシーポリシー</a>
+          <a href="/legal/terms/">利用規約</a>
+        </div>
       </div>
     </footer>
 
     <script>
       const form = document.getElementById("beta-form");
-      const thanksBox = document.getElementById("thanks-box");
-      const hiddenField = form.querySelector('input[name="website"]');
+      const successMsg = document.getElementById("success-msg");
       const endpoint = ["yohelab2026", "gmail.com"];
 
-      form.addEventListener("submit", async (event) => {
-        event.preventDefault();
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const honeypot = form.querySelector('input[name="website"]');
+        if (honeypot && honeypot.value.trim()) return;
 
-        if (hiddenField.value.trim() !== "") return;
-
-        const submitButton = form.querySelector('button[type="submit"]');
-        submitButton.disabled = true;
-        submitButton.textContent = "送信中...";
+        const btn = form.querySelector("button[type=submit]");
+        btn.disabled = true;
+        btn.textContent = "送信中...";
 
         const payload = {
-          tool: "案件レーダー",
+          tool: "案件レーダー β版",
           name: document.getElementById("name").value.trim(),
           email: document.getElementById("email").value.trim(),
-          purpose: "β版に申し込みたい",
           focus: document.getElementById("focus").value,
           message: document.getElementById("message").value.trim() || "なし",
           _subject: "よへラボ 案件レーダー β版申込み",
@@ -321,27 +306,18 @@
         };
 
         try {
-          const response = await fetch(`https://formsubmit.co/ajax/${endpoint.join("@")}`, {
+          const res = await fetch(`https://formsubmit.co/ajax/${endpoint.join("@")}`, {
             method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json"
-            },
+            headers: { "Content-Type": "application/json", Accept: "application/json" },
             body: JSON.stringify(payload)
           });
-
-          if (!response.ok) {
-            throw new Error("send_failed");
-          }
-
-          form.reset();
-          thanksBox.hidden = false;
-          thanksBox.scrollIntoView({ behavior: "smooth", block: "start" });
-        } catch (error) {
-          alert("送信できなかった。時間を置いてもう一度試して。");
-        } finally {
-          submitButton.disabled = false;
-          submitButton.textContent = "案件レーダーβに申し込む";
+          if (!res.ok) throw new Error();
+          form.style.display = "none";
+          successMsg.style.display = "block";
+        } catch {
+          alert("送信できませんでした。時間を置いてもう一度お試しください。");
+          btn.disabled = false;
+          btn.textContent = "β版に申し込む";
         }
       });
     </script>

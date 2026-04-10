@@ -3,160 +3,122 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>X返信・投稿補助 | よへラボ</title>
-    <meta
-      name="description"
-      content="X返信・投稿補助は、短い投稿案と返信案を返す無料版。ひとりで発信を続けたい人向けのよへラボの関連ツール。"
-    />
+    <title>AI X投稿・返信補助（無料版） | よへラボ</title>
+    <meta name="description" content="テーマと言いたいことを入れると、Xの投稿案と返信案をすぐ返す。無料・登録不要。" />
+    <meta name="robots" content="index,follow" />
+    <meta name="theme-color" content="#0d6b58" />
+    <link rel="canonical" href="https://yohelab.com/apps/x-helper/" />
     <link rel="icon" type="image/png" href="/yohelab-icon.png" />
     <link rel="stylesheet" href="/shared/site.css" />
+    <style>
+      .app-layout { display: grid; grid-template-columns: 380px 1fr; gap: 24px; padding: 32px 0 80px; align-items: start; }
+      .app-panel { position: sticky; top: 88px; background: var(--white); border: 1px solid var(--border); border-radius: 20px; padding: 28px; box-shadow: var(--shadow); }
+      .app-panel h2 { font-size: 18px; font-weight: 800; margin-bottom: 20px; }
+      .form-stack { display: grid; gap: 16px; }
+      .output-grid { display: grid; gap: 20px; }
+      .output-area { background: var(--white); border: 1px solid var(--border); border-radius: 20px; padding: 28px; box-shadow: var(--shadow); }
+      .output-area h3 { font-size: 17px; font-weight: 800; margin-bottom: 14px; }
+      .draft-box { font-size: 14px; line-height: 1.9; white-space: pre-wrap; background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 16px; color: #2a3240; }
+      .app-intro { padding: 40px 0 0; text-align: center; }
+      .app-intro h1 { font-size: clamp(26px,5vw,40px); margin-bottom: 12px; }
+      .app-intro p { color: var(--muted); font-size: 17px; margin-bottom: 8px; }
+      .app-chips { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-bottom: 32px; }
+      .app-chip { padding: 5px 14px; border-radius: 999px; background: var(--bg); border: 1px solid var(--border); font-size: 13px; color: var(--muted); font-weight: 600; }
+      .upsell-bar { padding: 28px 32px; border-radius: 20px; background: linear-gradient(135deg,#0d1a16,#0d2b24); color: #fff; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-top: 32px; }
+      .upsell-bar h3 { font-size: 18px; margin-bottom: 6px; color: #fff; }
+      .upsell-bar p { font-size: 14px; color: rgba(255,255,255,.7); margin: 0; }
+      @media (max-width: 900px) { .app-layout { grid-template-columns: 1fr; } .app-panel { position: static; } }
+    </style>
   </head>
   <body>
-    <header class="shell topbar">
-      <a class="brand" href="/">
-        <img src="/yohelab-icon.png" alt="よへラボのアイコン" />
-        <span>よへラボ</span>
-      </a>
-      <nav class="mini-nav">
-        <a href="/">トップ</a>
-        <a href="/apps/radar/">案件レーダー</a>
-        <a href="/contact/">問い合わせ</a>
-        <a href="/#labs">Labs</a>
-        <a href="/products/x-helper-beta/">β版に申し込む</a>
-      </nav>
+
+    <header class="nav">
+      <div class="nav-inner">
+        <a class="brand" href="/">
+          <img src="/yohelab-icon.png" alt="よへラボのアイコン" />
+          <span>よへラボ</span>
+        </a>
+        <nav class="nav-links">
+          <a href="/">トップ</a>
+          <a href="/apps/radar/">案件レーダー</a>
+          <a href="/contact/">問い合わせ</a>
+          <a class="btn btn-primary btn-sm" href="/products/x-helper-beta/">β版に申し込む</a>
+        </nav>
+      </div>
     </header>
 
-    <main class="shell">
-      <section class="hero">
-        <div class="hero-grid">
-          <div>
-            <div class="eyebrow">関連ツール</div>
-            <h1>Xの投稿も返信も、止まりにくくする。</h1>
-            <p class="lead">
-              話したいテーマと相手を入れると、短い投稿案と返信案を返す。Xでの発信を続けたいけど、毎回ゼロから考えるのが重い人向け。
-            </p>
+    <main>
+      <div class="container">
+
+        <div class="app-intro">
+          <h1>AI X投稿・返信補助 <span style="font-size:.55em;font-weight:500;color:var(--muted);letter-spacing:0;">無料版</span></h1>
+          <p>テーマと言いたいことを入れると、投稿案3本と返信案3本がすぐ返る。</p>
+          <div class="app-chips">
+            <span class="app-chip">登録不要</span>
+            <span class="app-chip">SNS連携なし</span>
+            <span class="app-chip">入力内容は保存しない</span>
           </div>
-          <aside class="panel stack">
-            <h2>このページでわかること</h2>
-            <ul class="detail-list">
-              <li><strong>向いている人</strong>Xで発信したい個人、返信文を考えるのが重い人。</li>
-              <li><strong>入力するもの</strong>テーマ、届けたい相手、言いたいこと、雰囲気。</li>
-              <li><strong>返ってくるもの</strong>短い投稿案と返信案。</li>
-              <li><strong>使うタイミング</strong>朝の投稿前、返信前、発信ネタが止まった時。</li>
-            </ul>
-          </aside>
         </div>
-      </section>
 
-      <section class="grid">
-        <form class="panel stack" id="x-form">
-          <h2>無料版を試す</h2>
-          <label>テーマ<input id="topic" value="副業で応募しやすい案件の見つけ方" /></label>
-          <label>届けたい相手<input id="audience" value="副業を始めたいけど案件探しで止まっている人" /></label>
-          <label>言いたいこと<textarea id="point">条件に合う案件だけを先に見られるだけで、応募まで進みやすくなる。探す時間を減らしたい。</textarea></label>
-          <label>雰囲気
-            <select id="voice">
-              <option value="親しみやすく">親しみやすく</option>
-              <option value="少し強めに">少し強めに</option>
-              <option value="落ち着いて">落ち着いて</option>
-            </select>
-          </label>
-          <button class="button primary" type="submit">投稿案を作る</button>
-          <p class="mini-note">入力内容はブラウザ内だけで処理する。SNSアカウント連携はまだ使わない。</p>
-        </form>
-        <div class="results">
-          <article class="result-card">
-            <h3>投稿案</h3>
-            <div class="output-box" id="posts-output"></div>
-          </article>
-          <article class="result-card">
-            <h3>返信案</h3>
-            <div class="output-box" id="replies-output"></div>
-          </article>
-        </div>
-      </section>
+        <div class="app-layout">
 
-      <section class="section">
-        <div class="section-head">
-          <h2>無料版とβ版の違い</h2>
-          <p>無料版は発想を止めないための簡易版。β版では保存とバリエーションまわりから優先して案内する。</p>
-        </div>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>項目</th>
-                <th>無料版</th>
-                <th>β版</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>投稿案</td>
-                <td>3案をその場で返す</td>
-                <td>切り口と長さの追加を優先して案内</td>
-              </tr>
-              <tr>
-                <td>返信案</td>
-                <td>3案をその場で返す</td>
-                <td>トーン別の返答を優先して案内</td>
-              </tr>
-              <tr>
-                <td>料金</td>
-                <td>無料</td>
-                <td>申込み時に案内</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
+          <div class="app-panel">
+            <h2>条件を入れる</h2>
+            <form class="form-stack" id="x-form">
+              <label>テーマ
+                <input id="topic" value="副業で応募しやすい案件の見つけ方" placeholder="例: 副業の案件探し、フリーランスの時間管理" />
+              </label>
+              <label>届けたい相手
+                <input id="audience" value="副業を始めたいけど案件探しで止まっている人" placeholder="例: 副業初心者、フリーランス1年目" />
+              </label>
+              <label>言いたいこと
+                <textarea id="point">条件に合う案件だけを先に見られるだけで、応募まで進みやすくなる。探す時間を減らしたい。</textarea>
+              </label>
+              <label>雰囲気
+                <select id="voice">
+                  <option value="親しみやすく">親しみやすく</option>
+                  <option value="少し強めに">少し強めに</option>
+                  <option value="落ち着いて">落ち着いて</option>
+                </select>
+              </label>
+              <button class="btn btn-primary" style="width:100%;height:50px;" type="submit">投稿案を作る</button>
+              <p style="font-size:12px;color:var(--muted);text-align:center;">入力内容はサーバーに保存しません</p>
+            </form>
+          </div>
 
-      <section class="section">
-        <div class="cards">
-          <article class="card">
-            <div class="tag">使う順番</div>
-            <h3>案件の次に、発信を止めにくくする</h3>
-            <p>
-              案件レーダーや応募文ジェネレーターと並べて使う想定。今日やったことをそのまま投稿の種にしやすくする。
-            </p>
-          </article>
-          <article class="card">
-            <div class="tag">申し込み後</div>
-            <h3>β版へ進む流れ</h3>
-            <div class="steps">
-              <div class="step"><strong>1. 無料版を試す</strong>投稿案と返信案の出方を見る。</div>
-              <div class="step"><strong>2. フォームから送る</strong>問い合わせページでこのツールを選ぶ。</div>
-              <div class="step"><strong>3. 利用内容を受け取る</strong>今使える範囲を見てから進める。</div>
+          <div class="output-grid">
+            <div class="output-area">
+              <h3>投稿案（3本）</h3>
+              <div class="draft-box" id="posts-output"></div>
             </div>
-          </article>
-          <article class="card">
-            <div class="tag">安心して使うために</div>
-            <h3>前提と問い合わせ</h3>
-            <ul class="detail-list">
-              <li><strong>更新日</strong>2026年4月10日</li>
-              <li><strong>問い合わせ</strong><a href="/products/x-helper-beta/">X補助βの案内ページ</a></li>
-              <li><strong>注意</strong>出力は叩き台。実際に投稿する前に事実関係と表現の強さは自分で確認する。</li>
-            </ul>
-          </article>
+            <div class="output-area">
+              <h3>返信案（3本）</h3>
+              <div class="draft-box" id="replies-output"></div>
+            </div>
+          </div>
+
         </div>
 
-        <div class="cta-box" style="margin-top: 18px;">
-          <strong>無料版で投稿の出方を見て、必要ならβ版に申し込む。</strong>
-          <div class="inline-actions">
-            <a class="button primary" href="/products/x-helper-beta/">β版に申し込む</a>
-            <a class="button secondary" href="/apps/proposal/">応募文ジェネレーターを見る</a>
+        <div class="upsell-bar">
+          <div>
+            <h3>毎日の発信を、止まらずに続けたい</h3>
+            <p>β版では切り口違い・保存・トーン別返答まで。Xの発信をルーティン化できる。</p>
           </div>
+          <a class="btn btn-white" href="/products/x-helper-beta/">β版に申し込む →</a>
         </div>
-      </section>
+
+      </div>
     </main>
 
-    <footer class="shell footer">
-      <div>よへラボ / X返信・投稿補助</div>
-      <div class="footer-links">
-        <a href="/">トップ</a>
-        <a href="/contact/">問い合わせ</a>
-        <a href="/legal/privacy/">プライバシーポリシー</a>
-        <a href="/legal/terms/">利用規約</a>
+    <footer class="footer">
+      <div class="footer-inner">
+        <div>© よへラボ / AI X投稿・返信補助</div>
+        <div class="footer-links">
+          <a href="/">トップ</a>
+          <a href="/apps/radar/">案件レーダー</a>
+          <a href="/contact/">問い合わせ</a>
+          <a href="/legal/privacy/">プライバシーポリシー</a>
+        </div>
       </div>
     </footer>
 
@@ -176,16 +138,10 @@
           `その感覚かなり自然。情報量が多いと止まりやすいから、探すより先に「外す条件」を決めると進みやすい。`,
           `それなら、応募文まで一気に作れる形にすると止まりにくい。探す→書く の間で勢いが切れやすいから。`
         ];
-
-        document.getElementById("posts-output").textContent = posts.map((text, index) => `案${index + 1}\n${text}`).join("\n\n");
-        document.getElementById("replies-output").textContent = replies.map((text, index) => `返信${index + 1}\n${text}`).join("\n\n");
+        document.getElementById("posts-output").textContent = posts.map((t, i) => `案${i+1}\n${t}`).join("\n\n");
+        document.getElementById("replies-output").textContent = replies.map((t, i) => `返信${i+1}\n${t}`).join("\n\n");
       }
-
-      document.getElementById("x-form").addEventListener("submit", (event) => {
-        event.preventDefault();
-        renderX();
-      });
-
+      document.getElementById("x-form").addEventListener("submit", e => { e.preventDefault(); renderX(); });
       renderX();
     </script>
   </body>

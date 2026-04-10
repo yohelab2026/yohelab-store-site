@@ -3,186 +3,127 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>X返信・投稿補助 β | よへラボ</title>
-    <meta
-      name="description"
-      content="X返信・投稿補助 βの案内ページ。無料版の投稿案が合ったあと、バリエーションや保存まで進みたい人向け。"
-    />
-    <meta property="og:title" content="X返信・投稿補助 β | よへラボ" />
-    <meta property="og:description" content="無料版の投稿案が合った人向けに、切り口違いや返信トーンまで広げるX返信・投稿補助 β。" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://yohelab.com/products/x-helper-beta/" />
-    <meta property="og:image" content="https://yohelab.com/yohelab-icon.png" />
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="X返信・投稿補助 β | よへラボ" />
-    <meta name="twitter:description" content="投稿案と返信案の相性が合った人向けに、バリエーションと保存を広げるX返信・投稿補助 β。" />
-    <meta name="twitter:image" content="https://yohelab.com/yohelab-icon.png" />
-    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
+    <title>AI X投稿・返信補助 β版 | よへラボ</title>
+    <meta name="description" content="Xの発信を毎日続けるためのβ版。切り口違い・保存・トーン別返答まで広げる。無料版で出力が合った人向け。" />
+    <meta name="robots" content="index,follow" />
+    <meta name="theme-color" content="#0d6b58" />
     <link rel="canonical" href="https://yohelab.com/products/x-helper-beta/" />
     <link rel="icon" type="image/png" href="/yohelab-icon.png" />
     <link rel="stylesheet" href="/shared/site.css" />
+    <style>
+      .product-hero { padding: 80px 0 64px; background: linear-gradient(160deg,#0d1a16,#0d2b24); color: #fff; text-align: center; }
+      .product-hero .hero-eyebrow { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.2); color: rgba(255,255,255,.9); }
+      .product-hero h1 { color: #fff; margin-bottom: 20px; }
+      .product-hero h1 em { color: #4fd1b8; font-style: normal; }
+      .product-hero .hero-sub { color: rgba(255,255,255,.75); }
+      .product-hero .hero-note { color: rgba(255,255,255,.5); margin-top: 20px; }
+      .benefit-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+      .benefit-card { padding: 28px; border-radius: 16px; background: var(--white); border: 1px solid var(--border); }
+      .benefit-icon { font-size: 28px; margin-bottom: 14px; }
+      .benefit-card h3 { font-size: 17px; font-weight: 800; margin-bottom: 10px; }
+      .benefit-card p { font-size: 15px; color: var(--muted); line-height: 1.75; }
+      .apply-section { padding: 80px 0; background: var(--bg); }
+      .apply-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; max-width: 900px; margin: 0 auto; }
+      .apply-form { background: var(--white); border: 1px solid var(--border); border-radius: 20px; padding: 36px; }
+      .apply-form h2 { font-size: 22px; margin-bottom: 8px; }
+      .apply-form .sub { color: var(--muted); font-size: 15px; margin-bottom: 28px; }
+      .form-stack { display: grid; gap: 18px; }
+      .apply-info { display: grid; gap: 16px; }
+      .info-block { padding: 24px; border-radius: 16px; background: var(--white); border: 1px solid var(--border); }
+      .info-block h4 { font-size: 15px; font-weight: 800; margin-bottom: 8px; }
+      .info-block p, .info-block li { font-size: 14px; color: var(--muted); line-height: 1.75; }
+      .info-block ul { display: grid; gap: 6px; }
+      .info-block li::before { content: "→ "; color: var(--green); font-weight: 700; }
+      .success-msg { display: none; padding: 28px; border-radius: 16px; background: var(--green-light); border: 1px solid var(--green-mid); text-align: center; }
+      .success-msg h3 { font-size: 20px; margin-bottom: 10px; color: var(--green-dark); }
+      @media (max-width: 768px) { .benefit-grid, .apply-wrap { grid-template-columns: 1fr; } }
+    </style>
   </head>
   <body>
-    <header class="shell topbar">
-      <a class="brand" href="/">
-        <img src="/yohelab-icon.png" alt="よへラボのアイコン" />
-        <span>よへラボ</span>
-      </a>
-      <nav class="mini-nav">
-        <a href="/">トップ</a>
-        <a href="/apps/x-helper/">無料版</a>
-        <a href="/contact/">問い合わせ</a>
-        <a href="/#labs">Labs</a>
-        <a href="#apply">申し込む</a>
-      </nav>
+    <header class="nav">
+      <div class="nav-inner">
+        <a class="brand" href="/"><img src="/yohelab-icon.png" alt="よへラボのアイコン" /><span>よへラボ</span></a>
+        <nav class="nav-links">
+          <a href="/">トップ</a>
+          <a href="/apps/x-helper/">無料版を試す</a>
+          <a href="/contact/">問い合わせ</a>
+          <a class="btn btn-primary btn-sm" href="#apply">β版に申し込む</a>
+        </nav>
+      </div>
     </header>
-    <main class="shell">
-      <section class="hero hero-frame">
-        <div class="hero-grid">
-          <div class="hero-copy">
-            <div class="eyebrow">X返信・投稿補助 β</div>
-            <h1>投稿のネタ切れと返信の止まりを、まとめて減らす。</h1>
-            <p class="lead">無料版で出る3案が合った人向け。切り口違い、返信トーン違い、保存しながら回す流れを足して、X運用を止まりにくくする。</p>
-            <div class="hero-bullets">
-              <div class="mini-card"><strong>切り口違い</strong>同じテーマでも角度を変えて出す。</div>
-              <div class="mini-card"><strong>返信トーン違い</strong>やわらかめ、端的、強めを分ける。</div>
-              <div class="mini-card"><strong>保存</strong>後で使う投稿案を残しやすくする。</div>
-            </div>
-            <div class="inline-actions hero-actions">
-              <a class="button primary" href="#apply">β版に申し込む</a>
-              <a class="button secondary" href="/apps/x-helper/">まず無料版を試す</a>
-            </div>
+    <main>
+      <section class="product-hero">
+        <div class="container">
+          <p class="hero-eyebrow">AI X投稿・返信補助 β版</p>
+          <h1>Xの発信を、<em>毎日続けられる</em>仕組みにする。</h1>
+          <p class="hero-sub" style="max-width:520px;margin:0 auto 36px;">切り口違い・保存・トーン別返答。発信が止まりやすい人が、続けるための機能を足す。</p>
+          <div class="hero-actions">
+            <a class="btn btn-white btn-lg" href="#apply">β版に申し込む</a>
+            <a class="btn btn-lg" style="color:rgba(255,255,255,.8);border:1.5px solid rgba(255,255,255,.25);" href="/apps/x-helper/">まず無料版を試す</a>
           </div>
-          <aside class="hero-preview">
-            <div class="preview-head">
-              <span class="preview-pill">発信を止めにくくする</span>
-              <span class="preview-status">無料版の続き</span>
-            </div>
-            <div class="preview-stack">
-              <article class="preview-card"><div class="preview-label">向いている人</div><p>投稿はしたいけど、書き出しで毎回止まる人。</p></article>
-              <article class="preview-card"><div class="preview-label">先に案内すること</div><p>切り口違い、返信トーン違い、保存の流れ。</p></article>
-              <article class="preview-card"><div class="preview-label">申し込み前の確認</div><p>無料版の3案が、自分の投稿に近い方向で出るか。</p></article>
-            </div>
-          </aside>
+          <p class="hero-note">まず無料版で相性を確認してから申し込める・料金は申込み後に案内</p>
         </div>
       </section>
       <section class="section">
-        <div class="comparison-grid">
-          <article class="plan-card free">
-            <div class="tag">無料版</div>
-            <h3>その場で3案を見る</h3>
-            <ul class="list-check">
-              <li>投稿案3つを返す</li>
-              <li>返信案3つを返す</li>
-              <li>料金はかからない</li>
-            </ul>
-            <a class="button secondary" href="/apps/x-helper/">無料版を見る</a>
-          </article>
-          <article class="plan-card beta">
-            <div class="tag">β版</div>
-            <h3>毎日の発信に乗せる</h3>
-            <ul class="list-check">
-              <li>切り口違いを優先して案内</li>
-              <li>返信トーン違いを優先して案内</li>
-              <li>料金は申込み時に案内</li>
-            </ul>
-            <a class="button primary" href="#apply">申し込む</a>
-          </article>
+        <div class="container">
+          <p class="section-label">What you get</p>
+          <h2 class="section-title">β版で増えること</h2>
+          <p class="section-sub">無料版は発想の起点を作るためのもの。β版は、発信を毎日続けるための機能を足す。</p>
+          <div class="benefit-grid">
+            <div class="benefit-card"><div class="benefit-icon">🔀</div><h3>切り口を変えて複数案を出す</h3><p>同じテーマでも視点を変えた複数の投稿案を出す。ネタ切れを起こしにくくする。</p></div>
+            <div class="benefit-card"><div class="benefit-icon">💾</div><h3>テーマを保存して継続しやすくする</h3><p>よく使うテーマや届けたい相手を保存して、毎回入れ直さなくていい状態にする。</p></div>
+            <div class="benefit-card"><div class="benefit-icon">🎯</div><h3>トーン別の返答を出す</h3><p>共感・情報提供・軽めの返しなど、相手や文脈に合わせた返信案を選べるようにする。</p></div>
+          </div>
         </div>
       </section>
-      <section class="section">
-        <div class="cards cards-3">
-          <article class="card"><div class="tag">向いている人</div><ul class="compact-list"><li>毎日の投稿で止まりやすい</li><li>返信の温度感を変えたい</li><li>無料版の投稿案が近かった</li></ul></article>
-          <article class="card"><div class="tag">向いていない人</div><ul class="compact-list"><li>まだ無料版を試していない</li><li>その場の3案だけで十分</li><li>自分で全部考えたい</li></ul></article>
-          <article class="card"><div class="tag">申し込み後</div><div class="steps"><div class="step"><strong>1. 送る</strong>何で止まりやすいか送る。</div><div class="step"><strong>2. 受け取る</strong>利用内容とアクセス方法を返す。</div><div class="step"><strong>3. 判断する</strong>内容を見て進めるか決める。</div></div></article>
-        </div>
-      </section>
-      <section class="section" id="apply">
-        <div class="section-head">
-          <h2>X返信・投稿補助 βに申し込む</h2>
-          <p>このページからそのまま送れる。送信後に、利用内容とアクセス方法を順番に返す。</p>
-        </div>
-        <div class="grid contact-grid">
-          <form class="panel stack" id="beta-form">
-            <label>名前<input id="name" name="name" autocomplete="name" required /></label>
-            <label>返信先メール<input id="email" name="email" type="email" autocomplete="email" required /></label>
-            <label>今いちばん欲しいこと
-              <select id="focus" name="focus" required>
-                <option value="切り口違いがほしい">切り口違いがほしい</option>
-                <option value="返信トーンを増やしたい">返信トーンを増やしたい</option>
-                <option value="投稿案を保存して回したい">投稿案を保存して回したい</option>
-              </select>
-            </label>
-            <label>ひとこと<textarea id="message" name="message" placeholder="無料版を使って感じたことがあれば短く書く。"></textarea></label>
-            <input class="hidden-field" type="text" name="website" tabindex="-1" autocomplete="off" />
-            <button class="button primary" type="submit">X補助βに申し込む</button>
-            <p class="mini-note">送信内容はβ版案内のために使う。ページ上にメールアドレスは出さない。</p>
-          </form>
-          <div class="stack">
-            <div class="card success-box" id="thanks-box" hidden>
-              <div class="tag">送信完了</div>
-              <h3>ありがとう。内容を受け取った。</h3>
-              <p>順番に確認して、X返信・投稿補助 βの利用内容やアクセス方法を返す。</p>
+      <section class="apply-section" id="apply">
+        <div class="container">
+          <div style="text-align:center;margin-bottom:48px;">
+            <p class="section-label">Apply</p>
+            <h2 class="section-title">β版に申し込む</h2>
+            <p style="color:var(--muted);font-size:17px;">送信後、利用内容と料金をお返しします。</p>
+          </div>
+          <div class="apply-wrap">
+            <div class="apply-form">
+              <h2>申し込みフォーム</h2>
+              <p class="sub">確定ではないので気軽にどうぞ。</p>
+              <div id="success-msg" class="success-msg"><h3>受け取りました。ありがとうございます。</h3><p>利用内容と料金をお返しします。</p></div>
+              <form class="form-stack" id="beta-form">
+                <label>お名前<input id="name" name="name" autocomplete="name" required /></label>
+                <label>返信先メール<input id="email" name="email" type="email" autocomplete="email" required /></label>
+                <label>いちばん改善したいこと
+                  <select id="focus" name="focus" required>
+                    <option value="切り口違いの複数案">切り口を変えた投稿案が欲しい</option>
+                    <option value="テーマ保存">テーマを保存して毎日すぐ使いたい</option>
+                    <option value="返信のトーン違い">返信をトーンに合わせて変えたい</option>
+                  </select>
+                </label>
+                <label>ひとこと（任意）<textarea id="message" name="message" placeholder="無料版を使ってみた感想など。"></textarea></label>
+                <input type="text" name="website" style="display:none;" tabindex="-1" autocomplete="off" />
+                <button class="btn btn-primary" style="width:100%;height:52px;" type="submit">β版に申し込む</button>
+                <p style="font-size:13px;color:var(--muted);text-align:center;">送信内容はβ版案内のみに使用します</p>
+              </form>
             </div>
-            <article class="card">
-              <div class="tag">送る前の確認</div>
-              <ul class="detail-list">
-                <li>無料版の3案が使えそうだったか</li>
-                <li>投稿と返信のどちらで止まりやすいか</li>
-                <li>どのトーンがほしいか</li>
-              </ul>
-            </article>
+            <div class="apply-info">
+              <div class="info-block"><h4>申し込み後の流れ</h4><ul><li>フォームを送る（今ここ）</li><li>利用内容と料金をメールでお返しする</li><li>内容を見て、進めるか決める</li></ul></div>
+              <div class="info-block"><h4>まだ無料版を試していないなら</h4><p><a href="/apps/x-helper/" style="color:var(--green);font-weight:700;">無料版</a>で投稿案・返信案の出方を確認してから申し込むのがおすすめです。</p></div>
+            </div>
           </div>
         </div>
       </section>
     </main>
-    <footer class="shell footer">
-      <div>よへラボ / X返信・投稿補助 β</div>
-      <div class="footer-links">
-        <a href="/">トップ</a>
-        <a href="/apps/x-helper/">無料版</a>
-        <a href="/contact/">問い合わせ</a>
-        <a href="/legal/privacy/">プライバシーポリシー</a>
-      </div>
-    </footer>
+    <div class="sticky-cta"><div class="sticky-cta-inner"><a class="btn btn-primary" href="#apply">β版に申し込む</a><a class="btn btn-outline" href="/apps/x-helper/">まず無料版を試す</a></div></div>
+    <footer class="footer"><div class="footer-inner"><div>© よへラボ / AI X投稿・返信補助 β版</div><div class="footer-links"><a href="/">トップ</a><a href="/apps/x-helper/">無料版</a><a href="/contact/">問い合わせ</a><a href="/legal/privacy/">プライバシーポリシー</a></div></div></footer>
     <script>
-      const form = document.getElementById("beta-form");
-      const thanksBox = document.getElementById("thanks-box");
-      const hiddenField = form.querySelector('input[name="website"]');
-      const endpoint = ["yohelab2026", "gmail.com"];
-      form.addEventListener("submit", async (event) => {
-        event.preventDefault();
-        if (hiddenField.value.trim() !== "") return;
-        const submitButton = form.querySelector('button[type="submit"]');
-        submitButton.disabled = true;
-        submitButton.textContent = "送信中...";
-        const payload = {
-          tool: "X返信・投稿補助",
-          name: document.getElementById("name").value.trim(),
-          email: document.getElementById("email").value.trim(),
-          purpose: "β版に申し込みたい",
-          focus: document.getElementById("focus").value,
-          message: document.getElementById("message").value.trim() || "なし",
-          _subject: "よへラボ X返信・投稿補助 β版申込み",
-          _template: "table",
-          _captcha: "false"
-        };
-        try {
-          const response = await fetch(`https://formsubmit.co/ajax/${endpoint.join("@")}`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json", Accept: "application/json" },
-            body: JSON.stringify(payload)
-          });
-          if (!response.ok) throw new Error("send_failed");
-          form.reset();
-          thanksBox.hidden = false;
-          thanksBox.scrollIntoView({ behavior: "smooth", block: "start" });
-        } catch (error) {
-          alert("送信できなかった。時間を置いてもう一度試して。");
-        } finally {
-          submitButton.disabled = false;
-          submitButton.textContent = "X補助βに申し込む";
-        }
+      const form = document.getElementById("beta-form"), successMsg = document.getElementById("success-msg"), endpoint = ["yohelab2026","gmail.com"];
+      form.addEventListener("submit", async e => {
+        e.preventDefault();
+        const honeypot = form.querySelector('input[name="website"]');
+        if (honeypot && honeypot.value.trim()) return;
+        const btn = form.querySelector("button[type=submit]"); btn.disabled = true; btn.textContent = "送信中...";
+        const payload = { tool:"AI X投稿・返信補助 β版", name:document.getElementById("name").value.trim(), email:document.getElementById("email").value.trim(), focus:document.getElementById("focus").value, message:document.getElementById("message").value.trim()||"なし", _subject:"よへラボ X補助β版申込み", _template:"table", _captcha:"false" };
+        try { const res = await fetch(`https://formsubmit.co/ajax/${endpoint.join("@")}`,{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify(payload)}); if(!res.ok) throw new Error(); form.style.display="none"; successMsg.style.display="block"; }
+        catch { alert("送信できませんでした。時間を置いてもう一度お試しください。"); btn.disabled=false; btn.textContent="β版に申し込む"; }
       });
     </script>
   </body>

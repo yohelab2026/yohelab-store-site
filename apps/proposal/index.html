@@ -3,172 +3,131 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>提案文・応募文ジェネレーター | よへラボ</title>
-    <meta
-      name="description"
-      content="提案文・応募文ジェネレーターは、案件内容と自分の強みから応募文の骨組みを返す無料版。案件レーダーの次に使いやすい関連ツール。"
-    />
+    <title>AI応募文アシスタント（無料版） | よへラボ</title>
+    <meta name="description" content="案件の要点と自分の強みを入れると、直しやすい応募文の骨組みをすぐ返す。無料・登録不要。" />
+    <meta name="robots" content="index,follow" />
+    <meta name="theme-color" content="#0d6b58" />
+    <link rel="canonical" href="https://yohelab.com/apps/proposal/" />
     <link rel="icon" type="image/png" href="/yohelab-icon.png" />
     <link rel="stylesheet" href="/shared/site.css" />
+    <style>
+      .app-layout { display: grid; grid-template-columns: 380px 1fr; gap: 24px; padding: 32px 0 80px; align-items: start; }
+      .app-panel { position: sticky; top: 88px; background: var(--white); border: 1px solid var(--border); border-radius: 20px; padding: 28px; box-shadow: var(--shadow); }
+      .app-panel h2 { font-size: 18px; font-weight: 800; margin-bottom: 20px; }
+      .form-stack { display: grid; gap: 16px; }
+      .output-area { background: var(--white); border: 1px solid var(--border); border-radius: 20px; padding: 28px; box-shadow: var(--shadow); }
+      .output-area h3 { font-size: 18px; font-weight: 800; margin-bottom: 16px; }
+      .draft-box { font-size: 15px; line-height: 1.9; white-space: pre-wrap; background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 20px; color: #2a3240; min-height: 200px; }
+      .app-intro { padding: 40px 0 0; text-align: center; }
+      .app-intro h1 { font-size: clamp(26px,5vw,40px); margin-bottom: 12px; }
+      .app-intro p { color: var(--muted); font-size: 17px; margin-bottom: 8px; }
+      .app-chips { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-bottom: 32px; }
+      .app-chip { padding: 5px 14px; border-radius: 999px; background: var(--bg); border: 1px solid var(--border); font-size: 13px; color: var(--muted); font-weight: 600; }
+      .upsell-bar { padding: 28px 32px; border-radius: 20px; background: linear-gradient(135deg,#0d1a16,#0d2b24); color: #fff; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-top: 32px; }
+      .upsell-bar h3 { font-size: 18px; margin-bottom: 6px; color: #fff; }
+      .upsell-bar p { font-size: 14px; color: rgba(255,255,255,.7); margin: 0; }
+      @media (max-width: 900px) { .app-layout { grid-template-columns: 1fr; } .app-panel { position: static; } }
+    </style>
   </head>
   <body>
-    <header class="shell topbar">
-      <a class="brand" href="/">
-        <img src="/yohelab-icon.png" alt="よへラボのアイコン" />
-        <span>よへラボ</span>
-      </a>
-      <nav class="mini-nav">
-        <a href="/">トップ</a>
-        <a href="/apps/radar/">案件レーダー</a>
-        <a href="/contact/">問い合わせ</a>
-        <a href="/#labs">Labs</a>
-        <a href="/products/proposal-beta/">β版に申し込む</a>
-      </nav>
+
+    <header class="nav">
+      <div class="nav-inner">
+        <a class="brand" href="/">
+          <img src="/yohelab-icon.png" alt="よへラボのアイコン" />
+          <span>よへラボ</span>
+        </a>
+        <nav class="nav-links">
+          <a href="/">トップ</a>
+          <a href="/apps/radar/">案件レーダー</a>
+          <a href="/contact/">問い合わせ</a>
+          <a class="btn btn-primary btn-sm" href="/products/proposal-beta/">β版に申し込む</a>
+        </nav>
+      </div>
     </header>
 
-    <main class="shell">
-      <section class="hero">
-        <div class="hero-grid">
+    <main>
+      <div class="container">
+
+        <div class="app-intro">
+          <h1>AI応募文アシスタント <span style="font-size:.55em;font-weight:500;color:var(--muted);letter-spacing:0;">無料版</span></h1>
+          <p>案件の要点と自分の強みを入れると、直しやすい応募文の骨組みが返る。</p>
+          <div class="app-chips">
+            <span class="app-chip">登録不要</span>
+            <span class="app-chip">ブラウザで今すぐ使える</span>
+            <span class="app-chip">案件レーダーの次に使うと効果的</span>
+          </div>
+        </div>
+
+        <div class="app-layout">
+
+          <div class="app-panel">
+            <h2>条件を入れる</h2>
+            <form class="form-stack" id="proposal-form">
+              <label>案件名
+                <input id="project" value="LP文章の構成と執筆" placeholder="例: LP制作、ブログ記事10本" />
+              </label>
+              <label>依頼の要点
+                <textarea id="needs">個人コーチ向けのLP。サービス内容を言語化しつつ、申し込みにつながる文章にしたい。</textarea>
+              </label>
+              <label>自分の強み
+                <textarea id="strength">ヒアリング内容を整理して構成に落とすのが得意。返信が早い。初稿も早い。</textarea>
+              </label>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                <label>雰囲気
+                  <select id="tone">
+                    <option value="丁寧">丁寧</option>
+                    <option value="やわらかめ">やわらかめ</option>
+                    <option value="端的">端的</option>
+                  </select>
+                </label>
+                <label>締め方
+                  <select id="close">
+                    <option value="相談歓迎">相談歓迎</option>
+                    <option value="すぐ着手可能">すぐ着手可能</option>
+                    <option value="実績共有">実績共有</option>
+                  </select>
+                </label>
+              </div>
+              <button class="btn btn-primary" style="width:100%;height:50px;" type="submit">応募文を作る</button>
+              <p style="font-size:12px;color:var(--muted);text-align:center;">入力内容はサーバーに保存しません</p>
+            </form>
+          </div>
+
+          <div class="output-area">
+            <h3>応募文の下書き</h3>
+            <div class="draft-box" id="proposal-output"></div>
+            <div style="display:flex;gap:10px;margin-top:14px;">
+              <button class="btn btn-outline btn-sm" id="copy-proposal" type="button">コピー</button>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="upsell-bar">
           <div>
-            <div class="eyebrow">関連ツール</div>
-            <h1>応募文を、叩き台から始める。</h1>
-            <p class="lead">
-              案件の要点、自分の強み、文の温度感を入れると、そのまま直しやすい応募文の骨組みを返す。案件レーダーの次に使うと、応募まで勢いを切らしにくい。
-            </p>
+            <h3>複数案を比べて、一番使えるものを選びたい</h3>
+            <p>β版では文体違い・複数案・再編集まで。応募文の精度をもう一段上げられる。</p>
           </div>
-          <aside class="panel stack">
-            <h2>このページでわかること</h2>
-            <ul class="detail-list">
-              <li><strong>向いている人</strong>応募文の最初の数行で止まりやすい人。</li>
-              <li><strong>入力するもの</strong>案件名、依頼の要点、自分の強み、文体、締め方。</li>
-              <li><strong>返ってくるもの</strong>直しやすい応募文の骨組み。</li>
-              <li><strong>使うタイミング</strong>案件を見つけた直後、応募前の30秒、提案を整える前。</li>
-            </ul>
-          </aside>
-        </div>
-      </section>
-
-      <section class="grid">
-        <form class="panel stack" id="proposal-form">
-          <h2>無料版を試す</h2>
-          <label>案件名<input id="project" value="LP文章の構成と執筆" /></label>
-          <label>依頼の要点<textarea id="needs">個人コーチ向けのLP。サービス内容を言語化しつつ、申し込みにつながる文章にしたい。</textarea></label>
-          <label>自分の強み<textarea id="strength">ヒアリング内容を整理して構成に落とすのが得意。返信が早い。初稿も早い。</textarea></label>
-          <div class="row">
-            <label>雰囲気
-              <select id="tone">
-                <option value="丁寧">丁寧</option>
-                <option value="やわらかめ">やわらかめ</option>
-                <option value="端的">端的</option>
-              </select>
-            </label>
-            <label>締め方
-              <select id="close">
-                <option value="相談歓迎">相談歓迎</option>
-                <option value="すぐ着手可能">すぐ着手可能</option>
-                <option value="実績共有">実績共有</option>
-              </select>
-            </label>
-          </div>
-          <button class="button primary" type="submit">応募文を作る</button>
-          <p class="mini-note">入力内容はこのブラウザ内だけで処理する。ページを閉じると残さない。</p>
-        </form>
-        <div class="results">
-          <article class="result-card">
-            <h3>応募文</h3>
-            <div class="output-box" id="proposal-output"></div>
-            <div class="inline-actions">
-              <button class="button secondary" id="copy-proposal" type="button">コピー</button>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <section class="section">
-        <div class="section-head">
-          <h2>無料版とβ版の違い</h2>
-          <p>無料版は1本の骨組みを試すためのもの。β版では調整パターンや再編集まわりから優先して案内する。</p>
-        </div>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>項目</th>
-                <th>無料版</th>
-                <th>β版</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>出力数</td>
-                <td>応募文1本</td>
-                <td>複数案と文体違いを優先して案内</td>
-              </tr>
-              <tr>
-                <td>使い方</td>
-                <td>その場で試す</td>
-                <td>保存や再編集まわりを優先して案内</td>
-              </tr>
-              <tr>
-                <td>料金</td>
-                <td>無料</td>
-                <td>申込み時に案内</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <section class="section">
-        <div class="cards">
-          <article class="card">
-            <div class="tag">使う順番</div>
-            <h3>案件レーダーの次に使う</h3>
-            <p>
-              案件レーダーで候補を見つけたあと、そのまま応募文づくりに進むための位置づけ。単体でも使えるけど、並べて使うと止まりにくい。
-            </p>
-          </article>
-          <article class="card">
-            <div class="tag">申し込み後</div>
-            <h3>β版へ進む流れ</h3>
-            <div class="steps">
-              <div class="step"><strong>1. 無料版を試す</strong>骨組みの出方が自分に合うかを見る。</div>
-              <div class="step"><strong>2. フォームから送る</strong>問い合わせページでこのツールを選ぶ。</div>
-              <div class="step"><strong>3. 利用内容を受け取る</strong>今使える範囲を見てから進める。</div>
-            </div>
-          </article>
-          <article class="card">
-            <div class="tag">安心して使うために</div>
-            <h3>前提と問い合わせ</h3>
-            <ul class="detail-list">
-              <li><strong>更新日</strong>2026年4月10日</li>
-              <li><strong>問い合わせ</strong><a href="/products/proposal-beta/">提案文βの案内ページ</a></li>
-              <li><strong>注意</strong>出力は下書き用。応募前に内容と実績表現は自分で確認する。</li>
-            </ul>
-          </article>
+          <a class="btn btn-white" href="/products/proposal-beta/">β版に申し込む →</a>
         </div>
 
-        <div class="cta-box" style="margin-top: 18px;">
-          <strong>無料版で骨組みを作って、必要ならβ版に申し込む。</strong>
-          <div class="inline-actions">
-            <a class="button primary" href="/products/proposal-beta/">β版に申し込む</a>
-            <a class="button secondary" href="/apps/radar/">案件レーダーに戻る</a>
-          </div>
-        </div>
-      </section>
+      </div>
     </main>
 
-    <footer class="shell footer">
-      <div>よへラボ / 提案文・応募文ジェネレーター</div>
-      <div class="footer-links">
-        <a href="/">トップ</a>
-        <a href="/contact/">問い合わせ</a>
-        <a href="/legal/privacy/">プライバシーポリシー</a>
-        <a href="/legal/terms/">利用規約</a>
+    <footer class="footer">
+      <div class="footer-inner">
+        <div>© よへラボ / AI応募文アシスタント</div>
+        <div class="footer-links">
+          <a href="/">トップ</a>
+          <a href="/apps/radar/">案件レーダー</a>
+          <a href="/contact/">問い合わせ</a>
+          <a href="/legal/privacy/">プライバシーポリシー</a>
+        </div>
       </div>
     </footer>
 
-    <div class="toast" id="copy-toast" hidden>コピーした。</div>
+    <div class="toast" id="copy-toast">コピーしました</div>
 
     <script>
       const output = document.getElementById("proposal-output");
@@ -181,23 +140,16 @@
         const tone = document.getElementById("tone").value;
         const close = document.getElementById("close").value;
 
-        output.textContent = `はじめまして。${project}の募集を拝見し、内容を見てすぐ力になれそうだと思いご連絡しました。\n\n依頼内容の理解としては、${needs}\n\n自分は ${strength} ので、最初に方向性を整理してから、無理のない形で初稿まで進められます。文面のトーンは${tone}に合わせて調整できます。\n\nもし必要なら、作業の流れや着手イメージも短く共有できます。${close}。`;
+        output.textContent = `はじめまして。${project}の募集を拝見し、内容を見てすぐ力になれそうだと思いご連絡しました。\n\n依頼内容の理解としては、${needs}\n\n${strength}ので、最初に方向性を整理してから無理のない形で初稿まで進められます。文面のトーンは${tone}に合わせて調整できます。\n\nもし必要なら、作業の流れや着手イメージも短く共有できます。${close}。`;
       }
 
-      document.getElementById("proposal-form").addEventListener("submit", (event) => {
-        event.preventDefault();
-        build();
-      });
+      document.getElementById("proposal-form").addEventListener("submit", e => { e.preventDefault(); build(); });
 
       document.getElementById("copy-proposal").addEventListener("click", async () => {
         await navigator.clipboard.writeText(output.textContent);
-        toast.hidden = false;
-        toast.classList.add("show");
-        clearTimeout(window.copyToastTimer);
-        window.copyToastTimer = setTimeout(() => {
-          toast.classList.remove("show");
-          toast.hidden = true;
-        }, 1400);
+        toast.classList.add("show"); toast.hidden = false;
+        clearTimeout(window._t);
+        window._t = setTimeout(() => { toast.classList.remove("show"); toast.hidden = true; }, 1600);
       });
 
       build();

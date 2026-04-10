@@ -3,186 +3,187 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>提案文・応募文ジェネレーター β | よへラボ</title>
-    <meta
-      name="description"
-      content="提案文・応募文ジェネレーター βの案内ページ。無料版で骨組みを試したあと、複数案や再編集まで進みたい人向け。"
-    />
-    <meta property="og:title" content="提案文・応募文ジェネレーター β | よへラボ" />
-    <meta property="og:description" content="応募文の骨組みが合った人向けに、複数案や調整パターンを案内するβ版。" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://yohelab.com/products/proposal-beta/" />
-    <meta property="og:image" content="https://yohelab.com/yohelab-icon.png" />
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="提案文・応募文ジェネレーター β | よへラボ" />
-    <meta name="twitter:description" content="無料版で骨組みが合った人向けに、複数案や再編集まで広げる提案文・応募文ジェネレーター β。" />
-    <meta name="twitter:image" content="https://yohelab.com/yohelab-icon.png" />
-    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
+    <title>AI応募文アシスタント β版 | よへラボ</title>
+    <meta name="description" content="応募文の複数案・文体違い・再編集まで広げるβ版。無料版で骨組みが合った人向け。" />
+    <meta name="robots" content="index,follow" />
+    <meta name="theme-color" content="#0d6b58" />
     <link rel="canonical" href="https://yohelab.com/products/proposal-beta/" />
     <link rel="icon" type="image/png" href="/yohelab-icon.png" />
     <link rel="stylesheet" href="/shared/site.css" />
+    <style>
+      .product-hero { padding: 80px 0 64px; background: linear-gradient(160deg,#0d1a16,#0d2b24); color: #fff; text-align: center; }
+      .product-hero .hero-eyebrow { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.2); color: rgba(255,255,255,.9); }
+      .product-hero h1 { color: #fff; margin-bottom: 20px; }
+      .product-hero h1 em { color: #4fd1b8; font-style: normal; }
+      .product-hero .hero-sub { color: rgba(255,255,255,.75); }
+      .product-hero .hero-note { color: rgba(255,255,255,.5); margin-top: 20px; }
+      .benefit-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+      .benefit-card { padding: 28px; border-radius: 16px; background: var(--white); border: 1px solid var(--border); }
+      .benefit-icon { font-size: 28px; margin-bottom: 14px; }
+      .benefit-card h3 { font-size: 17px; font-weight: 800; margin-bottom: 10px; }
+      .benefit-card p { font-size: 15px; color: var(--muted); line-height: 1.75; }
+      .apply-section { padding: 80px 0; background: var(--bg); }
+      .apply-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; max-width: 900px; margin: 0 auto; }
+      .apply-form { background: var(--white); border: 1px solid var(--border); border-radius: 20px; padding: 36px; }
+      .apply-form h2 { font-size: 22px; margin-bottom: 8px; }
+      .apply-form .sub { color: var(--muted); font-size: 15px; margin-bottom: 28px; }
+      .form-stack { display: grid; gap: 18px; }
+      .apply-info { display: grid; gap: 16px; }
+      .info-block { padding: 24px; border-radius: 16px; background: var(--white); border: 1px solid var(--border); }
+      .info-block h4 { font-size: 15px; font-weight: 800; margin-bottom: 8px; }
+      .info-block p, .info-block li { font-size: 14px; color: var(--muted); line-height: 1.75; }
+      .info-block ul { display: grid; gap: 6px; }
+      .info-block li::before { content: "→ "; color: var(--green); font-weight: 700; }
+      .success-msg { display: none; padding: 28px; border-radius: 16px; background: var(--green-light); border: 1px solid var(--green-mid); text-align: center; }
+      .success-msg h3 { font-size: 20px; margin-bottom: 10px; color: var(--green-dark); }
+      .success-msg p { color: var(--muted); font-size: 15px; }
+      @media (max-width: 768px) { .benefit-grid, .apply-wrap { grid-template-columns: 1fr; } }
+    </style>
   </head>
   <body>
-    <header class="shell topbar">
-      <a class="brand" href="/">
-        <img src="/yohelab-icon.png" alt="よへラボのアイコン" />
-        <span>よへラボ</span>
-      </a>
-      <nav class="mini-nav">
-        <a href="/">トップ</a>
-        <a href="/apps/proposal/">無料版</a>
-        <a href="/contact/">問い合わせ</a>
-        <a href="/#labs">Labs</a>
-        <a href="#apply">申し込む</a>
-      </nav>
+
+    <header class="nav">
+      <div class="nav-inner">
+        <a class="brand" href="/">
+          <img src="/yohelab-icon.png" alt="よへラボのアイコン" />
+          <span>よへラボ</span>
+        </a>
+        <nav class="nav-links">
+          <a href="/">トップ</a>
+          <a href="/apps/proposal/">無料版を試す</a>
+          <a href="/contact/">問い合わせ</a>
+          <a class="btn btn-primary btn-sm" href="#apply">β版に申し込む</a>
+        </nav>
+      </div>
     </header>
-    <main class="shell">
-      <section class="hero hero-frame">
-        <div class="hero-grid">
-          <div class="hero-copy">
-            <div class="eyebrow">提案文・応募文ジェネレーター β</div>
-            <h1>応募文を1本で終わらせず、そのまま出せる形まで広げる。</h1>
-            <p class="lead">無料版で骨組みの相性が合った人向け。文体違い、複数案、再編集の流れを足して、応募前で止まりにくくする。</p>
-            <div class="hero-bullets">
-              <div class="mini-card"><strong>複数案</strong>1本だけで止めずに比較できる。</div>
-              <div class="mini-card"><strong>文体違い</strong>丁寧、端的、やわらかめを出し分ける。</div>
-              <div class="mini-card"><strong>再編集</strong>強みや案件内容を足して整えやすくする。</div>
-            </div>
-            <div class="inline-actions hero-actions">
-              <a class="button primary" href="#apply">β版に申し込む</a>
-              <a class="button secondary" href="/apps/proposal/">まず無料版を試す</a>
-            </div>
+
+    <main>
+
+      <section class="product-hero">
+        <div class="container">
+          <p class="hero-eyebrow">AI応募文アシスタント β版</p>
+          <h1>応募文を<em>1本で終わらせない</em>。<br>複数案から、一番使えるものを選ぶ。</h1>
+          <p class="hero-sub" style="max-width:520px;margin:0 auto 36px;">文体違い・複数案・再編集。無料版で骨組みが合った人が、応募文の精度をもう一段上げるためのβ版。</p>
+          <div class="hero-actions">
+            <a class="btn btn-white btn-lg" href="#apply">β版に申し込む</a>
+            <a class="btn btn-lg" style="color:rgba(255,255,255,.8);border:1.5px solid rgba(255,255,255,.25);" href="/apps/proposal/">まず無料版を試す</a>
           </div>
-          <aside class="hero-preview">
-            <div class="preview-head">
-              <span class="preview-pill">無料版の続き</span>
-              <span class="preview-status">応募まで短くする</span>
-            </div>
-            <div class="preview-stack">
-              <article class="preview-card"><div class="preview-label">向いている人</div><p>骨組みは出るけど、あと一歩の調整で止まりやすい人。</p></article>
-              <article class="preview-card"><div class="preview-label">先に案内すること</div><p>複数案、文体違い、再編集の流れ。</p></article>
-              <article class="preview-card"><div class="preview-label">申し込み前の確認</div><p>無料版の1本目が、自分で直したくなる骨組みになっているか。</p></article>
-            </div>
-          </aside>
+          <p class="hero-note">まず無料版で相性を確認してから申し込める・料金は申込み後に案内</p>
         </div>
       </section>
+
       <section class="section">
-        <div class="comparison-grid">
-          <article class="plan-card free">
-            <div class="tag">無料版</div>
-            <h3>まず骨組みを見る</h3>
-            <ul class="list-check">
-              <li>応募文1本をその場で出す</li>
-              <li>直しやすい形か確認する</li>
-              <li>料金はかからない</li>
-            </ul>
-            <a class="button secondary" href="/apps/proposal/">無料版を見る</a>
-          </article>
-          <article class="plan-card beta">
-            <div class="tag">β版</div>
-            <h3>そのまま応募まで進める</h3>
-            <ul class="list-check">
-              <li>複数案を優先して案内</li>
-              <li>文体違いを優先して案内</li>
-              <li>料金は申込み時に案内</li>
-            </ul>
-            <a class="button primary" href="#apply">申し込む</a>
-          </article>
-        </div>
-      </section>
-      <section class="section">
-        <div class="cards cards-3">
-          <article class="card"><div class="tag">向いている人</div><ul class="compact-list"><li>応募文を毎回ゼロから書きたくない</li><li>案件ごとに文体を変えたい</li><li>無料版の骨組みが自分に合っていた</li></ul></article>
-          <article class="card"><div class="tag">向いていない人</div><ul class="compact-list"><li>まだ無料版を試していない</li><li>応募文は1本あれば十分</li><li>自分で毎回全部書きたい</li></ul></article>
-          <article class="card"><div class="tag">申し込み後</div><div class="steps"><div class="step"><strong>1. 送る</strong>今困っていることを送る。</div><div class="step"><strong>2. 受け取る</strong>案内内容とアクセス方法を返す。</div><div class="step"><strong>3. 判断する</strong>内容を見て進めるか決める。</div></div></article>
-        </div>
-      </section>
-      <section class="section" id="apply">
-        <div class="section-head">
-          <h2>提案文・応募文ジェネレーター βに申し込む</h2>
-          <p>このページからそのまま送れる。送信後に、利用内容とアクセス方法を順番に返す。</p>
-        </div>
-        <div class="grid contact-grid">
-          <form class="panel stack" id="beta-form">
-            <label>名前<input id="name" name="name" autocomplete="name" required /></label>
-            <label>返信先メール<input id="email" name="email" type="email" autocomplete="email" required /></label>
-            <label>今いちばん欲しいこと
-              <select id="focus" name="focus" required>
-                <option value="複数案がほしい">複数案がほしい</option>
-                <option value="文体違いがほしい">文体違いがほしい</option>
-                <option value="再編集しやすくしたい">再編集しやすくしたい</option>
-              </select>
-            </label>
-            <label>ひとこと<textarea id="message" name="message" placeholder="無料版を使って感じたことがあれば短く書く。"></textarea></label>
-            <input class="hidden-field" type="text" name="website" tabindex="-1" autocomplete="off" />
-            <button class="button primary" type="submit">提案文βに申し込む</button>
-            <p class="mini-note">送信内容はβ版案内のために使う。ページ上にメールアドレスは出さない。</p>
-          </form>
-          <div class="stack">
-            <div class="card success-box" id="thanks-box" hidden>
-              <div class="tag">送信完了</div>
-              <h3>ありがとう。内容を受け取った。</h3>
-              <p>順番に確認して、提案文・応募文ジェネレーター βの利用内容やアクセス方法を返す。</p>
+        <div class="container">
+          <p class="section-label">What you get</p>
+          <h2 class="section-title">β版で増えること</h2>
+          <p class="section-sub">無料版は1本の骨組みを確認するためのもの。β版は、出した下書きをそのまま精度を上げていくためのもの。</p>
+          <div class="benefit-grid">
+            <div class="benefit-card">
+              <div class="benefit-icon">📝</div>
+              <h3>複数案を出して比べる</h3>
+              <p>1本で止めずに、切り口違いの複数案を出して一番使えるものを選べるようにする。</p>
             </div>
-            <article class="card">
-              <div class="tag">送る前の確認</div>
-              <ul class="detail-list">
-                <li>無料版の骨組みが自分の案件で使えそうだったか</li>
-                <li>どの文体が一番ほしいか</li>
-                <li>応募文をどこまで自動で進めたいか</li>
-              </ul>
-            </article>
+            <div class="benefit-card">
+              <div class="benefit-icon">🎭</div>
+              <h3>文体を出し分ける</h3>
+              <p>丁寧・端的・やわらかめを案件ごとに使い分けられる。案件の雰囲気に合わせやすくなる。</p>
+            </div>
+            <div class="benefit-card">
+              <div class="benefit-icon">🔁</div>
+              <h3>その場で再編集できる</h3>
+              <p>強みや案件内容を足したり変えたりしながら、応募前の最後の詰めまで対応できる。</p>
+            </div>
           </div>
         </div>
       </section>
+
+      <section class="apply-section" id="apply">
+        <div class="container">
+          <div style="text-align:center;margin-bottom:48px;">
+            <p class="section-label">Apply</p>
+            <h2 class="section-title">β版に申し込む</h2>
+            <p style="color:var(--muted);font-size:17px;">送信後、利用内容と料金をお返しします。内容を見てから進めるか決めてください。</p>
+          </div>
+          <div class="apply-wrap">
+            <div class="apply-form">
+              <h2>申し込みフォーム</h2>
+              <p class="sub">確定ではないので気軽にどうぞ。</p>
+              <div id="success-msg" class="success-msg">
+                <h3>受け取りました。ありがとうございます。</h3>
+                <p>内容を確認して、利用内容と料金をお返しします。</p>
+              </div>
+              <form class="form-stack" id="beta-form">
+                <label>お名前<input id="name" name="name" autocomplete="name" placeholder="山田 太郎" required /></label>
+                <label>返信先メール<input id="email" name="email" type="email" autocomplete="email" placeholder="example@email.com" required /></label>
+                <label>いちばん改善したいこと
+                  <select id="focus" name="focus" required>
+                    <option value="複数案の比較">複数案を比べて選びたい</option>
+                    <option value="文体の出し分け">案件ごとに文体を変えたい</option>
+                    <option value="再編集">出た下書きをその場で整えたい</option>
+                  </select>
+                </label>
+                <label>ひとこと（任意）<textarea id="message" name="message" placeholder="無料版を使ってみた感想など。"></textarea></label>
+                <input type="text" name="website" style="display:none;" tabindex="-1" autocomplete="off" />
+                <button class="btn btn-primary" style="width:100%;height:52px;" type="submit">β版に申し込む</button>
+                <p style="font-size:13px;color:var(--muted);text-align:center;">送信内容はβ版案内のみに使用します</p>
+              </form>
+            </div>
+            <div class="apply-info">
+              <div class="info-block">
+                <h4>申し込み後の流れ</h4>
+                <ul>
+                  <li>フォームを送る（今ここ）</li>
+                  <li>利用内容と料金をメールでお返しする</li>
+                  <li>内容を見て、進めるか決める</li>
+                  <li>問題なければそのまま使い始める</li>
+                </ul>
+              </div>
+              <div class="info-block">
+                <h4>申し込む前の確認</h4>
+                <p>まだ無料版を試していないなら、先に<a href="/apps/proposal/" style="color:var(--green);font-weight:700;">無料版</a>で骨組みの出方を確認してから判断するのがおすすめです。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
     </main>
-    <footer class="shell footer">
-      <div>よへラボ / 提案文・応募文ジェネレーター β</div>
-      <div class="footer-links">
-        <a href="/">トップ</a>
-        <a href="/apps/proposal/">無料版</a>
-        <a href="/contact/">問い合わせ</a>
-        <a href="/legal/privacy/">プライバシーポリシー</a>
+
+    <div class="sticky-cta">
+      <div class="sticky-cta-inner">
+        <a class="btn btn-primary" href="#apply">β版に申し込む</a>
+        <a class="btn btn-outline" href="/apps/proposal/">まず無料版を試す</a>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <div>© よへラボ / AI応募文アシスタント β版</div>
+        <div class="footer-links">
+          <a href="/">トップ</a>
+          <a href="/apps/proposal/">無料版</a>
+          <a href="/contact/">問い合わせ</a>
+          <a href="/legal/privacy/">プライバシーポリシー</a>
+        </div>
       </div>
     </footer>
+
     <script>
       const form = document.getElementById("beta-form");
-      const thanksBox = document.getElementById("thanks-box");
-      const hiddenField = form.querySelector('input[name="website"]');
+      const successMsg = document.getElementById("success-msg");
       const endpoint = ["yohelab2026", "gmail.com"];
-      form.addEventListener("submit", async (event) => {
-        event.preventDefault();
-        if (hiddenField.value.trim() !== "") return;
-        const submitButton = form.querySelector('button[type="submit"]');
-        submitButton.disabled = true;
-        submitButton.textContent = "送信中...";
-        const payload = {
-          tool: "提案文・応募文ジェネレーター",
-          name: document.getElementById("name").value.trim(),
-          email: document.getElementById("email").value.trim(),
-          purpose: "β版に申し込みたい",
-          focus: document.getElementById("focus").value,
-          message: document.getElementById("message").value.trim() || "なし",
-          _subject: "よへラボ 提案文・応募文ジェネレーター β版申込み",
-          _template: "table",
-          _captcha: "false"
-        };
+      form.addEventListener("submit", async e => {
+        e.preventDefault();
+        const honeypot = form.querySelector('input[name="website"]');
+        if (honeypot && honeypot.value.trim()) return;
+        const btn = form.querySelector("button[type=submit]");
+        btn.disabled = true; btn.textContent = "送信中...";
+        const payload = { tool: "AI応募文アシスタント β版", name: document.getElementById("name").value.trim(), email: document.getElementById("email").value.trim(), focus: document.getElementById("focus").value, message: document.getElementById("message").value.trim() || "なし", _subject: "よへラボ 応募文β版申込み", _template: "table", _captcha: "false" };
         try {
-          const response = await fetch(`https://formsubmit.co/ajax/${endpoint.join("@")}`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json", Accept: "application/json" },
-            body: JSON.stringify(payload)
-          });
-          if (!response.ok) throw new Error("send_failed");
-          form.reset();
-          thanksBox.hidden = false;
-          thanksBox.scrollIntoView({ behavior: "smooth", block: "start" });
-        } catch (error) {
-          alert("送信できなかった。時間を置いてもう一度試して。");
-        } finally {
-          submitButton.disabled = false;
-          submitButton.textContent = "提案文βに申し込む";
-        }
+          const res = await fetch(`https://formsubmit.co/ajax/${endpoint.join("@")}`, { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify(payload) });
+          if (!res.ok) throw new Error();
+          form.style.display = "none"; successMsg.style.display = "block";
+        } catch { alert("送信できませんでした。時間を置いてもう一度お試しください。"); btn.disabled = false; btn.textContent = "β版に申し込む"; }
       });
     </script>
   </body>

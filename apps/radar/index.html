@@ -3,312 +3,257 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AI案件コンシェルジュ（案件レーダー） | よへラボ</title>
-    <meta
-      name="description"
-      content="AI案件コンシェルジュ（案件レーダー）は、条件に合う案件候補と提案文の下書きを先に返す無料版。応募の前で止まりにくくするためのよへラボの主役ツール。"
-    />
-    <meta property="og:title" content="AI案件コンシェルジュ（案件レーダー） | よへラボ" />
-    <meta
-      property="og:description"
-      content="今日応募しやすい案件を先に絞る。条件に合う案件候補と提案文の下書きを返す無料版。"
-    />
+    <title>案件レーダー（無料版） | よへラボ</title>
+    <meta name="description" content="案件レーダーは、条件に合うクラウドソーシング案件を厳選して、応募文の下書きまで返す無料AIツール。登録不要・ブラウザで今すぐ使える。" />
+    <meta property="og:title" content="案件レーダー（無料版） | よへラボ" />
+    <meta property="og:description" content="条件を入れると、応募しやすい案件候補と応募文の下書きがすぐ返る。無料・登録不要。" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://yohelab.com/apps/radar/" />
     <meta property="og:image" content="https://yohelab.com/yohelab-icon.png" />
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="AI案件コンシェルジュ（案件レーダー） | よへラボ" />
-    <meta
-      name="twitter:description"
-      content="今日応募しやすい案件を、先に絞る。無料版で候補と提案文の下書きを確認できる。"
-    />
-    <meta name="twitter:image" content="https://yohelab.com/yohelab-icon.png" />
     <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
-    <meta name="theme-color" content="#ca5f34" />
+    <meta name="theme-color" content="#0d6b58" />
     <link rel="canonical" href="https://yohelab.com/apps/radar/" />
     <link rel="icon" type="image/png" href="/yohelab-icon.png" />
     <link rel="stylesheet" href="/shared/site.css" />
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@graph": [
-          {
-            "@type": "SoftwareApplication",
-            "name": "案件レーダー",
-            "applicationCategory": "BusinessApplication",
-            "operatingSystem": "Web",
-            "url": "https://yohelab.com/apps/radar/",
-            "offers": {
-              "@type": "Offer",
-              "price": "0",
-              "priceCurrency": "JPY"
-            },
-            "description": "条件に合う案件候補と提案文の下書きを返す、ひとりで稼ぐ人向けのWebツール。"
-          },
-          {
-            "@type": "FAQPage",
-            "mainEntity": [
-              {
-                "@type": "Question",
-                "name": "無料版で何を確認できる？",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "候補の並び方、除外条件の効き方、提案文の下書きが自分に合うかを確認できる。"
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "β版に向いているのはどんな人？",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "毎朝の案件探しをもっと短くしたい人、提案文を毎回ゼロから考えたくない人、無料版の出力を見て続きが欲しくなった人。"
-                }
-              }
-            ]
-          }
-        ]
+    <style>
+      .app-layout {
+        display: grid;
+        grid-template-columns: 380px 1fr;
+        gap: 24px;
+        padding: 32px 0 80px;
+        align-items: start;
       }
+      .app-panel {
+        position: sticky;
+        top: 88px;
+        background: var(--white);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 28px;
+        box-shadow: var(--shadow);
+      }
+      .app-panel h2 { font-size: 18px; font-weight: 800; margin-bottom: 20px; }
+      .form-stack { display: grid; gap: 16px; }
+      .app-results { display: grid; gap: 20px; }
+      .result-item {
+        background: var(--white);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+      }
+      .result-head {
+        padding: 20px 24px 16px;
+        border-bottom: 1px solid var(--border);
+        background: var(--bg);
+      }
+      .result-head h3 { font-size: 18px; font-weight: 800; margin-bottom: 6px; }
+      .result-meta { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+      .meta-pill {
+        padding: 3px 10px;
+        border-radius: 999px;
+        background: var(--white);
+        border: 1px solid var(--border);
+        font-size: 13px;
+        color: var(--muted);
+      }
+      .score-pill {
+        padding: 3px 10px;
+        border-radius: 999px;
+        background: var(--green-light);
+        border: 1px solid var(--green-mid);
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--green);
+      }
+      .result-body {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+      }
+      .result-col {
+        padding: 20px 24px;
+      }
+      .result-col + .result-col {
+        border-left: 1px solid var(--border);
+      }
+      .result-col-label {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 10px;
+      }
+      .result-col p { font-size: 15px; line-height: 1.75; color: var(--text); margin: 0; }
+      .draft-box {
+        font-size: 14px;
+        line-height: 1.85;
+        white-space: pre-wrap;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 14px 16px;
+        margin-top: 10px;
+        color: #2a3240;
+      }
+      .copy-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin-top: 10px;
+        padding: 6px 14px;
+        border-radius: 8px;
+        background: var(--white);
+        border: 1px solid var(--border);
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+        color: var(--text);
+        transition: background .14s;
+      }
+      .copy-btn:hover { background: var(--bg); }
+      .app-intro {
+        padding: 40px 0 0;
+        text-align: center;
+      }
+      .app-intro h1 { font-size: clamp(28px,5vw,44px); margin-bottom: 12px; }
+      .app-intro p { color: var(--muted); font-size: 17px; margin-bottom: 8px; }
+      .app-chips { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-bottom: 32px; }
+      .app-chip {
+        padding: 5px 14px;
+        border-radius: 999px;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        font-size: 13px;
+        color: var(--muted);
+        font-weight: 600;
+      }
+      .upsell-bar {
+        padding: 28px 32px;
+        border-radius: 20px;
+        background: linear-gradient(135deg, #0d1a16, #0d2b24);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        flex-wrap: wrap;
+        margin-top: 32px;
+      }
+      .upsell-bar h3 { font-size: 18px; margin-bottom: 6px; color: #fff; }
+      .upsell-bar p { font-size: 14px; color: rgba(255,255,255,.7); margin: 0; }
+      @media (max-width: 900px) {
+        .app-layout { grid-template-columns: 1fr; }
+        .app-panel { position: static; }
+        .result-body { grid-template-columns: 1fr; }
+        .result-col + .result-col { border-left: none; border-top: 1px solid var(--border); }
+      }
+    </style>
+    <script type="application/ld+json">
+      {"@context":"https://schema.org","@type":"SoftwareApplication","name":"案件レーダー","applicationCategory":"BusinessApplication","operatingSystem":"Web","url":"https://yohelab.com/apps/radar/","offers":{"@type":"Offer","price":"0","priceCurrency":"JPY"},"description":"条件に合う案件候補と提案文の下書きを返す、ひとりで稼ぐ人向けのWebツール。"}
     </script>
   </head>
   <body>
-    <header class="shell topbar">
-      <a class="brand" href="/">
-        <img src="/yohelab-icon.png" alt="よへラボのアイコン" />
-        <span>よへラボ</span>
-      </a>
-      <nav class="mini-nav">
-        <a href="/">トップ</a>
-        <a href="/apps/proposal/">応募文</a>
-        <a href="/contact/">問い合わせ</a>
-        <a href="/#labs">Labs</a>
-        <a href="/products/radar-beta/">β版に申し込む</a>
-      </nav>
+
+    <header class="nav">
+      <div class="nav-inner">
+        <a class="brand" href="/">
+          <img src="/yohelab-icon.png" alt="よへラボのアイコン" />
+          <span>よへラボ</span>
+        </a>
+        <nav class="nav-links">
+          <a href="/">トップ</a>
+          <a href="/apps/proposal/">応募文アシスタント</a>
+          <a href="/contact/">問い合わせ</a>
+          <a class="btn btn-primary btn-sm" href="/products/radar-beta/">β版に申し込む</a>
+        </nav>
+      </div>
     </header>
 
-    <main class="shell">
-      <section class="hero">
-        <div class="hero-grid">
+    <main>
+      <div class="container">
+
+        <div class="app-intro">
+          <h1>案件レーダー <span style="font-size:.55em;font-weight:500;color:var(--muted);letter-spacing:0;">無料版</span></h1>
+          <p>条件を入れると、今日見るべき案件候補と応募文の下書きが返る。</p>
+          <div class="app-chips">
+            <span class="app-chip">登録不要</span>
+            <span class="app-chip">ブラウザで今すぐ使える</span>
+            <span class="app-chip">入力内容は保存しない</span>
+          </div>
+        </div>
+
+        <div class="app-layout">
+
+          <!-- フォーム -->
+          <div class="app-panel">
+            <h2>条件を入れる</h2>
+            <form class="form-stack" id="radar-form">
+              <label>欲しい案件のキーワード
+                <input id="keyword" value="Webサイト LP ライティング" placeholder="例: ライティング, LP制作, EC改善" />
+              </label>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                <label>最低予算（円）
+                  <input id="minBudget" type="number" value="30000" placeholder="30000" />
+                </label>
+                <label>得意分野
+                  <select id="specialty">
+                    <option value="writing">ライティング</option>
+                    <option value="design">デザイン</option>
+                    <option value="marketing">集客・マーケ</option>
+                    <option value="ai">AI活用</option>
+                  </select>
+                </label>
+              </div>
+              <label>外したい条件
+                <input id="exclude" value="女性限定, 出社必須, 動画編集" placeholder="例: 出社必須, 動画編集, 低単価" />
+              </label>
+              <label>自分の強み
+                <textarea id="strengths" placeholder="例: 返信が早い。納期厳守。LP構成が得意。">返信が早い。初稿が早い。個人事業主向けの文章が得意。相手の依頼内容を整理して進めるのが得意。</textarea>
+              </label>
+              <div style="display:flex;flex-wrap:wrap;gap:8px;">
+                <button class="chip-action" type="button" data-chip="返信が早い。">返信が早い</button>
+                <button class="chip-action" type="button" data-chip="納期厳守。">納期厳守</button>
+                <button class="chip-action" type="button" data-chip="ヒアリングが得意。">ヒアリング得意</button>
+                <button class="chip-action" type="button" data-chip="LP構成が得意。">LP構成得意</button>
+              </div>
+              <button class="btn btn-primary" style="width:100%;height:50px;" type="submit">案件を絞る</button>
+              <p style="font-size:12px;color:var(--muted);text-align:center;">入力内容はサーバーに保存しません</p>
+            </form>
+          </div>
+
+          <!-- 結果 -->
+          <div class="app-results" id="results"></div>
+
+        </div>
+
+        <!-- β版へのアップセル -->
+        <div class="upsell-bar">
           <div>
-            <div class="eyebrow">主役ツール</div>
-            <h1>AI案件コンシェルジュが、今日見る案件を先に減らす。</h1>
-            <p class="lead">
-              欲しい条件と外したい条件を入れると、案件候補、おすすめ理由、提案文の下書きまで続けて返す。まずは無料版で、どれくらい止まりにくくなるかを確かめられる。
-            </p>
-            <div class="chip-row" style="margin-top: 16px;">
-              <span class="chip">無料版あり</span>
-              <span class="chip">ブラウザでそのまま使える</span>
-              <span class="chip">入力内容は保存しない</span>
-            </div>
-            <div class="notice" style="margin-top: 18px;">
-              <strong>このページで見るべきところ</strong><br />
-              1. 候補の並び方が自分の感覚に近いか。<br />
-              2. 外したい条件がちゃんと除外されるか。<br />
-              3. 提案文の下書きが、そのまま直しやすいか。
-            </div>
-            <div class="inline-actions" style="margin-top: 18px;">
-              <a class="button primary" href="#demo">無料版を試す</a>
-              <a class="button secondary" href="/products/radar-beta/">β版に申し込む</a>
-            </div>
+            <h3>出力が合ったなら、β版で毎日使える形にする</h3>
+            <p>条件保存・候補整理・提案文の複数案。毎朝の案件探しをルーティン化できる。</p>
           </div>
-
-          <aside class="panel stack">
-            <h2>このページでわかること</h2>
-            <ul class="detail-list">
-              <li><strong>向いている人</strong>副業を始めたい人、案件探しに時間がかかる人、応募まで勢いを切らしたくない人。</li>
-              <li><strong>入力するもの</strong>キーワード、最低予算、得意分野、外したい条件、自分の強み。</li>
-              <li><strong>返ってくるもの</strong>候補案件、点数、おすすめ理由、提案文の下書き。</li>
-              <li><strong>使うタイミング</strong>朝の案件探し、応募前の比較、今日やることを決める前。</li>
-            </ul>
-          </aside>
-        </div>
-      </section>
-
-      <section class="grid" id="demo">
-        <form class="panel stack" id="radar-form">
-          <h2>無料版を試す</h2>
-          <div class="form-progress">
-            <span>入力は4ステップ</span>
-            <strong>今は条件づくり</strong>
-          </div>
-          <label>欲しい案件のキーワード<input id="keyword" value="Webサイト LP ライティング" placeholder="例: ライティング, LP制作, EC改善" /></label>
-          <div class="row">
-            <label>最低予算<input id="minBudget" type="number" value="30000" placeholder="例: 30000" /></label>
-            <label>得意分野
-              <select id="specialty">
-                <option value="writing">ライティング</option>
-                <option value="design">デザイン</option>
-                <option value="marketing">集客</option>
-                <option value="ai">AI活用</option>
-              </select>
-            </label>
-          </div>
-          <label>外したい条件<input id="exclude" value="女性限定, 出社必須, 動画編集" placeholder="例: 出社必須, 動画編集, 低単価" /></label>
-          <label>自分の強み<textarea id="strengths" placeholder="例: 返信が早い。納期厳守。LP構成が得意。">返信が早い。初稿が早い。個人事業主向けの文章が得意。相手の依頼内容を整理して進めるのが得意。</textarea></label>
-          <div class="chip-picker" aria-label="よく使う強み">
-            <button class="chip-action" type="button" data-chip="返信が早い。">返信が早い</button>
-            <button class="chip-action" type="button" data-chip="納期厳守。">納期厳守</button>
-            <button class="chip-action" type="button" data-chip="ヒアリングが得意。">ヒアリングが得意</button>
-            <button class="chip-action" type="button" data-chip="LP構成が得意。">LP構成が得意</button>
-          </div>
-          <button class="button primary" type="submit">案件を絞る</button>
-          <p class="mini-note">サーバー保存なし。無料版はブラウザ内だけで処理する。ページを閉じると入力内容は残さない。</p>
-        </form>
-        <div class="results" id="results"></div>
-      </section>
-
-      <section class="section">
-        <div class="section-head">
-          <h2>無料版とβ版の違い</h2>
-          <p>まず無料版で出力を確かめて、必要ならβ版に申し込む形にしている。</p>
-        </div>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>項目</th>
-                <th>無料版</th>
-                <th>β版</th>
-              </tr>
-            </thead>
-            <tbody>
-                <tr>
-                  <td>案件候補</td>
-                  <td>その場で上位候補を見られる</td>
-                  <td>条件保存と候補整理を優先して案内</td>
-                </tr>
-                <tr>
-                  <td>提案文</td>
-                  <td>下書き1案</td>
-                  <td>複数案、調整パターン、文体変更を優先して案内</td>
-                </tr>
-                <tr>
-                  <td>通知</td>
-                  <td>なし</td>
-                  <td>条件に合う候補の通知から優先して案内</td>
-                </tr>
-                <tr>
-                  <td>料金</td>
-                  <td>無料</td>
-                  <td>申込み時に案内</td>
-                </tr>
-              <tr>
-                <td>向いている人</td>
-                <td>出力の相性だけ先に見たい人</td>
-                <td>毎日の案件探しをもっと短くしたい人</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <section class="section">
-        <div class="cards">
-          <article class="card">
-            <div class="tag">β版で増えること</div>
-            <h3>無料版の次に欲しくなるところだけ広げる</h3>
-            <ul class="detail-list">
-              <li>条件を保存して毎回入れ直さなくていい</li>
-              <li>候補を見たあと、そのまま応募文まで続けやすい</li>
-              <li>無料版で相性を見てから判断できる</li>
-            </ul>
-          </article>
-          <article class="card">
-            <div class="tag">今申し込む理由</div>
-            <h3>こう感じたらβ版向き</h3>
-            <ul class="detail-list">
-              <li>毎朝の案件探しをもっと短くしたい</li>
-              <li>提案文を毎回ゼロから考えたくない</li>
-              <li>無料版の出力を見て、続きが欲しくなった</li>
-            </ul>
-            <p class="mini-note">無料版で相性が合った人だけ、β版で毎日の探す時間をさらに減らしやすくする。</p>
-          </article>
-          <article class="card">
-            <div class="tag">候補の決まり方</div>
-            <h3>上に来る理由と落ちる理由</h3>
-            <ul class="detail-list">
-              <li><strong>上に来る</strong>予算、リモート可否、得意分野との近さ、急ぎ度。</li>
-              <li><strong>落ちる</strong>低単価、条件不一致、外したいカテゴリ。</li>
-              <li><strong>無料版で見る点</strong>自分の感覚と並び順がズレていないか。</li>
-            </ul>
-          </article>
-          <article class="card">
-            <div class="tag">申込み後の流れ</div>
-            <h3>使い始めるまで</h3>
-            <div class="steps">
-              <div class="step"><strong>1. 無料版で確認</strong>案件の絞り方と提案文の出方を先に見る。</div>
-              <div class="step"><strong>2. β版に申し込む</strong>案件レーダーβの案内ページから送る。</div>
-              <div class="step"><strong>3. 利用内容が届く</strong>アクセス方法と利用内容を受け取って、そのままブラウザで使う。</div>
-            </div>
-          </article>
-
-          <article class="card">
-            <div class="tag">安心して使うために</div>
-            <h3>このツールの前提</h3>
-            <ul class="detail-list">
-              <li><strong>更新日</strong>2026年4月10日</li>
-              <li><strong>問い合わせ</strong><a href="/products/radar-beta/">案件レーダーβの案内ページ</a></li>
-              <li><strong>注意</strong>無料版は参考用の簡易版。実際の案件応募時は条件と募集内容を自分でも確認する。</li>
-            </ul>
-          </article>
+          <a class="btn btn-white" href="/products/radar-beta/">β版に申し込む →</a>
         </div>
 
-        <div class="cta-box" style="margin-top: 18px;">
-          <strong>無料版で相性を見て、必要ならβ版に申し込む。</strong>
-          <div class="inline-actions">
-            <a class="button primary" href="/products/radar-beta/">β版に申し込む</a>
-            <a class="button secondary" href="/apps/proposal/">応募文ジェネレーターを見る</a>
-          </div>
-          <p class="mini-note">今は、無料版で出力確認 → 案件レーダーβの案内ページから申込、の順にしている。</p>
-        </div>
-      </section>
-
-      <section class="section">
-        <div class="section-head">
-          <h2>よくある質問</h2>
-          <p>スマホで見に来た人でも、ここで判断しやすいようにしている。</p>
-        </div>
-        <div class="faq-grid">
-          <details class="faq-item faq-accordion">
-            <summary>無料版で何を確認できる？</summary>
-            <p>候補の並び方、除外条件の効き方、提案文の下書きが自分に合うかを確認できる。</p>
-          </details>
-          <details class="faq-item faq-accordion">
-            <summary>β版に向いているのはどんな人？</summary>
-            <p>毎朝の案件探しをもっと短くしたい人、提案文を毎回ゼロから考えたくない人、無料版の出力を見て続きが欲しくなった人。</p>
-          </details>
-          <details class="faq-item faq-accordion">
-            <summary>β版で何が増える？</summary>
-            <p>条件保存、候補整理、通知、提案文の複数案など、毎日の案件探しを短くする部分から優先して案内する。料金は申込み時に案内する。</p>
-          </details>
-          <details class="faq-item faq-accordion">
-            <summary>スマホでも使える？</summary>
-            <p>入り口としては見やすくしている。本格的な入力や比較はパソコンのほうがやりやすい。</p>
-          </details>
-        </div>
-      </section>
+      </div>
     </main>
 
-    <div class="shell sticky-cta">
-      <div class="cta-box">
-        <strong>スマホでは、まず無料版で出力の相性を見る。</strong>
-        <div class="inline-actions">
-          <a class="button primary" href="#demo">無料版を試す</a>
-          <a class="button secondary" href="/products/radar-beta/">β版に申し込む</a>
+    <footer class="footer">
+      <div class="footer-inner">
+        <div>© よへラボ / 案件レーダー</div>
+        <div class="footer-links">
+          <a href="/">トップ</a>
+          <a href="/contact/">問い合わせ</a>
+          <a href="/legal/privacy/">プライバシーポリシー</a>
+          <a href="/legal/terms/">利用規約</a>
         </div>
-      </div>
-    </div>
-
-    <footer class="shell footer">
-      <div>よへラボ / 案件レーダー</div>
-      <div class="footer-links">
-        <a href="/">トップ</a>
-        <a href="/contact/">問い合わせ</a>
-        <a href="/legal/privacy/">プライバシーポリシー</a>
-        <a href="/legal/terms/">利用規約</a>
       </div>
     </footer>
 
-    <div class="toast" id="copy-toast" hidden>コピーした。</div>
+    <div class="toast" id="copy-toast">コピーしました</div>
 
     <script>
       const copyToast = document.getElementById("copy-toast");
@@ -323,103 +268,93 @@
         { title: "女性限定モニター募集ページ作成", budget: 45000, remote: true, tags: ["LP", "女性限定"], summary: "特定ターゲット向けページ。", urgency: 2 }
       ];
 
-      const results = document.getElementById("results");
-
       function proposalFor(job, strengths) {
-        return `はじめまして。${job.title}を拝見し、内容の整理から一緒に進められると思い応募しました。\n\n${strengths.split("。").filter(Boolean).slice(0, 2).join("。")}。\n\n特に「${job.summary}」のように、依頼内容を言語化しながら進める案件が得意です。初稿までの流れを早めに共有し、修正の往復を減らせるよう動きます。`;
+        const points = strengths.split("。").filter(Boolean).slice(0, 2).join("。");
+        return `はじめまして。${job.title}の募集を拝見し、すぐに力になれると思いご連絡しました。\n\n${points}。\n\n「${job.summary}」という依頼内容を整理しながら進める案件が得意です。初稿の方向性を早めに共有し、修正の往復を減らす形で進めます。`;
       }
 
       function render(list, strengths) {
+        const results = document.getElementById("results");
         if (!list.length) {
-          results.innerHTML = '<div class="empty">条件に近い案件が見つからなかった。キーワードか外したい条件を少しゆるめると出やすい。</div>';
+          results.innerHTML = `<div class="empty" style="min-height:200px;display:grid;place-items:center;border:1.5px dashed var(--border);border-radius:16px;color:var(--muted);font-size:15px;">条件に近い案件が見つかりませんでした。<br>キーワードか最低予算を少しゆるめてみてください。</div>`;
           return;
         }
 
-        results.innerHTML = list.map((job) => `
-          <article class="result-card">
-            <div class="chip-row">
-              <span class="chip">案件候補</span>
-              <span class="chip">${job.score}点</span>
-            </div>
-            <h3>${job.title}</h3>
-            <p class="muted">${job.summary}</p>
-            <div class="meter-block">
-              <div class="meter-label">
-                <span>応募しやすさ</span>
-                <strong>${job.score} / 100</strong>
+        results.innerHTML = list.map(job => {
+          const draft = proposalFor(job, strengths);
+          return `
+          <div class="result-item">
+            <div class="result-head">
+              <h3>${job.title}</h3>
+              <div class="result-meta">
+                <span class="score-pill">応募しやすさ ${job.score} / 100</span>
+                <span class="meta-pill">予算 ${job.budget.toLocaleString()}円</span>
+                <span class="meta-pill">${job.remote ? "リモート可" : "出社あり"}</span>
+                ${job.tags.map(t => `<span class="meta-pill">${t}</span>`).join("")}
               </div>
-              <div class="meter-track"><div class="meter-fill" style="width:${Math.min(job.score, 100)}%"></div></div>
             </div>
-            <div class="meta-row">
-              <span class="meta">予算 ${job.budget.toLocaleString()}円</span>
-              <span class="meta">${job.remote ? "リモート可" : "出社あり"}</span>
-              <span class="meta">${job.tags.join(" / ")}</span>
-            </div>
-            <div class="subgrid" style="margin-top: 16px;">
-              <div class="info-card">
-                <h2>おすすめ理由</h2>
+            <div class="result-body">
+              <div class="result-col">
+                <div class="result-col-label">おすすめ理由</div>
                 <p>${job.reason}</p>
               </div>
-              <div class="info-card">
-                <h2>提案文の下書き</h2>
-                <div class="output-box">${proposalFor(job, strengths)}</div>
-                <div class="inline-actions" style="margin-top: 12px;">
-                  <button class="button secondary copy-draft" type="button" data-text="${encodeURIComponent(proposalFor(job, strengths))}">コピー</button>
-                </div>
+              <div class="result-col">
+                <div class="result-col-label">応募文の下書き</div>
+                <div class="draft-box" id="draft-${job.title}">${draft}</div>
+                <button class="copy-btn" data-target="draft-${job.title}">コピー</button>
               </div>
             </div>
-          </article>
-        `).join("");
+          </div>`;
+        }).join("");
 
-        document.querySelectorAll(".copy-draft").forEach((button) => {
-          button.addEventListener("click", async () => {
-            await navigator.clipboard.writeText(decodeURIComponent(button.dataset.text));
-            copyToast.hidden = false;
+        results.querySelectorAll(".copy-btn").forEach(btn => {
+          btn.addEventListener("click", async () => {
+            const box = document.getElementById(btn.dataset.target);
+            await navigator.clipboard.writeText(box.textContent);
             copyToast.classList.add("show");
-            clearTimeout(window.radarToastTimer);
-            window.radarToastTimer = setTimeout(() => {
+            copyToast.hidden = false;
+            clearTimeout(window._toastTimer);
+            window._toastTimer = setTimeout(() => {
               copyToast.classList.remove("show");
               copyToast.hidden = true;
-            }, 1400);
+            }, 1600);
           });
         });
       }
 
-      document.querySelectorAll(".chip-action").forEach((button) => {
-        button.addEventListener("click", () => {
-          const target = document.getElementById("strengths");
-          const value = button.dataset.chip;
-          if (!target.value.includes(value)) {
-            target.value = `${target.value.trim()} ${value}`.trim();
+      document.querySelectorAll(".chip-action").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const ta = document.getElementById("strengths");
+          if (!ta.value.includes(btn.dataset.chip)) {
+            ta.value = `${ta.value.trim()} ${btn.dataset.chip}`.trim();
           }
-          target.focus();
+          ta.focus();
         });
       });
 
-      document.getElementById("radar-form").addEventListener("submit", (event) => {
-        event.preventDefault();
-
+      document.getElementById("radar-form").addEventListener("submit", e => {
+        e.preventDefault();
         const keyword = document.getElementById("keyword").value.trim().toLowerCase();
         const minBudget = Number(document.getElementById("minBudget").value || 0);
         const specialty = document.getElementById("specialty").value;
-        const exclude = document.getElementById("exclude").value.split(",").map((item) => item.trim()).filter(Boolean);
+        const exclude = document.getElementById("exclude").value.split(",").map(s => s.trim()).filter(Boolean);
         const strengths = document.getElementById("strengths").value.trim();
 
         const ranked = jobs
-          .filter((job) => job.budget >= minBudget)
-          .filter((job) => !exclude.some((word) => `${job.title} ${job.summary} ${job.tags.join(" ")}`.includes(word)))
-          .map((job) => {
-            let score = job.budget / 1000 + job.urgency * 5 + (job.remote ? 12 : -8);
-            const hay = `${job.title} ${job.summary} ${job.tags.join(" ")}`.toLowerCase();
-            if (keyword && keyword.split(" ").some((word) => word && hay.includes(word))) score += 18;
-            if (specialty === "writing" && job.tags.some((tag) => ["ライティング", "LP", "SEO", "ブログ"].includes(tag))) score += 10;
-            if (specialty === "design" && job.tags.some((tag) => ["LP", "デザイン"].includes(tag))) score += 10;
-            if (specialty === "marketing" && job.tags.some((tag) => ["集客", "MEO", "EC"].includes(tag))) score += 10;
-            if (specialty === "ai" && job.tags.some((tag) => ["AI", "監修"].includes(tag))) score += 10;
+          .filter(j => j.budget >= minBudget)
+          .filter(j => !exclude.some(w => `${j.title} ${j.summary} ${j.tags.join(" ")}`.includes(w)))
+          .map(j => {
+            let score = j.budget / 1000 + j.urgency * 5 + (j.remote ? 12 : -8);
+            const hay = `${j.title} ${j.summary} ${j.tags.join(" ")}`.toLowerCase();
+            if (keyword && keyword.split(" ").some(w => w && hay.includes(w))) score += 18;
+            if (specialty === "writing" && j.tags.some(t => ["ライティング","LP","SEO","ブログ"].includes(t))) score += 10;
+            if (specialty === "design" && j.tags.some(t => ["LP","デザイン"].includes(t))) score += 10;
+            if (specialty === "marketing" && j.tags.some(t => ["集客","MEO","EC"].includes(t))) score += 10;
+            if (specialty === "ai" && j.tags.some(t => ["AI","監修"].includes(t))) score += 10;
             return {
-              ...job,
+              ...j,
               score: Math.round(score),
-              reason: `${job.remote ? "リモートで進めやすく" : "条件は少し重いが"}、予算と緊急度のバランスが良い。${specialty === "writing" ? "文章系の強み" : specialty === "marketing" ? "集客寄りの強み" : specialty === "ai" ? "AI活用の強み" : "希望条件"}ともつながりやすい。`
+              reason: `${j.remote ? "リモートで進めやすく" : "条件は重めだが"}、予算と緊急度のバランスが良い。${specialty === "writing" ? "文章系の強み" : specialty === "marketing" ? "集客寄りの強み" : specialty === "ai" ? "AI活用の強み" : "希望条件"}ともつながりやすい。`
             };
           })
           .sort((a, b) => b.score - a.score)
