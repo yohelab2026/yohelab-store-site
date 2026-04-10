@@ -108,6 +108,16 @@ img {
   background: rgba(240, 247, 255, 0.92);
 }
 
+.breadcrumb {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 10px 0 24px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
 .hero {
   padding: 34px 0 18px;
 }
@@ -666,6 +676,12 @@ select:focus-visible,
   box-shadow: 0 0 0 6px rgba(240, 90, 40, 0.08);
 }
 
+input:focus,
+textarea:focus,
+select:focus {
+  background: #fff;
+}
+
 textarea {
   min-height: 120px;
   resize: vertical;
@@ -898,6 +914,45 @@ th:first-child {
   font-size: 16px;
 }
 
+.faq-accordion {
+  cursor: pointer;
+}
+
+.faq-accordion summary {
+  list-style: none;
+  font-weight: 700;
+  font-size: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.faq-accordion summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-accordion summary::after {
+  content: "+";
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: rgba(240, 90, 40, 0.1);
+  color: var(--accent-strong);
+  font-size: 18px;
+  flex: none;
+}
+
+.faq-accordion[open] summary::after {
+  content: "−";
+}
+
+.faq-accordion p {
+  margin: 14px 0 0;
+}
+
 .contact-grid {
   align-items: start;
 }
@@ -905,6 +960,26 @@ th:first-child {
 .success-box {
   border-color: rgba(20, 122, 103, 0.18);
   background: rgba(236, 250, 246, 0.9);
+}
+
+.toast {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 30;
+  padding: 12px 16px;
+  border-radius: 16px;
+  background: rgba(15, 23, 32, 0.92);
+  color: #fff;
+  box-shadow: 0 18px 38px rgba(15, 23, 32, 0.2);
+  transform: translateY(10px);
+  opacity: 0;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .hidden-field {

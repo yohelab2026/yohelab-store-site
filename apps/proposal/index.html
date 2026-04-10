@@ -8,21 +8,21 @@
       name="description"
       content="提案文・応募文ジェネレーターは、案件内容と自分の強みから応募文の骨組みを返す無料版。案件レーダーの次に使いやすい関連ツール。"
     />
-    <link rel="icon" type="image/png" href="../../yohelab-icon.png" />
-    <link rel="stylesheet" href="../../shared/site.css" />
+    <link rel="icon" type="image/png" href="/yohelab-icon.png" />
+    <link rel="stylesheet" href="/shared/site.css" />
   </head>
   <body>
     <header class="shell topbar">
-      <a class="brand" href="../../index.html">
-        <img src="../../yohelab-icon.png" alt="よへラボのアイコン" />
+      <a class="brand" href="/">
+        <img src="/yohelab-icon.png" alt="よへラボのアイコン" />
         <span>よへラボ</span>
       </a>
       <nav class="mini-nav">
-        <a href="../../index.html">トップ</a>
-        <a href="../radar/index.html">案件レーダー</a>
-        <a href="../../contact/index.html">問い合わせ</a>
-        <a href="../../index.html#labs">Labs</a>
-        <a href="../../contact/index.html#proposal">β版に申し込む</a>
+        <a href="/">トップ</a>
+        <a href="/apps/radar/">案件レーダー</a>
+        <a href="/contact/">問い合わせ</a>
+        <a href="/#labs">Labs</a>
+        <a href="/contact/#proposal">β版に申し込む</a>
       </nav>
     </header>
 
@@ -142,7 +142,7 @@
             <h3>前提と問い合わせ</h3>
             <ul class="detail-list">
               <li><strong>更新日</strong>2026年4月10日</li>
-              <li><strong>問い合わせ</strong><a href="../../contact/index.html#proposal">β版申込みフォーム</a></li>
+              <li><strong>問い合わせ</strong><a href="/contact/#proposal">β版申込みフォーム</a></li>
               <li><strong>注意</strong>出力は下書き用。応募前に内容と実績表現は自分で確認する。</li>
             </ul>
           </article>
@@ -151,8 +151,8 @@
         <div class="cta-box" style="margin-top: 18px;">
           <strong>無料版で骨組みを作って、必要ならβ版に申し込む。</strong>
           <div class="inline-actions">
-            <a class="button primary" href="../../contact/index.html#proposal">β版に申し込む</a>
-            <a class="button secondary" href="../radar/index.html">案件レーダーに戻る</a>
+            <a class="button primary" href="/contact/#proposal">β版に申し込む</a>
+            <a class="button secondary" href="/apps/radar/">案件レーダーに戻る</a>
           </div>
         </div>
       </section>
@@ -161,15 +161,18 @@
     <footer class="shell footer">
       <div>よへラボ / 提案文・応募文ジェネレーター</div>
       <div class="footer-links">
-        <a href="../../index.html">トップ</a>
-        <a href="../../contact/index.html">問い合わせ</a>
-        <a href="../../legal/privacy/index.html">プライバシーポリシー</a>
-        <a href="../../legal/terms/index.html">利用規約</a>
+        <a href="/">トップ</a>
+        <a href="/contact/">問い合わせ</a>
+        <a href="/legal/privacy/">プライバシーポリシー</a>
+        <a href="/legal/terms/">利用規約</a>
       </div>
     </footer>
 
+    <div class="toast" id="copy-toast" hidden>コピーした。</div>
+
     <script>
       const output = document.getElementById("proposal-output");
+      const toast = document.getElementById("copy-toast");
 
       function build() {
         const project = document.getElementById("project").value.trim();
@@ -188,6 +191,13 @@
 
       document.getElementById("copy-proposal").addEventListener("click", async () => {
         await navigator.clipboard.writeText(output.textContent);
+        toast.hidden = false;
+        toast.classList.add("show");
+        clearTimeout(window.copyToastTimer);
+        window.copyToastTimer = setTimeout(() => {
+          toast.classList.remove("show");
+          toast.hidden = true;
+        }, 1400);
       });
 
       build();
