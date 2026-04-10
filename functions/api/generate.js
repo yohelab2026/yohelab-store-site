@@ -130,8 +130,8 @@ export async function onRequestOptions() {
 export async function onRequestPost(context) {
   const apiKey = context.env.GEMINI_API_KEY;
   if (!apiKey) {
-    return new Response(JSON.stringify({ error: "API key not configured" }), {
-      status: 500,
+    return new Response(JSON.stringify({ result: "[DEBUG] API key not configured. Please set GEMINI_API_KEY in Cloudflare Pages environment variables." }), {
+      status: 200,
       headers: { "Content-Type": "application/json", ...CORS_HEADERS },
     });
   }
