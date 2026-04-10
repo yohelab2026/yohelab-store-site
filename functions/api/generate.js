@@ -1,4 +1,4 @@
-const GEMINI_MODEL = "gemini-2.0-flash";
+const GEMINI_MODEL = "gemini-1.5-flash";
 
 const SYSTEM_PROMPTS = {
   proposal: `あなたはフリーランスの応募文を書く専門家です。
