@@ -42,6 +42,32 @@ Xの返信文を3パターン、日本語で作成してください。
 - 回答は簡潔で明確（50〜100字）
 - Q: A: の形式で出力する`,
 
+  radar: `あなたはクラウドソーシングの案件データベースです。
+ユーザーの条件に基づき、現在募集中の案件候補を3〜5件生成してください。
+各案件には応募文の下書きも含めてください。
+
+必ず以下のJSON配列のみで出力すること（説明文やマークダウンは不要）：
+[
+  {
+    "title": "案件名",
+    "budget": 数値（円）,
+    "remote": true または false,
+    "tags": ["タグ1", "タグ2"],
+    "summary": "案件の概要（1〜2文）",
+    "score": 数値（0〜100、応募しやすさ）,
+    "reason": "おすすめ理由（1〜2文）",
+    "proposal": "応募文の下書き（200〜350字）"
+  }
+]
+
+重要なルール：
+- 案件はリアルなクラウドソーシングサイトに実際にありそうな内容にする
+- 予算はユーザーの最低予算以上にする
+- 除外条件に該当する案件は含めない
+- scoreはユーザーの強みとの相性で判定する（高いほど相性がいい）
+- 毎回異なるバリエーションを出す
+- JSON以外のテキストを絶対に出力しない`,
+
   aio: `あなたはSEOとWebサイト改善の専門家です。
 入力されたサイト情報を分析して、改善提案を日本語で出力してください。
 以下の形式で出力すること：
@@ -104,6 +130,15 @@ function buildUserPrompt(tool, data) {
 
 上記をもとに購入前Q&Aを5セット作成してください。`;
 
+    case "radar":
+      return `検索キーワード：${data.keyword}
+最低予算：${data.minBudget}円
+得意分野：${data.specialty}
+除外条件：${data.exclude || "なし"}
+自分の強み：${data.strengths}
+
+上記の条件に合う案件候補をJSON配列で出力してください。`;
+
     case "aio":
       return `サイトURL・名称：${data.siteUrl}
 サイトの目的：${data.purpose}
@@ -157,7 +192,10 @@ export async function onRequestPost(context) {
         body: JSON.stringify({
           systemInstruction: { parts: [{ text: systemPrompt }] },
           contents: [{ role: "user", parts: [{ text: userPrompt }] }],
-          generationConfig: { temperature: 0.7, maxOutputTokens: 800 },
+          generationConfig: {
+            temperature: tool === "radar" ? 0.9 : 0.7,
+            maxOutputTokens: tool === "radar" ? 4000 : 800,
+          },
         }),
       });
     } catch (e) {

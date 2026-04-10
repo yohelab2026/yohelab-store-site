@@ -256,41 +256,21 @@
 
     <script>
       const copyToast = document.getElementById("copy-toast");
-      const jobs = [
-        { title: "LP文章の構成と執筆", budget: 80000, remote: true, tags: ["ライティング", "LP", "集客"], summary: "個人コーチ向けのLP。構成から相談したい。", urgency: 4 },
-        { title: "自社ブログ記事10本の下書き", budget: 35000, remote: true, tags: ["ライティング", "SEO", "ブログ"], summary: "AI下書きあり。人間の整えが必要。", urgency: 3 },
-        { title: "STORES商品ページ改善", budget: 50000, remote: true, tags: ["EC", "説明文", "Q&A"], summary: "商品説明とFAQを整えたい。", urgency: 5 },
-        { title: "YouTube台本制作", budget: 25000, remote: true, tags: ["動画", "台本"], summary: "ショート動画台本を毎週5本。", urgency: 2 },
-        { title: "店舗向けGoogle口コミ返信代行", budget: 42000, remote: true, tags: ["口コミ", "MEO", "返信"], summary: "10店舗分の返信方針を整えたい。", urgency: 4 },
-        { title: "出社ありの営業事務", budget: 50000, remote: false, tags: ["事務", "出社"], summary: "平日常駐。", urgency: 1 },
-        { title: "AI記事リライトと監修", budget: 70000, remote: true, tags: ["AI", "ライティング", "監修"], summary: "AI生成記事の人間監修。", urgency: 5 },
-        { title: "女性限定モニター募集ページ作成", budget: 45000, remote: true, tags: ["LP", "女性限定"], summary: "特定ターゲット向けページ。", urgency: 2 }
-      ];
 
-      async function generateProposal(job, strengths) {
-        try {
-          const res = await fetch("/api/generate", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              tool: "proposal",
-              data: {
-                project: job.title,
-                needs: job.summary,
-                strength: strengths || "ヒアリング内容を整理して構成に落とすのが得意。返信が早い。",
-                tone: "丁寧",
-                close: "相談歓迎"
-              }
-            }),
-          });
-          const json = await res.json();
-          return json.result || "生成に失敗しました。";
-        } catch {
-          return "通信エラーが発生しました。";
+      function parseJobs(text) {
+        try { return JSON.parse(text); } catch {}
+        const match = text.match(/\[[\s\S]*\]/);
+        if (match) {
+          try { return JSON.parse(match[0]); } catch {}
         }
+        throw new Error("案件データの解析に失敗しました。もう一度お試しください。");
       }
 
-      function render(list, strengths) {
+      function escapeHtml(str) {
+        return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+      }
+
+      function render(list) {
         const results = document.getElementById("results");
         if (!list.length) {
           results.innerHTML = `<div class="empty" style="min-height:200px;display:grid;place-items:center;border:1.5px dashed var(--border);border-radius:16px;color:var(--muted);font-size:15px;">条件に近い案件が見つかりませんでした。<br>キーワードか最低予算を少しゆるめてみてください。</div>`;
@@ -300,22 +280,26 @@
         results.innerHTML = list.map((job, i) => `
           <div class="result-item">
             <div class="result-head">
-              <h3>${job.title}</h3>
+              <h3>${escapeHtml(job.title)}</h3>
               <div class="result-meta">
-                <span class="score-pill">応募しやすさ ${job.score} / 100</span>
-                <span class="meta-pill">予算 ${job.budget.toLocaleString()}円</span>
+                <span class="score-pill">応募しやすさ ${Number(job.score) || 0} / 100</span>
+                <span class="meta-pill">予算 ${Number(job.budget).toLocaleString()}円</span>
                 <span class="meta-pill">${job.remote ? "リモート可" : "出社あり"}</span>
-                ${job.tags.map(t => `<span class="meta-pill">${t}</span>`).join("")}
+                ${(job.tags || []).map(t => `<span class="meta-pill">${escapeHtml(t)}</span>`).join("")}
               </div>
             </div>
             <div class="result-body">
               <div class="result-col">
                 <div class="result-col-label">おすすめ理由</div>
-                <p>${job.reason}</p>
+                <p>${escapeHtml(job.reason)}</p>
+                <div style="margin-top:12px;">
+                  <div class="result-col-label">案件概要</div>
+                  <p>${escapeHtml(job.summary)}</p>
+                </div>
               </div>
               <div class="result-col">
                 <div class="result-col-label">応募文の下書き（AI生成）</div>
-                <div class="draft-box" id="draft-${i}">AIが応募文を考えています…</div>
+                <div class="draft-box" id="draft-${i}">${escapeHtml(job.proposal)}</div>
                 <button class="copy-btn" data-target="draft-${i}">コピー</button>
               </div>
             </div>
@@ -334,13 +318,6 @@
             }, 1600);
           });
         });
-
-        list.forEach((job, i) => {
-          generateProposal(job, strengths).then(text => {
-            const box = document.getElementById(`draft-${i}`);
-            if (box) box.textContent = text;
-          });
-        });
       }
 
       document.querySelectorAll(".chip-action").forEach(btn => {
@@ -353,35 +330,41 @@
         });
       });
 
-      document.getElementById("radar-form").addEventListener("submit", e => {
+      document.getElementById("radar-form").addEventListener("submit", async (e) => {
         e.preventDefault();
-        const keyword = document.getElementById("keyword").value.trim().toLowerCase();
-        const minBudget = Number(document.getElementById("minBudget").value || 0);
-        const specialty = document.getElementById("specialty").value;
-        const exclude = document.getElementById("exclude").value.split(",").map(s => s.trim()).filter(Boolean);
-        const strengths = document.getElementById("strengths").value.trim();
+        const results = document.getElementById("results");
+        const submitBtn = e.target.querySelector('[type="submit"]');
+        const specialtyEl = document.getElementById("specialty");
 
-        const ranked = jobs
-          .filter(j => j.budget >= minBudget)
-          .filter(j => !exclude.some(w => `${j.title} ${j.summary} ${j.tags.join(" ")}`.includes(w)))
-          .map(j => {
-            let score = j.budget / 1000 + j.urgency * 5 + (j.remote ? 12 : -8);
-            const hay = `${j.title} ${j.summary} ${j.tags.join(" ")}`.toLowerCase();
-            if (keyword && keyword.split(" ").some(w => w && hay.includes(w))) score += 18;
-            if (specialty === "writing" && j.tags.some(t => ["ライティング","LP","SEO","ブログ"].includes(t))) score += 10;
-            if (specialty === "design" && j.tags.some(t => ["LP","デザイン"].includes(t))) score += 10;
-            if (specialty === "marketing" && j.tags.some(t => ["集客","MEO","EC"].includes(t))) score += 10;
-            if (specialty === "ai" && j.tags.some(t => ["AI","監修"].includes(t))) score += 10;
-            return {
-              ...j,
-              score: Math.round(score),
-              reason: `${j.remote ? "リモートで進めやすく" : "条件は重めだが"}、予算と緊急度のバランスが良い。${specialty === "writing" ? "文章系の強み" : specialty === "marketing" ? "集客寄りの強み" : specialty === "ai" ? "AI活用の強み" : "希望条件"}ともつながりやすい。`
-            };
-          })
-          .sort((a, b) => b.score - a.score)
-          .slice(0, 5);
+        submitBtn.disabled = true;
+        submitBtn.textContent = "AIが案件を探しています…";
+        results.innerHTML = `<div class="empty" style="min-height:200px;display:grid;place-items:center;border:1.5px dashed var(--border);border-radius:16px;color:var(--muted);font-size:15px;"><div style="text-align:center;">AIが条件に合う案件を探しています…<br><small>10〜20秒ほどかかります</small></div></div>`;
 
-        render(ranked, strengths);
+        try {
+          const res = await fetch("/api/generate", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              tool: "radar",
+              data: {
+                keyword: document.getElementById("keyword").value.trim(),
+                minBudget: document.getElementById("minBudget").value || "30000",
+                specialty: specialtyEl.options[specialtyEl.selectedIndex].text,
+                exclude: document.getElementById("exclude").value.trim(),
+                strengths: document.getElementById("strengths").value.trim(),
+              }
+            }),
+          });
+          const json = await res.json();
+          if (json.error) throw new Error(json.error);
+          const jobs = parseJobs(json.result);
+          render(jobs);
+        } catch (err) {
+          results.innerHTML = `<div class="empty" style="min-height:200px;display:grid;place-items:center;border:1.5px dashed var(--border);border-radius:16px;color:var(--muted);font-size:15px;"><div style="text-align:center;">エラーが発生しました。時間をおいて再度お試しください。<br><small>${escapeHtml(err.message)}</small></div></div>`;
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = "案件を絞る";
+        }
       });
     </script>
   </body>
