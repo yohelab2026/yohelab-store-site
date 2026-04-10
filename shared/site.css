@@ -21,6 +21,8 @@
 
 /* ---- Reset ---- */
 *, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+::selection { background: var(--green-mid); color: var(--green-dark); }
 body {
   margin: 0;
   font-family: -apple-system, "Hiragino Sans", "Yu Gothic UI", "Noto Sans JP", sans-serif;
@@ -871,6 +873,22 @@ input:focus, textarea:focus, select:focus {
   box-shadow: 0 0 0 3px rgba(13,107,88,.12);
 }
 
+/* Keyboard focus ring */
+*:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+}
+
+.btn:focus-visible, .button:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(13,107,88,.18);
+}
+
+input:focus-visible, textarea:focus-visible, select:focus-visible {
+  outline: none;
+}
+
 textarea { min-height: 120px; resize: vertical; }
 
 .button { /* alias for app pages using old class names */
@@ -1307,7 +1325,7 @@ td:first-child, th:first-child { font-weight: 700; }
 }
 
 .plan-card.free { background: var(--white); }
-.plan-card.beta { border-color: var(--green); background: var(--green-light); }
+.plan-card.beta, .plan-card.pro { border-color: var(--green); background: var(--green-light); }
 .plan-card h3 { font-size: 20px; margin-top: 0; margin-bottom: 16px; }
 .plan-card .button { margin-top: 16px; }
 
