@@ -132,15 +132,34 @@
     <script>
       const output = document.getElementById("proposal-output");
       const toast = document.getElementById("copy-toast");
+      const btn = document.querySelector("#proposal-form button[type=submit]");
 
-      function build() {
+      async function build() {
         const project = document.getElementById("project").value.trim();
         const needs = document.getElementById("needs").value.trim();
         const strength = document.getElementById("strength").value.trim();
         const tone = document.getElementById("tone").value;
         const close = document.getElementById("close").value;
+        if (!project || !needs || !strength) { output.textContent = "案件名・依頼の要点・自分の強みを入力してください。"; return; }
 
-        output.textContent = `はじめまして。${project}の募集を拝見し、内容を見てすぐ力になれそうだと思いご連絡しました。\n\n依頼内容の理解としては、${needs}\n\n${strength}ので、最初に方向性を整理してから無理のない形で初稿まで進められます。文面のトーンは${tone}に合わせて調整できます。\n\nもし必要なら、作業の流れや着手イメージも短く共有できます。${close}。`;
+        btn.disabled = true;
+        btn.textContent = "生成中…";
+        output.textContent = "AIが応募文を考えています…";
+
+        try {
+          const res = await fetch("/api/generate", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ tool: "proposal", data: { project, needs, strength, tone, close } }),
+          });
+          const json = await res.json();
+          output.textContent = json.result || "生成に失敗しました。もう一度お試しください。";
+        } catch {
+          output.textContent = "通信エラーが発生しました。もう一度お試しください。";
+        } finally {
+          btn.disabled = false;
+          btn.textContent = "応募文を作る";
+        }
       }
 
       document.getElementById("proposal-form").addEventListener("submit", e => { e.preventDefault(); build(); });
@@ -151,8 +170,6 @@
         clearTimeout(window._t);
         window._t = setTimeout(() => { toast.classList.remove("show"); toast.hidden = true; }, 1600);
       });
-
-      build();
     </script>
   </body>
 </html>

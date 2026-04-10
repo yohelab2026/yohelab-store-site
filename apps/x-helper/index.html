@@ -123,26 +123,49 @@
     </footer>
 
     <script>
-      function renderX() {
-        const topic = document.getElementById("topic").value.trim();
-        const audience = document.getElementById("audience").value.trim();
-        const point = document.getElementById("point").value.trim();
-        const voice = document.getElementById("voice").value;
-        const posts = [
-          `案件探しで止まる人、けっこう多い。\n${topic} って、情報が多いほど逆に迷いやすい。\n${point}\n${voice}話すなら、まず「今日見る案件を減らす」が効く。`,
-          `${audience} に一番足りないの、やる気じゃなくて順番かもしれない。\n${topic} を考える時は、探す→選ぶ→書く を分けるだけでかなり進む。`,
-          `「副業したいけど探すだけで疲れる」\nそれなら、全部見るんじゃなくて、応募しやすい案件だけ先に見る仕組みを作るとラク。`
-        ];
-        const replies = [
-          `わかる。案件探しって、探してる時間だけで消耗しやすいよね。まずは条件を絞って「今日見る案件」を減らすのが一番ラクだった。`,
-          `その感覚かなり自然。情報量が多いと止まりやすいから、探すより先に「外す条件」を決めると進みやすい。`,
-          `それなら、応募文まで一気に作れる形にすると止まりにくい。探す→書く の間で勢いが切れやすいから。`
-        ];
-        document.getElementById("posts-output").textContent = posts.map((t, i) => `案${i+1}\n${t}`).join("\n\n");
-        document.getElementById("replies-output").textContent = replies.map((t, i) => `返信${i+1}\n${t}`).join("\n\n");
+      const postsOutput = document.getElementById("posts-output");
+      const repliesOutput = document.getElementById("replies-output");
+      const btn = document.querySelector("#x-form button[type=submit]");
+
+      async function renderX() {
+        const theme = document.getElementById("topic").value.trim();
+        const target = document.getElementById("audience").value.trim();
+        const message = document.getElementById("point").value.trim();
+        const tone = document.getElementById("voice").value;
+        if (!theme || !message) { postsOutput.textContent = "テーマと言いたいことを入力してください。"; return; }
+
+        btn.disabled = true;
+        btn.textContent = "生成中…";
+        postsOutput.textContent = "AIが投稿案を考えています…";
+        repliesOutput.textContent = "AIが返信案を考えています…";
+
+        try {
+          const [postsRes, repliesRes] = await Promise.all([
+            fetch("/api/generate", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ tool: "x_post", data: { theme, target, message, tone } }),
+            }),
+            fetch("/api/generate", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ tool: "x_reply", data: { original: message, character: target, tone } }),
+            }),
+          ]);
+          const postsJson = await postsRes.json();
+          const repliesJson = await repliesRes.json();
+          postsOutput.textContent = postsJson.result || "生成に失敗しました。";
+          repliesOutput.textContent = repliesJson.result || "生成に失敗しました。";
+        } catch {
+          postsOutput.textContent = "通信エラーが発生しました。もう一度お試しください。";
+          repliesOutput.textContent = "";
+        } finally {
+          btn.disabled = false;
+          btn.textContent = "投稿案を作る";
+        }
       }
+
       document.getElementById("x-form").addEventListener("submit", e => { e.preventDefault(); renderX(); });
-      renderX();
     </script>
   </body>
 </html>

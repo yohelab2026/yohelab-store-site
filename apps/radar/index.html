@@ -268,9 +268,27 @@
         { title: "女性限定モニター募集ページ作成", budget: 45000, remote: true, tags: ["LP", "女性限定"], summary: "特定ターゲット向けページ。", urgency: 2 }
       ];
 
-      function proposalFor(job, strengths) {
-        const points = strengths.split("。").filter(Boolean).slice(0, 2).join("。");
-        return `はじめまして。${job.title}の募集を拝見し、すぐに力になれると思いご連絡しました。\n\n${points}。\n\n「${job.summary}」という依頼内容を整理しながら進める案件が得意です。初稿の方向性を早めに共有し、修正の往復を減らす形で進めます。`;
+      async function generateProposal(job, strengths) {
+        try {
+          const res = await fetch("/api/generate", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              tool: "proposal",
+              data: {
+                project: job.title,
+                needs: job.summary,
+                strength: strengths || "ヒアリング内容を整理して構成に落とすのが得意。返信が早い。",
+                tone: "丁寧",
+                close: "相談歓迎"
+              }
+            }),
+          });
+          const json = await res.json();
+          return json.result || "生成に失敗しました。";
+        } catch {
+          return "通信エラーが発生しました。";
+        }
       }
 
       function render(list, strengths) {
@@ -280,9 +298,7 @@
           return;
         }
 
-        results.innerHTML = list.map(job => {
-          const draft = proposalFor(job, strengths);
-          return `
+        results.innerHTML = list.map((job, i) => `
           <div class="result-item">
             <div class="result-head">
               <h3>${job.title}</h3>
@@ -299,13 +315,12 @@
                 <p>${job.reason}</p>
               </div>
               <div class="result-col">
-                <div class="result-col-label">応募文の下書き</div>
-                <div class="draft-box" id="draft-${job.title}">${draft}</div>
-                <button class="copy-btn" data-target="draft-${job.title}">コピー</button>
+                <div class="result-col-label">応募文の下書き（AI生成）</div>
+                <div class="draft-box" id="draft-${i}">AIが応募文を考えています…</div>
+                <button class="copy-btn" data-target="draft-${i}">コピー</button>
               </div>
             </div>
-          </div>`;
-        }).join("");
+          </div>`).join("");
 
         results.querySelectorAll(".copy-btn").forEach(btn => {
           btn.addEventListener("click", async () => {
@@ -318,6 +333,13 @@
               copyToast.classList.remove("show");
               copyToast.hidden = true;
             }, 1600);
+          });
+        });
+
+        list.forEach((job, i) => {
+          generateProposal(job, strengths).then(text => {
+            const box = document.getElementById(`draft-${i}`);
+            if (box) box.textContent = text;
           });
         });
       }
@@ -362,8 +384,6 @@
 
         render(ranked, strengths);
       });
-
-      document.getElementById("radar-form").dispatchEvent(new Event("submit"));
     </script>
   </body>
 </html>

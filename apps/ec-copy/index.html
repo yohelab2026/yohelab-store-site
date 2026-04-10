@@ -119,19 +119,49 @@
     </footer>
 
     <script>
-      function renderEC() {
-        const name = document.getElementById("ec-name").value.trim();
-        const audience = document.getElementById("audience").value.trim();
+      const descOutput = document.getElementById("desc-output");
+      const faqOutput = document.getElementById("faq-output");
+      const btn = document.querySelector("#ec-form button[type=submit]");
+
+      async function renderEC() {
+        const productName = document.getElementById("ec-name").value.trim();
+        const target = document.getElementById("audience").value.trim();
         const features = document.getElementById("features").value.trim();
-        const concerns = document.getElementById("concerns").value.trim();
-        document.getElementById("desc-output").textContent =
-          `【${name}】\n\n${audience}のために作りました。\n\n${features.split("。").filter(Boolean).map(f => `・${f.trim()}`).join("\n")}\n\n毎日使うものだからこそ、細かいところまでこだわっています。`;
-        const qs = concerns.split("。").filter(Boolean);
-        document.getElementById("faq-output").textContent =
-          qs.map(q => `Q: ${q.trim()}は？\nA: はい、${name}は${q.trim()}にも対応しています。ご安心ください。`).join("\n\n");
+        const category = document.getElementById("concerns").value.trim();
+        if (!productName || !features) { descOutput.textContent = "商品名と特徴を入力してください。"; return; }
+
+        btn.disabled = true;
+        btn.textContent = "生成中…";
+        descOutput.textContent = "AIが商品説明文を考えています…";
+        faqOutput.textContent = "AIがQ&Aを考えています…";
+
+        try {
+          const [descRes, qaRes] = await Promise.all([
+            fetch("/api/generate", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ tool: "ec_description", data: { productName, category, features, target } }),
+            }),
+            fetch("/api/generate", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ tool: "ec_qa", data: { productName, category, features } }),
+            }),
+          ]);
+          const descJson = await descRes.json();
+          const qaJson = await qaRes.json();
+          descOutput.textContent = descJson.result || "生成に失敗しました。";
+          faqOutput.textContent = qaJson.result || "生成に失敗しました。";
+        } catch {
+          descOutput.textContent = "通信エラーが発生しました。もう一度お試しください。";
+          faqOutput.textContent = "";
+        } finally {
+          btn.disabled = false;
+          btn.textContent = "説明文を作る";
+        }
       }
+
       document.getElementById("ec-form").addEventListener("submit", e => { e.preventDefault(); renderEC(); });
-      renderEC();
     </script>
   </body>
 </html>

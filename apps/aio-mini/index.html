@@ -146,28 +146,59 @@
     </footer>
 
     <script>
-      function renderAIO() {
-        const faq = Number(document.getElementById("faq").value);
-        const compare = Number(document.getElementById("compare").value);
-        const proof = Number(document.getElementById("proof").value);
-        const profile = Number(document.getElementById("profile").value);
-        const url = document.getElementById("url").value.trim();
-        const summary = document.getElementById("summary").value.trim();
-        const score = 42 + faq * 16 + compare * 16 + proof * 13 + profile * 13;
-        const el = document.getElementById("score");
-        el.textContent = `${score} / 100`;
-        el.className = `score-big ${score >= 75 ? "good" : "warn"}`;
-        document.getElementById("summary-output").textContent = `${url} — FAQ・比較・実例・プロフィールの4点から見た簡易診断。${summary}`;
-        const advice = [];
-        if (!faq) advice.push("FAQがない。よく聞かれる質問を3〜5個入れると、検索意図と一致しやすくなる。");
-        if (!compare) advice.push("比較表がない。誰向きか・何が違うか・何から始めるかを並べると理解されやすい。");
-        if (!proof) advice.push("実例や数字が弱い。使う前後・作業時間・件数・変化などを短く添えると信頼感が出る。");
-        if (!profile) advice.push("プロフィールが弱い。誰が作っているか・誰向けか・なぜ作ったかを明確にする。");
-        if (!advice.length) advice.push("大きな穴は少ない。次は見出しの分かりやすさと事例の追加を詰める段階。");
-        document.getElementById("advice-output").textContent = advice.join("\n\n");
+      const scoreEl = document.getElementById("score");
+      const summaryOut = document.getElementById("summary-output");
+      const adviceOut = document.getElementById("advice-output");
+      const btn = document.querySelector("#aio-form button[type=submit]");
+
+      async function renderAIO() {
+        const siteUrl = document.getElementById("url").value.trim();
+        const purpose = document.getElementById("summary").value.trim();
+        const faq = document.getElementById("faq").value;
+        const compare = document.getElementById("compare").value;
+        const proof = document.getElementById("proof").value;
+        const profile = document.getElementById("profile").value;
+        if (!purpose) { adviceOut.textContent = "何を提供しているかを入力してください。"; return; }
+
+        const issues = [
+          faq === "0" ? "FAQがない" : null,
+          compare === "0" ? "比較表がない" : null,
+          proof === "0" ? "実例・数字が不足" : null,
+          profile === "0" ? "プロフィールが弱い" : null,
+        ].filter(Boolean).join("、");
+
+        btn.disabled = true;
+        btn.textContent = "診断中…";
+        scoreEl.textContent = "—";
+        scoreEl.className = "score-big";
+        adviceOut.textContent = "AIが診断しています…";
+
+        try {
+          const res = await fetch("/api/generate", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ tool: "aio", data: { siteUrl: siteUrl || "未入力", purpose, target: "フリーランス・個人事業主", issues } }),
+          });
+          const json = await res.json();
+          const text = json.result || "";
+
+          const scoreMatch = text.match(/(\d+)\s*\/\s*100/);
+          if (scoreMatch) {
+            const s = Number(scoreMatch[1]);
+            scoreEl.textContent = `${s} / 100`;
+            scoreEl.className = `score-big ${s >= 75 ? "good" : "warn"}`;
+          }
+          summaryOut.textContent = siteUrl ? `${siteUrl} の診断結果` : "入力情報をもとにした診断結果";
+          adviceOut.textContent = text;
+        } catch {
+          adviceOut.textContent = "通信エラーが発生しました。もう一度お試しください。";
+        } finally {
+          btn.disabled = false;
+          btn.textContent = "診断する";
+        }
       }
+
       document.getElementById("aio-form").addEventListener("submit", e => { e.preventDefault(); renderAIO(); });
-      renderAIO();
     </script>
   </body>
 </html>
