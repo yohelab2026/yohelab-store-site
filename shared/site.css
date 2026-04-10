@@ -429,6 +429,12 @@ h1 {
   border-color: var(--line-strong);
 }
 
+.button.ghost {
+  background: rgba(29, 111, 216, 0.08);
+  border-color: rgba(29, 111, 216, 0.16);
+  color: var(--accent-alt);
+}
+
 .grid {
   display: grid;
   grid-template-columns: minmax(300px, 380px) minmax(0, 1fr);

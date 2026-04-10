@@ -121,8 +121,8 @@
 
       <section class="section">
         <div class="section-head">
-          <h2>ツールごとのβ版申込み</h2>
-          <p>下のボタンを押すと、フォームのツール名が自動で入る。</p>
+          <h2>各ツールのβ版LP</h2>
+          <p>β版の申込みは、各ツールごとの案内ページから進める形にしている。</p>
         </div>
         <div class="cards">
           <article class="card" id="radar">
@@ -130,7 +130,7 @@
             <h3>案件レーダー</h3>
             <p>条件保存、候補整理、通知、提案文の広げ方を優先して案内するβ版。料金は申込み時に案内する。</p>
             <div class="inline-actions">
-              <button class="button primary tool-pick" type="button" data-tool="案件レーダー">このツールで送る</button>
+              <a class="button primary" href="/products/radar-beta/">案内ページを見る</a>
             </div>
           </article>
           <article class="card" id="proposal">
@@ -138,7 +138,7 @@
             <h3>提案文・応募文ジェネレーター</h3>
             <p>文体変更や複数案を優先して案内するβ版。料金は申込み時に案内する。</p>
             <div class="inline-actions">
-              <button class="button primary tool-pick" type="button" data-tool="提案文・応募文ジェネレーター">このツールで送る</button>
+              <a class="button primary" href="/products/proposal-beta/">案内ページを見る</a>
             </div>
           </article>
           <article class="card" id="x-helper">
@@ -146,7 +146,7 @@
             <h3>X返信・投稿補助</h3>
             <p>投稿のバリエーションや保存を優先して案内するβ版。料金は申込み時に案内する。</p>
             <div class="inline-actions">
-              <button class="button primary tool-pick" type="button" data-tool="X返信・投稿補助">このツールで送る</button>
+              <a class="button primary" href="/products/x-helper-beta/">案内ページを見る</a>
             </div>
           </article>
           <article class="card" id="ec-copy">
@@ -154,7 +154,7 @@
             <h3>EC商品説明・Q&amp;A整備</h3>
             <p>商品説明の整え方を優先して案内するβ版。料金は申込み時に案内する。</p>
             <div class="inline-actions">
-              <button class="button primary tool-pick" type="button" data-tool="EC商品説明・Q&A整備">このツールで送る</button>
+              <a class="button primary" href="/products/ec-copy-beta/">案内ページを見る</a>
             </div>
           </article>
           <article class="card" id="aio-mini">
@@ -162,7 +162,7 @@
             <h3>AIOミニ診断</h3>
             <p>改善項目の整理や追記案を優先して案内するβ版。料金は申込み時に案内する。</p>
             <div class="inline-actions">
-              <button class="button primary tool-pick" type="button" data-tool="AIOミニ診断">このツールで送る</button>
+              <a class="button primary" href="/products/aio-mini-beta/">案内ページを見る</a>
             </div>
           </article>
           <article class="card" id="labs">
@@ -217,14 +217,6 @@
       const thanksBox = document.getElementById("thanks-box");
       const hiddenField = form.querySelector('input[name="website"]');
       const endpoint = ["yohelab2026", "gmail.com"];
-
-      document.querySelectorAll(".tool-pick").forEach((button) => {
-        button.addEventListener("click", () => {
-          toolSelect.value = button.dataset.tool;
-          purposeSelect.value = "β版に申し込みたい";
-          form.scrollIntoView({ behavior: "smooth", block: "start" });
-        });
-      });
 
       form.addEventListener("submit", async (event) => {
         event.preventDefault();

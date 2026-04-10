@@ -41,7 +41,17 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://yohelab.com/products/proposal-beta/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://yohelab.com/apps/x-helper/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yohelab.com/products/x-helper-beta/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -51,7 +61,17 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://yohelab.com/products/ec-copy-beta/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://yohelab.com/apps/aio-mini/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://yohelab.com/products/aio-mini-beta/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
