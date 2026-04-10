@@ -3,12 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>案件レーダー | よへラボ</title>
+    <title>AI案件コンシェルジュ（案件レーダー） | よへラボ</title>
     <meta
       name="description"
-      content="案件レーダーは、条件に合う案件候補と提案文の下書きを先に返す無料版。応募の前で止まりにくくするためのよへラボの主役ツール。"
+      content="AI案件コンシェルジュ（案件レーダー）は、条件に合う案件候補と提案文の下書きを先に返す無料版。応募の前で止まりにくくするためのよへラボの主役ツール。"
     />
-    <meta property="og:title" content="案件レーダー | よへラボ" />
+    <meta property="og:title" content="AI案件コンシェルジュ（案件レーダー） | よへラボ" />
     <meta
       property="og:description"
       content="今日応募しやすい案件を先に絞る。条件に合う案件候補と提案文の下書きを返す無料版。"
@@ -17,7 +17,7 @@
     <meta property="og:url" content="https://yohelab.com/apps/radar/" />
     <meta property="og:image" content="https://yohelab.com/yohelab-icon.png" />
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="案件レーダー | よへラボ" />
+    <meta name="twitter:title" content="AI案件コンシェルジュ（案件レーダー） | よへラボ" />
     <meta
       name="twitter:description"
       content="今日応募しやすい案件を、先に絞る。無料版で候補と提案文の下書きを確認できる。"
@@ -90,7 +90,7 @@
         <div class="hero-grid">
           <div>
             <div class="eyebrow">主役ツール</div>
-            <h1>今日応募しやすい案件を、先に絞る。</h1>
+            <h1>AI案件コンシェルジュが、今日見る案件を先に減らす。</h1>
             <p class="lead">
               欲しい条件と外したい条件を入れると、案件候補、おすすめ理由、提案文の下書きまで続けて返す。まずは無料版で、どれくらい止まりにくくなるかを確かめられる。
             </p>
@@ -126,9 +126,13 @@
       <section class="grid" id="demo">
         <form class="panel stack" id="radar-form">
           <h2>無料版を試す</h2>
-          <label>欲しい案件のキーワード<input id="keyword" value="Webサイト LP ライティング" /></label>
+          <div class="form-progress">
+            <span>入力は4ステップ</span>
+            <strong>今は条件づくり</strong>
+          </div>
+          <label>欲しい案件のキーワード<input id="keyword" value="Webサイト LP ライティング" placeholder="例: ライティング, LP制作, EC改善" /></label>
           <div class="row">
-            <label>最低予算<input id="minBudget" type="number" value="30000" /></label>
+            <label>最低予算<input id="minBudget" type="number" value="30000" placeholder="例: 30000" /></label>
             <label>得意分野
               <select id="specialty">
                 <option value="writing">ライティング</option>
@@ -138,10 +142,16 @@
               </select>
             </label>
           </div>
-          <label>外したい条件<input id="exclude" value="女性限定, 出社必須, 動画編集" /></label>
-          <label>自分の強み<textarea id="strengths">返信が早い。初稿が早い。個人事業主向けの文章が得意。相手の依頼内容を整理して進めるのが得意。</textarea></label>
+          <label>外したい条件<input id="exclude" value="女性限定, 出社必須, 動画編集" placeholder="例: 出社必須, 動画編集, 低単価" /></label>
+          <label>自分の強み<textarea id="strengths" placeholder="例: 返信が早い。納期厳守。LP構成が得意。">返信が早い。初稿が早い。個人事業主向けの文章が得意。相手の依頼内容を整理して進めるのが得意。</textarea></label>
+          <div class="chip-picker" aria-label="よく使う強み">
+            <button class="chip-action" type="button" data-chip="返信が早い。">返信が早い</button>
+            <button class="chip-action" type="button" data-chip="納期厳守。">納期厳守</button>
+            <button class="chip-action" type="button" data-chip="ヒアリングが得意。">ヒアリングが得意</button>
+            <button class="chip-action" type="button" data-chip="LP構成が得意。">LP構成が得意</button>
+          </div>
           <button class="button primary" type="submit">案件を絞る</button>
-          <p class="mini-note">無料版はブラウザ内だけで処理する。ページを閉じると入力内容は残さない。</p>
+          <p class="mini-note">サーバー保存なし。無料版はブラウザ内だけで処理する。ページを閉じると入力内容は残さない。</p>
         </form>
         <div class="results" id="results"></div>
       </section>
@@ -298,7 +308,10 @@
       </div>
     </footer>
 
+    <div class="toast" id="copy-toast" hidden>コピーした。</div>
+
     <script>
+      const copyToast = document.getElementById("copy-toast");
       const jobs = [
         { title: "LP文章の構成と執筆", budget: 80000, remote: true, tags: ["ライティング", "LP", "集客"], summary: "個人コーチ向けのLP。構成から相談したい。", urgency: 4 },
         { title: "自社ブログ記事10本の下書き", budget: 35000, remote: true, tags: ["ライティング", "SEO", "ブログ"], summary: "AI下書きあり。人間の整えが必要。", urgency: 3 },
@@ -330,6 +343,13 @@
             </div>
             <h3>${job.title}</h3>
             <p class="muted">${job.summary}</p>
+            <div class="meter-block">
+              <div class="meter-label">
+                <span>応募しやすさ</span>
+                <strong>${job.score} / 100</strong>
+              </div>
+              <div class="meter-track"><div class="meter-fill" style="width:${Math.min(job.score, 100)}%"></div></div>
+            </div>
             <div class="meta-row">
               <span class="meta">予算 ${job.budget.toLocaleString()}円</span>
               <span class="meta">${job.remote ? "リモート可" : "出社あり"}</span>
@@ -343,11 +363,38 @@
               <div class="info-card">
                 <h2>提案文の下書き</h2>
                 <div class="output-box">${proposalFor(job, strengths)}</div>
+                <div class="inline-actions" style="margin-top: 12px;">
+                  <button class="button secondary copy-draft" type="button" data-text="${encodeURIComponent(proposalFor(job, strengths))}">コピー</button>
+                </div>
               </div>
             </div>
           </article>
         `).join("");
+
+        document.querySelectorAll(".copy-draft").forEach((button) => {
+          button.addEventListener("click", async () => {
+            await navigator.clipboard.writeText(decodeURIComponent(button.dataset.text));
+            copyToast.hidden = false;
+            copyToast.classList.add("show");
+            clearTimeout(window.radarToastTimer);
+            window.radarToastTimer = setTimeout(() => {
+              copyToast.classList.remove("show");
+              copyToast.hidden = true;
+            }, 1400);
+          });
+        });
       }
+
+      document.querySelectorAll(".chip-action").forEach((button) => {
+        button.addEventListener("click", () => {
+          const target = document.getElementById("strengths");
+          const value = button.dataset.chip;
+          if (!target.value.includes(value)) {
+            target.value = `${target.value.trim()} ${value}`.trim();
+          }
+          target.focus();
+        });
+      });
 
       document.getElementById("radar-form").addEventListener("submit", (event) => {
         event.preventDefault();
