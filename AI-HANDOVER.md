@@ -8,7 +8,7 @@
 
 - **サイト**: https://yohelab.com
 - **リポジトリ**: https://github.com/yohelab2026/yohelab-store-site
-- **ホスティング**: Cloudflare Pages（ビルドコマンドなし、リポジトリのルートをそのまま配信）
+- **ホスティング**: Cloudflare Pages（Viteでビルド。ビルドコマンド: `vite build`、出力先: `dist/`）
 - **バックエンド**: Cloudflare Pages Functions（`functions/` ディレクトリ）
 
 ## ツール一覧
