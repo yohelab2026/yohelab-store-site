@@ -276,6 +276,22 @@
         transition: background .14s;
       }
       .copy-btn:hover { background: var(--bg); }
+      .draft-tab {
+        padding: 5px 14px;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--white);
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+        color: var(--muted);
+        transition: all .14s;
+      }
+      .draft-tab.is-active {
+        background: var(--green);
+        border-color: var(--green);
+        color: #fff;
+      }
       .app-intro {
         padding: 40px 0 0;
         text-align: center;
@@ -422,6 +438,7 @@
                 <div class="feature-checks">
                   <label class="feature-check is-locked"><input type="checkbox" disabled />回数制限なし・毎日何度でも使える</label>
                   <label class="feature-check is-locked"><input type="checkbox" disabled />条件を自動保存して翌日もすぐ始められる</label>
+                  <label class="feature-check is-locked"><input type="checkbox" disabled />応募文を2つの文体で比べて選べる</label>
                   <label class="feature-check is-locked"><input type="checkbox" disabled />絞り込み条件が増える（SNS運用・AI活用など）</label>
                 </div>
               </div>
@@ -622,12 +639,35 @@
               </div>
               <div class="result-col">
                 <div class="result-col-label">応募文の下書き</div>
+                ${proAccess && job.proposal_alt ? `
+                <div style="display:flex;gap:8px;margin-bottom:8px;">
+                  <button class="draft-tab is-active" data-tab="draft-${i}-a">文体A</button>
+                  <button class="draft-tab" data-tab="draft-${i}-b">文体B</button>
+                </div>
+                <div class="draft-box" id="draft-${i}-a">${escapeHtml(job.proposal)}</div>
+                <div class="draft-box" id="draft-${i}-b" style="display:none;">${escapeHtml(job.proposal_alt)}</div>
+                <button class="copy-btn" data-target="draft-${i}-a">コピー</button>
+                ` : `
                 <p class="result-col-note">そのまま使える下書き。必要なら少し直して送る。</p>
                 <div class="draft-box" id="draft-${i}">${escapeHtml(job.proposal)}</div>
                 <button class="copy-btn" data-target="draft-${i}">コピー</button>
+                `}
               </div>
             </div>
           </div>`).join("");
+
+        results.querySelectorAll(".draft-tab").forEach(tab => {
+          tab.addEventListener("click", () => {
+            const targetId = tab.dataset.tab;
+            const container = tab.closest(".result-col");
+            container.querySelectorAll(".draft-tab").forEach(t => t.classList.remove("is-active"));
+            tab.classList.add("is-active");
+            container.querySelectorAll(".draft-box").forEach(box => box.style.display = "none");
+            document.getElementById(targetId).style.display = "";
+            const copyBtn = container.querySelector(".copy-btn");
+            if (copyBtn) copyBtn.dataset.target = targetId;
+          });
+        });
 
         results.querySelectorAll(".copy-btn").forEach(btn => {
           btn.addEventListener("click", async () => {
