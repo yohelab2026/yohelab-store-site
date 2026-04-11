@@ -1458,76 +1458,6 @@ td:first-child, th:first-child { font-weight: 700; }
 
 .impact-strip { padding-top: 32px; }
 
-.preview-pill, .preview-status {
-  display: inline-flex;
-  align-items: center;
-  padding: 6px 12px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 700;
-}
-
-.hero-preview {
-  padding: 28px;
-  border: 1px solid rgba(255,255,255,.12);
-  border-radius: var(--radius-lg);
-  background: linear-gradient(180deg, #0e141f 0%, #161f2f 100%);
-  color: #f8fbff;
-}
-
-.preview-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 18px;
-}
-
-.preview-pill { background: rgba(255,255,255,.14); }
-.preview-status { background: rgba(13,107,88,.3); color: #a7f3d0; }
-
-.device-showcase {
-  display: grid;
-  grid-template-columns: 1fr 130px;
-  gap: 14px;
-  align-items: end;
-}
-
-.device {
-  border-radius: 18px;
-  padding: 10px;
-  background: rgba(255,255,255,.07);
-  border: 1px solid rgba(255,255,255,.1);
-}
-
-.device.desktop { min-height: 260px; }
-.device.phone { min-height: 200px; }
-
-.device-bar {
-  height: 6px;
-  width: 56px;
-  margin: 0 auto 10px;
-  border-radius: 999px;
-  background: rgba(255,255,255,.18);
-}
-
-.device-screen {
-  display: grid;
-  gap: 10px;
-  min-height: calc(100% - 18px);
-  padding: 14px;
-  border-radius: 12px;
-  background: rgba(7,12,20,.5);
-}
-
-.screen-stat strong { display: block; margin-top: 2px; font-size: 32px; line-height: 1; }
-.screen-stat small, .screen-job small, .screen-note { color: rgba(248,251,255,.65); font-size: 12px; }
-.screen-job span { display: block; font-weight: 700; font-size: 14px; }
-.screen-meter { height: 10px; border-radius: 999px; background: rgba(255,255,255,.1); overflow: hidden; }
-.screen-meter-fill { width: 88%; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #21c087, #1d6fd8); }
-.preview-label { margin-bottom: 6px; color: #93c5fd; font-size: 11px; font-weight: 700; }
-.device-screen p { margin: 0; font-size: 13px; color: rgba(248,251,255,.8); line-height: 1.7; }
-
 .eyebrow {
   display: inline-flex;
   align-items: center;
@@ -1608,7 +1538,7 @@ td:first-child, th:first-child { font-weight: 700; }
   .grid, .row, .subgrid, .hero-grid,
   .cards, .cards-2, .cards-3, .cards-4,
   .metric-grid, .comparison-grid, .split-grid,
-  .hero-bullets, .device-showcase {
+  .hero-bullets {
     grid-template-columns: 1fr;
   }
 
