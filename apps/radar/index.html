@@ -422,10 +422,14 @@
 
     <div class="toast" id="copy-toast">コピーしました</div>
 
+    <script src="/shared/pro-access.js"></script>
+
     <script>
       const copyToast = document.getElementById("copy-toast");
+      const PRODUCT_KEY = "radar";
       const FREE_LIMIT = 3;
       const USAGE_KEY = "yohelab.radar.freeUsage";
+      let proAccess = false;
 
       function todayKey() {
         const d = new Date();
@@ -451,20 +455,32 @@
 
       function updateUsageUI() {
         const usage = loadUsage();
-        const left = Math.max(0, FREE_LIMIT - usage.count);
+        const left = proAccess ? "無制限" : Math.max(0, FREE_LIMIT - usage.count);
         const usageLeft = document.getElementById("usage-left");
         const submitBtn = document.querySelector("#radar-form [type='submit']");
-        if (usageLeft) usageLeft.textContent = left > 0 ? `残り${left}回` : "上限に達した";
-        if (submitBtn && left <= 0) {
-          submitBtn.textContent = "今日は上限です";
+        if (usageLeft) usageLeft.textContent = proAccess ? "有料版で無制限" : (left > 0 ? `残り${left}回` : "上限に達した");
+        if (submitBtn) {
+          submitBtn.textContent = proAccess ? "案件を絞る" : (left <= 0 ? "今日は上限です" : "案件を絞る");
         }
+        document.querySelectorAll(".check-pill.is-locked input").forEach((input) => {
+          input.disabled = !proAccess ? true : false;
+        });
+        document.querySelectorAll(".check-pill.is-locked").forEach((pill) => {
+          pill.classList.toggle("is-locked", !proAccess);
+          const tag = pill.querySelector(".pill-tag");
+          if (tag) {
+            tag.textContent = proAccess ? "有効" : "PRO";
+            tag.classList.toggle("pro", proAccess);
+          }
+        });
       }
 
       function canUseFree() {
-        return loadUsage().count < FREE_LIMIT;
+        return proAccess || loadUsage().count < FREE_LIMIT;
       }
 
       function incrementUsage() {
+        if (proAccess) return;
         const usage = loadUsage();
         saveUsage(Math.min(FREE_LIMIT, usage.count + 1));
         updateUsageUI();
@@ -554,6 +570,10 @@
         });
       });
 
+      window.YoheLabAccess?.load(PRODUCT_KEY).then((state) => {
+        proAccess = !!state?.active;
+        updateUsageUI();
+      }).catch(() => {});
       updateUsageUI();
 
       document.getElementById("radar-form").addEventListener("submit", async (e) => {

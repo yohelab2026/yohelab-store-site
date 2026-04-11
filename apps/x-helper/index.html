@@ -151,12 +151,15 @@
       </div>
     </footer>
 
+    <script src="/shared/pro-access.js"></script>
     <script>
       const postsOutput = document.getElementById("posts-output");
       const repliesOutput = document.getElementById("replies-output");
       const btn = document.querySelector("#x-form button[type=submit]");
+      const PRODUCT_KEY = "x-helper";
       const FREE_LIMIT = 3;
       const USAGE_KEY = "yohelab.xhelper.freeUsage";
+      let proAccess = false;
 
       function todayKey() {
         const now = new Date();
@@ -188,16 +191,17 @@
 
       function updateUsageUI() {
         const usage = loadUsage();
-        const left = Math.max(0, FREE_LIMIT - usage.count);
+        const left = proAccess ? "無制限" : Math.max(0, FREE_LIMIT - usage.count);
         const el = document.getElementById("usage-left");
-        if (el) el.textContent = String(left);
+        if (el) el.textContent = proAccess ? "無制限" : String(left);
       }
 
       function canUseFree() {
-        return loadUsage().count < FREE_LIMIT;
+        return proAccess || loadUsage().count < FREE_LIMIT;
       }
 
       function incrementUsage() {
+        if (proAccess) return;
         const usage = loadUsage();
         const next = { date: todayKey(), count: usage.count + 1 };
         saveUsage(next);
@@ -262,6 +266,16 @@
       }
 
       document.getElementById("x-form").addEventListener("submit", e => { e.preventDefault(); renderX(); });
+      window.YoheLabAccess?.load(PRODUCT_KEY).then((state) => {
+        proAccess = !!state?.active;
+        updateUsageUI();
+        if (proAccess) {
+          const label = document.querySelector(".usage-card .label");
+          const count = document.querySelector(".usage-card .count");
+          if (label) label.textContent = "PRO";
+          if (count) count.innerHTML = '有料版が有効。<strong style="font-size:18px;color:var(--green-dark);">無制限</strong>';
+        }
+      }).catch(() => {});
       updateUsageUI();
     </script>
   </body>
