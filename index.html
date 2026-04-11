@@ -3,17 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>よへラボ | AIが案件を厳選して応募文まで進める実務ツール</title>
-    <meta name="description" content="よへラボは、ひとりで稼ぐ人向けのAI実務ツール。案件レーダーがクラウドソーシングの案件を厳選して、応募文の下書きまで30秒で出す。" />
-    <meta property="og:title" content="よへラボ | AIが案件を厳選して応募文まで進める実務ツール" />
-    <meta property="og:description" content="AIがクラウドソーシング案件を厳選して、応募文の下書きまで進める。よへラボの主役はAI案件コンシェルジュ（案件レーダー）。" />
+    <title>よへラボ | 案件探しを朝10分にするAI実務ツール</title>
+    <meta name="description" content="よへラボは、ひとりで稼ぐ人向けのAI実務ツール。案件レーダーが案件候補を絞って、応募文の下書きまで返す。" />
+    <meta property="og:title" content="よへラボ | 案件探しを朝10分にするAI実務ツール" />
+    <meta property="og:description" content="案件候補を絞って、応募文の下書きまで返す。よへラボの主役は案件レーダー。" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://yohelab.com/" />
     <meta property="og:image" content="https://yohelab.com/yohelab-icon.png" />
     <meta property="og:locale" content="ja_JP" />
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="よへラボ | AIが案件を厳選して応募文まで進める実務ツール" />
-    <meta name="twitter:description" content="AIがクラウドソーシング案件を厳選。応募文の下書きまで30秒で進める。" />
+    <meta name="twitter:title" content="よへラボ | 案件探しを朝10分にするAI実務ツール" />
+    <meta name="twitter:description" content="案件候補を絞って、応募文の下書きまで返す。" />
     <meta name="twitter:image" content="https://yohelab.com/yohelab-icon.png" />
     <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
     <meta name="theme-color" content="#0d6b58" />
@@ -42,7 +42,9 @@
             "mainEntity": [
               { "@type": "Question", "name": "案件レーダーは何が返ってくる？", "acceptedAnswer": { "@type": "Answer", "text": "条件に近い案件候補、応募しやすさの点数、おすすめ理由、提案文の下書きが返る。" } },
               { "@type": "Question", "name": "無料版とプロプランの違いは？", "acceptedAnswer": { "@type": "Answer", "text": "無料版はその場で出力を確認するためのもの。プロプランは条件保存など毎日の案件探しを短くする機能が揃う。月額980円、初月無料。" } },
-              { "@type": "Question", "name": "スマホでも使える？", "acceptedAnswer": { "@type": "Answer", "text": "トップページや案内ページはスマホでも見やすくしている。本格的な入力や比較はパソコンのほうが使いやすい。" } }
+              { "@type": "Question", "name": "実在の案件をそのまま取得するの？", "acceptedAnswer": { "@type": "Answer", "text": "案件候補を見やすく並べて、応募しやすいものを先に絞るためのツール。最終確認は自分で行う前提にしている。" } },
+              { "@type": "Question", "name": "入力した内容は保存される？", "acceptedAnswer": { "@type": "Answer", "text": "無料版は生成のために送信するが、運営側に自動保存しない。ページを閉じたあとに残り続ける設計にはしていない。" } },
+              { "@type": "Question", "name": "プロプランはいつでも解約できる？", "acceptedAnswer": { "@type": "Answer", "text": "はい、メール1本でいつでも解約できる。違約金はなし。解約した翌月から課金が止まる。" } }
             ]
           }
         ]
@@ -73,15 +75,67 @@
 
       <!-- ヒーロー -->
       <section class="hero">
-        <div class="container">
-          <p class="hero-eyebrow">案件レーダー — AI実務ツール</p>
-          <h1>案件探し<em>30分</em>が、<em>5分</em>になる。</h1>
-          <p class="hero-sub">条件を入れるだけ。AIが案件を厳選して、応募文の下書きまでセットで出す。毎朝クラウドソーシングを全部見ていた時間を、根本から削る。</p>
-          <div class="hero-actions">
-            <a class="btn btn-primary btn-lg" href="/apps/radar/">無料で今すぐ試す</a>
-            <a class="btn btn-outline btn-lg" href="/products/radar-beta/">プロプランを見る</a>
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <p class="hero-eyebrow">案件レーダー — 無料で試せるAI実務ツール</p>
+            <h1>案件探しを、<em>朝10分</em>に。</h1>
+            <p class="hero-sub">条件を入れるだけ。案件候補を先に絞って、応募文の下書きまで返す。ひとりで稼ぐ人の「探す・選ぶ・書く」を短くする。</p>
+            <div class="hero-actions hero-actions--left">
+              <a class="btn btn-primary btn-lg" href="/apps/radar/">無料で今すぐ試す</a>
+              <a class="btn btn-outline btn-lg" href="/products/radar-beta/">初月無料のプロプランを見る</a>
+            </div>
+            <div class="hero-bullets">
+              <div class="mini-card">
+                <strong>先に絞る</strong>
+                単価・カテゴリ・働き方で、見る案件を減らす。
+              </div>
+              <div class="mini-card">
+                <strong>先に比べる</strong>
+                応募しやすさを見て、次に読む案件を決めやすくする。
+              </div>
+              <div class="mini-card">
+                <strong>先に書ける</strong>
+                応募文の骨組みがあるから、判断から送信までが速い。
+              </div>
+            </div>
+            <div class="safety-note">
+              <div>登録不要</div>
+              <div>初回は無料</div>
+              <div>入力内容は保存しない</div>
+            </div>
           </div>
-          <p class="hero-note">登録不要・ブラウザで今すぐ使える・入力内容はサーバーに保存しない</p>
+          <aside class="hero-preview">
+            <div class="preview-head">
+              <span class="preview-pill">無料版の出力例</span>
+              <span class="preview-status">入力 → すぐ出る</span>
+            </div>
+            <div class="device-showcase">
+              <div class="device desktop">
+                <div class="device-bar"></div>
+                <div class="device-screen">
+                  <div class="preview-label">今日見る案件</div>
+                  <div class="screen-job">
+                    <span>LP文章の構成と執筆</span>
+                    <small>80,000円 / リモート / ライティング</small>
+                  </div>
+                  <div class="screen-job">
+                    <span>STORES商品ページ改善</span>
+                    <small>50,000円 / リモート / EC・説明文</small>
+                  </div>
+                  <div class="screen-meter"><div class="screen-meter-fill" style="width:88%;"></div></div>
+                  <p>応募しやすさの高い候補を先に見せて、次の一手を短くする。</p>
+                </div>
+              </div>
+              <div class="device phone">
+                <div class="device-bar"></div>
+                <div class="device-screen">
+                  <div class="preview-label">応募文</div>
+                  <div class="screen-stat"><small>下書き</small><strong>3案</strong></div>
+                  <p>そのまま送れる骨組みから、少し直して使う。</p>
+                </div>
+              </div>
+            </div>
+          </aside>
         </div>
       </section>
 
@@ -94,7 +148,7 @@
               <div class="stat-main">
                 <span class="stat-num-before">30分</span>
                 <span class="stat-arrow">→</span>
-                <span class="stat-num-after">5分</span>
+                <span class="stat-num-after">10分</span>
               </div>
               <div class="stat-note">見る前に絞るから、朝の作業が一気に軽くなる。</div>
             </div>
@@ -103,7 +157,7 @@
               <div class="stat-main">
                 <span class="stat-num-before">15分</span>
                 <span class="stat-arrow">→</span>
-                <span class="stat-num-after">3分</span>
+                <span class="stat-num-after">5分</span>
               </div>
               <div class="stat-note">候補が決まったら、そのまま下書きまで進める。</div>
             </div>
@@ -124,23 +178,23 @@
       <section class="section" id="how">
         <div class="container">
           <p class="section-label">How it works</p>
-          <h2 class="section-title">3つのことを、先にやる</h2>
-          <p class="section-sub">案件探しで時間がかかるのは「全部見る」から。見る前に絞って、勢いのまま応募文まで進む。</p>
+          <h2 class="section-title">売れる順番で、先にやる</h2>
+          <p class="section-sub">全部見る前に、見るべき案件を先に絞る。比較して、すぐ応募文まで進める。</p>
           <div class="feature-grid">
             <div class="feature">
               <div class="feature-num">01</div>
-              <h3>先に厳選</h3>
-              <p>自分の条件（単価・リモート・カテゴリ）に合う案件だけを先に絞る。全部見なくていい。</p>
+              <h3>先に候補化</h3>
+              <p>条件に近い案件だけを先に並べる。見る対象を減らして、朝の迷いを消す。</p>
             </div>
             <div class="feature">
               <div class="feature-num">02</div>
-              <h3>先に除外</h3>
-              <p>低単価・避けたいカテゴリを最初から落とす。見たくないものに時間を使わない。</p>
+              <h3>先に比較</h3>
+              <p>応募しやすさと理由を見ながら比べる。読む順番が決まると、止まりにくい。</p>
             </div>
             <div class="feature">
               <div class="feature-num">03</div>
-              <h3>そのまま応募文へ</h3>
-              <p>候補が決まったら、応募文の下書きをそのまま出す。勢いが切れる前に次に進める。</p>
+              <h3>先に応募</h3>
+              <p>応募文の骨組みがあるから、考えすぎずに次へ進める。止まる前に送れる。</p>
             </div>
           </div>
         </div>
@@ -150,8 +204,8 @@
       <section class="section section-alt">
         <div class="container">
           <p class="section-label">Output example</p>
-          <h2 class="section-title">こんな出力が返る</h2>
-          <p class="section-sub">条件を入れると、案件候補と応募文の下書きがセットで出てくる。</p>
+          <h2 class="section-title">無料版で返るもの</h2>
+          <p class="section-sub">案件候補と応募文の下書きを一緒に見ると、次の一手が決めやすい。</p>
           <div class="demo-wrap">
             <div class="demo-card">
               <div class="demo-card-head">
@@ -187,7 +241,7 @@
               </div>
               <div class="demo-body">はじめまして。LP文章の構成と執筆の募集を拝見し、内容を見てすぐ力になれそうだと思いご連絡しました。
 
-個人向けサービスの内容整理と構成づくりが得意で、方向性を先に言語化してから初稿まで進める形をよくやっています。
+個人向けサービスの文章整理と構成づくりが得意で、先に方向性をそろえてから初稿まで進める形をよくやっています。
 
 依頼内容を整理しつつ、申し込みにつながる文章へ整える流れで進めます。</div>
             </div>
@@ -200,13 +254,13 @@
         <div class="container">
           <p class="section-label">Pricing</p>
           <h2 class="section-title">まず無料版で試して、合えばプロプランへ</h2>
-          <p class="section-sub">無料版でツールとの相性を確認してから、続きが必要な人だけプロプランに進む流れにしている。</p>
+          <p class="section-sub">無料版で相性を確認してから、毎朝使う人だけプロプランに進める。</p>
           <div class="plan-grid">
             <div class="plan">
               <div class="plan-name">無料版</div>
               <div class="plan-price">¥0</div>
               <ul>
-                <li>今すぐブラウザで使える</li>
+                <li>ブラウザでそのまま試せる</li>
                 <li>案件候補と応募しやすさスコア</li>
                 <li>応募文の下書き1案</li>
                 <li>登録・ログイン不要</li>
@@ -219,8 +273,8 @@
               <div class="plan-price">¥980<span style="font-size:18px;font-weight:600;color:var(--muted)"> / 月</span></div>
               <ul>
                 <li>条件を保存して毎日すぐ使える</li>
-                <li>候補の複数案・調整パターン</li>
-                <li>応募文の複数案</li>
+                <li>候補をさらに絞って比較しやすい</li>
+                <li>応募文の複数案を出して比べられる</li>
                 <li><strong>初月無料・いつでも解約可</strong></li>
               </ul>
               <a class="btn btn-primary" href="/products/radar-beta/">初月無料で始める</a>
@@ -234,7 +288,7 @@
       <section class="section section-alt" id="tools">
         <div class="container">
           <p class="section-label">Tools</p>
-          <h2 class="section-title">一緒に使えるツール</h2>
+          <h2 class="section-title">案件レーダーの前後を補うツール</h2>
           <p class="section-sub">案件を見つけた後に止まりやすいところを、それぞれ補う。</p>
           <div class="tools-grid">
             <a class="tool-card" href="/apps/proposal/">
@@ -270,8 +324,8 @@
           <div class="trust-grid">
             <div class="trust-card">
               <div class="trust-icon">🔒</div>
-              <h4>入力内容はブラウザ内だけで処理</h4>
-              <p>無料版で入力した内容は、ブラウザの外へ自動保存しない。ページを閉じたら消える。</p>
+              <h4>入力内容は生成のために送信し、保存しない</h4>
+              <p>無料版で入力した内容は、AI生成のために送信するが、運営側に自動保存しない。使い終わったあとに残りにくい設計にしている。</p>
             </div>
             <div class="trust-card">
               <div class="trust-icon">💬</div>
@@ -328,20 +382,16 @@
               <div class="faq-body">無料版はその場で出力を確認するためのもの。プロプランは条件保存など毎日の案件探しを短くする機能が揃う。月額980円、初月無料でいつでも解約できる。</div>
             </details>
             <details class="faq">
-              <summary>スマホでも使える？</summary>
-              <div class="faq-body">トップページや案内ページはスマホでも見やすくしている。本格的な入力や比較はパソコンのほうが使いやすい。</div>
+              <summary>実在の案件をそのまま取得するの？</summary>
+              <div class="faq-body">案件候補を見やすく並べて、応募しやすいものを先に絞るためのツール。最終確認は自分で行う前提にしている。</div>
             </details>
             <details class="faq">
               <summary>入力した内容は保存される？</summary>
-              <div class="faq-body">無料版はブラウザ内だけで処理する構成にしていて、ページを閉じたあとに自動保存はしない。</div>
+              <div class="faq-body">無料版は生成のために送信するが、運営側に自動保存しない。ページを閉じたあとに残り続ける設計にはしていない。</div>
             </details>
             <details class="faq">
               <summary>プロプランはいつでも解約できる？</summary>
               <div class="faq-body">はい、メール1本でいつでも解約できる。違約金はなし。解約した翌月から課金が止まる。</div>
-            </details>
-            <details class="faq">
-              <summary>案件レーダー以外のツールにもプロプランはある？</summary>
-              <div class="faq-body">ある。応募文アシスタント、X投稿補助、EC商品説明、AIOミニ診断の5つすべてにプロプランがある。各ツールのページから申し込める。</div>
             </details>
           </div>
         </div>
@@ -351,7 +401,7 @@
       <section class="cta-section">
         <div class="container">
           <h2>今日の案件探し、まずAIに任せてみる</h2>
-          <p>条件を入れるだけ。案件候補と応募文が、5分以内に手元に揃う。</p>
+          <p>条件を入れるだけ。案件候補と応募文が、朝10分の流れに収まる。</p>
           <div class="hero-actions">
             <a class="btn btn-white btn-lg" href="/apps/radar/">今すぐ無料で試す</a>
             <a class="btn btn-outline btn-lg" href="/products/radar-beta/">初月無料のプロプランを見る</a>
