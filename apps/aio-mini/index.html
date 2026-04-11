@@ -28,6 +28,16 @@
       .score-big.good { color: var(--green); }
       .score-big.warn { color: #b45309; }
       .draft-box { font-size: 14px; line-height: 1.9; white-space: pre-wrap; background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 16px; color: #2a3240; }
+      .usage-card { margin-bottom: 18px; padding: 16px 18px; border-radius: 14px; background: linear-gradient(135deg,#f3fbf8,#e8f5ef); border: 1px solid #cde8dd; }
+      .usage-card .label { font-size: 12px; font-weight: 800; letter-spacing: .12em; color: var(--green); text-transform: uppercase; margin-bottom: 6px; }
+      .usage-card .count { font-size: 15px; font-weight: 800; color: var(--text); }
+      .usage-card .count strong { color: var(--green-dark); font-size: 20px; }
+      .pro-feature-box { margin-top: 18px; padding: 18px; border-radius: 16px; background: #f7faf8; border: 1px solid var(--border); }
+      .pro-feature-box h3 { font-size: 15px; font-weight: 800; margin-bottom: 12px; }
+      .pro-feature-list { display: grid; gap: 10px; }
+      .pro-feature-list label { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; color: var(--text); }
+      .pro-feature-list input[type="checkbox"] { margin-top: 3px; accent-color: var(--green); }
+      .pro-feature-list span { color: var(--muted); font-size: 13px; display: block; margin-top: 2px; }
       .app-intro { padding: 40px 0 0; text-align: center; }
       .app-intro h1 { font-size: clamp(24px,5vw,38px); margin-bottom: 12px; }
       .app-intro p { color: var(--muted); font-size: 17px; margin-bottom: 8px; }
@@ -64,6 +74,7 @@
           <p>自分のサイト・ブログが見つかりやすいかを、4項目でざっくり診断する。</p>
           <div class="app-chips">
             <span class="app-chip">登録不要</span>
+            <span class="app-chip">無料版は1日3回まで</span>
             <span class="app-chip">URL取得なし</span>
             <span class="app-chip">ブログ・note・ポートフォリオ向け</span>
           </div>
@@ -73,6 +84,10 @@
 
           <div class="app-panel">
             <h2>ページ情報を入れる</h2>
+            <div class="usage-card">
+              <div class="label">FREE LIMIT</div>
+              <div class="count">無料版は <strong id="usage-left">3</strong> 回使える</div>
+            </div>
             <form class="form-stack" id="aio-form">
               <label>ページURL
                 <input id="url" value="https://example.com/my-service" placeholder="https://..." />
@@ -112,6 +127,14 @@
               <button class="btn btn-primary" style="width:100%;height:50px;" type="submit">診断する</button>
               <p style="font-size:12px;color:var(--muted);text-align:center;">URL内容の外部取得はしません</p>
             </form>
+            <div class="pro-feature-box">
+              <h3>プロプランで使えること</h3>
+              <div class="pro-feature-list">
+                <label><input type="checkbox" checked disabled /> <span>改善項目を保存して次回も使う</span></label>
+                <label><input type="checkbox" checked disabled /> <span>見出しとFAQを複数案で出す</span></label>
+                <label><input type="checkbox" checked disabled /> <span>診断結果を比較して残す</span></label>
+              </div>
+            </div>
           </div>
 
           <div class="output-grid">
@@ -183,6 +206,56 @@
         return null;
       }
 
+      const FREE_LIMIT = 3;
+      const USAGE_KEY = "yohelab.aio.freeUsage";
+
+      function todayKey() {
+        const now = new Date();
+        const parts = new Intl.DateTimeFormat("sv-SE", {
+          timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+        }).formatToParts(now);
+        const map = Object.fromEntries(parts.map((p) => [p.type, p.value]));
+        return `${map.year}-${map.month}-${map.day}`;
+      }
+
+      function loadUsage() {
+        try {
+          const raw = localStorage.getItem(USAGE_KEY);
+          if (!raw) return { date: todayKey(), count: 0 };
+          const parsed = JSON.parse(raw);
+          if (!parsed || parsed.date !== todayKey()) return { date: todayKey(), count: 0 };
+          return { date: parsed.date, count: Number(parsed.count) || 0 };
+        } catch {
+          return { date: todayKey(), count: 0 };
+        }
+      }
+
+      function saveUsage(usage) {
+        localStorage.setItem(USAGE_KEY, JSON.stringify(usage));
+      }
+
+      function updateUsageUI() {
+        const usage = loadUsage();
+        const left = Math.max(0, FREE_LIMIT - usage.count);
+        const el = document.getElementById("usage-left");
+        if (el) el.textContent = String(left);
+      }
+
+      function canUseFree() {
+        return loadUsage().count < FREE_LIMIT;
+      }
+
+      function incrementUsage() {
+        const usage = loadUsage();
+        const next = { date: todayKey(), count: usage.count + 1 };
+        saveUsage(next);
+        updateUsageUI();
+        return next;
+      }
+
       async function renderAIO() {
         const siteUrl = document.getElementById("url").value.trim();
         const purpose = document.getElementById("summary").value.trim();
@@ -191,6 +264,11 @@
         const proof = document.getElementById("proof").value;
         const profile = document.getElementById("profile").value;
         if (!purpose) { adviceOut.textContent = "何を提供しているかを入力してください。"; return; }
+        if (!canUseFree()) {
+          adviceOut.innerHTML = '無料版は1日3回まで。<a href="/products/aio-mini-beta/" style="color:var(--green);font-weight:800;">プロプランを見る</a>';
+          scoreEl.textContent = "—";
+          return;
+        }
 
         const issues = [
           faq === "0" ? "FAQがない" : null,
@@ -228,6 +306,7 @@
               scoreEl.className = `score-big ${fs >= 75 ? "good" : "warn"}`;
             }
             adviceOut.textContent = text;
+            incrementUsage();
           } else {
             // 空レスポンス時のフォールバック
             const fs = calcFallbackScore(faq, compare, proof, profile);
@@ -256,6 +335,7 @@
       }
 
       document.getElementById("aio-form").addEventListener("submit", e => { e.preventDefault(); renderAIO(); });
+      updateUsageUI();
     </script>
   </body>
 </html>
