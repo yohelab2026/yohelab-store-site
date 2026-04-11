@@ -139,7 +139,9 @@ git push
 
 ## 注意事項
 
-- Cloudflare Pagesはビルドコマンドなし。`public/` ディレクトリは存在しない。リポジトリのルートがそのまま配信される。
+- Cloudflare Pagesは **Viteでビルド**している。ビルドコマンド: `vite build`、出力先: `dist/`。
+- `public/` ディレクトリは存在する。静的アセット（画像など）を置く場所。
+- `vite.config.js` にビルド対象のHTMLページが列挙されている。新しいページを追加したら `vite.config.js` の `input` にも追加する。
 - 環境変数を変更したら、必ずgit pushでデプロイをトリガーする（空コミットでもOK）。
 - Stripeの制限付きAPIキー（`rk_live_...`）はSubscriptions読み取り権限のみ付与している。
 - Cookieは `yohelab_access` という名前でHttpOnly・Secure・SameSite=Lax。有効期限1年。
