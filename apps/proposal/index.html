@@ -158,7 +158,7 @@
     </footer>
 
     <div class="toast" id="copy-toast">コピーしました</div>
-    <script src="/shared/yohelab-tools.js"></script>
+    <script>(() => { async function load(p) { try { const r = await fetch(`/api/license?product=${encodeURIComponent(p)}`, { credentials: "include" }); if (!r.ok) return { active: false, product: p }; return r.json(); } catch { return { active: false, product: p }; } } window.YoheLabAccess = { load }; })();</script>
 
     <script>
       const output = document.getElementById("proposal-output");
