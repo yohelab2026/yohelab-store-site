@@ -84,10 +84,11 @@
       <section class="product-hero">
         <div class="container">
           <p class="hero-eyebrow">案件レーダー プロプラン</p>
-          <h1>毎朝の案件探しを、<em>10分</em>に変える。</h1>
-          <p class="hero-sub" style="max-width:520px;margin:0 auto 36px;">条件を保存して毎日すぐ使える。候補の整理から提案文の複数案まで、案件探しのルーティンを丸ごと短くする。</p>
+          <h1>案件探し<em>30分</em>が、毎朝<em>5分</em>になる。</h1>
+          <p class="hero-sub" style="max-width:540px;margin:0 auto 12px;">条件を保存して毎日すぐ使える。候補の整理から応募文の複数案まで、案件探しのルーティンを丸ごと短くする。</p>
+          <p style="font-size:14px;color:rgba(255,255,255,.55);margin:0 auto 32px;max-width:420px;">月額980円 ／ <strong style="color:rgba(255,255,255,.85);">初月無料</strong> ／ いつでも解約可</p>
           <div class="hero-actions">
-            <a class="btn btn-white btn-lg" href="#apply">今すぐ申し込む</a>
+            <a class="btn btn-white btn-lg" href="#apply">初月無料で始める</a>
             <a class="btn btn-lg" style="color:rgba(255,255,255,.8);border:1.5px solid rgba(255,255,255,.25);" href="/apps/radar/">まず無料で試す</a>
           </div>
         </div>
@@ -107,7 +108,8 @@
               <li>生成回数の上限なし</li>
               <li>新機能が追加されても料金変わらず</li>
             </ul>
-            <a class="btn btn-primary" style="width:100%;height:52px;display:flex;align-items:center;justify-content:center;" href="#apply">プロプランに申し込む</a>
+            <a class="btn btn-primary" style="width:100%;height:52px;display:flex;align-items:center;justify-content:center;" href="#apply">初月無料で始める</a>
+            <p style="font-size:12px;color:var(--muted);margin-top:8px;text-align:center;">クレジットカード不要・メール1本で解約</p>
           </div>
         </div>
       </section>
@@ -164,7 +166,7 @@
               </tbody>
             </table>
             <p style="text-align:center;margin-top:28px;">
-              <a class="btn btn-primary" href="#apply">プロプランに申し込む</a>
+              <a class="btn btn-primary" href="#apply">初月無料で始める</a>
             </p>
           </div>
         </div>
@@ -212,17 +214,10 @@
               <form class="form-stack" id="beta-form">
                 <label>お名前<input id="name" name="name" autocomplete="name" placeholder="山田 太郎" required /></label>
                 <label>返信先メール<input id="email" name="email" type="email" autocomplete="email" placeholder="example@email.com" required /></label>
-                <label>いちばん減らしたいこと
-                  <select id="focus" name="focus" required>
-                    <option value="案件探しの時間">毎朝の案件探しの時間</option>
-                    <option value="候補整理の手間">候補を絞り込む手間</option>
-                    <option value="提案文づくり">応募文を書く時間</option>
-                  </select>
-                </label>
-                <label>ひとこと（任意）<textarea id="message" name="message" placeholder="無料版を使ってみた感想など。"></textarea></label>
+                <label>ひとこと（任意）<textarea id="message" name="message" placeholder="無料版を使ってみた感想や、プランについての質問など。"></textarea></label>
                 <input type="text" name="website" style="display:none;" tabindex="-1" autocomplete="off" />
-                <button class="btn btn-primary" style="width:100%;height:52px;" type="submit">プロプランに申し込む</button>
-                <p style="font-size:13px;color:var(--muted);text-align:center;">送信内容はプラン案内のみに使用します</p>
+                <button class="btn btn-primary" style="width:100%;height:54px;font-size:17px;" type="submit">初月無料で申し込む</button>
+                <p style="font-size:12px;color:var(--muted);text-align:center;margin-top:4px;">クレジットカード不要・メール1本で解約・送信内容はプラン案内のみに使用</p>
               </form>
             </div>
             <div class="apply-info">
@@ -252,7 +247,7 @@
 
     <div class="sticky-cta">
       <div class="sticky-cta-inner">
-        <a class="btn btn-primary" href="#apply">プロプランに申し込む</a>
+        <a class="btn btn-primary" href="#apply">初月無料で申し込む</a>
         <a class="btn btn-outline" href="/apps/radar/">まず無料で試す</a>
       </div>
     </div>
@@ -279,7 +274,7 @@
         if (honeypot && honeypot.value.trim()) return;
         const btn = form.querySelector("button[type=submit]");
         btn.disabled = true; btn.textContent = "送信中...";
-        const payload = { tool: "案件レーダー プロプラン", name: document.getElementById("name").value.trim(), email: document.getElementById("email").value.trim(), focus: document.getElementById("focus").value, message: document.getElementById("message").value.trim() || "なし", _subject: "よへラボ 案件レーダー プロプラン申込み", _template: "table", _captcha: "false" };
+        const payload = { tool: "案件レーダー プロプラン", name: document.getElementById("name").value.trim(), email: document.getElementById("email").value.trim(), message: document.getElementById("message").value.trim() || "なし", _subject: "よへラボ 案件レーダー プロプラン申込み", _template: "table", _captcha: "false" };
         try {
           const res = await fetch(`https://formsubmit.co/ajax/${endpoint.join("@")}`, { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify(payload) });
           if (!res.ok) throw new Error();
