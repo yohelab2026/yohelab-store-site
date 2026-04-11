@@ -420,9 +420,9 @@
                 <h3>プロプランで使えること</h3>
                 <p class="sub">プロプランに登録すると使えるようになる。</p>
                 <div class="feature-checks">
-                  <label class="feature-check is-locked"><input type="checkbox" disabled />条件を保存して毎朝そのまま使う</label>
-                  <label class="feature-check is-locked"><input type="checkbox" disabled />応募文を複数案で比べる</label>
-                  <label class="feature-check is-locked"><input type="checkbox" disabled />選んだ条件を固定して再利用する</label>
+                  <label class="feature-check is-locked"><input type="checkbox" disabled />回数制限なし・毎日何度でも使える</label>
+                  <label class="feature-check is-locked"><input type="checkbox" disabled />条件を自動保存して翌日もすぐ始められる</label>
+                  <label class="feature-check is-locked"><input type="checkbox" disabled />絞り込み条件が増える（SNS運用・AI活用など）</label>
                 </div>
               </div>
             </form>
@@ -474,7 +474,47 @@
       const PRODUCT_KEY = "radar";
       const FREE_LIMIT = 1;
       const USAGE_KEY = "yohelab.free.daily";
+      const CONDITIONS_KEY = "yohelab.radar.conditions";
       let proAccess = false;
+
+      function saveConditions() {
+        if (!proAccess) return;
+        try {
+          const data = {
+            minBudget: document.getElementById("minBudget").value,
+            specialty: document.getElementById("specialty").value,
+            wantChecked: Array.from(document.querySelectorAll('input[name="want"]:checked')).map(el => el.value),
+            excludeChecked: Array.from(document.querySelectorAll('input[name="exclude"]:checked')).map(el => el.value),
+            wantOther: document.getElementById("wantOther").value,
+            excludeOther: document.getElementById("excludeOther").value,
+            strengths: document.getElementById("strengths").value,
+          };
+          localStorage.setItem(CONDITIONS_KEY, JSON.stringify(data));
+        } catch {}
+      }
+
+      function restoreConditions() {
+        if (!proAccess) return;
+        try {
+          const saved = JSON.parse(localStorage.getItem(CONDITIONS_KEY) || "{}");
+          if (!saved.minBudget && !saved.specialty) return;
+          if (saved.minBudget) document.getElementById("minBudget").value = saved.minBudget;
+          if (saved.specialty) document.getElementById("specialty").value = saved.specialty;
+          if (saved.wantOther !== undefined) document.getElementById("wantOther").value = saved.wantOther;
+          if (saved.excludeOther !== undefined) document.getElementById("excludeOther").value = saved.excludeOther;
+          if (saved.strengths) document.getElementById("strengths").value = saved.strengths;
+          if (saved.wantChecked?.length) {
+            document.querySelectorAll('input[name="want"]').forEach(el => {
+              el.checked = saved.wantChecked.includes(el.value);
+            });
+          }
+          if (saved.excludeChecked?.length) {
+            document.querySelectorAll('input[name="exclude"]').forEach(el => {
+              el.checked = saved.excludeChecked.includes(el.value);
+            });
+          }
+        } catch {}
+      }
 
       function todayKey() {
         return new Intl.DateTimeFormat("sv-SE", { timeZone: "Asia/Tokyo" }).format(new Date());
@@ -617,8 +657,12 @@
       window.YoheLabAccess?.load(PRODUCT_KEY).then((state) => {
         proAccess = !!state?.active;
         updateUsageUI();
+        if (proAccess) restoreConditions();
       }).catch(() => {});
       updateUsageUI();
+
+      document.getElementById("radar-form").addEventListener("change", saveConditions);
+      document.getElementById("radar-form").addEventListener("input", saveConditions);
 
       document.getElementById("radar-form").addEventListener("submit", async (e) => {
         e.preventDefault();
@@ -659,6 +703,7 @@
           const jobs = parseJobs(json.result);
           render(jobs);
           incrementUsage();
+          saveConditions();
         } catch (err) {
           results.innerHTML = `<div class="empty" style="min-height:200px;display:grid;place-items:center;border:1.5px dashed var(--border);border-radius:16px;color:var(--muted);font-size:15px;"><div style="text-align:center;">${escapeHtml(friendlyError(err.message))}</div></div>`;
         } finally {
