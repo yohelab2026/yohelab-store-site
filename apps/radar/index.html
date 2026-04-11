@@ -345,7 +345,7 @@
             <span class="app-chip">登録不要</span>
             <span class="app-chip">ブラウザで今すぐ使える</span>
             <span class="app-chip">入力内容は保存しない</span>
-            <span class="app-chip">無料版は1日3回まで</span>
+            <span class="app-chip">無料版は1日1回まで</span>
           </div>
         </div>
 
@@ -357,7 +357,7 @@
             <form class="form-stack" id="radar-form">
               <div class="usage-card" aria-live="polite">
                 <div>
-                  <strong>無料版は1日3回まで</strong>
+                  <strong>無料版は1日1回まで</strong>
                   <span>今日の残り回数をここで確認できる。</span>
                 </div>
                 <strong id="usage-left">残り3回</strong>
@@ -435,7 +435,7 @@
                 <h2>出てくるもの</h2>
                 <p>左で案件候補、右で応募文の下書きを見る。まず案件を見て、次にそのまま送れる文を使う。</p>
               </div>
-              <div class="results-note">無料版は1日3回</div>
+              <div class="results-note">無料版は1日1回</div>
             </div>
             <div id="results"></div>
           </div>
@@ -472,8 +472,8 @@
     <script>
       const copyToast = document.getElementById("copy-toast");
       const PRODUCT_KEY = "radar";
-      const FREE_LIMIT = 3;
-      const USAGE_KEY = "yohelab.radar.freeUsage";
+      const FREE_LIMIT = 1;
+      const USAGE_KEY = "yohelab.free.dailyUsage";
       let proAccess = false;
 
       function todayKey() {
@@ -503,7 +503,7 @@
         const left = proAccess ? "無制限" : Math.max(0, FREE_LIMIT - usage.count);
         const usageLeft = document.getElementById("usage-left");
         const submitBtn = document.querySelector("#radar-form [type='submit']");
-        if (usageLeft) usageLeft.textContent = proAccess ? "有料版で無制限" : (left > 0 ? `残り${left}回` : "上限に達した");
+          if (usageLeft) usageLeft.textContent = proAccess ? "有料版で無制限" : (left > 0 ? `残り${left}回` : "上限に達した");
         if (submitBtn) {
           submitBtn.textContent = proAccess ? "案件を絞る" : (left <= 0 ? "今日は上限です" : "案件を絞る");
         }

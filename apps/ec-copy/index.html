@@ -71,7 +71,7 @@
           <p>商品情報を入れると、商品説明文とQ&amp;Aの叩き台がすぐ返る。BASE・STORESで使える。</p>
           <div class="app-chips">
             <span class="app-chip">登録不要</span>
-            <span class="app-chip">無料版は1日3回まで</span>
+            <span class="app-chip">無料版は1日1回まで</span>
             <span class="app-chip">ブラウザで今すぐ使える</span>
             <span class="app-chip">個人ショップ・ハンドメイド向け</span>
           </div>
@@ -155,7 +155,7 @@
       const btn = document.querySelector("#ec-form button[type=submit]");
       const PRODUCT_KEY = "ec-copy";
       const FREE_LIMIT = 3;
-      const USAGE_KEY = "yohelab.eccopy.freeUsage";
+      const USAGE_KEY = "yohelab.free.dailyUsage";
       let proAccess = false;
 
       function todayKey() {
@@ -213,7 +213,7 @@
         const category = document.getElementById("concerns").value.trim();
         if (!productName || !features) { descOutput.textContent = "商品名と特徴を入力してください。"; return; }
         if (!canUseFree()) {
-          const msg = '無料版は1日3回まで。プロプランなら複数トーンと売り方違いを保存して回せる。';
+          const msg = '無料版は1日1回まで。プロプランなら複数トーンと売り方違いを保存して回せる。';
           descOutput.innerHTML = `${msg} <a href="/products/ec-copy-beta/" style="color:var(--green);font-weight:800;">プロプランを見る</a>`;
           faqOutput.textContent = "";
           return;

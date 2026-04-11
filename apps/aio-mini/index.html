@@ -74,7 +74,7 @@
           <p>自分のサイト・ブログが見つかりやすいかを、4項目でざっくり診断する。</p>
           <div class="app-chips">
             <span class="app-chip">登録不要</span>
-            <span class="app-chip">無料版は1日3回まで</span>
+            <span class="app-chip">無料版は1日1回まで</span>
             <span class="app-chip">URL取得なし</span>
             <span class="app-chip">ブログ・note・ポートフォリオ向け</span>
           </div>
@@ -210,7 +210,7 @@
       }
 
       const FREE_LIMIT = 3;
-      const USAGE_KEY = "yohelab.aio.freeUsage";
+      const USAGE_KEY = "yohelab.free.dailyUsage";
 
       function todayKey() {
         const now = new Date();
@@ -269,7 +269,7 @@
         const profile = document.getElementById("profile").value;
         if (!purpose) { adviceOut.textContent = "何を提供しているかを入力してください。"; return; }
         if (!canUseFree()) {
-          adviceOut.innerHTML = '無料版は1日3回まで。<a href="/products/aio-mini-beta/" style="color:var(--green);font-weight:800;">プロプランを見る</a>';
+          adviceOut.innerHTML = '無料版は1日1回まで。<a href="/products/aio-mini-beta/" style="color:var(--green);font-weight:800;">プロプランを見る</a>';
           scoreEl.textContent = "—";
           return;
         }

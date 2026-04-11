@@ -70,7 +70,7 @@
           <p>案件の要点と自分の強みを入れると、直しやすい応募文の骨組みが返る。</p>
           <div class="app-chips">
             <span class="app-chip">登録不要</span>
-            <span class="app-chip">無料版は1日3回まで</span>
+            <span class="app-chip">無料版は1日1回まで</span>
             <span class="app-chip">ブラウザで今すぐ使える</span>
             <span class="app-chip">案件レーダーの次に使うと効果的</span>
           </div>
@@ -166,7 +166,7 @@
       const btn = document.querySelector("#proposal-form button[type=submit]");
       const PRODUCT_KEY = "proposal";
       const FREE_LIMIT = 3;
-      const USAGE_KEY = "yohelab.proposal.freeUsage";
+      const USAGE_KEY = "yohelab.free.dailyUsage";
       let proAccess = false;
 
       function todayKey() {
@@ -225,7 +225,7 @@
         const close = document.getElementById("close").value;
         if (!project || !needs || !strength) { output.textContent = "案件名・依頼の要点・自分の強みを入力してください。"; return; }
         if (!canUseFree()) {
-          output.innerHTML = '無料版は1日3回まで。<a href="/products/proposal-beta/" style="color:var(--green);font-weight:800;">プロプランを見る</a>';
+          output.innerHTML = '無料版は1日1回まで。<a href="/products/proposal-beta/" style="color:var(--green);font-weight:800;">プロプランを見る</a>';
           return;
         }
 

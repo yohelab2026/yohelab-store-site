@@ -71,7 +71,7 @@
           <p>テーマと言いたいことを入れると、投稿案3本と返信案3本がすぐ返る。</p>
           <div class="app-chips">
             <span class="app-chip">登録不要</span>
-            <span class="app-chip">無料版は1日3回まで</span>
+            <span class="app-chip">無料版は1日1回まで</span>
             <span class="app-chip">SNS連携なし</span>
             <span class="app-chip">入力内容は保存しない</span>
           </div>
@@ -158,7 +158,7 @@
       const btn = document.querySelector("#x-form button[type=submit]");
       const PRODUCT_KEY = "x-helper";
       const FREE_LIMIT = 3;
-      const USAGE_KEY = "yohelab.xhelper.freeUsage";
+      const USAGE_KEY = "yohelab.free.dailyUsage";
       let proAccess = false;
 
       function todayKey() {
@@ -224,7 +224,7 @@
         const tone = document.getElementById("voice").value;
         if (!theme || !message) { postsOutput.textContent = "テーマと言いたいことを入力してください。"; return; }
         if (!canUseFree()) {
-          const msg = '無料版は1日3回まで。プロプランなら切り口違いを保存して、毎日すぐ使える。';
+          const msg = '無料版は1日1回まで。プロプランなら切り口違いを保存して、毎日すぐ使える。';
           postsOutput.innerHTML = `${msg} <a href="/products/x-helper-beta/" style="color:var(--green);font-weight:800;">プロプランを見る</a>`;
           repliesOutput.textContent = "";
           return;
