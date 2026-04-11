@@ -4,9 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>案件レーダー | よへラボ</title>
-    <meta name="description" content="案件レーダーは、条件に合うクラウドソーシング案件を厳選して、応募文の下書きまで返す無料AIツール。登録不要・ブラウザで今すぐ使える。" />
+    <meta name="description" content="案件レーダーは、案件探しを朝10分にしたい人向けの無料AIツール。条件に合うクラウドソーシング案件候補を絞って、応募文の下書きまで返す。登録不要・ブラウザで今すぐ使える。" />
     <meta property="og:title" content="案件レーダー | よへラボ" />
-    <meta property="og:description" content="条件を入れると、応募しやすい案件候補と応募文の下書きがすぐ返る。無料・登録不要。" />
+    <meta property="og:description" content="案件探しを朝10分にしたい人向けの無料AIツール。条件を入れると、応募しやすい案件候補と応募文の下書きがすぐ返る。" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://yohelab.com/apps/radar/" />
     <meta property="og:image" content="https://yohelab.com/yohelab-icon.png" />
@@ -35,6 +35,26 @@
       }
       .app-panel h2 { font-size: 18px; font-weight: 800; margin-bottom: 20px; }
       .form-stack { display: grid; gap: 16px; }
+      .usage-card {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 14px 16px;
+        border-radius: 16px;
+        background: var(--green-light);
+        border: 1px solid var(--green-mid);
+      }
+      .usage-card strong {
+        font-size: 14px;
+        color: var(--green-dark);
+      }
+      .usage-card span {
+        display: block;
+        font-size: 13px;
+        color: var(--muted);
+        margin-top: 2px;
+      }
       .condition-group {
         padding: 18px;
         border-radius: 16px;
@@ -68,9 +88,32 @@
         line-height: 1.5;
         cursor: pointer;
       }
+      .check-pill.is-locked {
+        background: #f4f6f8;
+        color: var(--muted);
+        cursor: not-allowed;
+        opacity: .9;
+      }
       .check-pill input {
         margin-top: 2px;
         accent-color: var(--green);
+      }
+      .check-pill.is-locked input {
+        accent-color: #c8ced6;
+      }
+      .pill-tag {
+        margin-left: auto;
+        padding: 2px 8px;
+        border-radius: 999px;
+        font-size: 11px;
+        font-weight: 800;
+        color: var(--muted);
+        background: #eef1f4;
+        flex-shrink: 0;
+      }
+      .pill-tag.pro {
+        color: var(--green-dark);
+        background: #e1f3ea;
       }
       .other-box {
         display: grid;
@@ -81,7 +124,74 @@
         font-size: 13px;
         font-weight: 700;
       }
+      .pro-feature-box {
+        padding: 18px;
+        border-radius: 16px;
+        border: 1px solid var(--border);
+        background: linear-gradient(180deg, #f8fbf9 0%, #eef7f3 100%);
+      }
+      .pro-feature-box h3 {
+        font-size: 15px;
+        font-weight: 800;
+        margin-bottom: 8px;
+      }
+      .pro-feature-box .sub {
+        font-size: 12px;
+        color: var(--muted);
+        margin-bottom: 12px;
+      }
+      .feature-checks {
+        display: grid;
+        gap: 10px;
+      }
+      .feature-check {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        font-size: 14px;
+        line-height: 1.5;
+        color: var(--text);
+      }
+      .feature-check input {
+        margin-top: 2px;
+        accent-color: var(--green);
+      }
+      .feature-check.is-locked {
+        color: var(--muted);
+      }
+      .feature-check.is-locked input {
+        opacity: .8;
+      }
       .app-results { display: grid; gap: 20px; }
+      .results-intro {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 8px 4px 0;
+      }
+      .results-intro h2 {
+        font-size: 22px;
+        font-weight: 900;
+        margin-bottom: 6px;
+      }
+      .results-intro p {
+        font-size: 14px;
+        color: var(--muted);
+        line-height: 1.7;
+        margin: 0;
+      }
+      .results-note {
+        flex: 0 0 auto;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: var(--green-light);
+        border: 1px solid var(--green-mid);
+        color: var(--green);
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: .04em;
+      }
       .result-item {
         background: var(--white);
         border: 1px solid var(--border);
@@ -133,6 +243,12 @@
         margin-bottom: 10px;
       }
       .result-col p { font-size: 15px; line-height: 1.75; color: var(--text); margin: 0; }
+      .result-col-note {
+        margin-top: 4px;
+        font-size: 13px;
+        line-height: 1.7;
+        color: var(--muted);
+      }
       .draft-box {
         font-size: 14px;
         line-height: 1.85;
@@ -195,10 +311,11 @@
         .app-panel { position: static; }
         .result-body { grid-template-columns: 1fr; }
         .result-col + .result-col { border-left: none; border-top: 1px solid var(--border); }
+        .results-intro { flex-direction: column; align-items: start; }
       }
     </style>
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@type":"SoftwareApplication","name":"案件レーダー","applicationCategory":"BusinessApplication","operatingSystem":"Web","url":"https://yohelab.com/apps/radar/","offers":{"@type":"Offer","price":"0","priceCurrency":"JPY"},"description":"条件に合う案件候補と提案文の下書きを返す、ひとりで稼ぐ人向けのWebツール。"}
+      {"@context":"https://schema.org","@type":"SoftwareApplication","name":"案件レーダー","applicationCategory":"BusinessApplication","operatingSystem":"Web","url":"https://yohelab.com/apps/radar/","offers":{"@type":"Offer","price":"0","priceCurrency":"JPY"},"description":"案件探しを朝10分にしたい人向けの無料AIツール。条件に合う案件候補と提案文の下書きを返す。"}
     </script>
   </head>
   <body>
@@ -222,12 +339,13 @@
       <div class="container">
 
         <div class="app-intro">
-          <h1>案件レーダー</h1>
-          <p>条件を入れると、今日見るべき案件候補と応募文の下書きが返る。</p>
+          <h1>案件探しAIの案件レーダー</h1>
+          <p>条件を入れると、今日見るべき案件候補と応募文の下書きが返る。無料で試せる案件探しAI。</p>
           <div class="app-chips">
             <span class="app-chip">登録不要</span>
             <span class="app-chip">ブラウザで今すぐ使える</span>
             <span class="app-chip">入力内容は保存しない</span>
+            <span class="app-chip">無料版は1日3回まで</span>
           </div>
         </div>
 
@@ -237,6 +355,13 @@
           <div class="app-panel">
             <h2>条件を入れる</h2>
             <form class="form-stack" id="radar-form">
+              <div class="usage-card" aria-live="polite">
+                <div>
+                  <strong>無料版は1日3回まで</strong>
+                  <span>今日の残り回数をここで確認できる。</span>
+                </div>
+                <strong id="usage-left">残り3回</strong>
+              </div>
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
                 <label>最低予算（円）
                   <input id="minBudget" type="number" value="30000" placeholder="30000" />
@@ -257,9 +382,9 @@
                   <label class="check-pill"><input type="checkbox" name="want" value="ライティング" checked />ライティング</label>
                   <label class="check-pill"><input type="checkbox" name="want" value="LP制作" checked />LP制作</label>
                   <label class="check-pill"><input type="checkbox" name="want" value="EC改善" checked />EC改善</label>
-                  <label class="check-pill"><input type="checkbox" name="want" value="SNS運用" />SNS運用</label>
-                  <label class="check-pill"><input type="checkbox" name="want" value="AI活用" />AI活用</label>
-                  <label class="check-pill"><input type="checkbox" name="want" value="Webサイト改善" />Webサイト改善</label>
+                  <label class="check-pill is-locked"><input type="checkbox" name="want" value="SNS運用" disabled />SNS運用 <span class="pill-tag pro">PRO</span></label>
+                  <label class="check-pill is-locked"><input type="checkbox" name="want" value="AI活用" disabled />AI活用 <span class="pill-tag pro">PRO</span></label>
+                  <label class="check-pill is-locked"><input type="checkbox" name="want" value="Webサイト改善" disabled />Webサイト改善 <span class="pill-tag pro">PRO</span></label>
                 </div>
                 <label class="other-box">その他で探したいこと
                   <input id="wantOther" value="Webサイト LP" placeholder="例: 商品説明, メルマガ, 画像作成" />
@@ -272,9 +397,9 @@
                   <label class="check-pill"><input type="checkbox" name="exclude" value="出社必須" checked />出社必須</label>
                   <label class="check-pill"><input type="checkbox" name="exclude" value="低単価" checked />低単価</label>
                   <label class="check-pill"><input type="checkbox" name="exclude" value="女性限定" checked />女性限定</label>
-                  <label class="check-pill"><input type="checkbox" name="exclude" value="動画編集" />動画編集</label>
-                  <label class="check-pill"><input type="checkbox" name="exclude" value="短納期すぎる" />短納期すぎる</label>
-                  <label class="check-pill"><input type="checkbox" name="exclude" value="電話対応必須" />電話対応必須</label>
+                  <label class="check-pill is-locked"><input type="checkbox" name="exclude" value="動画編集" disabled />動画編集 <span class="pill-tag pro">PRO</span></label>
+                  <label class="check-pill is-locked"><input type="checkbox" name="exclude" value="短納期すぎる" disabled />短納期すぎる <span class="pill-tag pro">PRO</span></label>
+                  <label class="check-pill is-locked"><input type="checkbox" name="exclude" value="電話対応必須" disabled />電話対応必須 <span class="pill-tag pro">PRO</span></label>
                 </div>
                 <label class="other-box">その他で外したいこと
                   <input id="excludeOther" value="" placeholder="例: 土日対応必須, すぐ返信必須" />
@@ -291,17 +416,35 @@
               </div>
               <button class="btn btn-primary" style="width:100%;height:50px;" type="submit">案件を絞る</button>
               <p style="font-size:12px;color:var(--muted);text-align:center;">入力内容はサーバーに保存しません</p>
+              <div class="pro-feature-box">
+                <h3>プロプランで使えること</h3>
+                <p class="sub">無料版ではこのあたりが使えない。違いをはっきり見せる。</p>
+                <div class="feature-checks">
+                  <label class="feature-check is-locked"><input type="checkbox" disabled />条件を保存して毎朝そのまま使う</label>
+                  <label class="feature-check is-locked"><input type="checkbox" disabled />応募文を複数案で比べる</label>
+                  <label class="feature-check is-locked"><input type="checkbox" disabled />選んだ条件を固定して再利用する</label>
+                </div>
+              </div>
             </form>
           </div>
 
           <!-- 結果 -->
-          <div class="app-results" id="results"></div>
+          <div class="app-results">
+            <div class="results-intro">
+              <div>
+                <h2>出てくるもの</h2>
+                <p>左で案件候補、右で応募文の下書きを見る。まず案件を見て、次にそのまま送れる文を使う。</p>
+              </div>
+              <div class="results-note">無料版は1日3回</div>
+            </div>
+            <div id="results"></div>
+          </div>
 
         </div>
 
         <div class="upsell-bar">
           <div>
-            <h3>毎朝の案件探しを、10分で終わらせる形にする</h3>
+            <h3>毎朝の案件探しを10分で終わらせる形にする</h3>
             <p>プロプランでは条件保存・候補整理・応募文の複数案まで。毎日使える形に整えられる。</p>
           </div>
           <a class="btn btn-white" href="/products/radar-beta/">プロプランを見る →</a>
@@ -324,8 +467,69 @@
 
     <div class="toast" id="copy-toast">コピーしました</div>
 
+    <script src="/shared/pro-access.js"></script>
+
     <script>
       const copyToast = document.getElementById("copy-toast");
+      const PRODUCT_KEY = "radar";
+      const FREE_LIMIT = 3;
+      const USAGE_KEY = "yohelab.radar.freeUsage";
+      let proAccess = false;
+
+      function todayKey() {
+        const d = new Date();
+        const y = d.getFullYear();
+        const m = String(d.getMonth() + 1).padStart(2, "0");
+        const day = String(d.getDate()).padStart(2, "0");
+        return `${y}-${m}-${day}`;
+      }
+
+      function loadUsage() {
+        try {
+          const raw = JSON.parse(localStorage.getItem(USAGE_KEY) || "null");
+          if (!raw || raw.day !== todayKey()) return { day: todayKey(), count: 0 };
+          return { day: raw.day, count: Number(raw.count) || 0 };
+        } catch {
+          return { day: todayKey(), count: 0 };
+        }
+      }
+
+      function saveUsage(count) {
+        localStorage.setItem(USAGE_KEY, JSON.stringify({ day: todayKey(), count }));
+      }
+
+      function updateUsageUI() {
+        const usage = loadUsage();
+        const left = proAccess ? "無制限" : Math.max(0, FREE_LIMIT - usage.count);
+        const usageLeft = document.getElementById("usage-left");
+        const submitBtn = document.querySelector("#radar-form [type='submit']");
+        if (usageLeft) usageLeft.textContent = proAccess ? "有料版で無制限" : (left > 0 ? `残り${left}回` : "上限に達した");
+        if (submitBtn) {
+          submitBtn.textContent = proAccess ? "案件を絞る" : (left <= 0 ? "今日は上限です" : "案件を絞る");
+        }
+        document.querySelectorAll(".check-pill.is-locked input").forEach((input) => {
+          input.disabled = !proAccess ? true : false;
+        });
+        document.querySelectorAll(".check-pill.is-locked").forEach((pill) => {
+          pill.classList.toggle("is-locked", !proAccess);
+          const tag = pill.querySelector(".pill-tag");
+          if (tag) {
+            tag.textContent = proAccess ? "有効" : "PRO";
+            tag.classList.toggle("pro", proAccess);
+          }
+        });
+      }
+
+      function canUseFree() {
+        return proAccess || loadUsage().count < FREE_LIMIT;
+      }
+
+      function incrementUsage() {
+        if (proAccess) return;
+        const usage = loadUsage();
+        saveUsage(Math.min(FREE_LIMIT, usage.count + 1));
+        updateUsageUI();
+      }
 
       function friendlyError(msg) {
         if (!msg) return "予期しないエラーが発生しました。もう一度お試しください。";
@@ -354,7 +558,7 @@
       function render(list) {
         const results = document.getElementById("results");
         if (!list.length) {
-          results.innerHTML = `<div class="empty" style="min-height:200px;display:grid;place-items:center;border:1.5px dashed var(--border);border-radius:16px;color:var(--muted);font-size:15px;">条件に近い案件が見つかりませんでした。<br>キーワードか最低予算を少しゆるめてみてください。</div>`;
+          results.innerHTML = `<div class="empty" style="min-height:200px;display:grid;place-items:center;border:1.5px dashed var(--border);border-radius:16px;color:var(--muted);font-size:15px;">条件に近い案件が見つかりませんでした。<br>条件か最低予算を少しゆるめてみてください。</div>`;
           return;
         }
 
@@ -371,15 +575,20 @@
             </div>
             <div class="result-body">
               <div class="result-col">
-                <div class="result-col-label">おすすめ理由</div>
-                <p>${escapeHtml(job.reason)}</p>
+                <div class="result-col-label">案件候補</div>
+                <p class="result-col-note">応募しやすいものから先に見る。</p>
+                <div style="margin-top:12px;">
+                  <div class="result-col-label">おすすめ理由</div>
+                  <p>${escapeHtml(job.reason)}</p>
+                </div>
                 <div style="margin-top:12px;">
                   <div class="result-col-label">案件概要</div>
                   <p>${escapeHtml(job.summary)}</p>
                 </div>
               </div>
               <div class="result-col">
-                <div class="result-col-label">応募文の下書き（AI生成）</div>
+                <div class="result-col-label">応募文の下書き</div>
+                <p class="result-col-note">そのまま使える下書き。必要なら少し直して送る。</p>
                 <div class="draft-box" id="draft-${i}">${escapeHtml(job.proposal)}</div>
                 <button class="copy-btn" data-target="draft-${i}">コピー</button>
               </div>
@@ -411,11 +620,22 @@
         });
       });
 
+      window.YoheLabAccess?.load(PRODUCT_KEY).then((state) => {
+        proAccess = !!state?.active;
+        updateUsageUI();
+      }).catch(() => {});
+      updateUsageUI();
+
       document.getElementById("radar-form").addEventListener("submit", async (e) => {
         e.preventDefault();
         const results = document.getElementById("results");
         const submitBtn = e.target.querySelector('[type="submit"]');
         const specialtyEl = document.getElementById("specialty");
+
+        if (!canUseFree()) {
+          results.innerHTML = `<div class="empty" style="min-height:200px;display:grid;place-items:center;border:1.5px dashed var(--border);border-radius:16px;color:var(--muted);font-size:15px;"><div style="text-align:center;">今日の無料回数は上限です。<br><a href="/products/radar-beta/" style="color:var(--green);font-weight:700;">プロプランを見る →</a></div></div>`;
+          return;
+        }
 
         submitBtn.disabled = true;
         submitBtn.textContent = "AIが案件を探しています…";
@@ -444,6 +664,7 @@
           if (json.error) throw new Error(json.error);
           const jobs = parseJobs(json.result);
           render(jobs);
+          incrementUsage();
         } catch (err) {
           results.innerHTML = `<div class="empty" style="min-height:200px;display:grid;place-items:center;border:1.5px dashed var(--border);border-radius:16px;color:var(--muted);font-size:15px;"><div style="text-align:center;">${escapeHtml(friendlyError(err.message))}</div></div>`;
         } finally {

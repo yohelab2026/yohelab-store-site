@@ -25,6 +25,16 @@
       .output-area { background: var(--white); border: 1px solid var(--border); border-radius: 20px; padding: 28px; box-shadow: var(--shadow); }
       .output-area h3 { font-size: 17px; font-weight: 800; margin-bottom: 14px; }
       .draft-box { font-size: 14px; line-height: 1.9; white-space: pre-wrap; background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 16px; color: #2a3240; }
+      .usage-card { margin-bottom: 18px; padding: 16px 18px; border-radius: 14px; background: linear-gradient(135deg,#f3fbf8,#e8f5ef); border: 1px solid #cde8dd; }
+      .usage-card .label { font-size: 12px; font-weight: 800; letter-spacing: .12em; color: var(--green); text-transform: uppercase; margin-bottom: 6px; }
+      .usage-card .count { font-size: 15px; font-weight: 800; color: var(--text); }
+      .usage-card .count strong { color: var(--green-dark); font-size: 20px; }
+      .pro-feature-box { margin-top: 18px; padding: 18px; border-radius: 16px; background: #f7faf8; border: 1px solid var(--border); }
+      .pro-feature-box h3 { font-size: 15px; font-weight: 800; margin-bottom: 12px; }
+      .pro-feature-list { display: grid; gap: 10px; }
+      .pro-feature-list label { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; color: var(--text); }
+      .pro-feature-list input[type="checkbox"] { margin-top: 3px; accent-color: var(--green); }
+      .pro-feature-list span { color: var(--muted); font-size: 13px; display: block; margin-top: 2px; }
       .app-intro { padding: 40px 0 0; text-align: center; }
       .app-intro h1 { font-size: clamp(24px,5vw,38px); margin-bottom: 12px; }
       .app-intro p { color: var(--muted); font-size: 17px; margin-bottom: 8px; }
@@ -61,6 +71,7 @@
           <p>商品情報を入れると、商品説明文とQ&amp;Aの叩き台がすぐ返る。BASE・STORESで使える。</p>
           <div class="app-chips">
             <span class="app-chip">登録不要</span>
+            <span class="app-chip">無料版は1日3回まで</span>
             <span class="app-chip">ブラウザで今すぐ使える</span>
             <span class="app-chip">個人ショップ・ハンドメイド向け</span>
           </div>
@@ -70,6 +81,10 @@
 
           <div class="app-panel">
             <h2>商品情報を入れる</h2>
+            <div class="usage-card">
+              <div class="label">FREE LIMIT</div>
+              <div class="count">無料版は <strong id="usage-left">3</strong> 回使える</div>
+            </div>
             <form class="form-stack" id="ec-form">
               <label>商品名
                 <input id="ec-name" value="やわらかリネンのエプロン" placeholder="例: ハンドメイドポーチ、天然石ブレスレット" />
@@ -86,6 +101,14 @@
               <button class="btn btn-primary" style="width:100%;height:50px;" type="submit">説明文を作る</button>
               <p style="font-size:12px;color:var(--muted);text-align:center;">入力内容はサーバーに保存しません</p>
             </form>
+            <div class="pro-feature-box">
+              <h3>プロプランで使えること</h3>
+              <div class="pro-feature-list">
+                <label><input type="checkbox" checked disabled /> <span>複数トーンで説明文を出し分ける</span></label>
+                <label><input type="checkbox" checked disabled /> <span>売り方違いを保存して比べる</span></label>
+                <label><input type="checkbox" checked disabled /> <span>BASE・STORES向けにそのまま整える</span></label>
+              </div>
+            </div>
           </div>
 
           <div class="output-grid">
@@ -125,10 +148,63 @@
       </div>
     </footer>
 
+    <script src="/shared/pro-access.js"></script>
     <script>
       const descOutput = document.getElementById("desc-output");
       const faqOutput = document.getElementById("faq-output");
       const btn = document.querySelector("#ec-form button[type=submit]");
+      const PRODUCT_KEY = "ec-copy";
+      const FREE_LIMIT = 3;
+      const USAGE_KEY = "yohelab.eccopy.freeUsage";
+      let proAccess = false;
+
+      function todayKey() {
+        const now = new Date();
+        const parts = new Intl.DateTimeFormat("sv-SE", {
+          timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+        }).formatToParts(now);
+        const map = Object.fromEntries(parts.map((p) => [p.type, p.value]));
+        return `${map.year}-${map.month}-${map.day}`;
+      }
+
+      function loadUsage() {
+        try {
+          const raw = localStorage.getItem(USAGE_KEY);
+          if (!raw) return { date: todayKey(), count: 0 };
+          const parsed = JSON.parse(raw);
+          if (!parsed || parsed.date !== todayKey()) return { date: todayKey(), count: 0 };
+          return { date: parsed.date, count: Number(parsed.count) || 0 };
+        } catch {
+          return { date: todayKey(), count: 0 };
+        }
+      }
+
+      function saveUsage(usage) {
+        localStorage.setItem(USAGE_KEY, JSON.stringify(usage));
+      }
+
+      function updateUsageUI() {
+        const usage = loadUsage();
+        const left = proAccess ? "無制限" : Math.max(0, FREE_LIMIT - usage.count);
+        const el = document.getElementById("usage-left");
+        if (el) el.textContent = proAccess ? "無制限" : String(left);
+      }
+
+      function canUseFree() {
+        return proAccess || loadUsage().count < FREE_LIMIT;
+      }
+
+      function incrementUsage() {
+        if (proAccess) return;
+        const usage = loadUsage();
+        const next = { date: todayKey(), count: usage.count + 1 };
+        saveUsage(next);
+        updateUsageUI();
+        return next;
+      }
 
       async function renderEC() {
         const productName = document.getElementById("ec-name").value.trim();
@@ -136,6 +212,12 @@
         const features = document.getElementById("features").value.trim();
         const category = document.getElementById("concerns").value.trim();
         if (!productName || !features) { descOutput.textContent = "商品名と特徴を入力してください。"; return; }
+        if (!canUseFree()) {
+          const msg = '無料版は1日3回まで。プロプランなら複数トーンと売り方違いを保存して回せる。';
+          descOutput.innerHTML = `${msg} <a href="/products/ec-copy-beta/" style="color:var(--green);font-weight:800;">プロプランを見る</a>`;
+          faqOutput.textContent = "";
+          return;
+        }
 
         btn.disabled = true;
         btn.textContent = "生成中…";
@@ -159,6 +241,7 @@
           const qaJson = await qaRes.json();
           descOutput.textContent = descJson.result || "生成に失敗しました。";
           faqOutput.textContent = qaJson.result || "生成に失敗しました。";
+          if (descJson.result || qaJson.result) incrementUsage();
         } catch (err) {
           const msg = (err && /503|overloaded/i.test(String(err.message)))
             ? "AIサーバーが混み合っています。少し待ってからもう一度お試しください。"
@@ -172,6 +255,17 @@
       }
 
       document.getElementById("ec-form").addEventListener("submit", e => { e.preventDefault(); renderEC(); });
+      window.YoheLabAccess?.load(PRODUCT_KEY).then((state) => {
+        proAccess = !!state?.active;
+        updateUsageUI();
+        if (proAccess) {
+          const label = document.querySelector(".usage-card .label");
+          const count = document.querySelector(".usage-card .count");
+          if (label) label.textContent = "PRO";
+          if (count) count.innerHTML = '有料版が有効。<strong style="font-size:18px;color:var(--green-dark);">無制限</strong>';
+        }
+      }).catch(() => {});
+      updateUsageUI();
     </script>
   </body>
 </html>
