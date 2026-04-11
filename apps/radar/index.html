@@ -163,6 +163,35 @@
         opacity: .8;
       }
       .app-results { display: grid; gap: 20px; }
+      .results-intro {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 8px 4px 0;
+      }
+      .results-intro h2 {
+        font-size: 22px;
+        font-weight: 900;
+        margin-bottom: 6px;
+      }
+      .results-intro p {
+        font-size: 14px;
+        color: var(--muted);
+        line-height: 1.7;
+        margin: 0;
+      }
+      .results-note {
+        flex: 0 0 auto;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: var(--green-light);
+        border: 1px solid var(--green-mid);
+        color: var(--green);
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: .04em;
+      }
       .result-item {
         background: var(--white);
         border: 1px solid var(--border);
@@ -214,6 +243,12 @@
         margin-bottom: 10px;
       }
       .result-col p { font-size: 15px; line-height: 1.75; color: var(--text); margin: 0; }
+      .result-col-note {
+        margin-top: 4px;
+        font-size: 13px;
+        line-height: 1.7;
+        color: var(--muted);
+      }
       .draft-box {
         font-size: 14px;
         line-height: 1.85;
@@ -276,6 +311,7 @@
         .app-panel { position: static; }
         .result-body { grid-template-columns: 1fr; }
         .result-col + .result-col { border-left: none; border-top: 1px solid var(--border); }
+        .results-intro { flex-direction: column; align-items: start; }
       }
     </style>
     <script type="application/ld+json">
@@ -393,7 +429,16 @@
           </div>
 
           <!-- 結果 -->
-          <div class="app-results" id="results"></div>
+          <div class="app-results">
+            <div class="results-intro">
+              <div>
+                <h2>出てくるもの</h2>
+                <p>左で案件候補、右で応募文の下書きを見る。まず案件を見て、次にそのまま送れる文を使う。</p>
+              </div>
+              <div class="results-note">無料版は1日3回</div>
+            </div>
+            <div id="results"></div>
+          </div>
 
         </div>
 
@@ -530,15 +575,20 @@
             </div>
             <div class="result-body">
               <div class="result-col">
-                <div class="result-col-label">おすすめ理由</div>
-                <p>${escapeHtml(job.reason)}</p>
+                <div class="result-col-label">案件候補</div>
+                <p class="result-col-note">応募しやすいものから先に見る。</p>
+                <div style="margin-top:12px;">
+                  <div class="result-col-label">おすすめ理由</div>
+                  <p>${escapeHtml(job.reason)}</p>
+                </div>
                 <div style="margin-top:12px;">
                   <div class="result-col-label">案件概要</div>
                   <p>${escapeHtml(job.summary)}</p>
                 </div>
               </div>
               <div class="result-col">
-                <div class="result-col-label">応募文の下書き（AI生成）</div>
+                <div class="result-col-label">応募文の下書き</div>
+                <p class="result-col-note">そのまま使える下書き。必要なら少し直して送る。</p>
                 <div class="draft-box" id="draft-${i}">${escapeHtml(job.proposal)}</div>
                 <button class="copy-btn" data-target="draft-${i}">コピー</button>
               </div>
