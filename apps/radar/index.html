@@ -88,9 +88,32 @@
         line-height: 1.5;
         cursor: pointer;
       }
+      .check-pill.is-locked {
+        background: #f4f6f8;
+        color: var(--muted);
+        cursor: not-allowed;
+        opacity: .9;
+      }
       .check-pill input {
         margin-top: 2px;
         accent-color: var(--green);
+      }
+      .check-pill.is-locked input {
+        accent-color: #c8ced6;
+      }
+      .pill-tag {
+        margin-left: auto;
+        padding: 2px 8px;
+        border-radius: 999px;
+        font-size: 11px;
+        font-weight: 800;
+        color: var(--muted);
+        background: #eef1f4;
+        flex-shrink: 0;
+      }
+      .pill-tag.pro {
+        color: var(--green-dark);
+        background: #e1f3ea;
       }
       .other-box {
         display: grid;
@@ -323,9 +346,9 @@
                   <label class="check-pill"><input type="checkbox" name="want" value="ライティング" checked />ライティング</label>
                   <label class="check-pill"><input type="checkbox" name="want" value="LP制作" checked />LP制作</label>
                   <label class="check-pill"><input type="checkbox" name="want" value="EC改善" checked />EC改善</label>
-                  <label class="check-pill"><input type="checkbox" name="want" value="SNS運用" />SNS運用</label>
-                  <label class="check-pill"><input type="checkbox" name="want" value="AI活用" />AI活用</label>
-                  <label class="check-pill"><input type="checkbox" name="want" value="Webサイト改善" />Webサイト改善</label>
+                  <label class="check-pill is-locked"><input type="checkbox" name="want" value="SNS運用" disabled />SNS運用 <span class="pill-tag pro">PRO</span></label>
+                  <label class="check-pill is-locked"><input type="checkbox" name="want" value="AI活用" disabled />AI活用 <span class="pill-tag pro">PRO</span></label>
+                  <label class="check-pill is-locked"><input type="checkbox" name="want" value="Webサイト改善" disabled />Webサイト改善 <span class="pill-tag pro">PRO</span></label>
                 </div>
                 <label class="other-box">その他で探したいこと
                   <input id="wantOther" value="Webサイト LP" placeholder="例: 商品説明, メルマガ, 画像作成" />
@@ -338,9 +361,9 @@
                   <label class="check-pill"><input type="checkbox" name="exclude" value="出社必須" checked />出社必須</label>
                   <label class="check-pill"><input type="checkbox" name="exclude" value="低単価" checked />低単価</label>
                   <label class="check-pill"><input type="checkbox" name="exclude" value="女性限定" checked />女性限定</label>
-                  <label class="check-pill"><input type="checkbox" name="exclude" value="動画編集" />動画編集</label>
-                  <label class="check-pill"><input type="checkbox" name="exclude" value="短納期すぎる" />短納期すぎる</label>
-                  <label class="check-pill"><input type="checkbox" name="exclude" value="電話対応必須" />電話対応必須</label>
+                  <label class="check-pill is-locked"><input type="checkbox" name="exclude" value="動画編集" disabled />動画編集 <span class="pill-tag pro">PRO</span></label>
+                  <label class="check-pill is-locked"><input type="checkbox" name="exclude" value="短納期すぎる" disabled />短納期すぎる <span class="pill-tag pro">PRO</span></label>
+                  <label class="check-pill is-locked"><input type="checkbox" name="exclude" value="電話対応必須" disabled />電話対応必須 <span class="pill-tag pro">PRO</span></label>
                 </div>
                 <label class="other-box">その他で外したいこと
                   <input id="excludeOther" value="" placeholder="例: 土日対応必須, すぐ返信必須" />
