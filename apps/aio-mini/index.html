@@ -74,7 +74,7 @@
           <p>自分のサイト・ブログが見つかりやすいかを、4項目でざっくり診断する。</p>
           <div class="app-chips">
             <span class="app-chip">登録不要</span>
-            <span class="app-chip">無料版は1日1回まで</span>
+            <span class="app-chip">無料版は3回まで</span>
             <span class="app-chip">URL取得なし</span>
             <span class="app-chip">ブログ・note・ポートフォリオ向け</span>
           </div>
@@ -210,52 +210,21 @@
       }
 
       const FREE_LIMIT = 3;
-      const USAGE_KEY = "yohelab.free.dailyUsage";
-
-      function todayKey() {
-        const now = new Date();
-        const parts = new Intl.DateTimeFormat("sv-SE", {
-          timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-          year: "numeric",
-          month: "2-digit",
-          day: "2-digit",
-        }).formatToParts(now);
-        const map = Object.fromEntries(parts.map((p) => [p.type, p.value]));
-        return `${map.year}-${map.month}-${map.day}`;
-      }
+      const USAGE_KEY = "yohelab.free.aiomini";
 
       function loadUsage() {
-        try {
-          const raw = localStorage.getItem(USAGE_KEY);
-          if (!raw) return { date: todayKey(), count: 0 };
-          const parsed = JSON.parse(raw);
-          if (!parsed || parsed.date !== todayKey()) return { date: todayKey(), count: 0 };
-          return { date: parsed.date, count: Number(parsed.count) || 0 };
-        } catch {
-          return { date: todayKey(), count: 0 };
-        }
+        try { return Number(localStorage.getItem(USAGE_KEY)) || 0; } catch { return 0; }
       }
-
-      function saveUsage(usage) {
-        localStorage.setItem(USAGE_KEY, JSON.stringify(usage));
-      }
-
+      function saveUsage(count) { localStorage.setItem(USAGE_KEY, String(count)); }
       function updateUsageUI() {
-        const usage = loadUsage();
-        const left = proAccess ? "無制限" : Math.max(0, FREE_LIMIT - usage.count);
+        const left = proAccess ? "無制限" : Math.max(0, FREE_LIMIT - loadUsage());
         const el = document.getElementById("usage-left");
         if (el) el.textContent = proAccess ? "無制限" : String(left);
       }
-
-      function canUseFree() {
-        return proAccess || loadUsage().count < FREE_LIMIT;
-      }
-
+      function canUseFree() { return proAccess || loadUsage() < FREE_LIMIT; }
       function incrementUsage() {
         if (proAccess) return;
-        const usage = loadUsage();
-        const next = { date: todayKey(), count: usage.count + 1 };
-        saveUsage(next);
+        saveUsage(Math.min(FREE_LIMIT, loadUsage() + 1));
         updateUsageUI();
         return next;
       }
@@ -269,7 +238,7 @@
         const profile = document.getElementById("profile").value;
         if (!purpose) { adviceOut.textContent = "何を提供しているかを入力してください。"; return; }
         if (!canUseFree()) {
-          adviceOut.innerHTML = '無料版は1日1回まで。<a href="/products/aio-mini-beta/" style="color:var(--green);font-weight:800;">プロプランを見る</a>';
+          adviceOut.innerHTML = '無料版は3回まで。<a href="/products/aio-mini-beta/" style="color:var(--green);font-weight:800;">プロプランを見る</a>';
           scoreEl.textContent = "—";
           return;
         }

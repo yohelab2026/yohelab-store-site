@@ -145,18 +145,18 @@ function buildUserPrompt(tool, data) {
 
     case "ec_description":
       return `商品名：${data.productName}
-商品カテゴリ：${data.category}
 主な特徴：${data.features}
 ターゲット：${data.target}
+よくある不安・質問：${data.concerns || "特になし"}
 
 上記をもとに商品説明文を3パターン作成してください。`;
 
     case "ec_qa":
       return `商品名：${data.productName}
-商品カテゴリ：${data.category}
 主な特徴：${data.features}
+よくある不安・質問：${data.concerns || "特になし"}
 
-上記をもとに購入前Q&Aを5セット作成してください。`;
+上記をもとに購入前Q&Aを5セット作成してください。不安・質問が入力されている場合はそれを優先的にQ&Aに反映すること。`;
 
     case "radar":
       return `探したい案件：${[...(data.wantChecked || []), data.wantOther].filter(Boolean).join(" / ") || data.keyword || "指定なし"}

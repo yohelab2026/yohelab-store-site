@@ -345,7 +345,7 @@
             <span class="app-chip">登録不要</span>
             <span class="app-chip">ブラウザで今すぐ使える</span>
             <span class="app-chip">入力内容は保存しない</span>
-            <span class="app-chip">無料版は1日1回まで</span>
+            <span class="app-chip">無料版は3回まで</span>
           </div>
         </div>
 
@@ -357,8 +357,8 @@
             <form class="form-stack" id="radar-form">
               <div class="usage-card" aria-live="polite">
                 <div>
-                  <strong>無料版は1日1回まで</strong>
-                  <span>今日の残り回数をここで確認できる。</span>
+                  <strong>無料版は3回まで</strong>
+                  <span>残り回数をここで確認できる。</span>
                 </div>
                 <strong id="usage-left">残り3回</strong>
               </div>
@@ -435,7 +435,7 @@
                 <h2>出てくるもの</h2>
                 <p>左で案件候補、右で応募文の下書きを見る。まず案件を見て、次にそのまま送れる文を使う。</p>
               </div>
-              <div class="results-note">無料版は1日1回</div>
+              <div class="results-note">無料版は3回まで</div>
             </div>
             <div id="results"></div>
           </div>
@@ -472,40 +472,30 @@
     <script>
       const copyToast = document.getElementById("copy-toast");
       const PRODUCT_KEY = "radar";
-      const FREE_LIMIT = 1;
-      const USAGE_KEY = "yohelab.free.dailyUsage";
+      const FREE_LIMIT = 3;
+      const USAGE_KEY = "yohelab.free.radar";
       let proAccess = false;
-
-      function todayKey() {
-        const d = new Date();
-        const y = d.getFullYear();
-        const m = String(d.getMonth() + 1).padStart(2, "0");
-        const day = String(d.getDate()).padStart(2, "0");
-        return `${y}-${m}-${day}`;
-      }
 
       function loadUsage() {
         try {
-          const raw = JSON.parse(localStorage.getItem(USAGE_KEY) || "null");
-          if (!raw || raw.day !== todayKey()) return { day: todayKey(), count: 0 };
-          return { day: raw.day, count: Number(raw.count) || 0 };
+          return Number(localStorage.getItem(USAGE_KEY)) || 0;
         } catch {
-          return { day: todayKey(), count: 0 };
+          return 0;
         }
       }
 
       function saveUsage(count) {
-        localStorage.setItem(USAGE_KEY, JSON.stringify({ day: todayKey(), count }));
+        localStorage.setItem(USAGE_KEY, String(count));
       }
 
       function updateUsageUI() {
-        const usage = loadUsage();
-        const left = proAccess ? "無制限" : Math.max(0, FREE_LIMIT - usage.count);
+        const count = loadUsage();
+        const left = proAccess ? "無制限" : Math.max(0, FREE_LIMIT - count);
         const usageLeft = document.getElementById("usage-left");
         const submitBtn = document.querySelector("#radar-form [type='submit']");
-          if (usageLeft) usageLeft.textContent = proAccess ? "有料版で無制限" : (left > 0 ? `残り${left}回` : "上限に達した");
+        if (usageLeft) usageLeft.textContent = proAccess ? "有料版で無制限" : (left > 0 ? `残り${left}回` : "上限に達した");
         if (submitBtn) {
-          submitBtn.textContent = proAccess ? "案件を絞る" : (left <= 0 ? "今日は上限です" : "案件を絞る");
+          submitBtn.textContent = proAccess ? "案件を絞る" : (left <= 0 ? "無料回数を使い切りました" : "案件を絞る");
         }
         document.querySelectorAll(".check-pill.is-locked input").forEach((input) => {
           input.disabled = !proAccess ? true : false;
@@ -521,13 +511,12 @@
       }
 
       function canUseFree() {
-        return proAccess || loadUsage().count < FREE_LIMIT;
+        return proAccess || loadUsage() < FREE_LIMIT;
       }
 
       function incrementUsage() {
         if (proAccess) return;
-        const usage = loadUsage();
-        saveUsage(Math.min(FREE_LIMIT, usage.count + 1));
+        saveUsage(Math.min(FREE_LIMIT, loadUsage() + 1));
         updateUsageUI();
       }
 
@@ -633,7 +622,7 @@
         const specialtyEl = document.getElementById("specialty");
 
         if (!canUseFree()) {
-          results.innerHTML = `<div class="empty" style="min-height:200px;display:grid;place-items:center;border:1.5px dashed var(--border);border-radius:16px;color:var(--muted);font-size:15px;"><div style="text-align:center;">今日の無料回数は上限です。<br><a href="/products/radar-beta/" style="color:var(--green);font-weight:700;">プロプランを見る →</a></div></div>`;
+          results.innerHTML = `<div class="empty" style="min-height:200px;display:grid;place-items:center;border:1.5px dashed var(--border);border-radius:16px;color:var(--muted);font-size:15px;"><div style="text-align:center;">無料版の回数を使い切りました。<br><a href="/products/radar-beta/" style="color:var(--green);font-weight:700;">プロプランを見る →</a></div></div>`;
           return;
         }
 
