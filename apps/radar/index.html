@@ -35,6 +35,52 @@
       }
       .app-panel h2 { font-size: 18px; font-weight: 800; margin-bottom: 20px; }
       .form-stack { display: grid; gap: 16px; }
+      .condition-group {
+        padding: 18px;
+        border-radius: 16px;
+        border: 1px solid var(--border);
+        background: linear-gradient(180deg, #fff 0%, #fbfcfd 100%);
+      }
+      .condition-group h3 {
+        font-size: 15px;
+        font-weight: 800;
+        margin-bottom: 8px;
+      }
+      .condition-group .sub {
+        font-size: 12px;
+        color: var(--muted);
+        margin-bottom: 14px;
+      }
+      .checkbox-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+      .check-pill {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 11px 12px;
+        border-radius: 14px;
+        border: 1px solid var(--border);
+        background: var(--white);
+        font-size: 14px;
+        line-height: 1.5;
+        cursor: pointer;
+      }
+      .check-pill input {
+        margin-top: 2px;
+        accent-color: var(--green);
+      }
+      .other-box {
+        display: grid;
+        gap: 8px;
+        margin-top: 12px;
+      }
+      .other-box span {
+        font-size: 13px;
+        font-weight: 700;
+      }
       .app-results { display: grid; gap: 20px; }
       .result-item {
         background: var(--white);
@@ -191,9 +237,6 @@
           <div class="app-panel">
             <h2>条件を入れる</h2>
             <form class="form-stack" id="radar-form">
-              <label>欲しい案件のキーワード
-                <input id="keyword" value="Webサイト LP ライティング" placeholder="例: ライティング, LP制作, EC改善" />
-              </label>
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
                 <label>最低予算（円）
                   <input id="minBudget" type="number" value="30000" placeholder="30000" />
@@ -207,9 +250,36 @@
                   </select>
                 </label>
               </div>
-              <label>外したい条件
-                <input id="exclude" value="女性限定, 出社必須, 動画編集" placeholder="例: 出社必須, 動画編集, 低単価" />
-              </label>
+              <div class="condition-group">
+                <h3>こういう案件を探す</h3>
+                <p class="sub">当てはまるものをチェック。複数選べる。</p>
+                <div class="checkbox-grid">
+                  <label class="check-pill"><input type="checkbox" name="want" value="ライティング" checked />ライティング</label>
+                  <label class="check-pill"><input type="checkbox" name="want" value="LP制作" checked />LP制作</label>
+                  <label class="check-pill"><input type="checkbox" name="want" value="EC改善" checked />EC改善</label>
+                  <label class="check-pill"><input type="checkbox" name="want" value="SNS運用" />SNS運用</label>
+                  <label class="check-pill"><input type="checkbox" name="want" value="AI活用" />AI活用</label>
+                  <label class="check-pill"><input type="checkbox" name="want" value="Webサイト改善" />Webサイト改善</label>
+                </div>
+                <label class="other-box">その他で探したいこと
+                  <input id="wantOther" value="Webサイト LP" placeholder="例: 商品説明, メルマガ, 画像作成" />
+                </label>
+              </div>
+              <div class="condition-group">
+                <h3>外したい条件</h3>
+                <p class="sub">避けたいものをチェック。必要ならその他も入れる。</p>
+                <div class="checkbox-grid">
+                  <label class="check-pill"><input type="checkbox" name="exclude" value="出社必須" checked />出社必須</label>
+                  <label class="check-pill"><input type="checkbox" name="exclude" value="低単価" checked />低単価</label>
+                  <label class="check-pill"><input type="checkbox" name="exclude" value="女性限定" checked />女性限定</label>
+                  <label class="check-pill"><input type="checkbox" name="exclude" value="動画編集" />動画編集</label>
+                  <label class="check-pill"><input type="checkbox" name="exclude" value="短納期すぎる" />短納期すぎる</label>
+                  <label class="check-pill"><input type="checkbox" name="exclude" value="電話対応必須" />電話対応必須</label>
+                </div>
+                <label class="other-box">その他で外したいこと
+                  <input id="excludeOther" value="" placeholder="例: 土日対応必須, すぐ返信必須" />
+                </label>
+              </div>
               <label>自分の強み
                 <textarea id="strengths" placeholder="例: 返信が早い。納期厳守。LP構成が得意。">返信が早い。初稿が早い。個人事業主向けの文章が得意。相手の依頼内容を整理して進めるのが得意。</textarea>
               </label>
@@ -352,16 +422,20 @@
         results.innerHTML = `<div class="empty" style="min-height:200px;display:grid;place-items:center;border:1.5px dashed var(--border);border-radius:16px;color:var(--muted);font-size:15px;"><div style="text-align:center;">AIが条件に合う案件を探しています…<br><small>10〜20秒ほどかかります</small></div></div>`;
 
         try {
+          const wantChecked = Array.from(document.querySelectorAll('input[name="want"]:checked')).map(el => el.value);
+          const excludeChecked = Array.from(document.querySelectorAll('input[name="exclude"]:checked')).map(el => el.value);
           const res = await fetch("/api/generate", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               tool: "radar",
               data: {
-                keyword: document.getElementById("keyword").value.trim(),
                 minBudget: document.getElementById("minBudget").value || "30000",
                 specialty: specialtyEl.options[specialtyEl.selectedIndex].text,
-                exclude: document.getElementById("exclude").value.trim(),
+                wantChecked,
+                wantOther: document.getElementById("wantOther").value.trim(),
+                excludeChecked,
+                excludeOther: document.getElementById("excludeOther").value.trim(),
                 strengths: document.getElementById("strengths").value.trim(),
               }
             }),

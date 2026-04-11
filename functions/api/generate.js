@@ -159,10 +159,10 @@ function buildUserPrompt(tool, data) {
 上記をもとに購入前Q&Aを5セット作成してください。`;
 
     case "radar":
-      return `検索キーワード：${data.keyword}
+      return `探したい案件：${[...(data.wantChecked || []), data.wantOther].filter(Boolean).join(" / ") || data.keyword || "指定なし"}
 最低予算：${data.minBudget}円
 得意分野：${data.specialty}
-除外条件：${data.exclude || "なし"}
+外したい条件：${[...(data.excludeChecked || []), data.excludeOther].filter(Boolean).join(" / ") || data.exclude || "なし"}
 自分の強み：${data.strengths}
 
 上記の条件に合う案件候補をJSON配列で出力してください。`;
