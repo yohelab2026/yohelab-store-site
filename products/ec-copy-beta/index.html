@@ -48,7 +48,18 @@
       .success-msg { display: none; padding: 28px; border-radius: 16px; background: var(--green-light); border: 1px solid var(--green-mid); text-align: center; }
       .success-msg h3 { font-size: 20px; margin-bottom: 10px; color: var(--green-dark); }
       .success-msg p { color: var(--muted); font-size: 15px; }
-      @media (max-width: 768px) { .benefit-grid, .apply-wrap { grid-template-columns: 1fr; } }
+      .compare-table { width: 100%; border-collapse: collapse; border-radius: 16px; overflow: hidden; border: 1px solid var(--border); }
+      .compare-table th { padding: 16px 20px; font-size: 15px; font-weight: 800; text-align: center; }
+      .compare-table th:first-child { text-align: left; background: var(--bg); }
+      .compare-table th.col-free { background: var(--bg); color: var(--muted); }
+      .compare-table th.col-pro { background: var(--green); color: #fff; }
+      .compare-table td { padding: 14px 20px; font-size: 15px; border-top: 1px solid var(--border); text-align: center; }
+      .compare-table td:first-child { text-align: left; color: var(--text); font-weight: 600; background: var(--white); }
+      .compare-table td.col-free { background: var(--white); color: var(--muted); }
+      .compare-table td.col-pro { background: #f0faf7; color: var(--green-dark); font-weight: 700; }
+      .compare-check { color: var(--green); font-weight: 800; }
+      .compare-dash { color: #ccc; }
+      @media (max-width: 768px) { .benefit-grid, .apply-wrap { grid-template-columns: 1fr; } .compare-table th, .compare-table td { padding: 12px 10px; font-size: 13px; } }
     </style>
   </head>
   <body>
@@ -97,6 +108,64 @@
               <li>新機能が追加されても料金変わらず</li>
             </ul>
             <a class="btn btn-primary" style="width:100%;height:52px;display:flex;align-items:center;justify-content:center;" href="#apply">プロプランに申し込む</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <p class="section-label">Compare</p>
+          <h2 class="section-title">無料版とプロプランの違い</h2>
+          <div style="max-width:720px;margin:0 auto;">
+            <table class="compare-table">
+              <thead>
+                <tr>
+                  <th>機能</th>
+                  <th class="col-free">無料版</th>
+                  <th class="col-pro">プロプラン</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>商品説明文の生成</td>
+                  <td class="col-free"><span class="compare-check">✓</span></td>
+                  <td class="col-pro"><span class="compare-check">✓</span></td>
+                </tr>
+                <tr>
+                  <td>Q&A文の生成</td>
+                  <td class="col-free"><span class="compare-check">✓</span></td>
+                  <td class="col-pro"><span class="compare-check">✓</span></td>
+                </tr>
+                <tr>
+                  <td>複数トーン・売り方違いの出力</td>
+                  <td class="col-free"><span class="compare-dash">—</span></td>
+                  <td class="col-pro"><span class="compare-check">✓</span></td>
+                </tr>
+                <tr>
+                  <td>BASE・STORES向けの整形</td>
+                  <td class="col-free"><span class="compare-dash">—</span></td>
+                  <td class="col-pro"><span class="compare-check">✓</span></td>
+                </tr>
+                <tr>
+                  <td>商品情報の保存・再利用</td>
+                  <td class="col-free"><span class="compare-dash">—</span></td>
+                  <td class="col-pro"><span class="compare-check">✓</span></td>
+                </tr>
+                <tr>
+                  <td>生成回数</td>
+                  <td class="col-free">制限あり</td>
+                  <td class="col-pro">無制限</td>
+                </tr>
+                <tr>
+                  <td>月額料金</td>
+                  <td class="col-free">¥0</td>
+                  <td class="col-pro">¥980（初月無料）</td>
+                </tr>
+              </tbody>
+            </table>
+            <p style="text-align:center;margin-top:28px;">
+              <a class="btn btn-primary" href="#apply">プロプランに申し込む</a>
+            </p>
           </div>
         </div>
       </section>
