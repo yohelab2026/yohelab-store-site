@@ -339,8 +339,8 @@
       <div class="container">
 
         <div class="app-intro">
-          <h1>案件探しAIの案件レーダー</h1>
-          <p>条件を入れると、今日見るべき案件候補と応募文の下書きが返る。無料で試せる案件探しAI。</p>
+          <h1>案件探しを、毎朝10分に収める</h1>
+          <p>条件を入れると、今日応募すべき案件候補と応募文の下書きがすぐ返る。案件探しに時間をかけたくない人向けのAI。</p>
           <div class="app-chips">
             <span class="app-chip">登録不要</span>
             <span class="app-chip">ブラウザで今すぐ使える</span>
@@ -444,10 +444,10 @@
 
         <div class="upsell-bar">
           <div>
-            <h3>毎朝の案件探しを10分で終わらせる形にする</h3>
-            <p>プロプランでは条件保存・候補整理・応募文の複数案まで。毎日使える形に整えられる。</p>
+            <h3>使うたびに「また条件選び直す」が、なくなる</h3>
+            <p>プロプランは条件を保存して毎朝すぐ使える。候補の絞り込みと応募文の複数案まで含めて月額980円、初月無料。</p>
           </div>
-          <a class="btn btn-white" href="/products/radar-beta/">プロプランを見る →</a>
+          <a class="btn btn-white" href="/products/radar-beta/">初月無料で試す →</a>
         </div>
 
       </div>
@@ -627,7 +627,7 @@
         const specialtyEl = document.getElementById("specialty");
 
         if (!canUseFree()) {
-          results.innerHTML = `<div class="empty" style="min-height:200px;display:grid;place-items:center;border:1.5px dashed var(--border);border-radius:16px;color:var(--muted);font-size:15px;"><div style="text-align:center;">無料版の回数を使い切りました。<br><a href="/products/radar-beta/" style="color:var(--green);font-weight:700;">プロプランを見る →</a></div></div>`;
+          results.innerHTML = `<div class="empty" style="min-height:240px;display:grid;place-items:center;border:1.5px dashed var(--border);border-radius:16px;color:var(--muted);font-size:15px;"><div style="text-align:center;padding:24px;"><div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:8px;">今日の無料回数を使い切りました</div><div style="font-size:14px;color:var(--muted);margin-bottom:20px;">プロプランなら毎朝くり返し使える。<br>条件保存で次の日も10秒で始められる。</div><a href="/products/radar-beta/" style="display:inline-flex;align-items:center;justify-content:center;height:48px;padding:0 28px;background:var(--green);color:#fff;border-radius:12px;font-weight:800;font-size:15px;text-decoration:none;">初月無料で続ける →</a><div style="font-size:12px;color:var(--muted);margin-top:10px;">月額980円・いつでも解約可</div></div></div>`;
           return;
         }
 
