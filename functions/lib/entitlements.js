@@ -144,7 +144,7 @@ export function isActiveStripeStatus(status) {
 }
 
 export async function fetchStripeSubscription(subscriptionId, env) {
-  const key = env.STRIPE_SECRET_KEY;
+  const key = (env.STRIPE_SECRET_KEY || "").trim();
   if (!key) throw new Error("STRIPE_SECRET_KEY is not configured");
   const response = await fetch(`https://api.stripe.com/v1/subscriptions/${subscriptionId}`, {
     headers: {
