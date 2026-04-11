@@ -71,7 +71,7 @@
           <p>テーマと言いたいことを入れると、投稿案3本と返信案3本がすぐ返る。</p>
           <div class="app-chips">
             <span class="app-chip">登録不要</span>
-            <span class="app-chip">無料版は3回まで</span>
+      <span class="app-chip">無料版は1日1回</span>
             <span class="app-chip">SNS連携なし</span>
             <span class="app-chip">入力内容は保存しない</span>
           </div>
@@ -83,7 +83,7 @@
             <h2>条件を入れる</h2>
             <div class="usage-card">
               <div class="label">FREE LIMIT</div>
-              <div class="count">無料版は <strong id="usage-left">3</strong> 回使える</div>
+      <div class="count">無料版は <strong id="usage-left">1</strong> 回使える</div>
             </div>
             <form class="form-stack" id="x-form">
               <label>テーマ
@@ -157,14 +157,21 @@
       const repliesOutput = document.getElementById("replies-output");
       const btn = document.querySelector("#x-form button[type=submit]");
       const PRODUCT_KEY = "x-helper";
-      const FREE_LIMIT = 3;
-      const USAGE_KEY = "yohelab.free.xhelper";
+      const FREE_LIMIT = 1;
+      const USAGE_KEY = "yohelab.free.daily";
       let proAccess = false;
 
-      function loadUsage() {
-        try { return Number(localStorage.getItem(USAGE_KEY)) || 0; } catch { return 0; }
+      function todayKey() {
+        return new Intl.DateTimeFormat("sv-SE", { timeZone: "Asia/Tokyo" }).format(new Date());
       }
-      function saveUsage(count) { localStorage.setItem(USAGE_KEY, String(count)); }
+
+      function loadUsage() {
+        try {
+          const raw = JSON.parse(localStorage.getItem(USAGE_KEY) || "{}");
+          return raw.date === todayKey() ? Number(raw.count) || 0 : 0;
+        } catch { return 0; }
+      }
+      function saveUsage(count) { localStorage.setItem(USAGE_KEY, JSON.stringify({ date: todayKey(), count })); }
       function updateUsageUI() {
         const left = proAccess ? "無制限" : Math.max(0, FREE_LIMIT - loadUsage());
         const el = document.getElementById("usage-left");
@@ -192,7 +199,7 @@
         const tone = document.getElementById("voice").value;
         if (!theme || !message) { postsOutput.textContent = "テーマと言いたいことを入力してください。"; return; }
         if (!canUseFree()) {
-          const msg = '無料版は3回まで。プロプランなら切り口違いを保存して、毎日すぐ使える。';
+          const msg = '無料版は1日1回。プロプランなら切り口違いを保存して、毎日すぐ使える。';
           postsOutput.innerHTML = `${msg} <a href="/products/x-helper-beta/" style="color:var(--green);font-weight:800;">プロプランを見る</a>`;
           repliesOutput.textContent = "";
           return;

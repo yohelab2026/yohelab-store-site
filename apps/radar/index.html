@@ -345,7 +345,7 @@
             <span class="app-chip">登録不要</span>
             <span class="app-chip">ブラウザで今すぐ使える</span>
             <span class="app-chip">入力内容は保存しない</span>
-            <span class="app-chip">無料版は3回まで</span>
+      <span class="app-chip">無料版は1日1回</span>
           </div>
         </div>
 
@@ -357,10 +357,10 @@
             <form class="form-stack" id="radar-form">
               <div class="usage-card" aria-live="polite">
                 <div>
-                  <strong>無料版は3回まで</strong>
+          <strong>無料版は1日1回</strong>
                   <span>残り回数をここで確認できる。</span>
                 </div>
-                <strong id="usage-left">残り3回</strong>
+                <strong id="usage-left">残り1回</strong>
               </div>
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
                 <label>最低予算（円）
@@ -435,7 +435,7 @@
                 <h2>出てくるもの</h2>
                 <p>左で案件候補、右で応募文の下書きを見る。まず案件を見て、次にそのまま送れる文を使う。</p>
               </div>
-              <div class="results-note">無料版は3回まで</div>
+            <div class="results-note">無料版は1日1回</div>
             </div>
             <div id="results"></div>
           </div>
@@ -472,20 +472,25 @@
     <script>
       const copyToast = document.getElementById("copy-toast");
       const PRODUCT_KEY = "radar";
-      const FREE_LIMIT = 3;
-      const USAGE_KEY = "yohelab.free.radar";
+      const FREE_LIMIT = 1;
+      const USAGE_KEY = "yohelab.free.daily";
       let proAccess = false;
+
+      function todayKey() {
+        return new Intl.DateTimeFormat("sv-SE", { timeZone: "Asia/Tokyo" }).format(new Date());
+      }
 
       function loadUsage() {
         try {
-          return Number(localStorage.getItem(USAGE_KEY)) || 0;
+          const raw = JSON.parse(localStorage.getItem(USAGE_KEY) || "{}");
+          return raw.date === todayKey() ? Number(raw.count) || 0 : 0;
         } catch {
           return 0;
         }
       }
 
       function saveUsage(count) {
-        localStorage.setItem(USAGE_KEY, String(count));
+        localStorage.setItem(USAGE_KEY, JSON.stringify({ date: todayKey(), count }));
       }
 
       function updateUsageUI() {

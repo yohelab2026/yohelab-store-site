@@ -74,7 +74,7 @@
           <p>自分のサイト・ブログが見つかりやすいかを、4項目でざっくり診断する。</p>
           <div class="app-chips">
             <span class="app-chip">登録不要</span>
-            <span class="app-chip">無料版は3回まで</span>
+      <span class="app-chip">無料版は1日1回</span>
             <span class="app-chip">URL取得なし</span>
             <span class="app-chip">ブログ・note・ポートフォリオ向け</span>
           </div>
@@ -86,7 +86,7 @@
             <h2>ページ情報を入れる</h2>
             <div class="usage-card">
               <div class="label">FREE LIMIT</div>
-              <div class="count">無料版は <strong id="usage-left">3</strong> 回使える</div>
+      <div class="count">無料版は <strong id="usage-left">1</strong> 回使える</div>
             </div>
             <form class="form-stack" id="aio-form">
               <label>ページURL
@@ -209,13 +209,20 @@
         return null;
       }
 
-      const FREE_LIMIT = 3;
-      const USAGE_KEY = "yohelab.free.aiomini";
+      const FREE_LIMIT = 1;
+      const USAGE_KEY = "yohelab.free.daily";
+
+      function todayKey() {
+        return new Intl.DateTimeFormat("sv-SE", { timeZone: "Asia/Tokyo" }).format(new Date());
+      }
 
       function loadUsage() {
-        try { return Number(localStorage.getItem(USAGE_KEY)) || 0; } catch { return 0; }
+        try {
+          const raw = JSON.parse(localStorage.getItem(USAGE_KEY) || "{}");
+          return raw.date === todayKey() ? Number(raw.count) || 0 : 0;
+        } catch { return 0; }
       }
-      function saveUsage(count) { localStorage.setItem(USAGE_KEY, String(count)); }
+      function saveUsage(count) { localStorage.setItem(USAGE_KEY, JSON.stringify({ date: todayKey(), count })); }
       function updateUsageUI() {
         const left = proAccess ? "無制限" : Math.max(0, FREE_LIMIT - loadUsage());
         const el = document.getElementById("usage-left");
@@ -238,7 +245,7 @@
         const profile = document.getElementById("profile").value;
         if (!purpose) { adviceOut.textContent = "何を提供しているかを入力してください。"; return; }
         if (!canUseFree()) {
-          adviceOut.innerHTML = '無料版は3回まで。<a href="/products/aio-mini-beta/" style="color:var(--green);font-weight:800;">プロプランを見る</a>';
+          adviceOut.innerHTML = '無料版は1日1回。<a href="/products/aio-mini-beta/" style="color:var(--green);font-weight:800;">プロプランを見る</a>';
           scoreEl.textContent = "—";
           return;
         }
