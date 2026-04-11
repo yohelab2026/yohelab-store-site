@@ -91,6 +91,7 @@
           <div class="output-grid">
             <div class="output-area">
               <h3>商品説明文</h3>
+              <div style="padding:8px 12px;margin-bottom:10px;border-radius:8px;background:#fffbe6;border:1px solid #f0c040;font-size:12px;color:#7a5a00;">⚠ 出力は叩き台です。数値・素材・仕様など、入力していない情報が含まれていないか確認してから使用してください。</div>
               <div class="draft-box" id="desc-output"></div>
             </div>
             <div class="output-area">
@@ -158,8 +159,11 @@
           const qaJson = await qaRes.json();
           descOutput.textContent = descJson.result || "生成に失敗しました。";
           faqOutput.textContent = qaJson.result || "生成に失敗しました。";
-        } catch {
-          descOutput.textContent = "通信エラーが発生しました。もう一度お試しください。";
+        } catch (err) {
+          const msg = (err && /503|overloaded/i.test(String(err.message)))
+            ? "AIサーバーが混み合っています。少し待ってからもう一度お試しください。"
+            : "通信エラーが発生しました。もう一度お試しください。";
+          descOutput.textContent = msg;
           faqOutput.textContent = "";
         } finally {
           btn.disabled = false;

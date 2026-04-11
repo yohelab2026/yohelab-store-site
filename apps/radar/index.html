@@ -257,6 +257,17 @@
     <script>
       const copyToast = document.getElementById("copy-toast");
 
+      function friendlyError(msg) {
+        if (!msg) return "予期しないエラーが発生しました。もう一度お試しください。";
+        const s = String(msg);
+        if (/503|overloaded|over_loaded|unavailable/i.test(s)) return "AIサーバーが混み合っています。少し待ってからもう一度お試しください。";
+        if (/429|quota|rate.?limit/i.test(s)) return "利用が集中しています。1〜2分後にもう一度お試しください。";
+        if (/network|fetch|CORS/i.test(s)) return "通信エラーが発生しました。インターネット接続を確認してもう一度お試しください。";
+        if (/timeout|timed.?out/i.test(s)) return "AIの応答がタイムアウトしました。もう一度お試しください。";
+        if (/解析/i.test(s)) return s;
+        return "エラーが発生しました。もう一度お試しください。";
+      }
+
       function parseJobs(text) {
         try { return JSON.parse(text); } catch {}
         const match = text.match(/\[[\s\S]*\]/);
@@ -360,7 +371,7 @@
           const jobs = parseJobs(json.result);
           render(jobs);
         } catch (err) {
-          results.innerHTML = `<div class="empty" style="min-height:200px;display:grid;place-items:center;border:1.5px dashed var(--border);border-radius:16px;color:var(--muted);font-size:15px;"><div style="text-align:center;">エラーが発生しました。時間をおいて再度お試しください。<br><small>${escapeHtml(err.message)}</small></div></div>`;
+          results.innerHTML = `<div class="empty" style="min-height:200px;display:grid;place-items:center;border:1.5px dashed var(--border);border-radius:16px;color:var(--muted);font-size:15px;"><div style="text-align:center;">${escapeHtml(friendlyError(err.message))}</div></div>`;
         } finally {
           submitBtn.disabled = false;
           submitBtn.textContent = "案件を絞る";

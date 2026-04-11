@@ -133,6 +133,14 @@
       const repliesOutput = document.getElementById("replies-output");
       const btn = document.querySelector("#x-form button[type=submit]");
 
+      // ロールテキスト・確認文の除去
+      function cleanOutput(text) {
+        if (!text) return text;
+        return text
+          .replace(/^(承知しました[。．]?\s*|了解しました[。．]?\s*|はい[、，]?\s*|以下[のに].{0,20}(作成|生成|提案)[しますたいたしました。]{0,10}\s*|フリーランス[・\/]?個人事業主.*?専門家として[、，]?\s*|専門家として[、，]?\s*)/i, "")
+          .trim();
+      }
+
       async function renderX() {
         const theme = document.getElementById("topic").value.trim();
         const target = document.getElementById("audience").value.trim();
@@ -160,10 +168,13 @@
           ]);
           const postsJson = await postsRes.json();
           const repliesJson = await repliesRes.json();
-          postsOutput.textContent = postsJson.result || "生成に失敗しました。";
-          repliesOutput.textContent = repliesJson.result || "生成に失敗しました。";
-        } catch {
-          postsOutput.textContent = "通信エラーが発生しました。もう一度お試しください。";
+          postsOutput.textContent = cleanOutput(postsJson.result) || "生成に失敗しました。もう一度お試しください。";
+          repliesOutput.textContent = cleanOutput(repliesJson.result) || "生成に失敗しました。もう一度お試しください。";
+        } catch (err) {
+          const msg = (err && /503|overloaded/i.test(String(err.message)))
+            ? "AIサーバーが混み合っています。少し待ってからもう一度お試しください。"
+            : "通信エラーが発生しました。もう一度お試しください。";
+          postsOutput.textContent = msg;
           repliesOutput.textContent = "";
         } finally {
           btn.disabled = false;

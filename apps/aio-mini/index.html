@@ -157,6 +157,32 @@
       const adviceOut = document.getElementById("advice-output");
       const btn = document.querySelector("#aio-form button[type=submit]");
 
+      // 入力値からフォールバックスコアを計算（AI失敗時のみ使用）
+      function calcFallbackScore(faq, compare, proof, profile) {
+        let s = 50;
+        if (faq === "1") s += 10;
+        if (compare === "1") s += 10;
+        if (proof === "1") s += 8;
+        if (proof === "2") s += 15;
+        if (profile === "1") s += 10;
+        return Math.min(s, 95);
+      }
+
+      // スコア抽出（複数パターン対応）
+      function extractScore(text) {
+        const patterns = [
+          /【総合スコア】\s*(\d+)\s*\/\s*100/,
+          /総合スコア[：:]\s*(\d+)\s*\/\s*100/,
+          /(\d+)\s*\/\s*100/,
+          /スコア[：:]\s*(\d+)/,
+        ];
+        for (const re of patterns) {
+          const m = text.match(re);
+          if (m) return Number(m[1]);
+        }
+        return null;
+      }
+
       async function renderAIO() {
         const siteUrl = document.getElementById("url").value.trim();
         const purpose = document.getElementById("summary").value.trim();
@@ -188,16 +214,41 @@
           const json = await res.json();
           const text = json.result || "";
 
-          const scoreMatch = text.match(/(\d+)\s*\/\s*100/);
-          if (scoreMatch) {
-            const s = Number(scoreMatch[1]);
-            scoreEl.textContent = `${s} / 100`;
-            scoreEl.className = `score-big ${s >= 75 ? "good" : "warn"}`;
-          }
           summaryOut.textContent = siteUrl ? `${siteUrl} の診断結果` : "入力情報をもとにした診断結果";
-          adviceOut.textContent = text;
-        } catch {
-          adviceOut.textContent = "通信エラーが発生しました。もう一度お試しください。";
+
+          if (text) {
+            const s = extractScore(text);
+            if (s !== null) {
+              scoreEl.textContent = `${s} / 100`;
+              scoreEl.className = `score-big ${s >= 75 ? "good" : "warn"}`;
+            } else {
+              // AIがスコアを返さなかった場合はフォールバック計算
+              const fs = calcFallbackScore(faq, compare, proof, profile);
+              scoreEl.textContent = `${fs} / 100`;
+              scoreEl.className = `score-big ${fs >= 75 ? "good" : "warn"}`;
+            }
+            adviceOut.textContent = text;
+          } else {
+            // 空レスポンス時のフォールバック
+            const fs = calcFallbackScore(faq, compare, proof, profile);
+            scoreEl.textContent = `${fs} / 100`;
+            scoreEl.className = `score-big ${fs >= 75 ? "good" : "warn"}`;
+            const lackItems = [
+              faq === "0" ? "・FAQを追加するとAI検索での表示率が上がります" : null,
+              compare === "0" ? "・比較表を追加すると「〇〇 比較」検索への対応が強くなります" : null,
+              proof === "0" ? "・数字や実例を加えると信頼度が上がります" : null,
+              profile === "0" ? "・プロフィールを明確にすると誰向けのサイトか伝わりやすくなります" : null,
+            ].filter(Boolean);
+            adviceOut.textContent = lackItems.length
+              ? "【改善ポイント】\n" + lackItems.join("\n")
+              : "入力情報から大きな改善点は見当たりませんでした。";
+          }
+        } catch (err) {
+          const msg = (err && /503|overloaded/i.test(String(err.message)))
+            ? "AIサーバーが混み合っています。少し待ってからもう一度お試しください。"
+            : "通信エラーが発生しました。もう一度お試しください。";
+          adviceOut.textContent = msg;
+          scoreEl.textContent = "—";
         } finally {
           btn.disabled = false;
           btn.textContent = "診断する";

@@ -102,6 +102,7 @@
 
           <div class="output-area">
             <h3>応募文の下書き</h3>
+            <div id="placeholder-warn" style="display:none;padding:10px 14px;margin-bottom:12px;border-radius:8px;background:#fffbe6;border:1px solid #f0c040;font-size:13px;color:#7a5a00;">⚠ 出力に <code>[○○]</code> 形式の未入力箇所が含まれています。使用前に内容を確認・修正してください。</div>
             <div class="draft-box" id="proposal-output"></div>
             <div style="display:flex;gap:10px;margin-top:14px;">
               <button class="btn btn-outline btn-sm" id="copy-proposal" type="button">コピー</button>
@@ -159,9 +160,22 @@
             body: JSON.stringify({ tool: "proposal", data: { project, needs, strength, tone, close } }),
           });
           const json = await res.json();
-          output.textContent = json.result || "生成に失敗しました。もう一度お試しください。";
-        } catch {
-          output.textContent = "通信エラーが発生しました。もう一度お試しください。";
+          const result = json.result || "";
+          output.textContent = result || "生成に失敗しました。もう一度お試しください。";
+
+          // プレースホルダー検出
+          const phWarn = document.getElementById("placeholder-warn");
+          if (result && /\[[^\]]{1,20}\]/.test(result)) {
+            phWarn.style.display = "block";
+          } else {
+            phWarn.style.display = "none";
+          }
+        } catch (err) {
+          const msg = (err && /503|overloaded/i.test(String(err.message)))
+            ? "AIサーバーが混み合っています。少し待ってからもう一度お試しください。"
+            : "通信エラーが発生しました。もう一度お試しください。";
+          output.textContent = msg;
+          document.getElementById("placeholder-warn").style.display = "none";
         } finally {
           btn.disabled = false;
           btn.textContent = "応募文を作る";
