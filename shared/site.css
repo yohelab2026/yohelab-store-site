@@ -472,6 +472,7 @@ a.btn-primary:visited {
   background: linear-gradient(180deg, #08110f 0%, #101f1b 100%);
   border: 1px solid rgba(255,255,255,.12);
   box-shadow: 0 18px 34px rgba(0,0,0,.28);
+  animation: promoFrameFloat 10s ease-in-out infinite;
 }
 
 .promo-video {
@@ -481,6 +482,19 @@ a.btn-primary:visited {
   height: auto;
   object-fit: cover;
   background: #000;
+  transform-origin: 50% 50%;
+  animation: promoVideoDrift 14s ease-in-out infinite;
+}
+
+@keyframes promoFrameFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+@keyframes promoVideoDrift {
+  0%, 100% { transform: scale(1.03) translate3d(0, 0, 0); }
+  33% { transform: scale(1.06) translate3d(-1.4%, -0.8%, 0); }
+  66% { transform: scale(1.04) translate3d(1.2%, 0.6%, 0); }
 }
 
 .output-stats {
