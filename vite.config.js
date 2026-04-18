@@ -13,6 +13,8 @@ export default defineConfig({
         radarBeta: "products/radar-beta/index.html",
         proposal: "apps/proposal/index.html",
         proposalBeta: "products/proposal-beta/index.html",
+        proposalOptimizer: "apps/proposal-optimizer/index.html",
+        proposalOptimizerBeta: "products/proposal-optimizer-beta/index.html",
         xHelper: "apps/x-helper/index.html",
         xHelperBeta: "products/x-helper-beta/index.html",
         ecCopy: "apps/ec-copy/index.html",

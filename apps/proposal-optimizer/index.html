@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI応募文最適化 | よへラボ</title>
+    <meta name="description" content="案件本文を貼ると、件名案・応募文・送信前チェックまで返す無料AIツール。応募で止まりやすい人向け。" />
+    <meta property="og:title" content="AI応募文最適化 | よへラボ" />
+    <meta property="og:description" content="案件本文を貼ると、件名案・応募文・送信前チェックまで返す無料AIツール。" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://yohelab.com/apps/proposal-optimizer/" />
+    <meta property="og:image" content="https://yohelab.com/yohelab-icon.png" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
+    <meta name="theme-color" content="#0d6b58" />
+    <link rel="canonical" href="https://yohelab.com/apps/proposal-optimizer/" />
+    <link rel="icon" type="image/png" href="/yohelab-icon.png" />
+    <link rel="stylesheet" href="/shared/site.css" />
+    <style>
+      .app-layout { display: grid; grid-template-columns: 380px 1fr; gap: 24px; padding: 32px 0 80px; align-items: start; }
+      .app-panel { position: sticky; top: 88px; background: var(--white); border: 1px solid var(--border); border-radius: 20px; padding: 28px; box-shadow: var(--shadow); }
+      .app-panel h2 { font-size: 18px; font-weight: 800; margin-bottom: 20px; }
+      .form-stack { display: grid; gap: 16px; }
+      .output-area { background: var(--white); border: 1px solid var(--border); border-radius: 20px; padding: 28px; box-shadow: var(--shadow); }
+      .output-area h3 { font-size: 18px; font-weight: 800; margin-bottom: 16px; }
+      .draft-box { font-size: 15px; line-height: 1.9; white-space: pre-wrap; background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 20px; color: #2a3240; min-height: 220px; }
+      .usage-card { margin-bottom: 18px; padding: 16px 18px; border-radius: 14px; background: linear-gradient(135deg,#f3fbf8,#e8f5ef); border: 1px solid #cde8dd; }
+      .usage-card .label { font-size: 12px; font-weight: 800; letter-spacing: .12em; color: var(--green); text-transform: uppercase; margin-bottom: 6px; }
+      .usage-card .count { font-size: 15px; font-weight: 800; color: var(--text); }
+      .usage-card .count strong { color: var(--green-dark); font-size: 20px; }
+      .pro-feature-box { margin-top: 18px; padding: 18px; border-radius: 16px; background: #f7faf8; border: 1px solid var(--border); }
+      .pro-feature-box h3 { font-size: 15px; font-weight: 800; margin-bottom: 12px; }
+      .pro-feature-box .sub { font-size: 13px; color: var(--muted); margin-bottom: 12px; }
+      .pro-feature-list { display: grid; gap: 10px; }
+      .pro-feature-list label { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; color: var(--text); }
+      .pro-feature-list input[type="checkbox"] { margin-top: 3px; accent-color: var(--green); }
+      .pro-feature-list span { color: var(--muted); font-size: 13px; display: block; margin-top: 2px; }
+      .app-intro { padding: 40px 0 0; text-align: center; }
+      .app-intro h1 { font-size: clamp(26px,5vw,40px); margin-bottom: 12px; }
+      .app-intro p { color: var(--muted); font-size: 17px; margin-bottom: 8px; }
+      .app-chips { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-bottom: 32px; }
+      .app-chip { padding: 5px 14px; border-radius: 999px; background: var(--bg); border: 1px solid var(--border); font-size: 13px; color: var(--muted); font-weight: 600; }
+      .upsell-bar { padding: 28px 32px; border-radius: 20px; background: linear-gradient(135deg,#0d1a16,#0d2b24); color: #fff; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-top: 32px; }
+      .upsell-bar h3 { font-size: 18px; margin-bottom: 6px; color: #fff; }
+      .upsell-bar p { font-size: 14px; color: rgba(255,255,255,.7); margin: 0; }
+      @media (max-width: 900px) { .app-layout { grid-template-columns: 1fr; } .app-panel { position: static; } }
+    </style>
+  </head>
+  <body>
+
+    <header class="nav">
+      <div class="nav-inner">
+        <a class="brand" href="/">
+          <img src="/yohelab-icon.png" alt="よへラボのアイコン" />
+          <span>よへラボ</span>
+        </a>
+        <nav class="nav-links">
+          <a href="/">トップ</a>
+          <a href="/apps/radar/">案件レーダー</a>
+          <a href="/contact/">問い合わせ</a>
+          <a class="btn btn-primary btn-sm" href="/products/proposal-optimizer-beta/">プロプランを見る</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="container">
+
+        <div class="app-intro">
+          <h1>案件文を貼るだけ。応募文を1本に整える。</h1>
+          <p>案件本文と自分の強みを入れると、件名案・応募文・送信前チェックまで返る。応募で止まりやすい人向けの実務ツール。</p>
+          <div class="app-chips">
+            <span class="app-chip">登録不要</span>
+            <span class="app-chip">無料版は1日1回</span>
+            <span class="app-chip">ブラウザで今すぐ使える</span>
+            <span class="app-chip">案件レーダーの次に使うと効果的</span>
+          </div>
+        </div>
+
+        <div class="app-layout">
+          <div class="app-panel">
+            <h2>案件内容を入れる</h2>
+            <div class="usage-card">
+              <div class="label">FREE LIMIT</div>
+              <div class="count">無料版は <strong id="usage-left">1</strong> 回使える</div>
+            </div>
+            <form class="form-stack" id="proposal-form">
+              <label>案件タイトル
+                <input id="project" value="LP文章の構成と執筆" placeholder="例: LP制作、ブログ記事10本" />
+              </label>
+              <label>案件本文・要点
+                <textarea id="needs">個人コーチ向けのLP。サービス内容を言語化しつつ、申し込みにつながる文章にしたい。</textarea>
+              </label>
+              <label>自分の強み
+                <textarea id="strength">ヒアリング内容を整理して構成に落とすのが得意。返信が早い。初稿も早い。相手の要点をまとめるのが得意。</textarea>
+              </label>
+              <label>避けたいこと
+                <textarea id="avoid" placeholder="例: 強引すぎる営業、根拠のない実績、長すぎる文章"></textarea>
+              </label>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                <label>文体
+                  <select id="tone">
+                    <option value="丁寧">丁寧</option>
+                    <option value="やわらかめ">やわらかめ</option>
+                    <option value="端的">端的</option>
+                  </select>
+                </label>
+                <label>締め方
+                  <select id="close">
+                    <option value="相談歓迎">相談歓迎</option>
+                    <option value="すぐ着手可能">すぐ着手可能</option>
+                    <option value="実績共有">実績共有</option>
+                  </select>
+                </label>
+              </div>
+              <button class="btn btn-primary" style="width:100%;height:50px;" type="submit">応募文を最適化する</button>
+              <p style="font-size:12px;color:var(--muted);text-align:center;">入力内容はサーバーに保存しません</p>
+              <div class="pro-feature-box">
+                <h3>プロプランで使えること</h3>
+                <p class="sub">プロプランに登録すると使えるようになる。</p>
+                <div class="pro-feature-list">
+                  <label><input type="checkbox" checked disabled /> <span>件名案と本文を2案比べる</span></label>
+                  <label><input type="checkbox" checked disabled /> <span>応募前の注意点を短く先に出す</span></label>
+                  <label><input type="checkbox" checked disabled /> <span>自分の強みを保存して毎回使う</span></label>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <div class="output-area">
+            <h3>最適化結果</h3>
+            <div id="placeholder-warn" style="display:none;padding:10px 14px;margin-bottom:12px;border-radius:8px;background:#fffbe6;border:1px solid #f0c040;font-size:13px;color:#7a5a00;">⚠ 出力に <code>[○○]</code> 形式の未入力箇所が含まれています。使用前に内容を確認・修正してください。</div>
+            <div class="draft-box" id="proposal-output"></div>
+            <div style="display:flex;gap:10px;margin-top:14px;">
+              <button class="btn btn-outline btn-sm" id="copy-proposal" type="button">コピー</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="upsell-bar">
+          <div>
+            <h3>応募で止まりやすい部分を、先に埋めたい</h3>
+            <p>プロプランでは件名案の比較・切り口違い・保存まで対応。応募文の精度をもう一段上げられる。</p>
+          </div>
+          <a class="btn btn-white" href="/products/proposal-optimizer-beta/">プロプランを見る →</a>
+        </div>
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <div>© よへラボ / AI応募文最適化</div>
+        <div class="footer-links">
+          <a href="/">トップ</a>
+          <a href="/apps/radar/">案件レーダー</a>
+          <a href="/contact/">問い合わせ</a>
+          <a href="/legal/privacy/">プライバシーポリシー</a>
+        </div>
+      </div>
+    </footer>
+
+    <div class="toast" id="copy-toast">コピーしました</div>
+    <script>(() => { async function load(p) { try { const r = await fetch(`/api/license?product=${encodeURIComponent(p)}`, { credentials: "include" }); if (!r.ok) return { active: false, product: p }; return r.json(); } catch { return { active: false, product: p }; } } window.YoheLabAccess = { load }; })();</script>
+
+    <script>
+      const output = document.getElementById("proposal-output");
+      const toast = document.getElementById("copy-toast");
+      const btn = document.querySelector("#proposal-form button[type=submit]");
+      const PRODUCT_KEY = "proposal-optimizer";
+      const FREE_LIMIT = 1;
+      const USAGE_KEY = "yohelab.free.daily";
+      let proAccess = false;
+
+      function todayKey() {
+        return new Intl.DateTimeFormat("sv-SE", { timeZone: "Asia/Tokyo" }).format(new Date());
+      }
+
+      function loadUsage() {
+        try {
+          const raw = JSON.parse(localStorage.getItem(USAGE_KEY) || "{}");
+          return raw.date === todayKey() ? Number(raw.count) || 0 : 0;
+        } catch { return 0; }
+      }
+      function saveUsage(count) { localStorage.setItem(USAGE_KEY, JSON.stringify({ date: todayKey(), count })); }
+      function updateUsageUI() {
+        const left = proAccess ? "無制限" : Math.max(0, FREE_LIMIT - loadUsage());
+        const el = document.getElementById("usage-left");
+        if (el) el.textContent = proAccess ? "無制限" : String(left);
+      }
+      function canUseFree() { return proAccess || loadUsage() < FREE_LIMIT; }
+      function incrementUsage() {
+        if (proAccess) return;
+        saveUsage(Math.min(FREE_LIMIT, loadUsage() + 1));
+        updateUsageUI();
+      }
+
+      async function build() {
+        const project = document.getElementById("project").value.trim();
+        const needs = document.getElementById("needs").value.trim();
+        const strength = document.getElementById("strength").value.trim();
+        const avoid = document.getElementById("avoid").value.trim();
+        const tone = document.getElementById("tone").value;
+        const close = document.getElementById("close").value;
+        if (!project || !needs || !strength) {
+          output.textContent = "案件タイトル・案件本文・自分の強みを入力してください。";
+          return;
+        }
+        if (!canUseFree()) {
+          output.innerHTML = '無料版は1日1回。<a href="/products/proposal-optimizer-beta/" style="color:var(--green);font-weight:800;">プロプランを見る</a>';
+          return;
+        }
+
+        btn.disabled = true;
+        btn.textContent = "最適化中…";
+        output.textContent = "AIが案件文を整理しています…";
+
+        try {
+          const res = await fetch("/api/generate", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              tool: "proposal-optimizer",
+              data: { project, needs, strength, avoid, tone, close, mode: proAccess ? "pro" : "free" },
+            }),
+          });
+          const json = await res.json();
+          const result = json.result || "";
+          output.textContent = result || "生成に失敗しました。もう一度お試しください。";
+          if (result) incrementUsage();
+
+          const phWarn = document.getElementById("placeholder-warn");
+          if (result && /\[[^\]]{1,20}\]/.test(result)) {
+            phWarn.style.display = "block";
+          } else {
+            phWarn.style.display = "none";
+          }
+        } catch (err) {
+          const msg = (err && /503|overloaded/i.test(String(err.message)))
+            ? "AIサーバーが混み合っています。少し待ってからもう一度お試しください。"
+            : "通信エラーが発生しました。もう一度お試しください。";
+          output.textContent = msg;
+          document.getElementById("placeholder-warn").style.display = "none";
+        } finally {
+          btn.disabled = false;
+          btn.textContent = "応募文を最適化する";
+        }
+      }
+
+      document.getElementById("proposal-form").addEventListener("submit", e => { e.preventDefault(); build(); });
+      window.YoheLabAccess?.load(PRODUCT_KEY).then((state) => {
+        proAccess = !!state?.active;
+        updateUsageUI();
+        if (proAccess) {
+          const label = document.querySelector(".usage-card .label");
+          const count = document.querySelector(".usage-card .count");
+          if (label) label.textContent = "PRO";
+          if (count) count.innerHTML = '有料版が有効。<strong style="font-size:18px;color:var(--green-dark);">無制限</strong>';
+        }
+      }).catch(() => {});
+      updateUsageUI();
+
+      document.getElementById("copy-proposal").addEventListener("click", async () => {
+        await navigator.clipboard.writeText(output.textContent);
+        toast.classList.add("show"); toast.hidden = false;
+        clearTimeout(window._t);
+        window._t = setTimeout(() => { toast.classList.remove("show"); toast.hidden = true; }, 1600);
+      });
+    </script>
+  </body>
+</html>
