@@ -345,7 +345,7 @@ a.btn-primary:visited {
 
 /* ---- Divider ---- */
 .section {
-  padding: 96px 0;
+  padding: 72px 0;
 }
 
 .section-alt {
@@ -372,7 +372,7 @@ a.btn-primary:visited {
   color: var(--muted);
   max-width: 560px;
   line-height: 1.8;
-  margin-bottom: 56px;
+  margin-bottom: 40px;
 }
 
 /* ---- Output showcase ---- */
@@ -942,7 +942,7 @@ details.faq .faq-body {
 
 /* ---- CTA final ---- */
 .cta-section {
-  padding: 96px 0;
+  padding: 80px 0;
   text-align: center;
   background: var(--green);
   color: #fff;
@@ -1068,7 +1068,7 @@ details.faq .faq-body {
 }
 
 @media (max-width: 640px) {
-  .section { padding: 64px 0; }
+  .section { padding: 52px 0; }
 
   .hero { padding: 64px 0 56px; }
 
@@ -1920,4 +1920,63 @@ td:first-child, th:first-child { font-weight: 700; }
   font-size: 15px;
   color: var(--muted);
   font-weight: 600;
+}
+
+/* ---- Hero sub CTA (テキストリンク行) ---- */
+.hero-sub-cta {
+  font-size: 14px;
+  color: var(--muted);
+  margin-top: 10px;
+}
+
+.hero-sub-cta a {
+  color: var(--green);
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+}
+
+/* ---- Tools compare hint ---- */
+.tools-compare-hint {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  margin-bottom: 28px;
+  padding: 14px 20px;
+  border-radius: var(--radius);
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.tools-compare-q {
+  font-weight: 800;
+  color: #92400e;
+  white-space: nowrap;
+}
+
+.tools-compare-item {
+  color: #78350f;
+}
+
+.tools-compare-sep {
+  color: #d97706;
+  font-weight: 300;
+}
+
+/* ---- Sticky CTA sub text ---- */
+.sticky-cta-sub {
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+  margin: 0;
+}
+
+.sticky-cta-sub a {
+  color: var(--green);
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
 }
