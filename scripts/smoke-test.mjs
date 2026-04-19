@@ -23,15 +23,18 @@ checks.push(["home links radar lp", home.includes('/lp/radar/')]);
 checks.push(["home links proposal lp", home.includes('/lp/proposal/')]);
 checks.push(["home links new app lp", home.includes('/lp/proposal-optimizer/')]);
 checks.push(["home links article polish lp", home.includes('/lp/article-polish/')]);
-checks.push(["home headline", home.includes('案件探しAIを朝10分に')]);
-checks.push(["home tools section", home.includes('まず使うのは、この2本')]);
-checks.push(["home demo label softened", home.includes('操作イメージ')]);
-checks.push(["home no portal claim", !home.includes('カスタマーポータル')]);
+checks.push(["home headline", home.includes('探す、応募する、整える。')]);
+checks.push(["home hero eyebrow", home.includes('ひとりで稼ぐ人向けのAI実務ツール')]);
+checks.push(["home tools section", home.includes('最初に見せるべきツールを、前に出す。')]);
+checks.push(["home focus on three", home.includes('まず使うのはこの3本')]);
+checks.push(["home no labs in nav", !home.includes('>拡張・Labs<')]);
+checks.push(["home no games in nav", !home.includes('>ゲーム<')]);
 
 const lpRadar = read(dist("lp/radar/index.html"));
 checks.push(["lp radar title", lpRadar.includes('案件レーダー LP')]);
 checks.push(["lp radar free", lpRadar.includes('無料版を試す')]);
 checks.push(["lp radar pro", lpRadar.includes('初月無料で始める')]);
+checks.push(["lp radar paid label", lpRadar.includes('有料版で増えるもの')]);
 
 const lpProposal = read(dist("lp/proposal/index.html"));
 checks.push(["lp proposal title", lpProposal.includes('AI応募文アシスタント LP')]);
@@ -46,6 +49,7 @@ const lpArticlePolish = read(dist("lp/article-polish/index.html"));
 checks.push(["lp article polish title", lpArticlePolish.includes('AI文章整形 LP')]);
 checks.push(["lp article polish free", lpArticlePolish.includes('無料版を試す')]);
 checks.push(["lp article polish pro", lpArticlePolish.includes('全ツールパックで使う')]);
+checks.push(["lp article polish paid label", lpArticlePolish.includes('有料版で増えるもの')]);
 
 const lpXHelper = read(dist("lp/x-helper/index.html"));
 checks.push(["lp x helper title", lpXHelper.includes('AI X返信・投稿補助 LP')]);
@@ -115,6 +119,11 @@ const contact = read(dist("contact/index.html"));
 checks.push(["contact renamed proposal tool", contact.includes('AI応募文最適化')]);
 checks.push(["contact includes cancel purpose", contact.includes('解約したい')]);
 checks.push(["contact includes article polish", contact.includes('AI文章整形')]);
+
+const tools = read(dist("tools/index.html"));
+checks.push(["tools page title", tools.includes('AI実務ツール一覧')]);
+checks.push(["tools page mentions article polish", tools.includes('AI文章整形')]);
+checks.push(["tools page no games nav", !tools.includes('>ゲーム<')]);
 
 const commerce = read(dist("legal/commerce/index.html"));
 checks.push(["commerce single site name row", (commerce.match(/<th>サイト名<\/th>/g) || []).length === 1]);

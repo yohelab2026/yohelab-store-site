@@ -4,9 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AI X返信・投稿補助 LP | よへラボ</title>
-    <meta name="description" content="Xでの投稿と返信を短くするLP。無料版で3案を試して、合えば月額980円のプロプランへ進める。" />
+    <meta name="description" content="Xでの投稿と返信を短くする案内ページ。無料版で3案を試して、合えば月額980円のプロプランへ進める。" />
     <meta property="og:title" content="AI X返信・投稿補助 LP | よへラボ" />
-    <meta property="og:description" content="Xでの投稿と返信を短くするLP。無料版で3案を試して、合えば月額980円のプロプランへ進める。" />
+    <meta property="og:description" content="Xでの投稿と返信を短くする案内ページ。無料版で3案を試して、合えば月額980円のプロプランへ進める。" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="ja_JP" />
     <meta property="og:url" content="https://yohelab.com/lp/x-helper/" />
@@ -17,8 +17,302 @@
     <link rel="canonical" href="https://yohelab.com/lp/x-helper/" />
     <link rel="icon" type="image/png" href="/yohelab-icon.png" />
     <link rel="stylesheet" href="/shared/site.css" />
+    <style>
+      .lp-hero {
+        padding: 88px 0 72px;
+        background:
+          radial-gradient(ellipse 85% 65% at 50% 0%, rgba(13,107,88,.16), transparent 58%),
+          linear-gradient(180deg, #0f221d 0%, #0b1613 100%);
+        color: #fff;
+      }
+      .lp-hero .container {
+        width: min(1100px, 100% - 48px);
+      }
+      .lp-hero-copy {
+        max-width: 920px;
+        margin: 0 auto;
+        text-align: center;
+      }
+      .lp-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 16px;
+        border-radius: 999px;
+        background: rgba(255,255,255,.09);
+        border: 1px solid rgba(255,255,255,.16);
+        color: rgba(255,255,255,.92);
+        font-size: 13px;
+        font-weight: 700;
+        margin-bottom: 28px;
+      }
+      .lp-hero h1 {
+        color: #fff;
+        font-size: clamp(42px, 6.4vw, 74px);
+        letter-spacing: -0.05em;
+        line-height: 1.06;
+        margin-bottom: 18px;
+      }
+      .lp-hero h1 em {
+        color: #4fd1b8;
+        font-style: normal;
+      }
+      .lp-lead {
+        max-width: 760px;
+        margin: 0 auto 28px;
+        color: rgba(255,255,255,.76);
+        font-size: 19px;
+        line-height: 1.9;
+      }
+      .lp-actions {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 20px;
+      }
+      .lp-hero-note {
+        color: rgba(255,255,255,.55);
+        font-size: 13px;
+      }
+      .lp-band {
+        margin-top: 28px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+      }
+      .lp-band .lp-card {
+        background: rgba(255,255,255,.07);
+        border: 1px solid rgba(255,255,255,.12);
+        color: #fff;
+        box-shadow: none;
+      }
+      .lp-band .lp-card h3 {
+        color: #fff;
+      }
+      .lp-band .lp-card p {
+        color: rgba(255,255,255,.72);
+      }
+      .lp-section {
+        padding: 72px 0;
+      }
+      .lp-grid-3 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+      }
+      .lp-grid-2 {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+      }
+      .lp-card {
+        padding: 26px;
+        border-radius: 20px;
+        border: 1px solid var(--border);
+        background: var(--white);
+        box-shadow: var(--shadow);
+      }
+      .lp-card h3 {
+        font-size: 17px;
+        font-weight: 800;
+        margin-bottom: 10px;
+      }
+      .lp-card p {
+        color: var(--muted);
+        font-size: 15px;
+        line-height: 1.75;
+      }
+      .lp-mini-head {
+        text-align: center;
+        margin-bottom: 22px;
+      }
+      .lp-mini-head h2 {
+        font-size: 30px;
+        font-weight: 900;
+        letter-spacing: -0.04em;
+        margin-bottom: 8px;
+      }
+      .lp-mini-head p {
+        color: var(--muted);
+        font-size: 16px;
+      }
+      .lp-preview {
+        display: grid;
+        grid-template-columns: 1.1fr .9fr;
+        gap: 16px;
+        align-items: stretch;
+      }
+      .lp-preview-box {
+        padding: 28px;
+        border-radius: 20px;
+        border: 1px solid var(--green-mid);
+        background: linear-gradient(180deg, #f7fcfa 0%, #eef8f4 100%);
+        box-shadow: var(--shadow);
+      }
+      .lp-preview-box h3 {
+        font-size: 20px;
+        font-weight: 900;
+        margin-bottom: 10px;
+      }
+      .lp-preview-box p {
+        color: var(--muted);
+        line-height: 1.75;
+        font-size: 15px;
+      }
+      .lp-preview-list {
+        display: grid;
+        gap: 10px;
+        margin-top: 18px;
+      }
+      .lp-preview-list div {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        color: var(--text);
+        font-size: 14px;
+        line-height: 1.65;
+      }
+      .lp-preview-list span {
+        color: var(--green);
+        font-weight: 900;
+      }
+      .lp-side-box {
+        padding: 28px;
+        border-radius: 20px;
+        border: 1px solid var(--border);
+        background: var(--white);
+        box-shadow: var(--shadow);
+      }
+      .lp-side-box h3 {
+        font-size: 18px;
+        font-weight: 900;
+        margin-bottom: 12px;
+      }
+      .lp-side-box ul {
+        display: grid;
+        gap: 8px;
+      }
+      .lp-side-box li {
+        display: flex;
+        gap: 8px;
+        color: var(--muted);
+        line-height: 1.6;
+        font-size: 14px;
+      }
+      .lp-side-box li::before {
+        content: "→";
+        color: var(--green);
+        font-weight: 800;
+      }
+      .lp-table-wrap {
+        max-width: 860px;
+        margin: 0 auto;
+      }
+      .lp-table {
+        width: 100%;
+        border-collapse: collapse;
+        border-radius: 18px;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow);
+      }
+      .lp-table th,
+      .lp-table td {
+        padding: 15px 18px;
+        font-size: 15px;
+        text-align: center;
+      }
+      .lp-table th:first-child,
+      .lp-table td:first-child {
+        text-align: left;
+      }
+      .lp-table th {
+        background: var(--bg);
+        font-weight: 800;
+      }
+      .lp-table .free {
+        color: var(--muted);
+        background: #fff;
+      }
+      .lp-table .pro {
+        background: #f1faf6;
+        color: var(--green-dark);
+        font-weight: 700;
+      }
+      .lp-check {
+        color: var(--green);
+        font-weight: 900;
+      }
+      .lp-dash {
+        color: #b8bfca;
+      }
+      .lp-cta {
+        text-align: center;
+        padding: 64px 0 84px;
+        background: linear-gradient(180deg, #fff 0%, #f6fbf9 100%);
+      }
+      .lp-cta h2 {
+        font-size: clamp(30px, 5vw, 50px);
+        font-weight: 900;
+        letter-spacing: -0.04em;
+        margin-bottom: 12px;
+      }
+      .lp-cta p {
+        color: var(--muted);
+        font-size: 16px;
+        line-height: 1.8;
+        max-width: 680px;
+        margin: 0 auto 22px;
+      }
+      .lp-links {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 16px;
+      }
+      .lp-links .btn {
+        min-width: 220px;
+      }
+      .lp-note {
+        margin-top: 12px;
+        font-size: 13px;
+        color: var(--muted);
+      }
+      .lp-faq {
+        max-width: 840px;
+        margin: 0 auto;
+      }
+      .lp-faq .faq {
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        background: var(--white);
+        box-shadow: var(--shadow);
+      }
+      .lp-faq .faq + .faq {
+        margin-top: 10px;
+      }
+      .lp-faq .faq summary {
+        cursor: pointer;
+      }
+      @media (max-width: 960px) {
+        .lp-band,
+        .lp-grid-3,
+        .lp-grid-2,
+        .lp-preview {
+          grid-template-columns: 1fr;
+        }
+        .lp-hero {
+          padding: 72px 0 56px;
+        }
+        .lp-hero h1 {
+          font-size: clamp(36px, 10vw, 56px);
+        }
+      }
+    </style>
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"よへラボ","url":"https://yohelab.com/"},{"@type":"SoftwareApplication","name":"AI X返信・投稿補助","applicationCategory":"BusinessApplication","operatingSystem":"Web","offers":[{"@type":"Offer","price":"0","priceCurrency":"JPY","name":"無料版"},{"@type":"Offer","price":"980","priceCurrency":"JPY","name":"プロプラン","billingIncrement":"P1M","description":"月額980円・初月無料・いつでも解約可"}],"description":"Xでの投稿と返信を短くするLP。無料版で3案を試して、合えば月額980円のプロプランへ進める。"}]}
+      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"よへラボ","url":"https://yohelab.com/"},{"@type":"SoftwareApplication","name":"AI X返信・投稿補助","applicationCategory":"BusinessApplication","operatingSystem":"Web","offers":[{"@type":"Offer","price":"0","priceCurrency":"JPY","name":"無料版"},{"@type":"Offer","price":"980","priceCurrency":"JPY","name":"プロプラン","billingIncrement":"P1M","description":"月額980円・初月無料・いつでも解約可"}],"description":"Xでの投稿と返信を短くする案内ページ。無料版で3案を試して、合えば月額980円のプロプランへ進める。"}]}
     </script>
   </head>
   <body>
@@ -45,15 +339,15 @@
           <div class="lp-hero-copy">
             <p class="lp-eyebrow">X発信の下書き</p>
             <h1>Xの発信と返信を、まとめて下書きにする。</h1>
-            <p class="lp-lead">投稿文で止まる時間を減らす。切り口違いの案を先に並べて、続けやすくするLP。</p>
+            <p class="lp-lead">投稿文で止まる時間を減らす。切り口違いの案を先に並べて、続けやすくする。</p>
             <div class="lp-actions">
               <a class="btn btn-primary btn-lg" href="/apps/x-helper/">無料版を試す →</a>
               <a class="btn btn-lg" style="color:rgba(255,255,255,.86);border:1.5px solid rgba(255,255,255,.25);" href="https://buy.stripe.com/bJe14fgXR8XCfpg9n373G08?client_reference_id=x-helper" target="_blank" rel="noreferrer">初月無料で始める</a>
             </div>
-            <p class="lp-hero-note">無料版で相性を見て、合えばプロプランへ。全部ブラウザでそのまま使える。</p>
+            <p class="lp-hero-note">無料版で相性を見て、合えば有料版へ。全部ブラウザでそのまま使える。</p>
             <div class="lp-band">
               <div class="lp-card"><h3>無料版</h3><p>まず1回試して、返ってくるものを見る。合うかどうかの判断に使う。</p></div>
-              <div class="lp-card"><h3>プロプラン</h3><p>条件保存や複数案で、毎日の作業を短くする。月額980円、初月無料。</p></div>
+              <div class="lp-card"><h3>有料版</h3><p>比較や保存まで広げて、毎日の作業を短くする。使い方に合うならそこで続ける。</p></div>
               <div class="lp-card"><h3>導線</h3><p>無料版からそのまま進める。途中で止まりにくい順番にしている。</p></div>
             </div>
           </div>
@@ -79,11 +373,11 @@
               <p style="margin-top:18px;"><a class="btn btn-primary" href="/apps/x-helper/">無料版を試す →</a></p>
             </div>
             <div class="lp-side-box">
-              <h3>プロプランで増えるもの</h3>
+              <h3>有料版で増えるもの</h3>
               <ul>
                 <li>毎回ゼロから考える負担を減らす。</li><li>相手に合わせて返答の調子を出し分ける。</li><li>下書きを先に出して、投稿の止まりを減らす。</li>
               </ul>
-              <p class="lp-note">月額980円・初月無料。いつでも解約できる。</p>
+              <p class="lp-note">無料版で相性を見て、必要ならそのまま有料版へ進める。</p>
               <p style="margin-top:16px;"><a class="btn btn-primary" href="https://buy.stripe.com/bJe14fgXR8XCfpg9n373G08?client_reference_id=x-helper" target="_blank" rel="noreferrer" style="width:100%;">初月無料で始める</a></p>
             </div>
           </div>
@@ -116,14 +410,14 @@
       <section class="section section-alt">
         <div class="container">
           <p class="section-label">Compare</p>
-          <h2 class="section-title">無料版とプロプランの違い</h2>
+          <h2 class="section-title">無料版と有料版の違い</h2>
           <div class="lp-table-wrap">
             <table class="lp-table">
               <thead>
                 <tr>
                   <th>機能</th>
                   <th>無料版</th>
-                  <th>プロプラン</th>
+                  <th>有料版</th>
                 </tr>
               </thead>
               <tbody>
@@ -215,13 +509,13 @@
       <section class="lp-cta">
         <div class="container">
           <h2>Xの発信と返信を、まとめて下書きにする。</h2>
-          <p>投稿文で止まる時間を減らす。切り口違いの案を先に並べて、続けやすくするLP。</p>
+          <p>投稿文で止まる時間を減らす。切り口違いの案を先に並べて、続けやすくする。</p>
           <div class="lp-links">
             <a class="btn btn-primary btn-lg" href="/apps/x-helper/">無料版を試す →</a>
             <a class="btn btn-primary btn-lg" href="https://buy.stripe.com/bJe14fgXR8XCfpg9n373G08?client_reference_id=x-helper" target="_blank" rel="noreferrer">初月無料で始める</a>
           </div>
-          <p class="lp-note">7ツール全部まとめて使いたい場合は、<a href="https://buy.stripe.com/aFa5kv9vpb5K7WO1UB73G0b?client_reference_id=all-tools" target="_blank" rel="noreferrer" style="color:var(--green);font-weight:800;">全ツールパック</a>もある。</p>
-          <p class="lp-note"><a href="/products/x-helper-beta/" style="color:var(--green);font-weight:800;">プロプラン詳細を見る →</a></p>
+          <p class="lp-note">複数ツールをまとめて使いたい場合は、<a href="https://buy.stripe.com/aFa5kv9vpb5K7WO1UB73G0b?client_reference_id=all-tools" target="_blank" rel="noreferrer" style="color:var(--green);font-weight:800;">全ツールパック</a>も使える。</p>
+          <p class="lp-note"><a href="/products/x-helper-beta/" style="color:var(--green);font-weight:800;">有料版の詳細を見る →</a></p>
         </div>
       </section>
     </main>

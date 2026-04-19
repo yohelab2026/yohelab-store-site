@@ -12,10 +12,10 @@ const pages = [
     path: "/lp/radar/",
     name: "案件レーダー",
     title: "案件レーダー LP | よへラボ",
-    description: "案件探しを朝10分にしたい人向けのLP。無料版で案件候補と応募文の下書きを試して、合えば月額980円のプロプランへ進める。",
+    description: "案件探しを朝10分にしたい人向けの案内ページ。無料版で案件候補と応募文の下書きを試して、合えば月額980円のプロプランへ進める。",
     eyebrow: "案件探しAI",
     heroTitle: "案件を探す・選ぶ・書くを、1本にまとめる。",
-    heroLead: "条件を入れるだけ。案件候補を先に絞って、応募文の下書きまで返す。ひとりで稼ぐ人の朝を短くするLP。",
+    heroLead: "条件を入れるだけ。案件候補を先に絞って、応募文の下書きまで返す。ひとりで稼ぐ人の朝を短くする。",
     freeHref: "/apps/radar/",
     buyHref: "https://buy.stripe.com/dRmfZ9ePJ5Lq6SKbvb73G06?client_reference_id=radar",
     productHref: "/products/radar-beta/",
@@ -55,10 +55,10 @@ const pages = [
     path: "/lp/proposal/",
     name: "AI応募文アシスタント",
     title: "AI応募文アシスタント LP | よへラボ",
-    description: "案件名と自分の強みだけで応募文の下書きを作るLP。無料版で1案を試して、合えば月額980円のプロプランへ進める。",
+    description: "案件名と自分の強みだけで応募文の下書きを作る案内ページ。無料版で1案を試して、合えば月額980円のプロプランへ進める。",
     eyebrow: "応募文の下書き",
     heroTitle: "案件名と強みだけで、応募文の下書きが出る。",
-    heroLead: "案件文がなくても使える。ひとまず1案を出して、応募の初動で止まる時間を減らすLP。",
+    heroLead: "案件文がなくても使える。ひとまず1案を出して、応募の初動で止まる時間を減らす。",
     freeHref: "/apps/proposal/",
     buyHref: "https://buy.stripe.com/fZu9AL3716Pu7WOeHn73G07?client_reference_id=proposal",
     productHref: "/products/proposal-beta/",
@@ -94,59 +94,14 @@ const pages = [
     ],
   },
   {
-    slug: "article-polish",
-    path: "/lp/article-polish/",
-    name: "AI文章整形",
-    title: "AI文章整形 LP | よへラボ",
-    description: "相談メモやラフな下書きを、人が読みやすいブログ・LP・note・サービス紹介文に整えるLP。無料版で1回試して、合えば全ツールパックで使える。",
-    eyebrow: "文章を整えるAI",
-    heroTitle: "相談メモを、読まれる文章に整える。",
-    heroLead: "相談段階のメモや箇条書きを入れるだけ。ブログ、LP、note、サービス紹介に使える自然な文章へ整えるLP。",
-    freeHref: "/apps/article-polish/",
-    buyHref: allToolsHref,
-    buyLabel: "全ツールパックで使う",
-    productHref: "/products/article-polish-beta/",
-    compareHeadline: "無料版は1回、プロプランは比べて選ぶところまで",
-    freeCards: [
-      { title: "タイトル案", text: "読まれる入口を先に作る。文章の方向を決めやすくする。" },
-      { title: "導入文", text: "相談メモのままだと伝わりにくい部分を、読み始めやすい形にする。" },
-      { title: "SEOタイトル・メタ説明", text: "検索で見つかりやすい見出しと説明を整える。" },
-    ],
-    fitCards: [
-      { title: "相談メモから記事を作りたい人", text: "ラフな下書きを、公開できる形にしたいとき向け。" },
-      { title: "LPやnoteを書き始めたい人", text: "文章のたたき台を先に欲しい人向け。" },
-      { title: "SEOやAIOも意識したい人", text: "読みやすさと見つかりやすさを両方見たい人向け。" },
-    ],
-    compareRows: [
-      ["文章を整える", "✓", "✓"],
-      ["タイトル案", "1案", "複数案"],
-      ["導入文", "1案", "複数案"],
-      ["見出し案", "3項目", "比べやすく強化"],
-      ["SEOタイトル / メタ説明", "簡易", "強化版"],
-      ["1日の利用回数", "1回まで", "無制限"],
-      ["導入方法", "無料版からすぐ試せる", "全ツールパックで使える"],
-    ],
-    proCards: [
-      { title: "相談メモをそのまま記事化しやすい", text: "思いつきのメモから、公開できる文章に寄せやすい。" },
-      { title: "A/Bで比べて決めやすい", text: "タイトルや導入の切り口を見比べて選びやすくする。" },
-      { title: "SEOやAIOの整えも一緒に進める", text: "読まれる文章にするための下地を先に作れる。" },
-    ],
-    faq: [
-      ["無料版で何が返る？", "タイトル案、導入文、見出し案、本文、SEOタイトル、メタ説明、仕上げメモが返る。"],
-      ["無料版とプロプランの違いは？", "無料版は1回。プロプランは比較しながら整えやすい。"],
-      ["いつでも解約できる？", "問い合わせフォームからいつでも解約申請できる。"],
-      ["入力内容は保存される？", "無料版は運営側に自動保存しない。"],
-    ],
-  },
-  {
     slug: "proposal-optimizer",
     path: "/lp/proposal-optimizer/",
     name: "AI応募文最適化",
     title: "AI応募文最適化 LP | よへラボ",
-    description: "案件文を貼るだけで、件名案・冒頭3行・応募文・送信前チェックまで返るLP。無料版で1回試して、合えば月額980円のプロプランへ進める。",
+    description: "案件文を貼るだけで、件名案・冒頭3行・応募文・送信前チェックまで返る案内ページ。無料版で1回試して、合えば月額980円のプロプランへ進める。",
     eyebrow: "応募直前の仕上げ",
     heroTitle: "案件文を貼ると、件名案から送信前チェックまで返る。",
-    heroLead: "応募直前の最後の仕上げに向いたLP。案件本文を入れるだけで、使える形に整える。",
+    heroLead: "応募直前の最後の仕上げ用。案件本文を入れるだけで、使える形に整える。",
     freeHref: "/apps/proposal-optimizer/",
     buyHref: "https://buy.stripe.com/fZu9AL3716Pu7WOeHn73G07?client_reference_id=proposal-optimizer",
     productHref: "/products/proposal-optimizer-beta/",
@@ -186,10 +141,10 @@ const pages = [
     path: "/lp/article-polish/",
     name: "AI文章整形",
     title: "AI文章整形 LP | よへラボ",
-    description: "相談メモやラフな下書きを、人が読みやすいブログ・LP・note・サービス紹介文に整えるLP。無料版で1回試して、合えば全ツールパックで使える。",
+    description: "相談メモやラフな下書きを、人が読みやすいブログ・LP・note・サービス紹介文に整える案内ページ。無料版で1回試して、合えば全ツールパックで使える。",
     eyebrow: "文章を整えるAI",
     heroTitle: "相談メモを、読まれる文章に整える。",
-    heroLead: "相談段階のメモや箇条書きを入れるだけ。ブログ、LP、note、サービス紹介に使える自然な文章へ整えるLP。",
+    heroLead: "相談段階のメモや箇条書きを入れるだけ。ブログ、LP、note、サービス紹介に使える自然な文章へ整える。",
     freeHref: "/apps/article-polish/",
     buyHref: allToolsHref,
     buyLabel: "全ツールパックで使う",
@@ -231,10 +186,10 @@ const pages = [
     path: "/lp/x-helper/",
     name: "AI X返信・投稿補助",
     title: "AI X返信・投稿補助 LP | よへラボ",
-    description: "Xでの投稿と返信を短くするLP。無料版で3案を試して、合えば月額980円のプロプランへ進める。",
+    description: "Xでの投稿と返信を短くする案内ページ。無料版で3案を試して、合えば月額980円のプロプランへ進める。",
     eyebrow: "X発信の下書き",
     heroTitle: "Xの発信と返信を、まとめて下書きにする。",
-    heroLead: "投稿文で止まる時間を減らす。切り口違いの案を先に並べて、続けやすくするLP。",
+    heroLead: "投稿文で止まる時間を減らす。切り口違いの案を先に並べて、続けやすくする。",
     freeHref: "/apps/x-helper/",
     buyHref: "https://buy.stripe.com/bJe14fgXR8XCfpg9n373G08?client_reference_id=x-helper",
     productHref: "/products/x-helper-beta/",
@@ -274,10 +229,10 @@ const pages = [
     path: "/lp/ec-copy/",
     name: "EC商品説明・Q&A整備",
     title: "EC商品説明・Q&A整備 LP | よへラボ",
-    description: "商品説明文とQ&Aをまとめて整えるLP。無料版で3パターンを試して、合えば月額980円のプロプランへ進める。",
+    description: "商品説明文とQ&Aをまとめて整える案内ページ。無料版で3パターンを試して、合えば月額980円のプロプランへ進める。",
     eyebrow: "EC向けコピー",
     heroTitle: "商品説明とQ&Aを、売り方違いで整える。",
-    heroLead: "BASEやSTORESの運営で止まりやすい説明文を短くする。商品ページをまとめて整えるLP。",
+    heroLead: "BASEやSTORESの運営で止まりやすい説明文を短くする。商品ページをまとめて整える。",
     freeHref: "/apps/ec-copy/",
     buyHref: "https://buy.stripe.com/aFa4gr9vp5Lq6SKgPv73G09?client_reference_id=ec-copy",
     productHref: "/products/ec-copy-beta/",
@@ -317,10 +272,10 @@ const pages = [
     path: "/lp/aio-mini/",
     name: "AIOミニ診断",
     title: "AIOミニ診断 LP | よへラボ",
-    description: "AI検索で見つかりやすいかをざっくり確かめるLP。無料版で見え方を試して、合えば月額980円のプロプランへ進める。",
+    description: "AI検索で見つかりやすいかをざっくり確かめる案内ページ。無料版で見え方を試して、合えば月額980円のプロプランへ進める。",
     eyebrow: "AI検索の見え方",
     heroTitle: "AI検索で見つかる見え方を、先に整える。",
-    heroLead: "URLと概要を入れるだけ。見つかりやすさのスコアと改善点を返して、先に直すLP。",
+    heroLead: "URLと概要を入れるだけ。見つかりやすさのスコアと改善点を返して、先に直す。",
     freeHref: "/apps/aio-mini/",
     buyHref: "https://buy.stripe.com/28E8wHfTNddSb90bvb73G0a?client_reference_id=aio-mini",
     productHref: "/products/aio-mini-beta/",
@@ -755,7 +710,7 @@ function renderPage(page) {
           <a href="${page.freeHref}">無料版</a>
           <a href="${page.productHref}">プロプラン</a>
           <a href="/contact/">問い合わせ</a>
-          <a class="btn btn-primary btn-sm" href="${page.buyHref}" target="_blank" rel="noreferrer">初月無料で始める</a>
+          <a class="btn btn-primary btn-sm" href="${page.buyHref}" target="_blank" rel="noreferrer">${esc(page.buyLabel || "初月無料で始める")}</a>
         </nav>
       </div>
     </header>
@@ -769,12 +724,12 @@ function renderPage(page) {
             <p class="lp-lead">${page.heroLead}</p>
             <div class="lp-actions">
               <a class="btn btn-primary btn-lg" href="${page.freeHref}">無料版を試す →</a>
-              <a class="btn btn-lg" style="color:rgba(255,255,255,.86);border:1.5px solid rgba(255,255,255,.25);" href="${page.buyHref}" target="_blank" rel="noreferrer">初月無料で始める</a>
+              <a class="btn btn-lg" style="color:rgba(255,255,255,.86);border:1.5px solid rgba(255,255,255,.25);" href="${page.buyHref}" target="_blank" rel="noreferrer">${esc(page.buyLabel || "初月無料で始める")}</a>
             </div>
-            <p class="lp-hero-note">無料版で相性を見て、合えばプロプランへ。全部ブラウザでそのまま使える。</p>
+            <p class="lp-hero-note">無料版で相性を見て、合えば有料版へ。全部ブラウザでそのまま使える。</p>
             <div class="lp-band">
               <div class="lp-card"><h3>無料版</h3><p>まず1回試して、返ってくるものを見る。合うかどうかの判断に使う。</p></div>
-              <div class="lp-card"><h3>プロプラン</h3><p>条件保存や複数案で、毎日の作業を短くする。月額980円、初月無料。</p></div>
+              <div class="lp-card"><h3>有料版</h3><p>比較や保存まで広げて、毎日の作業を短くする。使い方に合うならそこで続ける。</p></div>
               <div class="lp-card"><h3>導線</h3><p>無料版からそのまま進める。途中で止まりにくい順番にしている。</p></div>
             </div>
           </div>
@@ -802,11 +757,11 @@ function renderPage(page) {
               <p style="margin-top:18px;"><a class="btn btn-primary" href="${page.freeHref}">無料版を試す →</a></p>
             </div>
             <div class="lp-side-box">
-              <h3>プロプランで増えるもの</h3>
+              <h3>有料版で増えるもの</h3>
               <ul>
                 ${page.proCards.map((item) => `<li>${esc(item.text)}</li>`).join("")}
               </ul>
-              <p class="lp-note">月額980円・初月無料。いつでも解約できる。</p>
+              <p class="lp-note">無料版で相性を見て、必要ならそのまま有料版へ進める。</p>
               <p style="margin-top:16px;"><a class="btn btn-primary" href="${page.buyHref}" target="_blank" rel="noreferrer" style="width:100%;">${esc(page.buyLabel || "初月無料で始める")}</a></p>
             </div>
           </div>
@@ -827,14 +782,14 @@ function renderPage(page) {
       <section class="section section-alt">
         <div class="container">
           <p class="section-label">Compare</p>
-          <h2 class="section-title">無料版とプロプランの違い</h2>
+          <h2 class="section-title">無料版と有料版の違い</h2>
           <div class="lp-table-wrap">
             <table class="lp-table">
               <thead>
                 <tr>
                   <th>機能</th>
                   <th>無料版</th>
-                  <th>プロプラン</th>
+                  <th>有料版</th>
                 </tr>
               </thead>
               <tbody>
@@ -873,8 +828,8 @@ function renderPage(page) {
             <a class="btn btn-primary btn-lg" href="${page.freeHref}">無料版を試す →</a>
             <a class="btn btn-primary btn-lg" href="${page.buyHref}" target="_blank" rel="noreferrer">${esc(page.buyLabel || "初月無料で始める")}</a>
           </div>
-          <p class="lp-note">7ツール全部まとめて使いたい場合は、<a href="${allToolsHref}" target="_blank" rel="noreferrer" style="color:var(--green);font-weight:800;">全ツールパック</a>もある。</p>
-          <p class="lp-note"><a href="${page.productHref}" style="color:var(--green);font-weight:800;">プロプラン詳細を見る →</a></p>
+          <p class="lp-note">複数ツールをまとめて使いたい場合は、<a href="${allToolsHref}" target="_blank" rel="noreferrer" style="color:var(--green);font-weight:800;">全ツールパック</a>も使える。</p>
+          <p class="lp-note"><a href="${page.productHref}" style="color:var(--green);font-weight:800;">有料版の詳細を見る →</a></p>
         </div>
       </section>
     </main>
