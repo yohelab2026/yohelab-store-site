@@ -7,6 +7,7 @@ const PRODUCT_CONFIG = {
   "x-helper": { label: "AI X投稿・返信補助", nextPath: "/apps/x-helper/" },
   "ec-copy": { label: "EC商品説明・Q&A整備", nextPath: "/apps/ec-copy/" },
   "aio-mini": { label: "AIOミニ診断", nextPath: "/apps/aio-mini/" },
+  "all-tools": { label: "全ツールパック", nextPath: "/apps/radar/" },
 };
 
 function getAccessSecret(env) {
