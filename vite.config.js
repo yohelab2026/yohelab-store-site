@@ -1,6 +1,20 @@
 import { defineConfig } from "vite";
 
+function matomoSnippetPlugin() {
+  const snippet = `<script async src="/shared/matomo-loader.js"></script>`;
+
+  return {
+    name: "matomo-snippet",
+    transformIndexHtml(html, ctx) {
+      if (!ctx?.path || ctx.path === "/google0009e82266fc5714.html") return html;
+      if (html.includes("matomo-loader.js")) return html;
+      return html.replace("</head>", `    ${snippet}\n  </head>`);
+    },
+  };
+}
+
 export default defineConfig({
+  plugins: [matomoSnippetPlugin()],
   build: {
     rollupOptions: {
       input: {

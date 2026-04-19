@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AIOミニ診断 — URLを貼るだけでAI検索の見え方がわかる | よへラボ</title>
-    <meta name="description" content="URLとページ概要を入れるだけで、AI検索での見つかりやすさスコアと改善ポイントが返ってくる。サイトをAI時代の検索に対応させる最初の一手。月額980円・初月無料。" />
-    <meta property="og:title" content="AIOミニ診断 — URLを貼るだけでAI検索の見え方がわかる | よへラボ" />
-    <meta property="og:description" content="URLとページ概要を入れるだけで、AI検索での見つかりやすさスコアと改善ポイントが返ってくる。サイトをAI時代の検索に対応させる最初の一手。月額980円・初月無料。" />
+    <title>AIOミニ診断 LP | よへラボ</title>
+    <meta name="description" content="AI検索で見つかりやすいかをざっくり確かめるLP。無料版で見え方を試して、合えば月額980円のプロプランへ進める。" />
+    <meta property="og:title" content="AIOミニ診断 LP | よへラボ" />
+    <meta property="og:description" content="AI検索で見つかりやすいかをざっくり確かめるLP。無料版で見え方を試して、合えば月額980円のプロプランへ進める。" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="ja_JP" />
     <meta property="og:url" content="https://yohelab.com/lp/aio-mini/" />
@@ -17,8 +17,302 @@
     <link rel="canonical" href="https://yohelab.com/lp/aio-mini/" />
     <link rel="icon" type="image/png" href="/yohelab-icon.png" />
     <link rel="stylesheet" href="/shared/site.css" />
+    <style>
+      .lp-hero {
+        padding: 88px 0 72px;
+        background:
+          radial-gradient(ellipse 85% 65% at 50% 0%, rgba(13,107,88,.16), transparent 58%),
+          linear-gradient(180deg, #0f221d 0%, #0b1613 100%);
+        color: #fff;
+      }
+      .lp-hero .container {
+        width: min(1100px, 100% - 48px);
+      }
+      .lp-hero-copy {
+        max-width: 920px;
+        margin: 0 auto;
+        text-align: center;
+      }
+      .lp-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 16px;
+        border-radius: 999px;
+        background: rgba(255,255,255,.09);
+        border: 1px solid rgba(255,255,255,.16);
+        color: rgba(255,255,255,.92);
+        font-size: 13px;
+        font-weight: 700;
+        margin-bottom: 28px;
+      }
+      .lp-hero h1 {
+        color: #fff;
+        font-size: clamp(42px, 6.4vw, 74px);
+        letter-spacing: -0.05em;
+        line-height: 1.06;
+        margin-bottom: 18px;
+      }
+      .lp-hero h1 em {
+        color: #4fd1b8;
+        font-style: normal;
+      }
+      .lp-lead {
+        max-width: 760px;
+        margin: 0 auto 28px;
+        color: rgba(255,255,255,.76);
+        font-size: 19px;
+        line-height: 1.9;
+      }
+      .lp-actions {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 20px;
+      }
+      .lp-hero-note {
+        color: rgba(255,255,255,.55);
+        font-size: 13px;
+      }
+      .lp-band {
+        margin-top: 28px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+      }
+      .lp-band .lp-card {
+        background: rgba(255,255,255,.07);
+        border: 1px solid rgba(255,255,255,.12);
+        color: #fff;
+        box-shadow: none;
+      }
+      .lp-band .lp-card h3 {
+        color: #fff;
+      }
+      .lp-band .lp-card p {
+        color: rgba(255,255,255,.72);
+      }
+      .lp-section {
+        padding: 72px 0;
+      }
+      .lp-grid-3 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+      }
+      .lp-grid-2 {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+      }
+      .lp-card {
+        padding: 26px;
+        border-radius: 20px;
+        border: 1px solid var(--border);
+        background: var(--white);
+        box-shadow: var(--shadow);
+      }
+      .lp-card h3 {
+        font-size: 17px;
+        font-weight: 800;
+        margin-bottom: 10px;
+      }
+      .lp-card p {
+        color: var(--muted);
+        font-size: 15px;
+        line-height: 1.75;
+      }
+      .lp-mini-head {
+        text-align: center;
+        margin-bottom: 22px;
+      }
+      .lp-mini-head h2 {
+        font-size: 30px;
+        font-weight: 900;
+        letter-spacing: -0.04em;
+        margin-bottom: 8px;
+      }
+      .lp-mini-head p {
+        color: var(--muted);
+        font-size: 16px;
+      }
+      .lp-preview {
+        display: grid;
+        grid-template-columns: 1.1fr .9fr;
+        gap: 16px;
+        align-items: stretch;
+      }
+      .lp-preview-box {
+        padding: 28px;
+        border-radius: 20px;
+        border: 1px solid var(--green-mid);
+        background: linear-gradient(180deg, #f7fcfa 0%, #eef8f4 100%);
+        box-shadow: var(--shadow);
+      }
+      .lp-preview-box h3 {
+        font-size: 20px;
+        font-weight: 900;
+        margin-bottom: 10px;
+      }
+      .lp-preview-box p {
+        color: var(--muted);
+        line-height: 1.75;
+        font-size: 15px;
+      }
+      .lp-preview-list {
+        display: grid;
+        gap: 10px;
+        margin-top: 18px;
+      }
+      .lp-preview-list div {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        color: var(--text);
+        font-size: 14px;
+        line-height: 1.65;
+      }
+      .lp-preview-list span {
+        color: var(--green);
+        font-weight: 900;
+      }
+      .lp-side-box {
+        padding: 28px;
+        border-radius: 20px;
+        border: 1px solid var(--border);
+        background: var(--white);
+        box-shadow: var(--shadow);
+      }
+      .lp-side-box h3 {
+        font-size: 18px;
+        font-weight: 900;
+        margin-bottom: 12px;
+      }
+      .lp-side-box ul {
+        display: grid;
+        gap: 8px;
+      }
+      .lp-side-box li {
+        display: flex;
+        gap: 8px;
+        color: var(--muted);
+        line-height: 1.6;
+        font-size: 14px;
+      }
+      .lp-side-box li::before {
+        content: "→";
+        color: var(--green);
+        font-weight: 800;
+      }
+      .lp-table-wrap {
+        max-width: 860px;
+        margin: 0 auto;
+      }
+      .lp-table {
+        width: 100%;
+        border-collapse: collapse;
+        border-radius: 18px;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow);
+      }
+      .lp-table th,
+      .lp-table td {
+        padding: 15px 18px;
+        font-size: 15px;
+        text-align: center;
+      }
+      .lp-table th:first-child,
+      .lp-table td:first-child {
+        text-align: left;
+      }
+      .lp-table th {
+        background: var(--bg);
+        font-weight: 800;
+      }
+      .lp-table .free {
+        color: var(--muted);
+        background: #fff;
+      }
+      .lp-table .pro {
+        background: #f1faf6;
+        color: var(--green-dark);
+        font-weight: 700;
+      }
+      .lp-check {
+        color: var(--green);
+        font-weight: 900;
+      }
+      .lp-dash {
+        color: #b8bfca;
+      }
+      .lp-cta {
+        text-align: center;
+        padding: 64px 0 84px;
+        background: linear-gradient(180deg, #fff 0%, #f6fbf9 100%);
+      }
+      .lp-cta h2 {
+        font-size: clamp(30px, 5vw, 50px);
+        font-weight: 900;
+        letter-spacing: -0.04em;
+        margin-bottom: 12px;
+      }
+      .lp-cta p {
+        color: var(--muted);
+        font-size: 16px;
+        line-height: 1.8;
+        max-width: 680px;
+        margin: 0 auto 22px;
+      }
+      .lp-links {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 16px;
+      }
+      .lp-links .btn {
+        min-width: 220px;
+      }
+      .lp-note {
+        margin-top: 12px;
+        font-size: 13px;
+        color: var(--muted);
+      }
+      .lp-faq {
+        max-width: 840px;
+        margin: 0 auto;
+      }
+      .lp-faq .faq {
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        background: var(--white);
+        box-shadow: var(--shadow);
+      }
+      .lp-faq .faq + .faq {
+        margin-top: 10px;
+      }
+      .lp-faq .faq summary {
+        cursor: pointer;
+      }
+      @media (max-width: 960px) {
+        .lp-band,
+        .lp-grid-3,
+        .lp-grid-2,
+        .lp-preview {
+          grid-template-columns: 1fr;
+        }
+        .lp-hero {
+          padding: 72px 0 56px;
+        }
+        .lp-hero h1 {
+          font-size: clamp(36px, 10vw, 56px);
+        }
+      }
+    </style>
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"よへラボ","url":"https://yohelab.com/"},{"@type":"SoftwareApplication","name":"AIOミニ診断","applicationCategory":"BusinessApplication","operatingSystem":"Web","offers":[{"@type":"Offer","price":"0","priceCurrency":"JPY","name":"無料版"},{"@type":"Offer","price":"980","priceCurrency":"JPY","name":"プロプラン","billingIncrement":"P1M","description":"月額980円・初月無料・いつでも解約可"}],"description":"URLとページ概要を入れるだけで、AI検索での見つかりやすさスコアと改善ポイントが返ってくる。"}]}
+      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"よへラボ","url":"https://yohelab.com/"},{"@type":"SoftwareApplication","name":"AIOミニ診断","applicationCategory":"BusinessApplication","operatingSystem":"Web","offers":[{"@type":"Offer","price":"0","priceCurrency":"JPY","name":"無料版"},{"@type":"Offer","price":"980","priceCurrency":"JPY","name":"プロプラン","billingIncrement":"P1M","description":"月額980円・初月無料・いつでも解約可"}],"description":"AI検索で見つかりやすいかをざっくり確かめるLP。無料版で見え方を試して、合えば月額980円のプロプランへ進める。"}]}
     </script>
   </head>
   <body>
@@ -31,7 +325,8 @@
         </a>
         <nav class="nav-links">
           <a href="/">トップ</a>
-          <a href="/apps/aio-mini/">無料版を試す</a>
+          <a href="/apps/aio-mini/">無料版</a>
+          <a href="/products/aio-mini-beta/">プロプラン</a>
           <a href="/contact/">問い合わせ</a>
           <a class="btn btn-primary btn-sm" href="https://buy.stripe.com/28E8wHfTNddSb90bvb73G0a?client_reference_id=aio-mini" target="_blank" rel="noreferrer">初月無料で始める</a>
         </nav>
@@ -39,265 +334,190 @@
     </header>
 
     <main>
-      <!-- Hero -->
       <section class="lp-hero">
         <div class="container">
           <div class="lp-hero-copy">
-            <p class="lp-eyebrow">✦ AIOミニ診断</p>
-            <h1>URLを貼るだけで、<em>AI検索の見え方</em>がわかる。</h1>
-            <p class="lp-lead">見つかりやすさスコアと改善ポイントが10秒で返ってくる。<br>ChatGPTやPerplexityに引っかかるページに整える最初の一手。</p>
+            <p class="lp-eyebrow">AI検索の見え方</p>
+            <h1>AI検索で見つかる見え方を、先に整える。</h1>
+            <p class="lp-lead">URLと概要を入れるだけ。見つかりやすさのスコアと改善点を返して、先に直すLP。</p>
             <div class="lp-actions">
               <a class="btn btn-primary btn-lg" href="/apps/aio-mini/">無料版を試す →</a>
-              <a class="btn btn-ghost-white btn-lg" href="https://buy.stripe.com/28E8wHfTNddSb90bvb73G0a?client_reference_id=aio-mini" target="_blank" rel="noreferrer">初月無料で始める</a>
+              <a class="btn btn-lg" style="color:rgba(255,255,255,.86);border:1.5px solid rgba(255,255,255,.25);" href="https://buy.stripe.com/28E8wHfTNddSb90bvb73G0a?client_reference_id=aio-mini" target="_blank" rel="noreferrer">初月無料で始める</a>
             </div>
-            <p class="lp-price-signal">月額980円 · 初月無料 · いつでも解約可</p>
+            <p class="lp-hero-note">無料版で相性を見て、合えばプロプランへ。全部ブラウザでそのまま使える。</p>
             <div class="lp-band">
-              <div class="lp-card"><div class="lp-card-icon">📊</div><h3>今の見え方を数値で知る</h3><p>感覚ではなくスコアで現状を把握できるので、何から手を付けるかが明確になる。</p></div>
-              <div class="lp-card"><div class="lp-card-icon">🎯</div><h3>改善ポイントがすぐ出る</h3><p>「ここを直せ」という具体的な指摘が返ってくる。専門知識がなくても動ける。</p></div>
-              <div class="lp-card"><div class="lp-card-icon">📝</div><h3>FAQ・見出し案まで出る</h3><p>AI検索に乗りやすい構造のたたき台も一緒に返るので、すぐページに反映できる。</p></div>
+              <div class="lp-card"><h3>無料版</h3><p>まず1回試して、返ってくるものを見る。合うかどうかの判断に使う。</p></div>
+              <div class="lp-card"><h3>プロプラン</h3><p>条件保存や複数案で、毎日の作業を短くする。月額980円、初月無料。</p></div>
+              <div class="lp-card"><h3>導線</h3><p>無料版からそのまま進める。途中で止まりにくい順番にしている。</p></div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- Pain -->
-      <section class="lp-section" style="background:var(--bg);">
-        <div class="container">
-          <div class="lp-mini-head">
-            <p class="section-label">Pain</p>
-            <h2>こういう場面で止まっていないか</h2>
-          </div>
-          <div class="lp-pain-grid">
-            <div class="lp-pain-card">
-              <div class="lp-pain-icon">🤷</div>
-              <strong>AI検索対策をしなければと思っているけど、何から手を付ければいいかわからない</strong>
-              <p>情報が多くて方針が定まらない。考えているうちに後回しが続く。</p>
-            </div>
-            <div class="lp-pain-card">
-              <div class="lp-pain-icon">🔍</div>
-              <strong>自分のサイトがAIにどう見えているかわからず、改善しようにも手が止まる</strong>
-              <p>何が問題かわからないと動けない。見えないから直しようがない状態が続く。</p>
-            </div>
-            <div class="lp-pain-card">
-              <div class="lp-pain-icon">📂</div>
-              <strong>SEO対策ツールは試したけど、AI検索への対応は別の話だと感じて放置している</strong>
-              <p>従来のSEOとAI検索は見られ方が違う。別のアプローチが必要だとわかっている。</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- How it works -->
       <section class="lp-section">
         <div class="container">
           <div class="lp-mini-head">
-            <p class="section-label">How it works</p>
-            <h2>使い方は3ステップ</h2>
-            <p>ブラウザだけで完結。入力30秒、出力10秒。</p>
-          </div>
-          <div class="lp-steps">
-            <div class="lp-step">
-              <div class="lp-step-num">1</div>
-              <h3>URLとページ概要を入れる</h3>
-              <p>診断したいページのURLとどんなページかを入力するだけ。</p>
-            </div>
-            <div class="lp-step">
-              <div class="lp-step-num">2</div>
-              <h3>スコアと改善ポイントが出る</h3>
-              <p>AI検索での見つかりやすさを数値化して、具体的な改善箇所が返ってくる。</p>
-            </div>
-            <div class="lp-step">
-              <div class="lp-step-num">3</div>
-              <h3>FAQ・見出し案をページに反映する</h3>
-              <p>AI検索に乗りやすい構造のたたき台も出るので、そのまま使える。</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Preview -->
-      <section class="lp-section" style="background:var(--bg);">
-        <div class="container">
-          <div class="lp-mini-head">
-            <p class="section-label">Output</p>
-            <h2>こういうものが返ってくる</h2>
+            <h2>無料版で見え方を試し、プロプランで整え続ける</h2>
+            <p>無料版で先に試せるものを見せて、プロプランで増えるものをそのまま比べる。</p>
           </div>
           <div class="lp-preview">
             <div class="lp-preview-box">
-              <h3>診断レポート</h3>
-              <p>URLを入れるだけで、AI検索の視点から見たページの強みと弱みがわかりやすく整理されて返ってくる。</p>
+              <h3>無料版で見えるもの</h3>
+              <p>まずは1回。どんな結果が返るかを確認してから進める。</p>
               <div class="lp-preview-list">
-                <div><span>✓</span><div><strong>見つかりやすさスコア</strong><br>0〜100点で現状の見え方を数値化。改善の優先順位が明確になる。</div></div>
-                <div><span>✓</span><div><strong>具体的な改善ポイント</strong><br>「この見出しを変える」「このFAQを追加する」といった具体的な指摘が出る。</div></div>
-                <div><span>✓</span><div><strong>FAQ・見出しのたたき台</strong><br>AI検索に乗りやすい構造案がそのまま使える形で出てくる。</div></div>
+                
+                  <div><span>✓</span><div><strong>見つかりやすさスコア</strong><br>いまの見え方をざっくり数値で見る。</div></div>
+                  <div><span>✓</span><div><strong>改善点</strong><br>先に直したい場所を短く返す。</div></div>
+                  <div><span>✓</span><div><strong>FAQ・見出しの叩き台</strong><br>AI検索に乗りやすい整理の入口を作る。</div></div>
               </div>
+              <p style="margin-top:18px;"><a class="btn btn-primary" href="/apps/aio-mini/">無料版を試す →</a></p>
             </div>
             <div class="lp-side-box">
-              <h3>プロプランで使えること</h3>
+              <h3>プロプランで増えるもの</h3>
               <ul>
-                <li>1日の診断回数が無制限になる</li>
-                <li>複数ページの診断結果を比較できる</li>
-                <li>過去の診断結果を保存して変化を追える</li>
-                <li>改善案の詳細版（強化モード）が使える</li>
+                <li>AI検索に乗りやすいページの形に寄せやすい。</li><li>ユーザーが止まりやすい場所を先に埋める。</li><li>毎回の確認を軽くして、改善の回転を上げる。</li>
               </ul>
               <p class="lp-note">月額980円・初月無料。いつでも解約できる。</p>
+              <p style="margin-top:16px;"><a class="btn btn-primary" href="https://buy.stripe.com/28E8wHfTNddSb90bvb73G0a?client_reference_id=aio-mini" target="_blank" rel="noreferrer" style="width:100%;">初月無料で始める</a></p>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- Compare -->
-      <section class="lp-section">
+      <section class="section">
         <div class="container">
-          <div class="lp-mini-head">
-            <p class="section-label">Compare</p>
-            <h2>無料版とプロプランの違い</h2>
+          <p class="section-label">Fit</p>
+          <h2 class="section-title">こういう人に向いている</h2>
+          <p class="section-sub">LPの役目は、合う人を先に見せること。使う人を絞るほど売りやすくなる。</p>
+          <div class="lp-grid-3">
+            
+          <article class="lp-card">
+            <h3>AI検索対策を先に知りたい人</h3>
+            <p>今のサイトがどう見えるかを軽く確かめたい人向け。</p>
+          </article>
+          <article class="lp-card">
+            <h3>FAQや見出しを整えたい人</h3>
+            <p>ページの出し方を先に整理したい人向け。</p>
+          </article>
+          <article class="lp-card">
+            <h3>小さく改善を続けたい人</h3>
+            <p>まずはざっくり見て、必要なところだけ直したい人向け。</p>
+          </article>
           </div>
+        </div>
+      </section>
+
+      <section class="section section-alt">
+        <div class="container">
+          <p class="section-label">Compare</p>
+          <h2 class="section-title">無料版とプロプランの違い</h2>
           <div class="lp-table-wrap">
             <table class="lp-table">
               <thead>
                 <tr>
                   <th>機能</th>
-                  <th class="th-free">無料版</th>
-                  <th class="th-pro">プロプラン</th>
+                  <th>無料版</th>
+                  <th>プロプラン</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>見つかりやすさスコア</td>
-                  <td class="free">✓</td>
-                  <td class="pro">✓</td>
-                </tr>
-                <tr>
-                  <td>改善ポイント</td>
-                  <td class="free">標準版</td>
-                  <td class="pro">強化版（詳細）</td>
-                </tr>
-                <tr>
-                  <td>FAQ・見出しのたたき台</td>
-                  <td class="free">✓</td>
-                  <td class="pro">✓（強化版）</td>
-                </tr>
-                <tr>
-                  <td>複数ページの比較・保存</td>
-                  <td class="free">—</td>
-                  <td class="pro">✓</td>
-                </tr>
-                <tr>
-                  <td>1日の利用回数</td>
-                  <td class="free">1回まで</td>
-                  <td class="pro">無制限</td>
-                </tr>
-                <tr>
-                  <td>月額料金</td>
-                  <td class="free">¥0</td>
-                  <td class="pro">¥980（初月無料）</td>
-                </tr>
+                
+              <tr>
+                <td>見つかりやすさ診断</td>
+                <td class="free">✓</td>
+                <td class="pro">✓</td>
+              </tr>
+              <tr>
+                <td>改善点</td>
+                <td class="free">✓</td>
+                <td class="pro">✓</td>
+              </tr>
+              <tr>
+                <td>FAQ・見出し叩き台</td>
+                <td class="free">簡易</td>
+                <td class="pro">強化版</td>
+              </tr>
+              <tr>
+                <td>比較・保存</td>
+                <td class="free">—</td>
+                <td class="pro">✓</td>
+              </tr>
+              <tr>
+                <td>1日の利用回数</td>
+                <td class="free">1回まで</td>
+                <td class="pro">無制限</td>
+              </tr>
+              <tr>
+                <td>月額料金</td>
+                <td class="free">¥0</td>
+                <td class="pro">¥980（初月無料）</td>
+              </tr>
               </tbody>
             </table>
           </div>
         </div>
       </section>
 
-      <!-- Price box -->
-      <section class="lp-section" style="background:var(--bg);">
+      <section class="section" style="background:var(--bg);">
         <div class="container">
-          <div class="lp-price-box">
-            <p class="lp-eyebrow" style="margin-bottom:16px;">プロプラン</p>
-            <p style="font-size:clamp(40px,6vw,64px);font-weight:900;letter-spacing:-0.05em;color:var(--text);line-height:1;">¥980<span style="font-size:18px;font-weight:600;color:var(--muted);">/月</span></p>
-            <p style="color:var(--muted);font-size:14px;margin-top:6px;margin-bottom:24px;">初月無料 · いつでも解約可 · Stripe決済</p>
-            <ul style="text-align:left;display:grid;gap:10px;max-width:320px;margin:0 auto 28px;">
-              <li style="display:flex;gap:8px;font-size:15px;"><span style="color:var(--green);font-weight:900;">✓</span> 毎日無制限でページを診断できる</li>
-              <li style="display:flex;gap:8px;font-size:15px;"><span style="color:var(--green);font-weight:900;">✓</span> 複数ページを比較して優先順位をつける</li>
-              <li style="display:flex;gap:8px;font-size:15px;"><span style="color:var(--green);font-weight:900;">✓</span> まずは無料版で相性を試せる</li>
-            </ul>
-            <a class="btn btn-primary btn-lg" href="https://buy.stripe.com/28E8wHfTNddSb90bvb73G0a?client_reference_id=aio-mini" target="_blank" rel="noreferrer">初月無料で始める →</a>
-          </div>
-        </div>
-      </section>
-
-      <!-- Fit -->
-      <section class="lp-section">
-        <div class="container">
-          <div class="lp-mini-head">
-            <p class="section-label">Fit</p>
-            <h2>こういう人に向いている</h2>
-          </div>
+          <p class="section-label">Features</p>
+          <h2 class="section-title">プロプランでできること</h2>
           <div class="lp-grid-3">
-            <article class="lp-card">
-              <h3>AI検索対策を始めたいが何から手を付けていいかわからない人</h3>
-              <p>まず現状を数値で把握したい人。スコアが出れば次に何をすべきかが明確になる。</p>
-            </article>
-            <article class="lp-card">
-              <h3>サイトやブログを持っているフリーランス・個人事業主</h3>
-              <p>専門家に頼まず自分で改善したい人。具体的な指摘が出るので動きやすい。</p>
-            </article>
-            <article class="lp-card">
-              <h3>定期的に改善を続けたい人</h3>
-              <p>一度見て終わりではなく、改善のサイクルを作りたい人。複数回の診断で変化を追える。</p>
-            </article>
+            
+          <article class="lp-card">
+            <h3>先に見える形を整える</h3>
+            <p>AI検索に乗りやすいページの形に寄せやすい。</p>
+          </article>
+          <article class="lp-card">
+            <h3>FAQの叩き台を作る</h3>
+            <p>ユーザーが止まりやすい場所を先に埋める。</p>
+          </article>
+          <article class="lp-card">
+            <h3>改善を続けやすい</h3>
+            <p>毎回の確認を軽くして、改善の回転を上げる。</p>
+          </article>
           </div>
         </div>
       </section>
 
-      <!-- FAQ -->
-      <section class="lp-section" style="background:var(--bg);">
+      <section class="section">
         <div class="container">
-          <div class="lp-mini-head">
-            <p class="section-label">FAQ</p>
-            <h2>よくある質問</h2>
-          </div>
+          <p class="section-label">FAQ</p>
+          <h2 class="section-title">よくある質問</h2>
           <div class="lp-faq faq-list">
+            
             <details class="faq">
-              <summary>無料版でどこまで使える？</summary>
-              <div class="faq-body">1日1回まで見つかりやすさスコア・改善ポイント・FAQ/見出しのたたき台が取得できる。まず相性を試してから決めてほしい。</div>
+              <summary>無料版で何が返る？</summary>
+              <div class="faq-body">見つかりやすさスコア、改善点、FAQや見出しの叩き台が返る。</div>
             </details>
             <details class="faq">
-              <summary>どんなサイトでも診断できる？</summary>
-              <div class="faq-body">ブログ・サービスサイト・ECサイト・ポートフォリオなど、ほとんどのWebページに対応している。URLと概要を正確に入力するほど精度が上がる。</div>
+              <summary>無料版とプロプランの違いは？</summary>
+              <div class="faq-body">無料版は1回。プロプランは保存して続けやすい。</div>
             </details>
             <details class="faq">
-              <summary>初月無料の仕組みは？</summary>
-              <div class="faq-body">Stripeで登録した月は課金されない。翌月から月額980円。解約は問い合わせフォームからいつでもできる。</div>
+              <summary>いつでも解約できる？</summary>
+              <div class="faq-body">問い合わせフォームからいつでも解約申請できる。</div>
             </details>
             <details class="faq">
-              <summary>入力したURLは外部に送られる？</summary>
-              <div class="faq-body">無料版では運営側に自動保存しない。AI処理のためにAPIに送信されるが、学習データには使用されない。</div>
+              <summary>入力内容は保存される？</summary>
+              <div class="faq-body">無料版は運営側に自動保存しない。</div>
             </details>
           </div>
         </div>
       </section>
 
-      <!-- Final CTA -->
       <section class="lp-cta">
         <div class="container">
-          <h2>自分のサイトがAIにどう見えているか、<br>今日確かめる。</h2>
-          <p>URLを貼るだけ。スコアと改善ポイントが10秒で返ってくる。</p>
-          <div class="lp-actions" style="margin-top:28px;margin-bottom:16px;">
-            <a class="btn btn-white btn-lg" href="/apps/aio-mini/">無料版を試す →</a>
-            <a class="btn btn-ghost-white btn-lg" href="https://buy.stripe.com/28E8wHfTNddSb90bvb73G0a?client_reference_id=aio-mini" target="_blank" rel="noreferrer">初月無料で始める</a>
+          <h2>AI検索で見つかる見え方を、先に整える。</h2>
+          <p>URLと概要を入れるだけ。見つかりやすさのスコアと改善点を返して、先に直すLP。</p>
+          <div class="lp-links">
+            <a class="btn btn-primary btn-lg" href="/apps/aio-mini/">無料版を試す →</a>
+            <a class="btn btn-primary btn-lg" href="https://buy.stripe.com/28E8wHfTNddSb90bvb73G0a?client_reference_id=aio-mini" target="_blank" rel="noreferrer">初月無料で始める</a>
           </div>
-          <p class="lp-note" style="color:rgba(255,255,255,.6);">6ツールまとめて使いたい場合は <a href="https://buy.stripe.com/aFa5kv9vpb5K7WO1UB73G0b?client_reference_id=all-tools" target="_blank" rel="noreferrer" style="color:#fff;font-weight:800;">全ツールパック</a> もある。</p>
+          <p class="lp-note">6ツール全部まとめて使いたい場合は、<a href="https://buy.stripe.com/aFa5kv9vpb5K7WO1UB73G0b?client_reference_id=all-tools" target="_blank" rel="noreferrer" style="color:var(--green);font-weight:800;">全ツールパック</a>もある。</p>
+          <p class="lp-note"><a href="/products/aio-mini-beta/" style="color:var(--green);font-weight:800;">プロプラン詳細を見る →</a></p>
         </div>
       </section>
     </main>
-
-    <!-- Mobile sticky CTA -->
-    <div class="lp-sticky">
-      <a class="btn btn-primary btn-lg" href="/apps/aio-mini/">無料版を試す →</a>
-      <a class="btn btn-ghost btn-lg" href="https://buy.stripe.com/28E8wHfTNddSb90bvb73G0a?client_reference_id=aio-mini" target="_blank" rel="noreferrer">初月無料で始める</a>
-    </div>
-
-    <footer class="lp-footer">
-      <div class="lp-footer-inner">
-        <a href="/" class="lp-footer-brand">よへラボ</a>
-        <nav class="lp-footer-links">
-          <a href="/legal/terms/">利用規約</a>
-          <a href="/legal/privacy/">プライバシーポリシー</a>
-          <a href="/legal/tokusho/">特定商取引法</a>
-          <a href="/contact/">問い合わせ</a>
-        </nav>
-      </div>
-    </footer>
   </body>
 </html>
