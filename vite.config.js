@@ -19,6 +19,9 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: "index.html",
+        tools: "tools/index.html",
+        labsIndex: "labs/index.html",
+        games: "games/index.html",
         contact: "contact/index.html",
         commerce: "legal/commerce/index.html",
         privacy: "legal/privacy/index.html",
