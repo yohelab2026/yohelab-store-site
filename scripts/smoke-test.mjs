@@ -19,8 +19,10 @@ function assert(condition, message) {
 const checks = [];
 
 const home = read(dist("index.html"));
+checks.push(["home links radar app", home.includes('/apps/radar/')]);
 checks.push(["home links new app", home.includes('/apps/proposal-optimizer/')]);
 checks.push(["home headline", home.includes('案件探しAIを朝10分に')]);
+checks.push(["home tools section", home.includes('よへラボの主要ツール')]);
 
 const app = read(dist("apps/proposal-optimizer/index.html"));
 checks.push(["app title", app.includes('AI応募文最適化')]);
