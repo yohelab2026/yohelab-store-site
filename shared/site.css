@@ -7,7 +7,7 @@
   --bg:      #f7f8fa;
   --border:  #e4e7ec;
   --text:    #111318;
-  --muted:   #6b7585;
+  --muted:   #52606e;
   --green:   #0d6b58;
   --green-dark: #095043;
   --green-light: #edf8f5;
@@ -27,10 +27,12 @@ body {
   margin: 0;
   font-family: -apple-system, "Hiragino Sans", "Yu Gothic UI", "Noto Sans JP", sans-serif;
   font-size: 17px;
-  line-height: 1.8;
+  line-height: 1.85;
   color: var(--text);
   background: var(--white);
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "kern" 1, "liga" 1;
 }
 img { display: block; max-width: 100%; }
 a { color: inherit; text-decoration: none; }
@@ -163,7 +165,8 @@ a.btn-primary:visited {
   padding: 100px 0 80px;
   text-align: center;
   background:
-    radial-gradient(ellipse 80% 60% at 50% -10%, rgba(13,107,88,.09), transparent),
+    radial-gradient(ellipse 90% 70% at 50% -5%, rgba(13,107,88,.10), transparent),
+    radial-gradient(ellipse 40% 40% at 80% 20%, rgba(13,107,88,.04), transparent),
     var(--white);
 }
 
@@ -185,8 +188,9 @@ a.btn-primary:visited {
   font-size: clamp(44px, 7vw, 80px);
   font-weight: 800;
   letter-spacing: -0.05em;
-  line-height: 1.05;
+  line-height: 1.08;
   margin-bottom: 24px;
+  text-wrap: balance;
 }
 
 .hero h1 em {
@@ -195,7 +199,7 @@ a.btn-primary:visited {
 }
 
 .hero-sub {
-  font-size: 20px;
+  font-size: 19px;
   color: var(--muted);
   line-height: 1.9;
   max-width: 560px;
@@ -365,6 +369,8 @@ a.btn-primary:visited {
   font-size: clamp(30px, 4vw, 48px);
   font-weight: 800;
   margin-bottom: 16px;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
 }
 
 .section-sub {
@@ -741,8 +747,10 @@ a.btn-primary:visited {
 
 .plan.featured {
   border-color: var(--green);
+  border-width: 2px;
   background: var(--green-light);
   position: relative;
+  box-shadow: 0 8px 32px rgba(13,107,88,.18);
 }
 
 .plan-badge {
@@ -859,15 +867,16 @@ a.btn-primary:visited {
 
 .tool-card:hover {
   border-color: var(--green);
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 4px 20px rgba(13,107,88,.15);
   transform: translateY(-2px);
 }
 
 .tool-name {
   font-weight: 800;
-  font-size: 17px;
+  font-size: 18px;
   margin-bottom: 10px;
   color: var(--text);
+  letter-spacing: -0.02em;
 }
 
 .tool-card p {
@@ -906,11 +915,17 @@ details.faq summary {
   justify-content: space-between;
   align-items: center;
   gap: 16px;
-  padding: 24px 28px;
+  padding: 22px 28px;
   font-weight: 700;
-  font-size: 16px;
+  font-size: 15px;
+  line-height: 1.6;
   cursor: pointer;
   user-select: none;
+  transition: background .15s;
+}
+
+details.faq summary:hover {
+  background: #fafdfb;
 }
 
 details.faq summary::-webkit-details-marker { display: none; }
@@ -928,9 +943,13 @@ details.faq[open] summary::after {
   transform: rotate(45deg);
 }
 
+details.faq[open] {
+  background: #f9fdfb;
+}
+
 details.faq .faq-body {
   padding: 0 28px 24px;
-  color: var(--muted);
+  color: var(--text);
   font-size: 16px;
   line-height: 1.85;
 }
@@ -963,7 +982,7 @@ details.faq .faq-body {
 .trust-card p {
   font-size: 14px;
   color: var(--muted);
-  line-height: 1.75;
+  line-height: 1.8;
 }
 
 /* ---- CTA final ---- */
@@ -979,11 +998,13 @@ details.faq .faq-body {
   font-weight: 800;
   margin-bottom: 16px;
   color: #fff;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
 }
 
 .cta-section p {
   font-size: 18px;
-  color: rgba(255,255,255,.8);
+  color: rgba(255,255,255,.85);
   margin-bottom: 36px;
 }
 
@@ -1098,15 +1119,17 @@ details.faq .faq-body {
 
   .hero { padding: 64px 0 56px; }
 
-  .hero h1 { font-size: clamp(38px, 11vw, 56px); }
+  .hero h1 { font-size: clamp(36px, 10vw, 52px); line-height: 1.1; }
 
-  .hero-sub { font-size: 17px; }
+  .hero-sub { font-size: 16px; line-height: 1.85; }
 
   .hero-actions { flex-direction: column; }
 
   .hero-actions .btn { width: 100%; max-width: 320px; }
 
-  .section-title { font-size: clamp(26px, 8vw, 36px); }
+  .section-title { font-size: clamp(24px, 7.5vw, 34px); line-height: 1.25; }
+
+  .section-sub { font-size: 16px; }
 
   .nav-links a:not(.btn) { display: none; }
 
@@ -1740,15 +1763,16 @@ td:first-child, th:first-child { font-weight: 700; }
 .hero-bullets { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 24px; }
 
 .mini-card {
-  padding: 18px;
+  padding: 18px 20px;
   border-radius: var(--radius);
   background: var(--bg);
   border: 1px solid var(--border);
   font-size: 14px;
-  line-height: 1.65;
+  line-height: 1.7;
+  color: var(--muted);
 }
 
-.mini-card strong { display: block; margin-bottom: 6px; font-size: 15px; }
+.mini-card strong { display: block; margin-bottom: 6px; font-size: 15px; color: var(--text); }
 
 .safety-note {
   display: flex;
