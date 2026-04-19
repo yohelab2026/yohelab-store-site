@@ -24,6 +24,23 @@
       .output-area { background: var(--white); border: 1px solid var(--border); border-radius: 20px; padding: 28px; box-shadow: var(--shadow); }
       .output-area h3 { font-size: 18px; font-weight: 800; margin-bottom: 16px; }
       .draft-box { font-size: 15px; line-height: 1.9; white-space: pre-wrap; background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 20px; color: #2a3240; min-height: 220px; }
+      .result-empty { min-height: 220px; display: grid; place-items: center; padding: 24px; border-radius: 14px; border: 1px dashed var(--border); color: var(--muted); text-align: center; line-height: 1.8; }
+      .prefill-banner { display: none; margin-bottom: 16px; padding: 14px 16px; border-radius: 14px; background: #eef7f3; border: 1px solid #cde8dd; }
+      .prefill-banner.is-visible { display: block; }
+      .prefill-banner strong { display: block; margin-bottom: 4px; color: var(--green-dark); }
+      .prefill-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+      .result-grid { display: grid; gap: 16px; }
+      .variant-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+      .variant-tab { padding: 7px 14px; border-radius: 999px; border: 1px solid var(--border); background: var(--white); font-size: 13px; font-weight: 800; color: var(--muted); cursor: pointer; }
+      .variant-tab.is-active { background: var(--green); border-color: var(--green); color: #fff; }
+      .variant-panel { display: none; gap: 14px; }
+      .variant-panel.is-active { display: grid; }
+      .result-card { border: 1px solid var(--border); border-radius: 16px; background: var(--bg); padding: 18px; }
+      .result-card h4 { font-size: 14px; font-weight: 900; margin-bottom: 10px; }
+      .result-card p { margin: 0; color: var(--text); line-height: 1.8; white-space: pre-wrap; }
+      .result-card ul { margin: 0; padding-left: 18px; color: var(--text); }
+      .result-card li { margin-bottom: 8px; line-height: 1.7; }
+      .card-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
       .usage-card { margin-bottom: 18px; padding: 16px 18px; border-radius: 14px; background: linear-gradient(135deg,#f3fbf8,#e8f5ef); border: 1px solid #cde8dd; }
       .usage-card .label { font-size: 12px; font-weight: 800; letter-spacing: .12em; color: var(--green); text-transform: uppercase; margin-bottom: 6px; }
       .usage-card .count { font-size: 15px; font-weight: 800; color: var(--text); }
@@ -129,10 +146,11 @@
 
           <div class="output-area">
             <h3>最適化結果</h3>
+            <div id="prefill-banner" class="prefill-banner"></div>
             <div id="placeholder-warn" style="display:none;padding:10px 14px;margin-bottom:12px;border-radius:8px;background:#fffbe6;border:1px solid #f0c040;font-size:13px;color:#7a5a00;">⚠ 出力に <code>[○○]</code> 形式の未入力箇所が含まれています。使用前に内容を確認・修正してください。</div>
-            <div class="draft-box" id="proposal-output"></div>
+            <div id="proposal-output" class="result-empty">案件本文を入れて「応募文を最適化する」を押すと、件名案・冒頭3行・本文・送信前チェックがここに出る。</div>
             <div style="display:flex;gap:10px;margin-top:14px;">
-              <button class="btn btn-outline btn-sm" id="copy-proposal" type="button">コピー</button>
+              <button class="btn btn-outline btn-sm" id="copy-proposal" type="button">全文コピー</button>
             </div>
           </div>
         </div>
@@ -170,7 +188,9 @@
       const PRODUCT_KEY = "proposal-optimizer";
       const FREE_LIMIT = 1;
       const USAGE_KEY = "yohelab.free.daily";
+      const PREFILL_KEY = "yohelab.proposal.prefill";
       let proAccess = false;
+      let latestResultText = "";
 
       function todayKey() {
         return new Intl.DateTimeFormat("sv-SE", { timeZone: "Asia/Tokyo" }).format(new Date());
@@ -195,6 +215,143 @@
         updateUsageUI();
       }
 
+      function escapeHtml(str) {
+        return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+      }
+
+      function parseBlocks(text) {
+        const matches = [...text.matchAll(/【([^】]+)】/g)];
+        if (!matches.length) return null;
+        const blocks = {};
+        matches.forEach((match, index) => {
+          const start = match.index + match[0].length;
+          const end = index + 1 < matches.length ? matches[index + 1].index : text.length;
+          blocks[match[1].trim()] = text.slice(start, end).trim();
+        });
+        return blocks;
+      }
+
+      function listFromText(text) {
+        return text.split(/\n+/).map(line => line.replace(/^[\-\d\.・\s]+/, "").trim()).filter(Boolean);
+      }
+
+      function renderVariant(title, data, active) {
+        return `
+          <div class="variant-panel ${active ? "is-active" : ""}" data-variant-panel="${title}">
+            <div class="result-card">
+              <h4>件名案</h4>
+              <p id="subject-${title}">${escapeHtml(data.subject || "件名案がありません")}</p>
+              <div class="card-actions">
+                <button class="btn btn-outline btn-sm copy-section" type="button" data-copy-target="subject-${title}">件名をコピー</button>
+              </div>
+            </div>
+            <div class="result-card">
+              <h4>冒頭3行</h4>
+              <p id="opening-${title}">${escapeHtml(data.opening || "冒頭3行がありません")}</p>
+              <div class="card-actions">
+                <button class="btn btn-outline btn-sm copy-section" type="button" data-copy-target="opening-${title}">冒頭をコピー</button>
+              </div>
+            </div>
+            <div class="result-card">
+              <h4>応募文</h4>
+              <p id="draft-${title}">${escapeHtml(data.draft || "応募文がありません")}</p>
+              <div class="card-actions">
+                <button class="btn btn-outline btn-sm copy-section" type="button" data-copy-target="draft-${title}">本文をコピー</button>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      function renderStructuredResult(text) {
+        latestResultText = text;
+        const blocks = parseBlocks(text);
+        if (!blocks) {
+          output.className = "draft-box";
+          output.textContent = text || "生成に失敗しました。もう一度お試しください。";
+          return;
+        }
+
+        const aVariant = {
+          subject: blocks["A案：件名案"] || blocks["件名案"] || "",
+          opening: blocks["A案：冒頭3行"] || blocks["冒頭3行"] || "",
+          draft: blocks["A案：応募文"] || blocks["応募文"] || "",
+        };
+        const bVariant = {
+          subject: blocks["B案：件名案"] || "",
+          opening: blocks["B案：冒頭3行"] || "",
+          draft: blocks["B案：応募文"] || "",
+        };
+        const checklist = listFromText(blocks["送信前チェック"] || "");
+        const hasB = !!(bVariant.subject || bVariant.opening || bVariant.draft);
+
+        output.className = "";
+        output.innerHTML = `
+          <div class="result-grid">
+            ${hasB ? `
+              <div class="variant-tabs">
+                <button class="variant-tab is-active" type="button" data-variant="A案">A案</button>
+                <button class="variant-tab" type="button" data-variant="B案">B案</button>
+              </div>
+            ` : ""}
+            ${renderVariant("A案", aVariant, true)}
+            ${hasB ? renderVariant("B案", bVariant, false) : ""}
+            <div class="result-card">
+              <h4>送信前チェック</h4>
+              <ul id="checklist-block">${checklist.map(item => `<li>${escapeHtml(item)}</li>`).join("") || "<li>送信前チェックがありません</li>"}</ul>
+            </div>
+          </div>
+        `;
+
+        output.querySelectorAll(".variant-tab").forEach(tab => {
+          tab.addEventListener("click", () => {
+            output.querySelectorAll(".variant-tab").forEach(el => el.classList.remove("is-active"));
+            output.querySelectorAll(".variant-panel").forEach(panel => panel.classList.remove("is-active"));
+            tab.classList.add("is-active");
+            output.querySelector(`[data-variant-panel="${tab.dataset.variant}"]`)?.classList.add("is-active");
+          });
+        });
+
+        output.querySelectorAll(".copy-section").forEach(btn => {
+          btn.addEventListener("click", async () => {
+            const target = document.getElementById(btn.dataset.copyTarget);
+            if (!target) return;
+            await navigator.clipboard.writeText(target.textContent);
+            toast.classList.add("show");
+            toast.hidden = false;
+            clearTimeout(window._t);
+            window._t = setTimeout(() => { toast.classList.remove("show"); toast.hidden = true; }, 1600);
+          });
+        });
+      }
+
+      function applyPrefill() {
+        const raw = localStorage.getItem(PREFILL_KEY);
+        if (!raw) return;
+        try {
+          const prefill = JSON.parse(raw);
+          if (prefill.project) document.getElementById("project").value = prefill.project;
+          if (prefill.needs) document.getElementById("needs").value = prefill.needs;
+          if (prefill.strength) document.getElementById("strength").value = prefill.strength;
+          if (prefill.avoid) document.getElementById("avoid").value = prefill.avoid;
+
+          const banner = document.getElementById("prefill-banner");
+          banner.classList.add("is-visible");
+          banner.innerHTML = `
+            <strong>案件レーダーから引き継ぎました</strong>
+            <div>${escapeHtml(prefill.project || "案件タイトルなし")} を元に、応募文の最適化をすぐ始められる状態にしています。</div>
+            <div class="prefill-actions">
+              <button class="btn btn-outline btn-sm" type="button" id="clear-prefill">引き継ぎを外す</button>
+            </div>
+          `;
+          banner.querySelector("#clear-prefill")?.addEventListener("click", () => {
+            localStorage.removeItem(PREFILL_KEY);
+            banner.classList.remove("is-visible");
+            banner.innerHTML = "";
+          });
+        } catch {}
+      }
+
       async function build() {
         const project = document.getElementById("project").value.trim();
         const needs = document.getElementById("needs").value.trim();
@@ -203,16 +360,19 @@
         const tone = document.getElementById("tone").value;
         const close = document.getElementById("close").value;
         if (!project || !needs || !strength) {
+          output.className = "result-empty";
           output.textContent = "案件タイトル・案件本文・自分の強みを入力してください。";
           return;
         }
         if (!canUseFree()) {
+          output.className = "result-empty";
           output.innerHTML = '無料版は1日1回。<a href="/products/proposal-optimizer-beta/" style="color:var(--green);font-weight:800;">プロプランを見る</a>';
           return;
         }
 
         btn.disabled = true;
         btn.textContent = "最適化中…";
+        output.className = "result-empty";
         output.textContent = "AIが案件文を整理しています…";
 
         try {
@@ -226,7 +386,7 @@
           });
           const json = await res.json();
           const result = json.result || "";
-          output.textContent = result || "生成に失敗しました。もう一度お試しください。";
+          renderStructuredResult(result || "生成に失敗しました。もう一度お試しください。");
           if (result) incrementUsage();
 
           const phWarn = document.getElementById("placeholder-warn");
@@ -239,6 +399,7 @@
           const msg = (err && /503|overloaded/i.test(String(err.message)))
             ? "AIサーバーが混み合っています。少し待ってからもう一度お試しください。"
             : "通信エラーが発生しました。もう一度お試しください。";
+          output.className = "result-empty";
           output.textContent = msg;
           document.getElementById("placeholder-warn").style.display = "none";
         } finally {
@@ -259,9 +420,10 @@
         }
       }).catch(() => {});
       updateUsageUI();
+      applyPrefill();
 
       document.getElementById("copy-proposal").addEventListener("click", async () => {
-        await navigator.clipboard.writeText(output.textContent);
+        await navigator.clipboard.writeText(latestResultText || output.textContent);
         toast.classList.add("show"); toast.hidden = false;
         clearTimeout(window._t);
         window._t = setTimeout(() => { toast.classList.remove("show"); toast.hidden = true; }, 1600);

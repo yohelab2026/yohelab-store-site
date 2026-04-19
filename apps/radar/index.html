@@ -199,6 +199,46 @@
         overflow: hidden;
         box-shadow: var(--shadow);
       }
+      .lead-result {
+        padding: 18px 20px;
+        border-radius: 18px;
+        border: 1px solid var(--green-mid);
+        background: linear-gradient(135deg, #f3fbf8, #e7f6ef);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        flex-wrap: wrap;
+      }
+      .lead-result-label {
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+        color: var(--green);
+        margin-bottom: 8px;
+      }
+      .lead-result h3 {
+        font-size: 22px;
+        font-weight: 900;
+        margin-bottom: 8px;
+      }
+      .lead-result p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+      .lead-result-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .result-action-row {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 12px;
+      }
       .result-head {
         padding: 20px 24px 16px;
         border-bottom: 1px solid var(--border);
@@ -328,6 +368,7 @@
         .result-body { grid-template-columns: 1fr; }
         .result-col + .result-col { border-left: none; border-top: 1px solid var(--border); }
         .results-intro { flex-direction: column; align-items: start; }
+        .lead-result { align-items: start; }
       }
     </style>
     <script type="application/ld+json">
@@ -492,6 +533,7 @@
       const FREE_LIMIT = 1;
       const USAGE_KEY = "yohelab.free.daily";
       const CONDITIONS_KEY = "yohelab.radar.conditions";
+      const PROPOSAL_PREFILL_KEY = "yohelab.proposal.prefill";
       let proAccess = false;
 
       function saveConditions() {
@@ -613,8 +655,23 @@
           return;
         }
 
-        results.innerHTML = list.map((job, i) => `
+        const lead = list[0];
+
+        results.innerHTML = `
+          <div class="lead-result">
+            <div>
+              <div class="lead-result-label">まず見るならこれ</div>
+              <h3>${escapeHtml(lead.title)}</h3>
+              <p>応募しやすさ ${Number(lead.score) || 0} / 100。最初にここを見て、そのまま応募文まで進めると朝の作業が止まりにくい。</p>
+            </div>
+            <div class="lead-result-actions">
+              <a class="btn btn-outline btn-sm" href="#result-0">候補を見る</a>
+              <button class="btn btn-primary btn-sm transfer-btn" type="button" data-job-index="0">この案件で応募文最適化へ</button>
+            </div>
+          </div>
+          ${list.map((job, i) => `
           <div class="result-item">
+            <div id="result-${i}"></div>
             <div class="result-head">
               <h3>${escapeHtml(job.title)}</h3>
               <div class="result-meta">
@@ -652,9 +709,13 @@
                 <div class="draft-box" id="draft-${i}">${escapeHtml(job.proposal)}</div>
                 <button class="copy-btn" data-target="draft-${i}">コピー</button>
                 `}
+                <div class="result-action-row">
+                  <button class="btn btn-outline btn-sm transfer-btn" type="button" data-job-index="${i}">この案件で応募文最適化へ</button>
+                </div>
               </div>
             </div>
-          </div>`).join("");
+          </div>`).join("")}
+        `;
 
         results.querySelectorAll(".draft-tab").forEach(tab => {
           tab.addEventListener("click", () => {
@@ -680,6 +741,30 @@
               copyToast.classList.remove("show");
               copyToast.hidden = true;
             }, 1600);
+          });
+        });
+
+        results.querySelectorAll(".transfer-btn").forEach(btn => {
+          btn.addEventListener("click", () => {
+            const job = list[Number(btn.dataset.jobIndex) || 0];
+            const excludeChecked = Array.from(document.querySelectorAll('input[name="exclude"]:checked')).map(el => el.value);
+            const excludeOther = document.getElementById("excludeOther").value.trim();
+            const strength = document.getElementById("strengths").value.trim();
+            const avoid = [...excludeChecked, excludeOther].filter(Boolean).join(" / ");
+            const needs = [
+              `案件概要: ${job.summary}`,
+              `おすすめ理由: ${job.reason}`,
+              `予算: ${Number(job.budget).toLocaleString()}円`,
+              `タグ: ${(job.tags || []).join(" / ") || "なし"}`
+            ].join("\n");
+
+            localStorage.setItem(PROPOSAL_PREFILL_KEY, JSON.stringify({
+              project: job.title,
+              needs,
+              strength,
+              avoid
+            }));
+            window.location.href = "/apps/proposal-optimizer/";
           });
         });
       }
