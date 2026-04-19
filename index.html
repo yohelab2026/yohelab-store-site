@@ -44,7 +44,7 @@
               { "@type": "Question", "name": "無料版とプロプランの違いは？", "acceptedAnswer": { "@type": "Answer", "text": "無料版は全体で1日1回まで試せる。プロプランは条件保存など毎日の案件探しを短くする機能が揃う。月額980円、初月無料。" } },
               { "@type": "Question", "name": "実在の案件をそのまま取得するの？", "acceptedAnswer": { "@type": "Answer", "text": "案件候補を見やすく並べて、応募しやすいものを先に絞るためのツール。最終確認は自分で行う前提にしている。" } },
               { "@type": "Question", "name": "入力した内容は保存される？", "acceptedAnswer": { "@type": "Answer", "text": "無料版は生成のために送信するが、運営側に自動保存しない。ページを閉じたあとに残り続ける設計にはしていない。" } },
-              { "@type": "Question", "name": "プロプランはいつでも解約できる？", "acceptedAnswer": { "@type": "Answer", "text": "はい、Stripeのカスタマーポータルからいつでも解約できる。違約金はなし。解約はStripe側の設定に沿って反映される。" } }
+              { "@type": "Question", "name": "プロプランはいつでも解約できる？", "acceptedAnswer": { "@type": "Answer", "text": "はい、お問い合わせフォームからいつでも解約申請できる。違約金はなし。次回更新日の前日までに完了した場合、次回以降の料金は発生しない。" } }
             ]
           }
         ]
@@ -176,9 +176,9 @@
           <p class="section-sub">条件を入れてボタンを押すだけ。案件候補と応募文の下書きがすぐ出る。</p>
           <div class="promo-video-shell">
             <div class="promo-video-copy">
-              <p class="promo-video-label">LIVE DEMO</p>
-              <h3>条件を入れると、今日見るべき案件候補が並ぶ</h3>
-              <p>応募しやすさのスコアと理由つきで返ってくる。どれから見るか迷わなくなる。</p>
+              <p class="promo-video-label">操作イメージ</p>
+              <h3>条件を入れると、今日見るべき案件候補が先に並ぶ</h3>
+              <p>応募しやすさのスコアと理由つきで返る。どれから見るか迷う時間を減らす。</p>
             </div>
             <div class="promo-video-frame">
               <div class="radar-demo">
@@ -465,7 +465,7 @@
                 <li><strong>初月無料・いつでも解約可</strong></li>
               </ul>
               <a class="btn btn-primary" href="https://buy.stripe.com/dRmfZ9ePJ5Lq6SKbvb73G06?client_reference_id=radar" target="_blank" rel="noreferrer">初月無料で始める</a>
-              <p style="font-size:12px;color:var(--muted);margin-top:8px;text-align:center;">Stripeのカスタマーポータルからいつでも解約できる</p>
+              <p style="font-size:12px;color:var(--muted);margin-top:8px;text-align:center;">解約申請は問い合わせフォームから受け付ける</p>
             </div>
           </div>
         </div>
@@ -579,7 +579,7 @@
             </details>
             <details class="faq">
               <summary>プロプランはいつでも解約できる？</summary>
-              <div class="faq-body">はい、Stripeのカスタマーポータルからいつでも解約できる。違約金はなし。解約はStripe側の設定に沿って反映される。</div>
+              <div class="faq-body">はい、問い合わせフォームからいつでも解約申請できる。違約金はなし。次回更新日の前日までに完了した場合、次回以降の料金は発生しない。</div>
             </details>
           </div>
         </div>
@@ -619,33 +619,5 @@
         </div>
       </div>
     </footer>
-
-    <script>
-      window.addEventListener('load', () => {
-        const video = document.querySelector('.promo-video');
-        if (video) {
-          video.muted = true;
-          video.defaultMuted = true;
-          const tryPlay = () => video.play().catch(() => {});
-          const observer = new IntersectionObserver(
-            (entries) => {
-              entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                  tryPlay();
-                } else {
-                  video.pause();
-                }
-              });
-            },
-            { threshold: 0.25 }
-          );
-          observer.observe(video);
-          video.addEventListener('canplay', tryPlay, { once: true });
-          video.addEventListener('loadedmetadata', tryPlay, { once: true });
-          tryPlay();
-        }
-      });
-    </script>
-
   </body>
 </html>

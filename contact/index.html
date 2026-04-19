@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>問い合わせ・相談 | よへラボ</title>
-    <meta name="description" content="使い方の質問や不具合連絡を受ける問い合わせページ。プロプランの申込みはStripeで行い、このページは相談用。" />
+    <meta name="description" content="使い方の質問、不具合連絡、解約申請を受ける問い合わせページ。プロプランの申込みはStripeで行い、このページは相談用。" />
     <meta property="og:title" content="問い合わせ・相談 | よへラボ" />
     <meta property="og:description" content="使い方の質問や不具合連絡を受ける問い合わせページ。プロプランの申込みはStripeで行う。" />
     <meta property="og:type" content="website" />
@@ -26,7 +26,7 @@
       <nav class="mini-nav">
         <a href="/">トップ</a>
         <a href="/apps/radar/">案件レーダー</a>
-        <a href="/#labs">Labs</a>
+        <a href="/apps/proposal-optimizer/">AI応募文最適化</a>
         <a href="/legal/privacy/">プライバシー</a>
       </nav>
     </header>
@@ -50,8 +50,8 @@
           <aside class="panel stack">
             <h2>まず送ると早い内容</h2>
             <ul class="detail-list">
-              <li><strong>使いたいツール名</strong>案件レーダー / 応募文 / X補助 / EC説明 / AIOミニ診断 など。</li>
-              <li><strong>何をしたいか</strong>プロプランに申し込みたい、使い方を聞きたい、リンク切れを伝えたい、など。</li>
+              <li><strong>使いたいツール名</strong>案件レーダー / AI応募文最適化 / X補助 / EC説明 / AIOミニ診断 など。</li>
+              <li><strong>何をしたいか</strong>使い方を聞きたい、解約したい、リンク切れを伝えたい、など。</li>
               <li><strong>困っていること</strong>案件探し、応募文、発信、商品説明、見つけられやすさ、など。</li>
             </ul>
           </aside>
@@ -68,7 +68,7 @@
             <label>使いたいツール
               <select id="tool" name="tool" required>
                 <option value="案件レーダー">案件レーダー</option>
-                <option value="提案文・応募文ジェネレーター">提案文・応募文ジェネレーター</option>
+                <option value="AI応募文最適化">AI応募文最適化</option>
                 <option value="X返信・投稿補助">X返信・投稿補助</option>
                 <option value="EC商品説明・Q&A整備">EC商品説明・Q&A整備</option>
                 <option value="AIOミニ診断">AIOミニ診断</option>
@@ -85,8 +85,8 @@
             </div>
             <label>何をしたいか
               <select id="purpose" name="purpose" required>
-                <option value="プロプランに申し込みたい">プロプランに申し込みたい</option>
                 <option value="使い方を確認したい">使い方を確認したい</option>
+                <option value="解約したい">解約したい</option>
                 <option value="リンク切れや不具合を伝えたい">リンク切れや不具合を伝えたい</option>
                 <option value="Labsについて相談したい">Labsについて相談したい</option>
               </select>
@@ -128,7 +128,7 @@
       <section class="section">
         <div class="section-head">
           <h2>各ツールのプロプランページ</h2>
-          <p>プロプランの申込みは、各ツールごとの案内ページからも進められる。</p>
+            <p>プロプランの申込みは、各ツールごとの案内ページから進める。ここは質問、不具合、解約申請用。</p>
         </div>
         <div class="cards">
           <article class="card" id="radar">
@@ -141,10 +141,10 @@
           </article>
           <article class="card" id="proposal">
             <div class="tag">関連</div>
-            <h3>提案文・応募文ジェネレーター</h3>
-            <p>複数案・文体違い・再編集。応募文の精度をもう一段上げる。月額980円・初月無料。</p>
+            <h3>AI応募文最適化</h3>
+            <p>件名案、冒頭3行、応募文、送信前チェックをまとめて整える。月額980円・初月無料。</p>
             <div class="inline-actions">
-              <a class="button primary" href="/products/proposal-beta/">案内ページを見る</a>
+              <a class="button primary" href="/products/proposal-optimizer-beta/">案内ページを見る</a>
             </div>
           </article>
           <article class="card" id="x-helper">
