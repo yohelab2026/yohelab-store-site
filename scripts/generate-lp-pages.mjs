@@ -94,6 +94,51 @@ const pages = [
     ],
   },
   {
+    slug: "article-polish",
+    path: "/lp/article-polish/",
+    name: "AI文章整形",
+    title: "AI文章整形 LP | よへラボ",
+    description: "相談メモやラフな下書きを、人が読みやすいブログ・LP・note・サービス紹介文に整えるLP。無料版で1回試して、合えば全ツールパックで使える。",
+    eyebrow: "文章を整えるAI",
+    heroTitle: "相談メモを、読まれる文章に整える。",
+    heroLead: "相談段階のメモや箇条書きを入れるだけ。ブログ、LP、note、サービス紹介に使える自然な文章へ整えるLP。",
+    freeHref: "/apps/article-polish/",
+    buyHref: allToolsHref,
+    buyLabel: "全ツールパックで使う",
+    productHref: "/products/article-polish-beta/",
+    compareHeadline: "無料版は1回、プロプランは比べて選ぶところまで",
+    freeCards: [
+      { title: "タイトル案", text: "読まれる入口を先に作る。文章の方向を決めやすくする。" },
+      { title: "導入文", text: "相談メモのままだと伝わりにくい部分を、読み始めやすい形にする。" },
+      { title: "SEOタイトル・メタ説明", text: "検索で見つかりやすい見出しと説明を整える。" },
+    ],
+    fitCards: [
+      { title: "相談メモから記事を作りたい人", text: "ラフな下書きを、公開できる形にしたいとき向け。" },
+      { title: "LPやnoteを書き始めたい人", text: "文章のたたき台を先に欲しい人向け。" },
+      { title: "SEOやAIOも意識したい人", text: "読みやすさと見つかりやすさを両方見たい人向け。" },
+    ],
+    compareRows: [
+      ["文章を整える", "✓", "✓"],
+      ["タイトル案", "1案", "複数案"],
+      ["導入文", "1案", "複数案"],
+      ["見出し案", "3項目", "比べやすく強化"],
+      ["SEOタイトル / メタ説明", "簡易", "強化版"],
+      ["1日の利用回数", "1回まで", "無制限"],
+      ["導入方法", "無料版からすぐ試せる", "全ツールパックで使える"],
+    ],
+    proCards: [
+      { title: "相談メモをそのまま記事化しやすい", text: "思いつきのメモから、公開できる文章に寄せやすい。" },
+      { title: "A/Bで比べて決めやすい", text: "タイトルや導入の切り口を見比べて選びやすくする。" },
+      { title: "SEOやAIOの整えも一緒に進める", text: "読まれる文章にするための下地を先に作れる。" },
+    ],
+    faq: [
+      ["無料版で何が返る？", "タイトル案、導入文、見出し案、本文、SEOタイトル、メタ説明、仕上げメモが返る。"],
+      ["無料版とプロプランの違いは？", "無料版は1回。プロプランは比較しながら整えやすい。"],
+      ["いつでも解約できる？", "問い合わせフォームからいつでも解約申請できる。"],
+      ["入力内容は保存される？", "無料版は運営側に自動保存しない。"],
+    ],
+  },
+  {
     slug: "proposal-optimizer",
     path: "/lp/proposal-optimizer/",
     name: "AI応募文最適化",
@@ -133,6 +178,51 @@ const pages = [
       ["案件レーダーと何が違う？", "案件レーダーは探すところ、応募文最適化は仕上げるところ。"],
       ["無料版で何が返る？", "件名案、冒頭3行、応募文の下書き、送信前チェックの入口が返る。"],
       ["いつでも解約できる？", "問い合わせフォームからいつでも解約申請できる。"],
+      ["入力内容は保存される？", "無料版は運営側に自動保存しない。"],
+    ],
+  },
+  {
+    slug: "article-polish",
+    path: "/lp/article-polish/",
+    name: "AI文章整形",
+    title: "AI文章整形 LP | よへラボ",
+    description: "相談メモやラフな下書きを、人が読みやすいブログ・LP・note・サービス紹介文に整えるLP。無料版で1回試して、合えば全ツールパックで使える。",
+    eyebrow: "文章を整えるAI",
+    heroTitle: "相談メモを、読まれる文章に整える。",
+    heroLead: "相談段階のメモや箇条書きを入れるだけ。ブログ、LP、note、サービス紹介に使える自然な文章へ整えるLP。",
+    freeHref: "/apps/article-polish/",
+    buyHref: allToolsHref,
+    buyLabel: "全ツールパックで使う",
+    productHref: "/products/article-polish-beta/",
+    compareHeadline: "無料版は1回、プロプランは比べて選ぶところまで",
+    freeCards: [
+      { title: "タイトル案", text: "読まれる入口を先に作る。文章の方向を決めやすくする。" },
+      { title: "導入文", text: "相談メモのままだと伝わりにくい部分を、読み始めやすい形にする。" },
+      { title: "SEOタイトル・メタ説明", text: "検索で見つかりやすい見出しと説明を整える。" },
+    ],
+    fitCards: [
+      { title: "相談メモから記事を作りたい人", text: "ラフなメモを、公開できる形にしたいとき向け。" },
+      { title: "LPやnoteを書き始めたい人", text: "文章のたたき台を先に欲しい人向け。" },
+      { title: "SEOやAIOも意識したい人", text: "読みやすさと見つかりやすさを両方見たい人向け。" },
+    ],
+    compareRows: [
+      ["文章を整える", "✓", "✓"],
+      ["タイトル案", "1案", "複数案"],
+      ["導入文", "1案", "複数案"],
+      ["見出し案", "3項目", "比べやすく強化"],
+      ["SEOタイトル / メタ説明", "簡易", "強化版"],
+      ["1日の利用回数", "1回まで", "無制限"],
+      ["導入方法", "無料版からすぐ試せる", "全ツールパックで使える"],
+    ],
+    proCards: [
+      { title: "相談メモをそのまま記事化しやすい", text: "思いつきのメモから、公開できる文章に寄せやすい。" },
+      { title: "A/Bで比べて決めやすい", text: "タイトルや導入の切り口を見比べて選びやすくする。" },
+      { title: "SEOやAIOの整えも一緒に進める", text: "読まれる文章にするための下地を先に作れる。" },
+    ],
+    faq: [
+      ["無料版で何が返る？", "タイトル案、導入文、見出し案、本文、SEOタイトル、メタ説明、仕上げメモが返る。"],
+      ["無料版とプロプランの違いは？", "無料版は1回。プロプランは比較しながら整えやすい。"],
+      ["全ツールパックには入ってる？", "入ってる。文章整形も、案件系や応募文系と一緒に使える。"],
       ["入力内容は保存される？", "無料版は運営側に自動保存しない。"],
     ],
   },
@@ -698,8 +788,8 @@ function renderPage(page) {
             <p>無料版で先に試せるものを見せて、プロプランで増えるものをそのまま比べる。</p>
           </div>
           <div class="lp-preview">
-            <div class="lp-preview-box">
-              <h3>無料版で見えるもの</h3>
+      <div class="lp-preview-box">
+        <h3>無料版で見えるもの</h3>
               <p>まずは1回。どんな結果が返るかを確認してから進める。</p>
               <div class="lp-preview-list">
                 ${page.freeCards
@@ -717,7 +807,7 @@ function renderPage(page) {
                 ${page.proCards.map((item) => `<li>${esc(item.text)}</li>`).join("")}
               </ul>
               <p class="lp-note">月額980円・初月無料。いつでも解約できる。</p>
-              <p style="margin-top:16px;"><a class="btn btn-primary" href="${page.buyHref}" target="_blank" rel="noreferrer" style="width:100%;">初月無料で始める</a></p>
+              <p style="margin-top:16px;"><a class="btn btn-primary" href="${page.buyHref}" target="_blank" rel="noreferrer" style="width:100%;">${esc(page.buyLabel || "初月無料で始める")}</a></p>
             </div>
           </div>
         </div>
@@ -781,9 +871,9 @@ function renderPage(page) {
           <p>${esc(page.heroLead)}</p>
           <div class="lp-links">
             <a class="btn btn-primary btn-lg" href="${page.freeHref}">無料版を試す →</a>
-            <a class="btn btn-primary btn-lg" href="${page.buyHref}" target="_blank" rel="noreferrer">初月無料で始める</a>
+            <a class="btn btn-primary btn-lg" href="${page.buyHref}" target="_blank" rel="noreferrer">${esc(page.buyLabel || "初月無料で始める")}</a>
           </div>
-          <p class="lp-note">6ツール全部まとめて使いたい場合は、<a href="${allToolsHref}" target="_blank" rel="noreferrer" style="color:var(--green);font-weight:800;">全ツールパック</a>もある。</p>
+          <p class="lp-note">7ツール全部まとめて使いたい場合は、<a href="${allToolsHref}" target="_blank" rel="noreferrer" style="color:var(--green);font-weight:800;">全ツールパック</a>もある。</p>
           <p class="lp-note"><a href="${page.productHref}" style="color:var(--green);font-weight:800;">プロプラン詳細を見る →</a></p>
         </div>
       </section>

@@ -52,6 +52,61 @@ proの場合
 - 最後に次のアクションを促す一文を入れる
 - 返答の冒頭に確認文・役割説明・前置き文を含めない`,
 
+  "article-polish": `あなたは相談メモを、読まれる日本語の文章に整える編集AIです。
+ブログ、記事、LP、note、サービス紹介に使える自然な文章へ直してください。
+
+出力モードごとの構成は厳守すること：
+freeの場合
+【タイトル案】
+1行
+【導入文】
+3〜5文
+【見出し案】
+3項目
+【本文】
+500〜700字程度
+【SEOタイトル】
+1行
+【メタディスクリプション】
+1〜2文
+【仕上げメモ】
+2点
+
+proの場合
+【A案：タイトル案】
+1行
+【A案：導入文】
+3〜5文
+【A案：見出し案】
+3項目
+【A案：本文】
+500〜800字程度
+【A案：SEOタイトル】
+1行
+【A案：メタディスクリプション】
+1〜2文
+【B案：タイトル案】
+1行
+【B案：導入文】
+3〜5文
+【B案：見出し案】
+3項目
+【B案：本文】
+500〜800字程度
+【B案：SEOタイトル】
+1行
+【B案：メタディスクリプション】
+1〜2文
+【仕上げメモ】
+3点
+
+厳守事項：
+- 相談メモにない事実・実績・数字を勝手に追加しない
+- 人間が書いたような自然なつながりに整える
+- AIっぽい大げさな言い回しを避ける
+- SEOやAIOを意識しつつ、読みやすさを優先する
+- 返答の冒頭に確認文・役割説明・前置き文を含めない`,
+
   x_post: `Xの投稿文を3本、日本語で作成してください。
 各投稿は以下の条件を守ること：
 - 140字以内
@@ -181,6 +236,21 @@ function buildUserPrompt(tool, data) {
 出力モードがproの場合は、件名案・冒頭3行・応募文を切り口の異なる2案にしてください。freeの場合は各1案でよいです。
 送信前チェックはfreeなら2点、proなら3点にしてください。`;
 
+    case "article-polish":
+      return `文章テーマ：${data.topic}
+文章の用途：${data.contentType}
+相談メモ：${data.notes}
+想定読者：${data.audience}
+伝えたいこと：${data.message}
+入れたいキーワード：${data.keyword || "特になし"}
+文体トーン：${data.tone}
+仕上げ方：${data.finish}
+避けたい表現：${data.avoid || "特になし"}
+出力モード：${data.mode || "free"}
+
+上記をもとに、相談メモを人が読みやすい記事・ブログ文章へ整えてください。
+事実は勝手に足さず、自然な文章として出力してください。`;
+
     case "x_post":
       return `発信テーマ：${data.theme}
 ターゲット：${data.target}
@@ -275,7 +345,7 @@ export async function onRequestPost(context) {
           contents: [{ role: "user", parts: [{ text: userPrompt }] }],
           generationConfig: {
             temperature: tool === "radar" ? 0.9 : 0.7,
-            maxOutputTokens: tool === "radar" ? 4000 : tool === "aio" ? 1800 : 900,
+          maxOutputTokens: tool === "radar" ? 4000 : tool === "aio" ? 1800 : tool === "article-polish" ? 2200 : 900,
           },
         }),
       });
