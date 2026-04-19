@@ -13,15 +13,17 @@
 
 ## ツール一覧
 
-現在5つのツールがあります。それぞれにProプランがあります。
+現在6つのツールがあります。それぞれにProプランがあります。全ツールパック（`all-tools`）も販売中。
 
 | キー | ツール名 | アプリパス |
 |------|---------|-----------|
 | `radar` | 案件レーダー | /apps/radar/ |
 | `proposal` | AI応募文アシスタント | /apps/proposal/ |
+| `proposal-optimizer` | AI応募文最適化 | /apps/proposal-optimizer/ |
 | `x-helper` | AI X投稿・返信補助 | /apps/x-helper/ |
 | `ec-copy` | EC商品説明・Q&A整備 | /apps/ec-copy/ |
 | `aio-mini` | AIOミニ診断 | /apps/aio-mini/ |
+| `all-tools` | 全ツールパック（バンドル） | /apps/radar/（アクティベーション後） |
 
 ---
 

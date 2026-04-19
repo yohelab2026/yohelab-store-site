@@ -14,11 +14,11 @@ export async function onRequestGet(context) {
     }
 
     const access = await verifyAccessCookie(cookieToken, context.env);
-    if (!access?.products?.[product]) {
+    // all-tools バンドル購入者は個別ツールでも有効とみなす
+    const grant = access?.products?.[product] || access?.products?.["all-tools"];
+    if (!grant) {
       return json({ active: false, product });
     }
-
-    const grant = access.products[product];
     const subscription = await fetchStripeSubscription(grant.subscriptionId, context.env);
     const active = isActiveStripeStatus(subscription.status);
 

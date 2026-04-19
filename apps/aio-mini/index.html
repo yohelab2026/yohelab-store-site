@@ -233,7 +233,6 @@
         if (proAccess) return;
         saveUsage(Math.min(FREE_LIMIT, loadUsage() + 1));
         updateUsageUI();
-        return next;
       }
 
       async function renderAIO() {
