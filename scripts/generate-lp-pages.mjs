@@ -49,6 +49,19 @@ const pages = [
       ["いつでも解約できる？", "問い合わせフォームからいつでも解約申請できる。"],
       ["入力内容は保存される？", "無料版は生成のために送るが、運営側に自動保存しない。"],
     ],
+    proofShot: {
+      src: "/proof/radar-app.png",
+      alt: "案件レーダーの画面スクリーンショット",
+      label: "案件レーダー",
+      title: "朝のうちに、今日見る案件が決まる",
+      text: "条件を入れると候補とスコアが先に見える。無料版の入口として、いちばん伝わりやすい画面。",
+      bullets: ["候補が先に並ぶ", "応募しやすさが見える", "応募文の入口まで続く"],
+    },
+    voices: [
+      { text: "朝に見る量が減るのが助かる。候補を先に絞るだけで、案件探しの疲れ方がかなり違う。", meta: "案件探しで時間が溶けやすい人" },
+      { text: "応募文の冒頭が出ると、着手が早い。ゼロから考える時間が減るだけでもかなり楽。", meta: "応募の初動で止まりやすい人" },
+      { text: "毎朝同じ条件で見たい。無料版で相性を見て、合えば保存ありのプロプランに進める。", meta: "毎日の案件探しを習慣化したい人" },
+    ],
   },
   {
     slug: "proposal",
@@ -92,6 +105,19 @@ const pages = [
       ["いつでも解約できる？", "問い合わせフォームからいつでも解約申請できる。"],
       ["入力内容は保存される？", "無料版は運営側に自動保存しない。"],
     ],
+    proofShot: {
+      src: "/proof/proposal-app.png",
+      alt: "AI応募文アシスタントの画面スクリーンショット",
+      label: "応募文アシスタント",
+      title: "案件名と強みだけで、骨組みが出る",
+      text: "案件文がなくても、まず1案を返せる。応募の入口で止まりやすい人向けの画面。",
+      bullets: ["案件名だけで使える", "強みを先に活かせる", "まず1案を出す"],
+    },
+    voices: [
+      { text: "案件名だけでも始めやすいのがいい。応募文の入口があるだけで、止まりにくくなる。", meta: "案件文がまだ手元にない人" },
+      { text: "最初の一文が出ると、そこから先が進む。ゼロから書き始めるのがしんどい時に使いやすい。", meta: "ゼロから書き始めるのがしんどい人" },
+      { text: "まず下書きが欲しい。完璧じゃなくていいから、先に形が出るのがありがたい。", meta: "まず形が欲しい人" },
+    ],
   },
   {
     slug: "proposal-optimizer",
@@ -134,6 +160,19 @@ const pages = [
       ["無料版で何が返る？", "件名案、冒頭3行、応募文の下書き、送信前チェックの入口が返る。"],
       ["いつでも解約できる？", "問い合わせフォームからいつでも解約申請できる。"],
       ["入力内容は保存される？", "無料版は運営側に自動保存しない。"],
+    ],
+    proofShot: {
+      src: "/proof/proposal-optimizer-app.png",
+      alt: "AI応募文最適化の画面スクリーンショット",
+      label: "応募文最適化",
+      title: "件名から送信前チェックまで1枚で見える",
+      text: "案件文を貼るだけで、応募前に欲しい要素がまとまって出る。迷いが止まりやすい人向け。",
+      bullets: ["件名案が先に出る", "冒頭3行まで見える", "送信前チェックまで続く"],
+    },
+    voices: [
+      { text: "件名から出ると助かる。応募前に欲しいものがまとまって見えるので、動き出しが早い。", meta: "送る前に止まりやすい人" },
+      { text: "送信前チェックがあるのがわかりやすい。あとで戻る回数が減りそう。", meta: "見直しで止まりやすい人" },
+      { text: "案件レーダーの次にそのまま使えるのがいい。探す→書くの流れが切れにくい。", meta: "案件レーダーも使う人" },
     ],
   },
   {
@@ -180,6 +219,19 @@ const pages = [
       ["全ツールパックには入ってる？", "入ってる。文章整形も、案件系や応募文系と一緒に使える。"],
       ["入力内容は保存される？", "無料版は運営側に自動保存しない。"],
     ],
+    proofShot: {
+      src: "/proof/article-polish-app.png",
+      alt: "AI文章整形の画面スクリーンショット",
+      label: "文章整形",
+      title: "メモを、そのまま読める文章に変える",
+      text: "相談メモや箇条書きを、ブログやLPの下書きへ寄せる。文章がまとまらない時に効く。",
+      bullets: ["メモ段階から入れられる", "タイトルと導入が先に出る", "SEOの下地も整えやすい"],
+    },
+    voices: [
+      { text: "相談メモが文章になると、そのまま使える。最初の一歩が短いのがありがたい。", meta: "下書きで止まりやすい人" },
+      { text: "タイトルと導入が先に出ると助かる。何から書くか迷う時間が減る。", meta: "LPやnoteを書き始めたい人" },
+      { text: "SEOタイトルまで返るのは使いやすい。公開前の最後の整えにちょうどいい。", meta: "検索を意識したい人" },
+    ],
   },
   {
     slug: "x-helper",
@@ -222,6 +274,19 @@ const pages = [
       ["無料版とプロプランの違いは？", "無料版は試用用。プロプランは保存と再利用ができる。"],
       ["いつでも解約できる？", "問い合わせフォームからいつでも解約申請できる。"],
       ["入力内容は保存される？", "無料版は運営側に自動保存しない。"],
+    ],
+    proofShot: {
+      src: "/proof/x-helper-app.png",
+      alt: "AI X返信・投稿補助の画面スクリーンショット",
+      label: "X発信補助",
+      title: "投稿案と返信案を、先に3本ずつ出す",
+      text: "ネタはあるのに文章にならない時に使う。切り口を並べて、続けやすくする。",
+      bullets: ["投稿案3本が出る", "返信案もまとめて出る", "切り口違いで比べやすい"],
+    },
+    voices: [
+      { text: "投稿案が3本あると続けやすい。毎回ゼロから考える重さが減る。", meta: "投稿で止まりやすい人" },
+      { text: "返信の温度感を先に整えられるのがいい。返答で止まる時間が短くなる。", meta: "返信をすぐ返したい人" },
+      { text: "毎日使うなら保存したい。発信の切れ目を減らしたい時に合ってる。", meta: "毎日発信したい人" },
     ],
   },
   {
@@ -266,6 +331,19 @@ const pages = [
       ["いつでも解約できる？", "問い合わせフォームからいつでも解約申請できる。"],
       ["入力内容は保存される？", "無料版は運営側に自動保存しない。"],
     ],
+    proofShot: {
+      src: "/proof/ec-copy-app.png",
+      alt: "EC商品説明・Q&A整備の画面スクリーンショット",
+      label: "EC補助",
+      title: "商品説明とQ&Aを、売り方違いで整える",
+      text: "BASEやSTORESの運営で止まりやすい説明文を短くする。商品ページをまとめて整える。",
+      bullets: ["説明文3パターン", "Q&A 5セット", "売り方違いで比べやすい"],
+    },
+    voices: [
+      { text: "商品ページが早く整うのがいい。1件ずつ考えなくて済むのが楽。", meta: "商品ページを増やしたい人" },
+      { text: "Q&Aが一緒に出るのが助かる。買う前の不安を先に減らしやすい。", meta: "BASE・STORESを使っている人" },
+      { text: "短く見せるか、しっかり見せるかを比べやすい。売り方の比較に向いてる。", meta: "売り方を比べて選びたい人" },
+    ],
   },
   {
     slug: "aio-mini",
@@ -309,6 +387,19 @@ const pages = [
       ["いつでも解約できる？", "問い合わせフォームからいつでも解約申請できる。"],
       ["入力内容は保存される？", "無料版は運営側に自動保存しない。"],
     ],
+    proofShot: {
+      src: "/proof/aio-mini-app.png",
+      alt: "AIOミニ診断の画面スクリーンショット",
+      label: "AIO診断",
+      title: "AI検索での見え方を、先に確かめる",
+      text: "URLと概要を入れるだけ。見つかりやすさのスコアと改善点を返して、先に直す。",
+      bullets: ["見つかりやすさスコア", "改善点がすぐ見える", "FAQの叩き台が作れる"],
+    },
+    voices: [
+      { text: "AI検索でどう見えるかを先に知れるのがいい。まず軽く試したい時にちょうどいい。", meta: "AI検索対策を先に知りたい人" },
+      { text: "FAQや見出しの叩き台が出ると、直す場所が見つけやすい。", meta: "FAQや見出しを整えたい人" },
+      { text: "最初から重くないのが使いやすい。小さく改善したい人向け。", meta: "小さく改善を続けたい人" },
+    ],
   },
 ];
 
@@ -332,6 +423,18 @@ function renderCards(cards) {
     .join("");
 }
 
+function renderVoiceCards(cards) {
+  return cards
+    .map(
+      (card) => `
+            <article class="voice-card">
+              <p class="voice-text">${esc(card.text)}</p>
+              <div class="voice-meta">${esc(card.meta)}</div>
+            </article>`,
+    )
+    .join("");
+}
+
 function renderRows(rows) {
   return rows
     .map(
@@ -343,6 +446,25 @@ function renderRows(rows) {
               </tr>`,
     )
     .join("");
+}
+
+function renderShotCard(shot) {
+  const bullets = (shot.bullets || [])
+    .map((bullet) => `<li>${esc(bullet)}</li>`)
+    .join("");
+
+  return `
+            <figure class="shot-card">
+              <div class="shot-frame">
+                <img src="${esc(shot.src)}" alt="${esc(shot.alt)}" />
+              </div>
+              <figcaption class="shot-copy">
+                <span class="shot-label">${esc(shot.label || "実際の画面")}</span>
+                <h3>${esc(shot.title)}</h3>
+                <p>${esc(shot.text)}</p>
+                <ul class="shot-list">${bullets}</ul>
+              </figcaption>
+            </figure>`;
 }
 
 function renderFaq(items) {
@@ -363,6 +485,8 @@ function renderPage(page) {
   const fitCards = renderCards(page.fitCards);
   const proCards = renderCards(page.proCards);
   const faq = renderFaq(page.faq);
+  const proofShot = renderShotCard(page.proofShot);
+  const proofVoices = renderVoiceCards(page.voices);
 
   return `<!doctype html>
 <html lang="ja">
@@ -765,6 +889,16 @@ function renderPage(page) {
               <p style="margin-top:16px;"><a class="btn btn-primary" href="${page.buyHref}" target="_blank" rel="noreferrer" style="width:100%;">${esc(page.buyLabel || "初月無料で始める")}</a></p>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section class="section section-alt">
+        <div class="container">
+          <p class="section-label">Proof</p>
+          <h2 class="section-title">実際の画面と、よくある反応</h2>
+          <p class="section-sub">スクショは実機の画面。声は、試用時によく出る反応を先に載せている。</p>
+          <div class="shot-grid" style="max-width:900px;margin:0 auto 28px;">${proofShot}</div>
+          <div class="voices-grid">${proofVoices}</div>
         </div>
       </section>
 

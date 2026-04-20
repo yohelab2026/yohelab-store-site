@@ -1,225 +1,556 @@
 <!doctype html>
 <html lang="ja">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>案件レーダー | よへラボ</title>
-  <meta name="description" content="案件探しを朝10分にしたい人向け。無料版で案件候補と応募文の下書きを試して、合えば月額980円のプロプランへ。" />
-  <meta property="og:title" content="案件レーダー | よへラボ" />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://yohelab.com/lp/radar/" />
-  <meta property="og:image" content="https://yohelab.com/yohelab-icon.png" />
-  <meta name="theme-color" content="#050f0c" />
-  <link rel="icon" type="image/png" href="../../yohelab-icon.png" />
-  <link rel="stylesheet" href="/shared/site.css" />
-  <link rel="stylesheet" href="/shared/lp.css" />
-</head>
-<body>
-  <header class="nav lp-nav">
-    <div class="nav-inner">
-      <a class="brand brand-light" href="/">
-        <img src="/yohelab-icon.png" alt="よへラボ" />
-        <span>よへラボ</span>
-        <span class="brand-sub">案件レーダー</span>
-      </a>
-      <nav class="nav-links">
-        <a href="/">トップ</a>
-        <a href="/apps/radar/">無料版</a>
-        <a href="/contact/">問い合わせ</a>
-        <a class="btn btn-primary btn-sm" href="https://buy.stripe.com/dRmfZ9ePJ5Lq6SKbvb73G06?client_reference_id=radar" target="_blank" rel="noreferrer">初月無料で始める</a>
-      </nav>
-    </div>
-  </header>
-
-  <main>
-    <section class="lp-hero">
-      <div class="lp-hero-grid" aria-hidden="true"></div>
-      <div class="container lp-hero-inner" style="text-align:center;">
-        <div class="lp-breadcrumb" style="justify-content:center;">
-          <a href="/">よへラボ</a><span>/</span><span style="color:rgba(255,255,255,.7);">案件レーダー</span>
-        </div>
-        <p class="lp-eyebrow reveal"><span class="lp-eyebrow-dot"></span>案件探しAI — Tool 01</p>
-        <h1 class="reveal reveal-d1">毎朝30分溶かしてた<br><em>案件探しが、10分になる</em></h1>
-        <div class="lp-transform reveal reveal-d2">
-          <span class="lp-before">どれに応募すればいいか…30分</span>
-          <span class="lp-arrow">→</span>
-          <span class="lp-after">候補が絞れて応募文まで、10分</span>
-        </div>
-        <p class="lp-lead reveal reveal-d2">条件を入れるだけ。案件候補を先に絞って、応募文の下書きまで返す。<br>ひとりで稼ぐ人の朝を、ぐっと短くする。</p>
-        <div class="lp-actions reveal reveal-d3">
-          <a class="btn btn-primary btn-xl" href="/apps/radar/">まず無料で試す →</a>
-          <a class="btn btn-ghost-white btn-lg" href="https://buy.stripe.com/dRmfZ9ePJ5Lq6SKbvb73G06?client_reference_id=radar" target="_blank" rel="noreferrer">初月無料で始める</a>
-        </div>
-        <p class="lp-hero-note reveal reveal-d3">登録不要・無料版あり・いつでも解約可</p>
-        <div class="lp-chips reveal reveal-d3">
-          <span>✓ 登録不要</span><span>✓ ブラウザだけ</span><span>✓ 無料版あり</span><span>✓ 月額¥980</span>
-        </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>案件レーダー | よへラボ</title>
+    <meta name="description" content="案件探しを朝10分にしたい人向けの案内ページ。無料版で案件候補と応募文の下書きを試して、合えば月額980円のプロプランへ進める。" />
+    <meta property="og:title" content="案件レーダー | よへラボ" />
+    <meta property="og:description" content="案件探しを朝10分にしたい人向けの案内ページ。無料版で案件候補と応募文の下書きを試して、合えば月額980円のプロプランへ進める。" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta property="og:url" content="https://yohelab.com/lp/radar/" />
+    <meta property="og:image" content="https://yohelab.com/yohelab-icon.png" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
+    <meta name="theme-color" content="#0d6b58" />
+    <link rel="canonical" href="https://yohelab.com/lp/radar/" />
+    <link rel="icon" type="image/png" href="/yohelab-icon.png" />
+    <link rel="stylesheet" href="/shared/site.css" />
+    <style>
+      .lp-hero {
+        padding: 88px 0 72px;
+        background:
+          radial-gradient(ellipse 85% 65% at 50% 0%, rgba(13,107,88,.16), transparent 58%),
+          linear-gradient(180deg, #0f221d 0%, #0b1613 100%);
+        color: #fff;
+      }
+      .lp-hero .container {
+        width: min(1100px, 100% - 48px);
+      }
+      .lp-hero-copy {
+        max-width: 920px;
+        margin: 0 auto;
+        text-align: center;
+      }
+      .lp-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 16px;
+        border-radius: 999px;
+        background: rgba(255,255,255,.09);
+        border: 1px solid rgba(255,255,255,.16);
+        color: rgba(255,255,255,.92);
+        font-size: 13px;
+        font-weight: 700;
+        margin-bottom: 28px;
+      }
+      .lp-hero h1 {
+        color: #fff;
+        font-size: clamp(42px, 6.4vw, 74px);
+        letter-spacing: -0.05em;
+        line-height: 1.06;
+        margin-bottom: 18px;
+      }
+      .lp-hero h1 em {
+        color: #4fd1b8;
+        font-style: normal;
+      }
+      .lp-lead {
+        max-width: 760px;
+        margin: 0 auto 28px;
+        color: rgba(255,255,255,.76);
+        font-size: 19px;
+        line-height: 1.9;
+      }
+      .lp-actions {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 20px;
+      }
+      .lp-hero-note {
+        color: rgba(255,255,255,.55);
+        font-size: 13px;
+      }
+      .lp-band {
+        margin-top: 28px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+      }
+      .lp-band .lp-card {
+        background: rgba(255,255,255,.07);
+        border: 1px solid rgba(255,255,255,.12);
+        color: #fff;
+        box-shadow: none;
+      }
+      .lp-band .lp-card h3 {
+        color: #fff;
+      }
+      .lp-band .lp-card p {
+        color: rgba(255,255,255,.72);
+      }
+      .lp-section {
+        padding: 72px 0;
+      }
+      .lp-grid-3 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+      }
+      .lp-grid-2 {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+      }
+      .lp-card {
+        padding: 26px;
+        border-radius: 20px;
+        border: 1px solid var(--border);
+        background: var(--white);
+        box-shadow: var(--shadow);
+      }
+      .lp-card h3 {
+        font-size: 17px;
+        font-weight: 800;
+        margin-bottom: 10px;
+      }
+      .lp-card p {
+        color: var(--muted);
+        font-size: 15px;
+        line-height: 1.75;
+      }
+      .lp-mini-head {
+        text-align: center;
+        margin-bottom: 22px;
+      }
+      .lp-mini-head h2 {
+        font-size: 30px;
+        font-weight: 900;
+        letter-spacing: -0.04em;
+        margin-bottom: 8px;
+      }
+      .lp-mini-head p {
+        color: var(--muted);
+        font-size: 16px;
+      }
+      .lp-preview {
+        display: grid;
+        grid-template-columns: 1.1fr .9fr;
+        gap: 16px;
+        align-items: stretch;
+      }
+      .lp-preview-box {
+        padding: 28px;
+        border-radius: 20px;
+        border: 1px solid var(--green-mid);
+        background: linear-gradient(180deg, #f7fcfa 0%, #eef8f4 100%);
+        box-shadow: var(--shadow);
+      }
+      .lp-preview-box h3 {
+        font-size: 20px;
+        font-weight: 900;
+        margin-bottom: 10px;
+      }
+      .lp-preview-box p {
+        color: var(--muted);
+        line-height: 1.75;
+        font-size: 15px;
+      }
+      .lp-preview-list {
+        display: grid;
+        gap: 10px;
+        margin-top: 18px;
+      }
+      .lp-preview-list div {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        color: var(--text);
+        font-size: 14px;
+        line-height: 1.65;
+      }
+      .lp-preview-list span {
+        color: var(--green);
+        font-weight: 900;
+      }
+      .lp-side-box {
+        padding: 28px;
+        border-radius: 20px;
+        border: 1px solid var(--border);
+        background: var(--white);
+        box-shadow: var(--shadow);
+      }
+      .lp-side-box h3 {
+        font-size: 18px;
+        font-weight: 900;
+        margin-bottom: 12px;
+      }
+      .lp-side-box ul {
+        display: grid;
+        gap: 8px;
+      }
+      .lp-side-box li {
+        display: flex;
+        gap: 8px;
+        color: var(--muted);
+        line-height: 1.6;
+        font-size: 14px;
+      }
+      .lp-side-box li::before {
+        content: "→";
+        color: var(--green);
+        font-weight: 800;
+      }
+      .lp-table-wrap {
+        max-width: 860px;
+        margin: 0 auto;
+      }
+      .lp-table {
+        width: 100%;
+        border-collapse: collapse;
+        border-radius: 18px;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow);
+      }
+      .lp-table th,
+      .lp-table td {
+        padding: 15px 18px;
+        font-size: 15px;
+        text-align: center;
+      }
+      .lp-table th:first-child,
+      .lp-table td:first-child {
+        text-align: left;
+      }
+      .lp-table th {
+        background: var(--bg);
+        font-weight: 800;
+      }
+      .lp-table .free {
+        color: var(--muted);
+        background: #fff;
+      }
+      .lp-table .pro {
+        background: #f1faf6;
+        color: var(--green-dark);
+        font-weight: 700;
+      }
+      .lp-check {
+        color: var(--green);
+        font-weight: 900;
+      }
+      .lp-dash {
+        color: #b8bfca;
+      }
+      .lp-cta {
+        text-align: center;
+        padding: 64px 0 84px;
+        background: linear-gradient(180deg, #fff 0%, #f6fbf9 100%);
+      }
+      .lp-cta h2 {
+        font-size: clamp(30px, 5vw, 50px);
+        font-weight: 900;
+        letter-spacing: -0.04em;
+        margin-bottom: 12px;
+      }
+      .lp-cta p {
+        color: var(--muted);
+        font-size: 16px;
+        line-height: 1.8;
+        max-width: 680px;
+        margin: 0 auto 22px;
+      }
+      .lp-links {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 16px;
+      }
+      .lp-links .btn {
+        min-width: 220px;
+      }
+      .lp-note {
+        margin-top: 12px;
+        font-size: 13px;
+        color: var(--muted);
+      }
+      .lp-faq {
+        max-width: 840px;
+        margin: 0 auto;
+      }
+      .lp-faq .faq {
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        background: var(--white);
+        box-shadow: var(--shadow);
+      }
+      .lp-faq .faq + .faq {
+        margin-top: 10px;
+      }
+      .lp-faq .faq summary {
+        cursor: pointer;
+      }
+      @media (max-width: 960px) {
+        .lp-band,
+        .lp-grid-3,
+        .lp-grid-2,
+        .lp-preview {
+          grid-template-columns: 1fr;
+        }
+        .lp-hero {
+          padding: 72px 0 56px;
+        }
+        .lp-hero h1 {
+          font-size: clamp(36px, 10vw, 56px);
+        }
+      }
+    </style>
+    <script type="application/ld+json">
+      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"よへラボ","url":"https://yohelab.com/"},{"@type":"SoftwareApplication","name":"案件レーダー","applicationCategory":"BusinessApplication","operatingSystem":"Web","offers":[{"@type":"Offer","price":"0","priceCurrency":"JPY","name":"無料版"},{"@type":"Offer","price":"980","priceCurrency":"JPY","name":"プロプラン","billingIncrement":"P1M","description":"月額980円・初月無料・いつでも解約可"}],"description":"案件探しを朝10分にしたい人向けの案内ページ。無料版で案件候補と応募文の下書きを試して、合えば月額980円のプロプランへ進める。"}]}
+    </script>
+  </head>
+  <body>
+    <header class="nav">
+      <div class="nav-inner">
+        <a class="brand" href="/">
+          <img src="/yohelab-icon.png" alt="よへラボのアイコン" />
+          <span>よへラボ</span>
+          <span class="brand-sub">AI実務ツール開発</span>
+        </a>
+        <nav class="nav-links">
+          <a href="/">トップ</a>
+          <a href="/apps/radar/">無料版</a>
+          <a href="/products/radar-beta/">プロプラン</a>
+          <a href="/contact/">問い合わせ</a>
+          <a class="btn btn-primary btn-sm" href="https://buy.stripe.com/dRmfZ9ePJ5Lq6SKbvb73G06?client_reference_id=radar" target="_blank" rel="noreferrer">初月無料で始める</a>
+        </nav>
       </div>
-    </section>
+    </header>
 
-    <div class="lp-body">
-      <!-- 無料 vs Pro -->
-      <section class="lp-section">
+    <main>
+      <section class="lp-hero">
         <div class="container">
-          <div class="lp-section-head reveal">
-            <p class="lp-section-kicker">Free vs Pro</p>
-            <h2 class="lp-section-title">まず無料で試す<br>合えばそのままプロへ</h2>
-            <p class="lp-section-sub">無料版で返ってくるものを確認してから判断できる。合わなければそれだけ。</p>
-          </div>
-          <div class="lp-preview reveal">
-            <div class="lp-free-box">
-              <h3>無料版で返ってくるもの</h3>
-              <p>1回試すだけでわかる。まずここから。</p>
-              <div class="lp-free-items">
-                <div class="lp-free-item">
-                  <div class="lp-free-item-icon">✓</div>
-                  <div><strong>案件候補リスト</strong><span>条件に近い案件を先に絞って並べる。見る量がぐっと減る。</span></div>
-                </div>
-                <div class="lp-free-item">
-                  <div class="lp-free-item-icon">✓</div>
-                  <div><strong>応募しやすさスコア</strong><span>どれから見るか迷わなくなる。理由つきで返る。</span></div>
-                </div>
-                <div class="lp-free-item">
-                  <div class="lp-free-item-icon">✓</div>
-                  <div><strong>応募文の下書き1案</strong><span>骨組みが先にあるから、送るまでが速い。</span></div>
-                </div>
-              </div>
-              <a class="btn btn-primary" href="/apps/radar/" style="width:100%;">無料で試す →</a>
+          <div class="lp-hero-copy">
+            <p class="lp-eyebrow">案件探しAI</p>
+            <h1>案件を探す・選ぶ・書くを、1本にまとめる。</h1>
+            <p class="lp-lead">条件を入れるだけ。案件候補を先に絞って、応募文の下書きまで返す。ひとりで稼ぐ人の朝を短くする。</p>
+            <div class="lp-actions">
+              <a class="btn btn-primary btn-lg" href="/apps/radar/">無料版を試す →</a>
+              <a class="btn btn-lg" style="color:rgba(255,255,255,.86);border:1.5px solid rgba(255,255,255,.25);" href="https://buy.stripe.com/dRmfZ9ePJ5Lq6SKbvb73G06?client_reference_id=radar" target="_blank" rel="noreferrer">初月無料で始める</a>
             </div>
-            <div class="lp-pro-box">
-              <h3>プロプランで増えること</h3>
-              <div class="lp-pro-items">
-                <div class="lp-pro-item">条件保存で毎朝すぐ使える。開いたら候補が出てくる</div>
-                <div class="lp-pro-item">絞り込みの幅が広がり、読む量が減る</div>
-                <div class="lp-pro-item">応募文を2文体で比較して選べる</div>
-                <div class="lp-pro-item">1日の利用が無制限になる</div>
-              </div>
-              <p class="lp-pro-note">無料版で相性を見て、必要なら月額¥980で続けられる。初月無料。</p>
-              <a class="btn btn-primary" href="https://buy.stripe.com/dRmfZ9ePJ5Lq6SKbvb73G06?client_reference_id=radar" target="_blank" rel="noreferrer" style="width:100%;">初月無料で始める</a>
+            <p class="lp-hero-note">無料版で相性を見て、合えばプロプランへ。全部ブラウザでそのまま使える。</p>
+            <div class="lp-band">
+              <div class="lp-card"><h3>無料版</h3><p>まず1回試して、返ってくるものを見る。合うかどうかの判断に使う。</p></div>
+              <div class="lp-card"><h3>プロプラン</h3><p>比較や保存まで広げて、毎日の作業を短くする。使い方に合うならそこで続ける。</p></div>
+              <div class="lp-card"><h3>導線</h3><p>無料版からそのまま進める。途中で止まりにくい順番にしている。</p></div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- こういう人に -->
-      <section class="lp-section lp-section-alt">
+      <section class="lp-section">
         <div class="container">
-          <div class="lp-section-head reveal">
-            <p class="lp-section-kicker">Fit</p>
-            <h2 class="lp-section-title">こういう人に向いている</h2>
+          <div class="lp-mini-head">
+            <h2>無料版で試して、合えばそのままプロプランへ</h2>
+            <p>無料で返ってくるものと、プロプランで増える機能を同じ画面で比べられる。</p>
           </div>
-          <div class="lp-fit-grid">
-            <div class="lp-fit-card reveal">
-              <h3>朝の案件探しで時間が溶ける人</h3>
-              <p>今日応募する1件を早く決めたい。そこで止まりたくない人向け。</p>
+          <div class="lp-preview">
+      <div class="lp-preview-box">
+        <h3>無料版で見えるもの</h3>
+              <p>まずは1回。どんな結果が返るかを確認してから進める。</p>
+              <div class="lp-preview-list">
+                
+                  <div><span>✓</span><div><strong>案件候補</strong><br>条件に近い案件候補を先に並べる。見る量を減らして朝の迷いを消す。</div></div>
+                  <div><span>✓</span><div><strong>応募しやすさ</strong><br>スコアと理由が返るので、どれから見るか決めやすい。</div></div>
+                  <div><span>✓</span><div><strong>応募文1案</strong><br>応募文の骨組みが先にあるから、送るまでが速い。</div></div>
+              </div>
+              <p style="margin-top:18px;"><a class="btn btn-primary" href="/apps/radar/">無料版を試す →</a></p>
             </div>
-            <div class="lp-fit-card reveal reveal-d1">
-              <h3>毎日同じ条件で見ている人</h3>
-              <p>条件保存で毎回入力する手間がなくなる。開いてすぐ使える。</p>
-            </div>
-            <div class="lp-fit-card reveal reveal-d2">
-              <h3>探すだけで止まらず送りたい人</h3>
-              <p>案件を見つけたあと、応募文まで一気に進めたい人向け。</p>
+            <div class="lp-side-box">
+              <h3>プロプランで増えるもの</h3>
+              <ul>
+                <li>保存した条件でそのまま使える。開いてすぐ案件候補が出る。</li><li>絞り込みの幅が広がると、読む量が減って判断が速くなる。</li><li>候補を並べて見て、送る前に1本へ絞りやすい。</li>
+              </ul>
+              <p class="lp-note">無料版で相性を見て、必要ならそのままプロプランへ進める。</p>
+              <p style="margin-top:16px;"><a class="btn btn-primary" href="https://buy.stripe.com/dRmfZ9ePJ5Lq6SKbvb73G06?client_reference_id=radar" target="_blank" rel="noreferrer" style="width:100%;">初月無料で始める</a></p>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- 比較表 -->
-      <section class="lp-section">
+      <section class="section section-alt">
         <div class="container">
-          <div class="lp-section-head reveal">
-            <p class="lp-section-kicker">Compare</p>
-            <h2 class="lp-section-title">無料版とプロプランの違い</h2>
+          <p class="section-label">Proof</p>
+          <h2 class="section-title">実際の画面と、よくある反応</h2>
+          <p class="section-sub">スクショは実機の画面。声は、試用時によく出る反応を先に載せている。</p>
+          <div class="shot-grid" style="max-width:900px;margin:0 auto 28px;">
+            <figure class="shot-card">
+              <div class="shot-frame">
+                <img src="/proof/radar-app.png" alt="案件レーダーの画面スクリーンショット" />
+              </div>
+              <figcaption class="shot-copy">
+                <span class="shot-label">案件レーダー</span>
+                <h3>朝のうちに、今日見る案件が決まる</h3>
+                <p>条件を入れると候補とスコアが先に見える。無料版の入口として、いちばん伝わりやすい画面。</p>
+                <ul class="shot-list"><li>候補が先に並ぶ</li><li>応募しやすさが見える</li><li>応募文の入口まで続く</li></ul>
+              </figcaption>
+            </figure></div>
+          <div class="voices-grid">
+            <article class="voice-card">
+              <p class="voice-text">朝に見る量が減るのが助かる。候補を先に絞るだけで、案件探しの疲れ方がかなり違う。</p>
+              <div class="voice-meta">案件探しで時間が溶けやすい人</div>
+            </article>
+            <article class="voice-card">
+              <p class="voice-text">応募文の冒頭が出ると、着手が早い。ゼロから考える時間が減るだけでもかなり楽。</p>
+              <div class="voice-meta">応募の初動で止まりやすい人</div>
+            </article>
+            <article class="voice-card">
+              <p class="voice-text">毎朝同じ条件で見たい。無料版で相性を見て、合えば保存ありのプロプランに進める。</p>
+              <div class="voice-meta">毎日の案件探しを習慣化したい人</div>
+            </article></div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <p class="section-label">Fit</p>
+          <h2 class="section-title">こういう人に向いている</h2>
+          <p class="section-sub">合う人・合わない人がすぐ分かるように、使いどころを先に絞っている。</p>
+          <div class="lp-grid-3">
+            
+          <article class="lp-card">
+            <h3>案件探しで時間が溶けやすい人</h3>
+            <p>朝のうちに今日応募する1件を決めたい人向け。</p>
+          </article>
+          <article class="lp-card">
+            <h3>毎日同じ条件で見たい人</h3>
+            <p>条件保存があると、同じ流れで回しやすい。</p>
+          </article>
+          <article class="lp-card">
+            <h3>応募文まで一気に進めたい人</h3>
+            <p>探すだけで止まらず、送るところまで短くしたい人向け。</p>
+          </article>
           </div>
-          <div class="lp-table-wrap reveal">
+        </div>
+      </section>
+
+      <section class="section section-alt">
+        <div class="container">
+          <p class="section-label">Compare</p>
+          <h2 class="section-title">無料版とプロプランの違い</h2>
+          <div class="lp-table-wrap">
             <table class="lp-table">
-              <thead><tr><th>機能</th><th>無料版</th><th class="col-pro-head">プロプラン ¥980/月</th></tr></thead>
+              <thead>
+                <tr>
+                  <th>機能</th>
+                  <th>無料版</th>
+                  <th>プロプラン</th>
+                </tr>
+              </thead>
               <tbody>
-                <tr><td>案件候補リスト</td><td class="col-free">✓</td><td class="col-pro">✓</td></tr>
-                <tr><td>応募しやすさスコア</td><td class="col-free">✓</td><td class="col-pro">✓</td></tr>
-                <tr><td>応募文の下書き</td><td class="col-free">1案</td><td class="col-pro">2文体・比較可</td></tr>
-                <tr><td>条件保存</td><td class="col-free">—</td><td class="col-pro">✓</td></tr>
-                <tr><td>1日の利用回数</td><td class="col-free">1回まで</td><td class="col-pro">無制限</td></tr>
-                <tr><td>月額料金</td><td class="col-free">¥0</td><td class="col-pro">¥980（初月無料）</td></tr>
+                
+              <tr>
+                <td>案件候補</td>
+                <td class="free">✓</td>
+                <td class="pro">✓</td>
+              </tr>
+              <tr>
+                <td>応募しやすさスコア</td>
+                <td class="free">✓</td>
+                <td class="pro">✓</td>
+              </tr>
+              <tr>
+                <td>応募文の下書き</td>
+                <td class="free">1案</td>
+                <td class="pro">2文体・比較可</td>
+              </tr>
+              <tr>
+                <td>条件保存</td>
+                <td class="free">—</td>
+                <td class="pro">✓</td>
+              </tr>
+              <tr>
+                <td>1日の利用回数</td>
+                <td class="free">1回まで</td>
+                <td class="pro">無制限</td>
+              </tr>
+              <tr>
+                <td>月額料金</td>
+                <td class="free">¥0</td>
+                <td class="pro">¥980（初月無料）</td>
+              </tr>
               </tbody>
             </table>
           </div>
         </div>
       </section>
 
-      <!-- プロの特徴 -->
-      <section class="lp-section lp-section-dark">
+      <section class="section" style="background:var(--bg);">
         <div class="container">
-          <div class="lp-section-head reveal">
-            <p class="lp-section-kicker">Features</p>
-            <h2 class="lp-section-title">プロプランでできること</h2>
-          </div>
-          <div class="lp-feat-grid">
-            <div class="lp-feat-card reveal">
-              <div class="lp-feat-num">01</div>
-              <h3>毎朝の条件選び直しをなくす</h3>
-              <p>保存した条件でそのまま使える。開いてすぐ候補が出る。</p>
-            </div>
-            <div class="lp-feat-card reveal reveal-d1">
-              <div class="lp-feat-num">02</div>
-              <h3>見なくていい案件を最初から減らす</h3>
-              <p>絞り込みの幅が広がると、読む量が減って判断が速くなる。</p>
-            </div>
-            <div class="lp-feat-card reveal reveal-d2">
-              <div class="lp-feat-num">03</div>
-              <h3>応募文の複数案を比べられる</h3>
-              <p>候補を並べて見て、送る前に1本へ絞りやすい。</p>
-            </div>
+          <p class="section-label">Features</p>
+          <h2 class="section-title">プロプランでできること</h2>
+          <div class="lp-grid-3">
+            
+          <article class="lp-card">
+            <h3>毎朝の条件選び直しをなくす</h3>
+            <p>保存した条件でそのまま使える。開いてすぐ案件候補が出る。</p>
+          </article>
+          <article class="lp-card">
+            <h3>見なくていい案件を最初から減らす</h3>
+            <p>絞り込みの幅が広がると、読む量が減って判断が速くなる。</p>
+          </article>
+          <article class="lp-card">
+            <h3>応募文の複数案を比べられる</h3>
+            <p>候補を並べて見て、送る前に1本へ絞りやすい。</p>
+          </article>
           </div>
         </div>
       </section>
 
-      <!-- FAQ -->
-      <section class="lp-section">
+      <section class="section">
         <div class="container">
-          <div class="lp-section-head reveal">
-            <p class="lp-section-kicker">FAQ</p>
-            <h2 class="lp-section-title">よくある質問</h2>
-          </div>
-          <div class="lp-faq-list faq-list reveal">
-            <details class="faq"><summary>無料版で何が返る？</summary><div class="faq-body">案件候補リスト、応募しやすさスコア、応募文の下書き1案が返る。</div></details>
-            <details class="faq"><summary>無料版とプロプランの違いは？</summary><div class="faq-body">無料版は1日1回。プロプランは条件保存・比較・無制限利用ができる。</div></details>
-            <details class="faq"><summary>いつでも解約できる？</summary><div class="faq-body">問い合わせフォームからいつでも解約申請できる。</div></details>
-            <details class="faq"><summary>入力内容は保存される？</summary><div class="faq-body">無料版は生成のために送るが、運営側に自動保存しない。</div></details>
+          <p class="section-label">FAQ</p>
+          <h2 class="section-title">よくある質問</h2>
+          <div class="lp-faq faq-list">
+            
+            <details class="faq">
+              <summary>無料版で何が返る？</summary>
+              <div class="faq-body">案件候補、応募しやすさスコア、応募文の下書き1案が返る。</div>
+            </details>
+            <details class="faq">
+              <summary>無料版とプロプランの違いは？</summary>
+              <div class="faq-body">無料版は全体で1日1回。プロプランは条件保存と比較機能が使える。</div>
+            </details>
+            <details class="faq">
+              <summary>いつでも解約できる？</summary>
+              <div class="faq-body">問い合わせフォームからいつでも解約申請できる。</div>
+            </details>
+            <details class="faq">
+              <summary>入力内容は保存される？</summary>
+              <div class="faq-body">無料版は生成のために送るが、運営側に自動保存しない。</div>
+            </details>
           </div>
         </div>
       </section>
-    </div>
 
-    <!-- Final CTA -->
-    <section class="lp-final-cta">
-      <div class="container">
-        <h2 class="reveal">今日の朝、1回だけ試してみて</h2>
-        <p class="reveal reveal-d1">登録なし。条件を入れるだけ。案件候補と応募文の下書きが返ってくる。合わなければそれだけ。</p>
-        <div class="lp-final-btns reveal reveal-d2">
-          <a class="btn btn-white btn-xl" href="/apps/radar/" style="color:var(--green-dark);">無料で試す →</a>
-          <a class="btn btn-ghost-white btn-lg" href="https://buy.stripe.com/dRmfZ9ePJ5Lq6SKbvb73G06?client_reference_id=radar" target="_blank" rel="noreferrer">初月無料で始める</a>
+      <section class="lp-cta">
+        <div class="container">
+          <h2>案件を探す・選ぶ・書くを、1本にまとめる。</h2>
+          <p>条件を入れるだけ。案件候補を先に絞って、応募文の下書きまで返す。ひとりで稼ぐ人の朝を短くする。</p>
+          <div class="lp-links">
+            <a class="btn btn-primary btn-lg" href="/apps/radar/">無料版を試す →</a>
+            <a class="btn btn-primary btn-lg" href="https://buy.stripe.com/dRmfZ9ePJ5Lq6SKbvb73G06?client_reference_id=radar" target="_blank" rel="noreferrer">初月無料で始める</a>
+          </div>
+          <p class="lp-note">複数ツールをまとめて使いたい場合は、<a href="https://buy.stripe.com/aFa5kv9vpb5K7WO1UB73G0b?client_reference_id=all-tools" target="_blank" rel="noreferrer" style="color:var(--green);font-weight:800;">全ツールパック</a>も使える。</p>
+          <p class="lp-note"><a href="/products/radar-beta/" style="color:var(--green);font-weight:800;">プロプランの詳細を見る →</a></p>
         </div>
-        <p class="lp-final-note reveal reveal-d3">複数まとめて使うなら <a href="https://buy.stripe.com/aFa5kv9vpb5K7WO1UB73G0b?client_reference_id=all-tools" target="_blank" rel="noreferrer">全ツールパック ¥1,980/月</a> がお得</p>
-      </div>
-    </section>
-  </main>
-
-  <footer class="lp-footer">
-    <div class="lp-footer-inner">
-      <div>© よへラボ / yohelab.com</div>
-      <div class="lp-footer-links">
-        <a href="/">トップ</a><a href="/contact/">問い合わせ</a>
-        <a href="/legal/commerce/">特定商取引法</a><a href="/legal/privacy/">プライバシー</a><a href="/legal/terms/">利用規約</a>
-      </div>
-    </div>
-  </footer>
-
-  <script>
-    const obs = new IntersectionObserver(e => e.forEach(el => { if(el.isIntersecting){el.target.classList.add('visible');obs.unobserve(el.target);} }), {threshold:.08,rootMargin:'0px 0px -40px 0px'});
-    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-    setTimeout(()=>document.querySelectorAll('.reveal:not(.visible)').forEach(el=>el.classList.add('visible')),800);
-  </script>
-</body>
+      </section>
+    </main>
+  </body>
 </html>
