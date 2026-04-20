@@ -1,295 +1,234 @@
 <!doctype html>
 <html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>問い合わせ・相談 | よへラボ</title>
-    <meta name="description" content="使い方の質問、不具合連絡、解約申請を受ける問い合わせページ。プロプランの申込みはStripeで行い、このページは相談用。" />
-    <meta property="og:title" content="問い合わせ・相談 | よへラボ" />
-    <meta property="og:description" content="使い方の質問や不具合連絡を受ける問い合わせページ。プロプランの申込みはStripeで行う。" />
-    <meta property="og:type" content="website" />
-    <meta property="og:locale" content="ja_JP" />
-    <meta property="og:url" content="https://yohelab.com/contact/" />
-    <meta property="og:image" content="https://yohelab.com/yohelab-icon.png" />
-    <meta name="twitter:card" content="summary" />
-    <meta name="robots" content="index,follow" />
-    <meta name="theme-color" content="#0d6b58" />
-    <link rel="canonical" href="https://yohelab.com/contact/" />
-    <link rel="icon" type="image/png" href="/yohelab-icon.png" />
-    <link rel="stylesheet" href="/shared/site.css" />
-  </head>
-  <body>
-    <header class="shell topbar">
-      <a class="brand" href="/">
-        <img src="/yohelab-icon.png" alt="よへラボのアイコン" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>問い合わせ・相談 | よへラボ</title>
+  <meta name="description" content="使い方の質問、不具合連絡、解約申請を受ける問い合わせページ。プロプランの申込みはStripeで行い、このページは相談用。" />
+  <meta property="og:title" content="問い合わせ・相談 | よへラボ" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://yohelab.com/contact/" />
+  <meta property="og:image" content="https://yohelab.com/yohelab-icon.png" />
+  <meta name="theme-color" content="#050f0c" />
+  <link rel="icon" type="image/png" href="../yohelab-icon.png" />
+  <link rel="stylesheet" href="/shared/site.css" />
+  <link rel="stylesheet" href="/shared/lp.css" />
+  <style>
+    .contact-hero {
+      padding: 80px 0 60px;
+      background: linear-gradient(180deg, #050f0c 0%, #091a14 100%);
+      color: #fff; text-align: center; position: relative; overflow: hidden;
+    }
+    .contact-hero-grid {
+      position: absolute; inset: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(16,184,146,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(16,184,146,.04) 1px, transparent 1px);
+      background-size: 56px 56px;
+      mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 0%, transparent 78%);
+      -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 0%, transparent 78%);
+    }
+    .contact-hero h1 { font-size: clamp(34px,5vw,56px); font-weight:900; letter-spacing:-0.05em; line-height:1.1; margin-bottom:16px; }
+    .contact-hero p  { font-size:16px; color:rgba(255,255,255,.62); max-width:520px; margin:0 auto; line-height:1.88; }
+    .contact-body { background:#fff; border-radius:28px 28px 0 0; margin-top:-28px; position:relative; z-index:2; }
+    .contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:28px; align-items:start; }
+    .contact-form-box {
+      padding:36px 32px; border-radius:24px;
+      border:1.5px solid var(--green-mid);
+      background:linear-gradient(175deg,#fff 0%,#f4fbf8 100%);
+      box-shadow: 0 4px 18px rgba(11,143,114,.10);
+    }
+    .contact-form-box h2 { font-size:22px; font-weight:900; letter-spacing:-0.03em; margin-bottom:22px; }
+    .contact-form-box label { display:grid; gap:6px; font-size:14px; font-weight:700; color:var(--text); margin-bottom:14px; }
+    .contact-form-box input,
+    .contact-form-box textarea,
+    .contact-form-box select { font-size:15px; }
+    .contact-info-box { display:flex; flex-direction:column; gap:16px; }
+    .contact-info-card {
+      padding:24px 22px; border-radius:20px;
+      border:1px solid var(--border); background:#fff; box-shadow:var(--shadow-sm);
+    }
+    .contact-info-card h3 { font-size:15px; font-weight:900; margin-bottom:12px; letter-spacing:-0.02em; }
+    .contact-info-card ul { display:grid; gap:8px; }
+    .contact-info-card li { font-size:14px; line-height:1.7; color:var(--muted); padding-left:16px; position:relative; }
+    .contact-info-card li::before { content:"→"; position:absolute; left:0; color:var(--green); font-weight:900; }
+    .contact-notice {
+      padding:14px 18px; border-radius:14px;
+      background:#eff6ff; border:1px solid #bfdbfe;
+      color:#1e40af; font-size:14px; line-height:1.7; margin-bottom:18px;
+    }
+    .contact-notice strong { display:block; margin-bottom:4px; font-size:15px; }
+    .thanks-box { display:none; padding:24px; border-radius:16px; background:var(--green-light); border:1.5px solid var(--green-mid); margin-bottom:20px; }
+    .thanks-box.show { display:block; }
+    .thanks-box h3 { font-size:18px; font-weight:900; color:var(--green-dark); margin-bottom:8px; }
+    .thanks-box p { font-size:14px; color:var(--green-dark); margin:0; line-height:1.75; }
+    @media(max-width:780px){ .contact-grid{grid-template-columns:1fr;} .contact-body{border-radius:20px 20px 0 0;} }
+    @media(max-width:580px){ .contact-form-box{padding:24px 20px;} }
+  </style>
+</head>
+<body>
+  <header class="nav lp-nav">
+    <div class="nav-inner">
+      <a class="brand brand-light" href="/">
+        <img src="/yohelab-icon.png" alt="よへラボ" />
         <span>よへラボ</span>
+        <span class="brand-sub">問い合わせ</span>
       </a>
-      <nav class="mini-nav">
+      <nav class="nav-links">
         <a href="/">トップ</a>
-        <a href="/#tools">ツール一覧</a>
-        <a href="/#plan">料金</a>
-        <a href="/legal/privacy/">プライバシー</a>
+        <a href="/#tools">AIツール</a>
+        <a href="/games/">ゲーム</a>
+        <a href="/labs/">Labs</a>
       </nav>
-    </header>
+    </div>
+  </header>
 
-    <main class="shell">
-      <section class="hero">
-        <div class="hero-grid">
-          <div>
-          <div class="eyebrow">問い合わせ・相談</div>
-            <h1>使い方の質問や不具合は、ここから送る。</h1>
-            <p class="lead">
-              申込みは各ページのStripeから進める。このページは、使い方の確認やリンク切れ、不具合の相談だけを受ける。
-            </p>
-            <div class="notice" style="margin-top: 18px;">
-              <strong>申込みの流れ</strong><br />
-              1. 無料版を試す。<br />
-              2. 気に入ったツールのStripeリンクを開く。<br />
-              3. 決済後のメールで専用URLを受け取って使い始める。
-            </div>
-            <p class="mini-note" style="margin-top:16px;">ツールでは足りない場合だけ、軽い導線整理や自動化の相談もここで受ける。</p>
-          </div>
-          <aside class="panel stack">
-            <h2>まず送ると早い内容</h2>
-            <ul class="detail-list">
-              <li><strong>使いたいツール名</strong>案件レーダー / AI応募文アシスタント / AI応募文最適化 / AI文章整形 / X補助 / EC説明 / AIOミニ診断 など。</li>
-              <li><strong>何をしたいか</strong>使い方を聞きたい、解約したい、リンク切れを伝えたい、など。</li>
-              <li><strong>困っていること</strong>案件探し、応募文、発信、商品説明、見つけられやすさ、など。</li>
-            </ul>
-          </aside>
-        </div>
-      </section>
-
-      <section class="section">
-        <div class="section-head">
-          <h2>問い合わせフォーム</h2>
-          <p>このページは問い合わせ用。申込みはStripe、質問や不具合だけここで送る。</p>
-        </div>
-        <div class="grid contact-grid">
-          <form class="panel stack" id="contact-form">
-            <label>使いたいツール
-              <select id="tool" name="tool" required>
-                <option value="案件レーダー">案件レーダー</option>
-                <option value="AI応募文アシスタント">AI応募文アシスタント</option>
-                <option value="AI応募文最適化">AI応募文最適化</option>
-                <option value="AI文章整形">AI文章整形</option>
-                <option value="X返信・投稿補助">X返信・投稿補助</option>
-                <option value="EC商品説明・Q&A整備">EC商品説明・Q&A整備</option>
-                <option value="AIOミニ診断">AIOミニ診断</option>
-              </select>
-            </label>
-            <div class="row">
-              <label>名前
-                <input id="name" name="name" autocomplete="name" required />
-              </label>
-              <label>返信先メール
-                <input id="email" name="email" type="email" autocomplete="email" required />
-              </label>
-            </div>
-            <label>何をしたいか
-              <select id="purpose" name="purpose" required>
-                <option value="使い方を確認したい">使い方を確認したい</option>
-                <option value="解約したい">解約したい</option>
-                <option value="リンク切れや不具合を伝えたい">リンク切れや不具合を伝えたい</option>
-                <option value="文章を整えたい">文章を整えたい</option>
-                <option value="自分向けに少し調整したい">自分向けに少し調整したい</option>
-                <option value="導線や自動化を相談したい">導線や自動化を相談したい</option>
-              </select>
-            </label>
-            <label>ひとこと
-              <textarea id="message" name="message" placeholder="困っていることや、試した無料版があれば書くと早い。"></textarea>
-            </label>
-            <input class="hidden-field" type="text" name="website" tabindex="-1" autocomplete="off" />
-            <button class="button primary" type="submit">問い合わせを送る</button>
-            <p class="mini-note">送信内容は問い合わせ対応のために使う。ページ上にメールアドレスは出さない。</p>
-          </form>
-
-          <div class="stack">
-            <div class="card success-box" id="thanks-box" hidden>
-              <div class="tag">送信完了</div>
-              <h3>ありがとう。内容を受け取った。</h3>
-              <p>順番に確認して、必要なら返事を返す。入力したメールアドレスを見直したい時は、もう一度このフォームから送って大丈夫。</p>
-            </div>
-            <article class="card">
-              <div class="tag">送信前に見るところ</div>
-              <ul class="detail-list">
-                <li><strong>案件レーダー</strong>無料版で候補の並び方と除外の効き方を見る。</li>
-                <li><strong>応募文系</strong>下書きの骨組みがそのまま使えそうかを見る。</li>
-                <li><strong>EC / AIO</strong>出力の方向が自分の用途に近いかを見る。</li>
-              </ul>
-            </article>
-            <article class="card">
-              <div class="tag">送信後</div>
-              <div class="steps">
-                <div class="step"><strong>1. 内容確認</strong>送った内容を元に、必要な案内を整理する。</div>
-                <div class="step"><strong>2. 必要なら返事を返す</strong>使い方や不具合の確認を返す。</div>
-                <div class="step"><strong>3. 申込みはStripeで進める</strong>気に入ったら各プランページからそのまま決済する。</div>
-              </div>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="section">
-        <div class="section-head">
-          <h2>各ツールのプロプランページ</h2>
-            <p>プロプランの申込みは、各ツールごとの案内ページから進める。ここは質問、不具合、解約申請用。</p>
-        </div>
-        <div class="cards">
-          <article class="card" id="radar">
-            <div class="tag">主役</div>
-            <h3>案件レーダー</h3>
-            <p>条件保存、候補整理、提案文の複数案。毎朝の案件探しを10分に変える。月額980円・初月無料。</p>
-            <div class="inline-actions">
-              <a class="button primary" href="/products/radar-beta/">案内ページを見る</a>
-            </div>
-          </article>
-          <article class="card" id="proposal">
-            <div class="tag">関連</div>
-            <h3>AI応募文アシスタント</h3>
-            <p>案件名と自分の強みだけで応募文の下書きを返す。案件文が手元にないとき向け。月額980円・初月無料。</p>
-            <div class="inline-actions">
-              <a class="button primary" href="/products/proposal-beta/">案内ページを見る</a>
-            </div>
-          </article>
-          <article class="card" id="proposal-optimizer">
-            <div class="tag">関連</div>
-            <h3>AI応募文最適化</h3>
-            <p>件名案、冒頭3行、応募文、送信前チェックをまとめて整える。月額980円・初月無料。</p>
-            <div class="inline-actions">
-              <a class="button primary" href="/products/proposal-optimizer-beta/">案内ページを見る</a>
-            </div>
-          </article>
-          <article class="card" id="article-polish">
-            <div class="tag">新機能</div>
-            <h3>AI文章整形</h3>
-            <p>相談メモやラフな下書きを、読みやすいブログ・LP・サービス紹介文に整える。SEO/AIOも意識できる。</p>
-            <div class="inline-actions">
-              <a class="button primary" href="/products/article-polish-beta/">案内ページを見る</a>
-            </div>
-          </article>
-          <article class="card" id="x-helper">
-            <div class="tag">関連</div>
-            <h3>X返信・投稿補助</h3>
-            <p>切り口違い・保存・トーン別返答。Xの発信を毎日続けるための機能。月額980円・初月無料。</p>
-            <div class="inline-actions">
-              <a class="button primary" href="/products/x-helper-beta/">案内ページを見る</a>
-            </div>
-          </article>
-          <article class="card" id="ec-copy">
-            <div class="tag">追加</div>
-            <h3>EC商品説明・Q&amp;A整備</h3>
-            <p>複数トーン・売り方違い・ページ別整形。商品ページをまとめて整える。月額980円・初月無料。</p>
-            <div class="inline-actions">
-              <a class="button primary" href="/products/ec-copy-beta/">案内ページを見る</a>
-            </div>
-          </article>
-          <article class="card" id="aio-mini">
-            <div class="tag">追加</div>
-            <h3>AIOミニ診断</h3>
-            <p>改善項目の整理・見出し叩き台・FAQ生成。サイトを見つかりやすく整える。月額980円・初月無料。</p>
-            <div class="inline-actions">
-              <a class="button primary" href="/products/aio-mini-beta/">案内ページを見る</a>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <section class="section">
-        <div class="cards">
-          <article class="card">
-            <div class="tag">問い合わせの流れ</div>
-            <h3>困りごとは、この順で送る</h3>
-            <div class="steps">
-              <div class="step"><strong>1. 無料版を試す</strong>まず出力や使い心地を確認する。</div>
-              <div class="step"><strong>2. Stripeで申し込む</strong>プロプランに進む人は各ページから決済する。</div>
-              <div class="step"><strong>3. 相談だけ送る</strong>使い方や不具合はこのフォームで送る。</div>
-            </div>
-          </article>
-          <article class="card">
-            <div class="tag">送信先</div>
-            <h3>問い合わせを受け付ける</h3>
-            <div class="link-list">
-              <a href="#contact-form">問い合わせフォームへ戻る</a>
-              <a href="https://buy.stripe.com/aFa5kv9vpb5K7WO1UB73G0b?client_reference_id=all-tools" target="_blank" rel="noreferrer">全ツールパックを見る</a>
-              <a href="/legal/commerce/">特定商取引法に関する表示</a>
-              <a href="/legal/privacy/">プライバシーポリシー</a>
-              <a href="/legal/terms/">利用規約</a>
-            </div>
-          </article>
-        </div>
-      </section>
-    </main>
-
-    <footer class="shell footer">
-      <div>よへラボ / 問い合わせ</div>
-      <div class="footer-links">
-        <a href="/">トップ</a>
-        <a href="/legal/commerce/">特定商取引法に関する表示</a>
-        <a href="/legal/privacy/">プライバシーポリシー</a>
-        <a href="/legal/terms/">利用規約</a>
+  <main>
+    <section class="contact-hero">
+      <div class="contact-hero-grid" aria-hidden="true"></div>
+      <div class="container" style="position:relative;z-index:1;">
+        <p class="lp-eyebrow reveal" style="justify-content:center;display:inline-flex;">💬 問い合わせ・相談</p>
+        <h1 class="reveal reveal-d1">使い方の質問や<br>不具合はここから</h1>
+        <p class="reveal reveal-d2">プロプランの申込みは各ページのStripeから。<br>このページは使い方の確認・不具合・解約申請・個別相談を受ける。</p>
       </div>
-    </footer>
-    <script>
-      const form = document.getElementById("contact-form");
-      const toolSelect = document.getElementById("tool");
-      const purposeSelect = document.getElementById("purpose");
-      const thanksBox = document.getElementById("thanks-box");
-      const hiddenField = form.querySelector('input[name="website"]');
-      const endpoint = ["yohelab2026", "gmail.com"];
+    </section>
 
-      form.addEventListener("submit", async (event) => {
-        event.preventDefault();
+    <div class="contact-body">
+      <section style="padding:64px 0 80px;">
+        <div class="container">
+          <div class="contact-grid">
+            <!-- フォーム -->
+            <div class="contact-form-box reveal">
+              <h2>問い合わせフォーム</h2>
+              <div class="contact-notice">
+                <strong>申込みの流れ</strong>
+                まず無料版を試す → 気に入ったツールのStripeリンクで決済 → メールで専用URLを受け取って使い始める。
+              </div>
+              <div class="thanks-box" id="thanks-box">
+                <h3>ありがとう。内容を受け取った。</h3>
+                <p>順番に確認して、必要なら返事を返す。入力したメールアドレスを見直したい時は、もう一度このフォームから送って大丈夫。</p>
+              </div>
+              <form id="contact-form" class="stack">
+                <label>使いたいツール
+                  <select id="tool" name="tool" required>
+                    <option value="案件レーダー">案件レーダー</option>
+                    <option value="AI応募文アシスタント">AI応募文アシスタント</option>
+                    <option value="AI応募文最適化">AI応募文最適化</option>
+                    <option value="AI文章整形">AI文章整形</option>
+                    <option value="X返信・投稿補助">X返信・投稿補助</option>
+                    <option value="EC商品説明・Q&A整備">EC商品説明・Q&A整備</option>
+                    <option value="AIOミニ診断">AIOミニ診断</option>
+                    <option value="その他・全般">その他・全般</option>
+                  </select>
+                </label>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                  <label>名前<input id="name" name="name" autocomplete="name" required /></label>
+                  <label>返信先メール<input id="email" name="email" type="email" autocomplete="email" required /></label>
+                </div>
+                <label>何をしたいか
+                  <select id="purpose" name="purpose" required>
+                    <option value="使い方を確認したい">使い方を確認したい</option>
+                    <option value="解約したい">解約したい</option>
+                    <option value="リンク切れや不具合を伝えたい">リンク切れや不具合を伝えたい</option>
+                    <option value="導線や自動化を相談したい">導線や自動化を相談したい</option>
+                    <option value="その他">その他</option>
+                  </select>
+                </label>
+                <label>ひとこと
+                  <textarea id="message" name="message" placeholder="困っていること、試した無料版があれば書くと早い。"></textarea>
+                </label>
+                <input style="position:absolute;left:-9999px;" type="text" name="website" tabindex="-1" autocomplete="off" />
+                <button class="btn btn-primary" type="submit" style="width:100%;height:52px;font-size:16px;">問い合わせを送る</button>
+                <p style="font-size:12.5px;color:var(--muted);margin-top:4px;">送信内容は問い合わせ対応のためだけに使う。</p>
+              </form>
+            </div>
 
-        if (hiddenField.value.trim() !== "") return;
+            <!-- 右側情報 -->
+            <div class="contact-info-box reveal reveal-d1">
+              <div class="contact-info-card">
+                <h3>送信前に見るところ</h3>
+                <ul>
+                  <li>案件レーダー → 無料版で候補の並び方を確認してから</li>
+                  <li>応募文系 → 下書きの骨組みが使えそうかを見てから</li>
+                  <li>EC / AIO → 出力の方向が用途に近いかを確認してから</li>
+                </ul>
+              </div>
+              <div class="contact-info-card">
+                <h3>こういう相談も受ける</h3>
+                <ul>
+                  <li>ツールで足りない場面の導線整理</li>
+                  <li>作業フローの自動化の相談</li>
+                  <li>個別のカスタマイズ依頼</li>
+                </ul>
+              </div>
+              <div class="contact-info-card">
+                <h3>各ツールのプロプランへ</h3>
+                <ul>
+                  <li><a href="/lp/radar/" style="color:var(--green);font-weight:700;">案件レーダー →</a></li>
+                  <li><a href="/lp/proposal-optimizer/" style="color:var(--green);font-weight:700;">AI応募文最適化 →</a></li>
+                  <li><a href="/lp/article-polish/" style="color:var(--green);font-weight:700;">AI文章整形 →</a></li>
+                  <li><a href="https://buy.stripe.com/aFa5kv9vpb5K7WO1UB73G0b?client_reference_id=all-tools" target="_blank" rel="noreferrer" style="color:var(--green);font-weight:700;">全ツールパック ¥1,980/月 →</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
 
-        const submitButton = form.querySelector('button[type="submit"]');
-        submitButton.disabled = true;
-        submitButton.textContent = "送信中...";
+  <footer class="lp-footer">
+    <div class="lp-footer-inner">
+      <div>© よへラボ / yohelab.com</div>
+      <div class="lp-footer-links">
+        <a href="/">トップ</a><a href="/#tools">AIツール</a>
+        <a href="/legal/commerce/">特定商取引法</a><a href="/legal/privacy/">プライバシー</a><a href="/legal/terms/">利用規約</a>
+      </div>
+    </div>
+  </footer>
 
-        const payload = {
-          tool: toolSelect.value,
-          name: document.getElementById("name").value.trim(),
-          email: document.getElementById("email").value.trim(),
-          purpose: purposeSelect.value,
-          message: document.getElementById("message").value.trim() || "なし",
-          _subject: `よへラボ ${toolSelect.value} ${purposeSelect.value}`,
-          _template: "table",
-          _captcha: "false"
-        };
+  <script>
+    const obs = new IntersectionObserver(e => e.forEach(el => { if(el.isIntersecting){el.target.classList.add('visible');obs.unobserve(el.target);} }), {threshold:.08,rootMargin:'0px 0px -40px 0px'});
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+    setTimeout(()=>document.querySelectorAll('.reveal:not(.visible)').forEach(el=>el.classList.add('visible')),800);
 
-        try {
-          const response = await fetch(`https://formsubmit.co/ajax/${endpoint.join("@")}`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json"
-            },
-            body: JSON.stringify(payload)
-          });
+    const form = document.getElementById('contact-form');
+    const toolSel = document.getElementById('tool');
+    const purposeSel = document.getElementById('purpose');
+    const thanksBox = document.getElementById('thanks-box');
+    const hiddenField = form.querySelector('input[name="website"]');
+    const endpoint = ['yohelab2026','gmail.com'];
 
-          if (!response.ok) {
-            throw new Error("send_failed");
-          }
-
-          form.reset();
-          toolSelect.value = payload.tool;
-          thanksBox.hidden = false;
-          thanksBox.scrollIntoView({ behavior: "smooth", block: "start" });
-        } catch (error) {
-          alert("送信できなかった。時間を置いてもう一度試して。");
-        } finally {
-          submitButton.disabled = false;
-          submitButton.textContent = "問い合わせを送る";
-        }
-      });
-
-      document.querySelectorAll(".tool-pick").forEach(btn => {
-        btn.addEventListener("click", () => {
-          toolSelect.value = btn.dataset.tool;
-          document.getElementById("contact-form").scrollIntoView({ behavior: "smooth" });
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      if (hiddenField.value.trim() !== '') return;
+      const btn = form.querySelector('button[type="submit"]');
+      btn.disabled = true; btn.textContent = '送信中...';
+      const payload = {
+        tool: toolSel.value,
+        name: document.getElementById('name').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        purpose: purposeSel.value,
+        message: document.getElementById('message').value.trim() || 'なし',
+        _subject: `よへラボ ${toolSel.value} ${purposeSel.value}`,
+        _template: 'table', _captcha: 'false'
+      };
+      try {
+        const res = await fetch(`https://formsubmit.co/ajax/${endpoint.join('@')}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify(payload)
         });
-      });
-    </script>
-  </body>
+        if (!res.ok) throw new Error('failed');
+        form.reset();
+        thanksBox.classList.add('show');
+        thanksBox.scrollIntoView({ block: 'nearest' });
+      } catch {
+        alert('送信できなかった。時間を置いてもう一度試して。');
+      } finally {
+        btn.disabled = false; btn.textContent = '問い合わせを送る';
+      }
+    });
+  </script>
+</body>
 </html>

@@ -1,65 +1,166 @@
 <!doctype html>
 <html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ゲーム（準備中） | よへラボ</title>
-    <meta name="description" content="よへラボの軽量ブラウザゲーム置き場。現在準備中。" />
-    <meta property="og:title" content="ゲーム（準備中） | よへラボ" />
-    <meta property="og:description" content="よへラボの軽量ブラウザゲーム置き場。現在準備中。" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://yohelab.com/games/" />
-    <meta property="og:image" content="https://yohelab.com/yohelab-icon.png" />
-    <meta property="og:locale" content="ja_JP" />
-    <meta name="robots" content="index,follow" />
-    <meta name="theme-color" content="#0d6b58" />
-    <link rel="canonical" href="https://yohelab.com/games/" />
-    <link rel="icon" type="image/png" href="/yohelab-icon.png" />
-    <link rel="stylesheet" href="/shared/site.css" />
-  </head>
-  <body>
-    <header class="nav">
-      <div class="nav-inner">
-        <a class="brand" href="/">
-          <img src="/yohelab-icon.png" alt="よへラボのアイコン" />
-          <span>よへラボ</span>
-          <span class="brand-sub">AI実務ツール開発</span>
-        </a>
-        <nav class="nav-links">
-          <a href="/tools/">ツール</a>
-          <a href="/labs/">拡張・Labs</a>
-          <a href="/games/">ゲーム</a>
-          <a href="/contact/">問い合わせ</a>
-        </nav>
-      </div>
-    </header>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ゲーム | よへラボ</title>
+  <meta name="description" content="インストール不要・登録不要。ブラウザを開いてすぐ遊べる軽量ゲームを集めた場所。仕事の合間に2分だけ遊ぶ。" />
+  <meta property="og:title" content="ゲーム | よへラボ" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://yohelab.com/games/" />
+  <meta property="og:image" content="https://yohelab.com/yohelab-icon.png" />
+  <meta name="theme-color" content="#050f0c" />
+  <link rel="icon" type="image/png" href="../yohelab-icon.png" />
+  <link rel="stylesheet" href="/shared/site.css" />
+  <link rel="stylesheet" href="/shared/lp.css" />
+  <style>
+    .games-hero {
+      position: relative; overflow: hidden;
+      padding: 100px 0 72px;
+      background:
+        radial-gradient(ellipse 70% 55% at 60% -5%, rgba(99,102,241,.28) 0%, transparent 52%),
+        radial-gradient(ellipse 45% 45% at 5% 80%, rgba(59,130,246,.12) 0%, transparent 60%),
+        linear-gradient(180deg, #07091a 0%, #0d1035 100%);
+      color: #fff;
+    }
+    .games-hero-grid {
+      position: absolute; inset: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(99,102,241,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(99,102,241,.04) 1px, transparent 1px);
+      background-size: 56px 56px;
+      mask-image: radial-gradient(ellipse 75% 65% at 50% 40%, #000 0%, transparent 78%);
+      -webkit-mask-image: radial-gradient(ellipse 75% 65% at 50% 40%, #000 0%, transparent 78%);
+    }
+    .games-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 7px 18px; border-radius: 999px;
+      background: rgba(99,102,241,.14); border: 1px solid rgba(99,102,241,.32);
+      color: #a5b4fc; font-size: 12px; font-weight: 800;
+      letter-spacing: .08em; text-transform: uppercase; margin-bottom: 24px;
+    }
+    .games-hero h1 {
+      font-size: clamp(40px, 6.5vw, 72px);
+      font-weight: 900; letter-spacing: -0.055em; line-height: 1.06;
+      color: #fff; margin-bottom: 20px; text-wrap: balance;
+    }
+    .games-hero h1 em {
+      background: linear-gradient(135deg, #a5b4fc 0%, #818cf8 55%, #6366f1 100%);
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .games-lead { font-size: clamp(16px,1.8vw,18px); color: rgba(255,255,255,.65); line-height:1.9; max-width:640px; margin:0 auto 32px; }
+    .games-body { background: #fff; border-radius: 28px 28px 0 0; margin-top: -28px; position: relative; z-index: 2; }
+    .games-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+    .game-card {
+      display: flex; flex-direction: column; gap: 12px;
+      padding: 30px 24px; border-radius: 22px;
+      border: 1.5px solid #bfdbfe;
+      background: linear-gradient(175deg, #fff 0%, #f0f4ff 100%);
+      text-decoration: none; color: inherit; position: relative; overflow: hidden;
+      transition: transform .22s cubic-bezier(.2,.9,.3,1), box-shadow .22s, border-color .22s;
+    }
+    .game-card:not(.coming-soon):hover { transform: translateY(-5px); box-shadow: 0 8px 28px rgba(99,102,241,.18); border-color: #a5b4fc; }
+    .coming-soon { opacity: .62; background: #f8faff; cursor: default; border-style: dashed; }
+    .coming-tag {
+      position: absolute; top: 14px; right: 14px;
+      background: #dbeafe; color: #1d4ed8;
+      font-size: 10px; font-weight: 900; letter-spacing: .06em; text-transform: uppercase;
+      padding: 3px 10px; border-radius: 999px;
+    }
+    .game-icon { font-size: 40px; line-height: 1; }
+    .game-card h3 { font-size: 19px; font-weight: 900; letter-spacing: -0.025em; margin: 0; }
+    .game-card p  { font-size: 13.5px; color: var(--muted); line-height: 1.75; flex: 1; margin: 0; }
+    .game-cta { font-size: 13px; font-weight: 800; color: #4f46e5; }
+    .coming-soon .game-cta { color: var(--muted-light); }
+    @media(max-width:720px){ .games-grid{grid-template-columns:1fr 1fr;} }
+    @media(max-width:480px){ .games-grid{grid-template-columns:1fr;} .games-body{border-radius:20px 20px 0 0;} }
+  </style>
+</head>
+<body>
+  <header class="nav lp-nav">
+    <div class="nav-inner">
+      <a class="brand brand-light" href="/">
+        <img src="/yohelab-icon.png" alt="よへラボ" />
+        <span>よへラボ</span>
+        <span class="brand-sub">ゲーム</span>
+      </a>
+      <nav class="nav-links">
+        <a href="/">トップ</a>
+        <a href="/#tools">AIツール</a>
+        <a href="/labs/">Labs</a>
+        <a href="/contact/">問い合わせ</a>
+      </nav>
+    </div>
+  </header>
 
-    <main>
-      <section class="section">
-        <div class="container" style="text-align:center;max-width:640px;">
-          <p class="section-label">Games</p>
-          <h1 class="section-title">ミニゲーム置き場 — 準備中</h1>
-          <p class="section-sub">拡散用の軽量ブラウザゲームをここにまとめる予定。まずは本業のAIツール側から着手中。</p>
-          <div style="margin-top:32px;">
-            <a class="btn btn-primary btn-lg" href="/tools/">ツールを見る →</a>
+  <main>
+    <section class="games-hero">
+      <div class="games-hero-grid" aria-hidden="true"></div>
+      <div class="container" style="text-align:center; position:relative; z-index:1;">
+        <p class="games-eyebrow reveal">🎮 ゲーム — 遊ぶ</p>
+        <h1 class="reveal reveal-d1">仕事の合間に<br><em>2分だけ遊ぶ</em></h1>
+        <p class="games-lead reveal reveal-d2">インストールなし、登録なし。ブラウザを開いてすぐ遊べる。集中が切れたとき、頭を切り替えたいとき、ちょうどいい軽さ。</p>
+        <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;" class="reveal reveal-d3">
+          <span style="font-size:13px;color:rgba(255,255,255,.45);font-weight:600;">✓ インストール不要</span>
+          <span style="font-size:13px;color:rgba(255,255,255,.45);font-weight:600;">✓ 登録不要</span>
+          <span style="font-size:13px;color:rgba(255,255,255,.45);font-weight:600;">✓ 無料</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="games-body">
+      <section style="padding: 64px 0 80px;">
+        <div class="container">
+          <div class="lp-section-head reveal">
+            <p class="lp-section-kicker" style="color:#4f46e5;">ゲーム一覧</p>
+            <h2 class="lp-section-title">今すぐ遊べるゲーム</h2>
+            <p class="lp-section-sub">仕事の合間の2分リセットに。重い処理なし、広告なし。タブを開いてすぐ始められる。</p>
+          </div>
+          <div class="games-grid">
+            <a class="game-card reveal" href="/games/">
+              <div class="game-icon">🎯</div>
+              <h3>ミニゲーム</h3>
+              <p>まずはここから。ブラウザで今すぐ遊べるゲームをまとめた一覧ページ。</p>
+              <span class="game-cta">遊んでみる →</span>
+            </a>
+            <div class="game-card coming-soon reveal reveal-d1">
+              <span class="coming-tag">準備中</span>
+              <div class="game-icon">🧩</div>
+              <h3>パズルゲーム</h3>
+              <p>1〜3分で終わる軽量パズル。集中力が戻る難易度に調整済み。</p>
+              <span class="game-cta">もうすぐ公開</span>
+            </div>
+            <div class="game-card coming-soon reveal reveal-d2">
+              <span class="coming-tag">準備中</span>
+              <div class="game-icon">⚡</div>
+              <h3>スピードゲーム</h3>
+              <p>反射と判断力をフル活用。短時間で頭がシャキッとするゲーム。</p>
+              <span class="game-cta">もうすぐ公開</span>
+            </div>
+          </div>
+
+          <div style="margin-top:56px;text-align:center;" class="reveal">
+            <p style="font-size:15px;color:var(--muted);margin-bottom:20px;">仕事のツールも一緒にどうぞ</p>
+            <a class="btn btn-primary btn-lg" href="/#tools">AIツールを見る →</a>
           </div>
         </div>
       </section>
-    </main>
+    </div>
+  </main>
 
-    <footer class="footer">
-      <div class="footer-inner">
-        <div>© よへラボ / yohelab.com</div>
-        <div class="footer-links">
-          <a href="/tools/">ツール</a>
-          <a href="/labs/">Labs</a>
-          <a href="/games/">ゲーム</a>
-          <a href="/contact/">問い合わせ</a>
-          <a href="/legal/commerce/">特定商取引法</a>
-          <a href="/legal/privacy/">プライバシー</a>
-          <a href="/legal/terms/">利用規約</a>
-        </div>
+  <footer class="lp-footer">
+    <div class="lp-footer-inner">
+      <div>© よへラボ / yohelab.com</div>
+      <div class="lp-footer-links">
+        <a href="/">トップ</a><a href="/#tools">AIツール</a><a href="/labs/">Labs</a>
+        <a href="/contact/">問い合わせ</a><a href="/legal/privacy/">プライバシー</a><a href="/legal/terms/">利用規約</a>
       </div>
-    </footer>
-  </body>
+    </div>
+  </footer>
+  <script>
+    const obs = new IntersectionObserver(e => e.forEach(el => { if(el.isIntersecting){el.target.classList.add('visible');obs.unobserve(el.target);} }), {threshold:.08,rootMargin:'0px 0px -40px 0px'});
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+    setTimeout(()=>document.querySelectorAll('.reveal:not(.visible)').forEach(el=>el.classList.add('visible')),800);
+  </script>
+</body>
 </html>
