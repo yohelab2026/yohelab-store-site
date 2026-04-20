@@ -23,42 +23,47 @@ checks.push(["home links radar lp", home.includes('/lp/radar/')]);
 checks.push(["home links proposal lp", home.includes('/lp/proposal/')]);
 checks.push(["home links new app lp", home.includes('/lp/proposal-optimizer/')]);
 checks.push(["home links article polish lp", home.includes('/lp/article-polish/')]);
-checks.push(["home headline", home.includes('探す、応募する、整える。')]);
-checks.push(["home hero eyebrow", home.includes('ひとりで稼ぐ人向けのAI実務ツール')]);
-checks.push(["home tools section", home.includes('最初に見せるべきツールを、前に出す。')]);
-checks.push(["home focus on three", home.includes('まず使うのはこの3本')]);
-checks.push(["home no labs in nav", !home.includes('>拡張・Labs<')]);
+checks.push(["home headline", home.includes('止まりやすい仕事を')]);
+checks.push(["home hero eyebrow", home.includes('ひとりで稼ぐ人のためのAI実務ツール')]);
+checks.push(["home tools section", home.includes('主役3本')]);
+checks.push(["home focus on three", home.includes('探す・応募する・整える')]);
+checks.push(["home plan anchor", home.includes('id="plan"')]);
+checks.push(["home no vague price", !home.includes('月額¥980〜')]);
+checks.push(["home no labs link", !home.includes('href="/labs/"')]);
+checks.push(["home no labs nav", !home.includes('>Labs<')]);
 checks.push(["home no games in nav", !home.includes('>ゲーム<')]);
 
 const lpRadar = read(dist("lp/radar/index.html"));
-checks.push(["lp radar title", lpRadar.includes('案件レーダー LP')]);
+checks.push(["lp radar title", lpRadar.includes('案件レーダー | よへラボ')]);
 checks.push(["lp radar free", lpRadar.includes('無料版を試す')]);
 checks.push(["lp radar pro", lpRadar.includes('初月無料で始める')]);
-checks.push(["lp radar paid label", lpRadar.includes('有料版で増えるもの')]);
+checks.push(["lp radar paid label", lpRadar.includes('プロプランで増えるもの')]);
+checks.push(["lp radar no internal copy", !lpRadar.includes('LPの役目')]);
 
 const lpProposal = read(dist("lp/proposal/index.html"));
-checks.push(["lp proposal title", lpProposal.includes('AI応募文アシスタント LP')]);
+checks.push(["lp proposal title", lpProposal.includes('AI応募文アシスタント | よへラボ')]);
 checks.push(["lp proposal free", lpProposal.includes('無料版を試す')]);
 
 const lpProposalOptimizer = read(dist("lp/proposal-optimizer/index.html"));
-checks.push(["lp proposal optimizer title", lpProposalOptimizer.includes('AI応募文最適化 LP')]);
+checks.push(["lp proposal optimizer title", lpProposalOptimizer.includes('AI応募文最適化 | よへラボ')]);
 checks.push(["lp proposal optimizer free", lpProposalOptimizer.includes('無料版を試す')]);
 checks.push(["lp proposal optimizer pro", lpProposalOptimizer.includes('件名案')]);
 
 const lpArticlePolish = read(dist("lp/article-polish/index.html"));
-checks.push(["lp article polish title", lpArticlePolish.includes('AI文章整形 LP')]);
+checks.push(["lp article polish title", lpArticlePolish.includes('AI文章整形 | よへラボ')]);
 checks.push(["lp article polish free", lpArticlePolish.includes('無料版を試す')]);
 checks.push(["lp article polish pro", lpArticlePolish.includes('全ツールパックで使う')]);
-checks.push(["lp article polish paid label", lpArticlePolish.includes('有料版で増えるもの')]);
+checks.push(["lp article polish paid label", lpArticlePolish.includes('プロプランで増えるもの')]);
+checks.push(["lp article polish no internal copy", !lpArticlePolish.includes('LPの役目')]);
 
 const lpXHelper = read(dist("lp/x-helper/index.html"));
-checks.push(["lp x helper title", lpXHelper.includes('AI X返信・投稿補助 LP')]);
+checks.push(["lp x helper title", lpXHelper.includes('AI X返信・投稿補助 | よへラボ')]);
 
 const lpEcCopy = read(dist("lp/ec-copy/index.html"));
-checks.push(["lp ec copy title", lpEcCopy.includes('EC商品説明・Q&amp;A整備 LP')]);
+checks.push(["lp ec copy title", lpEcCopy.includes('EC商品説明・Q&amp;A整備 | よへラボ')]);
 
 const lpAioMini = read(dist("lp/aio-mini/index.html"));
-checks.push(["lp aio mini title", lpAioMini.includes('AIOミニ診断 LP')]);
+checks.push(["lp aio mini title", lpAioMini.includes('AIOミニ診断 | よへラボ')]);
 
 const app = read(dist("apps/proposal-optimizer/index.html"));
 checks.push(["app title", app.includes('AI応募文最適化')]);
@@ -123,6 +128,9 @@ checks.push(["contact includes article polish", contact.includes('AI文章整形
 const tools = read(dist("tools/index.html"));
 checks.push(["tools page title", tools.includes('AI実務ツール一覧')]);
 checks.push(["tools page mentions article polish", tools.includes('AI文章整形')]);
+checks.push(["tools page no labs card", !tools.includes('Labs（WordPress・Chrome拡張）')]);
+checks.push(["tools page no labs wordpress link", !tools.includes('/labs/wordpress/')]);
+checks.push(["tools page no labs chrome link", !tools.includes('/labs/chrome/')]);
 checks.push(["tools page no games nav", !tools.includes('>ゲーム<')]);
 
 const commerce = read(dist("legal/commerce/index.html"));

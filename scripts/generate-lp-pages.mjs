@@ -11,7 +11,7 @@ const pages = [
     slug: "radar",
     path: "/lp/radar/",
     name: "案件レーダー",
-    title: "案件レーダー LP | よへラボ",
+    title: "案件レーダー | よへラボ",
     description: "案件探しを朝10分にしたい人向けの案内ページ。無料版で案件候補と応募文の下書きを試して、合えば月額980円のプロプランへ進める。",
     eyebrow: "案件探しAI",
     heroTitle: "案件を探す・選ぶ・書くを、1本にまとめる。",
@@ -54,7 +54,7 @@ const pages = [
     slug: "proposal",
     path: "/lp/proposal/",
     name: "AI応募文アシスタント",
-    title: "AI応募文アシスタント LP | よへラボ",
+    title: "AI応募文アシスタント | よへラボ",
     description: "案件名と自分の強みだけで応募文の下書きを作る案内ページ。無料版で1案を試して、合えば月額980円のプロプランへ進める。",
     eyebrow: "応募文の下書き",
     heroTitle: "案件名と強みだけで、応募文の下書きが出る。",
@@ -97,7 +97,7 @@ const pages = [
     slug: "proposal-optimizer",
     path: "/lp/proposal-optimizer/",
     name: "AI応募文最適化",
-    title: "AI応募文最適化 LP | よへラボ",
+    title: "AI応募文最適化 | よへラボ",
     description: "案件文を貼るだけで、件名案・冒頭3行・応募文・送信前チェックまで返る案内ページ。無料版で1回試して、合えば月額980円のプロプランへ進める。",
     eyebrow: "応募直前の仕上げ",
     heroTitle: "案件文を貼ると、件名案から送信前チェックまで返る。",
@@ -140,7 +140,7 @@ const pages = [
     slug: "article-polish",
     path: "/lp/article-polish/",
     name: "AI文章整形",
-    title: "AI文章整形 LP | よへラボ",
+    title: "AI文章整形 | よへラボ",
     description: "相談メモやラフな下書きを、人が読みやすいブログ・LP・note・サービス紹介文に整える案内ページ。無料版で1回試して、合えば全ツールパックで使える。",
     eyebrow: "文章を整えるAI",
     heroTitle: "相談メモを、読まれる文章に整える。",
@@ -185,7 +185,7 @@ const pages = [
     slug: "x-helper",
     path: "/lp/x-helper/",
     name: "AI X返信・投稿補助",
-    title: "AI X返信・投稿補助 LP | よへラボ",
+    title: "AI X返信・投稿補助 | よへラボ",
     description: "Xでの投稿と返信を短くする案内ページ。無料版で3案を試して、合えば月額980円のプロプランへ進める。",
     eyebrow: "X発信の下書き",
     heroTitle: "Xの発信と返信を、まとめて下書きにする。",
@@ -228,7 +228,7 @@ const pages = [
     slug: "ec-copy",
     path: "/lp/ec-copy/",
     name: "EC商品説明・Q&A整備",
-    title: "EC商品説明・Q&A整備 LP | よへラボ",
+    title: "EC商品説明・Q&A整備 | よへラボ",
     description: "商品説明文とQ&Aをまとめて整える案内ページ。無料版で3パターンを試して、合えば月額980円のプロプランへ進める。",
     eyebrow: "EC向けコピー",
     heroTitle: "商品説明とQ&Aを、売り方違いで整える。",
@@ -271,7 +271,7 @@ const pages = [
     slug: "aio-mini",
     path: "/lp/aio-mini/",
     name: "AIOミニ診断",
-    title: "AIOミニ診断 LP | よへラボ",
+    title: "AIOミニ診断 | よへラボ",
     description: "AI検索で見つかりやすいかをざっくり確かめる案内ページ。無料版で見え方を試して、合えば月額980円のプロプランへ進める。",
     eyebrow: "AI検索の見え方",
     heroTitle: "AI検索で見つかる見え方を、先に整える。",
@@ -726,10 +726,10 @@ function renderPage(page) {
               <a class="btn btn-primary btn-lg" href="${page.freeHref}">無料版を試す →</a>
               <a class="btn btn-lg" style="color:rgba(255,255,255,.86);border:1.5px solid rgba(255,255,255,.25);" href="${page.buyHref}" target="_blank" rel="noreferrer">${esc(page.buyLabel || "初月無料で始める")}</a>
             </div>
-            <p class="lp-hero-note">無料版で相性を見て、合えば有料版へ。全部ブラウザでそのまま使える。</p>
+            <p class="lp-hero-note">無料版で相性を見て、合えばプロプランへ。全部ブラウザでそのまま使える。</p>
             <div class="lp-band">
               <div class="lp-card"><h3>無料版</h3><p>まず1回試して、返ってくるものを見る。合うかどうかの判断に使う。</p></div>
-              <div class="lp-card"><h3>有料版</h3><p>比較や保存まで広げて、毎日の作業を短くする。使い方に合うならそこで続ける。</p></div>
+              <div class="lp-card"><h3>プロプラン</h3><p>比較や保存まで広げて、毎日の作業を短くする。使い方に合うならそこで続ける。</p></div>
               <div class="lp-card"><h3>導線</h3><p>無料版からそのまま進める。途中で止まりにくい順番にしている。</p></div>
             </div>
           </div>
@@ -740,7 +740,7 @@ function renderPage(page) {
         <div class="container">
           <div class="lp-mini-head">
             <h2>${esc(page.compareHeadline)}</h2>
-            <p>無料版で先に試せるものを見せて、プロプランで増えるものをそのまま比べる。</p>
+            <p>無料で返ってくるものと、プロプランで増える機能を同じ画面で比べられる。</p>
           </div>
           <div class="lp-preview">
       <div class="lp-preview-box">
@@ -757,11 +757,11 @@ function renderPage(page) {
               <p style="margin-top:18px;"><a class="btn btn-primary" href="${page.freeHref}">無料版を試す →</a></p>
             </div>
             <div class="lp-side-box">
-              <h3>有料版で増えるもの</h3>
+              <h3>プロプランで増えるもの</h3>
               <ul>
                 ${page.proCards.map((item) => `<li>${esc(item.text)}</li>`).join("")}
               </ul>
-              <p class="lp-note">無料版で相性を見て、必要ならそのまま有料版へ進める。</p>
+              <p class="lp-note">無料版で相性を見て、必要ならそのままプロプランへ進める。</p>
               <p style="margin-top:16px;"><a class="btn btn-primary" href="${page.buyHref}" target="_blank" rel="noreferrer" style="width:100%;">${esc(page.buyLabel || "初月無料で始める")}</a></p>
             </div>
           </div>
@@ -772,7 +772,7 @@ function renderPage(page) {
         <div class="container">
           <p class="section-label">Fit</p>
           <h2 class="section-title">こういう人に向いている</h2>
-          <p class="section-sub">LPの役目は、合う人を先に見せること。使う人を絞るほど売りやすくなる。</p>
+          <p class="section-sub">合う人・合わない人がすぐ分かるように、使いどころを先に絞っている。</p>
           <div class="lp-grid-3">
             ${fitCards}
           </div>
@@ -782,14 +782,14 @@ function renderPage(page) {
       <section class="section section-alt">
         <div class="container">
           <p class="section-label">Compare</p>
-          <h2 class="section-title">無料版と有料版の違い</h2>
+          <h2 class="section-title">無料版とプロプランの違い</h2>
           <div class="lp-table-wrap">
             <table class="lp-table">
               <thead>
                 <tr>
                   <th>機能</th>
                   <th>無料版</th>
-                  <th>有料版</th>
+                  <th>プロプラン</th>
                 </tr>
               </thead>
               <tbody>
@@ -829,7 +829,7 @@ function renderPage(page) {
             <a class="btn btn-primary btn-lg" href="${page.buyHref}" target="_blank" rel="noreferrer">${esc(page.buyLabel || "初月無料で始める")}</a>
           </div>
           <p class="lp-note">複数ツールをまとめて使いたい場合は、<a href="${allToolsHref}" target="_blank" rel="noreferrer" style="color:var(--green);font-weight:800;">全ツールパック</a>も使える。</p>
-          <p class="lp-note"><a href="${page.productHref}" style="color:var(--green);font-weight:800;">有料版の詳細を見る →</a></p>
+          <p class="lp-note"><a href="${page.productHref}" style="color:var(--green);font-weight:800;">プロプランの詳細を見る →</a></p>
         </div>
       </section>
     </main>

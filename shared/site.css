@@ -1325,15 +1325,16 @@ details.faq[open] summary::after {
   text-decoration: underline;
 }
 
-/* Other section (Labs / Contact) */
+/* Other section (Contact) */
 .top-other-section {
   background: var(--bg);
   padding: 32px 0 64px;
 }
 .top-other-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 14px;
+  max-width: 720px;
 }
 .top-other-card {
   display: flex;
