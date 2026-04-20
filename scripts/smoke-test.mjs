@@ -29,7 +29,7 @@ checks.push(["home tools section", home.includes('案件探し・応募文・文
 checks.push(["home focus on three", home.includes('また止まった') && home.includes('なくなっていく')]);
 checks.push(["home pricing bundle", home.includes('全ツールパック ¥1,980/月')]);
 checks.push(["home no vague price", !home.includes('月額¥980〜')]);
-checks.push(["home proof screenshots", home.includes('/proof/radar-app.png') && home.includes('/proof/proposal-optimizer-app.png')]);
+checks.push(["home proof screenshots", home.includes('raw.githubusercontent.com/yohelab2026/yohelab-store-site/main/public/proof/radar-app.png') && home.includes('raw.githubusercontent.com/yohelab2026/yohelab-store-site/main/public/proof/proposal-optimizer-app.png')]);
 checks.push(["home proof voices", home.includes('テスト時によく出る反応')]);
 
 const lpRadar = read(dist("lp/radar/index.html"));

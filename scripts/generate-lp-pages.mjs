@@ -5,6 +5,8 @@ const root = resolve(process.cwd());
 const out = (p) => resolve(root, p);
 
 const allToolsHref = "https://buy.stripe.com/aFa5kv9vpb5K7WO1UB73G0b?client_reference_id=all-tools";
+const proofBase = "https://raw.githubusercontent.com/yohelab2026/yohelab-store-site/main/public/proof";
+const proofUrl = (name) => `${proofBase}/${name}`;
 
 const pages = [
   {
@@ -50,7 +52,7 @@ const pages = [
       ["入力内容は保存される？", "無料版は生成のために送るが、運営側に自動保存しない。"],
     ],
     proofShot: {
-      src: "/proof/radar-app.png",
+      src: proofUrl("radar-app.png"),
       alt: "案件レーダーの画面スクリーンショット",
       label: "案件レーダー",
       title: "朝のうちに、今日見る案件が決まる",
@@ -106,7 +108,7 @@ const pages = [
       ["入力内容は保存される？", "無料版は運営側に自動保存しない。"],
     ],
     proofShot: {
-      src: "/proof/proposal-app.png",
+      src: proofUrl("proposal-app.png"),
       alt: "AI応募文アシスタントの画面スクリーンショット",
       label: "応募文アシスタント",
       title: "案件名と強みだけで、骨組みが出る",
@@ -162,7 +164,7 @@ const pages = [
       ["入力内容は保存される？", "無料版は運営側に自動保存しない。"],
     ],
     proofShot: {
-      src: "/proof/proposal-optimizer-app.png",
+      src: proofUrl("proposal-optimizer-app.png"),
       alt: "AI応募文最適化の画面スクリーンショット",
       label: "応募文最適化",
       title: "件名から送信前チェックまで1枚で見える",
@@ -220,7 +222,7 @@ const pages = [
       ["入力内容は保存される？", "無料版は運営側に自動保存しない。"],
     ],
     proofShot: {
-      src: "/proof/article-polish-app.png",
+      src: proofUrl("article-polish-app.png"),
       alt: "AI文章整形の画面スクリーンショット",
       label: "文章整形",
       title: "メモを、そのまま読める文章に変える",
@@ -276,7 +278,7 @@ const pages = [
       ["入力内容は保存される？", "無料版は運営側に自動保存しない。"],
     ],
     proofShot: {
-      src: "/proof/x-helper-app.png",
+      src: proofUrl("x-helper-app.png"),
       alt: "AI X返信・投稿補助の画面スクリーンショット",
       label: "X発信補助",
       title: "投稿案と返信案を、先に3本ずつ出す",
@@ -332,7 +334,7 @@ const pages = [
       ["入力内容は保存される？", "無料版は運営側に自動保存しない。"],
     ],
     proofShot: {
-      src: "/proof/ec-copy-app.png",
+      src: proofUrl("ec-copy-app.png"),
       alt: "EC商品説明・Q&A整備の画面スクリーンショット",
       label: "EC補助",
       title: "商品説明とQ&Aを、売り方違いで整える",
@@ -388,7 +390,7 @@ const pages = [
       ["入力内容は保存される？", "無料版は運営側に自動保存しない。"],
     ],
     proofShot: {
-      src: "/proof/aio-mini-app.png",
+      src: proofUrl("aio-mini-app.png"),
       alt: "AIOミニ診断の画面スクリーンショット",
       label: "AIO診断",
       title: "AI検索での見え方を、先に確かめる",
