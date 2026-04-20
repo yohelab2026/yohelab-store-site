@@ -135,6 +135,24 @@ checks.push(["tools page no labs wordpress link", !tools.includes('/labs/wordpre
 checks.push(["tools page no labs chrome link", !tools.includes('/labs/chrome/')]);
 checks.push(["tools page no games nav", !tools.includes('>ゲーム<')]);
 
+const games = read(dist("games/index.html"));
+checks.push(["games page title", games.includes('ゲーム | よへラボ')]);
+checks.push(["games page clear road", games.includes('/games/clear-road/')]);
+checks.push(["games page coin run", games.includes('/games/coin-run/')]);
+checks.push(["games page fruit catch", games.includes('/games/fruit-catch/')]);
+checks.push(["games page stack tower", games.includes('/games/stack-tower/')]);
+checks.push(["games page blink rush", games.includes('/games/blink-rush/')]);
+checks.push(["games page color switch", games.includes('/games/color-switch/')]);
+checks.push(["games page pair memory", games.includes('/games/pair-memory/')]);
+checks.push(["games page orbit escape", games.includes('/games/orbit-escape/')]);
+checks.push(["games page tap rush", games.includes('/games/tap-rush/')]);
+checks.push(["games page number order", games.includes('/games/number-order/')]);
+
+for (const slug of ["clear-road", "coin-run", "fruit-catch", "stack-tower", "blink-rush", "color-switch", "pair-memory", "orbit-escape", "tap-rush", "number-order"]) {
+  const page = read(dist(`games/${slug}/index.html`));
+  checks.push([`game ${slug} title`, page.includes(`よへラボゲーム`) && page.includes(`YOHE_GAME`)]);
+}
+
 const commerce = read(dist("legal/commerce/index.html"));
 checks.push(["commerce single site name row", (commerce.match(/<th>サイト名<\/th>/g) || []).length === 1]);
 

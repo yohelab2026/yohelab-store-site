@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "prebuild": "node scripts/generate-lp-pages.mjs",
+    "prebuild": "node scripts/generate-lp-pages.mjs && node scripts/generate-games.mjs && node scripts/copy-game-assets.mjs",
     "build": "vite build",
     "postbuild": "node scripts/copy-proof.mjs",
     "preview": "vite preview",

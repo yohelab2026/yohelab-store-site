@@ -1,4 +1,21 @@
 import { defineConfig } from "vite";
+import { existsSync, readdirSync } from "node:fs";
+import { resolve } from "node:path";
+
+function collectGameInputs() {
+  const input = {};
+  const gamesRoot = resolve("games");
+  if (!existsSync(gamesRoot)) return input;
+
+  for (const entry of readdirSync(gamesRoot, { withFileTypes: true })) {
+    if (!entry.isDirectory()) continue;
+    const indexPath = `games/${entry.name}/index.html`;
+    if (existsSync(indexPath)) {
+      input[`game-${entry.name}`] = indexPath;
+    }
+  }
+  return input;
+}
 
 function matomoSnippetPlugin() {
   const snippet = `<script async src="/shared/matomo-loader.js"></script>`;
@@ -49,6 +66,7 @@ export default defineConfig({
         lpAioMini: "lp/aio-mini/index.html",
         wpLabs: "labs/wordpress/index.html",
         chromeLabs: "labs/chrome/index.html",
+        ...collectGameInputs(),
       },
     },
   },

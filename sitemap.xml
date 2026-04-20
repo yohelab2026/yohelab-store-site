@@ -20,6 +20,16 @@
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
+  <url><loc>https://yohelab.com/games/clear-road/</loc><changefreq>monthly</changefreq><priority>0.2</priority></url>
+  <url><loc>https://yohelab.com/games/coin-run/</loc><changefreq>monthly</changefreq><priority>0.2</priority></url>
+  <url><loc>https://yohelab.com/games/fruit-catch/</loc><changefreq>monthly</changefreq><priority>0.2</priority></url>
+  <url><loc>https://yohelab.com/games/stack-tower/</loc><changefreq>monthly</changefreq><priority>0.2</priority></url>
+  <url><loc>https://yohelab.com/games/blink-rush/</loc><changefreq>monthly</changefreq><priority>0.2</priority></url>
+  <url><loc>https://yohelab.com/games/color-switch/</loc><changefreq>monthly</changefreq><priority>0.2</priority></url>
+  <url><loc>https://yohelab.com/games/pair-memory/</loc><changefreq>monthly</changefreq><priority>0.2</priority></url>
+  <url><loc>https://yohelab.com/games/orbit-escape/</loc><changefreq>monthly</changefreq><priority>0.2</priority></url>
+  <url><loc>https://yohelab.com/games/tap-rush/</loc><changefreq>monthly</changefreq><priority>0.2</priority></url>
+  <url><loc>https://yohelab.com/games/number-order/</loc><changefreq>monthly</changefreq><priority>0.2</priority></url>
   <url>
     <loc>https://yohelab.com/apps/radar/</loc>
     <changefreq>weekly</changefreq>
