@@ -50,7 +50,30 @@
         ]
       }
     </script>
-  </head>
+    <style>
+    /* ── Tab nav ── */
+    .nav-tabs {
+      display: flex; align-items: center; gap: 2px;
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 10px; padding: 3px;
+    }
+    .nav-tabs a {
+      display: inline-flex; align-items: center; gap: 5px;
+      height: 30px; padding: 0 13px; border-radius: 7px;
+      font-size: 13px; font-weight: 700;
+      color: rgba(255,255,255,.5); text-decoration: none;
+      transition: background .15s, color .15s, box-shadow .15s;
+      white-space: nowrap;
+    }
+    .nav-tabs a:hover { background: rgba(255,255,255,.08); color: rgba(255,255,255,.85); }
+    .nav-tabs a.tab-active {
+      background: rgba(255,255,255,.13); color: #fff;
+      box-shadow: 0 1px 4px rgba(0,0,0,.3), 0 1px 0 rgba(255,255,255,.12) inset;
+    }
+    @media (max-width: 600px) { .nav-tabs { display: none; } }
+  </style>
+</head>
   <body>
 
     <!-- ナビ -->
@@ -731,5 +754,10 @@
         </div>
       </div>
     </footer>
-  </body>
+  
+  <script>
+    const _tabs = document.querySelectorAll('#navTabs a');
+    _tabs.forEach(a => { if (a.getAttribute('href') === location.pathname) a.classList.add('tab-active'); });
+  </script>
+</body>
 </html>

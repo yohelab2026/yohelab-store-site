@@ -68,6 +68,29 @@
     .labs-card-cta { font-size: 13px; font-weight: 800; color: #c2410c; }
     @media(max-width:580px){ .labs-grid{grid-template-columns:1fr;} .labs-body{border-radius:20px 20px 0 0;} }
   </style>
+  <style>
+    /* ── Tab nav ── */
+    .nav-tabs {
+      display: flex; align-items: center; gap: 2px;
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 10px; padding: 3px;
+    }
+    .nav-tabs a {
+      display: inline-flex; align-items: center; gap: 5px;
+      height: 30px; padding: 0 13px; border-radius: 7px;
+      font-size: 13px; font-weight: 700;
+      color: rgba(255,255,255,.5); text-decoration: none;
+      transition: background .15s, color .15s, box-shadow .15s;
+      white-space: nowrap;
+    }
+    .nav-tabs a:hover { background: rgba(255,255,255,.08); color: rgba(255,255,255,.85); }
+    .nav-tabs a.tab-active {
+      background: rgba(255,255,255,.13); color: #fff;
+      box-shadow: 0 1px 4px rgba(0,0,0,.3), 0 1px 0 rgba(255,255,255,.12) inset;
+    }
+    @media (max-width: 600px) { .nav-tabs { display: none; } }
+  </style>
 </head>
 <body>
   <header class="nav lp-nav">
@@ -78,9 +101,11 @@
         <span class="brand-sub">Labs</span>
       </a>
       <nav class="nav-links">
-        <a href="/">トップ</a>
-        <a href="/#tools">AIツール</a>
-        <a href="/games/">ゲーム</a>
+        <div class="nav-tabs" id="navTabs">
+          <a href="/tools/">🤖 AIツール</a>
+          <a href="/games/">🎮 ゲーム</a>
+          <a href="/labs/">🔬 Labs</a>
+        </div>
         <a href="/contact/">問い合わせ</a>
       </nav>
     </div>
@@ -144,6 +169,11 @@
     const obs = new IntersectionObserver(e => e.forEach(el => { if(el.isIntersecting){el.target.classList.add('visible');obs.unobserve(el.target);} }), {threshold:.08,rootMargin:'0px 0px -40px 0px'});
     document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
     setTimeout(()=>document.querySelectorAll('.reveal:not(.visible)').forEach(el=>el.classList.add('visible')),800);
+  </script>
+
+  <script>
+    const _tabs = document.querySelectorAll('#navTabs a');
+    _tabs.forEach(a => { if (a.getAttribute('href') === location.pathname) a.classList.add('tab-active'); });
   </script>
 </body>
 </html>

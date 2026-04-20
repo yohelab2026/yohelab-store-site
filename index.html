@@ -556,9 +556,9 @@
       </a>
       <nav class="nav-links">
         <div class="nav-tabs" id="navTabs">
-          <a href="#tools">🤖 AIツール</a>
-          <a href="#games">🎮 ゲーム</a>
-          <a href="#labs">🔬 Labs</a>
+          <a href="/tools/">🤖 AIツール</a>
+          <a href="/games/">🎮 ゲーム</a>
+          <a href="/labs/">🔬 Labs</a>
         </div>
         <a href="/contact/">問い合わせ</a>
         <a class="btn btn-primary btn-sm" href="/apps/radar/">無料で試す →</a>
@@ -981,46 +981,11 @@
       revealAll();
     }
 
-    // ── Tab active state (scroll-linked) ────────────────────────────────
+    // ── Tab: highlight active based on current URL ───────────────────────
     const tabLinks = document.querySelectorAll('#navTabs a');
-
-    function setActiveTab(id) {
-      tabLinks.forEach(a => {
-        a.classList.toggle('tab-active', a.getAttribute('href') === '#' + id);
-      });
-    }
-
-    // Start with tools active
-    setActiveTab('tools');
-
-    // Detect which section is in the viewport (centered area)
-    const sectionIds = ['tools', 'games', 'labs'];
-    const tabObs = new IntersectionObserver((entries) => {
-      // Pick the one with biggest intersection ratio
-      let best = null, bestRatio = 0;
-      entries.forEach(e => {
-        if (e.isIntersecting && e.intersectionRatio > bestRatio) {
-          best = e.target.id;
-          bestRatio = e.intersectionRatio;
-        }
-      });
-      if (best) setActiveTab(best);
-    }, {
-      rootMargin: '-30% 0px -30% 0px',
-      threshold: [0, 0.1, 0.25, 0.5]
-    });
-
-    sectionIds.forEach(id => {
-      const el = document.getElementById(id);
-      if (el) tabObs.observe(el);
-    });
-
-    // Also respond to clicks immediately
+    const currentPath = location.pathname;
     tabLinks.forEach(a => {
-      a.addEventListener('click', () => {
-        const id = a.getAttribute('href').slice(1);
-        setActiveTab(id);
-      });
+      if (a.getAttribute('href') === currentPath) a.classList.add('tab-active');
     });
   </script>
 
