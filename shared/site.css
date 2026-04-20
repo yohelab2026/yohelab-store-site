@@ -587,21 +587,22 @@ a.btn-primary, a.btn-primary:visited { color: #fff; }
 .shot-frame {
   position: relative;
   aspect-ratio: 16 / 10;
-  background: linear-gradient(180deg, #0f221c 0%, #08110e 100%);
+  background: #f7faf8;
   overflow: hidden;
 }
 .shot-frame::after {
   content: "";
   position: absolute;
   inset: 0;
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,.06);
+  box-shadow: inset 0 0 0 1px rgba(5,15,12,.08);
   pointer-events: none;
 }
 .shot-frame img {
   width: 100%;
   height: 100%;
   display: block;
-  object-fit: cover;
+  object-fit: contain;
+  background: #f7faf8;
 }
 .shot-copy {
   padding: 22px 22px 24px;
