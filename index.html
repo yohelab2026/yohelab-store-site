@@ -497,11 +497,47 @@
       .contact-strip-inner { flex-direction: column; align-items: flex-start; }
 
       .nav-links a:not(.btn) { display: none; }
+      .nav-tabs { display: none; }
       .nav-links { gap: 8px; }
     }
     @media (max-width: 400px) {
       .sub-row { grid-template-columns: 1fr; }
       .hero-trust { font-size: 12px; gap: 6px 14px; }
+    }
+  </style>
+  <style>
+    /* ── Tab-style nav (hub page only) ── */
+    .nav-tabs {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 10px;
+      padding: 3px;
+    }
+    .nav-tabs a {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      height: 30px;
+      padding: 0 13px;
+      border-radius: 7px;
+      font-size: 13px;
+      font-weight: 700;
+      color: rgba(255,255,255,.5);
+      text-decoration: none;
+      transition: background .15s, color .15s, box-shadow .15s;
+      white-space: nowrap;
+    }
+    .nav-tabs a:hover {
+      background: rgba(255,255,255,.08);
+      color: rgba(255,255,255,.85);
+    }
+    .nav-tabs a.tab-active {
+      background: rgba(255,255,255,.13);
+      color: #fff;
+      box-shadow: 0 1px 4px rgba(0,0,0,.3), 0 1px 0 rgba(255,255,255,.12) inset;
     }
   </style>
   <script>
@@ -519,9 +555,11 @@
         <span class="brand-sub">AIツール・ゲーム・Labs</span>
       </a>
       <nav class="nav-links">
-        <a href="#tools">🤖 AIツール</a>
-        <a href="#games">🎮 ゲーム</a>
-        <a href="#labs">🔬 Labs</a>
+        <div class="nav-tabs" id="navTabs">
+          <a href="#tools">🤖 AIツール</a>
+          <a href="#games">🎮 ゲーム</a>
+          <a href="#labs">🔬 Labs</a>
+        </div>
         <a href="/contact/">問い合わせ</a>
         <a class="btn btn-primary btn-sm" href="/apps/radar/">無料で試す →</a>
       </nav>
@@ -942,6 +980,48 @@
     } else {
       revealAll();
     }
+
+    // ── Tab active state (scroll-linked) ────────────────────────────────
+    const tabLinks = document.querySelectorAll('#navTabs a');
+
+    function setActiveTab(id) {
+      tabLinks.forEach(a => {
+        a.classList.toggle('tab-active', a.getAttribute('href') === '#' + id);
+      });
+    }
+
+    // Start with tools active
+    setActiveTab('tools');
+
+    // Detect which section is in the viewport (centered area)
+    const sectionIds = ['tools', 'games', 'labs'];
+    const tabObs = new IntersectionObserver((entries) => {
+      // Pick the one with biggest intersection ratio
+      let best = null, bestRatio = 0;
+      entries.forEach(e => {
+        if (e.isIntersecting && e.intersectionRatio > bestRatio) {
+          best = e.target.id;
+          bestRatio = e.intersectionRatio;
+        }
+      });
+      if (best) setActiveTab(best);
+    }, {
+      rootMargin: '-30% 0px -30% 0px',
+      threshold: [0, 0.1, 0.25, 0.5]
+    });
+
+    sectionIds.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) tabObs.observe(el);
+    });
+
+    // Also respond to clicks immediately
+    tabLinks.forEach(a => {
+      a.addEventListener('click', () => {
+        const id = a.getAttribute('href').slice(1);
+        setActiveTab(id);
+      });
+    });
   </script>
 
 </body>
