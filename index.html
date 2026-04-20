@@ -4,654 +4,134 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>よへラボ | ひとりで稼ぐ人向けAI実務ツール</title>
-    <meta name="description" content="案件探し、応募文、文章整形を短くするAI実務ツール。無料版で試して、合えば月額プランへ進める。ひとりで稼ぐ人向けの入口。" />
+    <meta name="description" content="案件探し・応募文・文章整形など、ひとりで稼ぐ人の実務を短くするAIツール群。登録不要・無料版あり。" />
     <meta property="og:title" content="よへラボ | ひとりで稼ぐ人向けAI実務ツール" />
-    <meta property="og:description" content="案件探し、応募文、文章整形を短くするAI実務ツール。無料版で試して、合えば月額プランへ進める。" />
+    <meta property="og:description" content="案件探し・応募文・文章整形など、ひとりで稼ぐ人の実務を短くするAIツール群。登録不要・無料版あり。" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://yohelab.com/" />
     <meta property="og:image" content="https://yohelab.com/yohelab-icon.png" />
     <meta property="og:locale" content="ja_JP" />
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="よへラボ | ひとりで稼ぐ人向けAI実務ツール" />
-    <meta name="twitter:description" content="案件探し、応募文、文章整形を短くするAI実務ツール。無料版で試して、合えば月額プランへ進める。" />
+    <meta name="twitter:description" content="案件探し・応募文・文章整形など、ひとりで稼ぐ人の実務を短くするAIツール群。" />
     <meta name="twitter:image" content="https://yohelab.com/yohelab-icon.png" />
     <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
-    <meta name="theme-color" content="#0d6b58" />
+    <meta name="theme-color" content="#050f0c" />
     <link rel="canonical" href="https://yohelab.com/" />
     <link rel="icon" type="image/png" href="/yohelab-icon.png" />
     <link rel="stylesheet" href="/shared/site.css" />
-    <style>
-      .home-hero {
-        position: relative;
-        overflow: hidden;
-        padding: 110px 0 82px;
-        background:
-          radial-gradient(circle at 14% 18%, rgba(16, 184, 146, .20), transparent 28%),
-          radial-gradient(circle at 86% 14%, rgba(255, 107, 74, .12), transparent 24%),
-          linear-gradient(180deg, #f6fbf9 0%, #ffffff 62%);
-      }
-      .home-hero::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background-image:
-          linear-gradient(rgba(11, 143, 114, .04) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(11, 143, 114, .04) 1px, transparent 1px);
-        background-size: 52px 52px;
-        -webkit-mask-image: radial-gradient(circle at 50% 30%, #000 0%, transparent 76%);
-                mask-image: radial-gradient(circle at 50% 30%, #000 0%, transparent 76%);
-        pointer-events: none;
-      }
-      .home-hero .container {
-        position: relative;
-        z-index: 1;
-      }
-      .home-eyebrow {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 7px 16px;
-        border-radius: 999px;
-        background: #fff;
-        border: 1px solid var(--green-mid);
-        color: var(--green-dark);
-        font-size: 12px;
-        font-weight: 900;
-        letter-spacing: .08em;
-        text-transform: uppercase;
-        box-shadow: var(--shadow-xs);
-      }
-      .home-hero-grid {
-        display: grid;
-        grid-template-columns: minmax(0, 1.15fr) minmax(320px, .85fr);
-        gap: 28px;
-        align-items: start;
-        margin-top: 28px;
-      }
-      .home-hero h1 {
-        font-size: clamp(44px, 7vw, 82px);
-        line-height: 1.02;
-        letter-spacing: -.06em;
-        margin: 18px 0 20px;
-      }
-      .home-hero h1 em {
-        color: var(--green);
-        font-style: normal;
-      }
-      .home-lead {
-        max-width: 720px;
-        font-size: clamp(17px, 2vw, 20px);
-        color: var(--muted);
-        line-height: 1.88;
-      }
-      .home-actions {
-        display: flex;
-        gap: 12px;
-        flex-wrap: wrap;
-        margin: 30px 0 14px;
-      }
-      .home-proof {
-        display: flex;
-        gap: 8px;
-        flex-wrap: wrap;
-      }
-      .home-proof span {
-        padding: 7px 12px;
-        border-radius: 999px;
-        background: #fff;
-        border: 1px solid var(--border);
-        color: var(--muted);
-        font-size: 13px;
-        font-weight: 700;
-      }
-      .home-side {
-        display: grid;
-        gap: 14px;
-      }
-      .hero-panel {
-        padding: 24px;
-        border-radius: 24px;
-        background: linear-gradient(160deg, #0f221d, #13352c);
-        color: #fff;
-        box-shadow: var(--shadow-lg);
-      }
-      .hero-panel-label {
-        font-size: 11px;
-        font-weight: 900;
-        letter-spacing: .12em;
-        text-transform: uppercase;
-        color: #80e1cb;
-        margin-bottom: 12px;
-      }
-      .hero-panel h2 {
-        color: #fff;
-        font-size: 24px;
-        margin-bottom: 10px;
-      }
-      .hero-panel p {
-        color: rgba(255, 255, 255, .76);
-        font-size: 15px;
-        line-height: 1.82;
-      }
-      .hero-stack {
-        display: grid;
-        gap: 10px;
-        margin-top: 18px;
-      }
-      .hero-stack-item {
-        display: flex;
-        gap: 12px;
-        align-items: flex-start;
-        padding: 14px 16px;
-        border-radius: 16px;
-        background: rgba(255, 255, 255, .06);
-        border: 1px solid rgba(255, 255, 255, .10);
-      }
-      .hero-stack-item strong {
-        display: block;
-        font-size: 14px;
-        color: #fff;
-        margin-bottom: 4px;
-      }
-      .hero-stack-item span {
-        color: rgba(255, 255, 255, .66);
-        font-size: 13px;
-        line-height: 1.7;
-      }
-      .hero-panel-note {
-        margin-top: 16px;
-        font-size: 13px;
-        color: rgba(255, 255, 255, .58);
-      }
-      .core-section {
-        padding: 78px 0 24px;
-      }
-      .core-head {
-        text-align: center;
-        max-width: 760px;
-        margin: 0 auto 30px;
-      }
-      .core-head h2 {
-        font-size: clamp(32px, 5vw, 50px);
-        letter-spacing: -.05em;
-        margin-bottom: 12px;
-      }
-      .core-head p {
-        color: var(--muted);
-        font-size: 17px;
-        line-height: 1.85;
-      }
-      .core-grid {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 18px;
-      }
-      .core-card {
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-        padding: 28px;
-        border-radius: 24px;
-        border: 1px solid var(--border);
-        background: #fff;
-        box-shadow: var(--shadow);
-      }
-      .core-card.is-primary {
-        background: linear-gradient(180deg, #ffffff 0%, #f4fbf8 100%);
-        border-color: var(--green-mid);
-      }
-      .core-card-tag {
-        display: inline-flex;
-        width: fit-content;
-        padding: 6px 12px;
-        border-radius: 999px;
-        font-size: 12px;
-        font-weight: 900;
-        letter-spacing: .08em;
-        text-transform: uppercase;
-        color: var(--green-dark);
-        background: var(--green-light);
-        border: 1px solid var(--green-mid);
-      }
-      .core-card h3 {
-        font-size: 28px;
-      }
-      .core-card p {
-        color: var(--muted);
-        line-height: 1.82;
-      }
-      .core-points {
-        display: grid;
-        gap: 10px;
-      }
-      .core-points li {
-        display: flex;
-        gap: 8px;
-        color: var(--text-sub);
-        font-size: 14px;
-        line-height: 1.7;
-      }
-      .core-points li::before {
-        content: "✓";
-        color: var(--green);
-        font-weight: 900;
-      }
-      .core-actions {
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
-        margin-top: auto;
-      }
-      .flow-section {
-        padding: 56px 0 84px;
-      }
-      .flow-shell {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) 340px;
-        gap: 20px;
-        align-items: start;
-      }
-      .flow-card,
-      .support-card {
-        padding: 28px;
-        border-radius: 24px;
-        background: #fff;
-        border: 1px solid var(--border);
-        box-shadow: var(--shadow);
-      }
-      .flow-card h3,
-      .support-card h3 {
-        font-size: 24px;
-        margin-bottom: 12px;
-      }
-      .flow-card > p,
-      .support-card > p {
-        color: var(--muted);
-        line-height: 1.8;
-        margin-bottom: 18px;
-      }
-      .flow-steps {
-        display: grid;
-        gap: 14px;
-      }
-      .flow-step {
-        display: grid;
-        grid-template-columns: 48px minmax(0, 1fr);
-        gap: 14px;
-        align-items: start;
-      }
-      .flow-step-num {
-        display: grid;
-        place-items: center;
-        width: 48px;
-        height: 48px;
-        border-radius: 16px;
-        background: linear-gradient(180deg, #14c4a0, #0b8f72);
-        color: #fff;
-        font-size: 18px;
-        font-weight: 900;
-        box-shadow: var(--shadow-green);
-      }
-      .flow-step strong {
-        display: block;
-        margin-bottom: 4px;
-        font-size: 15px;
-      }
-      .flow-step p {
-        color: var(--muted);
-        font-size: 14px;
-        line-height: 1.72;
-        margin: 0;
-      }
-      .support-links {
-        display: grid;
-        gap: 10px;
-      }
-      .support-links a {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 16px;
-        padding: 14px 16px;
-        border-radius: 16px;
-        background: var(--bg);
-        border: 1px solid var(--border);
-        font-weight: 700;
-        transition: transform .14s ease, box-shadow .14s ease, border-color .14s ease;
-      }
-      .support-links a:hover {
-        transform: translateY(-2px);
-        border-color: var(--green-mid);
-        box-shadow: var(--shadow-sm);
-      }
-      .other-section {
-        padding: 0 0 88px;
-      }
-      .other-head {
-        display: flex;
-        justify-content: space-between;
-        gap: 18px;
-        align-items: end;
-        margin-bottom: 22px;
-      }
-      .other-head h2 {
-        font-size: 28px;
-      }
-      .other-head p {
-        max-width: 560px;
-        color: var(--muted);
-        line-height: 1.78;
-      }
-      .other-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        gap: 16px;
-      }
-      .other-card {
-        display: flex;
-        flex-direction: column;
-        gap: 14px;
-        padding: 22px;
-        border-radius: 20px;
-        border: 1px solid var(--border);
-        background: #fff;
-        box-shadow: var(--shadow-xs);
-      }
-      .other-card h3 {
-        font-size: 18px;
-      }
-      .other-card p {
-        color: var(--muted);
-        font-size: 14px;
-        line-height: 1.75;
-      }
-      .other-card.coming {
-        background: linear-gradient(180deg, #fbfcfc 0%, #f5f7f6 100%);
-        border-style: dashed;
-      }
-      .micro-note {
-        color: var(--muted);
-        font-size: 13px;
-        line-height: 1.7;
-      }
-      @media (max-width: 980px) {
-        .home-hero-grid,
-        .flow-shell,
-        .core-grid,
-        .other-grid {
-          grid-template-columns: 1fr;
-        }
-        .home-hero {
-          padding: 88px 0 62px;
-        }
-      }
-      @media (max-width: 640px) {
-        .home-hero h1 {
-          font-size: clamp(38px, 12vw, 56px);
-        }
-        .home-lead {
-          font-size: 16px;
-        }
-        .home-actions,
-        .core-actions {
-          flex-direction: column;
-        }
-        .home-actions .btn,
-        .core-actions .btn,
-        .support-links a {
-          width: 100%;
-        }
-        .core-card,
-        .flow-card,
-        .support-card,
-        .other-card {
-          padding: 22px;
-        }
-      }
-    </style>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@graph": [
-          {
-            "@type": "WebSite",
-            "name": "よへラボ",
-            "url": "https://yohelab.com/"
-          },
-          {
-            "@type": "Organization",
-            "name": "よへラボ",
-            "url": "https://yohelab.com/",
-            "logo": "https://yohelab.com/yohelab-icon.png"
-          },
-          {
-            "@type": "SoftwareApplication",
-            "name": "案件レーダー",
-            "applicationCategory": "BusinessApplication",
-            "operatingSystem": "Web",
-            "offers": [
-              { "@type": "Offer", "price": "0", "priceCurrency": "JPY", "name": "無料版" },
-              { "@type": "Offer", "price": "980", "priceCurrency": "JPY", "name": "プロプラン", "billingIncrement": "P1M" }
-            ],
-            "description": "案件候補を絞って、応募の初動を短くするAI実務ツール。"
-          }
+          { "@type": "WebSite", "name": "よへラボ", "url": "https://yohelab.com/" },
+          { "@type": "Organization", "name": "よへラボ", "url": "https://yohelab.com/", "logo": "https://yohelab.com/yohelab-icon.png" }
         ]
       }
     </script>
   </head>
-  <body>
-    <header class="nav">
+  <body class="hub-page">
+
+    <header class="nav nav-dark">
       <div class="nav-inner">
-        <a class="brand" href="/">
+        <a class="brand brand-light" href="/">
           <img src="/yohelab-icon.png" alt="よへラボのアイコン" />
           <span>よへラボ</span>
           <span class="brand-sub">AI実務ツール開発</span>
         </a>
         <nav class="nav-links">
-          <a href="/tools/">ツール一覧</a>
-          <a href="/#plan">料金</a>
+          <a href="/tools/">ツール</a>
+          <a href="/labs/">拡張・Labs</a>
+          <a href="/games/">ゲーム</a>
           <a href="/contact/">問い合わせ</a>
-          <a class="btn btn-primary btn-sm" href="/apps/radar/">無料で試す</a>
+          <a class="btn btn-white btn-sm" href="/apps/radar/">無料で試す</a>
         </nav>
       </div>
     </header>
 
     <main>
-      <section class="home-hero">
-        <div class="container">
-          <span class="home-eyebrow">ひとりで稼ぐ人向けのAI実務ツール</span>
-          <div class="home-hero-grid">
-            <div>
-              <h1>探す、応募する、整える。<br><em>止まりやすい仕事</em>から短くする。</h1>
-              <p class="home-lead">よへラボは、ひとりで稼ぐ人の実務を軽くするためのAIツール群。まずは案件レーダーと応募文最適化、そこから文章整形までつなげて使える。</p>
-              <div class="home-actions">
-                <a class="btn btn-primary btn-xl" href="/apps/radar/">案件レーダーを無料で試す</a>
-                <a class="btn btn-outline btn-lg" href="/lp/radar/">案件レーダーのLPを見る</a>
-              </div>
-              <div class="home-proof">
-                <span>登録不要</span>
-                <span>無料版は全体で1日1回</span>
-                <span>入力内容は自動保存しない</span>
-              </div>
-            </div>
-            <div class="home-side">
-              <div class="hero-panel">
-                <div class="hero-panel-label">まず使うのはこの3本</div>
-                <h2>今日の作業を、順番ごと短くする。</h2>
-                <p>何でもAIじゃなくて、止まりやすいところだけを先に軽くする。だから初見でも使いどころが分かりやすい。</p>
-                <div class="hero-stack">
-                  <div class="hero-stack-item">
-                    <div>1.</div>
-                    <div>
-                      <strong>案件レーダー</strong>
-                      <span>案件候補を先に絞って、今日応募する1件を決めやすくする。</span>
-                    </div>
-                  </div>
-                  <div class="hero-stack-item">
-                    <div>2.</div>
-                    <div>
-                      <strong>AI応募文最適化</strong>
-                      <span>件名、冒頭3行、応募文、送信前チェックまで返して、応募の最後を詰める。</span>
-                    </div>
-                  </div>
-                  <div class="hero-stack-item">
-                    <div>3.</div>
-                    <div>
-                      <strong>AI文章整形</strong>
-                      <span>相談メモや下書きを、読まれるブログ・LP・note文章へ整える。</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="hero-panel-note">最初はこの3本だけ見れば十分。補助ツールは必要になった時だけ見ればいい。</div>
-              </div>
-            </div>
+
+      <!-- ── HERO ──────────────────────────────────────────────── -->
+      <section class="hub-hero">
+        <div class="hub-hero-bg" aria-hidden="true"></div>
+        <div class="container hub-hero-inner">
+          <p class="hub-eyebrow">ひとりで稼ぐ人のためのAI実務ツール</p>
+          <h1 class="hub-hero-title">止まりやすい仕事を、<br><em>先に短くする。</em></h1>
+          <p class="hub-hero-lead">案件探し・応募文作成・文章整形。毎日の実務で止まりやすいところだけを、AIで先に軽くする。登録不要、まず無料で試せる。</p>
+          <div class="hub-hero-actions">
+            <a class="btn btn-primary btn-xl" href="/tools/">ツール一覧を見る</a>
+            <a class="btn btn-ghost-white btn-lg" href="/apps/radar/">まず無料で試す →</a>
+          </div>
+          <div class="hub-trust-row">
+            <span>✓ 登録不要</span>
+            <span>✓ 無料版あり</span>
+            <span>✓ ブラウザだけで動く</span>
+            <span>✓ いつでも解約</span>
           </div>
         </div>
       </section>
 
-      <section class="core-section" id="tools">
+      <!-- ── HUB GRID ───────────────────────────────────────────── -->
+      <section class="hub-section">
         <div class="container">
-          <div class="core-head">
-            <h2>最初に見せるべきツールを、前に出す。</h2>
-            <p>案件探しから応募までを1本の流れにして、そのあとで文章整形へつなぐ。この順番なら、何を試せばいいかで迷いにくい。</p>
-          </div>
-          <div class="core-grid">
-            <article class="core-card is-primary">
-              <span class="core-card-tag">Core 01</span>
-              <h3>案件レーダー</h3>
-              <p>条件を入れると、見るべき案件候補を先に絞る。応募しやすさの理由つきで返るから、朝の判断が速い。</p>
-              <ul class="core-points">
-                <li>案件候補と応募しやすさが返る</li>
-                <li>応募文の下書きまでつながる</li>
-                <li>無料版で相性を先に見られる</li>
-              </ul>
-              <div class="core-actions">
-                <a class="btn btn-primary" href="/lp/radar/">LPを見る</a>
-                <a class="btn btn-outline" href="/apps/radar/">無料版を試す</a>
+          <div class="hub-grid">
+
+            <a class="hub-card hub-card-featured" href="/tools/">
+              <div class="hub-card-header">
+                <span class="hub-card-kicker">Tools — メイン</span>
+                <span class="hub-card-badge">7ツール</span>
               </div>
-            </article>
-            <article class="core-card is-primary">
-              <span class="core-card-tag">Core 02</span>
-              <h3>AI応募文最適化</h3>
-              <p>案件文を貼ると、件名案、冒頭3行、応募文、送信前チェックまで返る。応募直前で止まる時間を減らす。</p>
-              <ul class="core-points">
-                <li>件名から送信前チェックまで一気に出る</li>
-                <li>案件レーダーから内容を引き継げる</li>
-                <li>比較しながら送る文を選べる</li>
-              </ul>
-              <div class="core-actions">
-                <a class="btn btn-primary" href="/lp/proposal-optimizer/">LPを見る</a>
-                <a class="btn btn-outline" href="/apps/proposal-optimizer/">無料版を試す</a>
+              <h2>AI実務ツール</h2>
+              <p>案件探し・応募文・文章整形など、毎日の仕事を短くする7つのWebツール。登録不要で無料版から試せる。</p>
+              <div class="hub-card-tools">
+                <span>🎯 案件レーダー</span>
+                <span>📝 応募文最適化</span>
+                <span>✍️ 文章整形</span>
+                <span>＋4ツール</span>
               </div>
-            </article>
-            <article class="core-card">
-              <span class="core-card-tag">Core 03</span>
-              <h3>AI文章整形</h3>
-              <p>相談メモや荒い下書きを、人にもAIにも読みやすい文章へ整える。ブログ、LP、note、サービス紹介まで広く使える。</p>
-              <ul class="core-points">
-                <li>タイトル、導入、本文、SEO周りまで返る</li>
-                <li>相談段階のメモからでも使える</li>
-                <li>記事と販売ページの下地を作りやすい</li>
-              </ul>
-              <div class="core-actions">
-                <a class="btn btn-primary" href="/lp/article-polish/">LPを見る</a>
-                <a class="btn btn-outline" href="/apps/article-polish/">無料版を試す</a>
+              <div class="hub-card-footer">
+                <span class="hub-card-price">¥980〜 / 月・初月無料</span>
+                <span class="hub-card-arrow">ツール一覧を見る →</span>
               </div>
-            </article>
+            </a>
+
+            <a class="hub-card" href="/labs/">
+              <div class="hub-card-icon">🧪</div>
+              <span class="hub-card-kicker">Labs — 拡張</span>
+              <h2>Chrome・WordPress 拡張</h2>
+              <p>ブラウザ拡張とWordPressプラグインの叩き台をAIで生成する実験置き場。必要な人だけ使う。</p>
+              <span class="hub-card-arrow">Labs を見る →</span>
+            </a>
+
+            <a class="hub-card hub-card-coming" href="/games/">
+              <div class="hub-card-icon">🎮</div>
+              <span class="hub-card-kicker">Games — 準備中</span>
+              <h2>ミニゲーム</h2>
+              <p>拡散用の軽量ブラウザゲーム置き場。近日オープン予定。</p>
+              <span class="hub-card-arrow">準備状況を見る →</span>
+            </a>
+
+            <a class="hub-card" href="/contact/">
+              <div class="hub-card-icon">💬</div>
+              <span class="hub-card-kicker">Contact</span>
+              <h2>相談・自動化</h2>
+              <p>ツールで足りない部分の個別相談、導線整理・自動化の依頼を受けている。</p>
+              <span class="hub-card-arrow">問い合わせる →</span>
+            </a>
+
           </div>
         </div>
       </section>
 
-      <section class="flow-section" id="plan">
-        <div class="container">
-          <div class="flow-shell">
-            <article class="flow-card">
-              <h3>この順番で使うと、一番わかりやすい。</h3>
-              <p>無料版は相性確認用。気に入ったものだけプロへ進める。最初から全部を覚える必要はない。</p>
-              <div class="flow-steps">
-                <div class="flow-step">
-                  <div class="flow-step-num">1</div>
-                  <div>
-                    <strong>無料版を1回試す</strong>
-                    <p>案件探しなら案件レーダー、応募直前なら応募文最適化、相談メモなら文章整形。この3本から入れば十分。</p>
-                  </div>
-                </div>
-                <div class="flow-step">
-                  <div class="flow-step-num">2</div>
-                  <div>
-                    <strong>合うものだけプロで続ける</strong>
-                    <p>毎日回すならプロに進む。単発で十分なら無料版だけで止めてもいい。</p>
-                  </div>
-                </div>
-                <div class="flow-step">
-                  <div class="flow-step-num">3</div>
-                  <div>
-                    <strong>足りない部分だけ相談する</strong>
-                    <p>ツールで足りない時だけ、軽い導線整理や自動化相談を問い合わせで受ける。最初から受託を押し出さない。</p>
-                  </div>
-                </div>
-              </div>
-            </article>
-            <aside class="support-card">
-              <h3>料金と入口</h3>
-              <p>無料版で試してから進める形にしている。いきなり申し込ませるより、相性を先に見せる方を優先している。</p>
-              <div class="support-links">
-                <a href="/products/radar-beta/"><span>案件レーダーの料金を見る</span><span>→</span></a>
-                <a href="/products/proposal-optimizer-beta/"><span>応募文最適化の料金を見る</span><span>→</span></a>
-                <a href="/products/article-polish-beta/"><span>文章整形の料金を見る</span><span>→</span></a>
-                <a href="https://buy.stripe.com/aFa5kv9vpb5K7WO1UB73G0b?client_reference_id=all-tools" target="_blank" rel="noreferrer"><span>全ツールパックを見る</span><span>→</span></a>
-              </div>
-              <p class="micro-note" style="margin-top: 14px;">単体より広く使いたいなら全ツールパック、まずは1本だけ見たいなら各ツールのLPから入る方がわかりやすい。</p>
-            </aside>
-          </div>
-        </div>
-      </section>
-
-      <section class="other-section">
-        <div class="container">
-          <div class="other-head">
-            <div>
-              <h2>補助ツール</h2>
-              <p>主役は上の3本。ここから先は、必要な時だけ見ればいい補助ツールだけを残している。</p>
-            </div>
-          </div>
-          <div class="other-grid">
-            <article class="other-card">
-              <h3>AI応募文アシスタント</h3>
-              <p>案件文が手元になくても、案件名と強みだけで応募文の下書きを出す。</p>
-              <a class="btn btn-outline btn-sm" href="/lp/proposal/">LPを見る</a>
-            </article>
-            <article class="other-card">
-              <h3>X返信・投稿補助</h3>
-              <p>Xの投稿案と返信案をまとめて出して、発信で止まる時間を減らす。</p>
-              <a class="btn btn-outline btn-sm" href="/lp/x-helper/">LPを見る</a>
-            </article>
-            <article class="other-card">
-              <h3>EC商品説明・Q&A整備</h3>
-              <p>商品説明とQ&Aをまとめて整えて、ECページの初動を速くする。</p>
-              <a class="btn btn-outline btn-sm" href="/lp/ec-copy/">LPを見る</a>
-            </article>
-            <article class="other-card">
-              <h3>AIOミニ診断</h3>
-              <p>AI検索で見つかるための入口を軽く診断して、FAQや見出しの叩き台を返す。</p>
-              <a class="btn btn-outline btn-sm" href="/lp/aio-mini/">LPを見る</a>
-            </article>
-            <article class="other-card">
-              <h3>問い合わせ・相談</h3>
-              <p>使い方、不具合、解約、軽い導線整理や自動化の相談はここから送る。</p>
-              <a class="btn btn-outline btn-sm" href="/contact/">問い合わせる</a>
-            </article>
-          </div>
-        </div>
-      </section>
     </main>
 
-    <footer class="footer">
+    <footer class="footer footer-dark">
       <div class="footer-inner">
         <div>© よへラボ / yohelab.com</div>
         <div class="footer-links">
-          <a href="/tools/">ツール一覧</a>
-          <a href="/#plan">料金</a>
+          <a href="/tools/">ツール</a>
+          <a href="/labs/">Labs</a>
+          <a href="/games/">ゲーム</a>
           <a href="/contact/">問い合わせ</a>
           <a href="/legal/commerce/">特定商取引法</a>
           <a href="/legal/privacy/">プライバシー</a>
