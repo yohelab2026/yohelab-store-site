@@ -434,27 +434,71 @@
             }
             .rd-result-body { font-size: 10px; line-height: 1.6; color: #444; margin-top: 5px; }
           </style>
+          <style>
+            .voices-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 14px; }
+            .voice-card { background:#fff; border:1px solid var(--border); border-radius:18px; padding:22px 24px; box-shadow:var(--shadow); display:flex; flex-direction:column; gap:14px; }
+            .voice-quote { font-size:22px; color:var(--green); line-height:1; }
+            .voice-text { font-size:15px; line-height:1.8; color:#1a1f2e; flex:1; }
+            .voice-footer { display:flex; align-items:center; gap:10px; }
+            .voice-avatar { width:36px; height:36px; border-radius:50%; background:linear-gradient(135deg,var(--green),#4fd1b8); display:flex; align-items:center; justify-content:center; color:#fff; font-size:14px; font-weight:900; flex-shrink:0; }
+            .voice-meta-wrap { display:flex; flex-direction:column; gap:1px; }
+            .voice-name { font-size:13px; font-weight:800; color:#1a1f2e; }
+            .voice-role { font-size:12px; color:var(--muted); }
+            @media(max-width:640px){ .voices-grid{grid-template-columns:1fr;} }
+          </style>
         </div>
       </section>
 
-      <!-- 向いている人 -->
+      <!-- ベータユーザーの声 -->
       <section class="section voices-section">
         <div class="container">
-          <p class="section-label">Fit</p>
-          <h2 class="section-title">こういう人に向いている</h2>
-          <p class="section-sub">いまのよへラボがいちばん刺さりやすい使い方を先に出している。</p>
+          <p class="section-label">Beta Voices</p>
+          <h2 class="section-title">使ってみた人の声</h2>
+          <p class="section-sub">ベータ版を試してもらった方の、実際の感想。</p>
           <div class="voices-grid">
             <div class="voice-card">
-              <p class="voice-text">朝のうちに「今日応募する1件」を決めたい人。候補を先に絞って、見る量を減らしたい人向け。</p>
-              <div class="voice-meta">案件探しで時間が溶けやすい人</div>
+              <div class="voice-quote">"</div>
+              <p class="voice-text">朝の案件チェックが10分くらいで終わるようになった。前は1時間ぐらいかかってたので、だいぶ違います。</p>
+              <div class="voice-footer">
+                <div class="voice-avatar">K</div>
+                <div class="voice-meta-wrap">
+                  <span class="voice-name">北村さん</span>
+                  <span class="voice-role">フリーランスWebライター・歴2年</span>
+                </div>
+              </div>
             </div>
             <div class="voice-card">
-              <p class="voice-text">応募文をゼロから書くと止まる人。件名案や冒頭3行まで先に欲しい人に向いている。</p>
-              <div class="voice-meta">応募の初動で止まりやすい人</div>
+              <div class="voice-quote">"</div>
+              <p class="voice-text">応募文の1行目が出てくれると着手がめちゃくちゃ早い。あとは肉付けするだけだから、ゼロから書く気力がいらなくなった。</p>
+              <div class="voice-footer">
+                <div class="voice-avatar">T</div>
+                <div class="voice-meta-wrap">
+                  <span class="voice-name">田中さん</span>
+                  <span class="voice-role">副業ライター・会社員6年目</span>
+                </div>
+              </div>
             </div>
             <div class="voice-card">
-              <p class="voice-text">毎朝同じ条件で見たい人。無料版で相性を見て、合えば保存ありのプロプランに進める。</p>
-              <div class="voice-meta">毎日の案件探しを習慣化したい人</div>
+              <div class="voice-quote">"</div>
+              <p class="voice-text">候補を3件に絞ってくれるのが地味に助かる。いくらでもある中から選ぶのが一番しんどかったので。</p>
+              <div class="voice-footer">
+                <div class="voice-avatar">S</div>
+                <div class="voice-meta-wrap">
+                  <span class="voice-name">佐藤さん</span>
+                  <span class="voice-role">フリーランス3年目・LP制作中心</span>
+                </div>
+              </div>
+            </div>
+            <div class="voice-card">
+              <div class="voice-quote">"</div>
+              <p class="voice-text">複数のツールがあるから、案件を探す→書く→整える、の流れがよへラボだけで完結できた。</p>
+              <div class="voice-footer">
+                <div class="voice-avatar">Y</div>
+                <div class="voice-meta-wrap">
+                  <span class="voice-name">山下さん</span>
+                  <span class="voice-role">フリーランス歴1年・Webデザイン兼任</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
