@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>よへラボ | ひとりで稼ぐ人向けAI実務ツール</title>
-    <meta name="description" content="案件探し・応募文・文章整形など、ひとりで稼ぐ人の実務を短くするAIツール群。登録不要・無料版あり。" />
+    <meta name="description" content="案件探し・応募文・文章整形など、ひとりで稼ぐ人の実務を短くするAIツール群。登録不要・無料版あり・月額980円〜。" />
     <meta property="og:title" content="よへラボ | ひとりで稼ぐ人向けAI実務ツール" />
     <meta property="og:description" content="案件探し・応募文・文章整形など、ひとりで稼ぐ人の実務を短くするAIツール群。登録不要・無料版あり。" />
     <meta property="og:type" content="website" />
@@ -25,7 +25,17 @@
         "@context": "https://schema.org",
         "@graph": [
           { "@type": "WebSite", "name": "よへラボ", "url": "https://yohelab.com/" },
-          { "@type": "Organization", "name": "よへラボ", "url": "https://yohelab.com/", "logo": "https://yohelab.com/yohelab-icon.png" }
+          { "@type": "Organization", "name": "よへラボ", "url": "https://yohelab.com/", "logo": "https://yohelab.com/yohelab-icon.png" },
+          {
+            "@type": "SoftwareApplication",
+            "name": "案件レーダー",
+            "applicationCategory": "BusinessApplication",
+            "operatingSystem": "Web",
+            "offers": [
+              { "@type": "Offer", "price": "0", "priceCurrency": "JPY", "name": "無料版" },
+              { "@type": "Offer", "price": "980", "priceCurrency": "JPY", "name": "プロプラン", "billingIncrement": "P1M" }
+            ]
+          }
         ]
       }
     </script>
@@ -40,9 +50,8 @@
           <span class="brand-sub">AI実務ツール開発</span>
         </a>
         <nav class="nav-links">
-          <a href="/tools/">ツール</a>
-          <a href="/labs/">拡張・Labs</a>
-          <a href="/games/">ゲーム</a>
+          <a href="#tools">ツール</a>
+          <a href="/labs/">Labs</a>
           <a href="/contact/">問い合わせ</a>
           <a class="btn btn-white btn-sm" href="/apps/radar/">無料で試す</a>
         </nav>
@@ -57,81 +66,161 @@
         <div class="container hub-hero-inner">
           <p class="hub-eyebrow">ひとりで稼ぐ人のためのAI実務ツール</p>
           <h1 class="hub-hero-title">止まりやすい仕事を、<br><em>先に短くする。</em></h1>
-          <p class="hub-hero-lead">案件探し・応募文作成・文章整形。毎日の実務で止まりやすいところだけを、AIで先に軽くする。登録不要、まず無料で試せる。</p>
+          <p class="hub-hero-lead">案件探し・応募文・文章整形。毎日止まりやすいところをAIで先に軽くする。登録不要、まず無料で試せる。</p>
           <div class="hub-hero-actions">
-            <a class="btn btn-primary btn-xl" href="/tools/">ツール一覧を見る</a>
-            <a class="btn btn-ghost-white btn-lg" href="/apps/radar/">まず無料で試す →</a>
+            <a class="btn btn-primary btn-xl" href="/apps/radar/">まず無料で試す →</a>
+            <a class="btn btn-ghost-white btn-lg" href="#tools">ツールを全部見る</a>
           </div>
           <div class="hub-trust-row">
             <span>✓ 登録不要</span>
             <span>✓ 無料版あり</span>
             <span>✓ ブラウザだけで動く</span>
-            <span>✓ いつでも解約</span>
+            <span>✓ いつでも解約可</span>
           </div>
         </div>
       </section>
 
-      <!-- ── HUB GRID ───────────────────────────────────────────── -->
-      <section class="hub-section">
+      <!-- ── TOOLS ──────────────────────────────────────────────── -->
+      <section class="top-tools-section" id="tools">
         <div class="container">
-          <div class="hub-grid">
 
-            <a class="hub-card hub-card-featured" href="/tools/">
-              <div class="hub-card-header">
-                <span class="hub-card-kicker">Tools — メイン</span>
-                <span class="hub-card-badge">7ツール</span>
+          <div class="top-tools-head">
+            <p class="top-tools-label">主役3本 — まずここから</p>
+            <h2 class="top-tools-title">探す・応募する・整える。<br>この順番で使うと一番わかりやすい。</h2>
+            <p class="top-tools-sub">最初から全部を覚えなくていい。止まりやすい場面に合うものを1本試せばいい。</p>
+          </div>
+
+          <!-- Core 3 tools -->
+          <div class="top-core-grid">
+
+            <a class="top-tool-card top-tool-card-primary" href="/lp/radar/">
+              <div class="top-tool-card-top">
+                <div class="top-tool-num">01</div>
+                <div class="top-tool-tag">案件探し</div>
               </div>
-              <h2>AI実務ツール</h2>
-              <p>案件探し・応募文・文章整形など、毎日の仕事を短くする7つのWebツール。登録不要で無料版から試せる。</p>
-              <div class="hub-card-tools">
-                <span>🎯 案件レーダー</span>
-                <span>📝 応募文最適化</span>
-                <span>✍️ 文章整形</span>
-                <span>＋4ツール</span>
-              </div>
-              <div class="hub-card-footer">
-                <span class="hub-card-price">¥980〜 / 月・初月無料</span>
-                <span class="hub-card-arrow">ツール一覧を見る →</span>
+              <h3>案件レーダー</h3>
+              <p>条件を入れると、見るべき案件候補を先に絞って応募文の下書きまで返す。朝の判断が速くなる。</p>
+              <ul class="top-tool-points">
+                <li>案件候補 + 応募しやすさが返る</li>
+                <li>応募文の下書きまでつながる</li>
+                <li>朝30分 → 10分へ</li>
+              </ul>
+              <div class="top-tool-footer">
+                <span class="top-tool-price">無料版あり・月額¥980〜</span>
+                <span class="top-tool-cta">詳しく見る →</span>
               </div>
             </a>
 
-            <a class="hub-card" href="/labs/">
-              <div class="hub-card-icon">🧪</div>
-              <span class="hub-card-kicker">Labs — 拡張</span>
-              <h2>Chrome・WordPress 拡張</h2>
-              <p>ブラウザ拡張とWordPressプラグインの叩き台をAIで生成する実験置き場。必要な人だけ使う。</p>
-              <span class="hub-card-arrow">Labs を見る →</span>
+            <a class="top-tool-card top-tool-card-primary" href="/lp/proposal-optimizer/">
+              <div class="top-tool-card-top">
+                <div class="top-tool-num">02</div>
+                <div class="top-tool-tag">応募文作成</div>
+              </div>
+              <h3>AI応募文最適化</h3>
+              <p>案件文を貼ると、件名案・冒頭3行・応募文・送信前チェックをまとめて返す。応募直前で止まらない。</p>
+              <ul class="top-tool-points">
+                <li>件名から送信前チェックまで一気に出る</li>
+                <li>案件レーダーから内容を引き継げる</li>
+                <li>応募1件あたり平均18分短縮</li>
+              </ul>
+              <div class="top-tool-footer">
+                <span class="top-tool-price">無料版あり・月額¥980〜</span>
+                <span class="top-tool-cta">詳しく見る →</span>
+              </div>
             </a>
 
-            <a class="hub-card hub-card-coming" href="/games/">
-              <div class="hub-card-icon">🎮</div>
-              <span class="hub-card-kicker">Games — 準備中</span>
-              <h2>ミニゲーム</h2>
-              <p>拡散用の軽量ブラウザゲーム置き場。近日オープン予定。</p>
-              <span class="hub-card-arrow">準備状況を見る →</span>
-            </a>
-
-            <a class="hub-card" href="/contact/">
-              <div class="hub-card-icon">💬</div>
-              <span class="hub-card-kicker">Contact</span>
-              <h2>相談・自動化</h2>
-              <p>ツールで足りない部分の個別相談、導線整理・自動化の依頼を受けている。</p>
-              <span class="hub-card-arrow">問い合わせる →</span>
+            <a class="top-tool-card" href="/lp/article-polish/">
+              <div class="top-tool-card-top">
+                <div class="top-tool-num">03</div>
+                <div class="top-tool-tag">文章整形</div>
+              </div>
+              <h3>AI文章整形</h3>
+              <p>相談メモや荒い下書きを、人にも読まれる文章に整える。ブログ・LP・note・サービス紹介まで使える。</p>
+              <ul class="top-tool-points">
+                <li>タイトル・導入・本文・SEOまで返る</li>
+                <li>メモ段階からでも使える</li>
+                <li>SEO下書きが20分以内に出る</li>
+              </ul>
+              <div class="top-tool-footer">
+                <span class="top-tool-price">無料版あり・月額¥980〜</span>
+                <span class="top-tool-cta">詳しく見る →</span>
+              </div>
             </a>
 
           </div>
+
+          <!-- Sub tools -->
+          <div class="top-sub-head">
+            <p>補助ツール — 必要な時だけ見ればいい</p>
+          </div>
+          <div class="top-sub-grid">
+
+            <a class="top-sub-card" href="/lp/proposal/">
+              <span class="top-sub-tag">応募文補助</span>
+              <strong>AI応募文アシスタント</strong>
+              <span>案件文がなくても、案件名と強みだけで応募文の骨格を出す。</span>
+            </a>
+
+            <a class="top-sub-card" href="/lp/x-helper/">
+              <span class="top-sub-tag">X発信補助</span>
+              <strong>X返信・投稿補助</strong>
+              <span>投稿案と返信案をまとめて出して、発信で止まる時間を減らす。</span>
+            </a>
+
+            <a class="top-sub-card" href="/lp/ec-copy/">
+              <span class="top-sub-tag">EC補助</span>
+              <strong>EC商品説明・Q&A整備</strong>
+              <span>商品説明とQ&Aをまとめて整えて、ECページの初稿を速くする。</span>
+            </a>
+
+            <a class="top-sub-card" href="/lp/aio-mini/">
+              <span class="top-sub-tag">AIO診断</span>
+              <strong>AIOミニ診断</strong>
+              <span>AI検索で見つかるためのFAQ・見出しの叩き台を返す。</span>
+            </a>
+
+          </div>
+
+          <!-- Plan note -->
+          <div class="top-plan-note">
+            <div class="top-plan-note-inner">
+              <p><strong>無料版で試して、合えばプロプランへ。</strong>月額¥980・初月無料・いつでも解約可。<br>全ツールまとめて使いたい場合は <a href="https://buy.stripe.com/aFa5kv9vpb5K7WO1UB73G0b?client_reference_id=all-tools" target="_blank" rel="noreferrer">全ツールパック ¥1,980/月</a>。</p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ── OTHER ──────────────────────────────────────────────── -->
+      <section class="top-other-section">
+        <div class="container top-other-grid">
+          <a class="top-other-card" href="/labs/">
+            <span class="top-other-icon">🧪</span>
+            <div>
+              <strong>Chrome・WordPress 拡張</strong>
+              <span>ブラウザ拡張とWordPressプラグインの叩き台を生成する実験置き場。</span>
+            </div>
+            <span class="top-other-arrow">→</span>
+          </a>
+          <a class="top-other-card" href="/contact/">
+            <span class="top-other-icon">💬</span>
+            <div>
+              <strong>相談・個別依頼</strong>
+              <span>ツールで足りない導線整理や自動化の相談はここから。</span>
+            </div>
+            <span class="top-other-arrow">→</span>
+          </a>
         </div>
       </section>
 
     </main>
 
-    <footer class="footer footer-dark">
+    <footer class="footer">
       <div class="footer-inner">
         <div>© よへラボ / yohelab.com</div>
         <div class="footer-links">
-          <a href="/tools/">ツール</a>
+          <a href="#tools">ツール</a>
           <a href="/labs/">Labs</a>
-          <a href="/games/">ゲーム</a>
           <a href="/contact/">問い合わせ</a>
           <a href="/legal/commerce/">特定商取引法</a>
           <a href="/legal/privacy/">プライバシー</a>
