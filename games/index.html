@@ -50,10 +50,25 @@
     }
     .games-lead { font-size: clamp(16px,1.8vw,18px); color: rgba(255,255,255,.65); line-height:1.9; max-width:640px; margin:0 auto 32px; }
     .games-body { background: #fff; border-radius: 28px 28px 0 0; margin-top: -28px; position: relative; z-index: 2; }
+    /* Category filter tabs */
+    .cat-filter {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      margin-bottom: 32px;
+    }
+    .cat-btn {
+      padding: 8px 18px; border-radius: 999px;
+      border: 1.5px solid #dbeafe;
+      background: #fff; color: #3b5bdb;
+      font-size: 13px; font-weight: 700;
+      cursor: pointer; transition: all .15s ease;
+    }
+    .cat-btn:hover { background: #eef2ff; border-color: #a5b4fc; }
+    .cat-btn.active { background: #4f46e5; color: #fff; border-color: #4f46e5; }
+    /* Game grid */
     .games-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
     .game-card {
-      display: flex; flex-direction: column; gap: 12px;
-      padding: 30px 24px; border-radius: 22px;
+      display: flex; flex-direction: column; gap: 10px;
+      padding: 26px 22px 22px; border-radius: 22px;
       border: 1.5px solid #bfdbfe;
       background: linear-gradient(175deg, #fff 0%, #f0f4ff 100%);
       text-decoration: none; color: inherit; position: relative; overflow: hidden;
@@ -67,16 +82,31 @@
       font-size: 10px; font-weight: 900; letter-spacing: .06em; text-transform: uppercase;
       padding: 3px 10px; border-radius: 999px;
     }
-    .game-icon { font-size: 40px; line-height: 1; }
-    .game-card h3 { font-size: 19px; font-weight: 900; letter-spacing: -0.025em; margin: 0; }
-    .game-card p  { font-size: 13.5px; color: var(--muted); line-height: 1.75; flex: 1; margin: 0; }
-    .game-cta { font-size: 13px; font-weight: 800; color: #4f46e5; }
+    .hot-tag {
+      position: absolute; top: 14px; right: 14px;
+      background: linear-gradient(135deg,#f97316,#ef4444);
+      color: #fff;
+      font-size: 10px; font-weight: 900; letter-spacing: .06em; text-transform: uppercase;
+      padding: 3px 10px; border-radius: 999px;
+    }
+    .new-tag {
+      position: absolute; top: 14px; right: 14px;
+      background: linear-gradient(135deg,#06b6d4,#3b82f6);
+      color: #fff;
+      font-size: 10px; font-weight: 900; letter-spacing: .06em; text-transform: uppercase;
+      padding: 3px 10px; border-radius: 999px;
+    }
+    .game-icon { font-size: 38px; line-height: 1; }
+    .game-card h3 { font-size: 18px; font-weight: 900; letter-spacing: -0.025em; margin: 0; }
+    .game-card p  { font-size: 13px; color: var(--muted); line-height: 1.75; flex: 1; margin: 0; }
+    .game-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 2px; }
+    .game-tag {
+      font-size: 10px; font-weight: 700; padding: 2px 9px; border-radius: 999px;
+      background: #eef2ff; color: #4f46e5; border: 1px solid #c7d2fe;
+    }
+    .game-cta { font-size: 13px; font-weight: 800; color: #4f46e5; margin-top: 4px; }
     .coming-soon .game-cta { color: var(--muted-light); }
-    @media(max-width:720px){ .games-grid{grid-template-columns:1fr 1fr;} }
-    @media(max-width:480px){ .games-grid{grid-template-columns:1fr;} .games-body{border-radius:20px 20px 0 0;} }
-  </style>
-  <style>
-    /* ── Tab nav ── */
+    /* Tab nav */
     .nav-tabs {
       display: flex; align-items: center; gap: 2px;
       background: rgba(255,255,255,.07);
@@ -97,6 +127,8 @@
       box-shadow: 0 1px 4px rgba(0,0,0,.3), 0 1px 0 rgba(255,255,255,.12) inset;
     }
     @media (max-width: 600px) { .nav-tabs { display: none; } }
+    @media(max-width:720px){ .games-grid{grid-template-columns:1fr 1fr;} }
+    @media(max-width:480px){ .games-grid{grid-template-columns:1fr;} .games-body{border-radius:20px 20px 0 0;} }
   </style>
 </head>
 <body>
@@ -141,72 +173,140 @@
             <h2 class="lp-section-title">今すぐ遊べるゲーム</h2>
             <p class="lp-section-sub">重い処理なし。タブを開いてすぐ始められる。全ゲーム無料。スマホでもPCでも遊びやすい短いゲームを並べている。</p>
           </div>
-          <div class="games-grid">
-            <a class="game-card reveal" href="/games/clear-road/">
+
+          <!-- Category filter -->
+          <div class="cat-filter reveal" id="catFilter">
+            <button class="cat-btn active" data-cat="all">すべて</button>
+            <button class="cat-btn" data-cat="reflex">⚡ 反射系</button>
+            <button class="cat-btn" data-cat="memory">🧠 記憶系</button>
+            <button class="cat-btn" data-cat="input">⌨️ 入力系</button>
+            <button class="cat-btn" data-cat="timing">🎯 タイミング系</button>
+          </div>
+
+          <div class="games-grid" id="gamesGrid">
+
+            <!-- ── おすすめ・新着 ── -->
+            <a class="game-card reveal" href="/games/reaction/" data-cat="reflex">
+              <span class="hot-tag">🔥 人気</span>
+              <div class="game-icon">⚡</div>
+              <h3>反応速度テスト</h3>
+              <p>緑になった瞬間にタップ。あなたの反応速度は何ms？3回計測で判定。</p>
+              <div class="game-tags"><span class="game-tag">反射系</span><span class="game-tag">スマホ対応</span><span class="game-tag">30秒</span></div>
+              <span class="game-cta">今すぐ遊ぶ →</span>
+            </a>
+
+            <a class="game-card reveal reveal-d1" href="/games/typing/" data-cat="input">
+              <span class="new-tag">✨ NEW</span>
+              <div class="game-icon">⌨️</div>
+              <h3>タイピングラッシュ</h3>
+              <p>30秒で何語打てる？単語が次々出てくる。スコアをXでシェアして競おう。</p>
+              <div class="game-tags"><span class="game-tag">入力系</span><span class="game-tag">PC向け</span><span class="game-tag">30秒</span></div>
+              <span class="game-cta">今すぐ遊ぶ →</span>
+            </a>
+
+            <a class="game-card reveal reveal-d2" href="/games/math-rush/" data-cat="input">
+              <span class="new-tag">✨ NEW</span>
+              <div class="game-icon">🔢</div>
+              <h3>計算ラッシュ</h3>
+              <p>30秒で何問正解？足し算・引き算・掛け算を4択で爆速回答。頭の回転を試そう。</p>
+              <div class="game-tags"><span class="game-tag">入力系</span><span class="game-tag">スマホ対応</span><span class="game-tag">30秒</span></div>
+              <span class="game-cta">今すぐ遊ぶ →</span>
+            </a>
+
+            <a class="game-card reveal" href="/games/sequence/" data-cat="memory">
+              <span class="new-tag">✨ NEW</span>
+              <div class="game-icon">🌈</div>
+              <h3>カラーシーケンス</h3>
+              <p>光った順番を覚えて同じ順番でタップ。レベルが上がるほど長くなる脳トレゲーム。</p>
+              <div class="game-tags"><span class="game-tag">記憶系</span><span class="game-tag">スマホ対応</span><span class="game-tag">無制限</span></div>
+              <span class="game-cta">今すぐ遊ぶ →</span>
+            </a>
+
+            <a class="game-card reveal reveal-d1" href="/games/clear-road/" data-cat="reflex">
               <div class="game-icon">🛣️</div>
               <h3>クリアロード</h3>
               <p>3本のレーンをよけ続ける定番の回避ゲーム。いちばん入りやすい。</p>
+              <div class="game-tags"><span class="game-tag">反射系</span><span class="game-tag">スマホ対応</span><span class="game-tag">30秒</span></div>
               <span class="game-cta">今すぐ遊ぶ →</span>
             </a>
-            <a class="game-card reveal reveal-d1" href="/games/coin-run/">
-              <div class="game-icon">🪙</div>
-              <h3>コインラン</h3>
-              <p>コインだけ拾って爆弾を避ける。拾うか避けるかだけの軽いゲーム。</p>
-              <span class="game-cta">今すぐ遊ぶ →</span>
-            </a>
-            <a class="game-card reveal reveal-d2" href="/games/fruit-catch/">
-              <div class="game-icon">🍓</div>
-              <h3>フルーツキャッチ</h3>
-              <p>フルーツだけ拾って爆弾は避ける。見た目を少し変えた拾う系ゲーム。</p>
-              <span class="game-cta">今すぐ遊ぶ →</span>
-            </a>
-            <a class="game-card reveal" href="/games/stack-tower/">
-              <div class="game-icon">🧱</div>
-              <h3>スタックタワー</h3>
-              <p>動くブロックを止めて積み上げる。タイミングだけで勝負できる。</p>
-              <span class="game-cta">今すぐ遊ぶ →</span>
-            </a>
-            <a class="game-card reveal reveal-d1" href="/games/blink-rush/">
+
+            <a class="game-card reveal reveal-d2" href="/games/blink-rush/" data-cat="reflex">
               <div class="game-icon">💡</div>
               <h3>ブリンクラッシュ</h3>
               <p>一瞬だけ出るターゲットを押す。反射だけで終わる短距離ゲーム。</p>
+              <div class="game-tags"><span class="game-tag">反射系</span><span class="game-tag">スマホ対応</span><span class="game-tag">25秒</span></div>
               <span class="game-cta">今すぐ遊ぶ →</span>
             </a>
-            <a class="game-card reveal reveal-d2" href="/games/color-switch/">
-              <div class="game-icon">🎨</div>
-              <h3>カラースイッチ</h3>
-              <p>色名に合うボタンを押すだけ。スマホでも分かりやすい見分けゲーム。</p>
+
+            <a class="game-card reveal" href="/games/tap-rush/" data-cat="reflex">
+              <div class="game-icon">👆</div>
+              <h3>タップラッシュ</h3>
+              <p>出てきたターゲットを連打するだけ。説明なしで始められる。</p>
+              <div class="game-tags"><span class="game-tag">反射系</span><span class="game-tag">スマホ向け</span><span class="game-tag">25秒</span></div>
               <span class="game-cta">今すぐ遊ぶ →</span>
             </a>
-            <a class="game-card reveal" href="/games/pair-memory/">
+
+            <a class="game-card reveal reveal-d1" href="/games/pair-memory/" data-cat="memory">
               <div class="game-icon">🧠</div>
               <h3>ペアメモ</h3>
               <p>同じ絵柄をそろえる記憶ゲーム。1回のプレイが短くてやり直しやすい。</p>
+              <div class="game-tags"><span class="game-tag">記憶系</span><span class="game-tag">スマホ向け</span><span class="game-tag">90秒</span></div>
               <span class="game-cta">今すぐ遊ぶ →</span>
             </a>
-            <a class="game-card reveal reveal-d1" href="/games/orbit-escape/">
-              <div class="game-icon">🛰️</div>
-              <h3>オービットエスケープ</h3>
-              <p>円の上を回って障害物をよける。見た目が変わる回避ゲーム。</p>
-              <span class="game-cta">今すぐ遊ぶ →</span>
-            </a>
-            <a class="game-card reveal reveal-d2" href="/games/tap-rush/">
-              <div class="game-icon">⚡</div>
-              <h3>タップラッシュ</h3>
-              <p>出てきたターゲットを連打するだけ。説明なしで始められる。</p>
-              <span class="game-cta">今すぐ遊ぶ →</span>
-            </a>
-            <a class="game-card reveal" href="/games/number-order/">
+
+            <a class="game-card reveal reveal-d2" href="/games/number-order/" data-cat="memory">
               <div class="game-icon">🔢</div>
               <h3>ナンバーオーダー</h3>
               <p>1から順に数字を押す集中ゲーム。短くて、頭も少し使う。</p>
+              <div class="game-tags"><span class="game-tag">記憶系</span><span class="game-tag">スマホ向け</span><span class="game-tag">60秒</span></div>
               <span class="game-cta">今すぐ遊ぶ →</span>
             </a>
+
+            <a class="game-card reveal" href="/games/stack-tower/" data-cat="timing">
+              <div class="game-icon">🧱</div>
+              <h3>スタックタワー</h3>
+              <p>動くブロックを止めて積み上げる。タイミングだけで勝負できる。</p>
+              <div class="game-tags"><span class="game-tag">タイミング系</span><span class="game-tag">スマホ向け</span><span class="game-tag">60秒</span></div>
+              <span class="game-cta">今すぐ遊ぶ →</span>
+            </a>
+
+            <a class="game-card reveal reveal-d1" href="/games/color-switch/" data-cat="reflex">
+              <div class="game-icon">🎨</div>
+              <h3>カラースイッチ</h3>
+              <p>色名に合うボタンを押すだけ。スマホでも分かりやすい見分けゲーム。</p>
+              <div class="game-tags"><span class="game-tag">反射系</span><span class="game-tag">スマホ向け</span><span class="game-tag">30秒</span></div>
+              <span class="game-cta">今すぐ遊ぶ →</span>
+            </a>
+
+            <a class="game-card reveal reveal-d2" href="/games/orbit-escape/" data-cat="timing">
+              <div class="game-icon">🛰️</div>
+              <h3>オービットエスケープ</h3>
+              <p>円の上を回って障害物をよける。見た目が変わる回避ゲーム。</p>
+              <div class="game-tags"><span class="game-tag">タイミング系</span><span class="game-tag">スマホ向け</span><span class="game-tag">30秒</span></div>
+              <span class="game-cta">今すぐ遊ぶ →</span>
+            </a>
+
+            <a class="game-card reveal" href="/games/coin-run/" data-cat="reflex">
+              <div class="game-icon">🪙</div>
+              <h3>コインラン</h3>
+              <p>コインだけ拾って爆弾を避ける。拾うか避けるかだけの軽いゲーム。</p>
+              <div class="game-tags"><span class="game-tag">反射系</span><span class="game-tag">スマホ向け</span><span class="game-tag">30秒</span></div>
+              <span class="game-cta">今すぐ遊ぶ →</span>
+            </a>
+
+            <a class="game-card reveal reveal-d1" href="/games/fruit-catch/" data-cat="reflex">
+              <div class="game-icon">🍓</div>
+              <h3>フルーツキャッチ</h3>
+              <p>フルーツだけ拾って爆弾は避ける。見た目を少し変えた拾う系ゲーム。</p>
+              <div class="game-tags"><span class="game-tag">反射系</span><span class="game-tag">スマホ向け</span><span class="game-tag">30秒</span></div>
+              <span class="game-cta">今すぐ遊ぶ →</span>
+            </a>
+
           </div>
 
           <div style="margin-top:56px;text-align:center;" class="reveal">
             <p style="font-size:15px;color:var(--muted);margin-bottom:20px;">仕事のツールも一緒にどうぞ</p>
-            <a class="btn btn-primary btn-lg" href="/#tools">AIツールを見る →</a>
+            <a class="btn btn-primary btn-lg" href="/tools/">AIツールを見る →</a>
           </div>
         </div>
       </section>
@@ -217,20 +317,39 @@
     <div class="lp-footer-inner">
       <div>© よへラボ / yohelab.com</div>
       <div class="lp-footer-links">
-        <a href="/">トップ</a><a href="/#tools">AIツール</a><a href="/labs/">Labs</a>
+        <a href="/">トップ</a><a href="/tools/">AIツール</a><a href="/labs/">Labs</a>
         <a href="/contact/">問い合わせ</a><a href="/legal/privacy/">プライバシー</a><a href="/legal/terms/">利用規約</a>
       </div>
     </div>
   </footer>
+
   <script>
     const obs = new IntersectionObserver(e => e.forEach(el => { if(el.isIntersecting){el.target.classList.add('visible');obs.unobserve(el.target);} }), {threshold:.08,rootMargin:'0px 0px -40px 0px'});
     document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
     setTimeout(()=>document.querySelectorAll('.reveal:not(.visible)').forEach(el=>el.classList.add('visible')),800);
   </script>
-
   <script>
     const _tabs = document.querySelectorAll('#navTabs a');
     _tabs.forEach(a => { if (a.getAttribute('href') === location.pathname) a.classList.add('tab-active'); });
+  </script>
+  <script>
+    // Category filter
+    const catBtns = document.querySelectorAll('.cat-btn');
+    const cards = document.querySelectorAll('#gamesGrid .game-card');
+    catBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        catBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const cat = btn.dataset.cat;
+        cards.forEach(card => {
+          if (cat === 'all' || card.dataset.cat === cat) {
+            card.style.display = '';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
   </script>
 </body>
 </html>

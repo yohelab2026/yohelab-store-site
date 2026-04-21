@@ -236,6 +236,66 @@ const pages = [
     ],
   },
   {
+    slug: "research-writer",
+    path: "/lp/research-writer/",
+    name: "リサーチ記事メーカー",
+    title: "リサーチ記事メーカー | よへラボ",
+    description: "3キーワードから最新情報を集め、選んだ情報だけで自然な記事にまとめる案内ページ。無料版で1回試して、合えば月額1,980円・月50回のプロプランへ進める。",
+    eyebrow: "調べて書くAI",
+    heroTitle: "3キーワードで、調べて、選んで、記事にする。",
+    heroLead: "最新情報を拾って、使う情報だけ選び、自然な文章にまとめる。note、ブログ、クラウドワークス向けの調査記事を短くする。",
+    freeHref: "/apps/research-writer/",
+    buyHref: "/contact/#research-writer",
+    buyLabel: "導入相談する",
+    productHref: "/products/research-writer-beta/",
+    proPrice: "1980",
+    proOfferDescription: "月額1,980円・月50回・いつでも解約可",
+    compareHeadline: "無料版で1回、プロプランは比べて選ぶところまで",
+    freeCards: [
+      { title: "最新情報を拾う", text: "Perplexityで3キーワードから関連情報を集める。" },
+      { title: "10〜20件の候補", text: "タイトルと要約が並ぶから、読む材料を先に選びやすい。" },
+      { title: "選んだ情報で記事化", text: "チェックした情報だけを材料に、自然な記事へまとめる。" },
+    ],
+    fitCards: [
+      { title: "noteやブログを書きたい人", text: "調べるところで止まらず、そのまま文章に進めたい人向け。" },
+      { title: "クラウドワークスで記事を書く人", text: "材料を先に集めて、構成づくりを短くしたい人向け。" },
+      { title: "AIっぽさを薄めたい人", text: "検索と執筆を分けずに、自然な文章へ寄せたい人向け。" },
+    ],
+    compareRows: [
+      ["キーワード入力", "3つ", "3つ"],
+      ["最新情報の取得", "✓", "✓"],
+      ["検索結果の選択", "10〜20件", "10〜20件"],
+      ["記事生成", "✓", "✓"],
+      ["SEO寄せ", "簡易", "強化"],
+      ["利用回数", "1セットまで", "月50セットまで"],
+      ["月額料金", "¥0", "¥1,980"],
+    ],
+    proCards: [
+      { title: "月50回まで使える", text: "毎月の回数を決めて、記事づくりを回しやすくする。" },
+      { title: "SEO寄せを強められる", text: "見出しやメタ説明まで整えて、公開しやすくする。" },
+      { title: "書く前の迷いを短くする", text: "選んだ情報をそのまま流して、記事の型を作りやすい。" },
+    ],
+    faq: [
+      ["無料版で何が返る？", "最新情報の検索結果と、選んだ情報をもとにした記事が返る。"],
+      ["どんな人向け？", "note、ブログ、クラウドワークスで記事を書く人向け。"],
+      ["無料版とプロプランの違いは？", "無料版は1セット。プロプランは月50セットまで使えて、比較しながら進めやすい。"],
+      ["いつでも解約できる？", "問い合わせフォームからいつでも解約申請できる。"],
+    ],
+    proofShot: {
+      src: proofUrl("research-writer-app.svg"),
+      alt: "リサーチ記事メーカーの画面スクリーンショット",
+      label: "調べて書く",
+      title: "キーワード3つから、記事の材料を選べる",
+      text: "検索結果を見てチェックし、選んだ情報だけで記事を作る。調べる時間を先に短くする。",
+      bullets: ["最新情報が先に並ぶ", "選んだ情報だけで書ける", "note / ブログ / CW向け"],
+    },
+    voices: [
+      { text: "調べるところで止まっていたのが進みやすい。材料を先に選べるのがわかりやすい。", meta: "noteやブログを書きたい人" },
+      { text: "記事の型が先に見えると、書く順番が決めやすい。クラウドワークス向けにも使いやすい。", meta: "クラウドワークスで記事を書く人" },
+      { text: "AIっぽい文章を薄めたい時に合ってる。検索と執筆がつながっているのがいい。", meta: "AIっぽさを薄めたい人" },
+    ],
+  },
+  {
     slug: "x-helper",
     path: "/lp/x-helper/",
     name: "AI X返信・投稿補助",
@@ -489,6 +549,8 @@ function renderPage(page) {
   const faq = renderFaq(page.faq);
   const proofShot = renderShotCard(page.proofShot);
   const proofVoices = renderVoiceCards(page.voices);
+  const proPrice = page.proPrice || "980";
+  const proOfferDescription = page.proOfferDescription || `月額${proPrice}円・初月無料・いつでも解約可`;
 
   return `<!doctype html>
 <html lang="ja">
@@ -815,7 +877,7 @@ function renderPage(page) {
             operatingSystem: "Web",
             offers: [
               { "@type": "Offer", price: "0", priceCurrency: "JPY", name: "無料版" },
-              { "@type": "Offer", price: "980", priceCurrency: "JPY", name: "プロプラン", billingIncrement: "P1M", description: "月額980円・初月無料・いつでも解約可" },
+              { "@type": "Offer", price: proPrice, priceCurrency: "JPY", name: "プロプラン", billingIncrement: "P1M", description: proOfferDescription },
             ],
             description: page.description,
           },

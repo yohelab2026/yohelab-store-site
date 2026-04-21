@@ -61,12 +61,22 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://yohelab.com/apps/research-writer/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://yohelab.com/lp/proposal-optimizer/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://yohelab.com/lp/article-polish/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yohelab.com/lp/research-writer/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -117,6 +127,11 @@
   </url>
   <url>
     <loc>https://yohelab.com/products/article-polish-beta/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://yohelab.com/products/research-writer-beta/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>

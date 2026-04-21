@@ -1,0 +1,992 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>リサーチ記事メーカー | よへラボ</title>
+    <meta name="description" content="3キーワードから最新情報を集め、選んだ情報だけで自然な記事にまとめるWebツール。note、ブログ、クラウドワークス向け。" />
+    <meta property="og:title" content="リサーチ記事メーカー | よへラボ" />
+    <meta property="og:description" content="3キーワードから最新情報を集め、選んだ情報だけで自然な記事にまとめるWebツール。note、ブログ、クラウドワークス向け。" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta property="og:url" content="https://yohelab.com/apps/research-writer/" />
+    <meta property="og:image" content="https://yohelab.com/yohelab-icon.png" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
+    <meta name="theme-color" content="#0d6b58" />
+    <link rel="canonical" href="https://yohelab.com/apps/research-writer/" />
+    <link rel="icon" type="image/png" href="/yohelab-icon.png" />
+    <link rel="stylesheet" href="/shared/site.css" />
+    <style>
+      .app-intro {
+        padding: 42px 0 0;
+        text-align: center;
+      }
+      .app-intro h1 {
+        font-size: clamp(28px, 5vw, 46px);
+        line-height: 1.08;
+        letter-spacing: -0.05em;
+        margin-bottom: 12px;
+      }
+      .app-intro p {
+        color: var(--muted);
+        font-size: 17px;
+        line-height: 1.8;
+        margin: 0 auto 10px;
+        max-width: 860px;
+      }
+      .app-chips {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin: 20px 0 28px;
+      }
+      .app-chip {
+        padding: 5px 14px;
+        border-radius: 999px;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        font-size: 13px;
+        color: var(--muted);
+        font-weight: 700;
+      }
+      .app-layout {
+        display: grid;
+        grid-template-columns: 390px minmax(0, 1fr);
+        gap: 24px;
+        align-items: start;
+        padding: 24px 0 72px;
+      }
+      .app-panel,
+      .output-area {
+        background: var(--white);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        box-shadow: var(--shadow);
+      }
+      .app-panel {
+        position: sticky;
+        top: 88px;
+        padding: 26px;
+      }
+      .app-panel h2,
+      .output-area h3 {
+        font-size: 18px;
+        font-weight: 900;
+        margin-bottom: 16px;
+      }
+      .form-stack {
+        display: grid;
+        gap: 14px;
+      }
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      .usage-card {
+        margin-bottom: 18px;
+        padding: 16px 18px;
+        border-radius: 14px;
+        background: linear-gradient(135deg,#f3fbf8,#e8f5ef);
+        border: 1px solid #cde8dd;
+      }
+      .usage-card .label {
+        font-size: 12px;
+        font-weight: 900;
+        letter-spacing: .12em;
+        color: var(--green);
+        text-transform: uppercase;
+        margin-bottom: 6px;
+      }
+      .usage-card .count {
+        font-size: 15px;
+        font-weight: 800;
+        color: var(--text);
+        line-height: 1.5;
+      }
+      .usage-card .count strong {
+        color: var(--green-dark);
+        font-size: 20px;
+      }
+      .search-meta {
+        margin-bottom: 12px;
+        padding: 12px 14px;
+        border-radius: 14px;
+        border: 1px solid var(--border);
+        background: #f9fbfa;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.7;
+      }
+      .source-actions,
+      .article-actions,
+      .header-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .header-actions {
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+      }
+      .results-panel {
+        display: grid;
+        gap: 16px;
+      }
+      .results-header {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+      .results-header .count {
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .source-list {
+        display: grid;
+        gap: 12px;
+      }
+      .source-card {
+        display: grid;
+        grid-template-columns: 22px minmax(0, 1fr);
+        gap: 12px;
+        align-items: start;
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        background: var(--bg);
+        padding: 16px;
+        cursor: pointer;
+        transition: border-color .18s, box-shadow .18s, transform .18s, background .18s;
+      }
+      .source-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 26px rgba(13,107,88,.08);
+      }
+      .source-card.is-selected {
+        border-color: var(--green);
+        background: #f1faf6;
+      }
+      .source-check {
+        width: 18px;
+        height: 18px;
+        margin-top: 2px;
+        accent-color: var(--green);
+      }
+      .source-top {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-bottom: 6px;
+      }
+      .source-title {
+        font-size: 15px;
+        font-weight: 900;
+        line-height: 1.5;
+      }
+      .source-domain {
+        font-size: 12px;
+        color: var(--green-dark);
+        background: #eafaf3;
+        border: 1px solid #c9e9dd;
+        padding: 3px 9px;
+        border-radius: 999px;
+        white-space: nowrap;
+      }
+      .source-summary {
+        font-size: 13px;
+        line-height: 1.75;
+        color: var(--text);
+        white-space: pre-wrap;
+      }
+      .source-meta {
+        margin-top: 8px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .empty-state {
+        min-height: 200px;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+        border-radius: 16px;
+        border: 1px dashed var(--border);
+        color: var(--muted);
+        text-align: center;
+        line-height: 1.8;
+        background: #fcfdfc;
+      }
+      .article-grid {
+        display: grid;
+        gap: 14px;
+      }
+      .article-section {
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        background: var(--bg);
+        padding: 18px;
+      }
+      .article-section h4 {
+        font-size: 15px;
+        font-weight: 900;
+        margin-bottom: 10px;
+      }
+      .article-section p,
+      .article-section li {
+        margin: 0;
+        line-height: 1.9;
+        color: var(--text);
+        white-space: pre-wrap;
+      }
+      .article-section ul {
+        margin: 0;
+        padding-left: 18px;
+      }
+      .article-section li {
+        margin-bottom: 8px;
+      }
+      .article-section .card-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 12px;
+      }
+      .result-shell {
+        display: grid;
+        gap: 18px;
+      }
+      .selected-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        flex-wrap: wrap;
+        padding: 14px 16px;
+        border-radius: 14px;
+        background: #f6fbf8;
+        border: 1px solid #d7eadf;
+        color: var(--text);
+        font-size: 13px;
+      }
+      .selected-bar strong {
+        color: var(--green-dark);
+      }
+      .pro-feature-box {
+        margin-top: 18px;
+        padding: 18px;
+        border-radius: 16px;
+        background: #f7faf8;
+        border: 1px solid var(--border);
+      }
+      .pro-feature-box h3 {
+        font-size: 15px;
+        font-weight: 900;
+        margin-bottom: 12px;
+      }
+      .pro-feature-box .sub {
+        font-size: 13px;
+        color: var(--muted);
+        margin-bottom: 12px;
+      }
+      .pro-feature-list {
+        display: grid;
+        gap: 10px;
+      }
+      .pro-feature-list label {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        font-size: 14px;
+        color: var(--text);
+      }
+      .pro-feature-list input[type="checkbox"] {
+        margin-top: 3px;
+        accent-color: var(--green);
+      }
+      .pro-feature-list span {
+        color: var(--muted);
+        font-size: 13px;
+        display: block;
+        margin-top: 2px;
+      }
+      .prefill-banner {
+        display: none;
+        margin-bottom: 16px;
+        padding: 14px 16px;
+        border-radius: 14px;
+        background: #eef7f3;
+        border: 1px solid #cde8dd;
+      }
+      .prefill-banner.is-visible {
+        display: block;
+      }
+      .prefill-banner strong {
+        display: block;
+        margin-bottom: 4px;
+        color: var(--green-dark);
+      }
+      .article-empty {
+        padding: 26px;
+        border-radius: 16px;
+        background: #fcfdfc;
+        border: 1px dashed var(--border);
+        color: var(--muted);
+        line-height: 1.8;
+      }
+      .section-note {
+        font-size: 12px;
+        color: var(--muted);
+        margin-top: 8px;
+      }
+      @media (max-width: 900px) {
+        .app-layout { grid-template-columns: 1fr; }
+        .app-panel { position: static; }
+        .form-grid { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="nav">
+      <div class="nav-inner">
+        <a class="brand" href="/">
+          <img src="/yohelab-icon.png" alt="よへラボのアイコン" />
+          <span>よへラボ</span>
+        </a>
+        <nav class="nav-links">
+          <a href="/">トップ</a>
+          <a href="/lp/research-writer/">LPを見る</a>
+          <a href="/contact/">問い合わせ</a>
+          <a class="btn btn-primary btn-sm" href="/products/research-writer-beta/">プロプランを見る</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="container">
+        <div class="app-intro">
+          <h1>3キーワードで、調べて、選んで、記事にする。</h1>
+          <p>最新情報を拾って、使う材料だけ選んで、人が読みやすい記事へまとめる。note、ブログ、クラウドワークス向けの調査記事を短くする。</p>
+          <div class="app-chips">
+            <span class="app-chip">登録不要</span>
+            <span class="app-chip">無料版は1日1セット</span>
+            <span class="app-chip">プロ版は月50セット</span>
+            <span class="app-chip">Perplexity検索</span>
+            <span class="app-chip">Claude Sonnet 4 で生成</span>
+          </div>
+        </div>
+
+        <div class="app-layout">
+          <aside class="app-panel">
+            <h2>キーワードを入れる</h2>
+            <div class="usage-card">
+              <div class="label">無料版</div>
+              <div class="count"><span id="usage-mode">無料版は</span> <strong id="usage-left">1</strong> セット使える</div>
+              <div class="section-note" id="usage-note">1セット = 検索1回 + 生成1回 / 1日1セット</div>
+            </div>
+            <form class="form-stack" id="research-form">
+              <label>キーワード1
+                <input id="keyword1" value="AI副業" placeholder="例: AI副業" />
+              </label>
+              <label>キーワード2
+                <input id="keyword2" value="初心者" placeholder="例: 初心者" />
+              </label>
+              <label>キーワード3
+                <input id="keyword3" value="始め方" placeholder="例: 始め方" />
+              </label>
+              <label>用途
+                <select id="audience">
+                  <option value="note向けの記事">note向けの記事</option>
+                  <option value="ブログ向けの記事">ブログ向けの記事</option>
+                  <option value="クラウドワークスの下書き">クラウドワークスの下書き</option>
+                  <option value="SEO記事">SEO記事</option>
+                  <option value="商品紹介文">商品紹介文</option>
+                </select>
+              </label>
+              <div class="form-grid">
+                <label>文体
+                  <select id="tone">
+                    <option value="やわらかめ">やわらかめ</option>
+                    <option value="丁寧">丁寧</option>
+                    <option value="カジュアル">カジュアル</option>
+                    <option value="論理的">論理的</option>
+                  </select>
+                </label>
+                <label>文字数
+                  <select id="length">
+                    <option value="2000">2000字</option>
+                    <option value="3000" selected>3000字</option>
+                    <option value="4000">4000字</option>
+                  </select>
+                </label>
+              </div>
+              <label>記事の狙い
+                <textarea id="angle" placeholder="例: 読者が最初に知りたいことを整理したい"></textarea>
+              </label>
+              <label>避けたいこと
+                <textarea id="avoid" placeholder="例: 大げさな表現、AIっぽい言い回し、曖昧な断定"></textarea>
+              </label>
+              <label style="display:flex;gap:10px;align-items:flex-start;">
+                <input id="seoMode" type="checkbox" style="margin-top:4px;accent-color:var(--green);" />
+                <span>
+                  <strong style="display:block;margin-bottom:2px;">SEO寄せ</strong>
+                  <span style="font-size:13px;color:var(--muted);line-height:1.6;">SEOタイトルとメタディスクリプションも一緒に出す。</span>
+                </span>
+              </label>
+              <button class="btn btn-primary" style="width:100%;height:50px;" type="submit">最新情報を探す</button>
+              <p style="font-size:12px;color:var(--muted);text-align:center;">検索結果は選んでから記事にする</p>
+
+              <div class="pro-feature-box">
+                <h3>プロプランで使えること</h3>
+                <p class="sub">月50セットまで、比較しながら進めやすい。</p>
+                <div class="pro-feature-list">
+                  <label><input type="checkbox" checked disabled /> <span>検索結果の比較と保存</span></label>
+                  <label><input type="checkbox" checked disabled /> <span>SEO寄せの出力を強化</span></label>
+                  <label><input type="checkbox" checked disabled /> <span>何度も調べて比べる作業を短くする</span></label>
+                </div>
+              </div>
+            </form>
+          </aside>
+
+          <section class="output-area">
+            <div class="header-actions">
+              <div>
+                <h3 style="margin-bottom:6px;">検索結果を選ぶ</h3>
+                <div style="color:var(--muted);font-size:13px;line-height:1.7;">Perplexity で最新情報を拾って、使いたいものだけチェックする。</div>
+              </div>
+              <div class="source-actions">
+                <button class="btn btn-outline btn-sm" id="select-top" type="button">上位5件を選ぶ</button>
+                <button class="btn btn-outline btn-sm" id="clear-selected" type="button">選択を外す</button>
+              </div>
+            </div>
+
+            <div id="prefill-banner" class="prefill-banner"></div>
+            <div id="search-meta" class="search-meta">3つのキーワードを入れて「最新情報を探す」を押すと、10〜20件の候補が出る。無料版は1日1セット、プロ版は月50セットまで。</div>
+            <div class="results-panel">
+              <div class="results-header">
+                <div>
+                  <strong id="result-count">検索結果 0件</strong>
+                  <div class="count">選択中 <span id="selected-count">0</span>件</div>
+                </div>
+                <button class="btn btn-primary btn-sm" id="generate-btn" type="button" disabled>選んだ情報で記事を作る</button>
+              </div>
+
+              <div id="search-results" class="source-list">
+                <div class="empty-state">
+                  キーワードを入れて検索すると、<br />
+                  最新情報の候補がここに並ぶ。
+                </div>
+              </div>
+
+              <div class="result-shell">
+                <div class="header-actions" style="margin-top:4px;">
+                  <div>
+                    <h3 style="margin-bottom:6px;">記事の出力</h3>
+                    <div style="color:var(--muted);font-size:13px;line-height:1.7;">選んだ情報だけを材料に、自然な記事へまとめる。</div>
+                  </div>
+                  <div class="article-actions">
+                    <button class="btn btn-outline btn-sm" id="copy-result" type="button" disabled>全文コピー</button>
+                  </div>
+                </div>
+                <div id="article-output" class="article-empty">
+                  検索して、必要な情報にチェックを入れてから「選んだ情報で記事を作る」を押す。
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <div class="upsell-bar">
+          <div>
+            <h3>調べる・選ぶ・書くを、1本にまとめたい</h3>
+            <p>プロプランでは比較しながら進めやすい。全ツールパックに入れると、案件探し・応募文・文章整形も一緒に使える。</p>
+          </div>
+          <a class="btn btn-primary" href="/products/research-writer-beta/">プロプランを見る →</a>
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <div>© よへラボ / リサーチ記事メーカー</div>
+        <div class="footer-links">
+          <a href="/">トップ</a>
+          <a href="/lp/research-writer/">LPを見る</a>
+          <a href="/contact/">問い合わせ</a>
+          <a href="/legal/privacy/">プライバシーポリシー</a>
+        </div>
+      </div>
+    </footer>
+
+    <div class="toast" id="copy-toast">コピーしました</div>
+    <script>(() => { async function load(p) { try { const r = await fetch(`/api/license?product=${encodeURIComponent(p)}`, { credentials: "include" }); if (!r.ok) return { active: false, product: p }; return r.json(); } catch { return { active: false, product: p }; } } window.YoheLabAccess = { load }; })();</script>
+    <script>
+      const PRODUCT_KEY = "research-writer";
+      const FREE_LIMIT = 1;
+      const PRO_MONTHLY_LIMIT = 50;
+      const USAGE_KEY = "yohelab.research-writer.daily";
+      const MONTHLY_USAGE_KEY = "yohelab.research-writer.monthly";
+      const researchForm = document.getElementById("research-form");
+      const searchResultsEl = document.getElementById("search-results");
+      const articleOutputEl = document.getElementById("article-output");
+      const searchMetaEl = document.getElementById("search-meta");
+      const resultCountEl = document.getElementById("result-count");
+      const selectedCountEl = document.getElementById("selected-count");
+      const generateBtn = document.getElementById("generate-btn");
+      const selectTopBtn = document.getElementById("select-top");
+      const clearSelectedBtn = document.getElementById("clear-selected");
+      const copyBtn = document.getElementById("copy-result");
+      const toast = document.getElementById("copy-toast");
+      const usageModeEl = document.getElementById("usage-mode");
+      const usageLeftEl = document.getElementById("usage-left");
+      const usageNoteEl = document.getElementById("usage-note");
+
+      const state = {
+        results: [],
+        selected: new Set(),
+        latestText: "",
+        proAccess: false,
+        usedToday: false,
+        generatedToday: false,
+        proMonthlyUsed: 0,
+      };
+
+      function todayKey() {
+        return new Intl.DateTimeFormat("sv-SE", { timeZone: "Asia/Tokyo" }).format(new Date());
+      }
+
+      function monthKey() {
+        return new Intl.DateTimeFormat("sv-SE", {
+          timeZone: "Asia/Tokyo",
+          year: "numeric",
+          month: "2-digit",
+        }).format(new Date());
+      }
+
+      function loadDailyUsage() {
+        try {
+          const raw = JSON.parse(localStorage.getItem(USAGE_KEY) || "{}");
+          return raw.date === todayKey()
+            ? { usedToday: Boolean(raw.usedToday), generatedToday: Boolean(raw.generatedToday) }
+            : { usedToday: false, generatedToday: false };
+        } catch {
+          return { usedToday: false, generatedToday: false };
+        }
+      }
+
+      function saveDailyUsage(next) {
+        localStorage.setItem(USAGE_KEY, JSON.stringify({ date: todayKey(), ...next }));
+      }
+
+      function loadMonthlyUsage() {
+        try {
+          const raw = JSON.parse(localStorage.getItem(MONTHLY_USAGE_KEY) || "{}");
+          return raw.period === monthKey() ? { count: Number(raw.count) || 0 } : { count: 0 };
+        } catch {
+          return { count: 0 };
+        }
+      }
+
+      function saveMonthlyUsage(next) {
+        localStorage.setItem(MONTHLY_USAGE_KEY, JSON.stringify({ period: monthKey(), count: Number(next.count) || 0 }));
+      }
+
+      function syncUsageUI() {
+        if (state.proAccess) {
+          const left = Math.max(0, PRO_MONTHLY_LIMIT - state.proMonthlyUsed);
+          usageModeEl.textContent = "プロ版は";
+          usageLeftEl.textContent = String(left);
+          usageNoteEl.textContent = `1セット = 検索1回 + 生成1回 / 月${PRO_MONTHLY_LIMIT}セットまで`;
+        } else {
+          const left = state.usedToday ? 0 : FREE_LIMIT;
+          usageModeEl.textContent = "無料版は";
+          usageLeftEl.textContent = String(left);
+          usageNoteEl.textContent = "1セット = 検索1回 + 生成1回 / 1日1セット";
+        }
+        generateBtn.disabled = !state.results.length || !state.selected.size || (!state.proAccess && (!state.usedToday || state.generatedToday));
+      }
+
+      function canSearch() {
+        return state.proAccess ? state.proMonthlyUsed < PRO_MONTHLY_LIMIT : !state.usedToday;
+      }
+
+      function canGenerate() {
+        return state.proAccess || (state.usedToday && !state.generatedToday);
+      }
+
+      function escapeHtml(value) {
+        return String(value)
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;");
+      }
+
+      function splitList(text) {
+        return String(text)
+          .split(/\n+/)
+          .map((line) => line.replace(/^[\-\d\.・\s]+/, "").trim())
+          .filter(Boolean);
+      }
+
+      function splitNumberedList(text) {
+        return String(text)
+          .split(/\n+/)
+          .map((line) => line.replace(/^[\d\.・\-\)\s]+/, "").trim())
+          .filter(Boolean);
+      }
+
+      function parseBlocks(text) {
+        const matches = [...String(text || "").matchAll(/【([^】]+)】/g)];
+        if (!matches.length) return null;
+        const blocks = {};
+        matches.forEach((match, index) => {
+          const start = match.index + match[0].length;
+          const end = index + 1 < matches.length ? matches[index + 1].index : text.length;
+          blocks[match[1].trim()] = text.slice(start, end).trim();
+        });
+        return blocks;
+      }
+
+      function cardHtml(item, checked = false) {
+        return `
+          <label class="source-card ${checked ? "is-selected" : ""}" data-key="${escapeHtml(item.key)}">
+            <input class="source-check" type="checkbox" ${checked ? "checked" : ""} />
+            <div>
+              <div class="source-top">
+                <div class="source-title">${escapeHtml(item.title || "無題")}</div>
+                <div class="source-domain">${escapeHtml(item.source || "source")}</div>
+              </div>
+              <div class="source-summary">${escapeHtml(item.summary || "要約なし")}</div>
+              <div class="source-meta">
+                ${item.date ? `更新日: ${escapeHtml(item.date)}` : ""}
+                ${item.url ? ` / ${escapeHtml(item.url)}` : ""}
+              </div>
+            </div>
+          </label>
+        `;
+      }
+
+      function renderSearchResults() {
+        if (!state.results.length) {
+          searchResultsEl.innerHTML = `
+            <div class="empty-state">
+              検索結果がここに並ぶ。<br />
+              まずはキーワード3つで探す。
+            </div>
+          `;
+          resultCountEl.textContent = "検索結果 0件";
+          selectedCountEl.textContent = "0";
+          syncUsageUI();
+          return;
+        }
+
+        searchResultsEl.innerHTML = state.results.map((item) => cardHtml(item, state.selected.has(item.key))).join("");
+        resultCountEl.textContent = `検索結果 ${state.results.length}件`;
+        selectedCountEl.textContent = String(state.selected.size);
+
+        searchResultsEl.querySelectorAll(".source-card").forEach((card) => {
+          const key = card.dataset.key;
+          const input = card.querySelector("input");
+          const toggle = () => {
+            if (input.checked) {
+              state.selected.add(key);
+              card.classList.add("is-selected");
+            } else {
+              state.selected.delete(key);
+              card.classList.remove("is-selected");
+            }
+            selectedCountEl.textContent = String(state.selected.size);
+            syncUsageUI();
+          };
+          input.addEventListener("change", toggle);
+          card.addEventListener("click", (event) => {
+            if (event.target === input) return;
+            input.checked = !input.checked;
+            toggle();
+          });
+        });
+
+        syncUsageUI();
+      }
+
+      function articleSection(title, content, kind = "text", id = "") {
+        const contentHtml = kind === "list"
+          ? `<ul>${splitList(content).map((item) => `<li>${escapeHtml(item)}</li>`).join("") || "<li>内容がありません</li>"}</ul>`
+          : kind === "numbered"
+            ? `<ol style="margin:0;padding-left:18px;">${splitNumberedList(content).map((item) => `<li style=\"margin-bottom:8px;\">${escapeHtml(item)}</li>`).join("") || "<li>内容がありません</li>"}</ol>`
+            : `<p id="${escapeHtml(id)}">${escapeHtml(content || "内容がありません")}</p>`;
+
+        return `
+          <div class="article-section">
+            <h4>${escapeHtml(title)}</h4>
+            ${contentHtml}
+            <div class="card-actions">
+              <button class="btn btn-outline btn-sm copy-section" type="button" data-copy-target="${escapeHtml(id)}">この内容をコピー</button>
+            </div>
+          </div>
+        `;
+      }
+
+      function renderArticle(text) {
+        state.latestText = text;
+        const blocks = parseBlocks(text);
+        if (!blocks) {
+          articleOutputEl.className = "article-empty";
+          articleOutputEl.textContent = text || "生成に失敗しました。";
+          copyBtn.disabled = !text;
+          return;
+        }
+
+        const sectionMap = [
+          ["タイトル案", blocks["タイトル案"] || ""],
+          ["導入文", blocks["導入文"] || ""],
+          ["見出し構成", blocks["見出し構成"] || ""],
+          ["本文", blocks["本文"] || ""],
+          ["まとめ", blocks["まとめ"] || ""],
+          ["SNS投稿用テキスト", blocks["SNS投稿用テキスト"] || ""],
+          ["SEOタイトル", blocks["SEOタイトル"] || ""],
+          ["メタディスクリプション", blocks["メタディスクリプション"] || ""],
+        ].filter(([, content], index) => {
+          if (index < 6) return true;
+          return Boolean(content);
+        });
+
+        articleOutputEl.className = "";
+        articleOutputEl.innerHTML = `
+          <div class="article-grid">
+            ${sectionMap
+              .map(([title, content]) => {
+                if (title === "タイトル案") return articleSection(title, content, "numbered", "title-block");
+                if (title === "見出し構成") return articleSection(title, content, "list", "outline-block");
+                if (title === "SNS投稿用テキスト") return articleSection(title, content, "text", "sns-block");
+                if (title === "SEOタイトル") return articleSection(title, content, "text", "seo-title-block");
+                if (title === "メタディスクリプション") return articleSection(title, content, "text", "seo-desc-block");
+                if (title === "導入文") return articleSection(title, content, "text", "intro-block");
+                if (title === "本文") return articleSection(title, content, "text", "body-block");
+                if (title === "まとめ") return articleSection(title, content, "text", "summary-block");
+                return "";
+              })
+              .join("")}
+          </div>
+        `;
+
+        articleOutputEl.querySelectorAll(".copy-section").forEach((btn) => {
+          btn.addEventListener("click", async () => {
+            const targetId = btn.dataset.copyTarget;
+            const target = document.getElementById(targetId);
+            if (!target) return;
+            await navigator.clipboard.writeText(target.textContent || "");
+            toast.classList.add("show");
+            toast.hidden = false;
+            clearTimeout(window._toastTimer);
+            window._toastTimer = setTimeout(() => {
+              toast.classList.remove("show");
+              toast.hidden = true;
+            }, 1500);
+          });
+        });
+
+        copyBtn.disabled = !text;
+      }
+
+      function selectedItems() {
+        return state.results.filter((item) => state.selected.has(item.key));
+      }
+
+      function markSearchUsed() {
+        if (state.proAccess) {
+          state.proMonthlyUsed = Math.min(PRO_MONTHLY_LIMIT, state.proMonthlyUsed + 1);
+          saveMonthlyUsage({ count: state.proMonthlyUsed });
+          return;
+        }
+        state.usedToday = true;
+        saveDailyUsage({
+          usedToday: true,
+          generatedToday: state.generatedToday,
+        });
+      }
+
+      function markGeneratedUsed() {
+        if (state.proAccess) return;
+        state.generatedToday = true;
+        saveUsage({
+          usedToday: state.usedToday,
+          generatedToday: true,
+        });
+      }
+
+      function loadPromptValues() {
+        return {
+          keywords: [
+            document.getElementById("keyword1").value.trim(),
+            document.getElementById("keyword2").value.trim(),
+            document.getElementById("keyword3").value.trim(),
+          ].filter(Boolean),
+          audience: document.getElementById("audience").value,
+          tone: document.getElementById("tone").value,
+          length: document.getElementById("length").value,
+          seoMode: document.getElementById("seoMode").checked,
+          angle: document.getElementById("angle").value.trim(),
+          avoid: document.getElementById("avoid").value.trim(),
+        };
+      }
+
+      async function searchLatest() {
+        const payload = loadPromptValues();
+        if (payload.keywords.length < 3) {
+          searchMetaEl.textContent = "キーワードを3つ入れてから検索してね。";
+          return;
+        }
+        if (!canSearch()) {
+          searchMetaEl.innerHTML = '今月の50セットを使い切った。<a href="/products/research-writer-beta/" style="color:var(--green);font-weight:800;">プロプランを見る</a>';
+          return;
+        }
+
+        const button = researchForm.querySelector('button[type="submit"]');
+        button.disabled = true;
+        button.textContent = "検索中…";
+        searchMetaEl.textContent = "Perplexity で最新情報を探しています…";
+        searchResultsEl.innerHTML = `<div class="empty-state">最新情報を探しています…</div>`;
+        articleOutputEl.className = "article-empty";
+        articleOutputEl.textContent = "検索結果を選ぶと、記事がここに出る。";
+        copyBtn.disabled = true;
+
+        try {
+          const response = await fetch("/api/research-writer", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              action: "search",
+              keywords: payload.keywords,
+            }),
+          });
+          const json = await response.json();
+          if (!response.ok || json.error) {
+            throw new Error(json.detail || json.error || "search_failed");
+          }
+
+          state.results = Array.isArray(json.results) ? json.results : [];
+          state.selected = new Set(state.results.slice(0, Math.min(5, state.results.length)).map((item) => item.key));
+          markSearchUsed();
+          renderSearchResults();
+          syncUsageUI();
+          searchMetaEl.textContent = `「${payload.keywords.join(" / ")}」で ${state.results.length} 件の候補を取得した。必要なものだけチェックして記事に進める。`;
+          if (!state.results.length) {
+            searchResultsEl.innerHTML = `<div class="empty-state">候補が少なかった。キーワードを少し変えてもう一度試してみて。</div>`;
+          }
+        } catch (error) {
+          searchMetaEl.textContent = `検索に失敗した。${error.message || "もう一度試して。"}`;
+          searchResultsEl.innerHTML = `<div class="empty-state">検索結果を取得できなかった。<br>キーワードを少し変えてもう一度試して。</div>`;
+        } finally {
+          button.disabled = false;
+          button.textContent = "最新情報を探す";
+          syncUsageUI();
+        }
+      }
+
+      async function generateArticle() {
+        const payload = loadPromptValues();
+        const selected = selectedItems();
+        if (!selected.length) {
+          searchMetaEl.textContent = "記事に使う情報を1件以上チェックしてね。";
+          return;
+        }
+        if (!canGenerate()) {
+          searchMetaEl.innerHTML = '無料版は1日1セット。<a href="/products/research-writer-beta/" style="color:var(--green);font-weight:800;">プロプランを見る</a>';
+          return;
+        }
+
+        generateBtn.disabled = true;
+        generateBtn.textContent = "生成中…";
+        articleOutputEl.className = "article-empty";
+        articleOutputEl.textContent = "選んだ情報をもとに記事をまとめています…";
+
+        try {
+          const response = await fetch("/api/research-writer", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              action: "generate",
+              keywords: payload.keywords,
+              audience: payload.audience,
+              tone: payload.tone,
+              length: payload.length,
+              seoMode: payload.seoMode,
+              angle: payload.angle,
+              avoid: payload.avoid,
+              selectedResults: selected.map((item) => ({
+                title: item.title,
+                summary: item.summary,
+                url: item.url,
+                source: item.source,
+                date: item.date,
+              })),
+            }),
+          });
+          const json = await response.json();
+          if (!response.ok || json.error) {
+            throw new Error(json.detail || json.error || "generate_failed");
+          }
+
+          renderArticle(json.result || "");
+          if (!state.proAccess) markGeneratedUsed();
+        } catch (error) {
+          articleOutputEl.className = "article-empty";
+          articleOutputEl.textContent = `生成に失敗した。${error.message || "もう一度試して。"}`;
+        } finally {
+          generateBtn.disabled = !state.results.length || !state.selected.size || (!state.proAccess && state.generatedToday);
+          generateBtn.textContent = "選んだ情報で記事を作る";
+          syncUsageUI();
+        }
+      }
+
+      researchForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        searchLatest();
+      });
+
+      generateBtn.addEventListener("click", generateArticle);
+
+      selectTopBtn.addEventListener("click", () => {
+        state.selected = new Set(state.results.slice(0, Math.min(5, state.results.length)).map((item) => item.key));
+        renderSearchResults();
+      });
+
+      clearSelectedBtn.addEventListener("click", () => {
+        state.selected = new Set();
+        renderSearchResults();
+      });
+
+      copyBtn.addEventListener("click", async () => {
+        if (!state.latestText) return;
+        await navigator.clipboard.writeText(state.latestText);
+        toast.classList.add("show");
+        toast.hidden = false;
+        clearTimeout(window._toastTimer);
+        window._toastTimer = setTimeout(() => {
+          toast.classList.remove("show");
+          toast.hidden = true;
+        }, 1500);
+      });
+
+      (async () => {
+        const access = await window.YoheLabAccess.load(PRODUCT_KEY);
+        state.proAccess = Boolean(access?.active);
+        const usage = loadDailyUsage();
+        state.usedToday = Boolean(usage.usedToday);
+        state.generatedToday = Boolean(usage.generatedToday);
+        const monthly = loadMonthlyUsage();
+        state.proMonthlyUsed = Number(monthly.count) || 0;
+        if (state.proAccess) {
+          syncUsageUI();
+        }
+        syncUsageUI();
+      })();
+    </script>
+  </body>
+</html>

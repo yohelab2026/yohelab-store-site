@@ -23,14 +23,15 @@ checks.push(["home links radar lp", home.includes('/lp/radar/')]);
 checks.push(["home links proposal lp", home.includes('/lp/proposal/')]);
 checks.push(["home links new app lp", home.includes('/lp/proposal-optimizer/')]);
 checks.push(["home links article polish lp", home.includes('/lp/article-polish/')]);
+checks.push(["home links research writer lp", home.includes('/lp/research-writer/')]);
 checks.push(["home headline", home.includes('仕事 もっと') && home.includes('AIが動く')]);
 checks.push(["home hero eyebrow", home.includes('ひとりで稼ぐ人のための場所')]);
-checks.push(["home tools section", home.includes('案件探し・応募文・文章整形')]);
+checks.push(["home tools section", home.includes('案件探し・応募文・文章整形・調べて書く')]);
 checks.push(["home focus on three", home.includes('また止まった') && home.includes('なくなっていく')]);
 checks.push(["home pricing bundle", home.includes('全ツールパック ¥1,980/月')]);
 checks.push(["home no vague price", !home.includes('月額¥980〜')]);
-checks.push(["home proof screenshots", home.includes('raw.githubusercontent.com/yohelab2026/yohelab-store-site/main/public/proof/radar-app.png') && home.includes('raw.githubusercontent.com/yohelab2026/yohelab-store-site/main/public/proof/proposal-optimizer-app.png')]);
-checks.push(["home proof voices", home.includes('テスト時によく出る反応')]);
+checks.push(["home proof screenshots", home.includes('raw.githubusercontent.com/yohelab2026/yohelab-store-site/main/public/proof/radar-app.png') && home.includes('raw.githubusercontent.com/yohelab2026/yohelab-store-site/main/public/proof/proposal-optimizer-app.png') && home.includes('raw.githubusercontent.com/yohelab2026/yohelab-store-site/main/public/proof/research-writer-app.svg')]);
+checks.push(["home proof voices", home.includes('テスト時によく出る反応') && home.includes('3キーワードから材料を選ぶ流れ')]);
 
 const lpRadar = read(dist("lp/radar/index.html"));
 checks.push(["lp radar title", lpRadar.includes('案件レーダー | よへラボ')]);
@@ -58,6 +59,11 @@ checks.push(["lp article polish paid label", lpArticlePolish.includes('プロプ
 checks.push(["lp article polish no internal copy", !lpArticlePolish.includes('LPの役目')]);
 checks.push(["lp article polish proof section", lpArticlePolish.includes('実際の画面と、よくある反応')]);
 
+const lpResearchWriter = read(dist("lp/research-writer/index.html"));
+checks.push(["lp research writer title", lpResearchWriter.includes('リサーチ記事メーカー | よへラボ')]);
+checks.push(["lp research writer free", lpResearchWriter.includes('無料版を試す')]);
+checks.push(["lp research writer proof section", lpResearchWriter.includes('実際の画面と、よくある反応')]);
+
 const lpXHelper = read(dist("lp/x-helper/index.html"));
 checks.push(["lp x helper title", lpXHelper.includes('AI X返信・投稿補助 | よへラボ')]);
 
@@ -75,6 +81,15 @@ checks.push(["app submit button", app.includes('応募文を最適化する')]);
 checks.push(["app links product", app.includes('/products/proposal-optimizer-beta/')]);
 checks.push(["app mentions opening lines", app.includes('冒頭3行')]);
 checks.push(["app has radar prefill banner", app.includes('案件レーダーから引き継ぎました')]);
+
+const researchApp = read(dist("apps/research-writer/index.html"));
+checks.push(["research app title", researchApp.includes('リサーチ記事メーカー')]);
+checks.push(["research app tool key", researchApp.includes('research-writer')]);
+checks.push(["research app free limit", researchApp.includes('無料版は1日1セット')]);
+checks.push(["research app pro cap", researchApp.includes('プロ版は月50セット')]);
+checks.push(["research app submit button", researchApp.includes('最新情報を探す')]);
+checks.push(["research app links product", researchApp.includes('/products/research-writer-beta/')]);
+checks.push(["research app mentions perplexity", researchApp.includes('Perplexity で最新情報を探しています')]);
 
 const articleApp = read(dist("apps/article-polish/index.html"));
 checks.push(["article app title", articleApp.includes('AI文章整形')]);
@@ -96,6 +111,12 @@ checks.push(["article product bundle link", articleProduct.includes('client_refe
 checks.push(["article product free link", articleProduct.includes('/apps/article-polish/')]);
 checks.push(["article product consultation", articleProduct.includes('導入相談する')]);
 
+const researchProduct = read(dist("products/research-writer-beta/index.html"));
+checks.push(["research product title", researchProduct.includes('リサーチ記事メーカー プロプラン')]);
+checks.push(["research product consultation link", researchProduct.includes('/contact/#research-writer')]);
+checks.push(["research product price", researchProduct.includes('¥1,980')]);
+checks.push(["research product monthly cap", researchProduct.includes('月50回') || researchProduct.includes('月50セット')]);
+
 const radar = read(dist("apps/radar/index.html"));
 checks.push(["radar links new app", radar.includes('/apps/proposal-optimizer/')]);
 checks.push(["radar label updated", radar.includes('応募文最適化')]);
@@ -109,6 +130,9 @@ checks.push(["sitemap article product url", sitemap.includes('https://yohelab.co
 checks.push(["sitemap lp radar", sitemap.includes('https://yohelab.com/lp/radar/')]);
 checks.push(["sitemap lp proposal optimizer", sitemap.includes('https://yohelab.com/lp/proposal-optimizer/')]);
 checks.push(["sitemap lp article polish", sitemap.includes('https://yohelab.com/lp/article-polish/')]);
+checks.push(["sitemap research app url", sitemap.includes('https://yohelab.com/apps/research-writer/')]);
+checks.push(["sitemap research product url", sitemap.includes('https://yohelab.com/products/research-writer-beta/')]);
+checks.push(["sitemap research lp url", sitemap.includes('https://yohelab.com/lp/research-writer/')]);
 
 const gen = read(src("functions/api/generate.js"));
 checks.push(["generate prompt", gen.includes('"proposal-optimizer"')]);
@@ -130,6 +154,7 @@ checks.push(["contact includes article polish", contact.includes('AI文章整形
 const tools = read(dist("tools/index.html"));
 checks.push(["tools page title", tools.includes('AI実務ツール一覧')]);
 checks.push(["tools page mentions article polish", tools.includes('AI文章整形')]);
+checks.push(["tools page mentions research writer", tools.includes('リサーチ記事メーカー')]);
 checks.push(["tools page no labs card", !tools.includes('Labs（WordPress・Chrome拡張）')]);
 checks.push(["tools page no labs wordpress link", !tools.includes('/labs/wordpress/')]);
 checks.push(["tools page no labs chrome link", !tools.includes('/labs/chrome/')]);

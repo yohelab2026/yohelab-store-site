@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>計算ラッシュ | よへラボゲーム</title>
+  <meta name="description" content="30秒で何問解ける？足し算・引き算・掛け算を4択で爆速回答。頭の回転を試そう。" />
+  <meta property="og:title" content="計算ラッシュ | よへラボゲーム" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://yohelab.com/games/math-rush/" />
+  <meta property="og:image" content="https://yohelab.com/yohelab-icon.png" />
+  <meta name="theme-color" content="#07120f" />
+  <link rel="icon" type="image/png" href="/yohelab-icon.png" />
+  <link rel="stylesheet" href="/shared/site.css" />
+  <link rel="stylesheet" href="/shared/arcade.css" />
+</head>
+<body>
+  <header class="nav lp-nav">
+    <div class="nav-inner">
+      <a class="brand brand-light" href="/">
+        <img src="/yohelab-icon.png" alt="よへラボ" />
+        <span>よへラボ</span>
+        <span class="brand-sub">ゲーム</span>
+      </a>
+      <nav class="nav-links">
+        <a href="/tools/">AIツール</a>
+        <a href="/games/">ゲーム</a>
+        <a href="/contact/">問い合わせ</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="arcade-hero">
+      <div class="container">
+        <p class="arcade-eyebrow">🔢 計算系</p>
+        <h1>計算ラッシュ</h1>
+        <p>30秒で何問解ける？足し算・引き算・掛け算を4択で爆速回答。頭の回転速度を試そう。</p>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:18px;">
+          <span class="hero-chip" style="background:rgba(255,255,255,.07);color:#fff;border-color:rgba(255,255,255,.15)">スマホ対応</span><span class="hero-chip" style="background:rgba(255,255,255,.07);color:#fff;border-color:rgba(255,255,255,.15)">計算ゲーム</span><span class="hero-chip" style="background:rgba(255,255,255,.07);color:#fff;border-color:rgba(255,255,255,.15)">登録不要</span><span class="hero-chip" style="background:rgba(255,255,255,.07);color:#fff;border-color:rgba(255,255,255,.15)">無料</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="arcade-shell">
+      <div class="container">
+        <div class="arcade-grid" id="gameRoot">
+          <div class="arcade-panel">
+            <div class="arcade-top">
+              <div class="arcade-stats">
+                <div class="arcade-stat"><span class="label">正解数</span><span class="value" id="statScore">0</span></div>
+                <div class="arcade-stat"><span class="label">残り時間</span><span class="value" id="statTime">30秒</span></div>
+                <div class="arcade-stat"><span class="label">ベスト</span><span class="value" id="statBest">0</span></div>
+              </div>
+              <div class="arcade-actions">
+                <button class="btn-arcade primary" id="startBtn">スタート</button>
+                <button class="btn-arcade" id="restartBtn">やり直す</button>
+              </div>
+            </div>
+            <div class="arcade-board" id="board">
+              <div class="game-banner">READY</div>
+            </div>
+            <div class="touch-pad" id="touchPad"></div>
+            <div class="arcade-footer-note" id="statusText">4択から正解を選ぶ</div>
+          </div>
+          <aside class="arcade-side">
+            <h3>遊び方</h3>
+            <ul id="hintList">
+              <li>4つのボタンから正解を選ぶ</li><li>間違えてもすぐ次の問題</li><li>30秒で何問正解できるか</li>
+            </ul>
+            <div class="arcade-tip">足し算・引き算・掛け算がランダムで出る。頭の体操にも。</div>
+            <p style="margin-top:14px;">スコアをXでシェアして友達と競おう。</p>
+          </aside>
+        </div>
+        <div class="ad-slot-gameover" id="adSlotGameover">
+          <!-- Google AdSense slot -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    window.YOHE_GAME = {
+      "slug": "math-rush",
+      "mode": "math",
+      "timeLimit": 30,
+      "startText": "4択から正解を選ぶ",
+      "runningText": "計算中",
+      "shareText": "計算ラッシュで {score}問/30秒正解！あなたは？🔢 #よへラボ",
+      "hints": ["4つのボタンから正解を選ぶ", "間違えてもすぐ次の問題", "30秒で何問正解できるか"]
+    };
+  </script>
+  <script src="/shared/arcade-game.js"></script>
+</body>
+</html>
