@@ -1,11 +1,8 @@
 const COOKIE_NAME = "yohelab_access";
 
 const PRODUCT_CONFIG = {
-  radar: { label: "案件レーダー", nextPath: "/apps/radar/" },
   proposal: { label: "AI応募文アシスタント", nextPath: "/apps/proposal/" },
-  "proposal-optimizer": { label: "AI応募文最適化", nextPath: "/apps/proposal-optimizer/" },
-  "article-polish": { label: "AI文章整形", nextPath: "/apps/article-polish/" },
-  "research-writer": { label: "リサーチ記事メーカー", nextPath: "/apps/research-writer/" },
+  "research-writer": { label: "AIOリサーチアシスタント", nextPath: "/apps/research-writer/" },
   "x-helper": { label: "AI X投稿・返信補助", nextPath: "/apps/x-helper/" },
   "ec-copy": { label: "EC商品説明・Q&A整備", nextPath: "/apps/ec-copy/" },
   "aio-mini": { label: "AIOミニ診断", nextPath: "/apps/aio-mini/" },

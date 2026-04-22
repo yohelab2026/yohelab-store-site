@@ -47,9 +47,6 @@ const AVATAR_MAP = {
 };
 
 const FILES = [
-  "lp/radar/index.html",
-  "lp/proposal-optimizer/index.html",
-  "lp/article-polish/index.html",
   "lp/x-helper/index.html",
   "lp/ec-copy/index.html",
   "lp/aio-mini/index.html",
