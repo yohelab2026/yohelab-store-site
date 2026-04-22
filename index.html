@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>よへラボ | AIツール・ゲーム・Labs</title>
-  <meta name="description" content="AIOリサーチ、X投稿ネタ生成、EC商品説明、AIO診断など、ひとりで稼ぐ人の実務を短くするAIツール。ゲームで遊んで、Labsで先取り。" />
-  <meta property="og:title" content="よへラボ | AIツール・ゲーム・Labs" />
+  <title>よへラボ | AIOリサーチ記事メーカー・ゲーム</title>
+  <meta name="description" content="AIOリサーチ記事メーカー — キーワードを入れるだけで、調べて・選んで・記事にする。登録不要・無料版あり。" />
+  <meta property="og:title" content="よへラボ | AIOリサーチ記事メーカー・ゲーム" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://yohelab.com/" />
   <meta property="og:image" content="https://yohelab.com/yohelab-icon.png" />
@@ -13,10 +13,8 @@
   <link rel="icon" type="image/png" href="yohelab-icon.png" />
   <link rel="stylesheet" href="/shared/site.css" />
   <style>
-    /* ── GLOBAL ENHANCEMENTS ── */
     html { scroll-behavior: smooth; }
 
-    /* Fade-in animation */
     .reveal {
       opacity: 0;
       transform: translateY(24px);
@@ -144,7 +142,6 @@
       padding: 4px 10px; border-radius: 999px;
     }
 
-    /* ── SCROLL ANCHOR ── */
     .scroll-hint {
       position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
       display: flex; flex-direction: column; align-items: center; gap: 8px;
@@ -158,7 +155,7 @@
       background: linear-gradient(to bottom, rgba(255,255,255,.25), transparent);
     }
 
-    /* ── SECTION DIVIDER ── */
+    /* ── CONTENT WRAP ── */
     .content-wrap {
       background: #fff; border-radius: 32px 32px 0 0;
       margin-top: -32px; position: relative; z-index: 2;
@@ -166,9 +163,7 @@
 
     /* ── PILLAR ── */
     .pillar { padding: 80px 0; }
-    .pillar + .pillar {
-      border-top: 1px solid var(--border);
-    }
+    .pillar + .pillar { border-top: 1px solid var(--border); }
     .pillar-alt { background: #fafcfb; }
 
     .section-kicker {
@@ -179,11 +174,10 @@
     }
     .kicker-green  { background: #e8faf3; color: var(--green-dark); border: 1px solid var(--green-mid); }
     .kicker-blue   { background: #eff3ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
-    .kicker-orange { background: #fff7ed; color: #c2410c; border: 1px solid #fcd9b0; }
 
     .pillar-head {
       display: grid; grid-template-columns: 1fr auto;
-      gap: 24px; align-items: end; margin-bottom: 48px; flex-wrap: wrap;
+      gap: 24px; align-items: end; margin-bottom: 48px;
     }
     .pillar-title {
       font-size: clamp(30px, 4.5vw, 50px);
@@ -192,14 +186,10 @@
     }
     .pillar-sub { color: var(--muted); font-size: 15.5px; line-height: 1.88; max-width: 580px; }
 
-    /* ── TOOL CARDS ── */
-    .tools-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 18px; margin-bottom: 18px;
-    }
+    /* ── TOOL CARD ── */
     .tool-card-v2 {
       display: flex; flex-direction: column;
-      padding: 30px 26px;
+      padding: 36px 32px;
       border-radius: 24px;
       border: 1.5px solid var(--green-mid);
       background: linear-gradient(175deg, #fff 0%, #f3fbf7 100%);
@@ -207,10 +197,11 @@
       transition: transform .22s cubic-bezier(.2,.9,.3,1), box-shadow .22s, border-color .22s;
       box-shadow: 0 2px 12px rgba(11,143,114,.08), 0 1px 0 rgba(11,143,114,.12) inset;
       position: relative; overflow: hidden;
+      max-width: 760px;
     }
     .tool-card-v2::before {
       content: "";
-      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
       background: linear-gradient(90deg, #14c4a0, #0b8f72, #086b56);
       opacity: 0; transition: opacity .22s;
     }
@@ -221,78 +212,63 @@
     }
     .tool-card-v2:hover::before { opacity: 1; }
 
-    .tool-num {
-      display: inline-grid; place-items: center;
-      width: 36px; height: 36px; border-radius: 11px;
-      background: linear-gradient(135deg, #1ad0a8, #0b8f72);
-      color: #fff; font-size: 14px; font-weight: 900;
-      box-shadow: 0 3px 10px rgba(11,143,114,.35);
-      margin-bottom: 18px;
-    }
     .tool-tag-pill {
       display: inline-block; font-size: 10.5px; font-weight: 900;
       letter-spacing: .1em; text-transform: uppercase;
       color: var(--green); background: var(--green-light);
       border: 1px solid var(--green-mid); padding: 3px 10px;
-      border-radius: 999px; margin-bottom: 12px;
+      border-radius: 999px; margin-bottom: 14px;
     }
-    .tool-card-v2 h3 { font-size: 22px; font-weight: 900; letter-spacing: -0.03em; margin-bottom: 10px; }
-    .tool-card-v2 > p { color: var(--muted); font-size: 14.5px; line-height: 1.8; margin-bottom: 18px; flex: 1; }
+    .tool-card-v2 h3 { font-size: 26px; font-weight: 900; letter-spacing: -0.03em; margin-bottom: 12px; }
+    .tool-card-v2 > p { color: var(--muted); font-size: 15px; line-height: 1.85; margin-bottom: 24px; max-width: 600px; }
 
-    /* Pain → solution */
     .tool-transform {
       display: flex; align-items: center; gap: 8px;
-      background: #f5f8f6; border-radius: 12px; padding: 12px 14px;
-      margin-bottom: 16px; font-size: 13px;
+      background: #f5f8f6; border-radius: 12px; padding: 14px 16px;
+      margin-bottom: 20px; font-size: 13.5px;
     }
     .tool-before { color: var(--muted); text-decoration: line-through; flex: 1; }
-    .tool-arrow { color: var(--green); font-weight: 900; font-size: 16px; }
+    .tool-arrow { color: var(--green); font-weight: 900; font-size: 18px; }
     .tool-after { color: var(--green-dark); font-weight: 800; flex: 1; text-align: right; }
 
-    .tool-bullets { display: grid; gap: 6px; margin-bottom: 20px; }
+    .tool-bullets { display: grid; gap: 8px; margin-bottom: 24px; }
     .tool-bullets li {
-      display: flex; gap: 8px; font-size: 13px; color: var(--text-sub); line-height: 1.55;
+      display: flex; gap: 8px; font-size: 14px; color: var(--text-sub); line-height: 1.55;
     }
     .tool-bullets li::before { content: "✓"; color: var(--green); font-weight: 900; flex-shrink: 0; }
 
     .tool-footer {
       display: flex; align-items: center; justify-content: space-between;
-      padding-top: 14px; border-top: 1px solid var(--border-soft);
-      margin-top: auto; gap: 8px;
+      padding-top: 18px; border-top: 1px solid var(--border-soft);
+      margin-top: auto; gap: 12px; flex-wrap: wrap;
     }
-    .tool-price { font-size: 12px; color: var(--muted); font-weight: 600; }
-    .tool-cta   { font-size: 13px; font-weight: 800; color: var(--green); white-space: nowrap; }
+    .tool-price { font-size: 13px; color: var(--muted); font-weight: 600; }
+    .tool-cta   { font-size: 14px; font-weight: 800; color: var(--green); white-space: nowrap; }
 
-    /* Sub tools row */
-    .sub-label {
-      text-align: center; font-size: 11px; font-weight: 900;
-      letter-spacing: .14em; text-transform: uppercase;
-      color: var(--muted-light); margin: 32px 0 14px;
+    /* Step flow */
+    .step-flow {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+      margin: 32px 0;
     }
-    .sub-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 32px; }
-    .sub-item {
-      display: flex; flex-direction: column; gap: 5px;
-      padding: 16px; border-radius: 16px;
-      border: 1px solid var(--border); background: #f8faf9;
-      text-decoration: none; color: inherit;
-      transition: transform .18s, box-shadow .18s, border-color .18s, background .18s;
+    .step-item {
+      background: #f5f8f6; border-radius: 18px; padding: 20px 18px;
+      border: 1px solid var(--green-mid);
+      display: flex; flex-direction: column; gap: 8px;
     }
-    .sub-item:hover { transform: translateY(-3px); box-shadow: var(--shadow-sm); border-color: var(--green-mid); background: #fff; }
-    .sub-item-tag { font-size: 10px; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; color: var(--green); }
-    .sub-item strong { font-size: 13.5px; letter-spacing: -0.02em; line-height: 1.3; display: block; }
-    .sub-item span { font-size: 12px; color: var(--muted); line-height: 1.6; }
+    .step-num { font-size: 11px; font-weight: 900; color: var(--green); letter-spacing: .1em; text-transform: uppercase; }
+    .step-item strong { font-size: 15px; font-weight: 900; color: var(--text); }
+    .step-item span { font-size: 13px; color: var(--muted); line-height: 1.6; }
 
     /* CTA banner */
     .cta-banner {
       display: flex; align-items: center; justify-content: space-between;
-      gap: 20px; padding: 22px 28px;
+      gap: 20px; padding: 24px 32px;
       background: linear-gradient(135deg, #e8faf3, #d0f5e8);
       border: 1.5px solid var(--green-mid); border-radius: 20px;
-      flex-wrap: wrap;
+      flex-wrap: wrap; margin-top: 40px;
     }
     .cta-banner-copy p { font-size: 15px; line-height: 1.7; color: var(--green-dark); margin: 0; }
-    .cta-banner-copy strong { font-size: 17px; display: block; margin-bottom: 4px; letter-spacing: -0.02em; }
-    .cta-banner-copy a { color: var(--green-dark); font-weight: 800; text-decoration: underline; text-underline-offset: 3px; }
+    .cta-banner-copy strong { font-size: 18px; display: block; margin-bottom: 4px; letter-spacing: -0.02em; }
 
     /* ── GAMES SECTION ── */
     .games-hero {
@@ -334,80 +310,15 @@
       transition: transform .22s cubic-bezier(.2,.9,.3,1), box-shadow .22s, border-color .22s;
       overflow: hidden;
     }
-    .game-card-v2:not(.coming):hover {
+    .game-card-v2:hover {
       transform: translateY(-5px);
       box-shadow: 0 8px 28px rgba(99,102,241,.16), 0 24px 56px rgba(99,102,241,.08);
       border-color: #a5b4fc;
-    }
-    .coming { opacity: .6; border-style: dashed; background: #f8faff; cursor: default; }
-    .coming-pill {
-      position: absolute; top: 14px; right: 14px;
-      background: #dbeafe; color: #1d4ed8;
-      font-size: 10px; font-weight: 900; letter-spacing: .06em; text-transform: uppercase;
-      padding: 3px 10px; border-radius: 999px;
     }
     .game-icon { font-size: 38px; line-height: 1; margin-bottom: 2px; }
     .game-card-v2 h3 { font-size: 18px; font-weight: 900; letter-spacing: -0.025em; }
     .game-card-v2 p  { font-size: 13.5px; color: var(--muted); line-height: 1.75; flex: 1; margin: 0; }
     .game-cta { font-size: 13px; font-weight: 800; color: #4f46e5; margin-top: 4px; }
-    .coming .game-cta { color: var(--muted-light); }
-
-    /* ── LABS SECTION ── */
-    .labs-banner {
-      background: linear-gradient(135deg, #1a0a00 0%, #2d1200 50%, #1a0a00 100%);
-      border-radius: 24px; padding: 40px; margin-bottom: 20px;
-      position: relative; overflow: hidden;
-      display: flex; align-items: center; justify-content: space-between; gap: 32px;
-    }
-    .labs-banner::before {
-      content: "";
-      position: absolute; inset: 0; pointer-events: none;
-      background: radial-gradient(ellipse 60% 70% at 80% 50%, rgba(234,88,12,.2) 0%, transparent 55%),
-        linear-gradient(rgba(255,255,255,.015) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.015) 1px, transparent 1px);
-      background-size: auto, 40px 40px, 40px 40px;
-    }
-    .labs-banner-copy { position: relative; z-index: 1; }
-    .labs-banner-copy h3 {
-      font-size: clamp(24px, 3.5vw, 38px); font-weight: 900;
-      letter-spacing: -0.04em; color: #fff; margin-bottom: 12px; line-height: 1.1;
-    }
-    .labs-banner-copy h3 em {
-      background: linear-gradient(135deg, #fdba74, #f97316);
-      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
-    }
-    .labs-banner-copy p { color: rgba(255,255,255,.58); font-size: 15px; line-height: 1.8; max-width: 420px; margin-bottom: 24px; }
-    .labs-big-emoji { font-size: 80px; line-height: 1; filter: drop-shadow(0 8px 24px rgba(234,88,12,.4)); position: relative; z-index: 1; flex-shrink: 0; }
-
-    .labs-grid {
-      display: grid; grid-template-columns: repeat(3,1fr); gap: 14px;
-    }
-    .lab-card-v2 {
-      display: flex; flex-direction: column; gap: 10px;
-      padding: 26px 22px; border-radius: 20px;
-      border: 1.5px solid #fcd9b0;
-      background: linear-gradient(175deg, #fff 0%, #fff8f3 100%);
-      text-decoration: none; color: inherit; position: relative;
-      transition: transform .22s cubic-bezier(.2,.9,.3,1), box-shadow .22s, border-color .22s;
-      overflow: hidden;
-    }
-    .lab-card-v2:not(.coming):hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 28px rgba(234,88,12,.14), 0 24px 56px rgba(234,88,12,.07);
-      border-color: #fb923c;
-    }
-    .lab-coming-pill {
-      position: absolute; top: 14px; right: 14px;
-      background: #ffedd5; color: #c2410c;
-      font-size: 10px; font-weight: 900; letter-spacing: .06em; text-transform: uppercase;
-      padding: 3px 10px; border-radius: 999px;
-    }
-    .lab-icon { font-size: 36px; line-height: 1; margin-bottom: 2px; }
-    .lab-tag-pill { font-size: 10px; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; color: #c2410c; display: block; }
-    .lab-card-v2 h3 { font-size: 18px; font-weight: 900; letter-spacing: -0.025em; }
-    .lab-card-v2 p  { font-size: 13.5px; color: var(--muted); line-height: 1.75; flex: 1; margin: 0; }
-    .lab-cta { font-size: 13px; font-weight: 800; color: #c2410c; margin-top: 4px; }
-    .lab-card-v2.coming .lab-cta { color: var(--muted-light); }
 
     /* ── FINAL CTA ── */
     .final-cta {
@@ -438,7 +349,6 @@
     .final-cta p { font-size: 17px; color: rgba(255,255,255,.75); max-width: 560px; margin: 0 auto 36px; line-height: 1.88; }
     .final-cta-btns { display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap; }
 
-    /* Contact strip */
     .contact-strip {
       background: #050f0c;
       border-top: 1px solid rgba(255,255,255,.08);
@@ -452,7 +362,6 @@
     .contact-strip p { color: rgba(255,255,255,.55); font-size: 14px; margin: 0; line-height: 1.7; }
     .contact-strip strong { color: rgba(255,255,255,.88); display: block; margin-bottom: 4px; font-size: 15px; }
 
-    /* footer */
     .footer-dark { background: #030b09; border-top: 1px solid rgba(255,255,255,.06); }
     .footer-dark .footer-links a { color: rgba(255,255,255,.35); }
     .footer-dark .footer-links a:hover { color: rgba(255,255,255,.75); }
@@ -463,13 +372,13 @@
       .hero-proof { display: none; }
       .pillar-head { grid-template-columns: 1fr; }
       .pillar-head .btn { align-self: flex-start; }
+      .step-flow { grid-template-columns: 1fr; }
     }
     @media (max-width: 800px) {
-      .tools-grid, .games-grid, .labs-grid { grid-template-columns: 1fr 1fr; }
-      .sub-row { grid-template-columns: 1fr 1fr; }
-      .games-hero, .labs-banner { flex-direction: column; gap: 20px; padding: 28px 24px; }
-      .games-big-emoji, .labs-big-emoji { font-size: 52px; }
-      .cta-banner { flex-direction: column; align-items: flex-start; }
+      .games-grid { grid-template-columns: 1fr 1fr; }
+      .games-hero { flex-direction: column; gap: 20px; padding: 28px 24px; }
+      .games-big-emoji { font-size: 52px; }
+      .cta-banner { flex-direction: column; align-items: flex-start; padding: 20px 22px; }
     }
     @media (max-width: 600px) {
       .hero-wrap { padding: 90px 0 72px; min-height: auto; }
@@ -478,88 +387,32 @@
       .hero-ctas { flex-direction: column; align-items: stretch; }
       .hero-ctas .btn { text-align: center; justify-content: center; }
       .scroll-hint { display: none; }
-
       .content-wrap { border-radius: 20px 20px 0 0; }
       .pillar { padding: 52px 0; }
       .pillar-title { font-size: clamp(26px, 8vw, 38px); }
-
-      .tools-grid, .games-grid, .labs-grid { grid-template-columns: 1fr; }
-      .sub-row { grid-template-columns: 1fr 1fr; }
-
-      .games-hero-copy h3, .labs-banner-copy h3 { font-size: clamp(22px, 7vw, 32px); }
-      .games-hero-copy p, .labs-banner-copy p { font-size: 14px; }
-
+      .games-grid { grid-template-columns: 1fr; }
       .final-cta { padding: 72px 0; }
       .final-cta h2 { font-size: clamp(28px, 9vw, 44px); }
       .final-cta-btns { flex-direction: column; align-items: stretch; }
       .final-cta-btns .btn { text-align: center; justify-content: center; }
-
       .contact-strip-inner { flex-direction: column; align-items: flex-start; }
-
       .nav-links a:not(.btn) { display: none; }
-      .nav-tabs { display: none; }
       .nav-links { gap: 8px; }
     }
-    @media (max-width: 400px) {
-      .sub-row { grid-template-columns: 1fr; }
-      .hero-trust { font-size: 12px; gap: 6px 14px; }
-    }
   </style>
-  <style>
-    /* ── Tab-style nav (hub page only) ── */
-    .nav-tabs {
-      display: flex;
-      align-items: center;
-      gap: 2px;
-      background: rgba(255,255,255,.07);
-      border: 1px solid rgba(255,255,255,.1);
-      border-radius: 10px;
-      padding: 3px;
-    }
-    .nav-tabs a {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      height: 30px;
-      padding: 0 13px;
-      border-radius: 7px;
-      font-size: 13px;
-      font-weight: 700;
-      color: rgba(255,255,255,.5);
-      text-decoration: none;
-      transition: background .15s, color .15s, box-shadow .15s;
-      white-space: nowrap;
-    }
-    .nav-tabs a:hover {
-      background: rgba(255,255,255,.08);
-      color: rgba(255,255,255,.85);
-    }
-    .nav-tabs a.tab-active {
-      background: rgba(255,255,255,.13);
-      color: #fff;
-      box-shadow: 0 1px 4px rgba(0,0,0,.3), 0 1px 0 rgba(255,255,255,.12) inset;
-    }
-  </style>
-  <script>
-    const PROOF_BASE = "https://raw.githubusercontent.com/yohelab2026/yohelab-store-site/main/public/proof";
-  </script>
 </head>
 <body class="hub-page">
 
-  <!-- NAV -->
   <header class="nav">
     <div class="nav-inner">
       <a class="brand brand-light" href="/">
         <img src="/yohelab-icon.png" alt="よへラボ" />
         <span>よへラボ</span>
-        <span class="brand-sub">AIツール・ゲーム・Labs</span>
+        <span class="brand-sub">AIOリサーチ・ゲーム</span>
       </a>
       <nav class="nav-links">
-        <div class="nav-tabs" id="navTabs">
-          <a href="/tools/">🤖 AIツール</a>
-          <a href="/games/">🎮 ゲーム</a>
-          <a href="/labs/">🔬 Labs</a>
-        </div>
+        <a href="/lp/research-writer/">AIOリサーチ</a>
+        <a href="/games/">🎮 ゲーム</a>
         <a href="/contact/">問い合わせ</a>
         <a class="btn btn-primary btn-sm" href="/apps/research-writer/">無料で試す →</a>
       </nav>
@@ -575,14 +428,14 @@
 
       <div class="hero-inner">
         <div>
-          <p class="hero-eyebrow reveal"><span></span>ひとりで稼ぐ人のための場所</p>
+          <p class="hero-eyebrow reveal"><span></span>AIO対応記事メーカー</p>
           <h1 class="hero-title reveal reveal-delay-1">
-            仕事 もっと<br>速くできる<br><em>AIが動く</em>
+            調べて<br>選んで<br><em>記事になる</em>
           </h1>
           <p class="hero-lead reveal reveal-delay-2">
-            案件を探す。応募文を書く。文章を整える。<br>
-            毎日ちょっとずつ止まるところを、AIが先に片付ける。<br>
-            登録なし。すぐ使える。
+            キーワードを3つ入れるだけ。最新情報を自動で集めて、<br>
+            使う情報だけ選んで、AIO向けの記事が出来上がる。<br>
+            登録なし。ブラウザだけで完結。
           </p>
           <div class="hero-ctas reveal reveal-delay-3">
             <a class="btn btn-primary btn-xl" href="/apps/research-writer/">まず無料で試す →</a>
@@ -591,35 +444,34 @@
           <div class="hero-trust reveal reveal-delay-4">
             <span>✓ 登録不要</span>
             <span>✓ 無料版あり</span>
-            <span>✓ 月額¥980</span>
+            <span>✓ 月額¥980〜</span>
             <span>✓ いつでも解約可</span>
           </div>
         </div>
 
-        <!-- proof card (desktop only) -->
         <div class="hero-proof reveal reveal-delay-2">
           <p class="proof-label">こういう場面で止まってない？</p>
           <div class="proof-row">
             <div class="proof-icon">🔍</div>
             <div class="proof-copy">
-              <strong>3キーワードで、調べるところが止まらない</strong>
-              <span>最新情報を拾って、使う材料だけ先に選べる</span>
+              <strong>リサーチで時間が溶ける</strong>
+              <span>最新情報を自動収集して、使う材料だけ先に選べる</span>
             </div>
             <span class="proof-badge">解決</span>
           </div>
           <div class="proof-row">
             <div class="proof-icon">✍️</div>
             <div class="proof-copy">
-              <strong>メモを、すぐ使える文章にできない</strong>
-              <span>箇条書きから、記事やLPの下書きまで返す</span>
+              <strong>記事の構成が決まらない</strong>
+              <span>見出し・FAQ・本文まで一気に出てくる</span>
             </div>
             <span class="proof-badge">解決</span>
           </div>
           <div class="proof-row">
             <div class="proof-icon">📝</div>
             <div class="proof-copy">
-              <strong>WordPressに入れる項目が毎回迷う</strong>
-              <span>タグ・スラッグ・抜粋・メタまで一緒に出せる</span>
+              <strong>AIO対応の書き方がわからない</strong>
+              <span>AI検索で読まれる構成を自動で当てる</span>
             </div>
             <span class="proof-badge">解決</span>
           </div>
@@ -631,171 +483,76 @@
 
     <div class="content-wrap">
 
-      <!-- ①  AIツール -->
-      <section class="pillar" id="tools">
+      <!-- ① AIOリサーチ記事メーカー -->
+      <section class="pillar" id="tool">
         <div class="container">
           <div class="pillar-head reveal">
             <div>
-              <div class="section-kicker kicker-green">🤖 AIツール — 実務を短くする</div>
-              <h2 class="pillar-title">「また止まった」が<br>なくなっていく</h2>
-              <p class="pillar-sub">調べて書く、X投稿を作る、商品説明を整える、AI検索で見つかりやすくする。ひとりで仕事してると必ず止まる場面がある。そこをAIで先に片付けておく。1本から試せばいい。</p>
+              <div class="section-kicker kicker-green">🔍 AIOリサーチ記事メーカー</div>
+              <h2 class="pillar-title">調べる→選ぶ→書く<br>が3ステップで終わる</h2>
+              <p class="pillar-sub">Google AI Overviewに読まれやすい記事を書くには、最新情報 + FAQ構成 + 信頼できるソースの3つが要る。このツールが全部まとめてやる。</p>
             </div>
             <a class="btn btn-primary btn-lg" href="/apps/research-writer/">無料で試してみる →</a>
           </div>
 
-          <div class="tools-grid">
-            <a class="tool-card-v2 reveal" href="/lp/research-writer/">
-              <div class="tool-num">01</div>
-              <span class="tool-tag-pill">調べて書く</span>
-              <h3>AIOリサーチアシスタント</h3>
-              <p>3キーワードから最新情報を集めて、選んだ情報だけでAIO向けの記事にまとめる。</p>
-              <div class="tool-transform">
-                <span class="tool-before">調べるだけで止まる</span>
-                <span class="tool-arrow">→</span>
-                <span class="tool-after">記事まで一気に進む</span>
-              </div>
-              <ul class="tool-bullets">
-                <li>最新情報を先に拾える</li>
-                <li>選ぶから自然にまとめやすい</li>
-                <li>note・ブログ・CW向け</li>
-              </ul>
-              <div class="tool-footer">
-                <span class="tool-price">無料版あり・月額¥980</span>
-                <span class="tool-cta">詳しく見る →</span>
-              </div>
-            </a>
+          <!-- Step flow -->
+          <div class="step-flow reveal">
+            <div class="step-item">
+              <span class="step-num">Step 1</span>
+              <strong>🔍 キーワードを入れる</strong>
+              <span>3つのキーワードを入力。最新のウェブ情報が自動で集まる。</span>
+            </div>
+            <div class="step-item">
+              <span class="step-num">Step 2</span>
+              <strong>✅ 使う情報を選ぶ</strong>
+              <span>検索結果を見てチェック。使いたい情報だけ選んで先へ進む。</span>
+            </div>
+            <div class="step-item">
+              <span class="step-num">Step 3</span>
+              <strong>📄 AIO向け記事が出る</strong>
+              <span>見出し・FAQ・本文・メタ情報まで一気にまとめて出力。</span>
+            </div>
           </div>
 
-          <p class="sub-label reveal">＋ 補助ツール — 必要な時だけ使えばいい</p>
-          <div class="sub-row reveal">
-            <a class="sub-item" href="/lp/x-helper/">
-              <span class="sub-item-tag">X発信補助</span>
-              <strong>X投稿ネタ生成ツール</strong>
-              <span>投稿案と返信案をまとめて出す。</span>
-            </a>
-            <a class="sub-item" href="/lp/ec-copy/">
-              <span class="sub-item-tag">EC補助</span>
-              <strong>EC商品説明・Q&A整備</strong>
-              <span>ECページの初稿を速くする。</span>
-            </a>
-            <a class="sub-item" href="/lp/aio-mini/">
-              <span class="sub-item-tag">AIO診断</span>
-              <strong>AIOミニ診断</strong>
-              <span>AI検索で見つかるためのFAQ叩き台。</span>
-            </a>
-          </div>
+          <a class="tool-card-v2 reveal" href="/lp/research-writer/">
+            <span class="tool-tag-pill">AIO特化 · 記事メーカー</span>
+            <h3>AIOリサーチアシスタント</h3>
+            <p>3キーワードから最新情報を集めて、選んだ情報だけでAIO向けの記事にまとめる。note・ブログ・WordPress向けの下書きをそのまま使える形で出力。</p>
+            <div class="tool-transform">
+              <span class="tool-before">調べるだけで半日消える</span>
+              <span class="tool-arrow">→</span>
+              <span class="tool-after">記事まで一気に進む</span>
+            </div>
+            <ul class="tool-bullets">
+              <li>最新情報を自動収集・選択できる</li>
+              <li>AI Overviewに読まれやすい構成を自動で当てる</li>
+              <li>WordPressのタグ・スラッグ・メタまで一緒に出る</li>
+              <li>note・ブログ・クラウドワークスの案件にそのまま使える</li>
+            </ul>
+            <div class="tool-footer">
+              <span class="tool-price">無料版あり・月額¥980（プロ）</span>
+              <span class="tool-cta">詳しく見る →</span>
+            </div>
+          </a>
 
           <div class="cta-banner reveal">
             <div class="cta-banner-copy">
-              <strong>まず1本、無料で試してみてください。</strong>
-              <p>合わなければそれだけ。合えばプロプランへ進める。解約はフォームから。</p>
+              <strong>まず1回、無料で試してみてください。</strong>
+              <p>登録なし・クレジットカードなし。キーワードを入れるだけで始められる。</p>
             </div>
             <a class="btn btn-primary btn-lg" href="/apps/research-writer/">無料で試す →</a>
           </div>
         </div>
       </section>
 
-      <!-- ③  Proof -->
-      <section class="section section-alt" id="proof">
-        <div class="container">
-          <p class="section-label">Proof</p>
-          <h2 class="section-title">実際の画面と、試したときの反応</h2>
-          <p class="section-sub">スクショは実機の画面。声はテスト時によく出る反応をそのまま載せている。</p>
-          <div class="shot-grid" style="margin-bottom:24px;">
-            <figure class="shot-card reveal">
-              <div class="shot-frame">
-                <img src="https://raw.githubusercontent.com/yohelab2026/yohelab-store-site/main/public/proof/research-writer-app.svg" alt="AIOリサーチアシスタントの画面スクリーンショット">
-              </div>
-              <figcaption class="shot-copy">
-                <span class="shot-label">AIOリサーチアシスタント</span>
-                <h3>キーワードを入れたら、調べる材料が先にそろう</h3>
-                <p>検索結果を並べて、使う情報だけ先に選ぶ。記事づくりの最初の迷いを短くする画面。</p>
-                <ul class="shot-list">
-                  <li>検索結果が先に並ぶ</li>
-                  <li>要る情報だけ選べる</li>
-                  <li>記事構成までつながる</li>
-                </ul>
-              </figcaption>
-            </figure>
-            <figure class="shot-card reveal reveal-delay-1">
-              <div class="shot-frame">
-                <img src="https://raw.githubusercontent.com/yohelab2026/yohelab-store-site/main/public/proof/x-helper-app.png" alt="X投稿ネタ生成ツールの画面スクリーンショット">
-              </div>
-              <figcaption class="shot-copy">
-                <span class="shot-label">X投稿ネタ生成ツール</span>
-                <h3>メモを、投稿案にそのまま変える</h3>
-                <p>ネタを入れると、切り口違いの投稿案が出る。発信を止めずに続けたい時の入口。</p>
-                <ul class="shot-list">
-                  <li>切り口違いの案が出る</li>
-                  <li>引用RT用の返信も出る</li>
-                  <li>自分用の発信にも使える</li>
-                </ul>
-              </figcaption>
-            </figure>
-            <figure class="shot-card reveal reveal-delay-2">
-              <div class="shot-frame">
-                <img src="https://raw.githubusercontent.com/yohelab2026/yohelab-store-site/main/public/proof/aio-mini-app.png" alt="AIOミニ診断の画面スクリーンショット">
-              </div>
-              <figcaption class="shot-copy">
-                <span class="shot-label">AIOミニ診断</span>
-                <h3>見つかりやすいページかを、先に確かめる</h3>
-                <p>URLと概要を見て、FAQや見出しの足りないところを先に出す。公開前の確認に向く。</p>
-                <ul class="shot-list">
-                  <li>スコアでざっくり見える</li>
-                  <li>改善点が先に出る</li>
-                  <li>FAQの叩き台が作れる</li>
-                </ul>
-              </figcaption>
-            </figure>
-            <figure class="shot-card reveal reveal-delay-3">
-              <div class="shot-frame">
-                <img src="https://raw.githubusercontent.com/yohelab2026/yohelab-store-site/main/public/proof/research-writer-app.svg" alt="AIOリサーチアシスタントの画面スクリーンショット">
-              </div>
-              <figcaption class="shot-copy">
-                <span class="shot-label">調べて書く</span>
-                <h3>キーワード3つから、記事の材料を選べる</h3>
-                <p>検索結果を見てチェックし、選んだ情報だけで記事を作る。調べる時間を先に短くする。</p>
-                <ul class="shot-list">
-                  <li>最新情報が先に並ぶ</li>
-                  <li>選んだ情報だけで書ける</li>
-                  <li>note / ブログ / CW向け</li>
-                </ul>
-              </figcaption>
-            </figure>
-          </div>
-
-          <p class="section-label">Voices</p>
-          <h2 class="section-title">使う前に出やすい反応</h2>
-          <p class="section-sub">実ユーザーの実名レビューではなく、試用時によく出る反応を先に載せている。</p>
-          <div class="voices-grid">
-            <article class="voice-card">
-              <p class="voice-text">調べる入口が短くなるのが助かる。材料を先に並べるだけで、記事づくりの迷いがかなり減る。</p>
-              <div class="voice-meta">リサーチで時間が溶けやすい人</div>
-            </article>
-            <article class="voice-card">
-              <p class="voice-text">応募文の冒頭が出ると、着手が早い。ゼロから考える時間が減るだけでもかなり楽。</p>
-              <div class="voice-meta">応募の初動で止まりやすい人</div>
-            </article>
-            <article class="voice-card">
-              <p class="voice-text">メモから文章になるのが一番わかりやすい。相談段階のまま止まっていたものを進めやすい。</p>
-              <div class="voice-meta">文章を整えたい人</div>
-            </article>
-            <article class="voice-card">
-              <p class="voice-text">3キーワードから材料を選ぶ流れがはっきりしていて、調べるところで止まりにくい。</p>
-              <div class="voice-meta">noteやブログを書きたい人</div>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <!-- ②  ゲーム -->
+      <!-- ② ゲーム -->
       <section class="pillar pillar-alt" id="games">
         <div class="container">
           <div class="pillar-head reveal">
             <div>
-              <div class="section-kicker kicker-blue">🎮 ゲーム — 遊ぶ</div>
+              <div class="section-kicker kicker-blue">🎮 ゲーム</div>
               <h2 class="pillar-title">ブラウザで<br>すぐ遊べるゲーム</h2>
-              <p class="pillar-sub">インストールなし、登録なし。タブを開くだけ。軽量ブラウザゲームをまとめた場所。</p>
+              <p class="pillar-sub">インストールなし、登録なし。タブを開くだけ。反射・記憶・タイピング・計算など、短くて飽きないゲームを集めた場所。</p>
             </div>
             <a class="btn btn-outline btn-lg" href="/games/" style="color:#4f46e5;border-color:#bfdbfe;background:#fff;">ゲーム一覧を見る →</a>
           </div>
@@ -803,7 +560,7 @@
           <div class="games-hero reveal">
             <div class="games-hero-copy">
               <h3>登録なし・インストールなし<br><em>タブを開けば始まる</em></h3>
-              <p>重い処理なし。ブラウザで完結。軽量でそのまま楽しめるゲームを集めた場所。</p>
+              <p>重い処理なし。ブラウザで完結。結果をXにシェアして友達と競える。</p>
               <a class="btn btn-white btn-lg" href="/games/" style="color:#4f46e5;">今すぐ遊ぶ →</a>
             </div>
             <div class="games-hero-right">
@@ -812,100 +569,47 @@
           </div>
 
           <div class="games-grid">
-            <div class="game-card-v2 coming reveal">
-                <span class="coming-pill">準備中</span>
-                <div class="game-icon">🎯</div>
-                <h3>ミニゲーム</h3>
-                <p>1〜2分で遊べる軽量ゲーム。ブラウザでそのまま遊べる。</p>
-                <span class="game-cta">もうすぐ公開</span>
-              </div>
-            <div class="game-card-v2 coming reveal reveal-delay-1">
-              <span class="coming-pill">準備中</span>
-              <div class="game-icon">🧩</div>
-              <h3>パズルゲーム</h3>
-              <p>1〜3分で終わる軽量パズル。集中力が戻る難易度に調整済み。</p>
-              <span class="game-cta">もうすぐ公開</span>
-            </div>
-            <div class="game-card-v2 coming reveal reveal-delay-2">
-              <span class="coming-pill">準備中</span>
+            <a class="game-card-v2 reveal" href="/games/reaction/">
               <div class="game-icon">⚡</div>
-              <h3>スピードゲーム</h3>
-              <p>反射と判断力をフル活用。短時間で頭がシャキッとするゲーム。</p>
-              <span class="game-cta">もうすぐ公開</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ③  Labs -->
-      <section class="pillar" id="labs">
-        <div class="container">
-          <div class="pillar-head reveal">
-            <div>
-              <div class="section-kicker kicker-orange">🔬 Labs — 実験・拡張</div>
-              <h2 class="pillar-title">まだ誰も触れてない<br>実験中の機能がある</h2>
-              <p class="pillar-sub">正式リリース前の実験的なツールや、拡張コンテンツを置いた場所。フィードバックをくれる人、大歓迎。</p>
-            </div>
-            <a class="btn btn-outline btn-lg" href="/labs/" style="color:#c2410c;border-color:#fcd9b0;background:#fff;">Labs一覧へ →</a>
-          </div>
-
-          <div class="labs-banner reveal">
-            <div class="labs-banner-copy">
-              <h3>先に触れる人だけが<br><em>先に速くなる</em></h3>
-              <p>Labsは実験場。まだ荒削りでも、早くから触れた人は使い方が早く身につく。フィードバックが改善の燃料になる。</p>
-              <a class="btn btn-white btn-lg" href="/labs/" style="color:#c2410c;">Labs を見てみる →</a>
-            </div>
-            <div class="labs-big-emoji">🔬</div>
-          </div>
-
-          <div class="labs-grid">
-            <a class="lab-card-v2 reveal" href="/labs/">
-              <div class="lab-icon">⚗️</div>
-              <span class="lab-tag-pill">実験的機能</span>
-              <h3>Labs 一覧</h3>
-              <p>正式リリース前のAIツール実験版。先行で触れる。フィードバック大歓迎。</p>
-              <span class="lab-cta">Labs を開く →</span>
+              <h3>反応速度テスト</h3>
+              <p>緑になった瞬間にタップ。あなたの反応速度は何ms？</p>
+              <span class="game-cta">今すぐ遊ぶ →</span>
             </a>
-            <div class="lab-card-v2 coming reveal reveal-delay-1">
-              <span class="lab-coming-pill">準備中</span>
-              <div class="lab-icon">📊</div>
-              <span class="lab-tag-pill">分析</span>
-              <h3>応募傾向レポート</h3>
-              <p>自分の案件データをもとに応募傾向・勝ちパターンを分析して返す。</p>
-              <span class="lab-cta">もうすぐ</span>
-            </div>
-            <div class="lab-card-v2 coming reveal reveal-delay-2">
-              <span class="lab-coming-pill">準備中</span>
-              <div class="lab-icon">🔗</div>
-              <span class="lab-tag-pill">連携</span>
-              <h3>Notion / Slack 連携</h3>
-              <p>出力結果をそのままNotionやSlackに書き出す。ツールの間を繋ぐ。</p>
-              <span class="lab-cta">もうすぐ</span>
-            </div>
+            <a class="game-card-v2 reveal reveal-delay-1" href="/games/typing/">
+              <div class="game-icon">⌨️</div>
+              <h3>タイピングラッシュ</h3>
+              <p>30秒で何語打てる？スコアをXでシェアして競おう。</p>
+              <span class="game-cta">今すぐ遊ぶ →</span>
+            </a>
+            <a class="game-card-v2 reveal reveal-delay-2" href="/games/">
+              <div class="game-icon">🎮</div>
+              <h3>全ゲームを見る</h3>
+              <p>計算・記憶・反射・タイミングなど14種類のゲームが遊べる。</p>
+              <span class="game-cta">一覧へ →</span>
+            </a>
           </div>
         </div>
       </section>
 
-    </div><!-- /content-wrap -->
+    </div>
 
     <!-- FINAL CTA -->
     <section class="final-cta">
       <div class="container">
-        <h2 class="reveal">今日 1本だけ試してみて<br>それだけでいい</h2>
-        <p class="reveal reveal-delay-1">登録なし、クレジットカードなし。ブラウザを開いて、条件を入れるだけ。合わなければそれだけ。合えばそこから先に進める。</p>
+        <h2 class="reveal">キーワードを入れるだけ<br>それだけでいい</h2>
+        <p class="reveal reveal-delay-1">登録なし、クレジットカードなし。ブラウザを開いて、キーワードを3つ入れるだけ。合わなければそれだけ。合えばそこから先に進める。</p>
         <div class="final-cta-btns reveal reveal-delay-2">
           <a class="btn btn-white btn-xl" href="/apps/research-writer/" style="color:var(--green-dark);">AIOリサーチアシスタントを無料で試す →</a>
-          <a class="btn btn-ghost-white btn-lg" href="#tools">ツール一覧を見る</a>
+          <a class="btn btn-ghost-white btn-lg" href="/games/">ゲームで遊ぶ</a>
         </div>
       </div>
     </section>
 
-    <!-- Contact strip -->
     <div class="contact-strip">
       <div class="contact-strip-inner">
         <div>
           <strong>相談・個別依頼</strong>
-          <p>ツールで足りない場面、自動化したいフロー、個別に相談できます。</p>
+          <p>ツールで足りない場面や、個別相談はこちらから。</p>
         </div>
         <a class="btn btn-ghost-white" href="/contact/">問い合わせる →</a>
       </div>
@@ -917,9 +621,8 @@
     <div class="footer-inner">
       <div style="color:rgba(255,255,255,.32);">© よへラボ / yohelab.com</div>
       <div class="footer-links">
-        <a href="#tools">AIツール</a>
-        <a href="#games">ゲーム</a>
-        <a href="#labs">Labs</a>
+        <a href="#tool">AIOリサーチ</a>
+        <a href="/games/">ゲーム</a>
         <a href="/contact/">問い合わせ</a>
         <a href="/legal/commerce/">特定商取引法</a>
         <a href="/legal/privacy/">プライバシー</a>
@@ -929,10 +632,6 @@
   </footer>
 
   <script>
-    // Intersection observer for reveal animations
-    // Fallback: if already in viewport on load, show immediately
-    const revealAll = () => document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
-
     if ('IntersectionObserver' in window) {
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(el => {
@@ -942,23 +641,13 @@
           }
         });
       }, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
-
       document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-      // Safety fallback: reveal everything after 800ms if nothing triggered
       setTimeout(() => {
         document.querySelectorAll('.reveal:not(.visible)').forEach(el => el.classList.add('visible'));
       }, 800);
     } else {
-      revealAll();
+      document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
     }
-
-    // ── Tab: highlight active based on current URL ───────────────────────
-    const tabLinks = document.querySelectorAll('#navTabs a');
-    const currentPath = location.pathname;
-    tabLinks.forEach(a => {
-      if (a.getAttribute('href') === currentPath) a.classList.add('tab-active');
-    });
   </script>
 
 </body>
