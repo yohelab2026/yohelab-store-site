@@ -18,10 +18,17 @@
     <link rel="icon" type="image/png" href="/yohelab-icon.png" />
     <link rel="stylesheet" href="/shared/site.css" />
     <style>
+      .reveal{opacity:0;transform:translateY(22px);transition:opacity .6s cubic-bezier(.22,1,.36,1),transform .6s cubic-bezier(.22,1,.36,1)}
+      .reveal.visible{opacity:1;transform:none}
+      .reveal-d1{transition-delay:.08s}.reveal-d2{transition-delay:.16s}.reveal-d3{transition-delay:.24s}
+
       /* ── hero ── */
-      .pro-hero { padding: 88px 0 72px; background: linear-gradient(160deg,#060e0b,#0a1e18); color: #fff; }
+      .pro-hero { padding: 96px 0 80px; background: linear-gradient(160deg,#060e0b,#0a1e18); color: #fff; position:relative; overflow:hidden; }
+      .pro-hero::before { content:""; position:absolute; inset:0; background: radial-gradient(ellipse 80% 55% at 55% -10%,rgba(11,184,146,.22) 0%,transparent 52%), radial-gradient(ellipse 40% 40% at 5% 80%,rgba(11,143,114,.1) 0%,transparent 55%); pointer-events:none; }
+      .pro-hero::after { content:""; position:absolute; inset:0; background-image:linear-gradient(rgba(16,184,146,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(16,184,146,.04) 1px,transparent 1px); background-size:56px 56px; mask-image:radial-gradient(ellipse 80% 65% at 50% 35%,#000 0%,transparent 70%); -webkit-mask-image:radial-gradient(ellipse 80% 65% at 50% 35%,#000 0%,transparent 70%); pointer-events:none; }
+      .pro-hero .container { position:relative; z-index:1; }
       .pro-eyebrow { display:inline-block;padding:6px 16px;border-radius:99px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.07);color:rgba(255,255,255,.8);font-size:13px;font-weight:700;letter-spacing:.04em;margin-bottom:24px; }
-      .pro-hero h1 { color:#fff; font-size:clamp(28px,5vw,52px); line-height:1.1; margin-bottom:20px; }
+      .pro-hero h1 { color:#fff; font-size:clamp(36px,6vw,72px); line-height:1.06; margin-bottom:20px; letter-spacing:-0.055em; }
       .pro-hero h1 .strike { text-decoration:line-through; opacity:.45; }
       .pro-hero h1 .accent { color:#4fd1b8; }
       .pro-hero .lead { color:rgba(255,255,255,.7); font-size:18px; max-width:640px; line-height:1.75; margin-bottom:12px; }
@@ -48,7 +55,7 @@
       /* ── plan ── */
       .plan-wrap { display:grid; grid-template-columns:1fr 1fr; gap:28px; max-width:860px; margin:0 auto; }
       .plan-card { border-radius:20px; padding:36px; border:2px solid var(--border); background:#fff; }
-      .plan-card.featured { border-color:var(--green); background:#f0faf7; }
+      .plan-card.featured { border-color:var(--green); background:linear-gradient(160deg,#f0fdf7,#e6faf3); box-shadow:0 4px 24px rgba(11,143,114,.18), 0 16px 48px rgba(11,143,114,.12); }
       .plan-tag { display:inline-block; padding:4px 12px; border-radius:99px; font-size:12px; font-weight:800; margin-bottom:16px; }
       .plan-card .plan-tag { background:var(--bg); color:var(--muted); }
       .plan-card.featured .plan-tag { background:var(--green); color:#fff; }
@@ -92,11 +99,17 @@
       .flow-arrow { position:absolute; right:-18px; top:40px; font-size:24px; color:var(--green); z-index:1; }
 
       /* ── final CTA ── */
-      .final-cta { padding:96px 0; background:linear-gradient(160deg,#060e0b,#0a2018); color:#fff; text-align:center; }
-      .final-cta h2 { color:#fff; font-size:clamp(24px,4vw,42px); line-height:1.15; margin-bottom:20px; }
+      .final-cta { padding:100px 0; background: radial-gradient(ellipse 80% 70% at 50% -10%,rgba(16,201,154,.4),transparent 55%), linear-gradient(180deg,#076050 0%,#043d33 100%); color:#fff; text-align:center; position:relative; overflow:hidden; }
+      .final-cta::before { content:""; position:absolute; inset:0; background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px); background-size:56px 56px; mask-image:radial-gradient(ellipse 70% 60% at 50% 50%,#000,transparent 80%); -webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 50%,#000,transparent 80%); }
+      .final-cta .container { position:relative; z-index:1; }
+      .final-cta h2 { color:#fff; font-size:clamp(28px,5vw,56px); line-height:1.15; margin-bottom:20px; }
       .final-cta h2 .accent { color:#4fd1b8; }
       .final-cta p { color:rgba(255,255,255,.65); font-size:17px; margin-bottom:36px; }
       .final-cta-note { font-size:13px; color:rgba(255,255,255,.4); margin-top:16px; }
+
+      .footer-dark { background:#030b09; border-top:1px solid rgba(255,255,255,.06); }
+      .footer-dark .footer-links a { color:rgba(255,255,255,.32); }
+      .footer-dark .footer-links a:hover { color:rgba(255,255,255,.72); }
 
       @media (max-width:768px) {
         .problem-grid, .plan-wrap, .benefit-grid, .flow-steps { grid-template-columns:1fr; }
@@ -127,7 +140,7 @@
 
       <!-- HERO -->
       <section class="pro-hero">
-        <div class="container">
+        <div class="container reveal">
           <p class="pro-eyebrow">AIOリサーチ記事メーカー プロプラン</p>
           <h1>
             <span class="strike">SEO記事を書いて、上位表示を待つ。</span><br>
@@ -144,7 +157,7 @@
 
       <!-- PARADIGM BAND -->
       <div class="paradigm-band">
-        <div class="container">
+        <div class="container reveal">
           <div class="paradigm-stat">
             <div class="num">58%</div>
             <div class="label">ゼロクリック検索の割合（2024）</div>
@@ -168,19 +181,19 @@
           <p class="section-label">Problem</p>
           <h2 class="section-title">SEO記事で止まっている人の、3つの壁</h2>
           <div class="problem-grid">
-            <div class="problem-card">
+            <div class="problem-card reveal">
               <div class="prob-icon">⏳</div>
               <h3>リサーチで半日溶ける</h3>
               <p>タブを20個開いて、何が使えるかわからないまま時間が過ぎる。</p>
               <div class="resolve">3キーワードで材料が揃う</div>
             </div>
-            <div class="problem-card">
+            <div class="problem-card reveal reveal-d1">
               <div class="prob-icon">📉</div>
               <h3>上位表示しても読まれない</h3>
               <p>Googleの答えがページ上で完結する。クリックされる前に終わっている。</p>
               <div class="resolve">AIOに引用される構成で作る</div>
             </div>
-            <div class="problem-card">
+            <div class="problem-card reveal reveal-d2">
               <div class="prob-icon">🔁</div>
               <h3>記事を量産できない</h3>
               <p>1本に時間がかかりすぎて、本数が増えない。存在感が出ない。</p>
@@ -195,7 +208,7 @@
         <div class="container">
           <p class="section-label">How it works</p>
           <h2 class="section-title">3ステップで、AIOに読まれる記事へ</h2>
-          <div class="flow-steps">
+          <div class="flow-steps reveal">
             <div class="flow-step">
               <div class="flow-num">1</div>
               <h3>キーワードを入れる</h3>
@@ -222,7 +235,7 @@
         <div class="container">
           <p class="section-label">Features</p>
           <h2 class="section-title">プロプランでできること</h2>
-          <div class="benefit-grid">
+          <div class="benefit-grid reveal">
             <div class="benefit-card">
               <div class="benefit-icon">🔎</div>
               <h3>最新情報を先に拾う</h3>
@@ -256,7 +269,7 @@
         <div class="container">
           <p class="section-label">Pricing</p>
           <h2 class="section-title">シンプルな2プラン</h2>
-          <div class="plan-wrap">
+          <div class="plan-wrap reveal">
             <div class="plan-card">
               <span class="plan-tag">無料版</span>
               <div class="plan-name">まず試す</div>
@@ -296,7 +309,7 @@
           <p class="section-label">Compare</p>
           <h2 class="section-title">無料版 vs プロプラン</h2>
           <div style="max-width:720px;margin:0 auto;">
-            <table class="compare-table">
+            <table class="compare-table reveal">
               <thead>
                 <tr>
                   <th>機能</th>
@@ -349,7 +362,7 @@
       <!-- FINAL CTA -->
       <section class="final-cta">
         <div class="container">
-          <h2>SEO記事じゃなく、<br><span class="accent">AIOに読まれる記事</span>を量産する。</h2>
+          <h2>書いても読まれない記事から、<br><span class="accent">引用される記事</span>へ。</h2>
           <p>クリック前に引用される存在感を、月50本のペースで作り続ける。</p>
           <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
             <a class="btn btn-white btn-lg" href="/apps/research-writer/">まず無料で1本作る</a>
@@ -368,9 +381,9 @@
       </div>
     </div>
 
-    <footer class="footer">
+    <footer class="footer footer-dark">
       <div class="footer-inner">
-        <div>© よへラボ / AIOリサーチ記事メーカー</div>
+        <div style="color:rgba(255,255,255,.28);">© よへラボ / AIOリサーチ記事メーカー</div>
         <div class="footer-links">
           <a href="/">トップ</a>
           <a href="/apps/research-writer/">無料で試す</a>
@@ -379,6 +392,14 @@
         </div>
       </div>
     </footer>
+
+  <script>
+    if ('IntersectionObserver' in window) {
+      const obs = new IntersectionObserver(e => e.forEach(el => { if(el.isIntersecting){el.target.classList.add('visible');obs.unobserve(el.target);} }), {threshold:.06,rootMargin:'0px 0px -36px 0px'});
+      document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+      setTimeout(()=>document.querySelectorAll('.reveal:not(.visible)').forEach(el=>el.classList.add('visible')),800);
+    } else { document.querySelectorAll('.reveal').forEach(el=>el.classList.add('visible')); }
+  </script>
 
   </body>
 </html>
