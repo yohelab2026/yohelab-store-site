@@ -204,7 +204,7 @@ const proofSections = {
               </div>
               <div class="mock-draft-box">
                 <div class="mock-draft-label">✏️ FAQ追加案</div>
-                <div class="mock-draft-text">Q: AIOリサーチアシスタントとはどんなツールですか？<br>A: 3キーワードから検索結果を集めて、記事構成とWordPress設定の下書きを返すAIツールです。</div>
+                <div class="mock-draft-text">Q: AIO特化リサーチ記事メーカーとはどんなツールですか？<br>A: 3キーワードから検索結果を集めて、記事構成とWordPress設定の下書きを返すAIツールです。</div>
               </div>`,
     voices: [
       { init:"Y2", text:"何を直せばいいかの優先順位が出てくるのがいい。全部やろうとして何もできないより、3つに絞られた方が動ける。", name:"吉田さん", role:"フリーランスWebデザイナー歴2年" },
