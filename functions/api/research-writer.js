@@ -83,6 +83,10 @@ async function handleGenerate(body, env) {
   const audience = String(body?.audience || "note / ブログ / クラウドワークスのライター").trim();
   const length = String(body?.length || "3000").trim();
   const seoMode = Boolean(body?.seoMode);
+  const wordpressMode = Boolean(body?.wordpressMode);
+  const wpPostType = String(body?.wpPostType || "投稿").trim();
+  const wpCategory = String(body?.wpCategory || "").trim();
+  const wpTags = String(body?.wpTags || "").trim();
   const angle = String(body?.angle || "").trim();
   const avoid = String(body?.avoid || "").trim();
 
@@ -119,6 +123,18 @@ ${seoMode ? `
 【メタディスクリプション】
 1〜2文
 ` : ""}
+${wordpressMode ? `
+【WordPress設定】
+- 投稿タイプ: ${wpPostType}
+- カテゴリー候補: 1〜3個
+- タグ候補: 5〜10個
+- スラッグ: 1行
+- 抜粋: 1〜2文
+- SEOタイトル: 1行
+- メタディスクリプション: 1〜2文
+- アイキャッチ代替テキスト: 1行
+- 公開時メモ: 1〜2行
+` : ""}
 
 # 文章の方向性
 - 読者に語りかける自然さを出す
@@ -140,6 +156,13 @@ ${angle || "最新情報を調べて、そのまま使える記事にする"}
 
 # 避けたいこと
 ${avoid || "特になし"}
+${wordpressMode ? `
+
+# WordPress設定
+投稿タイプ: ${wpPostType}
+カテゴリー候補: ${wpCategory || "記事内容に合うカテゴリを提案してください"}
+タグ候補: ${wpTags || "記事内容から関連タグを提案してください"}
+` : ""}
 
 # 参考にする情報
 ${selectedResults
@@ -168,7 +191,7 @@ ${selectedResults
     },
     body: JSON.stringify({
       model: ANTHROPIC_MODEL,
-      max_tokens: seoMode ? 3600 : 3200,
+      max_tokens: wordpressMode ? (seoMode ? 4200 : 3800) : (seoMode ? 3600 : 3200),
       temperature: 0.7,
       system,
       messages: [

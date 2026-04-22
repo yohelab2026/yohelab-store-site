@@ -127,57 +127,6 @@ const SHARED_CSS = `
 // ── Per-LP Proof section HTML ───────────────────────────────────────────────
 const proofSections = {
 
-  "proposal-optimizer": {
-    url: "yohelab.com/apps/proposal-optimizer/",
-    header: "✏️ 応募文最適化 — 結果",
-    inputVal: "Webライター・中小企業LP制作の案件文を貼り付け",
-    mockBody: `
-              <div class="mock-section-label">📋 件名案</div>
-              <div class="mock-row">
-                <div class="mock-row-title">A案：「LP制作2年の経験を活かし、成果が出る文章をご提供します」</div>
-                <div class="mock-row-sub">実績強調型。初回接触に向いている。</div>
-              </div>
-              <div class="mock-row">
-                <div class="mock-row-title">B案：「週2〜3日で完全対応可能なWebライターです」</div>
-                <div class="mock-row-sub">稼働条件を先出し。急ぎの採用担当に刺さりやすい。</div>
-              </div>
-              <div class="mock-section-label" style="margin-top:12px;">✏️ 冒頭3行</div>
-              <div class="mock-draft-box">
-                <div class="mock-draft-text">はじめまして。Webライターの〇〇です。LP制作と記事執筆を中心に2年ほど実績を積んでおり、今回の募集内容に強く興味を持ちご連絡しました。週2〜3日の稼働でしっかりコミットできます。</div>
-              </div>
-              <div class="mock-section-label" style="margin-top:12px;">✅ 送信前チェック</div>
-              <div class="mock-row"><div class="mock-row-sub">✓ 件名に実績・稼働条件が含まれている　✓ 冒頭で自己紹介が完結している　⚠ 具体的な成果数値を追記すると印象が上がる</div></div>`,
-    voices: [
-      { init:"K", text:"件名から2案出てくれると迷いがなくなる。どっちにするか考えながら応募文が書けるので、着手が全然違う。", name:"川口さん", role:"フリーランス歴3年・主にLP制作" },
-      { init:"H", text:"送信前チェックが一番助かった。送ったあとに「あれ書けばよかった」ってなるのが減った気がする。", name:"林さん", role:"副業ライター・Webデザイン兼業" },
-      { init:"M", text:"案件レーダーで候補を絞ったあとそのまま使えるのがいい。探す→書くの流れが途切れないのが便利。", name:"松本さん", role:"フリーランス1年目・ライター" },
-      { init:"O", text:"冒頭3行まで出してくれると、あとは流れで書けた。ゼロから書くとどうしても手が止まるので。", name:"大野さん", role:"副業ライター・会社員4年目" },
-    ]
-  },
-
-  "article-polish": {
-    url: "yohelab.com/apps/article-polish/",
-    header: "✨ AI文章整形 — 結果",
-    inputVal: "LP用下書き（700文字）を貼り付け",
-    mockBody: `
-              <div class="mock-section-label">🔍 整形後テキスト</div>
-              <div class="mock-row">
-                <div class="mock-row-title">整形済み（読みやすさ改善）</div>
-                <div class="mock-row-sub">段落を3つに分割・接続詞を整理・冗長な重複を削除しました。</div>
-              </div>
-              <div class="mock-draft-box">
-                <div class="mock-draft-text">副業で月5万を超えるために、最初にやるべきことがあります。<br>それは「案件の選び方」を変えること。毎日の作業量より、どの案件を選ぶかで収入の天井が決まります。<br>このLPでは、選び方の基準と実際の流れを説明しています。</div>
-              </div>
-              <div class="mock-section-label" style="margin-top:12px;">💡 改善ポイント</div>
-              <div class="mock-row"><div class="mock-row-sub">✓ 冒頭で結論を先出しに変更　✓ 「〜ということができます」→「〜できます」に圧縮　⚠ H2見出しにキーワードを入れると検索流入が増える可能性あり</div></div>`,
-    voices: [
-      { init:"A", text:"下書きを貼るだけで段落が整って返ってくる。構成を考えながら書いてた時間がそのまま消えた感じ。", name:"青木さん", role:"副業ライター・note運営中" },
-      { init:"I", text:"改善ポイントがついてるのがいい。ただ直されるより、どこが弱かったか分かると次に活かしやすい。", name:"石田さん", role:"フリーランスWebライター歴1年半" },
-      { init:"U", text:"LP書くとき、冒頭から詰まるんですけど、整形後の文を見て「あ、こういう流れでいいんだ」ってなった。", name:"上野さん", role:"副業ライター・会社員5年目" },
-      { init:"E", text:"SEOのポイントまで出してくれるのが予想外によかった。見出しに入れるキーワード、自分じゃ気づかなかった。", name:"江口さん", role:"フリーランス歴2年・SEO記事中心" },
-    ]
-  },
-
   "x-helper": {
     url: "yohelab.com/apps/x-helper/",
     header: "🐦 X発信補助 — 結果",
@@ -255,7 +204,7 @@ const proofSections = {
               </div>
               <div class="mock-draft-box">
                 <div class="mock-draft-label">✏️ FAQ追加案</div>
-                <div class="mock-draft-text">Q: 案件レーダーとはどんなツールですか？<br>A: 条件を入力するだけで案件候補の絞り込みと応募文の下書きを返すAIツールです。</div>
+                <div class="mock-draft-text">Q: AIOリサーチアシスタントとはどんなツールですか？<br>A: 3キーワードから検索結果を集めて、記事構成とWordPress設定の下書きを返すAIツールです。</div>
               </div>`,
     voices: [
       { init:"Y2", text:"何を直せばいいかの優先順位が出てくるのがいい。全部やろうとして何もできないより、3つに絞られた方が動ける。", name:"吉田さん", role:"フリーランスWebデザイナー歴2年" },

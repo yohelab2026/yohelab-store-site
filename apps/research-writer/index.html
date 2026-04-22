@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>リサーチ記事メーカー | よへラボ</title>
-    <meta name="description" content="3キーワードから最新情報を集め、選んだ情報だけで自然な記事にまとめるWebツール。note、ブログ、クラウドワークス向け。" />
-    <meta property="og:title" content="リサーチ記事メーカー | よへラボ" />
-    <meta property="og:description" content="3キーワードから最新情報を集め、選んだ情報だけで自然な記事にまとめるWebツール。note、ブログ、クラウドワークス向け。" />
+    <title>AIOリサーチアシスタント | よへラボ</title>
+    <meta name="description" content="3キーワードから最新情報を集め、選んだ情報だけでAIO向けの記事にまとめるWebツール。note、ブログ、クラウドワークス向け。" />
+    <meta property="og:title" content="AIOリサーチアシスタント | よへラボ" />
+    <meta property="og:description" content="3キーワードから最新情報を集め、選んだ情報だけでAIO向けの記事にまとめるWebツール。note、ブログ、クラウドワークス向け。" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="ja_JP" />
     <meta property="og:url" content="https://yohelab.com/apps/research-writer/" />
@@ -18,21 +18,32 @@
     <link rel="icon" type="image/png" href="/yohelab-icon.png" />
     <link rel="stylesheet" href="/shared/site.css" />
     <style>
+      body {
+        background:
+          radial-gradient(circle at top left, rgba(13, 107, 88, 0.09), transparent 30%),
+          radial-gradient(circle at top right, rgba(79, 209, 184, 0.08), transparent 26%),
+          linear-gradient(180deg, #f5faf8 0%, #fbfcfb 36%, #ffffff 100%);
+      }
       .app-intro {
-        padding: 42px 0 0;
+        padding: 44px 34px 30px;
         text-align: center;
+        background: linear-gradient(180deg, rgba(255,255,255,.86), rgba(244,250,247,.92));
+        border: 1px solid rgba(13, 107, 88, 0.12);
+        border-radius: 28px;
+        box-shadow: 0 18px 50px rgba(13, 107, 88, 0.06);
+        backdrop-filter: blur(10px);
       }
       .app-intro h1 {
-        font-size: clamp(28px, 5vw, 46px);
-        line-height: 1.08;
-        letter-spacing: -0.05em;
-        margin-bottom: 12px;
+        font-size: clamp(30px, 5vw, 48px);
+        line-height: 1.06;
+        letter-spacing: -0.055em;
+        margin-bottom: 14px;
       }
       .app-intro p {
         color: var(--muted);
         font-size: 17px;
-        line-height: 1.8;
-        margin: 0 auto 10px;
+        line-height: 1.85;
+        margin: 0 auto 12px;
         max-width: 860px;
       }
       .app-chips {
@@ -40,15 +51,15 @@
         justify-content: center;
         gap: 8px;
         flex-wrap: wrap;
-        margin: 20px 0 28px;
+        margin: 22px 0 8px;
       }
       .app-chip {
         padding: 5px 14px;
         border-radius: 999px;
-        background: var(--bg);
-        border: 1px solid var(--border);
+        background: rgba(255,255,255,.9);
+        border: 1px solid rgba(13, 107, 88, 0.12);
         font-size: 13px;
-        color: var(--muted);
+        color: var(--green-dark);
         font-weight: 700;
       }
       .app-layout {
@@ -56,14 +67,14 @@
         grid-template-columns: 390px minmax(0, 1fr);
         gap: 24px;
         align-items: start;
-        padding: 24px 0 72px;
+        padding: 26px 0 72px;
       }
       .app-panel,
       .output-area {
-        background: var(--white);
-        border: 1px solid var(--border);
-        border-radius: 20px;
-        box-shadow: var(--shadow);
+        background: rgba(255,255,255,.92);
+        border: 1px solid rgba(13, 107, 88, 0.11);
+        border-radius: 22px;
+        box-shadow: 0 16px 46px rgba(13, 107, 88, 0.06);
       }
       .app-panel {
         position: sticky;
@@ -115,7 +126,7 @@
         padding: 12px 14px;
         border-radius: 14px;
         border: 1px solid var(--border);
-        background: #f9fbfa;
+        background: #f7fbf9;
         color: var(--muted);
         font-size: 13px;
         line-height: 1.7;
@@ -156,9 +167,9 @@
         grid-template-columns: 22px minmax(0, 1fr);
         gap: 12px;
         align-items: start;
-        border: 1px solid var(--border);
+        border: 1px solid #dce9e2;
         border-radius: 16px;
-        background: var(--bg);
+        background: #fff;
         padding: 16px;
         cursor: pointer;
         transition: border-color .18s, box-shadow .18s, transform .18s, background .18s;
@@ -215,20 +226,20 @@
         place-items: center;
         padding: 24px;
         border-radius: 16px;
-        border: 1px dashed var(--border);
+        border: 1px dashed #d4e4dc;
         color: var(--muted);
         text-align: center;
         line-height: 1.8;
-        background: #fcfdfc;
+        background: linear-gradient(180deg, #ffffff, #f8fbf9);
       }
       .article-grid {
         display: grid;
         gap: 14px;
       }
       .article-section {
-        border: 1px solid var(--border);
+        border: 1px solid #dbe9e2;
         border-radius: 16px;
-        background: var(--bg);
+        background: #fff;
         padding: 18px;
       }
       .article-section h4 {
@@ -280,8 +291,8 @@
         margin-top: 18px;
         padding: 18px;
         border-radius: 16px;
-        background: #f7faf8;
-        border: 1px solid var(--border);
+        background: linear-gradient(180deg, #f7fbf8, #eef7f2);
+        border: 1px solid #d7e7de;
       }
       .pro-feature-box h3 {
         font-size: 15px;
@@ -334,9 +345,10 @@
         padding: 26px;
         border-radius: 16px;
         background: #fcfdfc;
-        border: 1px dashed var(--border);
+        border: 1px dashed #d4e4dc;
         color: var(--muted);
         line-height: 1.8;
+        background: linear-gradient(180deg, #ffffff, #f8fbf9);
       }
       .section-note {
         font-size: 12px;
@@ -369,14 +381,15 @@
     <main>
       <div class="container">
         <div class="app-intro">
-          <h1>3キーワードで、調べて、選んで、記事にする。</h1>
-          <p>最新情報を拾って、使う材料だけ選んで、人が読みやすい記事へまとめる。note、ブログ、クラウドワークス向けの調査記事を短くする。</p>
+          <h1>3キーワードで、調べて、選んで、AIO向けにまとめる。</h1>
+          <p>最新情報を拾って、使う材料だけ選び、見出し・FAQ・本文までひと続きで整える。note、ブログ、クラウドワークス向けの下書きを短くする。</p>
           <div class="app-chips">
             <span class="app-chip">登録不要</span>
+            <span class="app-chip">3キーワード起点</span>
+            <span class="app-chip">検索→選択→生成</span>
+            <span class="app-chip">AIO / SEO寄せ</span>
             <span class="app-chip">無料版は1日1セット</span>
             <span class="app-chip">プロ版は月50セット</span>
-            <span class="app-chip">Perplexity検索</span>
-            <span class="app-chip">Claude Sonnet 4 で生成</span>
           </div>
         </div>
 
@@ -433,9 +446,30 @@
               <label style="display:flex;gap:10px;align-items:flex-start;">
                 <input id="seoMode" type="checkbox" style="margin-top:4px;accent-color:var(--green);" />
                 <span>
-                  <strong style="display:block;margin-bottom:2px;">SEO寄せ</strong>
-                  <span style="font-size:13px;color:var(--muted);line-height:1.6;">SEOタイトルとメタディスクリプションも一緒に出す。</span>
+                  <strong style="display:block;margin-bottom:2px;">AIO寄せ</strong>
+                  <span style="font-size:13px;color:var(--muted);line-height:1.6;">見出し・FAQ・SEOタイトルも一緒に整える。</span>
                 </span>
+              </label>
+              <label style="display:flex;gap:10px;align-items:flex-start;">
+                <input id="wordpressMode" type="checkbox" style="margin-top:4px;accent-color:var(--green);" />
+                <span>
+                  <strong style="display:block;margin-bottom:2px;">WordPress設定も出す</strong>
+                  <span style="font-size:13px;color:var(--muted);line-height:1.6;">投稿タイトル、スラッグ、タグ、抜粋をまとめて出す。</span>
+                </span>
+              </label>
+              <div class="form-grid">
+                <label>投稿タイプ
+                  <select id="wpPostType">
+                    <option value="投稿">投稿</option>
+                    <option value="固定ページ">固定ページ</option>
+                  </select>
+                </label>
+                <label>想定カテゴリ
+                  <input id="wpCategory" placeholder="例: AI副業" />
+                </label>
+              </div>
+              <label>タグ候補
+                <input id="wpTags" placeholder="例: AIO, WordPress, SEO, 収益化" />
               </label>
               <button class="btn btn-primary" style="width:100%;height:50px;" type="submit">最新情報を探す</button>
               <p style="font-size:12px;color:var(--muted);text-align:center;">検索結果は選んでから記事にする</p>
@@ -445,7 +479,7 @@
                 <p class="sub">月50セットまで、比較しながら進めやすい。</p>
                 <div class="pro-feature-list">
                   <label><input type="checkbox" checked disabled /> <span>検索結果の比較と保存</span></label>
-                  <label><input type="checkbox" checked disabled /> <span>SEO寄せの出力を強化</span></label>
+                  <label><input type="checkbox" checked disabled /> <span>AIO向けの見出し・FAQを整える</span></label>
                   <label><input type="checkbox" checked disabled /> <span>何度も調べて比べる作業を短くする</span></label>
                 </div>
               </div>
@@ -456,7 +490,7 @@
             <div class="header-actions">
               <div>
                 <h3 style="margin-bottom:6px;">検索結果を選ぶ</h3>
-                <div style="color:var(--muted);font-size:13px;line-height:1.7;">Perplexity で最新情報を拾って、使いたいものだけチェックする。</div>
+                <div style="color:var(--muted);font-size:13px;line-height:1.7;">最新情報を拾って、使いたいものだけチェックする。迷う時間を先に削る。</div>
               </div>
               <div class="source-actions">
                 <button class="btn btn-outline btn-sm" id="select-top" type="button">上位5件を選ぶ</button>
@@ -486,8 +520,8 @@
                 <div class="header-actions" style="margin-top:4px;">
                   <div>
                     <h3 style="margin-bottom:6px;">記事の出力</h3>
-                    <div style="color:var(--muted);font-size:13px;line-height:1.7;">選んだ情報だけを材料に、自然な記事へまとめる。</div>
-                  </div>
+                <div style="color:var(--muted);font-size:13px;line-height:1.7;">選んだ情報だけを材料に、AIO向けの読みやすい形へまとめる。</div>
+              </div>
                   <div class="article-actions">
                     <button class="btn btn-outline btn-sm" id="copy-result" type="button" disabled>全文コピー</button>
                   </div>
@@ -512,7 +546,7 @@
 
     <footer class="footer">
       <div class="footer-inner">
-        <div>© よへラボ / リサーチ記事メーカー</div>
+        <div>© よへラボ / AIOリサーチアシスタント</div>
         <div class="footer-links">
           <a href="/">トップ</a>
           <a href="/lp/research-writer/">LPを見る</a>
@@ -716,9 +750,9 @@
 
       function articleSection(title, content, kind = "text", id = "") {
         const contentHtml = kind === "list"
-          ? `<ul>${splitList(content).map((item) => `<li>${escapeHtml(item)}</li>`).join("") || "<li>内容がありません</li>"}</ul>`
+          ? `<ul id="${escapeHtml(id)}">${splitList(content).map((item) => `<li>${escapeHtml(item)}</li>`).join("") || "<li>内容がありません</li>"}</ul>`
           : kind === "numbered"
-            ? `<ol style="margin:0;padding-left:18px;">${splitNumberedList(content).map((item) => `<li style=\"margin-bottom:8px;\">${escapeHtml(item)}</li>`).join("") || "<li>内容がありません</li>"}</ol>`
+            ? `<ol id="${escapeHtml(id)}" style="margin:0;padding-left:18px;">${splitNumberedList(content).map((item) => `<li style=\"margin-bottom:8px;\">${escapeHtml(item)}</li>`).join("") || "<li>内容がありません</li>"}</ol>`
             : `<p id="${escapeHtml(id)}">${escapeHtml(content || "内容がありません")}</p>`;
 
         return `
@@ -749,6 +783,7 @@
           ["本文", blocks["本文"] || ""],
           ["まとめ", blocks["まとめ"] || ""],
           ["SNS投稿用テキスト", blocks["SNS投稿用テキスト"] || ""],
+          ["WordPress設定", blocks["WordPress設定"] || ""],
           ["SEOタイトル", blocks["SEOタイトル"] || ""],
           ["メタディスクリプション", blocks["メタディスクリプション"] || ""],
         ].filter(([, content], index) => {
@@ -764,6 +799,7 @@
                 if (title === "タイトル案") return articleSection(title, content, "numbered", "title-block");
                 if (title === "見出し構成") return articleSection(title, content, "list", "outline-block");
                 if (title === "SNS投稿用テキスト") return articleSection(title, content, "text", "sns-block");
+                if (title === "WordPress設定") return articleSection(title, content, "list", "wp-block");
                 if (title === "SEOタイトル") return articleSection(title, content, "text", "seo-title-block");
                 if (title === "メタディスクリプション") return articleSection(title, content, "text", "seo-desc-block");
                 if (title === "導入文") return articleSection(title, content, "text", "intro-block");
@@ -831,6 +867,10 @@
           tone: document.getElementById("tone").value,
           length: document.getElementById("length").value,
           seoMode: document.getElementById("seoMode").checked,
+          wordpressMode: document.getElementById("wordpressMode").checked,
+          wpPostType: document.getElementById("wpPostType").value,
+          wpCategory: document.getElementById("wpCategory").value.trim(),
+          wpTags: document.getElementById("wpTags").value.trim(),
           angle: document.getElementById("angle").value.trim(),
           avoid: document.getElementById("avoid").value.trim(),
         };
@@ -850,10 +890,12 @@
         const button = researchForm.querySelector('button[type="submit"]');
         button.disabled = true;
         button.textContent = "検索中…";
-        searchMetaEl.textContent = "Perplexity で最新情報を探しています…";
+        searchMetaEl.textContent = "最新情報を探しています…";
         searchResultsEl.innerHTML = `<div class="empty-state">最新情報を探しています…</div>`;
         articleOutputEl.className = "article-empty";
-        articleOutputEl.textContent = "検索結果を選ぶと、記事がここに出る。";
+        articleOutputEl.textContent = payload.wordpressMode
+          ? "検索結果を選ぶと、AIO向けの記事とWordPress設定がここに出る。"
+          : "検索結果を選ぶと、AIO向けの記事がここに出る。";
         copyBtn.disabled = true;
 
         try {
@@ -917,6 +959,10 @@
               tone: payload.tone,
               length: payload.length,
               seoMode: payload.seoMode,
+              wordpressMode: payload.wordpressMode,
+              wpPostType: payload.wpPostType,
+              wpCategory: payload.wpCategory,
+              wpTags: payload.wpTags,
               angle: payload.angle,
               avoid: payload.avoid,
               selectedResults: selected.map((item) => ({

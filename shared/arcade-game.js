@@ -93,7 +93,8 @@
       const rawText = cfg.shareText
         ? cfg.shareText.replace("{score}", score).replace("{result}", message)
         : fallback;
-      const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(rawText + "\n" + location.href)}`;
+      const gameUrl = cfg.shareUrl || `${location.origin}/games/${cfg.slug}/`;
+      const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(rawText + "\n" + gameUrl)}`;
 
       // Score display label
       const scoreLabel = bestLow

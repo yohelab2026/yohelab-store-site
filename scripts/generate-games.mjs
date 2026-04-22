@@ -252,6 +252,7 @@ function pageTemplate(game) {
       startText: game.startText,
       runningText: game.runningText,
       hints: game.hints,
+      shareUrl: `https://yohelab.com/games/${game.slug}/`,
     })};
   </script>
   <script src="${sharedGameJs}"></script>

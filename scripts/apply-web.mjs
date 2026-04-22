@@ -37,7 +37,7 @@ copy("shared/site.css", "shared/site.css");
 copy("shared/lp.css",   "shared/lp.css");
 
 // ── LP pages (7 tools)
-const lps = ["radar","proposal-optimizer","article-polish","proposal","x-helper","ec-copy","aio-mini"];
+const lps = ["proposal","x-helper","ec-copy","aio-mini"];
 for (const lp of lps) {
   copy(`lp/${lp}/index.html`, `lp/${lp}/index.html`);
 }

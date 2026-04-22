@@ -13,18 +13,16 @@
 
 ## ツール一覧
 
-現在7つのツールがあります。それぞれにProプランがあります。全ツールパック（`all-tools`）も販売中。
+現在4つのツールがあります。それぞれにProプランがあります。全ツールパック（`all-tools`）も販売中。
 
 | キー | ツール名 | アプリパス |
 |------|---------|-----------|
-| `radar` | 案件レーダー | /apps/radar/ |
 | `proposal` | AI応募文アシスタント | /apps/proposal/ |
-| `proposal-optimizer` | AI応募文最適化 | /apps/proposal-optimizer/ |
-| `article-polish` | AI文章整形 | /apps/article-polish/ |
+| `research-writer` | AIOリサーチアシスタント | /apps/research-writer/ |
 | `x-helper` | AI X投稿・返信補助 | /apps/x-helper/ |
 | `ec-copy` | EC商品説明・Q&A整備 | /apps/ec-copy/ |
 | `aio-mini` | AIOミニ診断 | /apps/aio-mini/ |
-| `all-tools` | 全ツールパック（バンドル） | /apps/radar/（アクティベーション後） |
+| `all-tools` | 全ツールパック（バンドル） | /apps/research-writer/（アクティベーション後） |
 
 ---
 
@@ -84,8 +82,8 @@ apps/
 
 ```js
 const PRODUCT_CONFIG = {
-  radar: { label: "案件レーダー", nextPath: "/apps/radar/" },
   proposal: { label: "AI応募文アシスタント", nextPath: "/apps/proposal/" },
+  "research-writer": { label: "AIOリサーチアシスタント", nextPath: "/apps/research-writer/" },
   "x-helper": { label: "AI X投稿・返信補助", nextPath: "/apps/x-helper/" },
   "ec-copy": { label: "EC商品説明・Q&A整備", nextPath: "/apps/ec-copy/" },
   "aio-mini": { label: "AIOミニ診断", nextPath: "/apps/aio-mini/" },

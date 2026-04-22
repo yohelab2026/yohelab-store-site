@@ -15,30 +15,6 @@ const root = resolve(import.meta.dirname, "..");
 /* ─── ツール定義 ───────────────────────────────────────────── */
 const tools = [
   {
-    id: "radar",
-    accent: "#0bbe96",
-    accentRgb: "11,190,150",
-    accentDark: "#0b8f72",
-    label: "案件探しAI",
-    roiLine: "案件探しが朝30分 → 10分に。1日3件比べても止まらない。",
-  },
-  {
-    id: "proposal-optimizer",
-    accent: "#3b82f6",
-    accentRgb: "59,130,246",
-    accentDark: "#1d4ed8",
-    label: "応募文最適化AI",
-    roiLine: "件名から送信前チェックまで、応募1件あたり平均18分短縮。",
-  },
-  {
-    id: "article-polish",
-    accent: "#a855f7",
-    accentRgb: "168,85,247",
-    accentDark: "#7e22ce",
-    label: "文章整形AI",
-    roiLine: "相談メモから読まれる文章へ。SEO周りの下書きが20分以内に出る。",
-  },
-  {
     id: "proposal",
     accent: "#f97316",
     accentRgb: "249,115,22",
