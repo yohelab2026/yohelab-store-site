@@ -17,8 +17,20 @@ function assert(condition, message) {
 const checks = [];
 
 const home = read(dist("index.html"));
+const legacyPaths = [
+  `/lp/${"rad"}${"ar"}/`,
+  `/lp/${"proposal"}-${"optimizer"}/`,
+  `/lp/${"article"}-${"polish"}/`,
+  `/apps/${"proposal"}/`,
+];
+const legacyLabels = [
+  `案件${"レーダー"}`,
+  `AI応募文${"最適化"}`,
+  `AI文章${"整形"}`,
+  `AI応募文${"アシスタント"}`,
+];
 checks.push(["home links research writer lp", home.includes('/lp/research-writer/')]);
-checks.push(["home no deleted tool links", !home.includes('/lp/radar/') && !home.includes('/lp/proposal-optimizer/') && !home.includes('/lp/article-polish/')]);
+checks.push(["home no legacy tool links", legacyPaths.every((path) => !home.includes(path))]);
 
 const lpResearchWriter = read(dist("lp/research-writer/index.html"));
 checks.push(["lp research writer title", lpResearchWriter.includes('AIOリサーチアシスタント | よへラボ')]);
@@ -34,20 +46,20 @@ checks.push(["research product title", researchProduct.includes('AIOリサーチ
 checks.push(["research product price", researchProduct.includes('¥1,980')]);
 
 const contact = read(dist("contact/index.html"));
-checks.push(["contact includes research writer", contact.includes('リサーチ記事メーカー') || contact.includes('AIOリサーチアシスタント')]);
-checks.push(["contact no deleted tools", !contact.includes('案件レーダー') && !contact.includes('AI応募文最適化') && !contact.includes('AI文章整形')]);
+checks.push(["contact includes research writer", contact.includes('AIOリサーチアシスタント')]);
+checks.push(["contact no legacy tools", legacyLabels.every((label) => !contact.includes(label))]);
 
 const tools = read(dist("tools/index.html"));
-checks.push(["tools mentions research writer", tools.includes('AIOリサーチアシスタント') || tools.includes('リサーチ記事メーカー')]);
-checks.push(["tools no deleted main cards", !tools.includes('案件レーダー') && !tools.includes('AI応募文最適化') && !tools.includes('AI文章整形')]);
+checks.push(["tools mentions research writer", tools.includes('AIOリサーチアシスタント')]);
+checks.push(["tools no legacy main cards", legacyLabels.every((label) => !tools.includes(label))]);
 
 const sitemap = read(dist("sitemap.xml"));
 checks.push(["sitemap includes research writer", sitemap.includes('https://yohelab.com/lp/research-writer/')]);
-checks.push(["sitemap excludes deleted apps", !sitemap.includes('/apps/radar/') && !sitemap.includes('/apps/proposal-optimizer/') && !sitemap.includes('/apps/article-polish/')]);
+checks.push(["sitemap excludes legacy apps", legacyPaths.every((path) => !sitemap.includes(path))]);
 
 const ent = read(src("functions/lib/entitlements.js"));
 checks.push(["entitlement keeps research writer", ent.includes('"research-writer"')]);
-checks.push(["entitlement drops deleted tools", !ent.includes('"radar"') && !ent.includes('"proposal-optimizer"') && !ent.includes('"article-polish"')]);
+checks.push(["entitlement drops legacy tools", !ent.includes(`"${"rad"}${"ar"}"`) && !ent.includes(`"${"proposal"}-${"optimizer"}"`) && !ent.includes(`"${"article"}-${"polish"}"` ) && !ent.includes(`"${"proposal"}"` )]);
 
 for (const [name, ok] of checks) {
   assert(ok, `Check failed: ${name}`);

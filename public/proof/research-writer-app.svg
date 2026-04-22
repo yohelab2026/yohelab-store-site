@@ -23,7 +23,7 @@
   <rect x="72" y="52" width="1456" height="88" rx="36" fill="url(#nav)"/>
   <circle cx="116" cy="96" r="18" fill="#fff" fill-opacity=".12"/>
   <circle cx="116" cy="96" r="9" fill="#53d3b8"/>
-  <text x="150" y="104" fill="#ffffff" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="26" font-weight="800">リサーチ記事メーカー</text>
+  <text x="150" y="104" fill="#ffffff" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="26" font-weight="800">AIOリサーチアシスタント</text>
   <text x="390" y="104" fill="#8fd8c6" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="16" font-weight="700">3キーワードで調べて書く</text>
 
   <rect x="112" y="174" width="404" height="622" rx="28" fill="#fff" stroke="#d7e8df"/>

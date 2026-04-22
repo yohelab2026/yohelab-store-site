@@ -60,12 +60,12 @@ const TAB_JS = `
           <a href="/tools/">ツール</a>
           <a href="/#plan">料金</a>
           <a href="/contact/">問い合わせ</a>
-          <a class="btn btn-primary btn-sm" href="/apps/radar/">無料で試す</a>
+          <a class="btn btn-primary btn-sm" href="/apps/research-writer/">無料で試す</a>
         </nav>`,
       `<nav class="nav-links">
           ${TAB_BAR}
           <a href="/contact/">問い合わせ</a>
-          <a class="btn btn-primary btn-sm" href="/apps/radar/">無料で試す</a>
+          <a class="btn btn-primary btn-sm" href="/apps/research-writer/">無料で試す</a>
         </nav>`
     );
     // Inject JS before </body>

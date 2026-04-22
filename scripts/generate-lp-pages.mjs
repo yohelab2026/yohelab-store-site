@@ -4,7 +4,6 @@ import { dirname, resolve } from "node:path";
 const root = resolve(process.cwd());
 const out = (p) => resolve(root, p);
 
-const allToolsHref = "https://buy.stripe.com/aFa5kv9vpb5K7WO1UB73G0b?client_reference_id=all-tools";
 const proofBase = "https://raw.githubusercontent.com/yohelab2026/yohelab-store-site/main/public/proof";
 const proofUrl = (name) => `${proofBase}/${name}`;
 
@@ -12,8 +11,8 @@ const pages = [
   {
     slug: "research-writer",
     path: "/lp/research-writer/",
-    name: "リサーチ記事メーカー",
-    title: "リサーチ記事メーカー | よへラボ",
+    name: "AIOリサーチアシスタント",
+    title: "AIOリサーチアシスタント | よへラボ",
     description: "3キーワードから最新情報を集め、選んだ情報だけで自然な記事にまとめる案内ページ。無料版で1回試して、合えば月額1,980円・月50回のプロプランへ進める。",
     eyebrow: "調べて書くAI",
     heroTitle: "3キーワードで、調べて、選んで、記事にする。",
@@ -57,7 +56,7 @@ const pages = [
     ],
     proofShot: {
       src: proofUrl("research-writer-app.svg"),
-      alt: "リサーチ記事メーカーの画面スクリーンショット",
+      alt: "AIOリサーチアシスタントの画面スクリーンショット",
       label: "調べて書く",
       title: "キーワード3つから、記事の材料を選べる",
       text: "検索結果を見てチェックし、選んだ情報だけで記事を作る。調べる時間を先に短くする。",
@@ -800,7 +799,6 @@ function renderPage(page) {
             <a class="btn btn-primary btn-lg" href="${page.freeHref}">無料版を試す →</a>
             <a class="btn btn-primary btn-lg" href="${page.buyHref}" target="_blank" rel="noreferrer">${esc(page.buyLabel || "初月無料で始める")}</a>
           </div>
-          <p class="lp-note">複数ツールをまとめて使いたい場合は、<a href="${allToolsHref}" target="_blank" rel="noreferrer" style="color:var(--green);font-weight:800;">全ツールパック</a>も使える。</p>
           <p class="lp-note"><a href="${page.productHref}" style="color:var(--green);font-weight:800;">プロプランの詳細を見る →</a></p>
         </div>
       </section>

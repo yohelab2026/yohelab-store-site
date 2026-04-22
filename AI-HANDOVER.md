@@ -13,16 +13,14 @@
 
 ## ツール一覧
 
-現在4つのツールがあります。それぞれにProプランがあります。全ツールパック（`all-tools`）も販売中。
+現在4つのツールがあります。それぞれにProプランがあります。
 
 | キー | ツール名 | アプリパス |
 |------|---------|-----------|
-| `proposal` | AI応募文アシスタント | /apps/proposal/ |
 | `research-writer` | AIOリサーチアシスタント | /apps/research-writer/ |
-| `x-helper` | AI X投稿・返信補助 | /apps/x-helper/ |
+| `x-helper` | X投稿ネタ生成ツール | /apps/x-helper/ |
 | `ec-copy` | EC商品説明・Q&A整備 | /apps/ec-copy/ |
 | `aio-mini` | AIOミニ診断 | /apps/aio-mini/ |
-| `all-tools` | 全ツールパック（バンドル） | /apps/research-writer/（アクティベーション後） |
 
 ---
 
@@ -67,8 +65,7 @@ functions/
   lib/
     entitlements.js    # 全ツールのプロダクト設定・認証ロジック
 apps/
-  radar/index.html
-  proposal/index.html
+  research-writer/index.html
   x-helper/index.html
   ec-copy/index.html
   aio-mini/index.html
@@ -82,9 +79,8 @@ apps/
 
 ```js
 const PRODUCT_CONFIG = {
-  proposal: { label: "AI応募文アシスタント", nextPath: "/apps/proposal/" },
   "research-writer": { label: "AIOリサーチアシスタント", nextPath: "/apps/research-writer/" },
-  "x-helper": { label: "AI X投稿・返信補助", nextPath: "/apps/x-helper/" },
+  "x-helper": { label: "X投稿ネタ生成ツール", nextPath: "/apps/x-helper/" },
   "ec-copy": { label: "EC商品説明・Q&A整備", nextPath: "/apps/ec-copy/" },
   "aio-mini": { label: "AIOミニ診断", nextPath: "/apps/aio-mini/" },
   // ↓ 新しいツールをここに追加

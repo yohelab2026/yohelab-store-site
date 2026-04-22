@@ -130,20 +130,20 @@ const proofSections = {
   "x-helper": {
     url: "yohelab.com/apps/x-helper/",
     header: "🐦 X発信補助 — 結果",
-    inputVal: "「フリーランス案件探しの最短ルート」で投稿を生成",
+    inputVal: "「AI時代のブログネタの見つけ方」で投稿を生成",
     mockBody: `
               <div class="mock-section-label">🐦 投稿案（3パターン）</div>
               <div class="mock-row">
                 <div class="mock-row-title">A案：問いかけ型</div>
-                <div class="mock-row-sub">「案件探しで1時間溶けてる人、手を挙げて。朝10分で終わる方法あります」</div>
+                <div class="mock-row-sub">「ネタ探しで1時間溶けてる人、手を挙げて。朝10分で切り口を作る方法あります」</div>
               </div>
               <div class="mock-row">
                 <div class="mock-row-title">B案：数字先出し型</div>
-                <div class="mock-row-sub">「案件探しを30分→10分にした3つのステップ。①条件を先に絞る ②スコアで優先順位 ③下書きを先に出す」</div>
+                <div class="mock-row-sub">「ブログネタ探しを30分→10分にした3つのステップ。①読者を決める ②検索意図を見る ③切り口を先に出す」</div>
               </div>
               <div class="mock-row">
                 <div class="mock-row-title">C案：共感型</div>
-                <div class="mock-row-sub">「今日も案件探しで時間溶けた。でもそれ、探し方の問題かもしれない」</div>
+                <div class="mock-row-sub">「今日もネタ探しで時間溶けた。でもそれ、探し方の問題かもしれない」</div>
               </div>
               <div class="mock-section-label" style="margin-top:12px;">💬 返信案（引用RT用）</div>
               <div class="mock-draft-box">
@@ -186,7 +186,7 @@ const proofSections = {
   "aio-mini": {
     url: "yohelab.com/apps/aio-mini/",
     header: "🔍 AIOミニ診断 — 結果",
-    inputVal: "https://yohelab.com/lp/radar/ を診断",
+    inputVal: "https://yohelab.com/lp/research-writer/ を診断",
     mockBody: `
               <div class="mock-section-label">📊 AI検索対策スコア</div>
               <div class="mock-row">
@@ -211,25 +211,6 @@ const proofSections = {
       { init:"Ta", text:"FAQを追加したら検索流入が少し変わった気がする。何から手をつければいいかわからなかったのでよかった。", name:"高橋さん", role:"個人ブログ運営・副業ライター" },
       { init:"Iw", text:"AIO対策ってよく聞くけど何をすればいいか全然わかってなかった。診断してもらって初めてイメージがついた。", name:"岩田さん", role:"会社員・副業でLP制作" },
       { init:"Ha", text:"スコアが出るとゲーム感覚で改善できる。次の診断で何点になるか、試してみたくなった。", name:"原さん", role:"フリーランスライター・SEO記事中心" },
-    ]
-  },
-
-  "proposal": {
-    url: "yohelab.com/apps/proposal/",
-    header: "📝 応募文アシスタント — 結果",
-    inputVal: "Webライター・週2〜3日・経験2年・希望単価5万〜",
-    mockBody: `
-              <div class="mock-section-label">✏️ 応募文（全文）</div>
-              <div class="mock-draft-box">
-                <div class="mock-draft-text">件名：Webライター応募・週2〜3日対応可能<br><br>はじめまして。〇〇と申します。<br>Webライターとして2年ほど、LP制作と記事執筆を中心に実績を積んでまいりました。<br><br>今回の案件内容を拝見し、私のスキルセットと合致すると感じ、ご連絡いたしました。<br>週2〜3日の稼働でしっかりコミットできます。<br><br>ご検討のほど、よろしくお願いいたします。</div>
-              </div>
-              <div class="mock-section-label" style="margin-top:12px;">💡 強化ポイント</div>
-              <div class="mock-row"><div class="mock-row-sub">✓ 件名に稼働条件を入れた　✓ 冒頭で自己紹介を完結させた　⚠ 具体的な成果数値（例：月10本納品・修正対応率98%）があるとさらに良い</div></div>`,
-    voices: [
-      { init:"Ku", text:"ゼロから書こうとすると固まるので、全文出してもらえるのが助かる。あとは直すだけだから全然違う。", name:"黒木さん", role:"フリーランス1年目・ライター" },
-      { init:"Mo", text:"件名から本文まで一気に出るのがよかった。案件文がなくても自分の条件を入れるだけで始められた。", name:"森田さん", role:"副業ライター・会社員2年目" },
-      { init:"Ni", text:"強化ポイントを見て、成果数値を追記したら返信率が変わった気がする。自分じゃ気づかなかった観点だった。", name:"西村さん", role:"フリーランスWebライター歴1年半" },
-      { init:"Ts", text:"最適化（proposal-optimizer）と使い分けてる。案件文がないときはこっち、あるときはあっちって感じで。", name:"土井さん", role:"フリーランスライター歴3年" },
     ]
   },
 };
