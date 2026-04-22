@@ -1,560 +1,525 @@
 <!doctype html>
 <html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AIOリサーチアシスタント | よへラボ</title>
-    <meta name="description" content="3キーワードから最新情報を集め、選んだ情報だけで自然な記事にまとめる案内ページ。無料版で1回試して、合えば月額1,980円・月50回のプロプランへ進める。" />
-    <meta property="og:title" content="AIOリサーチアシスタント | よへラボ" />
-    <meta property="og:description" content="3キーワードから最新情報を集め、選んだ情報だけで自然な記事にまとめる案内ページ。無料版で1回試して、合えば月額1,980円・月50回のプロプランへ進める。" />
-    <meta property="og:type" content="website" />
-    <meta property="og:locale" content="ja_JP" />
-    <meta property="og:url" content="https://yohelab.com/lp/research-writer/" />
-    <meta property="og:image" content="https://yohelab.com/yohelab-icon.png" />
-    <meta name="twitter:card" content="summary" />
-    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
-    <meta name="theme-color" content="#0d6b58" />
-    <link rel="canonical" href="https://yohelab.com/lp/research-writer/" />
-    <link rel="icon" type="image/png" href="/yohelab-icon.png" />
-    <link rel="stylesheet" href="/shared/site.css" />
-    <style>
-      .lp-hero {
-        padding: 88px 0 72px;
-        background:
-          radial-gradient(ellipse 85% 65% at 50% 0%, rgba(13,107,88,.16), transparent 58%),
-          linear-gradient(180deg, #0f221d 0%, #0b1613 100%);
-        color: #fff;
-      }
-      .lp-hero .container {
-        width: min(1100px, 100% - 48px);
-      }
-      .lp-hero-copy {
-        max-width: 920px;
-        margin: 0 auto;
-        text-align: center;
-      }
-      .lp-eyebrow {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 6px 16px;
-        border-radius: 999px;
-        background: rgba(255,255,255,.09);
-        border: 1px solid rgba(255,255,255,.16);
-        color: rgba(255,255,255,.92);
-        font-size: 13px;
-        font-weight: 700;
-        margin-bottom: 28px;
-      }
-      .lp-hero h1 {
-        color: #fff;
-        font-size: clamp(42px, 6.4vw, 74px);
-        letter-spacing: -0.05em;
-        line-height: 1.06;
-        margin-bottom: 18px;
-      }
-      .lp-hero h1 em {
-        color: #4fd1b8;
-        font-style: normal;
-      }
-      .lp-lead {
-        max-width: 760px;
-        margin: 0 auto 28px;
-        color: rgba(255,255,255,.76);
-        font-size: 19px;
-        line-height: 1.9;
-      }
-      .lp-actions {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 12px;
-        margin-bottom: 20px;
-      }
-      .lp-hero-note {
-        color: rgba(255,255,255,.55);
-        font-size: 13px;
-      }
-      .lp-band {
-        margin-top: 28px;
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 14px;
-      }
-      .lp-band .lp-card {
-        background: rgba(255,255,255,.07);
-        border: 1px solid rgba(255,255,255,.12);
-        color: #fff;
-        box-shadow: none;
-      }
-      .lp-band .lp-card h3 {
-        color: #fff;
-      }
-      .lp-band .lp-card p {
-        color: rgba(255,255,255,.72);
-      }
-      .lp-section {
-        padding: 72px 0;
-      }
-      .lp-grid-3 {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 16px;
-      }
-      .lp-grid-2 {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 16px;
-      }
-      .lp-card {
-        padding: 26px;
-        border-radius: 20px;
-        border: 1px solid var(--border);
-        background: var(--white);
-        box-shadow: var(--shadow);
-      }
-      .lp-card h3 {
-        font-size: 17px;
-        font-weight: 800;
-        margin-bottom: 10px;
-      }
-      .lp-card p {
-        color: var(--muted);
-        font-size: 15px;
-        line-height: 1.75;
-      }
-      .lp-mini-head {
-        text-align: center;
-        margin-bottom: 22px;
-      }
-      .lp-mini-head h2 {
-        font-size: 30px;
-        font-weight: 900;
-        letter-spacing: -0.04em;
-        margin-bottom: 8px;
-      }
-      .lp-mini-head p {
-        color: var(--muted);
-        font-size: 16px;
-      }
-      .lp-preview {
-        display: grid;
-        grid-template-columns: 1.1fr .9fr;
-        gap: 16px;
-        align-items: stretch;
-      }
-      .lp-preview-box {
-        padding: 28px;
-        border-radius: 20px;
-        border: 1px solid var(--green-mid);
-        background: linear-gradient(180deg, #f7fcfa 0%, #eef8f4 100%);
-        box-shadow: var(--shadow);
-      }
-      .lp-preview-box h3 {
-        font-size: 20px;
-        font-weight: 900;
-        margin-bottom: 10px;
-      }
-      .lp-preview-box p {
-        color: var(--muted);
-        line-height: 1.75;
-        font-size: 15px;
-      }
-      .lp-preview-list {
-        display: grid;
-        gap: 10px;
-        margin-top: 18px;
-      }
-      .lp-preview-list div {
-        display: flex;
-        gap: 10px;
-        align-items: flex-start;
-        color: var(--text);
-        font-size: 14px;
-        line-height: 1.65;
-      }
-      .lp-preview-list span {
-        color: var(--green);
-        font-weight: 900;
-      }
-      .lp-side-box {
-        padding: 28px;
-        border-radius: 20px;
-        border: 1px solid var(--border);
-        background: var(--white);
-        box-shadow: var(--shadow);
-      }
-      .lp-side-box h3 {
-        font-size: 18px;
-        font-weight: 900;
-        margin-bottom: 12px;
-      }
-      .lp-side-box ul {
-        display: grid;
-        gap: 8px;
-      }
-      .lp-side-box li {
-        display: flex;
-        gap: 8px;
-        color: var(--muted);
-        line-height: 1.6;
-        font-size: 14px;
-      }
-      .lp-side-box li::before {
-        content: "→";
-        color: var(--green);
-        font-weight: 800;
-      }
-      .lp-table-wrap {
-        max-width: 860px;
-        margin: 0 auto;
-      }
-      .lp-table {
-        width: 100%;
-        border-collapse: collapse;
-        border-radius: 18px;
-        overflow: hidden;
-        border: 1px solid var(--border);
-        box-shadow: var(--shadow);
-      }
-      .lp-table th,
-      .lp-table td {
-        padding: 15px 18px;
-        font-size: 15px;
-        text-align: center;
-      }
-      .lp-table th:first-child,
-      .lp-table td:first-child {
-        text-align: left;
-      }
-      .lp-table th {
-        background: var(--bg);
-        font-weight: 800;
-      }
-      .lp-table .free {
-        color: var(--muted);
-        background: #fff;
-      }
-      .lp-table .pro {
-        background: #f1faf6;
-        color: var(--green-dark);
-        font-weight: 700;
-      }
-      .lp-check {
-        color: var(--green);
-        font-weight: 900;
-      }
-      .lp-dash {
-        color: #b8bfca;
-      }
-      .lp-cta {
-        text-align: center;
-        padding: 64px 0 84px;
-        background: linear-gradient(180deg, #fff 0%, #f6fbf9 100%);
-      }
-      .lp-cta h2 {
-        font-size: clamp(30px, 5vw, 50px);
-        font-weight: 900;
-        letter-spacing: -0.04em;
-        margin-bottom: 12px;
-      }
-      .lp-cta p {
-        color: var(--muted);
-        font-size: 16px;
-        line-height: 1.8;
-        max-width: 680px;
-        margin: 0 auto 22px;
-      }
-      .lp-links {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 12px;
-        margin-top: 16px;
-      }
-      .lp-links .btn {
-        min-width: 220px;
-      }
-      .lp-note {
-        margin-top: 12px;
-        font-size: 13px;
-        color: var(--muted);
-      }
-      .lp-faq {
-        max-width: 840px;
-        margin: 0 auto;
-      }
-      .lp-faq .faq {
-        border: 1px solid var(--border);
-        border-radius: 16px;
-        background: var(--white);
-        box-shadow: var(--shadow);
-      }
-      .lp-faq .faq + .faq {
-        margin-top: 10px;
-      }
-      .lp-faq .faq summary {
-        cursor: pointer;
-      }
-      @media (max-width: 960px) {
-        .lp-band,
-        .lp-grid-3,
-        .lp-grid-2,
-        .lp-preview {
-          grid-template-columns: 1fr;
-        }
-        .lp-hero {
-          padding: 72px 0 56px;
-        }
-        .lp-hero h1 {
-          font-size: clamp(36px, 10vw, 56px);
-        }
-      }
-    </style>
-    <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"よへラボ","url":"https://yohelab.com/"},{"@type":"SoftwareApplication","name":"AIOリサーチアシスタント","applicationCategory":"BusinessApplication","operatingSystem":"Web","offers":[{"@type":"Offer","price":"0","priceCurrency":"JPY","name":"無料版"},{"@type":"Offer","price":"1980","priceCurrency":"JPY","name":"プロプラン","billingIncrement":"P1M","description":"月額1,980円・月50回・いつでも解約可"}],"description":"3キーワードから最新情報を集め、選んだ情報だけで自然な記事にまとめる案内ページ。無料版で1回試して、合えば月額1,980円・月50回のプロプランへ進める。"}]}
-    </script>
-  </head>
-  <body>
-    <header class="nav">
-      <div class="nav-inner">
-        <a class="brand" href="/">
-          <img src="/yohelab-icon.png" alt="よへラボのアイコン" />
-          <span>よへラボ</span>
-          <span class="brand-sub">AI実務ツール開発</span>
-        </a>
-        <nav class="nav-links">
-          <a href="/">トップ</a>
-          <a href="/apps/research-writer/">無料版</a>
-          <a href="/products/research-writer-beta/">プロプラン</a>
-          <a href="/contact/">問い合わせ</a>
-          <a class="btn btn-primary btn-sm" href="/contact/#research-writer" target="_blank" rel="noreferrer">導入相談する</a>
-        </nav>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AIOリサーチ記事メーカー | SEO記事を書いても読まれない時代に、AIOに引用される記事を作る</title>
+  <meta name="description" content="Google AI Overviewに読まれる記事を、キーワード3つから自動で作る。調べる→選ぶ→記事にする、を全自動。無料版あり・月額¥980〜。" />
+  <meta property="og:title" content="AIOリサーチ記事メーカー | よへラボ" />
+  <meta property="og:description" content="Google AI Overviewに読まれる記事を、キーワード3つから自動で作る。調べる→選ぶ→記事にする、を全自動。" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="ja_JP" />
+  <meta property="og:url" content="https://yohelab.com/lp/research-writer/" />
+  <meta property="og:image" content="https://yohelab.com/yohelab-icon.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
+  <meta name="theme-color" content="#050f0c" />
+  <link rel="canonical" href="https://yohelab.com/lp/research-writer/" />
+  <link rel="icon" type="image/png" href="/yohelab-icon.png" />
+  <link rel="stylesheet" href="/shared/site.css" />
+  <style>
+    .reveal{opacity:0;transform:translateY(22px);transition:opacity .6s cubic-bezier(.22,1,.36,1),transform .6s cubic-bezier(.22,1,.36,1)}
+    .reveal.visible{opacity:1;transform:none}
+    .reveal-d1{transition-delay:.08s}.reveal-d2{transition-delay:.16s}.reveal-d3{transition-delay:.24s}
+
+    /* ── HERO ── */
+    .lp-hero {
+      background:
+        radial-gradient(ellipse 90% 60% at 55% -5%,rgba(11,184,146,.24) 0%,transparent 52%),
+        radial-gradient(ellipse 50% 50% at 5% 85%,rgba(11,143,114,.1) 0%,transparent 55%),
+        linear-gradient(180deg,#050f0c 0%,#0a1a14 100%);
+      color:#fff; padding:96px 0 72px; overflow:hidden; position:relative;
+    }
+    .lp-hero::before {
+      content:""; position:absolute; inset:0; pointer-events:none;
+      background-image:linear-gradient(rgba(16,184,146,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(16,184,146,.04) 1px,transparent 1px);
+      background-size:56px 56px;
+      mask-image:radial-gradient(ellipse 80% 65% at 50% 35%,#000 0%,transparent 75%);
+      -webkit-mask-image:radial-gradient(ellipse 80% 65% at 50% 35%,#000 0%,transparent 75%);
+    }
+    .lp-hero-inner { position:relative; z-index:1; text-align:center; max-width:920px; margin:0 auto; }
+
+    .lp-eyebrow {
+      display:inline-flex; align-items:center; gap:8px;
+      padding:6px 18px; border-radius:999px;
+      background:rgba(16,184,146,.12); border:1px solid rgba(16,184,146,.3);
+      color:#6be5c9; font-size:12px; font-weight:800;
+      letter-spacing:.1em; text-transform:uppercase; margin-bottom:28px;
+    }
+    .lp-hero h1 {
+      font-size:clamp(40px,6.5vw,78px); font-weight:900;
+      letter-spacing:-0.065em; line-height:1.04;
+      color:#fff; margin-bottom:20px; text-wrap:balance;
+    }
+    .lp-hero h1 .em { color:#4fd1b8; }
+    .lp-hero h1 .strike {
+      color:rgba(255,255,255,.28); text-decoration:line-through;
+      text-decoration-color:rgba(255,80,80,.5);
+      font-size:.7em; display:block; margin-bottom:6px;
+    }
+    .lp-lead {
+      max-width:680px; margin:0 auto 32px;
+      color:rgba(255,255,255,.7); font-size:clamp(17px,2vw,21px); line-height:1.88;
+    }
+    .lp-lead strong { color:#fff; font-weight:800; }
+    .lp-actions { display:flex; justify-content:center; flex-wrap:wrap; gap:12px; margin-bottom:18px; }
+    .lp-note { color:rgba(255,255,255,.45); font-size:13px; }
+
+    /* Proof strip */
+    .lp-proof-strip {
+      display:flex; justify-content:center; gap:32px; flex-wrap:wrap;
+      margin-top:48px; padding-top:40px; border-top:1px solid rgba(255,255,255,.1);
+    }
+    .proof-num { text-align:center; }
+    .proof-num .n { font-size:36px; font-weight:900; color:#4fd1b8; letter-spacing:-0.05em; line-height:1; display:block; }
+    .proof-num .l { font-size:12px; color:rgba(255,255,255,.45); font-weight:600; margin-top:4px; display:block; }
+
+    /* ── SECTIONS ── */
+    .lp-section { padding:88px 0; }
+    .lp-section-alt { background:#fafcfb; }
+
+    .lp-section-head { text-align:center; max-width:720px; margin:0 auto 52px; }
+    .lp-kicker {
+      display:inline-flex; align-items:center; gap:8px;
+      padding:6px 16px; border-radius:999px; margin-bottom:16px;
+      font-size:11px; font-weight:900; letter-spacing:.12em; text-transform:uppercase;
+    }
+    .kicker-green { background:#e8faf3; color:#065f46; border:1px solid #a7f3d0; }
+    .kicker-red   { background:#fff1f1; color:#b91c1c; border:1px solid #fecaca; }
+    .kicker-blue  { background:#eff3ff; color:#1e40af; border:1px solid #bfdbfe; }
+
+    .lp-section-head h2 { font-size:clamp(28px,4.5vw,52px); font-weight:900; letter-spacing:-0.05em; line-height:1.1; margin-bottom:14px; }
+    .lp-section-head p  { font-size:16px; color:var(--muted); line-height:1.85; }
+
+    /* Problem section */
+    .problem-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+    .problem-card {
+      padding:28px; border-radius:20px; border:1.5px solid #fecaca;
+      background:linear-gradient(175deg,#fff 0%,#fff8f8 100%);
+    }
+    .problem-icon { font-size:32px; margin-bottom:14px; }
+    .problem-card h3 { font-size:17px; font-weight:900; margin-bottom:8px; color:#991b1b; }
+    .problem-card p  { font-size:14px; color:var(--muted); line-height:1.75; }
+
+    /* Solution steps */
+    .step-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:0; position:relative; margin:48px 0; }
+    .step-grid::before {
+      content:""; position:absolute; top:36px; left:calc(16.66% + 28px); right:calc(16.66% + 28px); height:2px;
+      background:linear-gradient(90deg,var(--green-mid),var(--green),var(--green-mid));
+    }
+    .step-box { display:flex; flex-direction:column; align-items:center; text-align:center; padding:0 20px; }
+    .step-circle {
+      width:72px; height:72px; border-radius:50%;
+      background:linear-gradient(135deg,#14c4a0,#0b8f72);
+      display:grid; place-items:center; font-size:28px;
+      box-shadow:0 8px 28px rgba(11,143,114,.35);
+      margin-bottom:20px; position:relative; z-index:1; flex-shrink:0;
+    }
+    .step-box h3 { font-size:17px; font-weight:900; margin-bottom:6px; }
+    .step-box p  { font-size:14px; color:var(--muted); line-height:1.7; }
+
+    /* Feature grid */
+    .feature-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:18px; }
+    .feature-card {
+      padding:28px; border-radius:20px;
+      border:1.5px solid var(--green-mid);
+      background:linear-gradient(175deg,#fff 0%,#f3fbf7 100%);
+      display:flex; flex-direction:column; gap:10px;
+    }
+    .feature-card .f-icon { font-size:30px; }
+    .feature-card h3 { font-size:17px; font-weight:900; }
+    .feature-card p  { font-size:14px; color:var(--muted); line-height:1.75; }
+
+    /* AIO explains */
+    .aio-explainer {
+      background:linear-gradient(135deg,#0d1a16,#0c2420);
+      border-radius:24px; padding:48px; color:#fff; margin-bottom:40px;
+      position:relative; overflow:hidden;
+    }
+    .aio-explainer::before {
+      content:""; position:absolute; inset:0;
+      background:radial-gradient(ellipse 55% 70% at 90% 50%,rgba(16,184,146,.13) 0%,transparent 55%);
+    }
+    .aio-explainer-inner { position:relative; z-index:1; display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center; }
+    .aio-explainer h2 { font-size:clamp(26px,3.5vw,42px); font-weight:900; letter-spacing:-0.04em; line-height:1.1; margin-bottom:16px; color:#fff; }
+    .aio-explainer p { color:rgba(255,255,255,.65); font-size:15px; line-height:1.88; }
+    .aio-explainer strong { color:#4fd1b8; }
+    .aio-facts { display:grid; gap:14px; }
+    .aio-fact { background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.12); border-radius:16px; padding:18px 20px; display:flex; gap:14px; align-items:flex-start; }
+    .aio-fact-icon { font-size:22px; flex-shrink:0; }
+    .aio-fact strong { display:block; color:#fff; font-size:14px; font-weight:800; margin-bottom:3px; }
+    .aio-fact span { color:rgba(255,255,255,.55); font-size:13px; line-height:1.55; }
+
+    /* Compare table */
+    .lp-table { width:100%; border-collapse:collapse; border-radius:18px; overflow:hidden; border:1.5px solid var(--border); box-shadow:var(--shadow); }
+    .lp-table th, .lp-table td { padding:16px 20px; font-size:15px; }
+    .lp-table th { background:#f5f8f6; font-weight:800; text-align:center; }
+    .lp-table th:first-child, .lp-table td:first-child { text-align:left; }
+    .lp-table td { border-top:1px solid var(--border); text-align:center; }
+    .lp-table .col-free { background:#fff; color:var(--muted); }
+    .lp-table .col-pro  { background:#f0fdf7; color:#065f46; font-weight:700; }
+    .lp-table th.col-pro { background:var(--green); color:#fff; }
+    .lp-check { color:var(--green); font-weight:900; }
+    .lp-dash  { color:#ccc; }
+
+    /* Voices */
+    .voices-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+    .voice-card { padding:24px; border-radius:18px; background:#fff; border:1px solid var(--border); box-shadow:var(--shadow); }
+    .voice-card .voice-text { font-size:14px; color:var(--text); line-height:1.8; margin-bottom:14px; font-style:italic; }
+    .voice-card .voice-text::before { content:"「"; }
+    .voice-card .voice-text::after  { content:"」"; }
+    .voice-meta { font-size:12px; color:var(--muted); font-weight:700; }
+
+    /* FAQ */
+    .faq-list { display:grid; gap:10px; max-width:760px; margin:0 auto; }
+    .faq { border:1px solid var(--border); border-radius:16px; background:#fff; overflow:hidden; }
+    .faq summary { padding:18px 20px; font-size:16px; font-weight:800; cursor:pointer; list-style:none; display:flex; justify-content:space-between; align-items:center; }
+    .faq summary::after { content:"＋"; font-size:18px; color:var(--green); flex-shrink:0; }
+    .faq[open] summary::after { content:"−"; }
+    .faq-body { padding:0 20px 18px; color:var(--muted); font-size:15px; line-height:1.8; }
+
+    /* Final CTA */
+    .lp-final {
+      background:
+        radial-gradient(ellipse 80% 70% at 50% -10%,rgba(16,201,154,.4),transparent 55%),
+        linear-gradient(180deg,#076050 0%,#043d33 100%);
+      padding:100px 0; text-align:center; color:#fff;
+      position:relative; overflow:hidden;
+    }
+    .lp-final::before {
+      content:""; position:absolute; inset:0;
+      background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+      background-size:56px 56px;
+      mask-image:radial-gradient(ellipse 70% 60% at 50% 50%,#000,transparent 80%);
+      -webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 50%,#000,transparent 80%);
+    }
+    .lp-final .container { position:relative; z-index:1; }
+    .lp-final h2 { font-size:clamp(32px,5.5vw,62px); font-weight:900; letter-spacing:-0.06em; line-height:1.06; margin-bottom:18px; text-wrap:balance; }
+    .lp-final p  { font-size:17px; color:rgba(255,255,255,.72); max-width:520px; margin:0 auto 36px; line-height:1.88; }
+    .lp-final-btns { display:flex; align-items:center; justify-content:center; gap:14px; flex-wrap:wrap; }
+
+    .footer-dark { background:#030b09; border-top:1px solid rgba(255,255,255,.06); }
+    .footer-dark .footer-links a { color:rgba(255,255,255,.32); }
+    .footer-dark .footer-links a:hover { color:rgba(255,255,255,.72); }
+
+    @media(max-width:960px){
+      .aio-explainer-inner { grid-template-columns:1fr; gap:28px; }
+    }
+    @media(max-width:768px){
+      .problem-grid, .feature-grid, .voices-grid { grid-template-columns:1fr 1fr; }
+      .step-grid { grid-template-columns:1fr; gap:24px; }
+      .step-grid::before { display:none; }
+      .lp-proof-strip { gap:20px; }
+    }
+    @media(max-width:540px){
+      .problem-grid, .feature-grid, .voices-grid { grid-template-columns:1fr; }
+      .lp-final { padding:72px 0; }
+      .lp-final-btns { flex-direction:column; align-items:stretch; }
+      .lp-final-btns .btn { text-align:center; justify-content:center; }
+    }
+  </style>
+</head>
+<body>
+  <header class="nav" style="background:rgba(5,15,12,.94);backdrop-filter:blur(18px);">
+    <div class="nav-inner">
+      <a class="brand brand-light" href="/">
+        <img src="/yohelab-icon.png" alt="よへラボ" />
+        <span>よへラボ</span>
+        <span class="brand-sub">リサーチ記事メーカー</span>
+      </a>
+      <nav class="nav-links">
+        <a href="/">トップ</a>
+        <a href="/apps/research-writer/">無料版を試す</a>
+        <a href="/products/research-writer-beta/">プロプラン</a>
+        <a href="/contact/">問い合わせ</a>
+        <a class="btn btn-primary btn-sm" href="/apps/research-writer/">無料で試す →</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="lp-hero">
+      <div class="container">
+        <div class="lp-hero-inner">
+          <p class="lp-eyebrow reveal">AIOリサーチ記事メーカー</p>
+          <h1 class="reveal reveal-d1">
+            <span class="strike">SEO記事を書いても読まれない</span>
+            AIOに<span class="em">引用される記事</span>を作れ
+          </h1>
+          <p class="lp-lead reveal reveal-d2">
+            Googleの検索結果の上に、もう<strong>「答え」が先に出ている</strong>。<br>
+            クリックされる前に引用される記事が、今の戦い方だ。<br>
+            キーワードを3つ入れるだけで、AIO向け記事が完成する。
+          </p>
+          <div class="lp-actions reveal reveal-d3">
+            <a class="btn btn-primary btn-xl" href="/apps/research-writer/">まず無料で試す →</a>
+            <a class="btn btn-lg" style="color:rgba(255,255,255,.8);border:1.5px solid rgba(255,255,255,.2);" href="/products/research-writer-beta/">プロプランを見る</a>
+          </div>
+          <p class="lp-note reveal reveal-d3">登録不要・クレジットカードなし・無料版で1回試せる</p>
+
+          <div class="lp-proof-strip reveal">
+            <div class="proof-num"><span class="n">3つ</span><span class="l">キーワードを入れるだけ</span></div>
+            <div class="proof-num"><span class="n">全自動</span><span class="l">調べる→選ぶ→記事にする</span></div>
+            <div class="proof-num"><span class="n">¥0〜</span><span class="l">無料版で今日から使える</span></div>
+          </div>
+        </div>
       </div>
-    </header>
+    </section>
 
-    <main>
-      <section class="lp-hero">
-        <div class="container">
-          <div class="lp-hero-copy">
-            <p class="lp-eyebrow">調べて書くAI</p>
-            <h1>3キーワードで、調べて、選んで、記事にする。</h1>
-            <p class="lp-lead">最新情報を拾って、使う情報だけ選び、自然な文章にまとめる。note、ブログ、クラウドワークス向けの調査記事を短くする。</p>
-            <div class="lp-actions">
-              <a class="btn btn-primary btn-lg" href="/apps/research-writer/">無料版を試す →</a>
-              <a class="btn btn-lg" style="color:rgba(255,255,255,.86);border:1.5px solid rgba(255,255,255,.25);" href="/contact/#research-writer" target="_blank" rel="noreferrer">導入相談する</a>
+    <!-- AIO Explainer -->
+    <section class="lp-section">
+      <div class="container">
+        <div class="aio-explainer reveal">
+          <div class="aio-explainer-inner">
+            <div>
+              <p style="font-size:11px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:#4fd1b8;margin-bottom:14px;">なぜ今、AIOなのか</p>
+              <h2>SEOで上がっても、<br>もう誰も<br>クリックしない。</h2>
+              <p style="margin-top:16px;">Googleは2024年から<strong>AI Overview（AIO）</strong>を全面展開した。検索結果の上に「答え」が先に出て、ユーザーはそこで満足して戻る。SEO1位を取っても、その上にAIOが立ちはだかっている。<br><br>これからの勝負は、<strong>AIOにあなたの記事を引用させること</strong>だ。</p>
             </div>
-            <p class="lp-hero-note">無料版で相性を見て、合えばプロプランへ。全部ブラウザでそのまま使える。</p>
-            <div class="lp-band">
-              <div class="lp-card"><h3>無料版</h3><p>まず1回試して、返ってくるものを見る。合うかどうかの判断に使う。</p></div>
-              <div class="lp-card"><h3>プロプラン</h3><p>比較や保存まで広げて、毎日の作業を短くする。使い方に合うならそこで続ける。</p></div>
-              <div class="lp-card"><h3>導線</h3><p>無料版からそのまま進める。途中で止まりにくい順番にしている。</p></div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="lp-section">
-        <div class="container">
-          <div class="lp-mini-head">
-            <h2>無料版で1回、プロプランは比べて選ぶところまで</h2>
-            <p>無料で返ってくるものと、プロプランで増える機能を同じ画面で比べられる。</p>
-          </div>
-          <div class="lp-preview">
-      <div class="lp-preview-box">
-        <h3>無料版で見えるもの</h3>
-              <p>まずは1回。どんな結果が返るかを確認してから進める。</p>
-              <div class="lp-preview-list">
-                
-                  <div><span>✓</span><div><strong>最新情報を拾う</strong><br>Perplexityで3キーワードから関連情報を集める。</div></div>
-                  <div><span>✓</span><div><strong>10〜20件の候補</strong><br>タイトルと要約が並ぶから、読む材料を先に選びやすい。</div></div>
-                  <div><span>✓</span><div><strong>選んだ情報で記事化</strong><br>チェックした情報だけを材料に、自然な記事へまとめる。</div></div>
+            <div class="aio-facts">
+              <div class="aio-fact">
+                <div class="aio-fact-icon">📉</div>
+                <div>
+                  <strong>SEOクリックが減り続けている</strong>
+                  <span>検索の58%以上がクリックゼロで終わると言われ始めている。答えがページに来る前に出るから。</span>
+                </div>
               </div>
-              <p style="margin-top:18px;"><a class="btn btn-primary" href="/apps/research-writer/">無料版を試す →</a></p>
-            </div>
-            <div class="lp-side-box">
-              <h3>プロプランで増えるもの</h3>
-              <ul>
-                <li>毎月の回数を決めて、記事づくりを回しやすくする。</li><li>見出しやメタ説明まで整えて、公開しやすくする。</li><li>選んだ情報をそのまま流して、記事の型を作りやすい。</li>
-              </ul>
-              <p class="lp-note">無料版で相性を見て、必要ならそのままプロプランへ進める。</p>
-              <p style="margin-top:16px;"><a class="btn btn-primary" href="/contact/#research-writer" target="_blank" rel="noreferrer" style="width:100%;">導入相談する</a></p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section section-alt">
-        <div class="container">
-          <p class="section-label">Proof</p>
-          <h2 class="section-title">実際の画面と、よくある反応</h2>
-          <p class="section-sub">スクショは実機の画面。声は、試用時によく出る反応を先に載せている。</p>
-          <div class="shot-grid" style="max-width:900px;margin:0 auto 28px;">
-            <figure class="shot-card">
-              <div class="shot-frame">
-                <img src="https://raw.githubusercontent.com/yohelab2026/yohelab-store-site/main/public/proof/research-writer-app.svg" alt="AIOリサーチアシスタントの画面スクリーンショット" />
+              <div class="aio-fact">
+                <div class="aio-fact-icon">🤖</div>
+                <div>
+                  <strong>AIOは記事を「読んで引用する」</strong>
+                  <span>構造が明確で・最新情報を含み・FAQ付きの記事が引用されやすい。</span>
+                </div>
               </div>
-              <figcaption class="shot-copy">
-                <span class="shot-label">調べて書く</span>
-                <h3>キーワード3つから、記事の材料を選べる</h3>
-                <p>検索結果を見てチェックし、選んだ情報だけで記事を作る。調べる時間を先に短くする。</p>
-                <ul class="shot-list"><li>最新情報が先に並ぶ</li><li>選んだ情報だけで書ける</li><li>note / ブログ / CW向け</li></ul>
-              </figcaption>
-            </figure></div>
-          <div class="voices-grid">
-            <article class="voice-card">
-              <p class="voice-text">調べるところで止まっていたのが進みやすい。材料を先に選べるのがわかりやすい。</p>
-              <div class="voice-meta">noteやブログを書きたい人</div>
-            </article>
-            <article class="voice-card">
-              <p class="voice-text">記事の型が先に見えると、書く順番が決めやすい。クラウドワークス向けにも使いやすい。</p>
-              <div class="voice-meta">クラウドワークスで記事を書く人</div>
-            </article>
-            <article class="voice-card">
-              <p class="voice-text">AIっぽい文章を薄めたい時に合ってる。検索と執筆がつながっているのがいい。</p>
-              <div class="voice-meta">AIっぽさを薄めたい人</div>
-            </article></div>
-        </div>
-      </section>
-
-      <section class="section">
-        <div class="container">
-          <p class="section-label">Fit</p>
-          <h2 class="section-title">こういう人に向いている</h2>
-          <p class="section-sub">合う人・合わない人がすぐ分かるように、使いどころを先に絞っている。</p>
-          <div class="lp-grid-3">
-            
-          <article class="lp-card">
-            <h3>noteやブログを書きたい人</h3>
-            <p>調べるところで止まらず、そのまま文章に進めたい人向け。</p>
-          </article>
-          <article class="lp-card">
-            <h3>クラウドワークスで記事を書く人</h3>
-            <p>材料を先に集めて、構成づくりを短くしたい人向け。</p>
-          </article>
-          <article class="lp-card">
-            <h3>AIっぽさを薄めたい人</h3>
-            <p>検索と執筆を分けずに、自然な文章へ寄せたい人向け。</p>
-          </article>
+              <div class="aio-fact">
+                <div class="aio-fact-icon">⚡</div>
+                <div>
+                  <strong>このツールがその構成を自動で作る</strong>
+                  <span>キーワード3つで、AIOに読まれる構成の記事を出力する。</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section class="section section-alt">
-        <div class="container">
-          <p class="section-label">Compare</p>
-          <h2 class="section-title">無料版とプロプランの違い</h2>
-          <div class="lp-table-wrap">
-            <table class="lp-table">
-              <thead>
-                <tr>
-                  <th>機能</th>
-                  <th>無料版</th>
-                  <th>プロプラン</th>
-                </tr>
-              </thead>
-              <tbody>
-                
-              <tr>
-                <td>キーワード入力</td>
-                <td class="free">3つ</td>
-                <td class="pro">3つ</td>
-              </tr>
-              <tr>
-                <td>最新情報の取得</td>
-                <td class="free">✓</td>
-                <td class="pro">✓</td>
-              </tr>
-              <tr>
-                <td>検索結果の選択</td>
-                <td class="free">10〜20件</td>
-                <td class="pro">10〜20件</td>
-              </tr>
-              <tr>
-                <td>記事生成</td>
-                <td class="free">✓</td>
-                <td class="pro">✓</td>
-              </tr>
-              <tr>
-                <td>SEO寄せ</td>
-                <td class="free">簡易</td>
-                <td class="pro">強化</td>
-              </tr>
-              <tr>
-                <td>利用回数</td>
-                <td class="free">1セットまで</td>
-                <td class="pro">月50セットまで</td>
-              </tr>
-              <tr>
-                <td>月額料金</td>
-                <td class="free">¥0</td>
-                <td class="pro">¥1,980</td>
-              </tr>
-              </tbody>
-            </table>
+    <!-- Problem -->
+    <section class="lp-section lp-section-alt">
+      <div class="container">
+        <div class="lp-section-head reveal">
+          <p class="lp-kicker kicker-red">😓 こんな経験ない？</p>
+          <h2>記事を書いても、<br>なぜか読まれない理由</h2>
+          <p>一生懸命書いたのに、アクセスが増えない。それはSEO最適化だけで戦おうとしているから。</p>
+        </div>
+        <div class="problem-grid">
+          <div class="problem-card reveal">
+            <div class="problem-icon">🔍</div>
+            <h3>リサーチで半日溶ける</h3>
+            <p>何を書けばいいかわからず、調べ続けて時間が消える。書き始めにたどり着かない。</p>
+          </div>
+          <div class="problem-card reveal reveal-d1">
+            <div class="problem-icon">📝</div>
+            <h3>構成が決まらない</h3>
+            <p>見出しの順番・FAQの内容・まとめの書き方。毎回ゼロから考えていたら終わらない。</p>
+          </div>
+          <div class="problem-card reveal reveal-d2">
+            <div class="problem-icon">😓</div>
+            <h3>書いてもAIOに無視される</h3>
+            <p>頑張って書いたのに検索結果の上に別の答えが出る。存在しないのと同じになっている。</p>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section class="section" style="background:var(--bg);">
-        <div class="container">
-          <p class="section-label">Features</p>
-          <h2 class="section-title">プロプランでできること</h2>
-          <div class="lp-grid-3">
-            
-          <article class="lp-card">
-            <h3>月50回まで使える</h3>
-            <p>毎月の回数を決めて、記事づくりを回しやすくする。</p>
+    <!-- How it works -->
+    <section class="lp-section">
+      <div class="container">
+        <div class="lp-section-head reveal">
+          <p class="lp-kicker kicker-green">✅ 解決策</p>
+          <h2>3ステップで<br>AIO向け記事が完成する</h2>
+          <p>調べる・選ぶ・書く。この3つを全部つなげた。キーワードを入れるだけで動き出す。</p>
+        </div>
+        <div class="step-grid">
+          <div class="step-box reveal">
+            <div class="step-circle">🔍</div>
+            <h3>Step 1：キーワードを3つ入れる</h3>
+            <p>最新のウェブ情報が自動で収集される。10〜20件の候補が並ぶ。</p>
+          </div>
+          <div class="step-box reveal reveal-d1">
+            <div class="step-circle">✅</div>
+            <h3>Step 2：使う情報だけ選ぶ</h3>
+            <p>一覧を見てチェックするだけ。余計な情報を除いて、使いたいものだけ残す。</p>
+          </div>
+          <div class="step-box reveal reveal-d2">
+            <div class="step-circle">📄</div>
+            <h3>Step 3：AIO向け記事が出る</h3>
+            <p>見出し・FAQ・本文・メタ情報まで、AIOに読まれる構成で自動出力。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section class="lp-section lp-section-alt">
+      <div class="container">
+        <div class="lp-section-head reveal">
+          <p class="lp-kicker kicker-green">🛠 できること</p>
+          <h2>AIOリサーチアシスタントで<br>できること</h2>
+        </div>
+        <div class="feature-grid">
+          <div class="feature-card reveal">
+            <div class="f-icon">📡</div>
+            <h3>最新情報を自動収集</h3>
+            <p>古い情報ではなく、今日の検索結果をベースに記事を作れる。「最新情報が見つからない」が消える。</p>
+          </div>
+          <div class="feature-card reveal reveal-d1">
+            <div class="f-icon">☑️</div>
+            <h3>使う情報だけ選べる</h3>
+            <p>10〜20件の候補を一覧で見て、使いたいものだけチェック。ノイズを除いた材料だけで書ける。</p>
+          </div>
+          <div class="feature-card reveal reveal-d2">
+            <div class="f-icon">🏗️</div>
+            <h3>AIO向け構成を自動で当てる</h3>
+            <p>FAQ形式・明確な見出し・信頼できるソースの引用。AIに読まれやすい構成を自動で組み込む。</p>
+          </div>
+          <div class="feature-card reveal reveal-d3">
+            <div class="f-icon">📋</div>
+            <h3>WP・note・ブログにそのまま使える</h3>
+            <p>タイトル・見出し・本文・FAQ・メタ説明・SNS投稿まで一括出力。貼り付けるだけで完成。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Voices -->
+    <section class="lp-section">
+      <div class="container">
+        <div class="lp-section-head reveal">
+          <p class="lp-kicker kicker-blue">💬 よくある反応</p>
+          <h2>試した人の声</h2>
+        </div>
+        <div class="voices-grid">
+          <article class="voice-card reveal">
+            <p class="voice-text">リサーチで止まっていたのが一気に進むようになった。材料を先に選べるのが一番大きい。</p>
+            <div class="voice-meta">ブログ・note 書いている人</div>
           </article>
-          <article class="lp-card">
-            <h3>SEO寄せを強められる</h3>
-            <p>見出しやメタ説明まで整えて、公開しやすくする。</p>
+          <article class="voice-card reveal reveal-d1">
+            <p class="voice-text">記事の構成がいつも悩みだったけど、それが先に出てくるのがありがたい。クラウドワークスの案件速度が上がった。</p>
+            <div class="voice-meta">クラウドワークスで記事受注している人</div>
           </article>
-          <article class="lp-card">
-            <h3>書く前の迷いを短くする</h3>
-            <p>選んだ情報をそのまま流して、記事の型を作りやすい。</p>
+          <article class="voice-card reveal reveal-d2">
+            <p class="voice-text">AIOに読まれる構成って何なのか、ずっとわからなかった。使ってみてようやく感覚がつかめた。</p>
+            <div class="voice-meta">SEOからAIOへ移行中の人</div>
           </article>
-          </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section class="section">
-        <div class="container">
-          <p class="section-label">FAQ</p>
-          <h2 class="section-title">よくある質問</h2>
-          <div class="lp-faq faq-list">
-            
-            <details class="faq">
-              <summary>無料版で何が返る？</summary>
-              <div class="faq-body">最新情報の検索結果と、選んだ情報をもとにした記事が返る。</div>
-            </details>
-            <details class="faq">
-              <summary>どんな人向け？</summary>
-              <div class="faq-body">note、ブログ、クラウドワークスで記事を書く人向け。</div>
-            </details>
-            <details class="faq">
-              <summary>無料版とプロプランの違いは？</summary>
-              <div class="faq-body">無料版は1セット。プロプランは月50セットまで使えて、比較しながら進めやすい。</div>
-            </details>
-            <details class="faq">
-              <summary>いつでも解約できる？</summary>
-              <div class="faq-body">問い合わせフォームからいつでも解約申請できる。</div>
-            </details>
+    <!-- Compare -->
+    <section class="lp-section lp-section-alt">
+      <div class="container">
+        <div class="lp-section-head reveal">
+          <p class="lp-kicker kicker-blue">📊 プラン比較</p>
+          <h2>無料版とプロプランの違い</h2>
+          <p>まず無料で試して、合えばプロプランへ。登録なし、カードなし。</p>
+        </div>
+        <div style="max-width:780px;margin:0 auto;">
+          <table class="lp-table reveal">
+            <thead>
+              <tr>
+                <th>機能</th>
+                <th>無料版</th>
+                <th class="col-pro">プロプラン</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>キーワード入力</td><td class="col-free">3つ</td><td class="col-pro">3つ</td></tr>
+              <tr><td>最新情報の自動収集</td><td class="col-free"><span class="lp-check">✓</span></td><td class="col-pro"><span class="lp-check">✓</span></td></tr>
+              <tr><td>検索結果の選択</td><td class="col-free">10〜20件</td><td class="col-pro">10〜20件</td></tr>
+              <tr><td>AIO向け記事生成</td><td class="col-free"><span class="lp-check">✓</span></td><td class="col-pro"><span class="lp-check">✓</span></td></tr>
+              <tr><td>FAQ・メタ情報出力</td><td class="col-free">簡易</td><td class="col-pro">強化版</td></tr>
+              <tr><td>利用回数</td><td class="col-free">1回まで</td><td class="col-pro">月50回まで</td></tr>
+              <tr><td>月額料金</td><td class="col-free">¥0</td><td class="col-pro">¥980〜</td></tr>
+            </tbody>
+          </table>
+          <div style="display:flex;justify-content:center;gap:12px;margin-top:28px;flex-wrap:wrap;">
+            <a class="btn btn-primary btn-lg" href="/apps/research-writer/">無料で試す →</a>
+            <a class="btn btn-outline btn-lg" href="/products/research-writer-beta/">プロプランを見る</a>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section class="lp-cta">
-        <div class="container">
-          <h2>3キーワードで、調べて、選んで、記事にする。</h2>
-          <p>最新情報を拾って、使う情報だけ選び、自然な文章にまとめる。note、ブログ、クラウドワークス向けの調査記事を短くする。</p>
-          <div class="lp-links">
-            <a class="btn btn-primary btn-lg" href="/apps/research-writer/">無料版を試す →</a>
-            <a class="btn btn-primary btn-lg" href="/contact/#research-writer" target="_blank" rel="noreferrer">導入相談する</a>
-          </div>
-          <p class="lp-note"><a href="/products/research-writer-beta/" style="color:var(--green);font-weight:800;">プロプランの詳細を見る →</a></p>
+    <!-- FAQ -->
+    <section class="lp-section">
+      <div class="container">
+        <div class="lp-section-head reveal">
+          <p class="lp-kicker kicker-green">❓ よくある質問</p>
+          <h2>FAQ</h2>
         </div>
-      </section>
-    </main>
-  </body>
+        <div class="faq-list reveal">
+          <details class="faq">
+            <summary>AIO（AI Overview）って何ですか？</summary>
+            <div class="faq-body">Googleが2024年から展開しているAI検索機能。検索結果の一番上に「AIが生成した答え」が表示される。ユーザーはそこで答えを読んで、クリックせずに戻ることが多い。AIOに引用された記事は、クリックされる前から存在感を持てる。</div>
+          </details>
+          <details class="faq">
+            <summary>どんな記事が作れますか？</summary>
+            <div class="faq-body">note・ブログ・WordPress向けの記事本文・見出し・FAQ・メタ説明が作れる。AIOに読まれやすい構成を自動で当てて出力する。</div>
+          </details>
+          <details class="faq">
+            <summary>無料版で何が試せますか？</summary>
+            <div class="faq-body">キーワード3つを入れて、最新情報の収集→選択→AIO向け記事生成まで1回フルで試せる。登録なし・クレジットカードなし。</div>
+          </details>
+          <details class="faq">
+            <summary>プロプランとの違いは？</summary>
+            <div class="faq-body">無料版は1回まで。プロプランは月50回まで使え、FAQ強化・メタ情報の詳細出力など機能が広がる。月額¥980〜。</div>
+          </details>
+          <details class="faq">
+            <summary>いつでも解約できますか？</summary>
+            <div class="faq-body">はい。問い合わせフォームからいつでも解約申請できる。違約金なし。</div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Final CTA -->
+  <section class="lp-final">
+    <div class="container">
+      <h2 class="reveal">AIOに読まれる記事で、<br>先に存在感を作る</h2>
+      <p class="reveal reveal-d1">キーワードを3つ入れるだけ。登録なし、無料から始められる。合わなければそれだけ。</p>
+      <div class="lp-final-btns reveal reveal-d2">
+        <a class="btn btn-white btn-xl" href="/apps/research-writer/" style="color:var(--green-dark);">まず無料で試す →</a>
+        <a class="btn btn-ghost-white btn-lg" href="/products/research-writer-beta/">プロプランを見る</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer footer-dark">
+    <div class="footer-inner">
+      <div style="color:rgba(255,255,255,.28);">© よへラボ / yohelab.com</div>
+      <div class="footer-links">
+        <a href="/">トップ</a>
+        <a href="/apps/research-writer/">無料で試す</a>
+        <a href="/games/">ゲーム</a>
+        <a href="/contact/">問い合わせ</a>
+        <a href="/legal/privacy/">プライバシー</a>
+        <a href="/legal/terms/">利用規約</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    if ('IntersectionObserver' in window) {
+      const obs = new IntersectionObserver(e => e.forEach(el => { if(el.isIntersecting){el.target.classList.add('visible');obs.unobserve(el.target);} }), {threshold:.06,rootMargin:'0px 0px -36px 0px'});
+      document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+      setTimeout(()=>document.querySelectorAll('.reveal:not(.visible)').forEach(el=>el.classList.add('visible')),800);
+    } else { document.querySelectorAll('.reveal').forEach(el=>el.classList.add('visible')); }
+  </script>
+
+</body>
 </html>

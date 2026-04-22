@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>よへラボ | AIOリサーチ記事メーカー・ゲーム</title>
-  <meta name="description" content="AIOリサーチ記事メーカー — キーワードを入れるだけで、調べて・選んで・記事にする。登録不要・無料版あり。" />
-  <meta property="og:title" content="よへラボ | AIOリサーチ記事メーカー・ゲーム" />
+  <title>よへラボ | SEOの時代は終わった。AIOで勝つ記事を作れ。</title>
+  <meta name="description" content="Google検索の上に「答え」が出る時代。クリックされる前に引用される記事を、キーワード3つで作るツール。" />
+  <meta property="og:title" content="よへラボ | SEOの時代は終わった。AIOで勝つ記事を作れ。" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://yohelab.com/" />
   <meta property="og:image" content="https://yohelab.com/yohelab-icon.png" />
@@ -15,389 +15,318 @@
   <style>
     html { scroll-behavior: smooth; }
 
-    .reveal {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity .65s cubic-bezier(.22,1,.36,1), transform .65s cubic-bezier(.22,1,.36,1);
-    }
-    .reveal.visible { opacity: 1; transform: none; }
-    .reveal-delay-1 { transition-delay: .08s; }
-    .reveal-delay-2 { transition-delay: .16s; }
-    .reveal-delay-3 { transition-delay: .24s; }
-    .reveal-delay-4 { transition-delay: .32s; }
+    .reveal { opacity:0; transform:translateY(24px); transition:opacity .65s cubic-bezier(.22,1,.36,1),transform .65s cubic-bezier(.22,1,.36,1); }
+    .reveal.visible { opacity:1; transform:none; }
+    .reveal-d1{transition-delay:.08s} .reveal-d2{transition-delay:.16s}
+    .reveal-d3{transition-delay:.24s} .reveal-d4{transition-delay:.32s}
 
     /* ── NAV ── */
-    .nav { background: rgba(5,15,12,.92); backdrop-filter: blur(18px); }
+    .nav { background:rgba(5,15,12,.94); backdrop-filter:blur(18px); }
 
     /* ── HERO ── */
     .hero-wrap {
-      position: relative;
-      min-height: 100svh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      overflow: hidden;
-      background: #050f0c;
-      padding: 120px 0 80px;
+      position:relative; min-height:100svh;
+      display:flex; flex-direction:column; justify-content:center;
+      overflow:hidden; background:#050f0c; padding:120px 0 80px;
     }
     .hero-bg {
-      position: absolute; inset: 0; pointer-events: none;
+      position:absolute; inset:0; pointer-events:none;
       background:
-        radial-gradient(ellipse 80% 60% at 60% -10%, rgba(11,184,146,.22) 0%, transparent 55%),
-        radial-gradient(ellipse 50% 50% at 10% 80%, rgba(11,143,114,.10) 0%, transparent 60%),
-        radial-gradient(ellipse 40% 40% at 90% 90%, rgba(29,111,216,.08) 0%, transparent 60%);
+        radial-gradient(ellipse 90% 60% at 55% -5%, rgba(11,184,146,.26) 0%, transparent 52%),
+        radial-gradient(ellipse 50% 50% at 5% 80%, rgba(11,143,114,.12) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 95% 90%, rgba(99,102,241,.07) 0%, transparent 60%);
     }
     .hero-grid-bg {
-      position: absolute; inset: 0; pointer-events: none;
+      position:absolute; inset:0; pointer-events:none;
       background-image:
-        linear-gradient(rgba(16,184,146,.045) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(16,184,146,.045) 1px, transparent 1px);
-      background-size: 56px 56px;
-      mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 0%, transparent 75%);
-      -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 0%, transparent 75%);
+        linear-gradient(rgba(16,184,146,.04) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(16,184,146,.04) 1px,transparent 1px);
+      background-size:56px 56px;
+      mask-image:radial-gradient(ellipse 80% 70% at 50% 40%,#000 0%,transparent 75%);
+      -webkit-mask-image:radial-gradient(ellipse 80% 70% at 50% 40%,#000 0%,transparent 75%);
     }
     .hero-inner {
-      position: relative; z-index: 2;
-      width: min(1120px, 100% - 44px);
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 380px;
-      gap: 48px;
-      align-items: center;
+      position:relative; z-index:2;
+      width:min(1120px, 100% - 44px); margin:0 auto;
+      display:grid; grid-template-columns:1fr 400px; gap:56px; align-items:center;
     }
-    .hero-eyebrow {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 7px 18px; border-radius: 999px;
-      background: rgba(16,184,146,.12); border: 1px solid rgba(16,184,146,.3);
-      color: #6be5c9; font-size: 12px; font-weight: 800;
-      letter-spacing: .08em; text-transform: uppercase;
-      margin-bottom: 28px;
+    .hero-label {
+      display:inline-flex; align-items:center; gap:10px;
+      padding:6px 16px; border-radius:999px;
+      background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.14);
+      color:rgba(255,255,255,.72); font-size:12px; font-weight:800;
+      letter-spacing:.1em; text-transform:uppercase; margin-bottom:28px;
     }
-    .hero-eyebrow span { width: 6px; height: 6px; border-radius: 50%; background: #6be5c9; animation: blink 2s ease-in-out infinite; }
-    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+    .hero-label .dot { width:6px; height:6px; border-radius:50%; background:#4fd1b8; animation:blink 2s ease-in-out infinite; }
+    @keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
 
     .hero-title {
-      font-size: clamp(48px, 7.5vw, 88px);
-      font-weight: 900;
-      letter-spacing: -0.06em;
-      line-height: 1.0;
-      color: #fff;
-      margin-bottom: 28px;
-      text-wrap: balance;
+      font-size:clamp(48px,7.5vw,92px); font-weight:900;
+      letter-spacing:-0.065em; line-height:1.0;
+      color:#fff; margin-bottom:28px; text-wrap:balance;
     }
-    .hero-title em {
-      display: block;
-      background: linear-gradient(135deg, #6be5c9 0%, #0bbe96 55%, #0b8f72 100%);
-      -webkit-background-clip: text; background-clip: text;
-      -webkit-text-fill-color: transparent;
+    .hero-title .line-accent {
+      background:linear-gradient(135deg,#6be5c9 0%,#0bbe96 55%,#0b8f72 100%);
+      -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+      display:block;
+    }
+    .hero-title .line-strike {
+      color:rgba(255,255,255,.28); text-decoration:line-through;
+      text-decoration-color:rgba(255,100,100,.6);
+      font-size:.72em; display:block; letter-spacing:-0.04em;
+      margin-bottom:4px;
     }
     .hero-lead {
-      font-size: clamp(16px, 1.8vw, 19px);
-      color: rgba(255,255,255,.65);
-      line-height: 1.92; max-width: 520px;
-      margin-bottom: 36px;
+      font-size:clamp(16px,1.8vw,19px); color:rgba(255,255,255,.65);
+      line-height:1.9; max-width:520px; margin-bottom:36px;
     }
-    .hero-ctas {
-      display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
-      margin-bottom: 32px;
-    }
-    .hero-trust {
-      display: flex; flex-wrap: wrap; gap: 8px 20px;
-      font-size: 13px; color: rgba(255,255,255,.38); font-weight: 600;
-    }
+    .hero-lead strong { color:#fff; font-weight:800; }
+    .hero-ctas { display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:28px; }
+    .hero-trust { display:flex; flex-wrap:wrap; gap:8px 20px; font-size:13px; color:rgba(255,255,255,.35); font-weight:600; }
 
-    /* Hero right: proof card */
-    .hero-proof {
-      background: rgba(255,255,255,.055);
-      border: 1px solid rgba(255,255,255,.1);
-      border-radius: 24px;
-      padding: 28px;
-      backdrop-filter: blur(16px);
-      display: flex; flex-direction: column; gap: 14px;
+    /* Right panel */
+    .hero-shift {
+      background:rgba(255,255,255,.055); border:1px solid rgba(255,255,255,.1);
+      border-radius:24px; padding:28px; backdrop-filter:blur(16px);
+      display:flex; flex-direction:column; gap:12px;
     }
-    .proof-label {
-      font-size: 10px; font-weight: 900; letter-spacing: .14em;
-      text-transform: uppercase; color: #6be5c9; margin-bottom: 2px;
+    .shift-label { font-size:10px; font-weight:900; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,.4); margin-bottom:4px; }
+    .shift-row {
+      display:flex; align-items:center; gap:12px;
+      padding:14px 16px; border-radius:14px;
     }
-    .proof-row {
-      background: rgba(255,255,255,.07);
-      border: 1px solid rgba(255,255,255,.1);
-      border-radius: 14px;
-      padding: 16px 18px;
-      display: flex; align-items: center; gap: 14px;
+    .shift-row.old { background:rgba(255,80,80,.08); border:1px solid rgba(255,80,80,.2); }
+    .shift-row.new { background:rgba(16,184,146,.1); border:1px solid rgba(16,184,146,.28); }
+    .shift-icon { font-size:22px; flex-shrink:0; }
+    .shift-copy strong { display:block; color:#fff; font-size:14px; font-weight:800; margin-bottom:2px; }
+    .shift-copy span { color:rgba(255,255,255,.5); font-size:12px; line-height:1.5; }
+    .shift-badge {
+      margin-left:auto; flex-shrink:0;
+      padding:4px 10px; border-radius:999px;
+      font-size:11px; font-weight:800;
     }
-    .proof-icon {
-      width: 40px; height: 40px; border-radius: 12px;
-      background: linear-gradient(135deg, #14c4a0, #0b8f72);
-      display: grid; place-items: center;
-      font-size: 18px; flex-shrink: 0;
-      box-shadow: 0 4px 14px rgba(11,143,114,.4);
-    }
-    .proof-copy strong { display: block; color: #fff; font-size: 14px; font-weight: 800; margin-bottom: 3px; }
-    .proof-copy span { color: rgba(255,255,255,.52); font-size: 12px; line-height: 1.5; }
-    .proof-badge {
-      margin-left: auto; flex-shrink: 0;
-      background: rgba(107,229,201,.15); border: 1px solid rgba(107,229,201,.3);
-      color: #6be5c9; font-size: 11px; font-weight: 800;
-      padding: 4px 10px; border-radius: 999px;
-    }
+    .shift-badge.bad { background:rgba(255,80,80,.15); color:#ff8080; }
+    .shift-badge.good { background:rgba(107,229,201,.15); color:#6be5c9; }
+    .shift-arrow { text-align:center; font-size:20px; color:rgba(255,255,255,.25); }
 
     .scroll-hint {
-      position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
-      display: flex; flex-direction: column; align-items: center; gap: 8px;
-      color: rgba(255,255,255,.28); font-size: 11px; font-weight: 700;
-      letter-spacing: .1em; text-transform: uppercase;
-      animation: scrollBounce 2.5s ease-in-out infinite;
+      position:absolute; bottom:32px; left:50%; transform:translateX(-50%);
+      display:flex; flex-direction:column; align-items:center; gap:8px;
+      color:rgba(255,255,255,.25); font-size:11px; font-weight:700;
+      letter-spacing:.1em; text-transform:uppercase;
+      animation:scrollBounce 2.5s ease-in-out infinite;
     }
-    @keyframes scrollBounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(6px)} }
-    .scroll-hint::after {
-      content:""; width:1px; height:40px;
-      background: linear-gradient(to bottom, rgba(255,255,255,.25), transparent);
+    @keyframes scrollBounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(6px)}}
+    .scroll-hint::after { content:""; width:1px; height:40px; background:linear-gradient(to bottom,rgba(255,255,255,.22),transparent); }
+
+    /* ── CONTENT ── */
+    .content-wrap { background:#fff; border-radius:32px 32px 0 0; margin-top:-32px; position:relative; z-index:2; }
+    .pillar { padding:88px 0; }
+    .pillar+.pillar { border-top:1px solid var(--border); }
+    .pillar-alt { background:#fafcfb; }
+
+    /* What changed section */
+    .change-banner {
+      background:linear-gradient(135deg,#0d1a16,#0c2420);
+      border-radius:24px; padding:52px 48px; margin-bottom:48px;
+      position:relative; overflow:hidden;
     }
-
-    /* ── CONTENT WRAP ── */
-    .content-wrap {
-      background: #fff; border-radius: 32px 32px 0 0;
-      margin-top: -32px; position: relative; z-index: 2;
+    .change-banner::before {
+      content:""; position:absolute; inset:0;
+      background:radial-gradient(ellipse 60% 70% at 90% 50%,rgba(16,184,146,.12) 0%,transparent 55%),
+        linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);
+      background-size:auto,48px 48px,48px 48px;
     }
+    .change-banner-inner { position:relative; z-index:1; max-width:760px; }
+    .change-kicker { font-size:11px; font-weight:900; letter-spacing:.14em; text-transform:uppercase; color:#4fd1b8; margin-bottom:16px; }
+    .change-banner h2 { font-size:clamp(28px,4vw,44px); font-weight:900; letter-spacing:-0.05em; color:#fff; line-height:1.15; margin-bottom:16px; }
+    .change-banner p { color:rgba(255,255,255,.65); font-size:16px; line-height:1.9; }
+    .change-banner strong { color:#fff; font-weight:800; }
+    .change-stat {
+      margin-top:28px; display:flex; gap:24px; flex-wrap:wrap;
+    }
+    .stat-item { background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.12); border-radius:16px; padding:18px 22px; }
+    .stat-num { font-size:32px; font-weight:900; color:#4fd1b8; letter-spacing:-0.05em; line-height:1; margin-bottom:4px; }
+    .stat-label { font-size:12px; color:rgba(255,255,255,.52); font-weight:600; }
 
-    /* ── PILLAR ── */
-    .pillar { padding: 80px 0; }
-    .pillar + .pillar { border-top: 1px solid var(--border); }
-    .pillar-alt { background: #fafcfb; }
-
+    /* Section kicker */
     .section-kicker {
-      display: inline-flex; align-items: center; gap: 10px;
-      padding: 8px 20px; border-radius: 999px;
-      font-size: 12px; font-weight: 900; letter-spacing: .1em;
-      text-transform: uppercase; margin-bottom: 20px;
+      display:inline-flex; align-items:center; gap:10px;
+      padding:8px 20px; border-radius:999px;
+      font-size:12px; font-weight:900; letter-spacing:.1em; text-transform:uppercase; margin-bottom:20px;
     }
-    .kicker-green  { background: #e8faf3; color: var(--green-dark); border: 1px solid var(--green-mid); }
-    .kicker-blue   { background: #eff3ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+    .kicker-green { background:#e8faf3; color:var(--green-dark); border:1px solid var(--green-mid); }
+    .kicker-blue  { background:#eff3ff; color:#1d4ed8; border:1px solid #bfdbfe; }
 
-    .pillar-head {
-      display: grid; grid-template-columns: 1fr auto;
-      gap: 24px; align-items: end; margin-bottom: 48px;
-    }
-    .pillar-title {
-      font-size: clamp(30px, 4.5vw, 50px);
-      font-weight: 900; letter-spacing: -0.05em;
-      line-height: 1.1; margin-bottom: 14px;
-    }
-    .pillar-sub { color: var(--muted); font-size: 15.5px; line-height: 1.88; max-width: 580px; }
-
-    /* ── TOOL CARD ── */
-    .tool-card-v2 {
-      display: flex; flex-direction: column;
-      padding: 36px 32px;
-      border-radius: 24px;
-      border: 1.5px solid var(--green-mid);
-      background: linear-gradient(175deg, #fff 0%, #f3fbf7 100%);
-      text-decoration: none; color: inherit;
-      transition: transform .22s cubic-bezier(.2,.9,.3,1), box-shadow .22s, border-color .22s;
-      box-shadow: 0 2px 12px rgba(11,143,114,.08), 0 1px 0 rgba(11,143,114,.12) inset;
-      position: relative; overflow: hidden;
-      max-width: 760px;
-    }
-    .tool-card-v2::before {
-      content: "";
-      position: absolute; top: 0; left: 0; right: 0; height: 3px;
-      background: linear-gradient(90deg, #14c4a0, #0b8f72, #086b56);
-      opacity: 0; transition: opacity .22s;
-    }
-    .tool-card-v2:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 6px 28px rgba(11,143,114,.18), 0 24px 56px rgba(11,143,114,.10);
-      border-color: var(--green);
-    }
-    .tool-card-v2:hover::before { opacity: 1; }
-
-    .tool-tag-pill {
-      display: inline-block; font-size: 10.5px; font-weight: 900;
-      letter-spacing: .1em; text-transform: uppercase;
-      color: var(--green); background: var(--green-light);
-      border: 1px solid var(--green-mid); padding: 3px 10px;
-      border-radius: 999px; margin-bottom: 14px;
-    }
-    .tool-card-v2 h3 { font-size: 26px; font-weight: 900; letter-spacing: -0.03em; margin-bottom: 12px; }
-    .tool-card-v2 > p { color: var(--muted); font-size: 15px; line-height: 1.85; margin-bottom: 24px; max-width: 600px; }
-
-    .tool-transform {
-      display: flex; align-items: center; gap: 8px;
-      background: #f5f8f6; border-radius: 12px; padding: 14px 16px;
-      margin-bottom: 20px; font-size: 13.5px;
-    }
-    .tool-before { color: var(--muted); text-decoration: line-through; flex: 1; }
-    .tool-arrow { color: var(--green); font-weight: 900; font-size: 18px; }
-    .tool-after { color: var(--green-dark); font-weight: 800; flex: 1; text-align: right; }
-
-    .tool-bullets { display: grid; gap: 8px; margin-bottom: 24px; }
-    .tool-bullets li {
-      display: flex; gap: 8px; font-size: 14px; color: var(--text-sub); line-height: 1.55;
-    }
-    .tool-bullets li::before { content: "✓"; color: var(--green); font-weight: 900; flex-shrink: 0; }
-
-    .tool-footer {
-      display: flex; align-items: center; justify-content: space-between;
-      padding-top: 18px; border-top: 1px solid var(--border-soft);
-      margin-top: auto; gap: 12px; flex-wrap: wrap;
-    }
-    .tool-price { font-size: 13px; color: var(--muted); font-weight: 600; }
-    .tool-cta   { font-size: 14px; font-weight: 800; color: var(--green); white-space: nowrap; }
+    .pillar-head { display:grid; grid-template-columns:1fr auto; gap:24px; align-items:end; margin-bottom:48px; }
+    .pillar-title { font-size:clamp(30px,4.5vw,52px); font-weight:900; letter-spacing:-0.05em; line-height:1.1; margin-bottom:14px; }
+    .pillar-sub { color:var(--muted); font-size:15.5px; line-height:1.88; max-width:580px; }
 
     /* Step flow */
-    .step-flow {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
-      margin: 32px 0;
+    .step-flow { display:grid; grid-template-columns:repeat(3,1fr); gap:0; margin:40px 0; position:relative; }
+    .step-flow::before {
+      content:""; position:absolute; top:32px; left:calc(16.66% + 32px); right:calc(16.66% + 32px); height:2px;
+      background:linear-gradient(90deg,var(--green-mid),var(--green),var(--green-mid));
     }
     .step-item {
-      background: #f5f8f6; border-radius: 18px; padding: 20px 18px;
-      border: 1px solid var(--green-mid);
-      display: flex; flex-direction: column; gap: 8px;
+      display:flex; flex-direction:column; align-items:center; text-align:center;
+      padding:0 16px;
     }
-    .step-num { font-size: 11px; font-weight: 900; color: var(--green); letter-spacing: .1em; text-transform: uppercase; }
-    .step-item strong { font-size: 15px; font-weight: 900; color: var(--text); }
-    .step-item span { font-size: 13px; color: var(--muted); line-height: 1.6; }
+    .step-circle {
+      width:64px; height:64px; border-radius:50%;
+      background:linear-gradient(135deg,#14c4a0,#0b8f72);
+      display:grid; place-items:center; font-size:24px;
+      box-shadow:0 8px 24px rgba(11,143,114,.3);
+      margin-bottom:18px; position:relative; z-index:1;
+      flex-shrink:0;
+    }
+    .step-item strong { font-size:16px; font-weight:900; letter-spacing:-0.02em; margin-bottom:6px; display:block; }
+    .step-item span { font-size:13px; color:var(--muted); line-height:1.65; }
 
-    /* CTA banner */
-    .cta-banner {
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 20px; padding: 24px 32px;
-      background: linear-gradient(135deg, #e8faf3, #d0f5e8);
-      border: 1.5px solid var(--green-mid); border-radius: 20px;
-      flex-wrap: wrap; margin-top: 40px;
+    /* Tool card */
+    .tool-feature-card {
+      display:grid; grid-template-columns:1fr 1fr; gap:32px; align-items:start;
+      padding:40px; border-radius:28px;
+      border:1.5px solid var(--green-mid);
+      background:linear-gradient(160deg,#fff 0%,#f2fbf7 100%);
+      box-shadow:0 4px 24px rgba(11,143,114,.1), 0 1px 0 rgba(11,143,114,.1) inset;
+      text-decoration:none; color:inherit; margin-bottom:24px;
     }
-    .cta-banner-copy p { font-size: 15px; line-height: 1.7; color: var(--green-dark); margin: 0; }
-    .cta-banner-copy strong { font-size: 18px; display: block; margin-bottom: 4px; letter-spacing: -0.02em; }
+    .tool-tag { font-size:10.5px; font-weight:900; letter-spacing:.1em; text-transform:uppercase; color:var(--green); background:var(--green-light); border:1px solid var(--green-mid); padding:3px 10px; border-radius:999px; display:inline-block; margin-bottom:14px; }
+    .tool-feature-card h3 { font-size:clamp(24px,3vw,34px); font-weight:900; letter-spacing:-0.04em; margin-bottom:12px; }
+    .tool-feature-card .card-lead { font-size:16px; color:var(--muted); line-height:1.85; margin-bottom:24px; }
+    .feature-list { display:grid; gap:10px; }
+    .feature-list li { display:flex; gap:10px; font-size:14px; color:var(--text-sub); line-height:1.55; }
+    .feature-list li::before { content:"✓"; color:var(--green); font-weight:900; flex-shrink:0; }
+    .tool-cta-row { display:flex; gap:10px; flex-wrap:wrap; margin-top:24px; }
 
-    /* ── GAMES SECTION ── */
-    .games-hero {
-      background: linear-gradient(135deg, #0d1b4a 0%, #1a1a4e 50%, #0a1a3a 100%);
-      border-radius: 24px; padding: 40px; margin-bottom: 20px;
-      position: relative; overflow: hidden;
-      display: flex; align-items: center; justify-content: space-between; gap: 32px;
+    .tool-right { display:flex; flex-direction:column; gap:14px; }
+    .aio-point {
+      background:linear-gradient(135deg,#e8faf3,#d0f5e8); border:1px solid var(--green-mid);
+      border-radius:18px; padding:20px; display:flex; gap:14px; align-items:flex-start;
     }
-    .games-hero::before {
-      content: "";
-      position: absolute; inset: 0; pointer-events: none;
-      background-image: radial-gradient(circle at 80% 50%, rgba(99,102,241,.15) 0%, transparent 50%),
-        linear-gradient(rgba(255,255,255,.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.02) 1px, transparent 1px);
-      background-size: auto, 40px 40px, 40px 40px;
-    }
-    .games-hero-copy { position: relative; z-index: 1; }
-    .games-hero-copy h3 {
-      font-size: clamp(24px, 3.5vw, 38px); font-weight: 900;
-      letter-spacing: -0.04em; color: #fff; margin-bottom: 12px; line-height: 1.1;
-    }
-    .games-hero-copy h3 em {
-      background: linear-gradient(135deg, #a5b4fc, #818cf8);
-      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
-    }
-    .games-hero-copy p { color: rgba(255,255,255,.6); font-size: 15px; line-height: 1.8; max-width: 420px; margin-bottom: 24px; }
-    .games-hero-right { position: relative; z-index: 1; flex-shrink: 0; }
-    .games-big-emoji { font-size: 80px; line-height: 1; filter: drop-shadow(0 8px 24px rgba(99,102,241,.4)); }
+    .aio-point-icon { font-size:26px; flex-shrink:0; }
+    .aio-point strong { display:block; font-size:14px; font-weight:900; margin-bottom:4px; }
+    .aio-point span { font-size:13px; color:var(--muted); line-height:1.6; }
 
-    .games-grid {
-      display: grid; grid-template-columns: repeat(3,1fr); gap: 14px;
+    /* Comparison: SEO vs AIO */
+    .compare-shift {
+      display:grid; grid-template-columns:1fr auto 1fr; gap:0; align-items:stretch;
+      border-radius:24px; overflow:hidden; border:1.5px solid var(--border);
+      margin:40px 0;
     }
-    .game-card-v2 {
-      display: flex; flex-direction: column; gap: 10px;
-      padding: 26px 22px; border-radius: 20px;
-      border: 1.5px solid #bfdbfe;
-      background: linear-gradient(175deg, #fff 0%, #f0f4ff 100%);
-      text-decoration: none; color: inherit; position: relative;
-      transition: transform .22s cubic-bezier(.2,.9,.3,1), box-shadow .22s, border-color .22s;
-      overflow: hidden;
+    .compare-col { padding:32px; }
+    .compare-col.seo-col { background:#fff9f9; }
+    .compare-col.aio-col { background:#f0fdf7; }
+    .compare-divider {
+      background:var(--border); display:flex; align-items:center; justify-content:center;
+      padding:0 16px; font-size:24px; color:var(--muted);
     }
-    .game-card-v2:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 28px rgba(99,102,241,.16), 0 24px 56px rgba(99,102,241,.08);
-      border-color: #a5b4fc;
-    }
-    .game-icon { font-size: 38px; line-height: 1; margin-bottom: 2px; }
-    .game-card-v2 h3 { font-size: 18px; font-weight: 900; letter-spacing: -0.025em; }
-    .game-card-v2 p  { font-size: 13.5px; color: var(--muted); line-height: 1.75; flex: 1; margin: 0; }
-    .game-cta { font-size: 13px; font-weight: 800; color: #4f46e5; margin-top: 4px; }
+    .compare-tag { font-size:10px; font-weight:900; letter-spacing:.12em; text-transform:uppercase; padding:4px 12px; border-radius:999px; display:inline-block; margin-bottom:16px; }
+    .compare-tag.seo { background:#ffe4e4; color:#c53030; }
+    .compare-tag.aio { background:#d1fae5; color:#065f46; }
+    .compare-col h3 { font-size:20px; font-weight:900; letter-spacing:-0.03em; margin-bottom:14px; }
+    .compare-col ul { display:grid; gap:8px; }
+    .compare-col li { font-size:14px; line-height:1.6; display:flex; gap:8px; }
+    .compare-col.seo-col li::before { content:"✗"; color:#c53030; font-weight:900; flex-shrink:0; }
+    .compare-col.aio-col li::before { content:"✓"; color:#059669; font-weight:900; flex-shrink:0; }
+    .compare-col.seo-col h3 { color:#c53030; }
+    .compare-col.aio-col h3 { color:#065f46; }
 
-    /* ── FINAL CTA ── */
+    /* Games */
+    .games-banner {
+      background:linear-gradient(135deg,#0d1b4a,#1a1a4e,#0a1a3a);
+      border-radius:24px; padding:40px; position:relative; overflow:hidden;
+      display:flex; align-items:center; justify-content:space-between; gap:32px;
+    }
+    .games-banner::before {
+      content:""; position:absolute; inset:0; pointer-events:none;
+      background-image:radial-gradient(circle at 80% 50%,rgba(99,102,241,.15) 0%,transparent 50%),
+        linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);
+      background-size:auto,40px 40px,40px 40px;
+    }
+    .games-copy { position:relative; z-index:1; }
+    .games-copy h3 { font-size:clamp(22px,3vw,36px); font-weight:900; letter-spacing:-0.04em; color:#fff; margin-bottom:12px; line-height:1.1; }
+    .games-copy h3 em { background:linear-gradient(135deg,#a5b4fc,#818cf8); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+    .games-copy p { color:rgba(255,255,255,.6); font-size:15px; line-height:1.8; max-width:380px; margin-bottom:24px; }
+    .games-emoji { font-size:72px; position:relative; z-index:1; filter:drop-shadow(0 8px 24px rgba(99,102,241,.4)); flex-shrink:0; }
+    .games-mini { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:24px; }
+    .games-mini-card {
+      padding:18px 16px; border-radius:16px;
+      border:1.5px solid rgba(99,102,241,.3); background:rgba(255,255,255,.06);
+      text-decoration:none; color:#fff;
+      transition:background .18s, transform .18s;
+    }
+    .games-mini-card:hover { background:rgba(255,255,255,.1); transform:translateY(-3px); }
+    .games-mini-card .g-icon { font-size:28px; margin-bottom:8px; display:block; }
+    .games-mini-card strong { font-size:14px; font-weight:800; display:block; margin-bottom:4px; }
+    .games-mini-card span { font-size:12px; color:rgba(255,255,255,.5); }
+
+    /* Final CTA */
     .final-cta {
       background:
-        radial-gradient(ellipse 80% 70% at 50% -10%, rgba(16,201,154,.38), transparent 55%),
-        linear-gradient(180deg, #076050 0%, #043d33 100%);
-      padding: 100px 0;
-      text-align: center;
-      color: #fff;
-      position: relative; overflow: hidden;
+        radial-gradient(ellipse 80% 70% at 50% -10%,rgba(16,201,154,.38),transparent 55%),
+        linear-gradient(180deg,#076050 0%,#043d33 100%);
+      padding:112px 0; text-align:center; color:#fff; position:relative; overflow:hidden;
     }
     .final-cta::before {
-      content: "";
-      position: absolute; inset: 0;
-      background-image:
-        linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
-      background-size: 56px 56px;
-      mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, #000, transparent 80%);
-      -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, #000, transparent 80%);
+      content:""; position:absolute; inset:0;
+      background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+      background-size:56px 56px;
+      mask-image:radial-gradient(ellipse 70% 60% at 50% 50%,#000,transparent 80%);
+      -webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 50%,#000,transparent 80%);
     }
-    .final-cta .container { position: relative; z-index: 1; }
-    .final-cta h2 {
-      font-size: clamp(34px, 6vw, 64px); font-weight: 900;
-      letter-spacing: -0.055em; line-height: 1.08;
-      margin-bottom: 20px; text-wrap: balance;
-    }
-    .final-cta p { font-size: 17px; color: rgba(255,255,255,.75); max-width: 560px; margin: 0 auto 36px; line-height: 1.88; }
-    .final-cta-btns { display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap; }
+    .final-cta .container { position:relative; z-index:1; }
+    .final-cta h2 { font-size:clamp(34px,6vw,68px); font-weight:900; letter-spacing:-0.06em; line-height:1.06; margin-bottom:20px; text-wrap:balance; }
+    .final-cta p { font-size:17px; color:rgba(255,255,255,.72); max-width:520px; margin:0 auto 40px; line-height:1.88; }
+    .final-cta-btns { display:flex; align-items:center; justify-content:center; gap:14px; flex-wrap:wrap; }
 
-    .contact-strip {
-      background: #050f0c;
-      border-top: 1px solid rgba(255,255,255,.08);
-      padding: 32px 0;
-    }
-    .contact-strip-inner {
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 16px; flex-wrap: wrap;
-      width: min(1120px, 100% - 44px); margin: 0 auto;
-    }
-    .contact-strip p { color: rgba(255,255,255,.55); font-size: 14px; margin: 0; line-height: 1.7; }
-    .contact-strip strong { color: rgba(255,255,255,.88); display: block; margin-bottom: 4px; font-size: 15px; }
+    .contact-strip { background:#050f0c; border-top:1px solid rgba(255,255,255,.07); padding:32px 0; }
+    .contact-strip-inner { display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; width:min(1120px,100% - 44px); margin:0 auto; }
+    .contact-strip p { color:rgba(255,255,255,.5); font-size:14px; margin:0; line-height:1.7; }
+    .contact-strip strong { color:rgba(255,255,255,.85); display:block; margin-bottom:4px; font-size:15px; }
 
-    .footer-dark { background: #030b09; border-top: 1px solid rgba(255,255,255,.06); }
-    .footer-dark .footer-links a { color: rgba(255,255,255,.35); }
-    .footer-dark .footer-links a:hover { color: rgba(255,255,255,.75); }
+    .footer-dark { background:#030b09; border-top:1px solid rgba(255,255,255,.06); }
+    .footer-dark .footer-links a { color:rgba(255,255,255,.32); }
+    .footer-dark .footer-links a:hover { color:rgba(255,255,255,.72); }
 
-    /* ── RESPONSIVE ── */
-    @media (max-width: 960px) {
-      .hero-inner { grid-template-columns: 1fr; }
-      .hero-proof { display: none; }
-      .pillar-head { grid-template-columns: 1fr; }
-      .pillar-head .btn { align-self: flex-start; }
-      .step-flow { grid-template-columns: 1fr; }
+    @media(max-width:960px){
+      .hero-inner { grid-template-columns:1fr; }
+      .hero-shift { display:none; }
+      .pillar-head { grid-template-columns:1fr; }
+      .pillar-head .btn { align-self:flex-start; }
+      .tool-feature-card { grid-template-columns:1fr; }
+      .step-flow::before { display:none; }
+      .compare-shift { grid-template-columns:1fr; }
+      .compare-divider { padding:16px; font-size:16px; }
     }
-    @media (max-width: 800px) {
-      .games-grid { grid-template-columns: 1fr 1fr; }
-      .games-hero { flex-direction: column; gap: 20px; padding: 28px 24px; }
-      .games-big-emoji { font-size: 52px; }
-      .cta-banner { flex-direction: column; align-items: flex-start; padding: 20px 22px; }
+    @media(max-width:800px){
+      .games-banner { flex-direction:column; gap:20px; padding:28px 24px; }
+      .games-emoji { font-size:48px; }
+      .games-mini { grid-template-columns:1fr 1fr; }
+      .change-banner { padding:36px 28px; }
+      .step-flow { grid-template-columns:1fr; gap:20px; }
     }
-    @media (max-width: 600px) {
-      .hero-wrap { padding: 90px 0 72px; min-height: auto; }
-      .hero-title { font-size: clamp(40px, 12vw, 64px); }
-      .hero-lead { font-size: 15px; }
-      .hero-ctas { flex-direction: column; align-items: stretch; }
-      .hero-ctas .btn { text-align: center; justify-content: center; }
-      .scroll-hint { display: none; }
-      .content-wrap { border-radius: 20px 20px 0 0; }
-      .pillar { padding: 52px 0; }
-      .pillar-title { font-size: clamp(26px, 8vw, 38px); }
-      .games-grid { grid-template-columns: 1fr; }
-      .final-cta { padding: 72px 0; }
-      .final-cta h2 { font-size: clamp(28px, 9vw, 44px); }
-      .final-cta-btns { flex-direction: column; align-items: stretch; }
-      .final-cta-btns .btn { text-align: center; justify-content: center; }
-      .contact-strip-inner { flex-direction: column; align-items: flex-start; }
-      .nav-links a:not(.btn) { display: none; }
-      .nav-links { gap: 8px; }
+    @media(max-width:600px){
+      .hero-wrap { padding:90px 0 72px; min-height:auto; }
+      .hero-title { font-size:clamp(40px,12vw,64px); }
+      .hero-lead { font-size:15px; }
+      .hero-ctas { flex-direction:column; align-items:stretch; }
+      .hero-ctas .btn { text-align:center; justify-content:center; }
+      .scroll-hint { display:none; }
+      .content-wrap { border-radius:20px 20px 0 0; }
+      .pillar { padding:56px 0; }
+      .pillar-title { font-size:clamp(26px,8vw,38px); }
+      .games-mini { grid-template-columns:1fr; }
+      .final-cta { padding:72px 0; }
+      .final-cta h2 { font-size:clamp(28px,9vw,44px); }
+      .final-cta-btns { flex-direction:column; align-items:stretch; }
+      .final-cta-btns .btn { text-align:center; justify-content:center; }
+      .contact-strip-inner { flex-direction:column; align-items:flex-start; }
+      .nav-links a:not(.btn) { display:none; }
+      .nav-links { gap:8px; }
     }
   </style>
 </head>
@@ -408,10 +337,10 @@
       <a class="brand brand-light" href="/">
         <img src="/yohelab-icon.png" alt="よへラボ" />
         <span>よへラボ</span>
-        <span class="brand-sub">AIOリサーチ・ゲーム</span>
+        <span class="brand-sub">リサーチ記事メーカー</span>
       </a>
       <nav class="nav-links">
-        <a href="/lp/research-writer/">AIOリサーチ</a>
+        <a href="/lp/research-writer/">ツール詳細</a>
         <a href="/games/">🎮 ゲーム</a>
         <a href="/contact/">問い合わせ</a>
         <a class="btn btn-primary btn-sm" href="/apps/research-writer/">無料で試す →</a>
@@ -420,60 +349,61 @@
   </header>
 
   <main>
-
-    <!-- ── HERO ── -->
     <section class="hero-wrap">
       <div class="hero-bg" aria-hidden="true"></div>
       <div class="hero-grid-bg" aria-hidden="true"></div>
 
       <div class="hero-inner">
         <div>
-          <p class="hero-eyebrow reveal"><span></span>AIO対応記事メーカー</p>
-          <h1 class="hero-title reveal reveal-delay-1">
-            調べて<br>選んで<br><em>記事になる</em>
+          <p class="hero-label reveal"><span class="dot"></span>AIO時代の記事メーカー</p>
+          <h1 class="hero-title reveal reveal-d1">
+            <span class="line-strike">SEO記事</span>
+            クリック前に<br><span class="line-accent">引用される記事</span>
           </h1>
-          <p class="hero-lead reveal reveal-delay-2">
-            キーワードを3つ入れるだけ。最新情報を自動で集めて、<br>
-            使う情報だけ選んで、AIO向けの記事が出来上がる。<br>
-            登録なし。ブラウザだけで完結。
+          <p class="hero-lead reveal reveal-d2">
+            Googleは検索結果を出す前に、もう答えを返している。<br>
+            <strong>AIO（AI Overview）に読まれる記事</strong>を、<br>
+            キーワード3つから自動で作るツール。
           </p>
-          <div class="hero-ctas reveal reveal-delay-3">
-            <a class="btn btn-primary btn-xl" href="/apps/research-writer/">まず無料で試す →</a>
-            <a class="btn btn-ghost-white btn-lg" href="#games">ゲームで遊ぶ</a>
+          <div class="hero-ctas reveal reveal-d3">
+            <a class="btn btn-primary btn-xl" href="/apps/research-writer/">無料で試す →</a>
+            <a class="btn btn-ghost-white btn-lg" href="#tool">仕組みを見る</a>
           </div>
-          <div class="hero-trust reveal reveal-delay-4">
+          <div class="hero-trust reveal reveal-d4">
             <span>✓ 登録不要</span>
             <span>✓ 無料版あり</span>
             <span>✓ 月額¥980〜</span>
-            <span>✓ いつでも解約可</span>
+            <span>✓ いつでも解約</span>
           </div>
         </div>
 
-        <div class="hero-proof reveal reveal-delay-2">
-          <p class="proof-label">こういう場面で止まってない？</p>
-          <div class="proof-row">
-            <div class="proof-icon">🔍</div>
-            <div class="proof-copy">
-              <strong>リサーチで時間が溶ける</strong>
-              <span>最新情報を自動収集して、使う材料だけ先に選べる</span>
+        <div class="hero-shift reveal reveal-d2">
+          <p class="shift-label">検索の何が変わったか</p>
+          <div class="shift-row old">
+            <div class="shift-icon">😓</div>
+            <div class="shift-copy">
+              <strong>SEO記事を書いた</strong>
+              <span>1位に上がっても、AIが先に答えを返す</span>
             </div>
-            <span class="proof-badge">解決</span>
+            <span class="shift-badge bad">旧時代</span>
           </div>
-          <div class="proof-row">
-            <div class="proof-icon">✍️</div>
-            <div class="proof-copy">
-              <strong>記事の構成が決まらない</strong>
-              <span>見出し・FAQ・本文まで一気に出てくる</span>
+          <div class="shift-arrow">↓</div>
+          <div class="shift-row new">
+            <div class="shift-icon">⚡</div>
+            <div class="shift-copy">
+              <strong>AIOに読まれる記事を書く</strong>
+              <span>クリック前に引用される。存在感が先に出る</span>
             </div>
-            <span class="proof-badge">解決</span>
+            <span class="shift-badge good">今の戦い方</span>
           </div>
-          <div class="proof-row">
-            <div class="proof-icon">📝</div>
-            <div class="proof-copy">
-              <strong>AIO対応の書き方がわからない</strong>
-              <span>AI検索で読まれる構成を自動で当てる</span>
+          <div class="shift-arrow">↓</div>
+          <div class="shift-row new">
+            <div class="shift-icon">🔍</div>
+            <div class="shift-copy">
+              <strong>キーワード3つ入れるだけ</strong>
+              <span>調べて→選んで→AIO向け記事が出る</span>
             </div>
-            <span class="proof-badge">解決</span>
+            <span class="shift-badge good">このツール</span>
           </div>
         </div>
       </div>
@@ -483,110 +413,176 @@
 
     <div class="content-wrap">
 
-      <!-- ① AIOリサーチ記事メーカー -->
-      <section class="pillar" id="tool">
+      <!-- What changed -->
+      <section class="pillar" id="shift">
         <div class="container">
-          <div class="pillar-head reveal">
-            <div>
-              <div class="section-kicker kicker-green">🔍 AIOリサーチ記事メーカー</div>
-              <h2 class="pillar-title">調べる→選ぶ→書く<br>が3ステップで終わる</h2>
-              <p class="pillar-sub">Google AI Overviewに読まれやすい記事を書くには、最新情報 + FAQ構成 + 信頼できるソースの3つが要る。このツールが全部まとめてやる。</p>
-            </div>
-            <a class="btn btn-primary btn-lg" href="/apps/research-writer/">無料で試してみる →</a>
-          </div>
-
-          <!-- Step flow -->
-          <div class="step-flow reveal">
-            <div class="step-item">
-              <span class="step-num">Step 1</span>
-              <strong>🔍 キーワードを入れる</strong>
-              <span>3つのキーワードを入力。最新のウェブ情報が自動で集まる。</span>
-            </div>
-            <div class="step-item">
-              <span class="step-num">Step 2</span>
-              <strong>✅ 使う情報を選ぶ</strong>
-              <span>検索結果を見てチェック。使いたい情報だけ選んで先へ進む。</span>
-            </div>
-            <div class="step-item">
-              <span class="step-num">Step 3</span>
-              <strong>📄 AIO向け記事が出る</strong>
-              <span>見出し・FAQ・本文・メタ情報まで一気にまとめて出力。</span>
+          <div class="change-banner reveal">
+            <div class="change-banner-inner">
+              <p class="change-kicker">パラダイムシフト</p>
+              <h2>SEOで上がっても、<br>もうクリックされない時代が来た。</h2>
+              <p>
+                Google検索の一番上に「AI Overview」が出る。ユーザーはそこで答えを読んで、そのまま戻る。<br>
+                <strong>あなたの記事がAIOに引用されなければ、存在しないのと同じ。</strong><br>
+                SEO最適化だけをやり続けても、トラフィックは減っていく一方だ。
+              </p>
+              <div class="change-stat">
+                <div class="stat-item">
+                  <div class="stat-num">58%</div>
+                  <div class="stat-label">検索クリックがゼロのまま終わるケース</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-num">2024</div>
+                  <div class="stat-label">Google、AI Overviewを全面展開開始</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-num">3つ</div>
+                  <div class="stat-label">キーワードを入れるだけで記事が完成</div>
+                </div>
+              </div>
             </div>
           </div>
 
-          <a class="tool-card-v2 reveal" href="/lp/research-writer/">
-            <span class="tool-tag-pill">AIO特化 · 記事メーカー</span>
-            <h3>AIOリサーチアシスタント</h3>
-            <p>3キーワードから最新情報を集めて、選んだ情報だけでAIO向けの記事にまとめる。note・ブログ・WordPress向けの下書きをそのまま使える形で出力。</p>
-            <div class="tool-transform">
-              <span class="tool-before">調べるだけで半日消える</span>
-              <span class="tool-arrow">→</span>
-              <span class="tool-after">記事まで一気に進む</span>
+          <div class="compare-shift reveal">
+            <div class="compare-col seo-col">
+              <span class="compare-tag seo">SEO時代（終わりかけ）</span>
+              <h3>検索1位を狙う</h3>
+              <ul>
+                <li>上位表示できても、AIが先に答える</li>
+                <li>クリック率が下がり続けている</li>
+                <li>キーワード詰め込みが逆効果になる</li>
+                <li>更新しても効果が出にくくなった</li>
+              </ul>
             </div>
-            <ul class="tool-bullets">
-              <li>最新情報を自動収集・選択できる</li>
-              <li>AI Overviewに読まれやすい構成を自動で当てる</li>
-              <li>WordPressのタグ・スラッグ・メタまで一緒に出る</li>
-              <li>note・ブログ・クラウドワークスの案件にそのまま使える</li>
-            </ul>
-            <div class="tool-footer">
-              <span class="tool-price">無料版あり・月額¥980（プロ）</span>
-              <span class="tool-cta">詳しく見る →</span>
+            <div class="compare-divider">→</div>
+            <div class="compare-col aio-col">
+              <span class="compare-tag aio">AIO時代（今ここ）</span>
+              <h3>AIに読まれる記事を作る</h3>
+              <ul>
+                <li>クリック前に引用される存在になれる</li>
+                <li>FAQ・構造化・信頼ソースが鍵</li>
+                <li>最新情報 × 明確な構成が評価される</li>
+                <li>1記事の質で長く効き続ける</li>
+              </ul>
             </div>
-          </a>
-
-          <div class="cta-banner reveal">
-            <div class="cta-banner-copy">
-              <strong>まず1回、無料で試してみてください。</strong>
-              <p>登録なし・クレジットカードなし。キーワードを入れるだけで始められる。</p>
-            </div>
-            <a class="btn btn-primary btn-lg" href="/apps/research-writer/">無料で試す →</a>
           </div>
         </div>
       </section>
 
-      <!-- ② ゲーム -->
-      <section class="pillar pillar-alt" id="games">
+      <!-- Tool -->
+      <section class="pillar pillar-alt" id="tool">
+        <div class="container">
+          <div class="pillar-head reveal">
+            <div>
+              <div class="section-kicker kicker-green">🔍 AIOリサーチ記事メーカー</div>
+              <h2 class="pillar-title">3ステップで<br>AIO向け記事が完成する</h2>
+              <p class="pillar-sub">調べる・選ぶ・書く、この3つを自動でつなぐ。キーワードを入れるだけで、最新情報 × AIO構成の記事が出てくる。</p>
+            </div>
+            <a class="btn btn-primary btn-lg" href="/apps/research-writer/">無料で試す →</a>
+          </div>
+
+          <div class="step-flow reveal">
+            <div class="step-item">
+              <div class="step-circle">🔍</div>
+              <strong>キーワードを3つ入れる</strong>
+              <span>最新のウェブ情報が自動で収集される。自分で探す必要なし。</span>
+            </div>
+            <div class="step-item">
+              <div class="step-circle">✅</div>
+              <strong>使う情報だけ選ぶ</strong>
+              <span>検索結果を一覧で見て、使いたいものだけチェック。ノイズを除く。</span>
+            </div>
+            <div class="step-item">
+              <div class="step-circle">📄</div>
+              <strong>AIO向け記事が出る</strong>
+              <span>見出し・FAQ・本文・メタ情報まで、AIOに読まれる構成で出力。</span>
+            </div>
+          </div>
+
+          <div class="tool-feature-card reveal">
+            <div>
+              <span class="tool-tag">AIO特化 · 記事メーカー</span>
+              <h3>AIOリサーチアシスタント</h3>
+              <p class="card-lead">キーワードを入れると最新情報を集めてくる。選んだ情報だけでAIO向けの記事を作る。note・ブログ・WordPressにそのまま使える形で出力。</p>
+              <ul class="feature-list">
+                <li>最新情報を自動収集。調べる時間が消える</li>
+                <li>Google AI Overviewに読まれやすい構成を自動で当てる</li>
+                <li>FAQ・見出し・本文・SNS投稿まで一括出力</li>
+                <li>WordPressのタグ・スラッグ・メタ説明まで出てくる</li>
+              </ul>
+              <div class="tool-cta-row">
+                <a class="btn btn-primary btn-lg" href="/apps/research-writer/">まず無料で試す →</a>
+                <a class="btn btn-outline btn-lg" href="/lp/research-writer/">詳細を見る</a>
+              </div>
+            </div>
+            <div class="tool-right">
+              <div class="aio-point">
+                <div class="aio-point-icon">📌</div>
+                <div>
+                  <strong>AIOに引用されやすい構成</strong>
+                  <span>FAQ形式・明確な見出し・信頼ソースの引用を自動で組み込む。</span>
+                </div>
+              </div>
+              <div class="aio-point">
+                <div class="aio-point-icon">⚡</div>
+                <div>
+                  <strong>最新情報ベースで書ける</strong>
+                  <span>古い情報ではなく今日の検索結果をベースに記事を作る。</span>
+                </div>
+              </div>
+              <div class="aio-point">
+                <div class="aio-point-icon">📝</div>
+                <div>
+                  <strong>そのまま公開できる形で出る</strong>
+                  <span>note・ブログ・WordPress向けの下書きとしてそのまま使える。</span>
+                </div>
+              </div>
+              <div class="aio-point">
+                <div class="aio-point-icon">🆓</div>
+                <div>
+                  <strong>無料で1回試せる</strong>
+                  <span>登録なし。キーワードを入れるだけで、返ってくるものが確認できる。</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Games -->
+      <section class="pillar" id="games">
         <div class="container">
           <div class="pillar-head reveal">
             <div>
               <div class="section-kicker kicker-blue">🎮 ゲーム</div>
               <h2 class="pillar-title">ブラウザで<br>すぐ遊べるゲーム</h2>
-              <p class="pillar-sub">インストールなし、登録なし。タブを開くだけ。反射・記憶・タイピング・計算など、短くて飽きないゲームを集めた場所。</p>
+              <p class="pillar-sub">インストールなし、登録なし。タブを開くだけ。結果をXでシェアして友達と競える。</p>
             </div>
-            <a class="btn btn-outline btn-lg" href="/games/" style="color:#4f46e5;border-color:#bfdbfe;background:#fff;">ゲーム一覧を見る →</a>
+            <a class="btn btn-outline btn-lg" href="/games/" style="color:#4f46e5;border-color:#bfdbfe;background:#fff;">ゲーム一覧 →</a>
           </div>
 
-          <div class="games-hero reveal">
-            <div class="games-hero-copy">
+          <div class="games-banner reveal">
+            <div class="games-copy">
               <h3>登録なし・インストールなし<br><em>タブを開けば始まる</em></h3>
-              <p>重い処理なし。ブラウザで完結。結果をXにシェアして友達と競える。</p>
-              <a class="btn btn-white btn-lg" href="/games/" style="color:#4f46e5;">今すぐ遊ぶ →</a>
+              <p>反射・記憶・タイピング・計算。スマホでもPCでも、14種類のゲームが無料で遊べる。</p>
+              <div class="games-mini">
+                <a class="games-mini-card" href="/games/reaction/">
+                  <span class="g-icon">⚡</span>
+                  <strong>反応速度テスト</strong>
+                  <span>あなたは何ms？</span>
+                </a>
+                <a class="games-mini-card" href="/games/typing/">
+                  <span class="g-icon">⌨️</span>
+                  <strong>タイピングラッシュ</strong>
+                  <span>30秒で何語？</span>
+                </a>
+                <a class="games-mini-card" href="/games/">
+                  <span class="g-icon">🎮</span>
+                  <strong>全14ゲームを見る</strong>
+                  <span>一覧へ →</span>
+                </a>
+              </div>
             </div>
-            <div class="games-hero-right">
-              <div class="games-big-emoji">🎲</div>
-            </div>
-          </div>
-
-          <div class="games-grid">
-            <a class="game-card-v2 reveal" href="/games/reaction/">
-              <div class="game-icon">⚡</div>
-              <h3>反応速度テスト</h3>
-              <p>緑になった瞬間にタップ。あなたの反応速度は何ms？</p>
-              <span class="game-cta">今すぐ遊ぶ →</span>
-            </a>
-            <a class="game-card-v2 reveal reveal-delay-1" href="/games/typing/">
-              <div class="game-icon">⌨️</div>
-              <h3>タイピングラッシュ</h3>
-              <p>30秒で何語打てる？スコアをXでシェアして競おう。</p>
-              <span class="game-cta">今すぐ遊ぶ →</span>
-            </a>
-            <a class="game-card-v2 reveal reveal-delay-2" href="/games/">
-              <div class="game-icon">🎮</div>
-              <h3>全ゲームを見る</h3>
-              <p>計算・記憶・反射・タイミングなど14種類のゲームが遊べる。</p>
-              <span class="game-cta">一覧へ →</span>
-            </a>
+            <div class="games-emoji">🎲</div>
           </div>
         </div>
       </section>
@@ -596,11 +592,11 @@
     <!-- FINAL CTA -->
     <section class="final-cta">
       <div class="container">
-        <h2 class="reveal">キーワードを入れるだけ<br>それだけでいい</h2>
-        <p class="reveal reveal-delay-1">登録なし、クレジットカードなし。ブラウザを開いて、キーワードを3つ入れるだけ。合わなければそれだけ。合えばそこから先に進める。</p>
-        <div class="final-cta-btns reveal reveal-delay-2">
-          <a class="btn btn-white btn-xl" href="/apps/research-writer/" style="color:var(--green-dark);">AIOリサーチアシスタントを無料で試す →</a>
-          <a class="btn btn-ghost-white btn-lg" href="/games/">ゲームで遊ぶ</a>
+        <h2 class="reveal">SEO記事じゃなく、<br>AIOに読まれる記事を作れ</h2>
+        <p class="reveal reveal-d1">キーワードを3つ入れるだけ。最新情報を集めて、選んで、AIO向けの記事にまとめる。登録なし、無料から始められる。</p>
+        <div class="final-cta-btns reveal reveal-d2">
+          <a class="btn btn-white btn-xl" href="/apps/research-writer/" style="color:var(--green-dark);">まず無料で試す →</a>
+          <a class="btn btn-ghost-white btn-lg" href="/lp/research-writer/">詳細ページを見る</a>
         </div>
       </div>
     </section>
@@ -619,9 +615,10 @@
 
   <footer class="footer footer-dark">
     <div class="footer-inner">
-      <div style="color:rgba(255,255,255,.32);">© よへラボ / yohelab.com</div>
+      <div style="color:rgba(255,255,255,.28);">© よへラボ / yohelab.com</div>
       <div class="footer-links">
-        <a href="#tool">AIOリサーチ</a>
+        <a href="#shift">AIOとは</a>
+        <a href="#tool">ツール</a>
         <a href="/games/">ゲーム</a>
         <a href="/contact/">問い合わせ</a>
         <a href="/legal/commerce/">特定商取引法</a>
@@ -633,22 +630,14 @@
 
   <script>
     if ('IntersectionObserver' in window) {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(el => {
-          if (el.isIntersecting) {
-            el.target.classList.add('visible');
-            observer.unobserve(el.target);
-          }
-        });
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach(el => { if (el.isIntersecting) { el.target.classList.add('visible'); obs.unobserve(el.target); } });
       }, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
-      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-      setTimeout(() => {
-        document.querySelectorAll('.reveal:not(.visible)').forEach(el => el.classList.add('visible'));
-      }, 800);
+      document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+      setTimeout(() => document.querySelectorAll('.reveal:not(.visible)').forEach(el => el.classList.add('visible')), 800);
     } else {
       document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
     }
   </script>
-
 </body>
 </html>
