@@ -13,15 +13,12 @@
 
 ## ツール一覧
 
-現在4つのツールがあります。それぞれにProプランがあります。
+現在の主力は2つです。AIO特化リサーチ記事メーカーはプロプランあり、AIO対応WordPressテーマは価格未定で導入相談から案内します。
 
 | キー | ツール名 | アプリパス |
 |------|---------|-----------|
 | `research-writer` | AIO特化リサーチ記事メーカー | /apps/research-writer/ |
 | `wordpress-theme` | AIO対応WordPressテーマ | /apps/wordpress-theme/ |
-| `x-helper` | X投稿ネタ生成ツール | /apps/x-helper/ |
-| `ec-copy` | EC商品説明・Q&A整備 | /apps/ec-copy/ |
-| `aio-mini` | AIOミニ診断 | /apps/aio-mini/ |
 
 ---
 
@@ -67,9 +64,7 @@ functions/
     entitlements.js    # 全ツールのプロダクト設定・認証ロジック
 apps/
   research-writer/index.html
-  x-helper/index.html
-  ec-copy/index.html
-  aio-mini/index.html
+  wordpress-theme/index.html
 ```
 
 ---
@@ -82,9 +77,6 @@ apps/
 const PRODUCT_CONFIG = {
   "research-writer": { label: "AIO特化リサーチ記事メーカー", nextPath: "/apps/research-writer/" },
   "wordpress-theme": { label: "AIO対応WordPressテーマ", nextPath: "/apps/wordpress-theme/" },
-  "x-helper": { label: "X投稿ネタ生成ツール", nextPath: "/apps/x-helper/" },
-  "ec-copy": { label: "EC商品説明・Q&A整備", nextPath: "/apps/ec-copy/" },
-  "aio-mini": { label: "AIOミニ診断", nextPath: "/apps/aio-mini/" },
   // ↓ 新しいツールをここに追加
   "new-tool": { label: "新しいツール名", nextPath: "/apps/new-tool/" },
 };

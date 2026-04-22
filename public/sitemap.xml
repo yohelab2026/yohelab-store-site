@@ -6,11 +6,6 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://yohelab.com/tools/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.95</priority>
-  </url>
-  <url>
     <loc>https://yohelab.com/labs/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
@@ -30,6 +25,10 @@
   <url><loc>https://yohelab.com/games/orbit-escape/</loc><changefreq>monthly</changefreq><priority>0.2</priority></url>
   <url><loc>https://yohelab.com/games/tap-rush/</loc><changefreq>monthly</changefreq><priority>0.2</priority></url>
   <url><loc>https://yohelab.com/games/number-order/</loc><changefreq>monthly</changefreq><priority>0.2</priority></url>
+  <url><loc>https://yohelab.com/games/reaction/</loc><changefreq>monthly</changefreq><priority>0.2</priority></url>
+  <url><loc>https://yohelab.com/games/typing/</loc><changefreq>monthly</changefreq><priority>0.2</priority></url>
+  <url><loc>https://yohelab.com/games/math-rush/</loc><changefreq>monthly</changefreq><priority>0.2</priority></url>
+  <url><loc>https://yohelab.com/games/sequence/</loc><changefreq>monthly</changefreq><priority>0.2</priority></url>
   <url>
     <loc>https://yohelab.com/apps/research-writer/</loc>
     <changefreq>weekly</changefreq>
@@ -51,57 +50,12 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://yohelab.com/apps/x-helper/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://yohelab.com/lp/x-helper/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://yohelab.com/apps/ec-copy/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://yohelab.com/lp/ec-copy/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://yohelab.com/apps/aio-mini/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://yohelab.com/lp/aio-mini/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://yohelab.com/products/research-writer-beta/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://yohelab.com/products/wordpress-theme-beta/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://yohelab.com/products/x-helper-beta/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://yohelab.com/products/ec-copy-beta/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://yohelab.com/products/aio-mini-beta/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>

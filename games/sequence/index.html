@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>カラーシーケンス | よへラボゲーム</title>
-  <meta name="description" content="光った順番を覚えて同じ順番でタップ。何レベルまで記憶できる？脳トレ系シーケンスゲーム。" />
+  <meta name="description" content="光った順番を覚えて同じ順番で押す、記憶力ゲーム。" />
   <meta property="og:title" content="カラーシーケンス | よへラボゲーム" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://yohelab.com/games/sequence/" />
@@ -23,7 +23,7 @@
         <span class="brand-sub">ゲーム</span>
       </a>
       <nav class="nav-links">
-        <a href="/tools/">AIツール</a>
+        <a href="/#tool">AIツール</a>
         <a href="/games/">ゲーム</a>
         <a href="/contact/">問い合わせ</a>
       </nav>
@@ -33,11 +33,11 @@
   <main>
     <section class="arcade-hero">
       <div class="container">
-        <p class="arcade-eyebrow">🧠 記憶系</p>
+        <p class="arcade-eyebrow">🎮 ブラウザで1分</p>
         <h1>カラーシーケンス</h1>
-        <p>光った順番を覚えて、同じ順番でタップ。レベルが上がるほど長くなる。何レベルまで記憶できる？</p>
+        <p>光った色の順番を覚える。レベルが上がるほど長くなるので、短いけど集中力がいる。</p>
         <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:18px;">
-          <span class="hero-chip" style="background:rgba(255,255,255,.07);color:#fff;border-color:rgba(255,255,255,.15)">スマホ対応</span><span class="hero-chip" style="background:rgba(255,255,255,.07);color:#fff;border-color:rgba(255,255,255,.15)">記憶ゲーム</span><span class="hero-chip" style="background:rgba(255,255,255,.07);color:#fff;border-color:rgba(255,255,255,.15)">登録不要</span><span class="hero-chip" style="background:rgba(255,255,255,.07);color:#fff;border-color:rgba(255,255,255,.15)">無料</span>
+          <span class="hero-chip" style="background:rgba(255,255,255,.07);color:#fff;border-color:rgba(255,255,255,.15)">記憶</span><span class="hero-chip" style="background:rgba(255,255,255,.07);color:#fff;border-color:rgba(255,255,255,.15)">スマホ向け</span><span class="hero-chip" style="background:rgba(255,255,255,.07);color:#fff;border-color:rgba(255,255,255,.15)">登録不要</span><span class="hero-chip" style="background:rgba(255,255,255,.07);color:#fff;border-color:rgba(255,255,255,.15)">無料</span>
         </div>
       </div>
     </section>
@@ -48,8 +48,8 @@
           <div class="arcade-panel">
             <div class="arcade-top">
               <div class="arcade-stats">
-                <div class="arcade-stat"><span class="label">レベル</span><span class="value" id="statScore">0</span></div>
-                <div class="arcade-stat"><span class="label">ステータス</span><span class="value" id="statTime">待機中</span></div>
+                <div class="arcade-stat"><span class="label">スコア</span><span class="value" id="statScore">0</span></div>
+                <div class="arcade-stat"><span class="label">残り時間</span><span class="value" id="statTime">90秒</span></div>
                 <div class="arcade-stat"><span class="label">ベスト</span><span class="value" id="statBest">0</span></div>
               </div>
               <div class="arcade-actions">
@@ -61,35 +61,23 @@
               <div class="game-banner">READY</div>
             </div>
             <div class="touch-pad" id="touchPad"></div>
-            <div class="arcade-footer-note" id="statusText">光った順番を覚えてタップ</div>
+            <div class="arcade-footer-note" id="statusText">光った順番を覚える</div>
           </div>
           <aside class="arcade-side">
             <h3>遊び方</h3>
             <ul id="hintList">
-              <li>光った順番を覚える</li><li>同じ順番でタップ</li><li>レベルが上がるほど長くなる</li>
+              <li>光った順番を覚える</li><li>同じ順番で押す</li><li>レベルが上がると長くなる</li>
             </ul>
-            <div class="arcade-tip">光った順番を覚えて同じ順番でタップ。脳トレにも。</div>
-            <p style="margin-top:14px;">スコアをXでシェアして友達と競おう。</p>
+            <div class="arcade-tip">光った順番を覚えて同じ順番で押す、記憶力ゲーム。</div>
+            <p style="margin-top:14px;">ゲームは全部ブラウザだけ。サーバーの負荷をほぼ増やさない軽い作り。</p>
           </aside>
-        </div>
-        <div class="ad-slot-gameover" id="adSlotGameover">
-          <!-- Google AdSense slot -->
         </div>
       </div>
     </section>
   </main>
 
   <script>
-    window.YOHE_GAME = {
-      "slug": "sequence",
-      "mode": "sequence",
-      "timeLimit": 120,
-      "hideTimer": true,
-      "startText": "光った順番を覚えてタップ",
-      "runningText": "シーケンス中",
-      "shareText": "カラーシーケンスでレベル {score} まで到達！あなたは？🧠 #よへラボ",
-      "hints": ["光った順番を覚える", "同じ順番でタップ", "レベルが上がるほど長くなる"]
-    };
+    window.YOHE_GAME = {"slug":"sequence","mode":"sequence","timeLimit":90,"startText":"光った順番を覚える","runningText":"順番を再現する","hints":["光った順番を覚える","同じ順番で押す","レベルが上がると長くなる"],"shareUrl":"https://yohelab.com/games/sequence/"};
   </script>
   <script src="/shared/arcade-game.js"></script>
 </body>

@@ -157,6 +157,70 @@ const games = [
     hints: ["1から順に押す", "間違えてもすぐ戻る", "12までいけばクリア"],
     bullets: ["ルールが短い", "頭を使う", "小さく遊べる"],
   },
+  {
+    slug: "reaction",
+    title: "反応速度テスト",
+    name: "反応速度テスト",
+    description: "緑になった瞬間に押す、反応速度を測る短時間ゲーム。",
+    lead: "待って、色が変わった瞬間に押すだけ。3回の平均で自分の反応速度を見られる。",
+    icon: "⚡",
+    badge: "人気",
+    mode: "reaction",
+    timeLimit: 30,
+    hideTimer: true,
+    lowerIsBetter: true,
+    scoreLabel: "{n}ms",
+    shareText: "反応速度テストの結果は平均{score}ms！",
+    startText: "緑になったら押す",
+    runningText: "合図を待つ",
+    hints: ["緑になるまで待つ", "早押ししすぎるとやり直し", "3回測って平均を見る"],
+    bullets: ["一瞬で分かる", "シェアしやすい", "スマホでもPCでも遊べる"],
+  },
+  {
+    slug: "typing",
+    title: "タイピングラッシュ",
+    name: "タイピングラッシュ",
+    description: "30秒で何語打てるかを競う、短時間タイピングゲーム。",
+    lead: "表示された単語を打ってEnter。シンプルだけど、スコアが出るともう一回やりたくなる。",
+    icon: "⌨️",
+    badge: "入力系",
+    mode: "typing",
+    timeLimit: 30,
+    startText: "単語を打ってEnter",
+    runningText: "タイピング中",
+    hints: ["表示された単語を入力", "Enterで判定", "30秒で何語打てるか競う"],
+    bullets: ["PC向け", "スコアが分かりやすい", "短く競える"],
+  },
+  {
+    slug: "math-rush",
+    title: "計算ラッシュ",
+    name: "計算ラッシュ",
+    description: "30秒で計算問題を何問解けるかを競う、4択の脳トレゲーム。",
+    lead: "足し算・引き算・掛け算を4択で答える。短い時間で頭を起こすタイプのゲーム。",
+    icon: "🔢",
+    badge: "計算",
+    mode: "math",
+    timeLimit: 30,
+    startText: "正しい答えを選ぶ",
+    runningText: "計算中",
+    hints: ["問題を見て答えを選ぶ", "間違えても次へ進む", "30秒で正解数を伸ばす"],
+    bullets: ["スマホでも押しやすい", "短い脳トレ", "数字だけで遊べる"],
+  },
+  {
+    slug: "sequence",
+    title: "カラーシーケンス",
+    name: "カラーシーケンス",
+    description: "光った順番を覚えて同じ順番で押す、記憶力ゲーム。",
+    lead: "光った色の順番を覚える。レベルが上がるほど長くなるので、短いけど集中力がいる。",
+    icon: "🌈",
+    badge: "記憶",
+    mode: "sequence",
+    timeLimit: 90,
+    startText: "光った順番を覚える",
+    runningText: "順番を再現する",
+    hints: ["光った順番を覚える", "同じ順番で押す", "レベルが上がると長くなる"],
+    bullets: ["記憶力勝負", "何度も挑戦できる", "スマホで遊びやすい"],
+  },
 ];
 
 function pageTemplate(game) {
@@ -191,7 +255,7 @@ function pageTemplate(game) {
         <span class="brand-sub">ゲーム</span>
       </a>
       <nav class="nav-links">
-        <a href="/tools/">AIツール</a>
+        <a href="/#tool">AIツール</a>
         <a href="/games/">ゲーム</a>
         <a href="/contact/">問い合わせ</a>
       </nav>
@@ -253,6 +317,11 @@ function pageTemplate(game) {
       runningText: game.runningText,
       hints: game.hints,
       shareUrl: `https://yohelab.com/games/${game.slug}/`,
+      hideTimer: game.hideTimer,
+      lowerIsBetter: game.lowerIsBetter,
+      scoreLabel: game.scoreLabel,
+      shareText: game.shareText,
+      noBest: game.noBest,
     })};
   </script>
   <script src="${sharedGameJs}"></script>

@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>反応速度テスト | よへラボゲーム</title>
-  <meta name="description" content="緑になったら即タップ。あなたの反応速度は何ミリ秒？3回計測して平均を出す。" />
+  <meta name="description" content="緑になった瞬間に押す、反応速度を測る短時間ゲーム。" />
   <meta property="og:title" content="反応速度テスト | よへラボゲーム" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://yohelab.com/games/reaction/" />
@@ -23,7 +23,7 @@
         <span class="brand-sub">ゲーム</span>
       </a>
       <nav class="nav-links">
-        <a href="/tools/">AIツール</a>
+        <a href="/#tool">AIツール</a>
         <a href="/games/">ゲーム</a>
         <a href="/contact/">問い合わせ</a>
       </nav>
@@ -33,11 +33,11 @@
   <main>
     <section class="arcade-hero">
       <div class="container">
-        <p class="arcade-eyebrow">⚡ 反射系</p>
+        <p class="arcade-eyebrow">🎮 ブラウザで1分</p>
         <h1>反応速度テスト</h1>
-        <p>緑になった瞬間にタップ。あなたの反応速度は何ミリ秒？3回計測して平均を出す。友達と比べてみよう。</p>
+        <p>待って、色が変わった瞬間に押すだけ。3回の平均で自分の反応速度を見られる。</p>
         <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:18px;">
-          <span class="hero-chip" style="background:rgba(255,255,255,.07);color:#fff;border-color:rgba(255,255,255,.15)">スマホ対応</span><span class="hero-chip" style="background:rgba(255,255,255,.07);color:#fff;border-color:rgba(255,255,255,.15)">反応速度</span><span class="hero-chip" style="background:rgba(255,255,255,.07);color:#fff;border-color:rgba(255,255,255,.15)">登録不要</span><span class="hero-chip" style="background:rgba(255,255,255,.07);color:#fff;border-color:rgba(255,255,255,.15)">無料</span>
+          <span class="hero-chip" style="background:rgba(255,255,255,.07);color:#fff;border-color:rgba(255,255,255,.15)">人気</span><span class="hero-chip" style="background:rgba(255,255,255,.07);color:#fff;border-color:rgba(255,255,255,.15)">スマホ向け</span><span class="hero-chip" style="background:rgba(255,255,255,.07);color:#fff;border-color:rgba(255,255,255,.15)">登録不要</span><span class="hero-chip" style="background:rgba(255,255,255,.07);color:#fff;border-color:rgba(255,255,255,.15)">無料</span>
         </div>
       </div>
     </section>
@@ -48,9 +48,9 @@
           <div class="arcade-panel">
             <div class="arcade-top">
               <div class="arcade-stats">
-                <div class="arcade-stat"><span class="label">平均反応</span><span class="value" id="statScore">—</span></div>
-                <div class="arcade-stat"><span class="label">テスト回数</span><span class="value" id="statTime">0/3</span></div>
-                <div class="arcade-stat"><span class="label">ベスト</span><span class="value" id="statBest">—</span></div>
+                <div class="arcade-stat"><span class="label">スコア</span><span class="value" id="statScore">0</span></div>
+                <div class="arcade-stat"><span class="label">残り時間</span><span class="value" id="statTime">30秒</span></div>
+                <div class="arcade-stat"><span class="label">ベスト</span><span class="value" id="statBest">0</span></div>
               </div>
               <div class="arcade-actions">
                 <button class="btn-arcade primary" id="startBtn">スタート</button>
@@ -61,36 +61,23 @@
               <div class="game-banner">READY</div>
             </div>
             <div class="touch-pad" id="touchPad"></div>
-            <div class="arcade-footer-note" id="statusText">緑になったら即タップ・クリック</div>
+            <div class="arcade-footer-note" id="statusText">緑になったら押す</div>
           </div>
           <aside class="arcade-side">
             <h3>遊び方</h3>
             <ul id="hintList">
-              <li>緑になった瞬間にタップ</li><li>早押しはペナルティ</li><li>3回の平均で判定</li>
+              <li>緑になるまで待つ</li><li>早押ししすぎるとやり直し</li><li>3回測って平均を見る</li>
             </ul>
-            <div class="arcade-tip">一般的な人の反応速度は200〜300ms。あなたはどのくらい？</div>
-            <p style="margin-top:14px;">結果をXでシェアして友達と競おう。</p>
+            <div class="arcade-tip">緑になった瞬間に押す、反応速度を測る短時間ゲーム。</div>
+            <p style="margin-top:14px;">ゲームは全部ブラウザだけ。サーバーの負荷をほぼ増やさない軽い作り。</p>
           </aside>
-        </div>
-        <div class="ad-slot-gameover" id="adSlotGameover">
-          <!-- Google AdSense slot -->
         </div>
       </div>
     </section>
   </main>
 
   <script>
-    window.YOHE_GAME = {
-      "slug": "reaction",
-      "mode": "reaction",
-      "timeLimit": 120,
-      "hideTimer": true,
-      "lowerIsBetter": true,
-      "startText": "緑になったら即タップ・クリック",
-      "runningText": "待機中…",
-      "shareText": "反応速度テスト：平均 {score}ms ⚡ あなたは何ms？ #よへラボ",
-      "hints": ["緑になった瞬間にタップ", "早押しはペナルティ", "3回の平均で判定"]
-    };
+    window.YOHE_GAME = {"slug":"reaction","mode":"reaction","timeLimit":30,"startText":"緑になったら押す","runningText":"合図を待つ","hints":["緑になるまで待つ","早押ししすぎるとやり直し","3回測って平均を見る"],"shareUrl":"https://yohelab.com/games/reaction/","hideTimer":true,"lowerIsBetter":true,"scoreLabel":"{n}ms","shareText":"反応速度テストの結果は平均{score}ms！"};
   </script>
   <script src="/shared/arcade-game.js"></script>
 </body>

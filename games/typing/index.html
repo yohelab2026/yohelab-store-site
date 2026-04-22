@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>タイピングラッシュ | よへラボゲーム</title>
-  <meta name="description" content="30秒で何語打てる？単語が次々出てくるタイピングゲーム。スコアをシェアして友達と競おう。" />
+  <meta name="description" content="30秒で何語打てるかを競う、短時間タイピングゲーム。" />
   <meta property="og:title" content="タイピングラッシュ | よへラボゲーム" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://yohelab.com/games/typing/" />
@@ -23,7 +23,7 @@
         <span class="brand-sub">ゲーム</span>
       </a>
       <nav class="nav-links">
-        <a href="/tools/">AIツール</a>
+        <a href="/#tool">AIツール</a>
         <a href="/games/">ゲーム</a>
         <a href="/contact/">問い合わせ</a>
       </nav>
@@ -33,11 +33,11 @@
   <main>
     <section class="arcade-hero">
       <div class="container">
-        <p class="arcade-eyebrow">⌨️ タイピング系</p>
+        <p class="arcade-eyebrow">🎮 ブラウザで1分</p>
         <h1>タイピングラッシュ</h1>
-        <p>30秒で何語打てる？単語が次々出てくる。打ち終えたら次へ。スコアをシェアして友達と競おう。</p>
+        <p>表示された単語を打ってEnter。シンプルだけど、スコアが出るともう一回やりたくなる。</p>
         <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:18px;">
-          <span class="hero-chip" style="background:rgba(255,255,255,.07);color:#fff;border-color:rgba(255,255,255,.15)">PC向け</span><span class="hero-chip" style="background:rgba(255,255,255,.07);color:#fff;border-color:rgba(255,255,255,.15)">タイピング</span><span class="hero-chip" style="background:rgba(255,255,255,.07);color:#fff;border-color:rgba(255,255,255,.15)">登録不要</span><span class="hero-chip" style="background:rgba(255,255,255,.07);color:#fff;border-color:rgba(255,255,255,.15)">無料</span>
+          <span class="hero-chip" style="background:rgba(255,255,255,.07);color:#fff;border-color:rgba(255,255,255,.15)">入力系</span><span class="hero-chip" style="background:rgba(255,255,255,.07);color:#fff;border-color:rgba(255,255,255,.15)">スマホ向け</span><span class="hero-chip" style="background:rgba(255,255,255,.07);color:#fff;border-color:rgba(255,255,255,.15)">登録不要</span><span class="hero-chip" style="background:rgba(255,255,255,.07);color:#fff;border-color:rgba(255,255,255,.15)">無料</span>
         </div>
       </div>
     </section>
@@ -48,7 +48,7 @@
           <div class="arcade-panel">
             <div class="arcade-top">
               <div class="arcade-stats">
-                <div class="arcade-stat"><span class="label">正解語数</span><span class="value" id="statScore">0</span></div>
+                <div class="arcade-stat"><span class="label">スコア</span><span class="value" id="statScore">0</span></div>
                 <div class="arcade-stat"><span class="label">残り時間</span><span class="value" id="statTime">30秒</span></div>
                 <div class="arcade-stat"><span class="label">ベスト</span><span class="value" id="statBest">0</span></div>
               </div>
@@ -61,34 +61,23 @@
               <div class="game-banner">READY</div>
             </div>
             <div class="touch-pad" id="touchPad"></div>
-            <div class="arcade-footer-note" id="statusText">単語を打って Enter で次へ</div>
+            <div class="arcade-footer-note" id="statusText">単語を打ってEnter</div>
           </div>
           <aside class="arcade-side">
             <h3>遊び方</h3>
             <ul id="hintList">
-              <li>表示された単語をそのまま打つ</li><li>Enter か Space で次の単語へ</li><li>30秒で何語打てるか勝負</li>
+              <li>表示された単語を入力</li><li>Enterで判定</li><li>30秒で何語打てるか競う</li>
             </ul>
-            <div class="arcade-tip">30秒で何語打てる？スコアをXでシェアして友達と競おう。</div>
-            <p style="margin-top:14px;">ゲームは全部ブラウザだけ。キーボード練習にも最適。</p>
+            <div class="arcade-tip">30秒で何語打てるかを競う、短時間タイピングゲーム。</div>
+            <p style="margin-top:14px;">ゲームは全部ブラウザだけ。サーバーの負荷をほぼ増やさない軽い作り。</p>
           </aside>
-        </div>
-        <div class="ad-slot-gameover" id="adSlotGameover">
-          <!-- Google AdSense slot -->
         </div>
       </div>
     </section>
   </main>
 
   <script>
-    window.YOHE_GAME = {
-      "slug": "typing",
-      "mode": "typing",
-      "timeLimit": 30,
-      "startText": "単語を打って Enter で次へ",
-      "runningText": "打ち続ける",
-      "shareText": "タイピングゲームで {score}語/30秒！あなたは何語？⌨️ #よへラボ",
-      "hints": ["表示された単語をそのまま打つ", "Enter か Space で次の単語へ", "30秒で何語打てるか勝負"]
-    };
+    window.YOHE_GAME = {"slug":"typing","mode":"typing","timeLimit":30,"startText":"単語を打ってEnter","runningText":"タイピング中","hints":["表示された単語を入力","Enterで判定","30秒で何語打てるか競う"],"shareUrl":"https://yohelab.com/games/typing/"};
   </script>
   <script src="/shared/arcade-game.js"></script>
 </body>
