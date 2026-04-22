@@ -1,7 +1,8 @@
 const COOKIE_NAME = "yohelab_access";
 
 const PRODUCT_CONFIG = {
-  "research-writer": { label: "AIOリサーチアシスタント", nextPath: "/apps/research-writer/" },
+  "research-writer": { label: "AIO特化リサーチ記事メーカー", nextPath: "/apps/research-writer/" },
+  "wordpress-theme": { label: "AIO対応WordPressテーマ", nextPath: "/apps/wordpress-theme/" },
   "x-helper": { label: "X投稿ネタ生成ツール", nextPath: "/apps/x-helper/" },
   "ec-copy": { label: "EC商品説明・Q&A整備", nextPath: "/apps/ec-copy/" },
   "aio-mini": { label: "AIOミニ診断", nextPath: "/apps/aio-mini/" },

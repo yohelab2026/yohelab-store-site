@@ -1,0 +1,866 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AIO対応WordPressテーマ | よへラボ</title>
+    <meta name="description" content="AIOに強くて軽いWordPressテーマのテンプレート群。FAQ、構造化データ、記事導線を無駄なくまとめた3つのデザインを試せる。" />
+    <meta property="og:title" content="AIO対応WordPressテーマ | よへラボ" />
+    <meta property="og:description" content="AIOに強くて軽いWordPressテーマのテンプレート群。FAQ、構造化データ、記事導線を無駄なくまとめた3つのデザインを試せる。" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta property="og:url" content="https://yohelab.com/apps/wordpress-theme/" />
+    <meta property="og:image" content="https://yohelab.com/yohelab-icon.png" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
+    <meta name="theme-color" content="#08110f" />
+    <link rel="canonical" href="https://yohelab.com/apps/wordpress-theme/" />
+    <link rel="icon" type="image/png" href="/yohelab-icon.png" />
+    <link rel="stylesheet" href="/shared/site.css" />
+    <style>
+      body {
+        background:
+          radial-gradient(circle at top left, rgba(11, 143, 114, 0.12), transparent 28%),
+          radial-gradient(circle at top right, rgba(29, 78, 216, 0.08), transparent 26%),
+          linear-gradient(180deg, #07100e 0%, #f7faf8 16%, #f9fbfa 100%);
+      }
+      .hero {
+        padding: 92px 0 62px;
+        color: #fff;
+        position: relative;
+        overflow: hidden;
+      }
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse 72% 56% at 50% -10%, rgba(79, 209, 184, 0.24) 0%, transparent 56%),
+          radial-gradient(ellipse 42% 42% at 10% 85%, rgba(29, 78, 216, 0.09) 0%, transparent 60%),
+          linear-gradient(180deg, rgba(8, 17, 15, 0.98) 0%, rgba(10, 27, 22, 0.92) 100%);
+      }
+      .hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background-image:
+          linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+        background-size: 58px 58px;
+        mask-image: radial-gradient(ellipse 76% 60% at 50% 38%, #000 0%, transparent 72%);
+        -webkit-mask-image: radial-gradient(ellipse 76% 60% at 50% 38%, #000 0%, transparent 72%);
+      }
+      .hero-inner {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: 1fr 370px;
+        gap: 34px;
+        align-items: center;
+      }
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 22px;
+        padding: 7px 16px;
+        border-radius: 999px;
+        border: 1px solid rgba(255,255,255,.16);
+        background: rgba(255,255,255,.06);
+        color: rgba(255,255,255,.8);
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+      }
+      .eyebrow .dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #4fd1b8;
+      }
+      .hero h1 {
+        font-size: clamp(44px, 6.8vw, 78px);
+        line-height: 1.04;
+        letter-spacing: -0.06em;
+        margin-bottom: 18px;
+      }
+      .hero h1 em {
+        font-style: normal;
+        color: #6be5c9;
+      }
+      .hero-lead {
+        max-width: 680px;
+        color: rgba(255,255,255,.72);
+        font-size: 18px;
+        line-height: 1.88;
+        margin-bottom: 28px;
+      }
+      .hero-actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-bottom: 18px;
+      }
+      .hero-note {
+        color: rgba(255,255,255,.48);
+        font-size: 13px;
+      }
+      .hero-card {
+        border: 1px solid rgba(255,255,255,.12);
+        background: rgba(255,255,255,.06);
+        border-radius: 22px;
+        padding: 22px;
+        box-shadow: 0 18px 42px rgba(0,0,0,.15);
+      }
+      .hero-card h3 {
+        font-size: 16px;
+        font-weight: 900;
+        margin-bottom: 12px;
+        color: #fff;
+      }
+      .hero-points {
+        display: grid;
+        gap: 10px;
+      }
+      .hero-point {
+        display: grid;
+        grid-template-columns: 28px 1fr;
+        gap: 10px;
+        align-items: start;
+        color: rgba(255,255,255,.74);
+        font-size: 13px;
+        line-height: 1.6;
+      }
+      .hero-point strong {
+        color: #fff;
+        font-size: 13px;
+      }
+      .hero-point i {
+        display: grid;
+        place-items: center;
+        width: 28px;
+        height: 28px;
+        border-radius: 8px;
+        background: linear-gradient(135deg, #14c4a0, #0b8f72);
+        color: #fff;
+        font-style: normal;
+        font-size: 13px;
+        font-weight: 900;
+      }
+      .panel {
+        padding: 72px 0;
+      }
+      .panel.alt {
+        background: linear-gradient(180deg, #fbfcfb 0%, #f3f8f5 100%);
+      }
+      .panel-head {
+        max-width: 760px;
+        margin: 0 auto 28px;
+        text-align: center;
+      }
+      .panel-kicker {
+        display: inline-block;
+        margin-bottom: 12px;
+        padding: 7px 16px;
+        border-radius: 999px;
+        border: 1px solid var(--green-mid);
+        background: #eafaf3;
+        color: var(--green-dark);
+        font-size: 11px;
+        font-weight: 900;
+        letter-spacing: .16em;
+        text-transform: uppercase;
+      }
+      .panel-head h2 {
+        font-size: clamp(28px, 4.4vw, 46px);
+        letter-spacing: -0.05em;
+        line-height: 1.15;
+        margin-bottom: 10px;
+      }
+      .panel-head p {
+        color: var(--muted);
+        font-size: 15.5px;
+        line-height: 1.9;
+      }
+      .variant-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+      }
+      .variant-card {
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        background: var(--white);
+        box-shadow: var(--shadow-xs);
+        padding: 24px;
+        text-align: left;
+        transition: transform .2s, box-shadow .2s, border-color .2s;
+      }
+      .variant-card:hover,
+      .variant-card.is-active {
+        transform: translateY(-3px);
+        border-color: var(--green-mid);
+        box-shadow: var(--shadow);
+      }
+      .variant-tag {
+        display: inline-block;
+        margin-bottom: 12px;
+        padding: 4px 10px;
+        border-radius: 999px;
+        background: #eff6ff;
+        border: 1px solid #c7d2fe;
+        color: #1d4ed8;
+        font-size: 11px;
+        font-weight: 900;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+      }
+      .variant-card h3 {
+        font-size: 18px;
+        font-weight: 900;
+        letter-spacing: -0.03em;
+        margin-bottom: 10px;
+      }
+      .variant-card p {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.8;
+        margin-bottom: 16px;
+      }
+      .variant-list {
+        display: grid;
+        gap: 8px;
+      }
+      .variant-list li {
+        display: flex;
+        gap: 8px;
+        font-size: 13px;
+        color: var(--text-sub);
+        line-height: 1.55;
+      }
+      .variant-list li::before {
+        content: "✓";
+        color: var(--green);
+        font-weight: 900;
+        flex-shrink: 0;
+      }
+      .preview-wrap {
+        margin-top: 22px;
+        display: grid;
+        grid-template-columns: 1.12fr .88fr;
+        gap: 18px;
+        align-items: stretch;
+      }
+      .preview-shell {
+        border-radius: 24px;
+        border: 1px solid var(--border);
+        background: linear-gradient(180deg, #fff 0%, #f8fbf9 100%);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+      }
+      .preview-bar {
+        height: 48px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 0 16px;
+        border-bottom: 1px solid var(--border);
+        background: #f6faf8;
+      }
+      .preview-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #d7e7df;
+      }
+      .preview-dot.active {
+        background: var(--green);
+      }
+      .preview-body {
+        padding: 26px;
+      }
+      .preview-kicker {
+        display: inline-block;
+        margin-bottom: 12px;
+        padding: 4px 10px;
+        border-radius: 999px;
+        background: #ecfdf5;
+        color: var(--green-dark);
+        font-size: 11px;
+        font-weight: 900;
+        letter-spacing: .1em;
+        text-transform: uppercase;
+      }
+      .preview-title {
+        font-size: 24px;
+        font-weight: 900;
+        letter-spacing: -0.04em;
+        line-height: 1.2;
+        margin-bottom: 12px;
+      }
+      .preview-lead {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.85;
+        margin-bottom: 18px;
+      }
+      .preview-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+      .preview-block {
+        border-radius: 16px;
+        padding: 16px;
+        border: 1px solid var(--border);
+        background: #fff;
+      }
+      .preview-block h4 {
+        font-size: 14px;
+        font-weight: 900;
+        margin-bottom: 8px;
+      }
+      .preview-block p {
+        color: var(--muted);
+        font-size: 12.5px;
+        line-height: 1.7;
+      }
+      .preview-side {
+        border-radius: 24px;
+        border: 1px solid var(--border);
+        background: #fff;
+        box-shadow: var(--shadow-xs);
+        padding: 24px;
+      }
+      .preview-side h3 {
+        font-size: 18px;
+        font-weight: 900;
+        letter-spacing: -0.03em;
+        margin-bottom: 12px;
+      }
+      .side-list {
+        display: grid;
+        gap: 10px;
+      }
+      .side-list li {
+        display: grid;
+        grid-template-columns: 20px 1fr;
+        gap: 10px;
+        align-items: start;
+        font-size: 13px;
+        color: var(--text-sub);
+        line-height: 1.6;
+      }
+      .side-list li::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--green);
+        margin-top: 6px;
+      }
+      .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+      }
+      .settings-grid {
+        display: grid;
+        grid-template-columns: 1.1fr .9fr;
+        gap: 16px;
+      }
+      .settings-card {
+        border-radius: 18px;
+        border: 1px solid var(--border);
+        background: var(--white);
+        box-shadow: var(--shadow-xs);
+        padding: 24px;
+      }
+      .settings-card h3 {
+        font-size: 17px;
+        font-weight: 900;
+        letter-spacing: -0.03em;
+        margin-bottom: 8px;
+      }
+      .settings-card p {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.8;
+        margin-bottom: 16px;
+      }
+      .settings-list {
+        display: grid;
+        gap: 10px;
+      }
+      .settings-list li {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        font-size: 13px;
+        color: var(--text-sub);
+        line-height: 1.6;
+      }
+      .settings-list li::before {
+        content: "✓";
+        color: var(--green);
+        font-weight: 900;
+        flex-shrink: 0;
+      }
+      .setting-row {
+        display: grid;
+        gap: 10px;
+      }
+      .setting-row label {
+        display: grid;
+        gap: 6px;
+        font-size: 13px;
+        font-weight: 800;
+        color: var(--text);
+      }
+      .setting-row input,
+      .setting-row select {
+        width: 100%;
+        padding: 12px 14px;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        background: #fff;
+        font-size: 14px;
+      }
+      .check-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+      .check-pill {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        padding: 10px 12px;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        background: #fff;
+        font-size: 13px;
+        color: var(--text-sub);
+      }
+      .check-pill input {
+        accent-color: var(--green);
+      }
+      .feature-card {
+        border-radius: 18px;
+        border: 1px solid var(--border);
+        background: var(--white);
+        box-shadow: var(--shadow-xs);
+        padding: 22px;
+      }
+      .feature-card .icon {
+        font-size: 26px;
+        margin-bottom: 12px;
+      }
+      .feature-card h3 {
+        font-size: 15px;
+        font-weight: 900;
+        margin-bottom: 8px;
+      }
+      .feature-card p {
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.75;
+      }
+      .lightness-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+      }
+      .lightness-card {
+        padding: 24px;
+        border-radius: 18px;
+        border: 1px solid var(--border);
+        background: var(--white);
+        box-shadow: var(--shadow-xs);
+      }
+      .lightness-card h3 {
+        font-size: 16px;
+        font-weight: 900;
+        margin-bottom: 8px;
+      }
+      .lightness-card p {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.8;
+      }
+      .cta-band {
+        padding: 84px 0 96px;
+        background: linear-gradient(180deg, #0b1713 0%, #05100d 100%);
+        color: #fff;
+        text-align: center;
+      }
+      .cta-band h2 {
+        color: #fff;
+        font-size: clamp(30px, 5vw, 56px);
+        letter-spacing: -0.05em;
+        line-height: 1.1;
+        margin-bottom: 16px;
+      }
+      .cta-band h2 em {
+        font-style: normal;
+        color: #6be5c9;
+      }
+      .cta-band p {
+        color: rgba(255,255,255,.68);
+        font-size: 16px;
+        line-height: 1.9;
+        margin: 0 auto 28px;
+        max-width: 740px;
+      }
+      .cta-actions {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      @media (max-width: 980px) {
+        .hero-inner,
+        .preview-wrap,
+        .feature-grid {
+          grid-template-columns: 1fr;
+        }
+        .variant-grid,
+        .lightness-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="nav">
+      <div class="nav-inner">
+        <a class="brand" href="/">
+          <img src="/yohelab-icon.png" alt="よへラボのアイコン" />
+          <span>よへラボ</span>
+        </a>
+        <nav class="nav-links">
+          <a href="/">トップ</a>
+          <a href="/apps/research-writer/">AIO記事</a>
+          <a href="/contact/">問い合わせ</a>
+          <a class="btn btn-primary btn-sm" href="/contact/#wordpress-theme">導入相談する</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container hero-inner">
+          <div>
+            <div class="eyebrow"><span class="dot"></span> WordPress theme template</div>
+            <h1>AIOに強くて、<em>軽い</em>WordPressテーマ。</h1>
+            <p class="hero-lead">余計なアニメーションや装飾を削って、見出し・FAQ・構造化データ・CTAだけをきれいに通す。3つのデザインから、用途に合う型を選ぶだけ。</p>
+            <div class="hero-actions">
+              <a class="btn btn-white btn-lg" href="#variants">3デザインを見る</a>
+              <a class="btn btn-lg" style="color:rgba(255,255,255,.86);border:1.5px solid rgba(255,255,255,.24);" href="/lp/wordpress-theme/">LPを見る</a>
+            </div>
+            <div class="hero-note">AIO向けの骨組みを先に固めて、あとから中身を差し替えやすくする。</div>
+          </div>
+          <aside class="hero-card">
+            <h3>このテーマで残すもの</h3>
+            <div class="hero-points">
+              <div class="hero-point"><i>1</i><div><strong>FAQがそのまま乗る</strong><span>質問と答えが自然に見える構造で、AIO向けの説明を減らす。</span></div></div>
+              <div class="hero-point"><i>2</i><div><strong>見出しが崩れない</strong><span>H1-H3を中心に組み、読ませたい順番をそのまま出せる。</span></div></div>
+              <div class="hero-point"><i>3</i><div><strong>アクセス解析を標準搭載</strong><span>テーマ内解析か外部解析かを選んで、見たい数字を先にそろえる。</span></div></div>
+              <div class="hero-point"><i>4</i><div><strong>プラグインを減らす</strong><span>FAQ、構造化、パンくず、AIOチェックをテーマ側へ寄せる。</span></div></div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="panel alt" id="variants">
+        <div class="container">
+          <div class="panel-head">
+            <div class="panel-kicker">3 templates</div>
+            <h2>用途で選べる3つのデザイン</h2>
+            <p>どれもAIOに強く、かなり軽め。見せ方だけ変えて、中身の骨組みはそろえる。</p>
+          </div>
+          <div class="variant-grid" id="variant-grid">
+            <button class="variant-card is-active" data-variant="minimal" type="button">
+              <span class="variant-tag">MINIMAL</span>
+              <h3>AIOミニマル</h3>
+              <p>最小構成で、読み込みを軽くしたい時のベース。</p>
+              <ul class="variant-list">
+                <li>白場を広く取る</li>
+                <li>本文を主役にする</li>
+                <li>FAQとCTAだけ強める</li>
+              </ul>
+            </button>
+            <button class="variant-card" data-variant="editorial" type="button">
+              <span class="variant-tag">EDITORIAL</span>
+              <h3>AIOエディトリアル</h3>
+              <p>情報の厚みを見せたい、記事サイト寄りの型。</p>
+              <ul class="variant-list">
+                <li>関連記事と目次を見せる</li>
+                <li>構造化データに向けやすい</li>
+                <li>比較表をきれいに置ける</li>
+              </ul>
+            </button>
+            <button class="variant-card" data-variant="landing" type="button">
+              <span class="variant-tag">LANDING</span>
+              <h3>AIOセールス</h3>
+              <p>問い合わせや申し込みを取りにいく、LP寄りの型。</p>
+              <ul class="variant-list">
+                <li>CTAを複数回配置</li>
+                <li>導入メリットを先に見せる</li>
+                <li>比較表で迷いを減らす</li>
+              </ul>
+            </button>
+          </div>
+
+          <div class="preview-wrap">
+            <div class="preview-shell">
+              <div class="preview-bar">
+                <span class="preview-dot active"></span>
+                <span class="preview-dot"></span>
+                <span class="preview-dot"></span>
+              </div>
+              <div class="preview-body" id="preview-body">
+                <div class="preview-kicker">AIOミニマル</div>
+                <div class="preview-title">見出しとFAQだけで、すっと読める。</div>
+                <div class="preview-lead">記事を長く見せるより、必要な情報だけを前に出す。AIOが拾いやすい定義文、FAQ、要点を小さく並べる。</div>
+                <div class="preview-grid">
+                  <div class="preview-block">
+                    <h4>メイン導線</h4>
+                    <p>ヒーロー、見出し、FAQ、CTAの順で迷いを減らす。</p>
+                  </div>
+                  <div class="preview-block">
+                    <h4>軽さ</h4>
+                    <p>余分な演出を入れず、表示を先に終わらせる。</p>
+                  </div>
+                  <div class="preview-block">
+                    <h4>AIO向け</h4>
+                    <p>FAQ schema、Article schema、Breadcrumb を自然に置く。</p>
+                  </div>
+                  <div class="preview-block">
+                    <h4>向いてる用途</h4>
+                    <p>ブログ、実績紹介、メモ中心の個人サイト。</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <aside class="preview-side">
+              <h3>軽くて強い理由</h3>
+              <ul class="side-list">
+                <li>最初に読む人とAIOの両方が迷わない、素直な階層で組む。</li>
+                <li>画像や動きに寄りすぎず、文字情報を先に届ける。</li>
+                <li>見出し、FAQ、比較表、CTAをテンプレとして固定しやすい。</li>
+                <li>CSSの塊を大きくしすぎず、差し替えを前提にした構成にする。</li>
+              </ul>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="container">
+          <div class="panel-head">
+            <div class="panel-kicker">AIO ready</div>
+            <h2>最初から入れておく部品</h2>
+            <p>後付けにすると散らかる要素を、最初からテンプレに組み込む。</p>
+          </div>
+          <div class="feature-grid">
+            <article class="feature-card">
+              <div class="icon">🧭</div>
+              <h3>見出し設計</h3>
+              <p>H1からH3までの流れを整えて、記事構造を読みやすくする。</p>
+            </article>
+            <article class="feature-card">
+              <div class="icon">❔</div>
+              <h3>FAQブロック</h3>
+              <p>質問と答えを自然に置ける。AIO向けに抜き出しやすい。</p>
+            </article>
+            <article class="feature-card">
+              <div class="icon">🧱</div>
+              <h3>比較表</h3>
+              <p>選ぶ場面を助ける表を軽く置いて、読み飛ばされにくくする。</p>
+            </article>
+          <article class="feature-card">
+              <div class="icon">⚡</div>
+              <h3>プラグイン削減</h3>
+              <p>SEOメタ、OGP、パンくず、FAQ、AIOチェックをテーマ側へ寄せる。</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel alt">
+        <div class="container">
+          <div class="panel-head">
+            <div class="panel-kicker">Simple setup</div>
+            <h2>設定は少なく、機能は多く</h2>
+            <p>入力する場所は絞る。けれど、アクセス解析とAIOチェックは最初から入れておく。</p>
+          </div>
+          <div class="settings-grid reveal">
+            <div class="settings-card">
+              <h3>アクセス解析</h3>
+              <p>テーマ内で持つか、外部をつなぐかを先に決める。余計なプラグインを増やしにくい。</p>
+              <div class="check-grid" style="grid-template-columns:repeat(2,1fr);">
+                <label class="check-pill"><input type="radio" name="analytics-mode" checked /> テーマ内解析</label>
+                <label class="check-pill"><input type="radio" name="analytics-mode" /> 外部解析</label>
+              </div>
+              <div class="setting-row" style="margin-top:14px;">
+                <label>外部の測定ID
+                  <input type="text" value="G-XXXXXXXXXX" placeholder="G-XXXXXXXXXX" />
+                </label>
+                <label>出力先
+                  <select>
+                    <option>GA4</option>
+                    <option>Search Console</option>
+                    <option>Plausible / Umami</option>
+                  </select>
+                </label>
+              </div>
+              <ul class="settings-list" style="margin-top:14px;">
+                <li>ページビュー、流入元、滞在をあとから見やすい。</li>
+                <li>ヘッダーへまとめて入れて、触る場所を減らす。</li>
+                <li>初期設定を複雑にしない。</li>
+              </ul>
+            </div>
+            <div class="settings-card">
+              <h3>AIOチェック</h3>
+              <p>何を直せばいいかをチェック式で扱う。細かくしすぎず、必要なところだけONにする。</p>
+              <div class="check-grid">
+                <label class="check-pill"><input type="checkbox" checked /> FAQを有効</label>
+                <label class="check-pill"><input type="checkbox" checked /> 構造化データ</label>
+                <label class="check-pill"><input type="checkbox" checked /> 見出し整理</label>
+                <label class="check-pill"><input type="checkbox" checked /> 内部リンク</label>
+                <label class="check-pill"><input type="checkbox" /> 比較表</label>
+                <label class="check-pill"><input type="checkbox" /> 関連記事</label>
+              </div>
+              <ul class="settings-list" style="margin-top:14px;">
+                <li>ON/OFFだけで切り替えられる。</li>
+                <li>難しい文言を減らして、迷う時間を短くする。</li>
+                <li>テンプレは増えても、設定は増やしすぎない。</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel alt">
+        <div class="container">
+          <div class="panel-head">
+            <div class="panel-kicker">Why it wins</div>
+            <h2>テーマがAIOに強い方が、後が楽</h2>
+            <p>記事ごとの頑張りより、土台を軽く整えておく方が継続しやすい。</p>
+          </div>
+          <div class="lightness-grid">
+            <article class="lightness-card">
+              <h3>読み込みが速い</h3>
+              <p>画像やアニメーションを盛りすぎない。AIO以前に、人が待たない。</p>
+            </article>
+            <article class="lightness-card">
+              <h3>構造が素直</h3>
+              <p>見出し・FAQ・CTA・関連記事を固定しやすい。ページごとに迷わない。</p>
+            </article>
+            <article class="lightness-card">
+              <h3>差し替えが簡単</h3>
+              <p>文章と画像を入れ替えるだけで更新できる。テンプレの意味が残る。</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta-band">
+        <div class="container">
+          <h2>AIOに強い土台を、<br><em>軽いまま</em>持っておく。</h2>
+          <p>3つのデザインから選んで、必要なものだけを載せる。AIOに読まれやすく、あとから触っても崩れにくいテーマにする。</p>
+          <div class="cta-actions">
+            <a class="btn btn-white btn-lg" href="/lp/wordpress-theme/">LPを見る</a>
+            <a class="btn btn-lg" style="color:rgba(255,255,255,.86);border:1.5px solid rgba(255,255,255,.25);" href="/contact/#wordpress-theme">導入相談する</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <div>© よへラボ / AIO対応WordPressテーマ</div>
+        <div class="footer-links">
+          <a href="/">トップ</a>
+          <a href="/lp/wordpress-theme/">LP</a>
+          <a href="/contact/">問い合わせ</a>
+          <a href="/legal/privacy/">プライバシーポリシー</a>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      const data = {
+        minimal: {
+          tag: "AIOミニマル",
+          title: "見出しとFAQだけで、すっと読める。",
+          lead: "記事を長く見せるより、必要な情報だけを前に出す。AIOが拾いやすい定義文、FAQ、要点を小さく並べる。",
+          blocks: [
+            ["メイン導線", "ヒーロー、見出し、FAQ、CTAの順で迷いを減らす。"],
+            ["軽さ", "余分な演出を入れず、表示を先に終わらせる。"],
+            ["AIO向け", "FAQ schema、Article schema、Breadcrumb を自然に置く。"],
+            ["向いてる用途", "ブログ、実績紹介、メモ中心の個人サイト。"],
+          ],
+        },
+        editorial: {
+          tag: "AIOエディトリアル",
+          title: "情報を厚く見せる、記事サイトの型。",
+          lead: "目次、関連記事、比較表をつけても重くなりすぎない。AIOに拾わせたい情報が多い時の中間型。",
+          blocks: [
+            ["目次", "ページの流れを先に示して、読みたい場所へ飛びやすくする。"],
+            ["関連記事", "近い記事を並べて、サイト内回遊をつなげる。"],
+            ["比較表", "選びたい場面を短く整理して、離脱を減らす。"],
+            ["向いてる用途", "メディア、解説サイト、ノウハウ集。"],
+          ],
+        },
+        landing: {
+          tag: "AIOセールス",
+          title: "CTAをすっきり置く、LP寄りの型。",
+          lead: "問い合わせや申し込みが主目的のページ向け。情報を詰め込みすぎず、AIOに説明しやすい順で見せる。",
+          blocks: [
+            ["CTA配置", "ファーストビュー、途中、最後で同じ導線を見せる。"],
+            ["比較表", "無料と有料の違いを簡単に見せて迷いを減らす。"],
+            ["FAQ", "購入前の不安を先に解消して、ページを閉じられにくくする。"],
+            ["向いてる用途", "サービス紹介、問い合わせ、導入相談。"],
+          ],
+        },
+      };
+
+      const cards = [...document.querySelectorAll(".variant-card")];
+      const preview = document.getElementById("preview-body");
+
+      function render(variant) {
+        const item = data[variant];
+        if (!item) return;
+        preview.innerHTML = `
+          <div class="preview-kicker">${item.tag}</div>
+          <div class="preview-title">${item.title}</div>
+          <div class="preview-lead">${item.lead}</div>
+          <div class="preview-grid">
+            ${item.blocks
+              .map(
+                ([title, text]) => `
+                  <div class="preview-block">
+                    <h4>${title}</h4>
+                    <p>${text}</p>
+                  </div>`,
+              )
+              .join("")}
+          </div>
+        `;
+      }
+
+      cards.forEach((card) => {
+        card.addEventListener("click", () => {
+          cards.forEach((c) => c.classList.remove("is-active"));
+          card.classList.add("is-active");
+          render(card.dataset.variant);
+        });
+      });
+    </script>
+  </body>
+</html>

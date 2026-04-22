@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AIO対応WordPressテーマ プロプラン | よへラボ</title>
+    <meta name="description" content="AIOに強くて軽いWordPressテーマのプロプラン。3つのデザインテンプレートを使い分けながら、FAQ・構造化データ・CTAを整えやすい。" />
+    <meta property="og:title" content="AIO対応WordPressテーマ プロプラン | よへラボ" />
+    <meta property="og:description" content="AIOに強くて軽いWordPressテーマのプロプラン。3つのデザインテンプレートを使い分けながら、FAQ・構造化データ・CTAを整えやすい。" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta property="og:url" content="https://yohelab.com/products/wordpress-theme-beta/" />
+    <meta property="og:image" content="https://yohelab.com/yohelab-icon.png" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
+    <meta name="theme-color" content="#0d6b58" />
+    <link rel="canonical" href="https://yohelab.com/products/wordpress-theme-beta/" />
+    <link rel="icon" type="image/png" href="/yohelab-icon.png" />
+    <link rel="stylesheet" href="/shared/site.css" />
+    <style>
+      .reveal{opacity:0;transform:translateY(22px);transition:opacity .6s cubic-bezier(.22,1,.36,1),transform .6s cubic-bezier(.22,1,.36,1)}
+      .reveal.visible{opacity:1;transform:none}
+      .reveal-d1{transition-delay:.08s}.reveal-d2{transition-delay:.16s}.reveal-d3{transition-delay:.24s}
+      .pro-hero {
+        padding: 96px 0 80px;
+        background:
+          radial-gradient(ellipse 80% 55% at 55% -10%, rgba(79,209,184,.20) 0%, transparent 52%),
+          radial-gradient(ellipse 44% 40% at 5% 82%, rgba(29,78,216,.08) 0%, transparent 60%),
+          linear-gradient(160deg,#07100e,#0b1e18);
+        color: #fff;
+        position: relative;
+        overflow: hidden;
+      }
+      .pro-hero::before,
+      .pro-hero::after {
+        content:"";
+        position:absolute;
+        inset:0;
+        pointer-events:none;
+      }
+      .pro-hero::before {
+        background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+        background-size:56px 56px;
+        mask-image:radial-gradient(ellipse 78% 64% at 50% 38%,#000 0%,transparent 70%);
+        -webkit-mask-image:radial-gradient(ellipse 78% 64% at 50% 38%,#000 0%,transparent 70%);
+      }
+      .pro-hero::after {
+        background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(16,184,146,.12) 0%, transparent 60%);
+      }
+      .pro-hero .container { position:relative; z-index:1; }
+      .pro-eyebrow {
+        display:inline-block;
+        padding:6px 16px;
+        border-radius:99px;
+        border:1px solid rgba(255,255,255,.18);
+        background:rgba(255,255,255,.06);
+        color:rgba(255,255,255,.78);
+        font-size:13px;
+        font-weight:700;
+        letter-spacing:.04em;
+        margin-bottom:24px;
+      }
+      .pro-hero h1 {
+        color:#fff;
+        font-size:clamp(38px,6vw,72px);
+        line-height:1.06;
+        margin-bottom:20px;
+        letter-spacing:-0.055em;
+      }
+      .pro-hero h1 .accent { color:#6be5c9; }
+      .pro-hero .lead {
+        color:rgba(255,255,255,.74);
+        font-size:18px;
+        max-width:700px;
+        line-height:1.85;
+        margin-bottom:12px;
+      }
+      .pro-hero .sub-note { color:rgba(255,255,255,.42); font-size:13px; margin-bottom:30px; }
+      .pro-hero-actions { display:flex; gap:14px; flex-wrap:wrap; }
+      .band {
+        background:#0d6b58;
+        color:#fff;
+        padding:18px 0;
+      }
+      .band .container {
+        display:grid;
+        grid-template-columns:repeat(3,1fr);
+        gap:14px;
+      }
+      .band-stat {
+        text-align:center;
+        padding:12px 10px;
+      }
+      .band-stat .num {
+        font-size:28px;
+        font-weight:900;
+        letter-spacing:-0.03em;
+      }
+      .band-stat .label {
+        font-size:12px;
+        opacity:.75;
+        margin-top:2px;
+      }
+      .section-grid {
+        display:grid;
+        grid-template-columns:repeat(3,1fr);
+        gap:16px;
+      }
+      .settings-grid {
+        display:grid;
+        grid-template-columns:1.1fr .9fr;
+        gap:16px;
+      }
+      .settings-box {
+        padding:24px;
+        border-radius:18px;
+        background:#fff;
+        border:1px solid var(--border);
+        box-shadow:var(--shadow-xs);
+      }
+      .settings-box h3 {
+        font-size:17px;
+        font-weight:900;
+        margin-bottom:8px;
+        letter-spacing:-0.03em;
+      }
+      .settings-box p {
+        color:var(--muted);
+        font-size:14px;
+        line-height:1.8;
+        margin-bottom:16px;
+      }
+      .settings-list {
+        display:grid;
+        gap:10px;
+      }
+      .settings-list li {
+        display:flex;
+        gap:10px;
+        align-items:flex-start;
+        font-size:13px;
+        color:var(--text-sub);
+        line-height:1.6;
+      }
+      .settings-list li::before {
+        content:"✓";
+        color:var(--green);
+        font-weight:900;
+        flex-shrink:0;
+      }
+      .check-grid {
+        display:grid;
+        grid-template-columns:repeat(2,1fr);
+        gap:10px;
+      }
+      .check-pill {
+        display:flex;
+        gap:10px;
+        align-items:center;
+        padding:10px 12px;
+        border-radius:12px;
+        border:1px solid var(--border);
+        background:#fff;
+        font-size:13px;
+        color:var(--text-sub);
+      }
+      .check-pill input { accent-color:var(--green); }
+      .setting-row {
+        display:grid;
+        grid-template-columns:repeat(2,1fr);
+        gap:12px;
+      }
+      .setting-row label {
+        display:grid;
+        gap:6px;
+        font-size:13px;
+        color:var(--text-sub);
+        font-weight:700;
+      }
+      .setting-row input,
+      .setting-row select {
+        width:100%;
+        border-radius:12px;
+        border:1px solid var(--border);
+        padding:12px 14px;
+        font-size:14px;
+        color:var(--text);
+        background:#fff;
+      }
+      .card {
+        padding:28px;
+        border-radius:16px;
+        background:#fff;
+        border:1px solid var(--border);
+        box-shadow:var(--shadow-xs);
+      }
+      .card .tag {
+        display:inline-block;
+        margin-bottom:12px;
+        padding:4px 10px;
+        border-radius:999px;
+        background:#ecfdf5;
+        color:var(--green-dark);
+        font-size:11px;
+        font-weight:900;
+        letter-spacing:.08em;
+      }
+      .card h3 {
+        font-size:18px;
+        font-weight:900;
+        margin-bottom:10px;
+        letter-spacing:-0.03em;
+      }
+      .card p {
+        font-size:14px;
+        color:var(--muted);
+        line-height:1.8;
+      }
+      .compare-table {
+        width:100%;
+        border-collapse:collapse;
+        border-radius:16px;
+        overflow:hidden;
+        border:1px solid var(--border);
+      }
+      .compare-table th {
+        padding:16px 20px;
+        font-size:15px;
+        font-weight:800;
+        text-align:center;
+      }
+      .compare-table th:first-child { text-align:left; background:var(--bg); }
+      .compare-table th.col-free { background:var(--bg); color:var(--muted); }
+      .compare-table th.col-pro { background:var(--green); color:#fff; }
+      .compare-table td {
+        padding:14px 20px;
+        font-size:15px;
+        border-top:1px solid var(--border);
+        text-align:center;
+      }
+      .compare-table td:first-child { text-align:left; color:var(--text); font-weight:600; background:#fff; }
+      .compare-table td.col-free { background:#fff; color:var(--muted); }
+      .compare-table td.col-pro { background:#f0faf7; color:#0d6b58; font-weight:700; }
+      .ck { color:var(--green); font-weight:900; }
+      .cx { color:#ccc; }
+      .light-box {
+        padding:28px;
+        border-radius:18px;
+        background:#fff;
+        border:1px solid var(--border);
+        box-shadow:var(--shadow-xs);
+      }
+      .light-box h3 {
+        font-size:17px;
+        font-weight:900;
+        margin-bottom:8px;
+      }
+      .light-box p {
+        color:var(--muted);
+        line-height:1.8;
+        font-size:14px;
+      }
+      .final-cta {
+        padding:100px 0;
+        background: radial-gradient(ellipse 80% 70% at 50% -10%,rgba(16,201,154,.3),transparent 55%), linear-gradient(180deg,#0a5b4c 0%,#043d33 100%);
+        color:#fff;
+        text-align:center;
+        position:relative;
+        overflow:hidden;
+      }
+      .final-cta::before {
+        content:"";
+        position:absolute;
+        inset:0;
+        background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+        background-size:56px 56px;
+        mask-image:radial-gradient(ellipse 70% 60% at 50% 50%,#000,transparent 80%);
+        -webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 50%,#000,transparent 80%);
+      }
+      .final-cta .container { position:relative; z-index:1; }
+      .final-cta h2 { color:#fff; font-size:clamp(30px,5vw,56px); line-height:1.15; margin-bottom:20px; }
+      .final-cta h2 .accent { color:#6be5c9; }
+      .final-cta p { color:rgba(255,255,255,.65); font-size:17px; margin-bottom:36px; }
+      .footer-dark { background:#030b09; border-top:1px solid rgba(255,255,255,.06); }
+      .footer-dark .footer-links a { color:rgba(255,255,255,.32); }
+      .footer-dark .footer-links a:hover { color:rgba(255,255,255,.72); }
+      @media (max-width:768px) {
+        .band .container,
+        .section-grid { grid-template-columns:1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="nav">
+      <div class="nav-inner">
+        <a class="brand" href="/">
+          <img src="/yohelab-icon.png" alt="よへラボのアイコン" />
+          <span>よへラボ</span>
+        </a>
+        <nav class="nav-links">
+          <a href="/">トップ</a>
+          <a href="/apps/wordpress-theme/">無料で試す</a>
+          <a href="/contact/">問い合わせ</a>
+          <a class="btn btn-primary btn-sm" href="/contact/#wordpress-theme">導入相談する</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="pro-hero">
+        <div class="container reveal">
+          <p class="pro-eyebrow">AIO対応WordPressテーマ プロプラン</p>
+          <h1><span class="accent">AIOに強くて軽い</span>、3つのデザインテンプレート。</h1>
+          <p class="lead">見出し、FAQ、構造化データ、アクセス解析、AIOチェックを最初から素直に入れておける。余計な装飾を増やさず、記事とLPの両方に使いやすい土台を持つ。</p>
+          <p class="sub-note">月額980円・初月無料 ／ 3テンプレート ／ いつでも解約できる</p>
+          <div class="pro-hero-actions">
+            <a class="btn btn-white btn-lg" href="/apps/wordpress-theme/">まず無料で1つ見る</a>
+            <a class="btn btn-lg" style="color:rgba(255,255,255,.8);border:1.5px solid rgba(255,255,255,.25);" href="/contact/#wordpress-theme">導入相談する</a>
+          </div>
+        </div>
+      </section>
+
+      <div class="band">
+        <div class="container reveal">
+          <div class="band-stat">
+            <div class="num">3種</div>
+            <div class="label">ミニマル / エディトリアル / LP寄り</div>
+          </div>
+          <div class="band-stat">
+            <div class="num">解析</div>
+            <div class="label">アクセス解析を標準で入れやすい</div>
+          </div>
+          <div class="band-stat">
+            <div class="num">AIO向け</div>
+            <div class="label">FAQ・見出し・構造化を素直に配置</div>
+          </div>
+        </div>
+      </div>
+
+      <section class="section">
+        <div class="container">
+          <p class="section-label">Templates</p>
+          <h2 class="section-title">使い分けしやすい3テンプレート</h2>
+          <div class="section-grid reveal">
+            <article class="card">
+              <span class="tag">MINIMAL</span>
+              <h3>AIOミニマル</h3>
+              <p>白場を広くとって、本文とFAQを主役にする。速度優先のベーステンプレート。</p>
+            </article>
+            <article class="card">
+              <span class="tag">EDITORIAL</span>
+              <h3>AIOエディトリアル</h3>
+              <p>目次、関連記事、比較表を整えて、情報の厚みを見せる記事サイト向け。</p>
+            </article>
+            <article class="card">
+              <span class="tag">LANDING</span>
+              <h3>AIOセールス</h3>
+              <p>CTAと比較表を自然に置ける。問い合わせや申し込みの導線を短くする。</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" style="background:var(--bg);padding:64px 0;">
+        <div class="container">
+          <p class="section-label">Fit</p>
+          <h2 class="section-title">AIOに強い理由を、テンプレに最初から入れる</h2>
+          <div class="section-grid reveal">
+            <div class="light-box">
+              <h3>見出しが素直</h3>
+              <p>H1からH3までの並びを崩さず、AIOが拾いやすい順番にする。</p>
+            </div>
+            <div class="light-box">
+              <h3>FAQが強い</h3>
+              <p>質問と答えを自然に見せて、ページの説明量を無理なく増やす。</p>
+            </div>
+            <div class="light-box">
+              <h3>構造化しやすい</h3>
+              <p>Breadcrumb、Article、FAQ などを足しやすいベースにする。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <p class="section-label">Setup</p>
+          <h2 class="section-title">設定は少なく、機能は多く</h2>
+          <div class="settings-grid reveal">
+            <div class="settings-box">
+              <h3>アクセス解析</h3>
+              <p>テーマ内で持つか、外部をつなぐかを先に決める。余計なプラグインを増やしにくい。</p>
+              <div class="check-grid">
+                <label class="check-pill"><input type="radio" name="analytics-mode" checked /> テーマ内解析</label>
+                <label class="check-pill"><input type="radio" name="analytics-mode" /> 外部解析</label>
+              </div>
+              <div class="setting-row" style="margin-top:14px;">
+                <label>外部の測定ID
+                  <input type="text" value="G-XXXXXXXXXX" placeholder="G-XXXXXXXXXX" />
+                </label>
+                <label>出力先
+                  <select>
+                    <option>GA4</option>
+                    <option>Search Console</option>
+                    <option>Plausible / Umami</option>
+                  </select>
+                </label>
+              </div>
+              <ul class="settings-list" style="margin-top:14px;">
+                <li>ページビュー、流入元、滞在をあとから見やすい。</li>
+                <li>ヘッダーへまとめて入れて、触る場所を減らす。</li>
+                <li>初期設定を複雑にしない。</li>
+              </ul>
+            </div>
+            <div class="settings-box">
+              <h3>AIOチェック</h3>
+              <p>何を直せばいいかをチェック式で扱う。細かくしすぎず、必要なところだけONにする。</p>
+              <div class="check-grid">
+                <label class="check-pill"><input type="checkbox" checked /> FAQ</label>
+                <label class="check-pill"><input type="checkbox" checked /> 構造化</label>
+                <label class="check-pill"><input type="checkbox" checked /> 見出し整理</label>
+                <label class="check-pill"><input type="checkbox" checked /> 内部リンク</label>
+                <label class="check-pill"><input type="checkbox" /> 比較表</label>
+                <label class="check-pill"><input type="checkbox" /> 関連記事</label>
+              </div>
+              <ul class="settings-list" style="margin-top:14px;">
+                <li>ON/OFFだけで切り替えられる。</li>
+                <li>テンプレは増やしても、設定は増やしすぎない。</li>
+                <li>簡単でわかりやすいのに、使える機能は多い。</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <p class="section-label">Compare</p>
+          <h2 class="section-title">無料版 vs プロプラン</h2>
+          <div style="max-width:760px;margin:0 auto;">
+            <table class="compare-table reveal">
+              <thead>
+                <tr>
+                  <th>項目</th>
+                  <th class="col-free">無料版</th>
+                  <th class="col-pro">プロプラン</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>テンプレート数</td>
+                  <td class="col-free">1種</td>
+                  <td class="col-pro">3種</td>
+                </tr>
+                <tr>
+                  <td>見出し・FAQの骨組み</td>
+                  <td class="col-free"><span class="ck">✓</span></td>
+                  <td class="col-pro"><span class="ck">✓</span></td>
+                </tr>
+                <tr>
+                  <td>比較表・CTAの配置</td>
+                  <td class="col-free">簡易</td>
+                  <td class="col-pro">強化版</td>
+                </tr>
+                <tr>
+                  <td>プラグイン削減</td>
+                  <td class="col-free"><span class="ck">✓</span></td>
+                  <td class="col-pro"><span class="ck">✓</span></td>
+                </tr>
+                <tr>
+                  <td>月額料金</td>
+                  <td class="col-free">¥0</td>
+                  <td class="col-pro">¥980（初月無料）</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="final-cta">
+        <div class="container">
+          <h2>テーマの土台を、<br><span class="accent">AIO向けに最初から</span>整える。</h2>
+          <p>軽さを残したまま、3つのデザインとアクセス解析、AIOチェックを持てる。記事サイトにもLPにも寄せやすく、プラグインを増やしにくいテーマを入れる。</p>
+          <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+            <a class="btn btn-white btn-lg" href="/apps/wordpress-theme/">まず無料で試す</a>
+            <a class="btn btn-lg" style="color:rgba(255,255,255,.8);border:1.5px solid rgba(255,255,255,.25);" href="/contact/#wordpress-theme">導入相談する</a>
+          </div>
+          <p style="margin-top:16px;color:rgba(255,255,255,.42);font-size:13px;">月額980円・初月無料 ／ いつでも解約できる</p>
+        </div>
+      </section>
+    </main>
+
+    <div class="sticky-cta">
+      <div class="sticky-cta-inner">
+        <a class="btn btn-primary" href="/contact/#wordpress-theme">導入相談する</a>
+        <a class="btn btn-outline" href="/apps/wordpress-theme/">まず無料で試す</a>
+      </div>
+    </div>
+
+    <footer class="footer footer-dark">
+      <div class="footer-inner">
+        <div style="color:rgba(255,255,255,.28);">© よへラボ / AIO対応WordPressテーマ</div>
+        <div class="footer-links">
+          <a href="/">トップ</a>
+          <a href="/apps/wordpress-theme/">無料で試す</a>
+          <a href="/contact/">問い合わせ</a>
+          <a href="/legal/privacy/">プライバシーポリシー</a>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      if ("IntersectionObserver" in window) {
+        const obs = new IntersectionObserver((entries) => entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            obs.unobserve(entry.target);
+          }
+        }), { threshold: 0.06, rootMargin: "0px 0px -36px 0px" });
+        document.querySelectorAll(".reveal").forEach((el) => obs.observe(el));
+        setTimeout(() => document.querySelectorAll(".reveal:not(.visible)").forEach((el) => el.classList.add("visible")), 800);
+      } else {
+        document.querySelectorAll(".reveal").forEach((el) => el.classList.add("visible"));
+      }
+    </script>
+  </body>
+</html>

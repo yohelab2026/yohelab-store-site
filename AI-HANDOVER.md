@@ -17,7 +17,8 @@
 
 | キー | ツール名 | アプリパス |
 |------|---------|-----------|
-| `research-writer` | AIOリサーチアシスタント | /apps/research-writer/ |
+| `research-writer` | AIO特化リサーチ記事メーカー | /apps/research-writer/ |
+| `wordpress-theme` | AIO対応WordPressテーマ | /apps/wordpress-theme/ |
 | `x-helper` | X投稿ネタ生成ツール | /apps/x-helper/ |
 | `ec-copy` | EC商品説明・Q&A整備 | /apps/ec-copy/ |
 | `aio-mini` | AIOミニ診断 | /apps/aio-mini/ |
@@ -79,7 +80,8 @@ apps/
 
 ```js
 const PRODUCT_CONFIG = {
-  "research-writer": { label: "AIOリサーチアシスタント", nextPath: "/apps/research-writer/" },
+  "research-writer": { label: "AIO特化リサーチ記事メーカー", nextPath: "/apps/research-writer/" },
+  "wordpress-theme": { label: "AIO対応WordPressテーマ", nextPath: "/apps/wordpress-theme/" },
   "x-helper": { label: "X投稿ネタ生成ツール", nextPath: "/apps/x-helper/" },
   "ec-copy": { label: "EC商品説明・Q&A整備", nextPath: "/apps/ec-copy/" },
   "aio-mini": { label: "AIOミニ診断", nextPath: "/apps/aio-mini/" },
