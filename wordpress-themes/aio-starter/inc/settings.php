@@ -61,9 +61,9 @@ function aio_starter_settings_page() {
           <tr><td>ZIP配布</td><td>OK</td><td>downloads と public に同期済み</td></tr>
           <tr><td>色設定</td><td>OK</td><td>メインカラーと文字色を変更可能</td></tr>
           <tr><td>JSON-LD / llms.txt</td><td>OK</td><td>Article / Person / Breadcrumb / FAQPage / llms.txt</td></tr>
-          <tr><td>実機WordPress有効化</td><td>未確認</td><td>この環境では実際のWP画面での有効化を未実施</td></tr>
-          <tr><td>Theme Check</td><td>未確認</td><td>WordPress公式のテーマ検査は未実施</td></tr>
-          <tr><td>スマホ実機</td><td>未確認</td><td>レスポンシブCSSはあり、実端末確認は別途必要</td></tr>
+          <tr><td>実機WordPress有効化</td><td>OK</td><td>DockerのWordPress環境で有効化確認済み</td></tr>
+          <tr><td>Theme Check</td><td>確認済み</td><td>WordPress.org審査ではショートコードがplugin territory扱い。商品仕様上はテーマ内蔵機能として残しています。</td></tr>
+          <tr><td>スマホ表示</td><td>OK</td><td>レスポンシブCSSと44pxタップターゲットを設定済み。実端末では購入者環境ごとに最終確認してください。</td></tr>
         </tbody>
       </table>
       <form method="post" action="options.php">
@@ -106,8 +106,8 @@ function aio_starter_settings_page() {
             <td><label><input type="checkbox" name="aio_starter_options[internal_analytics]" value="1" <?php checked($options['internal_analytics'], '1'); ?>> PV・人気記事・流入元を軽量記録する</label></td>
           </tr>
           <tr>
-            <th scope="row">静的HTMLキャッシュ</th>
-            <td><label><input type="checkbox" name="aio_starter_options[static_cache]" value="1" <?php checked($options['static_cache'], '1'); ?>> 未ログイン閲覧者向けに簡易キャッシュを使う</label></td>
+            <th scope="row">軽量キャッシュ</th>
+            <td><label><input type="checkbox" name="aio_starter_options[static_cache]" value="1" <?php checked($options['static_cache'], '1'); ?>> 未ログイン閲覧者向けに簡易キャッシュを使う（コメント受付中の記事は除外）</label></td>
           </tr>
           <tr>
             <th scope="row"><label for="aio-llms-extra">llms.txt 追加メモ</label></th>

@@ -22,7 +22,16 @@ get_header();
           <?php if (has_post_thumbnail()) : ?>
             <figure><?php the_post_thumbnail('large'); ?></figure>
           <?php endif; ?>
-          <div class="aio-entry"><?php the_content(); ?></div>
+          <div class="aio-entry">
+            <?php
+            the_content();
+            wp_link_pages(array(
+                'before' => '<nav class="aio-page-links" aria-label="' . esc_attr__('Post pages', 'aio-starter') . '">',
+                'after'  => '</nav>',
+            ));
+            ?>
+          </div>
+          <?php the_tags('<div class="aio-tags"><span>' . esc_html__('Tags:', 'aio-starter') . '</span> ', ' ', '</div>'); ?>
           <?php echo do_shortcode('[aio_author]'); ?>
           <?php comments_template(); ?>
         </article>
