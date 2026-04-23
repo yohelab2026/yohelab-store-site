@@ -7,7 +7,7 @@
 
 get_header();
 ?>
-<main>
+<main id="content">
   <div class="aio-wrap aio-main">
     <div class="aio-content">
       <?php while (have_posts()) : the_post(); ?>
@@ -23,6 +23,7 @@ get_header();
           <?php endif; ?>
           <div class="aio-entry"><?php the_content(); ?></div>
           <?php echo do_shortcode('[aio_author]'); ?>
+          <?php comments_template(); ?>
         </article>
       <?php endwhile; ?>
     </div>

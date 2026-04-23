@@ -4,7 +4,7 @@ Theme URI: https://yohelab.com/apps/wordpress-theme/
 Author: YoheLab
 Author URI: https://yohelab.com/
 Description: A lightweight WordPress theme for beginner bloggers who want AIO/LLMO-ready structure, FAQ schema, author signals, llms.txt, and simple internal analytics without adding many plugins.
-Version: 0.1.0
+Version: 0.1.1
 Requires at least: 6.5
 Tested up to: 6.8
 Requires PHP: 8.0
@@ -68,6 +68,22 @@ a {
   color: var(--aio-green-dark);
 }
 
+.aio-skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 12px;
+  z-index: 999;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: var(--aio-green-dark);
+  color: #fff;
+  text-decoration: none;
+}
+
+.aio-skip-link:focus {
+  left: 12px;
+}
+
 .aio-wrap {
   width: min(var(--aio-wide), calc(100% - 40px));
   margin: 0 auto;
@@ -122,6 +138,12 @@ a {
 .aio-nav a {
   color: var(--aio-muted);
   text-decoration: none;
+}
+
+.aio-nav a:hover,
+.aio-nav a:focus-visible {
+  color: var(--aio-green-dark);
+  text-decoration: underline;
 }
 
 .aio-hero {
@@ -231,6 +253,15 @@ a {
   border: 1px solid var(--aio-line);
 }
 
+.aio-article a:focus-visible,
+.aio-widget a:focus-visible,
+.aio-faq summary:focus-visible,
+.aio-author-sns:focus-visible,
+.aio-btn:focus-visible {
+  outline: 2px solid var(--aio-green);
+  outline-offset: 2px;
+}
+
 .aio-sidebar {
   position: sticky;
   top: 96px;
@@ -250,6 +281,11 @@ a {
 .aio-widget h3 {
   margin-top: 0;
   font-size: 16px;
+}
+
+.aio-widget ul,
+.aio-widget ol {
+  padding-left: 20px;
 }
 
 .aio-footer {
@@ -301,6 +337,10 @@ a {
   width: 72px;
   height: 72px;
   border-radius: 50%;
+}
+
+.aio-author-avatar {
+  object-fit: cover;
 }
 
 .aio-compare {
@@ -356,6 +396,68 @@ a {
 .aio-toc-item a:hover {
   color: var(--aio-green-dark);
   text-decoration: underline;
+}
+
+.aio-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: var(--aio-green-dark);
+  color: #fff;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.aio-comments {
+  max-width: var(--aio-content);
+  margin: 24px 0;
+}
+
+.aio-comments-title {
+  font-size: 20px;
+}
+
+.aio-comments-list {
+  padding-left: 20px;
+}
+
+.aio-comments-closed {
+  color: var(--aio-muted);
+}
+
+.aio-comment-form label {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.aio-comment-form textarea,
+.aio-comment-form input[type="text"],
+.aio-comment-form input[type="email"],
+.aio-comment-form input[type="url"] {
+  width: 100%;
+  max-width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--aio-line);
+  border-radius: 14px;
+  background: var(--aio-surface);
+  color: var(--aio-text);
+}
+
+.aio-comment-form .submit {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--aio-green-dark);
+  color: #fff;
+  font-weight: 800;
 }
 
 /* 引用・出典ブロック */

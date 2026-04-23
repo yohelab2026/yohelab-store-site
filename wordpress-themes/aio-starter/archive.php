@@ -7,7 +7,7 @@
 
 get_header();
 ?>
-<main>
+<main id="content">
   <section class="aio-hero">
     <div class="aio-wrap">
       <div class="aio-hero-card">

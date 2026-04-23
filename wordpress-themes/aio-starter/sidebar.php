@@ -6,6 +6,9 @@
  */
 ?>
 <aside class="aio-sidebar">
+  <?php if (is_active_sidebar('sidebar-1')) : ?>
+    <?php dynamic_sidebar('sidebar-1'); ?>
+  <?php endif; ?>
   <section class="aio-widget">
     <h2>サイト内検索</h2>
     <?php get_search_form(); ?>

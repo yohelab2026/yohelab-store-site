@@ -16,13 +16,26 @@ function aio_starter_shortcode_faq($atts, $content = '') {
         return '';
     }
 
-    return '<details class="aio-faq"><summary>' . esc_html($atts['question']) . '</summary><div class="aio-faq-answer">' . wpautop(do_shortcode($content)) . '</div></details>';
+    $allowed = array(
+        'a'      => array('href' => true, 'title' => true, 'target' => true, 'rel' => true),
+        'br'     => array(),
+        'em'     => array(),
+        'strong' => array(),
+        'p'      => array(),
+        'ul'     => array(),
+        'ol'     => array(),
+        'li'     => array(),
+        'code'   => array(),
+        'span'   => array('class' => true),
+    );
+
+    return '<details class="aio-faq"><summary>' . esc_html($atts['question']) . '</summary><div class="aio-faq-answer">' . wpautop(wp_kses(do_shortcode($content), $allowed)) . '</div></details>';
 }
 
 add_shortcode('aio_summary', 'aio_starter_shortcode_summary');
 function aio_starter_shortcode_summary($atts, $content = '') {
     $atts = shortcode_atts(array('title' => 'この記事のポイント'), $atts, 'aio_summary');
-    return '<div class="aio-summary"><strong>' . esc_html($atts['title']) . '</strong>' . wpautop(do_shortcode($content)) . '</div>';
+    return '<div class="aio-summary"><strong>' . esc_html($atts['title']) . '</strong>' . wpautop(wp_kses_post(do_shortcode($content))) . '</div>';
 }
 
 add_shortcode('aio_author', 'aio_starter_shortcode_author');
@@ -63,7 +76,7 @@ function aio_starter_shortcode_author($atts) {
     $expertise_html = $expertise ? '<span class="aio-author-expertise">' . esc_html($expertise) . '</span>' : '';
 
     return '<div class="aio-author-box">' .
-        get_avatar($author_id, 144) .
+        get_avatar($author_id, 144, '', esc_attr($name), array('class' => 'aio-author-avatar')) .
         '<div class="aio-author-info">' .
             '<strong class="aio-author-name">' . esc_html($name) . '</strong>' .
             $expertise_html .
@@ -75,7 +88,7 @@ function aio_starter_shortcode_author($atts) {
 
 add_shortcode('aio_compare', 'aio_starter_shortcode_compare');
 function aio_starter_shortcode_compare($atts, $content = '') {
-    return '<div class="aio-compare">' . do_shortcode($content) . '</div>';
+    return '<div class="aio-compare">' . wp_kses_post(do_shortcode($content)) . '</div>';
 }
 
 // 引用・出典ブロック
@@ -88,7 +101,7 @@ function aio_starter_shortcode_cite($atts, $content = '') {
     } elseif ($atts['source']) {
         $source_html = '<cite class="aio-cite-source">' . esc_html($atts['source']) . '</cite>';
     }
-    return '<blockquote class="aio-blockquote">' . wpautop(do_shortcode($content)) . $source_html . '</blockquote>';
+    return '<blockquote class="aio-blockquote">' . wpautop(wp_kses_post(do_shortcode($content))) . $source_html . '</blockquote>';
 }
 
 // 目次ブロック（h2/h3 自動生成）
@@ -121,7 +134,7 @@ function aio_starter_shortcode_toc($atts, $content = '') {
         return '';
     }
 
-    return '<nav class="aio-toc" aria-label="目次"><strong class="aio-toc-title">' . esc_html($atts['title']) . '</strong><ol class="aio-toc-list">' . $items . '</ol></nav>';
+    return '<nav class="aio-toc" aria-label="目次"><strong class="aio-toc-title">' . esc_html($atts['title']) . '</strong><ol class="aio-toc-list">' . wp_kses_post($items) . '</ol></nav>';
 }
 
 // 目次用：h2/h3 に id を付与

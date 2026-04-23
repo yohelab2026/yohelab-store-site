@@ -13,6 +13,7 @@
 </head>
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
+<a class="aio-skip-link" href="#content">本文へスキップ</a>
 <header class="aio-header">
   <div class="aio-wrap aio-header-inner">
     <a class="aio-brand" href="<?php echo esc_url(home_url('/')); ?>">

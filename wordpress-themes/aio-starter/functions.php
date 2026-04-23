@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('AIO_STARTER_VERSION', '0.1.0');
+define('AIO_STARTER_VERSION', '0.1.1');
 define('AIO_STARTER_DIR', get_template_directory());
 define('AIO_STARTER_URI', get_template_directory_uri());
 
@@ -48,12 +48,26 @@ function aio_starter_setup() {
     register_nav_menus(array(
         'primary' => __('Primary Menu', 'aio-starter'),
     ));
+
+    register_sidebar(array(
+        'name'          => __('Sidebar', 'aio-starter'),
+        'id'            => 'sidebar-1',
+        'description'   => __('Main sidebar for widgets.', 'aio-starter'),
+        'before_widget' => '<section id="%1$s" class="aio-widget %2$s">',
+        'after_widget'  => '</section>',
+        'before_title'  => '<h2>',
+        'after_title'   => '</h2>',
+    ));
 }
 
 add_action('wp_enqueue_scripts', 'aio_starter_assets');
 function aio_starter_assets() {
     wp_enqueue_style('aio-starter-style', get_stylesheet_uri(), array(), AIO_STARTER_VERSION);
     wp_enqueue_script('aio-starter-main', AIO_STARTER_URI . '/assets/js/main.js', array(), AIO_STARTER_VERSION, true);
+
+    if (is_singular() && comments_open() && get_option('thread_comments')) {
+        wp_enqueue_script('comment-reply');
+    }
 }
 
 add_filter('body_class', 'aio_starter_body_classes');
@@ -71,6 +85,9 @@ function aio_starter_image_attributes($attr) {
     if (empty($attr['decoding'])) {
         $attr['decoding'] = 'async';
     }
+    if (!empty($attr['class']) && false === strpos($attr['class'], 'aio-responsive-image')) {
+        $attr['class'] .= ' aio-responsive-image';
+    }
     return $attr;
 }
 
@@ -86,6 +103,15 @@ function aio_starter_head_meta() {
         echo '<meta property="og:type" content="article">' . "\n";
         echo '<meta property="og:title" content="' . esc_attr(get_the_title($post)) . '">' . "\n";
         echo '<meta property="og:url" content="' . esc_url(get_permalink($post)) . '">' . "\n";
+        $excerpt = aio_starter_excerpt($post, 160);
+        if ($excerpt) {
+            echo '<meta name="description" content="' . esc_attr($excerpt) . '">' . "\n";
+            echo '<meta property="og:description" content="' . esc_attr($excerpt) . '">' . "\n";
+            echo '<meta name="twitter:description" content="' . esc_attr($excerpt) . '">' . "\n";
+        }
+        if (has_post_thumbnail($post)) {
+            echo '<meta property="og:image" content="' . esc_url(get_the_post_thumbnail_url($post, 'large')) . '">' . "\n";
+        }
         echo '<meta name="twitter:card" content="summary_large_image">' . "\n";
     }
 }

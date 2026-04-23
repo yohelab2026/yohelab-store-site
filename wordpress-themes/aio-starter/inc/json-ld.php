@@ -20,6 +20,22 @@ function aio_starter_json_ld() {
         ),
     );
 
+    $publisher = array(
+        '@type' => 'Organization',
+        'name'  => get_bloginfo('name'),
+    );
+
+    $logo_id = get_theme_mod('custom_logo');
+    if ($logo_id) {
+        $logo = wp_get_attachment_image_src($logo_id, 'full');
+        if (!empty($logo[0])) {
+            $publisher['logo'] = array(
+                '@type' => 'ImageObject',
+                'url'   => $logo[0],
+            );
+        }
+    }
+
     if (is_singular()) {
         $post = get_post();
         $author_id = (int) $post->post_author;
@@ -39,8 +55,13 @@ function aio_starter_json_ld() {
             'datePublished' => get_the_date(DATE_W3C, $post),
             'dateModified'  => get_the_modified_date(DATE_W3C, $post),
             'author'        => array('@id' => get_author_posts_url($author_id) . '#person'),
+            'publisher'     => $publisher,
             'mainEntityOfPage' => get_permalink($post),
         );
+
+        if (has_post_thumbnail($post)) {
+            $graph[count($graph) - 1]['image'] = wp_get_attachment_image_url(get_post_thumbnail_id($post), 'large');
+        }
 
         $graph[] = aio_starter_breadcrumb_schema($post);
 
