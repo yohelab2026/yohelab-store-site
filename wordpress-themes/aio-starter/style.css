@@ -288,6 +288,61 @@ a {
   padding-left: 20px;
 }
 
+/* パンくずリスト */
+.aio-breadcrumb {
+  padding: 10px 0 0;
+}
+
+.aio-bc-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 13px;
+  color: var(--aio-muted);
+}
+
+.aio-bc-item a {
+  color: var(--aio-muted);
+  text-decoration: none;
+}
+
+.aio-bc-item a:hover {
+  color: var(--aio-green-dark);
+  text-decoration: underline;
+}
+
+.aio-bc-current {
+  color: var(--aio-text);
+  font-weight: 700;
+}
+
+/* ボタン共通 */
+.aio-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 24px;
+  border-radius: 12px;
+  background: var(--aio-green);
+  color: #fff;
+  font-weight: 800;
+  font-size: 15px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: background .15s;
+}
+
+.aio-btn:hover,
+.aio-btn:focus-visible {
+  background: var(--aio-green-dark);
+  color: #fff;
+}
+
 .aio-footer {
   padding: 36px 0;
   border-top: 1px solid var(--aio-line);

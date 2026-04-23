@@ -91,3 +91,66 @@ function aio_starter_normalize_hex_color($value, $default) {
     $color = sanitize_hex_color($value);
     return $color ?: $default;
 }
+
+/**
+ * パンくずリストのHTML出力（AIO・アクセシビリティ対応）
+ */
+function aio_starter_breadcrumb_html() {
+    if (is_front_page()) {
+        return;
+    }
+
+    $items = array();
+
+    // ホーム
+    $items[] = '<li class="aio-bc-item"><a href="' . esc_url(home_url('/')) . '">'
+        . esc_html(get_bloginfo('name')) . '</a></li>';
+
+    if (is_singular('post')) {
+        $cats = get_the_category();
+        if ($cats) {
+            $cat = $cats[0];
+            $items[] = '<li class="aio-bc-item" aria-hidden="true">›</li>'
+                . '<li class="aio-bc-item"><a href="' . esc_url(get_category_link($cat)) . '">'
+                . esc_html($cat->name) . '</a></li>';
+        }
+        $items[] = '<li class="aio-bc-item" aria-hidden="true">›</li>'
+            . '<li class="aio-bc-item aio-bc-current" aria-current="page">'
+            . esc_html(get_the_title()) . '</li>';
+
+    } elseif (is_page()) {
+        // 親ページがあれば表示
+        global $post;
+        if ($post->post_parent) {
+            $ancestors = array_reverse(get_post_ancestors($post->ID));
+            foreach ($ancestors as $ancestor_id) {
+                $items[] = '<li class="aio-bc-item" aria-hidden="true">›</li>'
+                    . '<li class="aio-bc-item"><a href="' . esc_url(get_permalink($ancestor_id)) . '">'
+                    . esc_html(get_the_title($ancestor_id)) . '</a></li>';
+            }
+        }
+        $items[] = '<li class="aio-bc-item" aria-hidden="true">›</li>'
+            . '<li class="aio-bc-item aio-bc-current" aria-current="page">'
+            . esc_html(get_the_title()) . '</li>';
+
+    } elseif (is_category()) {
+        $items[] = '<li class="aio-bc-item" aria-hidden="true">›</li>'
+            . '<li class="aio-bc-item aio-bc-current" aria-current="page">'
+            . esc_html(single_cat_title('', false)) . '</li>';
+
+    } elseif (is_archive()) {
+        $items[] = '<li class="aio-bc-item" aria-hidden="true">›</li>'
+            . '<li class="aio-bc-item aio-bc-current" aria-current="page">'
+            . esc_html(get_the_archive_title()) . '</li>';
+
+    } elseif (is_search()) {
+        $items[] = '<li class="aio-bc-item" aria-hidden="true">›</li>'
+            . '<li class="aio-bc-item aio-bc-current" aria-current="page">検索結果: '
+            . esc_html(get_search_query()) . '</li>';
+    }
+
+    echo '<nav class="aio-breadcrumb" aria-label="パンくずリスト">'
+        . '<ol class="aio-bc-list">'
+        . implode('', $items)
+        . '</ol></nav>';
+}

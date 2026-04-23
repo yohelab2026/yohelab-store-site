@@ -8,6 +8,7 @@
 get_header();
 ?>
 <main id="content">
+  <div class="aio-wrap"><?php aio_starter_breadcrumb_html(); ?></div>
   <div class="aio-wrap aio-main">
     <div class="aio-content">
       <?php while (have_posts()) : the_post(); ?>

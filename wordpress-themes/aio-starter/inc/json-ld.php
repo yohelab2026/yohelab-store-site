@@ -11,14 +11,29 @@ if (!defined('ABSPATH')) {
 
 add_action('wp_head', 'aio_starter_json_ld', 30);
 function aio_starter_json_ld() {
-    $graph = array(
-        array(
-            '@type' => 'WebSite',
-            '@id'   => home_url('/#website'),
-            'url'   => home_url('/'),
-            'name'  => get_bloginfo('name'),
+    $site_name = get_bloginfo('name');
+    $site_desc = get_bloginfo('description');
+
+    $website = array(
+        '@type' => 'WebSite',
+        '@id'   => home_url('/#website'),
+        'url'   => home_url('/'),
+        'name'  => $site_name,
+        // AIO・LLMがサイト概要を把握しやすくする
+        'potentialAction' => array(
+            '@type'       => 'SearchAction',
+            'target'      => array(
+                '@type'       => 'EntryPoint',
+                'urlTemplate' => home_url('/?s={search_term_string}'),
+            ),
+            'query-input' => 'required name=search_term_string',
         ),
     );
+    if ($site_desc) {
+        $website['description'] = $site_desc;
+    }
+
+    $graph = array($website);
 
     $publisher = array(
         '@type' => 'Organization',

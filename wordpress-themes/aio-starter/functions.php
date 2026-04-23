@@ -108,6 +108,7 @@ function aio_starter_image_attributes($attr) {
 
 add_action('wp_head', 'aio_starter_head_meta', 4);
 function aio_starter_head_meta() {
+    // Google Search Console 認証
     $gsc = aio_starter_get_option('gsc_verification', '');
     if ($gsc) {
         echo '<meta name="google-site-verification" content="' . esc_attr($gsc) . '">' . "\n";
@@ -115,19 +116,66 @@ function aio_starter_head_meta() {
 
     if (is_singular()) {
         global $post;
-        echo '<meta property="og:type" content="article">' . "\n";
-        echo '<meta property="og:title" content="' . esc_attr(get_the_title($post)) . '">' . "\n";
-        echo '<meta property="og:url" content="' . esc_url(get_permalink($post)) . '">' . "\n";
+        $title   = get_the_title($post);
+        $url     = get_permalink($post);
         $excerpt = aio_starter_excerpt($post, 160);
+
+        // meta description
         if ($excerpt) {
             echo '<meta name="description" content="' . esc_attr($excerpt) . '">' . "\n";
+        }
+
+        // OGP
+        echo '<meta property="og:type" content="article">' . "\n";
+        echo '<meta property="og:title" content="' . esc_attr($title) . '">' . "\n";
+        echo '<meta property="og:url" content="' . esc_url($url) . '">' . "\n";
+        echo '<meta property="og:locale" content="ja_JP">' . "\n";
+        if ($excerpt) {
             echo '<meta property="og:description" content="' . esc_attr($excerpt) . '">' . "\n";
+        }
+
+        // og:image — アイキャッチ → サイトアイコン の順でフォールバック
+        $img_url = '';
+        if (has_post_thumbnail($post)) {
+            $img_url = (string) get_the_post_thumbnail_url($post, 'large');
+        }
+        if (!$img_url) {
+            $img_url = (string) get_site_icon_url(512);
+        }
+        if ($img_url) {
+            echo '<meta property="og:image" content="' . esc_url($img_url) . '">' . "\n";
+        }
+
+        // twitter:card — 画像ありなら large_image、なければ summary
+        $card = $img_url ? 'summary_large_image' : 'summary';
+        echo '<meta name="twitter:card" content="' . esc_attr($card) . '">' . "\n";
+        echo '<meta name="twitter:title" content="' . esc_attr($title) . '">' . "\n";
+        if ($excerpt) {
             echo '<meta name="twitter:description" content="' . esc_attr($excerpt) . '">' . "\n";
         }
-        if (has_post_thumbnail($post)) {
-            echo '<meta property="og:image" content="' . esc_url(get_the_post_thumbnail_url($post, 'large')) . '">' . "\n";
+        if ($img_url) {
+            echo '<meta name="twitter:image" content="' . esc_url($img_url) . '">' . "\n";
         }
-        echo '<meta name="twitter:card" content="summary_large_image">' . "\n";
+
+    } elseif (is_front_page() || is_home()) {
+        $name = get_bloginfo('name');
+        $desc = get_bloginfo('description');
+        $url  = home_url('/');
+        if ($desc) {
+            echo '<meta name="description" content="' . esc_attr($desc) . '">' . "\n";
+        }
+        echo '<meta property="og:type" content="website">' . "\n";
+        echo '<meta property="og:title" content="' . esc_attr($name) . '">' . "\n";
+        echo '<meta property="og:url" content="' . esc_url($url) . '">' . "\n";
+        echo '<meta property="og:locale" content="ja_JP">' . "\n";
+        if ($desc) {
+            echo '<meta property="og:description" content="' . esc_attr($desc) . '">' . "\n";
+        }
+        $icon = (string) get_site_icon_url(512);
+        if ($icon) {
+            echo '<meta property="og:image" content="' . esc_url($icon) . '">' . "\n";
+        }
+        echo '<meta name="twitter:card" content="summary">' . "\n";
     }
 }
 
