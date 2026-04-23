@@ -31,6 +31,8 @@ function aio_starter_sanitize_options($input) {
     $input = is_array($input) ? $input : array();
     return array(
         'color_preset'       => in_array($input['color_preset'] ?? 'green', array('green', 'light', 'dark'), true) ? $input['color_preset'] : 'green',
+        'main_color'         => aio_starter_normalize_hex_color($input['main_color'] ?? '#0d8f72', '#0d8f72'),
+        'text_color'         => aio_starter_normalize_hex_color($input['text_color'] ?? '#0b1220', '#0b1220'),
         'ga4_id'             => sanitize_text_field($input['ga4_id'] ?? ''),
         'gsc_verification'   => sanitize_text_field($input['gsc_verification'] ?? ''),
         'internal_analytics' => !empty($input['internal_analytics']) ? '1' : '0',
@@ -44,7 +46,7 @@ function aio_starter_settings_page() {
     ?>
     <div class="wrap">
       <h1>AIO Starter</h1>
-      <p>初心者向けに、AIOの土台、軽量解析、llms.txt、外部計測IDをまとめて設定します。</p>
+        <p>初心者向けに、AIOの土台、軽量解析、llms.txt、外部計測IDをまとめて設定します。</p>
       <form method="post" action="options.php">
         <?php settings_fields('aio_starter_options_group'); ?>
         <table class="form-table" role="presentation">
@@ -56,6 +58,20 @@ function aio_starter_settings_page() {
                 <option value="light" <?php selected($options['color_preset'], 'light'); ?>>Light</option>
                 <option value="dark" <?php selected($options['color_preset'], 'dark'); ?>>Dark</option>
               </select>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row"><label for="aio-main-color">メインカラー</label></th>
+            <td>
+              <input id="aio-main-color" type="color" name="aio_starter_options[main_color]" value="<?php echo esc_attr($options['main_color']); ?>">
+              <p class="description">ボタン、リンク、見出しアクセントに使う色。</p>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row"><label for="aio-text-color">文字色</label></th>
+            <td>
+              <input id="aio-text-color" type="color" name="aio_starter_options[text_color]" value="<?php echo esc_attr($options['text_color']); ?>">
+              <p class="description">本文やタイトルの基本色。</p>
             </td>
           </tr>
           <tr>

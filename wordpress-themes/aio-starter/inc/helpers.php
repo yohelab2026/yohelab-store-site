@@ -12,6 +12,8 @@ if (!defined('ABSPATH')) {
 function aio_starter_get_options() {
     $defaults = array(
         'color_preset'       => 'green',
+        'main_color'         => '#0d8f72',
+        'text_color'         => '#0b1220',
         'ga4_id'             => '',
         'gsc_verification'   => '',
         'internal_analytics' => '1',
@@ -36,4 +38,40 @@ function aio_starter_excerpt($post_id = null, $length = 140) {
 
     $text = has_excerpt($post) ? get_the_excerpt($post) : wp_strip_all_tags(strip_shortcodes($post->post_content));
     return mb_substr(trim(preg_replace('/\s+/u', ' ', $text)), 0, $length);
+}
+
+function aio_starter_hex_to_rgb($hex) {
+    $hex = ltrim((string) $hex, '#');
+    if (strlen($hex) === 3) {
+        $hex = $hex[0] . $hex[0] . $hex[1] . $hex[1] . $hex[2] . $hex[2];
+    }
+
+    if (strlen($hex) !== 6) {
+        return null;
+    }
+
+    return array(
+        hexdec(substr($hex, 0, 2)),
+        hexdec(substr($hex, 2, 2)),
+        hexdec(substr($hex, 4, 2)),
+    );
+}
+
+function aio_starter_adjust_color($hex, $ratio = 0.8) {
+    $rgb = aio_starter_hex_to_rgb($hex);
+    if (!$rgb) {
+        return $hex;
+    }
+
+    $ratio = max(0, min(1, (float) $ratio));
+    $rgb = array_map(static function ($value) use ($ratio) {
+        return max(0, min(255, (int) round($value * $ratio)));
+    }, $rgb);
+
+    return sprintf('#%02x%02x%02x', $rgb[0], $rgb[1], $rgb[2]);
+}
+
+function aio_starter_normalize_hex_color($value, $default) {
+    $color = sanitize_hex_color($value);
+    return $color ?: $default;
 }
