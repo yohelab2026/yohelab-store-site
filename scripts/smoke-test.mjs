@@ -45,7 +45,7 @@ checks.push(["home links research writer lp", home.includes('/lp/research-writer
 checks.push(["home no legacy tool links", legacyPaths.every((path) => !home.includes(path))]);
 
 const lpResearchWriter = read(dist("lp/research-writer/index.html"));
-checks.push(["lp research writer title", lpResearchWriter.includes('AIOに引用される記事を作る | よへラボ')]);
+checks.push(["lp research writer title", lpResearchWriter.includes('AIOに読まれやすい記事を作る | よへラボ')]);
 checks.push(["lp research writer free", lpResearchWriter.includes('無料版を試す')]);
 
 const researchApp = read(dist("apps/research-writer/index.html"));
@@ -64,7 +64,7 @@ checks.push(["wp app plugin reduction", wpApp.includes('プラグインを増や
 checks.push(["wp app starter download", wpApp.includes('/downloads/aio-starter.zip') && existsSync(dist("downloads/aio-starter.zip"))]);
 
 const wpProduct = read(dist("products/wordpress-theme-beta/index.html"));
-checks.push(["wp product title", wpProduct.includes('AIO対応WordPressテーマ プロプラン')]);
+checks.push(["wp product title", wpProduct.includes('AIO対応WordPressテーマ 用途別ライン')]);
 checks.push(["wp product analytics", wpProduct.includes('テーマ内解析') && wpProduct.includes('外部解析')]);
 checks.push(["wp product price pending", wpProduct.includes('価格未定')]);
 
@@ -76,7 +76,11 @@ checks.push(["contact no legacy tools", legacyLabels.every((label) => !contact.i
 const sitemap = read(dist("sitemap.xml"));
 checks.push(["sitemap includes research writer", sitemap.includes('https://yohelab.com/lp/research-writer/')]);
 checks.push(["sitemap excludes legacy apps", legacyPaths.every((path) => !sitemap.includes(path))]);
+checks.push(["sitemap excludes removed labs", !sitemap.includes('https://yohelab.com/labs/')]);
 checks.push(["sitemap includes all game pages", ["reaction", "typing", "math-rush", "sequence"].every((slug) => sitemap.includes(`https://yohelab.com/games/${slug}/`))]);
+
+const gameScript = read(dist("shared/arcade-game.js"));
+checks.push(["game share keeps result data", gameScript.includes('searchParams.set("score"') && gameScript.includes('searchParams.set("result"')]);
 
 const ent = read(src("functions/lib/entitlements.js"));
 checks.push(["entitlement keeps research writer", ent.includes('"research-writer"')]);

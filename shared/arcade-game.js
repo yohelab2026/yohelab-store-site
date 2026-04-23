@@ -31,6 +31,13 @@
   const rand = (min, max) => Math.random() * (max - min) + min;
   const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
   const shuffle = (arr) => arr.map((v) => [Math.random(), v]).sort((a, b) => a[0] - b[0]).map((x) => x[1]);
+  const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (ch) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;",
+  }[ch]));
   const lanes = 3;
   const laneX = (lane) => ((lane + 0.5) / lanes) * W();
 
@@ -93,7 +100,7 @@
       const rawText = cfg.shareText
         ? cfg.shareText.replace("{score}", score).replace("{result}", message)
         : fallback;
-      const gameUrl = cfg.shareUrl || `${location.origin}/games/${cfg.slug}/`;
+      const gameUrl = buildResultUrl(score, message, win);
       const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(rawText + "\n" + gameUrl)}`;
 
       // Score display label
@@ -136,6 +143,34 @@
     // Hide ad slot on reset
     const adSlot = document.getElementById("adSlotGameover");
     if (adSlot) adSlot.style.display = "none";
+  }
+
+  function buildResultUrl(finalScore, message, win) {
+    const base = cfg.shareUrl || `${location.origin}/games/${cfg.slug}/`;
+    const url = new URL(base, location.origin);
+    url.searchParams.set("score", String(finalScore));
+    url.searchParams.set("result", message);
+    url.searchParams.set("clear", win ? "1" : "0");
+    return url.toString();
+  }
+
+  function showSharedResult() {
+    if (!touchPad || !location.search) return;
+    const params = new URLSearchParams(location.search);
+    const sharedScore = params.get("score");
+    const sharedResult = params.get("result");
+    if (!sharedScore && !sharedResult) return;
+    const gameName = document.title.split("|")[0].trim() || "ブラウザゲーム";
+    const wrap = document.createElement("div");
+    wrap.className = "share-result-wrap";
+    wrap.innerHTML = `
+      <div class="share-result-score">
+        <strong>${escapeHtml(gameName)} の結果</strong>
+        ${sharedScore ? `スコア ${escapeHtml(sharedScore)}` : ""}
+        ${sharedResult ? `<br>${escapeHtml(sharedResult)}` : ""}
+      </div>
+    `;
+    touchPad.appendChild(wrap);
   }
 
   function startLoop(fn) {
@@ -888,4 +923,5 @@
   setHints(cfg.hints || []);
   setStats();
   setStatus(cfg.startText || "スタートを押して開始");
+  showSharedResult();
 })();
