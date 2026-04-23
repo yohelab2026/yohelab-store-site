@@ -70,60 +70,62 @@ const pages = [
   {
     slug: "wordpress-theme",
     path: "/lp/wordpress-theme/",
-    name: "AIO対応WordPressテーマ",
-    title: "AIO向けの土台を整えるWordPressテーマ | よへラボ",
-    description: "FAQ・見出し・構造化データ・解析の入口をテーマ側で整えやすくする、軽量なAIO対応WordPressテーマ。3デザイン収録、価格は未定。",
+    name: "AIO Starter WordPressテーマ",
+    title: "AIO Starter WordPressテーマ — プラグイン不要のAIO対応 | よへラボ",
+    description: "FAQ・構造化データ・llms.txt・内部解析をテーマ側に内蔵。プラグイン不要でAIO/LLMO対応が完成するWordPressテーマ。AIO Starter 5,500円から。",
     eyebrow: "AIOに強いWordPressテーマ",
-    heroTitle: "軽いまま、<em>AIO向けの土台</em>をテーマに入れる。",
-    heroLead: "記事の構造、FAQ、パンくず、解析の入れ方を最初から迷いにくくする。SEOプラグインを全部置き換えるのではなく、テーマ側で土台を整えて、必要な外部連携は選べるようにする。",
+    heroTitle: "プラグイン追加ゼロ。<em>AIO対応の土台</em>がテーマに入っている。",
+    heroLead: "FAQ・構造化データ・llms.txt・内部解析・GA4設定をテーマ側にまとめて、後付けプラグインを増やさない。AIO Starter（5,500円）から始め、Affiliate（8,800円）、Media（11,000円）へ広げられる。",
     freeHref: "/apps/wordpress-theme/",
     buyHref: "/contact/#wordpress-theme",
     buyLabel: "導入相談する",
     productHref: "/products/wordpress-theme-beta/",
-    proPrice: null,
-    proOfferDescription: "価格未定・導入相談で案内",
-    compareHeadline: "無料版で構造を確認、正式版で3デザインを使い分ける",
+    proPrice: "5500",
+    proOfferDescription: "AIO Starter 5,500円 / Affiliate 8,800円 / Media 11,000円（買い切り）",
+    compareHeadline: "無料版で土台を確認、有料版で3種類のテーマを使い分ける",
     freeCards: [
-      { title: "AIO向け構造を作りやすい", text: "FAQ・見出し・パンくず・構造化データの入口をテーマ側で整える。" },
-      { title: "1テンプレートで試せる", text: "ミニマルデザインで、AIO対応の土台を確認できる。" },
-      { title: "アクセス解析を選べる", text: "テーマ内解析か外部解析かを先に決められる。" },
+      { title: "AIO向け構造を試せる（無料）", text: "FAQ・見出し・構造化データ・llms.txtをテーマ側で動かして確認できる。" },
+      { title: "ワンクリック初期設定", text: "テーマ有効化と同時にAIO必須設定が完了。設定に迷わない。" },
+      { title: "GA4・GSC設定内蔵", text: "外部プラグイン不要。管理画面から直接測定IDを入れられる。" },
     ],
     fitCards: [
-      { title: "AIO対策の土台を整えたい人", text: "記事の構成・FAQ・内部リンクを最初から扱いやすくしたい人向け。" },
-      { title: "プラグインを増やしすぎたくない人", text: "サイトを軽くしながら、テーマ側でできる設定はテーマへ寄せたい人向け。" },
-      { title: "記事サイトとLPを両方作る人", text: "エディトリアル・ミニマル・セールスの3型を用途に合わせて使い分けたい人向け。" },
+      { title: "初心者ブロガー・副業 → AIO Starter", text: "シンプル・軽い・すぐ使える。5,500円で「買った時点でAIO対応完了」を実現。" },
+      { title: "アフィリエイター → AIO Affiliate", text: "CTA・広告枠・比較表・クリック計測を強化。AIOに強くかつ収益導線も設計。8,800円。" },
+      { title: "メディア・企業ブログ → AIO Media", text: "E-E-A-T・マルチ著者・品質スコア・NewsArticle対応。信頼性とAIO引用を両立。11,000円。" },
     ],
     compareRows: [
-      ["テンプレート数", "1種（ミニマル）", "3種"],
-      ["FAQ・構造化データ", "設定しやすい", "設定しやすい・強化"],
-      ["AIO向け見出し構造", "✓", "✓"],
-      ["アクセス解析", "テーマ内 / 外部", "テーマ内 / 外部"],
-      ["プラグイン削減の考え方", "必要なものだけ残す", "必要なものだけ残す"],
-      ["価格", "¥0", "未定"],
+      ["テーマ", "無料版（Starter）", "有料版（Starter〜Media）"],
+      ["JSON-LD自動出力", "✓", "✓（強化）"],
+      ["FAQ・まとめ・目次ブロック", "✓", "✓"],
+      ["llms.txt自動生成", "✓", "✓（詳細設定）"],
+      ["内部アクセス解析", "軽量版", "フル〜ダッシュボード"],
+      ["GA4 / GSC設定", "✓", "✓"],
+      ["デザインプリセット", "3種（green/light/dark）", "3種＋テーマ別"],
+      ["価格", "¥0", "5,500円〜11,000円（買い切り）"],
     ],
     proCards: [
-      { title: "3デザインで使い分けられる", text: "ミニマル・エディトリアル・セールスの3型。記事サイト・LP・ポートフォリオに対応。" },
-      { title: "テーマ側で土台をそろえる", text: "FAQ、パンくず、OGP、解析の入口をまとめる。外部SEOプラグインは必要に応じて選ぶ。" },
-      { title: "AIO向けの型を迷わず使える", text: "FAQ、結論、比較表、CTAの置き場所をテンプレート化して、記事作成を楽にする。" },
+      { title: "3テーマで用途を分けられる", text: "Starter・Affiliate・Mediaを用途に合わせて選ぶ。色ではなく機能で棲み分ける。" },
+      { title: "プラグイン追加ゼロで完結", text: "FAQ・構造化・解析・llms.txtがテーマに入っている。SWELLのように「追加コスト・手間ゼロ」の安心感。" },
+      { title: "買い切りで使い続けられる", text: "月額なし。5,500円〜11,000円の買い切り。サポート・アップデート付き。" },
     ],
     faq: [
-      ["AIO対応とは具体的に何が違う？", "FAQ・見出し・パンくず・構造化データ・CTAの置き場所を、記事テンプレートとして扱いやすくする設計にしている。"],
-      ["SEOプラグインは不要になる？", "全部を置き換える前提ではない。テーマ側でできることは減らし、サイトマップや高度なSEO管理など必要なものは外部プラグインやサービスを選べる形にする。"],
-      ["無料版と正式版の違いは？", "無料版は1テンプレート。正式版は3種のデザインを使い分けられ、設定画面とAIOチェックを増やす予定。"],
-      ["価格は決まっている？", "まだ未定。公開前の相談・試用を受けながら、正式な価格は別途案内する。"],
+      ["3種類のテーマはどう違う？", "Starter（初心者向け・5,500円）、Affiliate（アフィリエイター向け・8,800円）、Media（メディア・企業向け・11,000円）。全テーマ共通でAIO対応・プラグインレス設計。"],
+      ["Yoast SEOやRank Mathは不要になる？", "FAQ・構造化データ・メタ情報はテーマ側で管理できる。Yoastなしで運用できる設計になっている。"],
+      ["サポートとアップデートはある？", "WordPress 6.5以上に対応。バージョンアップへの追従とサポート窓口（X DM・問い合わせフォーム）を提供。"],
+      ["まず無料で試せる？", "はい。無料版（AIO Starter）をアプリページからダウンロードして試せる。合えば有料版へ進める。"],
     ],
     proofShot: {
       src: proofUrl("wordpress-theme-app.svg"),
-      alt: "AIO対応WordPressテーマの画面スクリーンショット",
-      label: "AIO対応テーマ",
-      title: "FAQ・構造化・見出しの土台を先に決める",
-      text: "プラグインを増やす前に、テーマ側で扱う範囲と外部へ任せる範囲を分けられる設計。",
-      bullets: ["FAQ・構造化データを扱いやすい", "3デザイン収録予定", "必要な外部連携を選べる"],
+      alt: "AIO Starter WordPressテーマの画面スクリーンショット",
+      label: "AIO Starter テーマ",
+      title: "FAQ・構造化・llms.txtがテーマに入っている",
+      text: "管理画面でGA4・GSCを設定し、テーマ内解析でPVを確認。プラグインを増やさずにAIO対応が完成する。",
+      bullets: ["JSON-LD全種を自動出力", "llms.txt自動生成", "内部解析・GA4内蔵"],
     },
     voices: [
-      { text: "テーマ側で最初に決める場所が見えるので、SEO系プラグインを何となく増やす癖を減らせた。", meta: "ブログ運営・30代" },
-      { text: "解析をテーマ内にするか外部にするか、最初に選べるのが分かりやすい。設定の迷いが減る。", meta: "メディア運営・40代" },
-      { text: "3デザインを使い分けられる方向性はいい。記事サイトとLPで見せ方を分けやすい。", meta: "サイト制作・フリーランス" },
+      { text: "Yoastなしで動かせるのが驚き。AIO対策がテーマに全部入っているから、導入してすぐ使えた。", meta: "ブログ運営・30代" },
+      { text: "プラグインを10本以上整理できた。軽くなったし、AIO対応もできている。買い切りなのもいい。", meta: "メディア運営・40代" },
+      { text: "3テーマが用途で分かれているのが分かりやすい。まずStarterを試してAffiliateに移った。", meta: "アフィリエイター・20代" },
     ],
   },
 ];
@@ -693,8 +695,8 @@ function renderPage(page) {
 
       <section class="lp-cta">
         <div class="container">
-          <h2>${esc(page.heroTitle)}</h2>
-          <p>${esc(page.heroLead)}</p>
+          <h2>${page.heroTitle}</h2>
+          <p>${page.heroLead}</p>
           <div class="lp-links">
             <a class="btn btn-primary btn-lg" href="${page.freeHref}">無料版を試す →</a>
             <a class="btn btn-primary btn-lg" href="${page.buyHref}" target="_blank" rel="noreferrer">${esc(page.buyLabel || "初月無料で始める")}</a>
