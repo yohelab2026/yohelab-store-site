@@ -60,7 +60,8 @@ checks.push(["research product price", researchProduct.includes('¥1,980')]);
 const wpApp = read(dist("apps/wordpress-theme/index.html"));
 checks.push(["wp app title", wpApp.includes('AIO対応WordPressテーマ')]);
 checks.push(["wp app analytics", wpApp.includes('テーマ内解析') && wpApp.includes('外部解析')]);
-checks.push(["wp app plugin reduction", wpApp.includes('プラグイン削減')]);
+checks.push(["wp app plugin reduction", wpApp.includes('プラグインを増やしすぎない') || wpApp.includes('プラグイン追加ゼロ')]);
+checks.push(["wp app starter download", wpApp.includes('/downloads/aio-starter.zip') && existsSync(dist("downloads/aio-starter.zip"))]);
 
 const wpProduct = read(dist("products/wordpress-theme-beta/index.html"));
 checks.push(["wp product title", wpProduct.includes('AIO対応WordPressテーマ プロプラン')]);

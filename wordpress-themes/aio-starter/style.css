@@ -1,0 +1,342 @@
+/*
+Theme Name: AIO Starter
+Theme URI: https://yohelab.com/apps/wordpress-theme/
+Author: YoheLab
+Author URI: https://yohelab.com/
+Description: A lightweight WordPress theme for beginner bloggers who want AIO/LLMO-ready structure, FAQ schema, author signals, llms.txt, and simple internal analytics without adding many plugins.
+Version: 0.1.0
+Requires at least: 6.5
+Tested up to: 6.8
+Requires PHP: 8.0
+License: GNU General Public License v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: aio-starter
+Tags: blog, custom-colors, custom-logo, editor-style, featured-images, block-patterns
+*/
+
+:root {
+  --aio-bg: #f7faf8;
+  --aio-surface: #ffffff;
+  --aio-text: #0b1220;
+  --aio-muted: #536174;
+  --aio-line: #dce7e1;
+  --aio-green: #0d8f72;
+  --aio-green-dark: #075c4c;
+  --aio-green-soft: #e6f8f2;
+  --aio-shadow: 0 20px 60px rgba(10, 30, 24, .08);
+  --aio-radius: 22px;
+  --aio-content: 760px;
+  --aio-wide: 1120px;
+  --aio-font: "Noto Sans JP", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+}
+
+body.aio-preset-dark {
+  --aio-bg: #07110e;
+  --aio-surface: #0f1f1a;
+  --aio-text: #f7fbf9;
+  --aio-muted: #b8c8c1;
+  --aio-line: #203c33;
+  --aio-green-soft: #102a23;
+  --aio-shadow: 0 20px 60px rgba(0, 0, 0, .22);
+}
+
+body.aio-preset-light {
+  --aio-bg: #fbfaf6;
+  --aio-green: #0f766e;
+  --aio-green-dark: #115e59;
+  --aio-green-soft: #eefaf7;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--aio-bg);
+  color: var(--aio-text);
+  font-family: var(--aio-font);
+  line-height: 1.8;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: var(--aio-green-dark);
+}
+
+.aio-wrap {
+  width: min(var(--aio-wide), calc(100% - 40px));
+  margin: 0 auto;
+}
+
+.aio-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  border-bottom: 1px solid rgba(13, 143, 114, .14);
+  background: color-mix(in srgb, var(--aio-surface) 92%, transparent);
+  backdrop-filter: blur(14px);
+}
+
+.aio-header-inner {
+  min-height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.aio-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--aio-text);
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.aio-brand img {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+}
+
+.aio-nav ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.aio-nav {
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.aio-nav a {
+  color: var(--aio-muted);
+  text-decoration: none;
+}
+
+.aio-hero {
+  padding: 72px 0 48px;
+  background:
+    radial-gradient(ellipse 70% 60% at 50% 0%, rgba(13, 143, 114, .18), transparent 60%),
+    linear-gradient(180deg, var(--aio-bg), transparent);
+}
+
+.aio-hero-card {
+  max-width: 920px;
+  padding: clamp(30px, 6vw, 64px);
+  border: 1px solid var(--aio-line);
+  border-radius: calc(var(--aio-radius) + 8px);
+  background: var(--aio-surface);
+  box-shadow: var(--aio-shadow);
+}
+
+.aio-eyebrow {
+  display: inline-flex;
+  padding: 6px 14px;
+  border: 1px solid color-mix(in srgb, var(--aio-green) 30%, transparent);
+  border-radius: 999px;
+  background: var(--aio-green-soft);
+  color: var(--aio-green-dark);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.aio-title {
+  margin: 18px 0 16px;
+  font-size: clamp(36px, 7vw, 72px);
+  line-height: 1.05;
+  letter-spacing: -.06em;
+}
+
+.aio-lead {
+  max-width: 720px;
+  color: var(--aio-muted);
+  font-size: clamp(16px, 2.2vw, 19px);
+}
+
+.aio-main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 32px;
+  align-items: start;
+  padding: 42px 0 80px;
+}
+
+.aio-content {
+  min-width: 0;
+}
+
+.aio-article {
+  padding: clamp(24px, 5vw, 46px);
+  border: 1px solid var(--aio-line);
+  border-radius: var(--aio-radius);
+  background: var(--aio-surface);
+  box-shadow: var(--aio-shadow);
+}
+
+.aio-article h1,
+.aio-article h2,
+.aio-article h3 {
+  line-height: 1.25;
+  letter-spacing: -.04em;
+}
+
+.aio-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0 0 24px;
+  color: var(--aio-muted);
+  font-size: 13px;
+}
+
+.aio-post-title {
+  margin: 0 0 12px;
+  font-size: clamp(32px, 5vw, 54px);
+}
+
+.aio-entry > * {
+  max-width: var(--aio-content);
+}
+
+.aio-entry > .alignwide {
+  max-width: 100%;
+}
+
+.aio-entry p {
+  margin: 0 0 1.3em;
+}
+
+.aio-entry table {
+  width: 100%;
+  border-collapse: collapse;
+  overflow: hidden;
+}
+
+.aio-entry th,
+.aio-entry td {
+  padding: 12px 14px;
+  border: 1px solid var(--aio-line);
+}
+
+.aio-sidebar {
+  position: sticky;
+  top: 96px;
+  display: grid;
+  gap: 16px;
+}
+
+.aio-widget {
+  padding: 20px;
+  border: 1px solid var(--aio-line);
+  border-radius: 18px;
+  background: var(--aio-surface);
+  box-shadow: var(--aio-shadow);
+}
+
+.aio-widget h2,
+.aio-widget h3 {
+  margin-top: 0;
+  font-size: 16px;
+}
+
+.aio-footer {
+  padding: 36px 0;
+  border-top: 1px solid var(--aio-line);
+  color: var(--aio-muted);
+  font-size: 13px;
+}
+
+.aio-faq {
+  max-width: var(--aio-content);
+  margin: 20px 0;
+  border: 1px solid var(--aio-line);
+  border-radius: 16px;
+  background: var(--aio-surface);
+  overflow: hidden;
+}
+
+.aio-faq summary {
+  cursor: pointer;
+  padding: 16px 18px;
+  font-weight: 900;
+}
+
+.aio-faq-answer {
+  padding: 0 18px 18px;
+  color: var(--aio-muted);
+}
+
+.aio-summary,
+.aio-author-box,
+.aio-compare {
+  max-width: var(--aio-content);
+  margin: 24px 0;
+  padding: 22px;
+  border: 1px solid var(--aio-line);
+  border-radius: 18px;
+  background: var(--aio-green-soft);
+}
+
+.aio-author-box {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  background: var(--aio-surface);
+}
+
+.aio-author-box img {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+}
+
+.aio-compare {
+  overflow-x: auto;
+}
+
+.aio-compare table {
+  min-width: 560px;
+}
+
+@media (max-width: 900px) {
+  .aio-main {
+    grid-template-columns: 1fr;
+  }
+
+  .aio-sidebar {
+    position: static;
+  }
+}
+
+@media (max-width: 640px) {
+  .aio-wrap {
+    width: min(100% - 26px, var(--aio-wide));
+  }
+
+  .aio-header-inner {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 14px 0;
+  }
+
+  .aio-hero {
+    padding: 42px 0 28px;
+  }
+
+  .aio-author-box {
+    display: block;
+  }
+}

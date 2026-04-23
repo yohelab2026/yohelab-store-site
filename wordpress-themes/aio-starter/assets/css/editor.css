@@ -1,0 +1,10 @@
+.editor-styles-wrapper {
+  font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+}
+
+.editor-styles-wrapper .aio-summary,
+.editor-styles-wrapper .aio-faq {
+  border: 1px solid #dce7e1;
+  border-radius: 16px;
+  padding: 16px;
+}
