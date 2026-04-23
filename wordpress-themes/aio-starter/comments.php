@@ -33,9 +33,11 @@ if (post_password_required()) {
     <p class="aio-comments-closed">コメントは終了しました。</p>
   <?php endif; ?>
 
-  <?php comment_form(array(
-      'class_form'    => 'aio-comment-form',
-      'title_reply'   => 'コメントを書く',
-      'comment_field' => '<p class="comment-form-comment"><label for="comment">コメント</label><textarea id="comment" name="comment" cols="45" rows="6" required></textarea></p>',
-  )); ?>
+  <?php if (comments_open()) : ?>
+    <?php comment_form(array(
+        'class_form'    => 'aio-comment-form',
+        'title_reply'   => 'コメントを書く',
+        'comment_field' => '<p class="comment-form-comment"><label for="comment">コメント</label><textarea id="comment" name="comment" cols="45" rows="6" required></textarea></p>',
+    )); ?>
+  <?php endif; ?>
 </section>

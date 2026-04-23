@@ -460,6 +460,23 @@ a {
   font-weight: 800;
 }
 
+.aio-search-form {
+  display: flex;
+  gap: 10px;
+  align-items: stretch;
+}
+
+.aio-search-input {
+  flex: 1;
+  min-width: 0;
+  min-height: 44px;
+  padding: 12px 14px;
+  border: 1px solid var(--aio-line);
+  border-radius: 14px;
+  background: var(--aio-surface);
+  color: var(--aio-text);
+}
+
 /* 引用・出典ブロック */
 .aio-blockquote {
   max-width: var(--aio-content);

@@ -46,7 +46,26 @@ function aio_starter_settings_page() {
     ?>
     <div class="wrap">
       <h1>AIO Starter</h1>
-        <p>初心者向けに、AIOの土台、軽量解析、llms.txt、外部計測IDをまとめて設定します。</p>
+      <p>初心者向けに、AIOの土台、軽量解析、llms.txt、外部計測IDをまとめて設定します。</p>
+      <h2>最終確認表</h2>
+      <table class="widefat striped" style="max-width:860px;margin:16px 0 24px;">
+        <thead>
+          <tr>
+            <th>項目</th>
+            <th>状態</th>
+            <th>メモ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>テーマ基本ファイル</td><td>OK</td><td>style.css / functions.php / template群あり</td></tr>
+          <tr><td>ZIP配布</td><td>OK</td><td>downloads と public に同期済み</td></tr>
+          <tr><td>色設定</td><td>OK</td><td>メインカラーと文字色を変更可能</td></tr>
+          <tr><td>JSON-LD / llms.txt</td><td>OK</td><td>Article / Person / Breadcrumb / FAQPage / llms.txt</td></tr>
+          <tr><td>実機WordPress有効化</td><td>未確認</td><td>この環境では実際のWP画面での有効化を未実施</td></tr>
+          <tr><td>Theme Check</td><td>未確認</td><td>WordPress公式のテーマ検査は未実施</td></tr>
+          <tr><td>スマホ実機</td><td>未確認</td><td>レスポンシブCSSはあり、実端末確認は別途必要</td></tr>
+        </tbody>
+      </table>
       <form method="post" action="options.php">
         <?php settings_fields('aio_starter_options_group'); ?>
         <table class="form-table" role="presentation">
