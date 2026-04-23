@@ -62,11 +62,15 @@ checks.push(["wp app title", wpApp.includes('AIO対応WordPressテーマ')]);
 checks.push(["wp app analytics", wpApp.includes('テーマ内解析') && wpApp.includes('外部解析')]);
 checks.push(["wp app plugin reduction", wpApp.includes('プラグインを増やしすぎない') || wpApp.includes('プラグイン追加ゼロ')]);
 checks.push(["wp app starter download", wpApp.includes('/downloads/aio-starter.zip') && existsSync(dist("downloads/aio-starter.zip"))]);
+checks.push(["wp app install guide", wpApp.includes('WordPressに入れる手順') && wpApp.includes('保証しないこと')]);
 
 const wpProduct = read(dist("products/wordpress-theme-beta/index.html"));
 checks.push(["wp product title", wpProduct.includes('AIO対応WordPressテーマ 用途別ライン')]);
 checks.push(["wp product analytics", wpProduct.includes('テーマ内解析') && wpProduct.includes('外部解析')]);
 checks.push(["wp product price pending", wpProduct.includes('価格未定')]);
+checks.push(["wp product support policy", wpProduct.includes('サポートと保証の線引き') && wpProduct.includes('販売前の最終確認表')]);
+
+checks.push(["research product sample and purchase flow", researchProduct.includes('プロプランで返すもの') && researchProduct.includes('申し込み後の流れ')]);
 
 const contact = read(dist("contact/index.html"));
 checks.push(["contact includes research writer", contact.includes('AIO特化リサーチ記事メーカー')]);
