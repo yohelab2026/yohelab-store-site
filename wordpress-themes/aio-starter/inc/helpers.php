@@ -71,6 +71,22 @@ function aio_starter_adjust_color($hex, $ratio = 0.8) {
     return sprintf('#%02x%02x%02x', $rgb[0], $rgb[1], $rgb[2]);
 }
 
+function aio_starter_mix_color($hex, $target = '#ffffff', $ratio = 0.14) {
+    $rgb = aio_starter_hex_to_rgb($hex);
+    $mix = aio_starter_hex_to_rgb($target);
+    if (!$rgb || !$mix) {
+        return $hex;
+    }
+
+    $ratio = max(0, min(1, (float) $ratio));
+    $output = array();
+    foreach ($rgb as $index => $value) {
+        $output[] = (int) round($value * (1 - $ratio) + $mix[$index] * $ratio);
+    }
+
+    return sprintf('#%02x%02x%02x', $output[0], $output[1], $output[2]);
+}
+
 function aio_starter_normalize_hex_color($value, $default) {
     $color = sanitize_hex_color($value);
     return $color ?: $default;

@@ -73,11 +73,13 @@ function aio_starter_assets() {
     $main = aio_starter_normalize_hex_color($options['main_color'] ?? '#0d8f72', '#0d8f72');
     $text = aio_starter_normalize_hex_color($options['text_color'] ?? '#0b1220', '#0b1220');
     $main_dark = aio_starter_adjust_color($main, 0.78);
+    $main_soft = aio_starter_mix_color($main, '#ffffff', 0.86);
 
     $inline = sprintf(
-        ':root{--aio-green:%1$s;--aio-green-dark:%2$s;--aio-green-soft:color-mix(in srgb, %1$s 14%%, white);--aio-text:%3$s;}',
+        ':root{--aio-green:%1$s;--aio-green-dark:%2$s;--aio-green-soft:%3$s;--aio-text:%4$s;}',
         esc_html($main),
         esc_html($main_dark),
+        esc_html($main_soft),
         esc_html($text)
     );
     wp_add_inline_style('aio-starter-style', $inline);
