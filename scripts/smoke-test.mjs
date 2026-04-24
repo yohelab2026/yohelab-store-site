@@ -70,7 +70,8 @@ checks.push(["wp product analytics", wpProduct.includes('テーマ内解析') &&
 checks.push(["wp product price pending", wpProduct.includes('価格未定')]);
 checks.push(["wp product support policy", wpProduct.includes('サポートと保証の線引き') && wpProduct.includes('販売前の最終確認表')]);
 
-checks.push(["research product sample and purchase flow", researchProduct.includes('プロプランで返すもの') && researchProduct.includes('申し込み後の流れ')]);
+checks.push(["research product sample and purchase flow", researchProduct.includes('プロプランで返すもの') && researchProduct.includes('購入後の流れ')]);
+checks.push(["research product checkout cta", researchProduct.includes('/api/checkout?product=research-writer') && researchProduct.includes('1日1セットまで')]);
 
 const contact = read(dist("contact/index.html"));
 checks.push(["contact includes research writer", contact.includes('AIO特化リサーチ記事メーカー')]);
@@ -87,9 +88,11 @@ const gameScript = read(dist("shared/arcade-game.js"));
 checks.push(["game share keeps result data", gameScript.includes('searchParams.set("score"') && gameScript.includes('searchParams.set("result"')]);
 
 const ent = read(src("functions/lib/entitlements.js"));
+const checkout = read(src("functions/api/checkout.js"));
 checks.push(["entitlement keeps research writer", ent.includes('"research-writer"')]);
 checks.push(["entitlement adds wordpress theme", ent.includes('"wordpress-theme"')]);
 checks.push(["entitlement drops legacy tools", !ent.includes(`"${"rad"}${"ar"}"`) && !ent.includes(`"${oldPropToken}-${oldOptimizer}"`) && !ent.includes(`"${"article"}-${"polish"}"` ) && !ent.includes(`"${oldPropToken}"` ) && !ent.includes(`"${"x"}-${"helper"}"` ) && !ent.includes(`"${"ec"}-${"copy"}"` ) && !ent.includes(`"${"aio"}-${"mini"}"` )]);
+checks.push(["checkout function has fallback", checkout.includes('STRIPE_RESEARCH_WRITER_PRICE_ID') && checkout.includes('/contact/#')]);
 
 for (const [name, ok] of checks) {
   assert(ok, `Check failed: ${name}`);

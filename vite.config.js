@@ -43,6 +43,7 @@ export default defineConfig({
         terms: "legal/terms/index.html",
         researchWriter: "apps/research-writer/index.html",
         researchWriterBeta: "products/research-writer-beta/index.html",
+        activatePending: "pro/activate-pending/index.html",
         lpResearchWriter: "lp/research-writer/index.html",
         wordpressTheme: "apps/wordpress-theme/index.html",
         wordpressThemeBeta: "products/wordpress-theme-beta/index.html",

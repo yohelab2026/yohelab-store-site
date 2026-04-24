@@ -13,17 +13,17 @@ const pages = [
     path: "/lp/research-writer/",
     name: "AIO特化リサーチ記事メーカー",
     title: "AIOに読まれやすい記事を作る | よへラボ",
-    description: "GoogleのAI概要（AIO）時代に向けて、3キーワードで最新情報を収集し、見出し・FAQ・出典・WordPress設定まで整えた記事下書きを生成。無料版で1回試して、月額1,980円のプロプランへ。",
+    description: "GoogleのAI概要（AIO）時代に向けて、3キーワードで最新情報を収集し、見出し・FAQ・出典・WordPress設定まで整えた記事下書きを生成。無料版は1日1セット、プロプランは月50セット。",
     eyebrow: "AIOに読まれやすい記事メーカー",
     heroTitle: "SEOだけで止まらない。<em>AIOに読まれやすい記事</em>を作る。",
     heroLead: "GoogleのAI概要やAI Modeでも、基本は通常のSEOと同じく、インデックス可能で信頼できる本文が前提になる。だから最新情報、明確な見出し、FAQ、出典をそろえた記事下書きを、3キーワードから作れるようにした。",
     freeHref: "/apps/research-writer/",
-    buyHref: "/contact/#research-writer",
-    buyLabel: "導入相談する",
+    buyHref: "/api/checkout?product=research-writer",
+    buyLabel: "プロプランを始める",
     productHref: "/products/research-writer-beta/",
     proPrice: "1980",
     proOfferDescription: "月額1,980円・月50回・いつでも解約可",
-    compareHeadline: "無料版で1回、プロプランは比べて選ぶところまで",
+    compareHeadline: "無料版は1日1セット、プロプランは月50セットまで",
     freeCards: [
       { title: "最新情報を自動収集", text: "3キーワードを入れるだけ。Perplexityが最新の情報源を集める。" },
       { title: "AIO向け構造で記事化", text: "見出し・FAQ・結論を先に置く、AIにも人にも読まれやすい構造で出力。" },
@@ -39,7 +39,7 @@ const pages = [
       ["最新情報の収集", "✓", "✓"],
       ["AIO向け構造出力", "✓", "強化版"],
       ["FAQ自動生成", "✓", "✓"],
-      ["利用回数", "1セットまで", "月50セットまで"],
+      ["利用回数", "1日1セットまで", "月50セットまで"],
       ["月額料金", "¥0", "¥1,980"],
     ],
     proCards: [
@@ -50,7 +50,7 @@ const pages = [
     faq: [
       ["AIOとは何ですか？", "ここではGoogleのAI概要（AI Overview）など、検索結果内でAIが回答を要約する流れを指している。表示や引用は保証されないが、通常のSEOと同じく技術要件と本文品質が重要になる。"],
       ["どんな記事がAI検索に読まれやすい？", "インデックス可能で、見出し構造・FAQ・結論・出典が明確な記事。このツールはその下書き構造を作る。"],
-      ["無料版とプロプランの違いは？", "無料版は1セット。プロプランは月50セットまで使えて、AIO向け構造の強化版出力も使える。"],
+      ["無料版とプロプランの違いは？", "無料版は1日1セット。プロプランは月50セットまで使えて、AIO向け構造の強化版出力も使える。"],
       ["いつでも解約できる？", "問い合わせフォームからいつでも解約申請できる。"],
     ],
     proofShot: {
@@ -594,7 +594,7 @@ function renderPage(page) {
             </div>
             <p class="lp-hero-note">無料版で相性を見て、合えばプロプランへ。全部ブラウザでそのまま使える。</p>
             <div class="lp-band">
-              <div class="lp-card"><h3>無料版</h3><p>まず1回試して、返ってくるものを見る。合うかどうかの判断に使う。</p></div>
+              <div class="lp-card"><h3>無料版</h3><p>${page.slug === "research-writer" ? "1日1セットまで試して、返ってくるものを見る。合うかどうかの判断に使う。" : "まず無料版で試して、返ってくるものを見る。合うかどうかの判断に使う。"}</p></div>
               <div class="lp-card"><h3>プロプラン</h3><p>比較や保存まで広げて、毎日の作業を短くする。使い方に合うならそこで続ける。</p></div>
               <div class="lp-card"><h3>導線</h3><p>無料版からそのまま進める。途中で止まりにくい順番にしている。</p></div>
             </div>

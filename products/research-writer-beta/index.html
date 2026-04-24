@@ -4,9 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AIO特化リサーチ記事メーカー プロプラン | よへラボ</title>
-    <meta name="description" content="SEOだけで止まらない時代に、AIOに読まれやすい記事下書きを月50本作れるプロプラン。月額1,980円。" />
+    <meta name="description" content="SEOだけで止まらない時代に、AIOに読まれやすい記事下書きを月50セットまで作れるプロプラン。月額1,980円。" />
     <meta property="og:title" content="AIO特化リサーチ記事メーカー プロプラン | よへラボ" />
-    <meta property="og:description" content="SEOだけで止まらない時代に、AIOに読まれやすい記事下書きを月50本作れるプロプラン。月額1,980円。" />
+    <meta property="og:description" content="SEOだけで止まらない時代に、AIOに読まれやすい記事下書きを月50セットまで作れるプロプラン。月額1,980円。" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="ja_JP" />
     <meta property="og:url" content="https://yohelab.com/products/research-writer-beta/" />
@@ -131,7 +131,7 @@
           <a href="/">トップ</a>
           <a href="/apps/research-writer/">無料で試す</a>
           <a href="/contact/">問い合わせ</a>
-          <a class="btn btn-primary btn-sm" href="/contact/#research-writer">プロプランを申し込む</a>
+          <a class="btn btn-primary btn-sm" href="/api/checkout?product=research-writer">プロプランを始める</a>
         </nav>
       </div>
     </header>
@@ -147,10 +147,10 @@
             <span class="accent">AIOに読まれやすい記事を、量産する時代へ。</span>
           </h1>
           <p class="lead">検索結果の上でAIが答えを要約する場面が増えている。<br>見出し、FAQ、出典が整理された記事が、今の「見つけられやすさ」の土台になる。</p>
-          <p class="sub-note">月額1,980円 ／ 月50本まで ／ いつでも解約できる</p>
+          <p class="sub-note">月額1,980円 ／ 月50セットまで ／ いつでも解約できる</p>
           <div class="pro-hero-actions">
-            <a class="btn btn-white btn-lg" href="/apps/research-writer/">まず無料で1本作る</a>
-            <a class="btn btn-lg" style="color:rgba(255,255,255,.8);border:1.5px solid rgba(255,255,255,.25);" href="/contact/#research-writer">プロプランを申し込む</a>
+            <a class="btn btn-white btn-lg" href="/apps/research-writer/">まず無料で1セット試す</a>
+            <a class="btn btn-lg" style="color:rgba(255,255,255,.8);border:1.5px solid rgba(255,255,255,.25);" href="/api/checkout?product=research-writer">プロプランを始める</a>
           </div>
         </div>
       </section>
@@ -197,7 +197,7 @@
               <div class="prob-icon">🔁</div>
               <h3>記事を量産できない</h3>
               <p>1本に時間がかかりすぎて、本数が増えない。存在感が出ない。</p>
-              <div class="resolve">月50本のペースで回せる</div>
+              <div class="resolve">月50セットのペースで回せる</div>
             </div>
           </div>
         </div>
@@ -299,24 +299,40 @@
 
       <section class="section">
         <div class="container">
+          <p class="section-label">Example</p>
+          <h2 class="section-title">実際の出力イメージ</h2>
+          <div class="benefit-card reveal" style="max-width:860px;margin:0 auto;">
+            <div class="benefit-icon">📝</div>
+            <h3>例：AI検索時代のブログ記事構成</h3>
+            <p><strong>タイトル案：</strong>AI検索時代のSEO対策とは？AIOに読まれやすい記事構成を解説</p>
+            <p><strong>導入：</strong>検索結果でAIが回答を要約する場面が増えています。これからの記事は、順位だけでなく、結論・見出し・FAQ・出典が読み取りやすい形になっているかが重要です。</p>
+            <p><strong>H2構成：</strong>結論 / AIOで読まれやすい記事の条件 / WordPressで設定する項目 / よくある質問</p>
+            <p><strong>WordPress設定：</strong>カテゴリー: SEO・AI活用、タグ: AIO, AI Overview, SEO, 構造化データ、スラッグ: aio-seo-guide</p>
+            <span class="aio-badge">無料版でも出力の型を確認可能</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
           <p class="section-label">After purchase</p>
-          <h2 class="section-title">申し込み後の流れ</h2>
+          <h2 class="section-title">購入後の流れ</h2>
           <div class="flow-steps reveal">
             <div class="flow-step">
               <div class="flow-num">1</div>
-              <h3>フォームから申込み</h3>
-              <p>使いたい内容とメールアドレスを送る。</p>
+              <h3>決済ページへ進む</h3>
+              <p>プロプランのボタンからStripe決済へ進む。未設定時は問い合わせに戻る。</p>
               <div class="flow-arrow">›</div>
             </div>
             <div class="flow-step">
               <div class="flow-num">2</div>
-              <h3>決済・案内を受け取る</h3>
-              <p>月額1,980円の案内と利用開始方法を受け取る。</p>
+              <h3>有効化URLを受け取る</h3>
+              <p>決済後、購入時のメールアドレスに有料版の有効化URLが届く。</p>
               <div class="flow-arrow">›</div>
             </div>
             <div class="flow-step">
               <div class="flow-num">3</div>
-              <h3>月50本まで使う</h3>
+              <h3>月50セットまで使う</h3>
               <p>不要になったら問い合わせフォームから解約できる。</p>
             </div>
           </div>
@@ -337,7 +353,7 @@
               <ul class="plan-list">
                 <li>最新情報のリサーチ</li>
                 <li>候補を選んで記事生成</li>
-                <li class="dim">月1本まで</li>
+                <li class="dim">1日1セットまで</li>
                 <li class="dim">AIO寄せオプション（簡易）</li>
               </ul>
               <a class="btn btn-outline" style="width:100%;height:52px;display:flex;align-items:center;justify-content:center;" href="/apps/research-writer/">無料で試す</a>
@@ -346,19 +362,19 @@
               <span class="plan-tag">プロプラン</span>
               <div class="plan-name">量産する</div>
               <div class="plan-price-big">¥1,980<span>/月</span></div>
-              <p class="plan-trial">月50本まで ／ いつでも解約できる</p>
+              <p class="plan-trial">月50セットまで ／ いつでも解約できる</p>
               <ul class="plan-list">
                 <li>最新情報のリサーチ</li>
                 <li>候補を選んで記事生成</li>
-                <li>月50本まで</li>
+                <li>月50セットまで</li>
                 <li>AIO寄せオプション（フル）</li>
                 <li>SNS投稿も同時生成</li>
                 <li>A/B比較生成</li>
               </ul>
-              <a class="btn btn-primary" style="width:100%;height:52px;display:flex;align-items:center;justify-content:center;" href="/contact/#research-writer">プロプランを申し込む</a>
+              <a class="btn btn-primary" style="width:100%;height:52px;display:flex;align-items:center;justify-content:center;" href="/api/checkout?product=research-writer">プロプランを始める</a>
             </div>
           </div>
-          <p style="text-align:center;margin-top:20px;color:var(--muted);font-size:14px;">まず<a href="/apps/research-writer/" style="color:var(--green);font-weight:700;">無料版で1本作って</a>から申し込むのがおすすめ。</p>
+          <p style="text-align:center;margin-top:20px;color:var(--muted);font-size:14px;">まず<a href="/apps/research-writer/" style="color:var(--green);font-weight:700;">無料版で1日1セット試して</a>から決めるのがおすすめ。</p>
         </div>
       </section>
 
@@ -389,8 +405,8 @@
                 </tr>
                 <tr>
                   <td>月の利用回数</td>
-                  <td class="col-free">1本まで</td>
-                  <td class="col-pro">50本まで</td>
+                  <td class="col-free">1日1セットまで</td>
+                  <td class="col-pro">月50セットまで</td>
                 </tr>
                 <tr>
                   <td>AIO寄せオプション</td>
@@ -422,10 +438,10 @@
       <section class="final-cta">
         <div class="container">
           <h2>書いて終わる記事から、<br><span class="accent">読まれやすい構造の記事</span>へ。</h2>
-          <p>見出し・FAQ・出典まで整えた下書きを、月50本のペースで作り続ける。</p>
+          <p>見出し・FAQ・出典まで整えた下書きを、月50セットのペースで作り続ける。</p>
           <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
-            <a class="btn btn-white btn-lg" href="/apps/research-writer/">まず無料で1本作る</a>
-            <a class="btn btn-lg" style="color:rgba(255,255,255,.8);border:1.5px solid rgba(255,255,255,.25);" href="/contact/#research-writer">プロプランを申し込む</a>
+            <a class="btn btn-white btn-lg" href="/apps/research-writer/">まず無料で1セット試す</a>
+            <a class="btn btn-lg" style="color:rgba(255,255,255,.8);border:1.5px solid rgba(255,255,255,.25);" href="/api/checkout?product=research-writer">プロプランを始める</a>
           </div>
           <p class="final-cta-note">月額1,980円 ／ 違約金なし ／ いつでも解約できる</p>
         </div>
@@ -435,7 +451,7 @@
 
     <div class="sticky-cta">
       <div class="sticky-cta-inner">
-        <a class="btn btn-primary" href="/contact/#research-writer">プロプランを申し込む</a>
+        <a class="btn btn-primary" href="/api/checkout?product=research-writer">プロプランを始める</a>
         <a class="btn btn-outline" href="/apps/research-writer/">まず無料で試す</a>
       </div>
     </div>
