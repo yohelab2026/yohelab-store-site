@@ -47,8 +47,8 @@
     }
     .hero-inner {
       position:relative; z-index:2;
-      width:min(1120px, 100% - 44px); margin:0 auto;
-      display:grid; grid-template-columns:1fr 400px; gap:56px; align-items:center;
+      width:min(1180px, 100% - 44px); margin:0 auto;
+      display:grid; grid-template-columns:1fr 520px; gap:56px; align-items:center;
     }
     .hero-label {
       display:inline-flex; align-items:center; gap:10px;
@@ -87,12 +87,12 @@
     /* Right panel */
     .hero-proof {
       position:relative;
-      padding:18px;
-      border-radius:28px;
-      background:rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.12);
+      padding:14px;
+      border-radius:26px;
+      background:linear-gradient(145deg,rgba(255,255,255,.14),rgba(255,255,255,.045));
+      border:1px solid rgba(255,255,255,.14);
       backdrop-filter:blur(18px);
-      box-shadow:0 22px 60px rgba(0,0,0,.28);
+      box-shadow:0 26px 70px rgba(0,0,0,.34);
     }
     .hero-proof::before {
       content:"";
@@ -103,49 +103,172 @@
       transform:rotate(-2deg);
       z-index:-1;
     }
-    .proof-head {
+    .search-shot {
+      border-radius:18px;
+      overflow:hidden;
+      background:#fff;
+      color:#0f172a;
+      box-shadow:0 14px 38px rgba(2,6,23,.2);
+    }
+    .search-top {
+      display:grid;
+      grid-template-columns:auto 1fr auto;
+      gap:14px;
+      align-items:center;
+      padding:16px 18px 12px;
+      border-bottom:1px solid #e5e7eb;
+    }
+    .search-brand {
+      font-size:20px;
+      font-weight:900;
+      letter-spacing:0;
+    }
+    .search-brand span:nth-child(1){color:#2563eb}
+    .search-brand span:nth-child(2){color:#ef4444}
+    .search-brand span:nth-child(3){color:#f59e0b}
+    .search-brand span:nth-child(4){color:#2563eb}
+    .search-brand span:nth-child(5){color:#16a34a}
+    .search-brand span:nth-child(6){color:#ef4444}
+    .search-box {
+      min-width:0;
+      border:1px solid #dde3ea;
+      box-shadow:0 4px 16px rgba(15,23,42,.1);
+      border-radius:999px;
+      padding:10px 16px;
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:12px;
+      font-size:15px;
+      font-weight:700;
+      color:#111827;
+    }
+    .search-icons { color:#6b7280; font-size:14px; letter-spacing:.28em; white-space:nowrap; }
+    .search-tabs {
+      display:flex;
+      gap:18px;
+      padding:0 18px 10px;
+      color:#6b7280;
+      font-size:12px;
+      font-weight:800;
+      white-space:nowrap;
+      overflow:hidden;
+    }
+    .search-tabs span:nth-child(2) {
+      color:#111827;
+      position:relative;
+    }
+    .search-tabs span:nth-child(2)::after {
+      content:"";
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:-10px;
+      height:3px;
+      background:#111827;
+      border-radius:999px;
+    }
+    .ai-result {
+      padding:22px 24px 20px;
+      border-bottom:1px solid #edf2f7;
+      background:
+        linear-gradient(180deg,#ffffff 0%,#f8fffd 100%);
+    }
+    .ai-kicker {
+      display:flex;
+      align-items:center;
+      gap:8px;
+      color:#0f766e;
+      font-size:13px;
+      font-weight:900;
       margin-bottom:14px;
     }
-    .proof-label {
-      color:rgba(255,255,255,.82);
-      font-size:12px;
-      font-weight:900;
-      letter-spacing:.08em;
+    .ai-kicker::before {
+      content:"";
+      width:15px;
+      height:15px;
+      border-radius:40% 60% 45% 55%;
+      background:linear-gradient(135deg,#2563eb,#10b981);
+      box-shadow:0 0 18px rgba(16,185,129,.32);
     }
-    .proof-pill {
-      font-size:10px;
+    .ai-result h3 {
+      font-size:17px;
+      line-height:1.65;
+      letter-spacing:0;
+      margin:0 0 14px;
       font-weight:900;
-      letter-spacing:.14em;
-      text-transform:uppercase;
+      color:#0f172a;
+    }
+    .ai-result h3 strong { color:#0b8f72; }
+    .ai-list {
+      display:grid;
+      gap:8px;
+      margin:0 0 18px;
+      padding:0;
+      list-style:none;
+      color:#334155;
+      font-size:13px;
+      line-height:1.65;
+      font-weight:700;
+    }
+    .ai-list li {
+      display:grid;
+      grid-template-columns:18px 1fr;
+      gap:8px;
+    }
+    .ai-list li::before {
+      content:"✓";
       color:#0b8f72;
-      background:#e8faf3;
-      border:1px solid #a7e3d0;
-      padding:4px 10px;
+      font-weight:900;
+    }
+    .ai-more {
+      width:100%;
+      border:1.5px solid #93c5fd;
+      color:#1d4ed8;
+      background:#fff;
       border-radius:999px;
+      padding:11px 16px;
+      font-size:13px;
+      font-weight:900;
+      text-align:center;
+    }
+    .organic-card {
+      padding:18px 24px 22px;
+      background:#fff;
+    }
+    .site-line {
+      display:flex;
+      align-items:center;
+      gap:10px;
+      color:#475569;
+      font-size:12px;
+      margin-bottom:6px;
+    }
+    .site-icon {
+      width:28px;
+      height:28px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      background:#e8faf3;
+      color:#0b8f72;
+      font-weight:900;
       flex-shrink:0;
     }
-    .proof-frame {
+    .organic-title {
+      font-size:18px;
+      line-height:1.45;
+      color:#6d28d9;
+      font-weight:900;
+      letter-spacing:0;
+      margin:0 0 6px;
+    }
+    .organic-card p {
       margin:0;
-      border-radius:20px;
-      overflow:hidden;
-      background:#fff;
-      border:1px solid rgba(255,255,255,.12);
-      box-shadow:0 10px 30px rgba(2,6,23,.18);
-    }
-    .proof-frame img {
-      display:block;
-      width:100%;
-      height:auto;
-    }
-    .proof-caption {
-      margin-top:14px;
-      color:rgba(255,255,255,.68);
+      color:#64748b;
       font-size:13px;
       line-height:1.7;
+      font-weight:700;
     }
 
     .scroll-hint {
@@ -350,7 +473,7 @@
     }
     @media(max-width:600px){
       .hero-wrap { padding:90px 0 72px; min-height:auto; }
-      .hero-title { font-size:clamp(40px,12vw,64px); }
+      .hero-title { font-size:clamp(34px,9vw,42px); line-height:1.08; }
       .hero-lead { font-size:15px; }
       .hero-ctas { flex-direction:column; align-items:stretch; }
       .hero-ctas .btn { text-align:center; justify-content:center; }
@@ -366,6 +489,11 @@
       .contact-strip-inner { flex-direction:column; align-items:flex-start; }
       .nav-links a:not(.btn) { display:none; }
       .nav-links { gap:8px; }
+      .search-top { grid-template-columns:1fr; }
+      .search-brand { display:none; }
+      .search-tabs { gap:14px; font-size:11px; }
+      .ai-result { padding:18px; }
+      .organic-card { padding:16px 18px 18px; }
     }
   </style>
 </head>
@@ -417,14 +545,34 @@
         </div>
 
         <div class="hero-proof reveal reveal-d2">
-          <div class="proof-head">
-            <div class="proof-label">AI検索の見え方</div>
-            <div class="proof-pill">SCREENSHOT</div>
+          <div class="search-shot" aria-label="AI検索結果風の表示例">
+            <div class="search-top">
+              <div class="search-brand" aria-hidden="true"><span>S</span><span>e</span><span>a</span><span>r</span><span>c</span><span>h</span></div>
+              <div class="search-box">
+                <span>よへラボ AIO 記事メーカー</span>
+                <span class="search-icons">× ● 🔍</span>
+              </div>
+              <div class="proof-pill">AIO READY</div>
+            </div>
+            <div class="search-tabs" aria-hidden="true">
+              <span>AIモード</span><span>すべて</span><span>画像</span><span>動画</span><span>ニュース</span><span>もっと見る</span>
+            </div>
+            <div class="ai-result">
+              <div class="ai-kicker">AIによる概要</div>
+              <h3>よへラボは、<strong>AIOに読まれやすい記事下書き</strong>を3つのキーワードから作れるツールです。</h3>
+              <ul class="ai-list">
+                <li>最新情報を集めて、使う情報だけを選べる</li>
+                <li>見出し・FAQ・出典を整理した記事構成にする</li>
+                <li>WordPress向けのタグやメタ説明まで一緒に出す</li>
+              </ul>
+              <div class="ai-more">もっと見る</div>
+            </div>
+            <div class="organic-card">
+              <div class="site-line"><span class="site-icon">よ</span><span>yohelab.com</span></div>
+              <h3 class="organic-title">SEOの時代は終わった。AIOで勝つ記事を作れ。</h3>
+              <p>検索の上に答えが出る時代に、クリック前から伝わる記事構成を作る。</p>
+            </div>
           </div>
-          <figure class="proof-frame">
-            <img src="./ai-overview-sample.png" alt="AI検索結果の概要が表示されているスクリーンショット" decoding="async" fetchpriority="high" />
-          </figure>
-          <p class="proof-caption">検索結果の上で答えが先に出る場面を、そのまま見せる。AIO向けの説明画像として使いやすい。</p>
         </div>
       </div>
 
