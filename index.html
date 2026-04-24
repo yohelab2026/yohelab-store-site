@@ -85,29 +85,68 @@
     .hero-trust { display:flex; flex-wrap:wrap; gap:8px 20px; font-size:13px; color:rgba(255,255,255,.35); font-weight:600; }
 
     /* Right panel */
-    .hero-shift {
-      background:rgba(255,255,255,.055); border:1px solid rgba(255,255,255,.1);
-      border-radius:24px; padding:28px; backdrop-filter:blur(16px);
-      display:flex; flex-direction:column; gap:12px;
+    .hero-proof {
+      position:relative;
+      padding:18px;
+      border-radius:28px;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.12);
+      backdrop-filter:blur(18px);
+      box-shadow:0 22px 60px rgba(0,0,0,.28);
     }
-    .shift-label { font-size:10px; font-weight:900; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,.4); margin-bottom:4px; }
-    .shift-row {
-      display:flex; align-items:center; gap:12px;
-      padding:14px 16px; border-radius:14px;
+    .hero-proof::before {
+      content:"";
+      position:absolute;
+      inset:10px 10px -10px -10px;
+      border-radius:30px;
+      background:rgba(255,255,255,.04);
+      transform:rotate(-2deg);
+      z-index:-1;
     }
-    .shift-row.old { background:rgba(255,80,80,.08); border:1px solid rgba(255,80,80,.2); }
-    .shift-row.new { background:rgba(16,184,146,.1); border:1px solid rgba(16,184,146,.28); }
-    .shift-icon { font-size:22px; flex-shrink:0; }
-    .shift-copy strong { display:block; color:#fff; font-size:14px; font-weight:800; margin-bottom:2px; }
-    .shift-copy span { color:rgba(255,255,255,.5); font-size:12px; line-height:1.5; }
-    .shift-badge {
-      margin-left:auto; flex-shrink:0;
-      padding:4px 10px; border-radius:999px;
-      font-size:11px; font-weight:800;
+    .proof-head {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:14px;
     }
-    .shift-badge.bad { background:rgba(255,80,80,.15); color:#ff8080; }
-    .shift-badge.good { background:rgba(107,229,201,.15); color:#6be5c9; }
-    .shift-arrow { text-align:center; font-size:20px; color:rgba(255,255,255,.25); }
+    .proof-label {
+      color:rgba(255,255,255,.82);
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.08em;
+    }
+    .proof-pill {
+      font-size:10px;
+      font-weight:900;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      color:#0b8f72;
+      background:#e8faf3;
+      border:1px solid #a7e3d0;
+      padding:4px 10px;
+      border-radius:999px;
+      flex-shrink:0;
+    }
+    .proof-frame {
+      margin:0;
+      border-radius:20px;
+      overflow:hidden;
+      background:#fff;
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow:0 10px 30px rgba(2,6,23,.18);
+    }
+    .proof-frame img {
+      display:block;
+      width:100%;
+      height:auto;
+    }
+    .proof-caption {
+      margin-top:14px;
+      color:rgba(255,255,255,.68);
+      font-size:13px;
+      line-height:1.7;
+    }
 
     .scroll-hint {
       position:absolute; bottom:32px; left:50%; transform:translateX(-50%);
@@ -294,7 +333,7 @@
 
     @media(max-width:960px){
       .hero-inner { grid-template-columns:1fr; }
-      .hero-shift { display:none; }
+      .hero-proof { max-width:680px; margin-top:28px; }
       .pillar-head { grid-template-columns:1fr; }
       .pillar-head .btn { align-self:flex-start; }
       .tool-feature-card { grid-template-columns:1fr; }
@@ -377,34 +416,15 @@
           </div>
         </div>
 
-        <div class="hero-shift reveal reveal-d2">
-          <p class="shift-label">検索の何が変わったか</p>
-          <div class="shift-row old">
-            <div class="shift-icon">😓</div>
-            <div class="shift-copy">
-              <strong>SEO記事を書いた</strong>
-              <span>上位表示できても、AIが先に答える場面がある</span>
-            </div>
-            <span class="shift-badge bad">旧時代</span>
+        <div class="hero-proof reveal reveal-d2">
+          <div class="proof-head">
+            <div class="proof-label">AI検索の見え方</div>
+            <div class="proof-pill">SCREENSHOT</div>
           </div>
-          <div class="shift-arrow">↓</div>
-          <div class="shift-row new">
-            <div class="shift-icon">⚡</div>
-            <div class="shift-copy">
-              <strong>AIOに読まれやすい記事を書く</strong>
-              <span>結論・FAQ・出典をそろえて、AIにも人にも伝える</span>
-            </div>
-            <span class="shift-badge good">今の戦い方</span>
-          </div>
-          <div class="shift-arrow">↓</div>
-          <div class="shift-row new">
-            <div class="shift-icon">🔍</div>
-            <div class="shift-copy">
-              <strong>キーワード3つ入れるだけ</strong>
-                <span>調べて→選んで→AIO向け下書きが出る</span>
-            </div>
-            <span class="shift-badge good">このツール</span>
-          </div>
+          <figure class="proof-frame">
+            <img src="/assets/ai-overview-sample.png" alt="AI検索結果の概要が表示されているスクリーンショット" decoding="async" fetchpriority="high" />
+          </figure>
+          <p class="proof-caption">検索結果の上で答えが先に出る場面を、そのまま見せる。AIO向けの説明画像として使いやすい。</p>
         </div>
       </div>
 
