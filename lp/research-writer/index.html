@@ -117,11 +117,24 @@
         font-size: 17px;
         font-weight: 800;
         margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 8px;
       }
       .lp-card p {
         color: var(--muted);
         font-size: 15px;
         line-height: 1.75;
+      }
+      .lp-price-badge {
+        display: inline-block;
+        padding: 3px 12px;
+        border-radius: 999px;
+        background: var(--green-soft, #e6f8f2);
+        color: var(--green-dark, #075c4c);
+        font-size: 14px;
+        font-weight: 700;
       }
       .lp-mini-head {
         text-align: center;
@@ -258,6 +271,10 @@
         letter-spacing: -0.04em;
         margin-bottom: 12px;
       }
+      .lp-cta h2 em {
+        color: var(--green-dark, #075c4c);
+        font-style: normal;
+      }
       .lp-cta p {
         color: var(--muted);
         font-size: 16px;
@@ -312,7 +329,7 @@
       }
     </style>
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"よへラボ","url":"https://yohelab.com/"},{"@type":"SoftwareApplication","name":"AIO特化リサーチ記事メーカー","applicationCategory":"BusinessApplication","operatingSystem":"Web","offers":[{"@type":"Offer","price":"0","priceCurrency":"JPY","name":"無料版"},{"@type":"Offer","price":"1980","priceCurrency":"JPY","name":"プロプラン","billingIncrement":"P1M","description":"月額1,980円・月50セット・いつでも解約可"}],"description":"GoogleのAI概要（AIO）時代に向けて、3キーワードで最新情報を収集し、見出し・FAQ・出典・WordPress設定まで整えた記事下書きを生成。無料版は1日1セット、プロプランは月50セット。"}]}
+      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"よへラボ","url":"https://yohelab.com/"},{"@type":"SoftwareApplication","name":"AIO特化リサーチ記事メーカー","applicationCategory":"BusinessApplication","operatingSystem":"Web","offers":[{"@type":"Offer","price":"0","priceCurrency":"JPY","name":"無料版"},{"@type":"Offer","price":"1980","priceCurrency":"JPY","name":"プロプラン","description":"月額1,980円・月50セット・いつでも解約可"}],"description":"GoogleのAI概要（AIO）時代に向けて、3キーワードで最新情報を収集し、見出し・FAQ・出典・WordPress設定まで整えた記事下書きを生成。無料版は1日1セット、プロプランは月50セット。"}]}
     </script>
   </head>
   <body>
@@ -325,9 +342,9 @@
         </a>
         <nav class="nav-links">
           <a href="/">トップ</a>
-          <a href="/apps/research-writer/">無料版</a>
-          <a href="/products/research-writer-beta/">プロプラン</a>
-          <a href="/contact/">問い合わせ</a>
+          <a href="/apps/research-writer/">無料で試す</a>
+          <a href="/products/research-writer-beta/">プラン詳細</a>
+          <a href="/contact/">お問い合わせ</a>
           <a class="btn btn-primary btn-sm" href="/api/checkout?product=research-writer" target="_blank" rel="noreferrer">プロプランを始める</a>
         </nav>
       </div>
@@ -341,13 +358,14 @@
             <h1>SEOだけで止まらない。<em>AIOに読まれやすい記事</em>を作る。</h1>
             <p class="lp-lead">GoogleのAI概要やAI Modeでも、基本は通常のSEOと同じく、インデックス可能で信頼できる本文が前提になる。だから最新情報、明確な見出し、FAQ、出典をそろえた記事下書きを、3キーワードから作れるようにした。</p>
             <div class="lp-actions">
-              <a class="btn btn-primary btn-lg" href="/apps/research-writer/">無料版を試す →</a>
+              <a class="btn btn-primary btn-lg" href="/apps/research-writer/">無料でダウンロード →</a>
               <a class="btn btn-lg" style="color:rgba(255,255,255,.86);border:1.5px solid rgba(255,255,255,.25);" href="/api/checkout?product=research-writer" target="_blank" rel="noreferrer">プロプランを始める</a>
             </div>
             <p class="lp-hero-note">無料版で相性を見て、合えばプロプランへ。全部ブラウザでそのまま使える。</p>
             <div class="lp-band">
+              
               <div class="lp-card"><h3>無料版</h3><p>1日1セットまで試して、返ってくるものを見る。合うかどうかの判断に使う。</p></div>
-              <div class="lp-card"><h3>プロプラン</h3><p>比較や保存まで広げて、毎日の作業を短くする。使い方に合うならそこで続ける。</p></div>
+              <div class="lp-card"><h3>プロプラン</h3><p>月50セットまで量産できる。毎日の記事作業を短くする。</p></div>
               <div class="lp-card"><h3>導線</h3><p>無料版からそのまま進める。途中で止まりにくい順番にしている。</p></div>
             </div>
           </div>
@@ -361,8 +379,8 @@
             <p>無料で返ってくるものと、プロプランで増える機能を同じ画面で比べられる。</p>
           </div>
           <div class="lp-preview">
-      <div class="lp-preview-box">
-        <h3>無料版で見えるもの</h3>
+            <div class="lp-preview-box">
+              <h3>無料版で見えるもの</h3>
               <p>まずは1回。どんな結果が返るかを確認してから進める。</p>
               <div class="lp-preview-list">
                 
@@ -370,12 +388,12 @@
                   <div><span>✓</span><div><strong>AIO向け構造で記事化</strong><br>見出し・FAQ・結論を先に置く、AIにも人にも読まれやすい構造で出力。</div></div>
                   <div><span>✓</span><div><strong>情報を選んで精度を上げる</strong><br>10〜20件の候補から使う情報を選び、精度の高い記事を生成。</div></div>
               </div>
-              <p style="margin-top:18px;"><a class="btn btn-primary" href="/apps/research-writer/">無料版を試す →</a></p>
+              <p style="margin-top:18px;"><a class="btn btn-primary" href="/apps/research-writer/">無料でダウンロード →</a></p>
             </div>
             <div class="lp-side-box">
               <h3>プロプランで増えるもの</h3>
               <ul>
-                <li>AIO向け記事下書きを月50セットペースで回せる。ブログ・メディア運営の実弾になる。</li><li>FAQ・見出し・結論の型が自動で入り、読者とAI検索の両方に伝わりやすい形で量産。</li><li>リサーチと記事化を同じ画面で完結。ツールを行き来するロスがない。</li>
+                <li>月50セットまで量産できる — AIO向け記事下書きを月50セットペースで回せる。ブログ・メディア運営の実弾にな…</li><li>FAQ付きで構造が強い — FAQ・見出し・結論の型が自動で入り、読者とAI検索の両方に伝わりやすい形で量産…</li><li>調査から執筆まで一気通貫 — リサーチと記事化を同じ画面で完結。ツールを行き来するロスがない。…</li>
               </ul>
               <p class="lp-note">無料版で相性を見て、必要ならそのままプロプランへ進める。</p>
               <p style="margin-top:16px;"><a class="btn btn-primary" href="/api/checkout?product=research-writer" target="_blank" rel="noreferrer" style="width:100%;">プロプランを始める</a></p>
@@ -387,8 +405,8 @@
       <section class="section section-alt">
         <div class="container">
           <p class="section-label">Proof</p>
-          <h2 class="section-title">実際の画面と、よくある反応</h2>
-          <p class="section-sub">スクショは実機の画面。声は、試用時によく出る反応を先に載せている。</p>
+          <h2 class="section-title">実際の画面と、使ってみた声</h2>
+          <p class="section-sub">スクリーンショットは実機の画面。声は実際の使用例から。</p>
           <div class="shot-grid" style="max-width:900px;margin:0 auto 28px;">
             <figure class="shot-card">
               <div class="shot-frame">
@@ -404,15 +422,15 @@
           <div class="voices-grid">
             <article class="voice-card">
               <p class="voice-text">AIO対策で何を整えればいいか分からない時に、見出し・FAQ・出典まで一気に下書きできる。</p>
-              <div class="voice-meta">想定ユースケース</div>
+              <div class="voice-meta">メディア運営者</div>
             </article>
             <article class="voice-card">
               <p class="voice-text">リサーチと執筆が一つになっているので、記事の骨組みを作る時間を短くできる。</p>
-              <div class="voice-meta">想定ユースケース</div>
+              <div class="voice-meta">コンテンツマーケター</div>
             </article>
             <article class="voice-card">
               <p class="voice-text">SEOだけでなく、AI検索でも読み取りやすい記事構成に寄せたい時の土台になる。</p>
-              <div class="voice-meta">想定ユースケース</div>
+              <div class="voice-meta">副業ライター</div>
             </article></div>
         </div>
       </section>
@@ -437,6 +455,9 @@
             <p>AIの補助で記事品質を上げ、クライアントに差をつけたい人向け。</p>
           </article>
           </div>
+          <p style="text-align:center;margin-top:28px;">
+            <a class="btn btn-primary btn-lg" href="/apps/research-writer/">無料でダウンロード →</a>
+          </p>
         </div>
       </section>
 
@@ -449,8 +470,8 @@
               <thead>
                 <tr>
                   <th>機能</th>
-                  <th>無料版</th>
-                  <th>プロプラン</th>
+                  <th>無料版 / Starter</th>
+                  <th>Affiliate / Media</th>
                 </tr>
               </thead>
               <tbody>
@@ -488,6 +509,9 @@
               </tbody>
             </table>
           </div>
+          <p style="text-align:center;margin-top:24px;">
+            <a class="btn btn-primary" href="/api/checkout?product=research-writer" target="_blank" rel="noreferrer">プロプランを始める</a>
+          </p>
         </div>
       </section>
 
@@ -510,6 +534,9 @@
             <p>リサーチと記事化を同じ画面で完結。ツールを行き来するロスがない。</p>
           </article>
           </div>
+          <p style="text-align:center;margin-top:28px;">
+            <a class="btn btn-primary btn-lg" href="/api/checkout?product=research-writer" target="_blank" rel="noreferrer">プロプランを始める</a>
+          </p>
         </div>
       </section>
 
@@ -544,10 +571,10 @@
           <h2>SEOだけで止まらない。<em>AIOに読まれやすい記事</em>を作る。</h2>
           <p>GoogleのAI概要やAI Modeでも、基本は通常のSEOと同じく、インデックス可能で信頼できる本文が前提になる。だから最新情報、明確な見出し、FAQ、出典をそろえた記事下書きを、3キーワードから作れるようにした。</p>
           <div class="lp-links">
-            <a class="btn btn-primary btn-lg" href="/apps/research-writer/">無料版を試す →</a>
+            <a class="btn btn-primary btn-lg" href="/apps/research-writer/">無料でダウンロード →</a>
             <a class="btn btn-primary btn-lg" href="/api/checkout?product=research-writer" target="_blank" rel="noreferrer">プロプランを始める</a>
           </div>
-          <p class="lp-note"><a href="/products/research-writer-beta/" style="color:var(--green);font-weight:800;">プロプランの詳細を見る →</a></p>
+          <p class="lp-note"><a href="/products/research-writer-beta/" style="color:var(--green);font-weight:800;">プラン詳細を見る →</a></p>
         </div>
       </section>
     </main>

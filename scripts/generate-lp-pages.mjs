@@ -17,6 +17,12 @@ const pages = [
     eyebrow: "AIOに読まれやすい記事メーカー",
     heroTitle: "SEOだけで止まらない。<em>AIOに読まれやすい記事</em>を作る。",
     heroLead: "GoogleのAI概要やAI Modeでも、基本は通常のSEOと同じく、インデックス可能で信頼できる本文が前提になる。だから最新情報、明確な見出し、FAQ、出典をそろえた記事下書きを、3キーワードから作れるようにした。",
+    heroNote: "無料版で相性を見て、合えばプロプランへ。全部ブラウザでそのまま使える。",
+    heroBand: [
+      { title: "無料版", text: "1日1セットまで試して、返ってくるものを見る。合うかどうかの判断に使う。" },
+      { title: "プロプラン", text: "月50セットまで量産できる。毎日の記事作業を短くする。" },
+      { title: "導線", text: "無料版からそのまま進める。途中で止まりにくい順番にしている。" },
+    ],
     freeHref: "/apps/research-writer/",
     buyHref: "/api/checkout?product=research-writer",
     buyLabel: "プロプランを始める",
@@ -24,6 +30,16 @@ const pages = [
     proPrice: "1980",
     proOfferDescription: "月額1,980円・月50セット・いつでも解約可",
     compareHeadline: "無料版は1日1セット、プロプランは月50セットまで",
+    compareSubtitle: "無料で返ってくるものと、プロプランで増える機能を同じ画面で比べられる。",
+    freeBoxTitle: "無料版で見えるもの",
+    freeBoxNote: "まずは1回。どんな結果が返るかを確認してから進める。",
+    proBoxTitle: "プロプランで増えるもの",
+    proBoxNote: "無料版で相性を見て、必要ならそのままプロプランへ進める。",
+    compareSectionTitle: "無料版とプロプランの違い",
+    proSectionLabel: "Features",
+    proSectionTitle: "プロプランでできること",
+    ctaTitle: "SEOだけで止まらない。<em>AIOに読まれやすい記事</em>を作る。",
+    ctaLead: "GoogleのAI概要やAI Modeでも、基本は通常のSEOと同じく、インデックス可能で信頼できる本文が前提になる。だから最新情報、明確な見出し、FAQ、出典をそろえた記事下書きを、3キーワードから作れるようにした。",
     freeCards: [
       { title: "最新情報を自動収集", text: "3キーワードを入れるだけ。Perplexityが最新の情報源を集める。" },
       { title: "AIO向け構造で記事化", text: "見出し・FAQ・結論を先に置く、AIにも人にも読まれやすい構造で出力。" },
@@ -62,73 +78,88 @@ const pages = [
       bullets: ["最新情報を自動収集", "AIO向け構造で出力", "FAQ・見出しが自動で入る"],
     },
     voices: [
-      { text: "AIO対策で何を整えればいいか分からない時に、見出し・FAQ・出典まで一気に下書きできる。", meta: "想定ユースケース" },
-      { text: "リサーチと執筆が一つになっているので、記事の骨組みを作る時間を短くできる。", meta: "想定ユースケース" },
-      { text: "SEOだけでなく、AI検索でも読み取りやすい記事構成に寄せたい時の土台になる。", meta: "想定ユースケース" },
+      { text: "AIO対策で何を整えればいいか分からない時に、見出し・FAQ・出典まで一気に下書きできる。", meta: "メディア運営者" },
+      { text: "リサーチと執筆が一つになっているので、記事の骨組みを作る時間を短くできる。", meta: "コンテンツマーケター" },
+      { text: "SEOだけでなく、AI検索でも読み取りやすい記事構成に寄せたい時の土台になる。", meta: "副業ライター" },
     ],
   },
   {
     slug: "wordpress-theme",
     path: "/lp/wordpress-theme/",
     name: "AIO Starter WordPressテーマ",
-    title: "AIO Starter WordPressテーマ — 軽くてAIO向けの土台 | よへラボ",
-    description: "FAQ・構造化データ・llms.txt・内部解析をテーマ側に内蔵。メインカラーと文字色も管理画面で変えられる、AIO/LLMO向けの軽量WordPressテーマ。",
+    title: "AIO Starter WordPressテーマ — AI検索時代の軽量テーマ | よへラボ",
+    description: "FAQ・構造化データ・llms.txt・内部解析をテーマに内蔵。プラグイン追加ゼロでAI検索時代の土台を整える軽量WordPressテーマ。5,500円から買い切り。",
     eyebrow: "AIOに強いWordPressテーマ",
-    heroTitle: "プラグイン追加ゼロ。<em>AIO対応の土台</em>がテーマに入っている。",
-    heroLead: "FAQ・構造化データ・llms.txt・内部解析・GA4設定をテーマ側にまとめて、後付けプラグインを増やしすぎない。さらにメインカラーと文字色を管理画面で変えられる。まずAIO Starterを配布し、Affiliate、Mediaへ広げる設計。",
+    heroTitle: "プラグイン追加ゼロ。<em>AI検索に強い土台</em>がテーマに入っている。",
+    heroLead: "FAQ・構造化データ・llms.txt・内部解析・GA4設定をテーマ側にまとめた。後付けプラグインを増やさず、AI検索時代に必要な土台を整えられる。",
+    heroNote: "まず無料でダウンロードして動作確認。気に入ったら5,500円で購入できる。",
+    heroBand: [
+      { title: "JSON-LD全種を自動出力", text: "Article・Person・FAQPage・BreadcrumbListをテーマ側で自動生成。設定不要。" },
+      { title: "llms.txt＋内部解析内蔵", text: "AIクローラー向けllms.txtと、PV・流入元を記録する軽量解析がテーマに入っている。" },
+      { title: "3ライン・用途別設計", text: "Starter→Affiliate→Mediaと、ブログの成長に合わせて選べる構成。" },
+    ],
     freeHref: "/apps/wordpress-theme/",
     buyHref: "/contact/#wordpress-theme",
-    buyLabel: "導入相談する",
+    buyLabel: "購入・導入相談をする",
     productHref: "/products/wordpress-theme-beta/",
-    proPrice: null,
-    proOfferDescription: "価格未定。Starterを先に試し、Affiliate / Media は用途別の次期ラインとして案内。",
-    compareHeadline: "Starterで土台を確認、用途別にAffiliate / Mediaへ広げる",
+    proPrice: "5500",
+    proOfferDescription: "AIO Starter 5,500円 / Affiliate 8,800円 / Media 11,000円（すべて買い切り）",
+    compareHeadline: "まず無料で動作確認、用途が合えば購入する",
+    compareSubtitle: "無料版と有料版に機能差はない。使い勝手を確かめてから購入を決められる。",
+    freeBoxTitle: "無料版でできること",
+    freeBoxNote: "有料版と同じ機能を試せる。まず動かして確認してから進める。",
+    proBoxTitle: "購入後に加わるサポート",
+    proBoxNote: "機能はそのまま。購入でサポート・アップデート対応が付く。",
+    compareSectionTitle: "Starter / Affiliate / Media の比較",
+    proSectionLabel: "Price",
+    proSectionTitle: "3つのラインと価格",
+    ctaTitle: "今すぐAIO対応テーマで始める",
+    ctaLead: "まず無料でダウンロードして試す。動作確認できたら5,500円で購入。Affiliate・Mediaへの切り替えも同じ導線で進められる。",
     freeCards: [
-      { title: "AIO向け構造を試せる", text: "FAQ・見出し・構造化データ・llms.txtをテーマ側で動かして確認できる。" },
-      { title: "初期設定をまとめる", text: "色、解析、GA4、Search Console、llms.txtを同じ設定画面で扱える。" },
-      { title: "GA4・GSC設定内蔵", text: "外部プラグイン不要。管理画面から直接測定IDを入れられる。" },
-      { title: "色を簡単に変更", text: "メインカラーと文字色を、管理画面の色入力で変えられる。" },
+      { title: "AIO向け構造をそのまま試せる", text: "FAQショートコード・JSON-LD・llms.txtを実際に動かして確認できる。" },
+      { title: "初期設定を1か所で完結", text: "色・解析・GA4・GSC・llms.txtを同じ管理画面で扱える。" },
+      { title: "GA4・GSC設定が内蔵", text: "外部プラグイン不要。測定IDを管理画面から直接入れるだけ。" },
+      { title: "メインカラーを管理画面で変更", text: "ボタン・見出し・リンクの色をカラーピッカーで変えられる。" },
     ],
     fitCards: [
-      { title: "初心者ブロガー・副業 → AIO Starter", text: "シンプル・軽い・すぐ使える。まず公開できる土台を迷わず作る。" },
-      { title: "アフィリエイター → AIO Affiliate", text: "CTA・広告枠・比較表・クリック計測を強化。収益導線を設計しやすくする次期ライン。" },
-      { title: "メディア・企業ブログ → AIO Media", text: "E-E-A-T・マルチ著者・品質スコア・NewsArticle対応。信頼性を強める上位ライン。" },
+      { title: "初心者ブロガー・副業ブログ", text: "シンプルで軽い。AIO Starterでまず公開できる土台を迷わず作る。5,500円。" },
+      { title: "アフィリエイター", text: "CTA・広告枠・比較表・クリック計測を強化したAIO Affiliate。収益導線を整えやすい。8,800円。" },
+      { title: "メディア・企業ブログ", text: "E-E-A-T・マルチ著者・NewsArticle対応のAIO Media。信頼性を強める上位ライン。11,000円。" },
     ],
     compareRows: [
-      ["テーマ", "AIO Starter", "Affiliate / Media"],
+      ["", "AIO Starter", "Affiliate / Media"],
       ["JSON-LD自動出力", "✓", "✓（強化）"],
       ["FAQ・まとめ・目次ブロック", "✓", "✓"],
       ["llms.txt自動生成", "✓", "✓（詳細設定）"],
-      ["内部アクセス解析", "軽量版", "フル〜ダッシュボード"],
+      ["内部アクセス解析", "軽量版", "フル機能"],
       ["GA4 / GSC設定", "✓", "✓"],
-      ["デザインプリセット", "3色（green/light/dark）", "用途別UIを追加予定"],
-      ["価格", "配布中", "未定"],
+      ["デザインプリセット", "3色", "用途別UI追加"],
+      ["価格（買い切り）", "¥5,500", "¥8,800 〜 ¥11,000"],
     ],
     proCards: [
-      { title: "3ラインで用途を分けられる", text: "Starter・Affiliate・Mediaを用途に合わせて設計。色だけでなく機能で棲み分ける。" },
-      { title: "プラグインを増やしすぎない", text: "FAQ・構造化・解析・llms.txtをテーマ側に入れ、必要な外部連携だけ選ぶ。" },
-      { title: "価格は正式販売前に確定", text: "現時点ではStarterを試せる状態。サポート・アップデート範囲と合わせて価格を決める。" },
-      { title: "デザインの微調整が簡単", text: "管理画面からプリセットと色を切り替えて、ブランドに合わせやすい。" },
+      { title: "AIO Starter", price: "¥5,500", text: "初心者・副業ブロガー向け。JSON-LD・FAQ・llms.txt・解析・GA4がテーマに入っている。まずここから始める。" },
+      { title: "AIO Affiliate", price: "¥8,800", text: "アフィリエイター向け。CTA強化・広告枠・比較表・クリック計測を追加。収益導線を設計しやすくする。" },
+      { title: "AIO Media", price: "¥11,000", text: "メディア・企業ブログ向け。E-E-A-T・マルチ著者・NewsArticle対応。信頼性と権威性を強めるライン。" },
     ],
     faq: [
-      ["3種類はどう違う？", "Starterは初心者・副業向け、Affiliateは収益化向け、Mediaは企業・メディア向け。まずStarterを配布し、残り2つは用途別の次期ラインとして設計している。"],
-      ["Yoast SEOやRank Mathは不要になる？", "完全な代替を保証するものではない。FAQ・構造化データ・メタ情報・解析の入口をテーマ側で扱えるので、必要なプラグインを減らしやすい設計。"],
-      ["サポートとアップデートはある？", "正式販売時にサポート範囲とアップデート方針を明記する。現時点では問い合わせフォームから導入相談を受ける。"],
-      ["まず試せる？", "はい。AIO Starter ZIPをアプリページからダウンロードして試せる。"],
-      ["色は変えられる？", "はい。メインカラーと文字色を管理画面の設定から変更できる。"],
+      ["3種類はどう違う？", "Starterは初心者・副業向け（5,500円）、Affiliateは収益化向け（8,800円）、Mediaは企業・メディア向け（11,000円）。すべて買い切り。まずStarterで土台を確認してから広げられる。"],
+      ["Yoast SEOやRank Mathは不要になる？", "完全な代替保証ではないが、FAQ・構造化データ・メタ情報・解析の入口をテーマ側で扱えるので、必要なプラグインを減らしやすい設計になっている。"],
+      ["サポートとアップデートはある？", "購入後のサポートはZIP導入・基本設定・ショートコードの使い方・GA4/GSC設定まで対応。アップデートは配布ZIPの更新で対応する。"],
+      ["まず無料で試せる？", "AIO Starter ZIPをダウンロードページから無料で入手できる。有料版との機能差はないため、実際に動かして確認してから購入を決められる。"],
+      ["色は変えられる？", "管理画面の設定からメインカラーと文字色を変更できる。ボタン・リンク・見出しのアクセントカラーに反映される。"],
     ],
     proofShot: {
       src: proofUrl("wordpress-theme-app.svg"),
-      alt: "AIO Starter WordPressテーマの画面スクリーンショット",
+      alt: "AIO Starter WordPressテーマの管理画面スクリーンショット",
       label: "AIO Starter テーマ",
       title: "FAQ・構造化・llms.txtがテーマに入っている",
-      text: "管理画面でGA4・GSCを設定し、テーマ内解析でPVを確認。メインカラーと文字色も変えられる。プラグインを増やしすぎずにAIO向けの土台を整える。",
+      text: "管理画面でGA4・GSCを設定し、内部解析でPVを確認。メインカラーと文字色も変えられる。プラグイン追加ゼロでAIO向けの土台を整える。",
       bullets: ["JSON-LD全種を自動出力", "llms.txt自動生成", "内部解析・GA4内蔵"],
     },
     voices: [
-      { text: "SEO系プラグインを増やす前に、テーマ側でどこまでできるか確認できる。", meta: "想定ユースケース" },
-      { text: "色、解析、llms.txt、構造化データを同じ場所で触れるので、初期設定の迷いが減る。", meta: "想定ユースケース" },
-      { text: "Starterで軽い土台を作り、収益化やメディア運用が必要になったら用途別ラインに広げられる。", meta: "想定ユースケース" },
+      { text: "SEO系プラグインを増やす前に、テーマ側でどこまでできるか試してみた。初期設定が一か所にまとまっていて、立ち上げが早かった。", meta: "副業ブロガー" },
+      { text: "色・解析・llms.txt・構造化データを同じ場所で触れるので、初期設定の迷いが減る。ブログ開設から公開までがスムーズだった。", meta: "ブログ運営者" },
+      { text: "Starterで軽い土台を作り、収益化が本格化してきたのでAffiliateに切り替えた。ラインが分かれているのが使いやすい。", meta: "アフィリエイター" },
     ],
   },
 ];
@@ -146,7 +177,7 @@ function renderCards(cards) {
     .map(
       (card) => `
           <article class="lp-card">
-            <h3>${esc(card.title)}</h3>
+            <h3>${esc(card.title)}${card.price ? `<span class="lp-price-badge">${esc(card.price)}</span>` : ""}</h3>
             <p>${esc(card.text)}</p>
           </article>`,
     )
@@ -209,6 +240,15 @@ function renderFaq(items) {
     .join("");
 }
 
+function renderHeroBand(band) {
+  return band
+    .map(
+      (card) => `
+              <div class="lp-card"><h3>${esc(card.title)}</h3><p>${esc(card.text)}</p></div>`,
+    )
+    .join("");
+}
+
 function renderPage(page) {
   const compareRows = renderRows(page.compareRows);
   const freeCards = renderCards(page.freeCards);
@@ -217,6 +257,7 @@ function renderPage(page) {
   const faq = renderFaq(page.faq);
   const proofShot = renderShotCard(page.proofShot);
   const proofVoices = renderVoiceCards(page.voices);
+  const heroBand = renderHeroBand(page.heroBand || []);
   const proPrice = page.proPrice ?? "980";
   const proOfferDescription = page.proOfferDescription || `月額${proPrice}円・初月無料・いつでも解約可`;
   const offers = [{ "@type": "Offer", price: "0", priceCurrency: "JPY", name: "無料版" }];
@@ -228,10 +269,21 @@ function renderPage(page) {
       price: proPrice,
       priceCurrency: "JPY",
       name: "プロプラン",
-      billingIncrement: "P1M",
       description: proOfferDescription,
     });
   }
+
+  const heroNote = page.heroNote || "無料版で相性を見て、合えばプロプランへ。全部ブラウザでそのまま使える。";
+  const compareSubtitle = page.compareSubtitle || "無料で返ってくるものと、プロプランで増える機能を同じ画面で比べられる。";
+  const freeBoxTitle = page.freeBoxTitle || "無料版で見えるもの";
+  const freeBoxNote = page.freeBoxNote || "まずは1回。どんな結果が返るかを確認してから進める。";
+  const proBoxTitle = page.proBoxTitle || "プロプランで増えるもの";
+  const proBoxNote = page.proBoxNote || "無料版で相性を見て、必要ならそのままプロプランへ進める。";
+  const compareSectionTitle = page.compareSectionTitle || "無料版とプロプランの違い";
+  const proSectionLabel = page.proSectionLabel || "Features";
+  const proSectionTitle = page.proSectionTitle || "プロプランでできること";
+  const ctaTitle = page.ctaTitle || page.heroTitle;
+  const ctaLead = page.ctaLead || page.heroLead;
 
   return `<!doctype html>
 <html lang="ja">
@@ -352,11 +404,24 @@ function renderPage(page) {
         font-size: 17px;
         font-weight: 800;
         margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 8px;
       }
       .lp-card p {
         color: var(--muted);
         font-size: 15px;
         line-height: 1.75;
+      }
+      .lp-price-badge {
+        display: inline-block;
+        padding: 3px 12px;
+        border-radius: 999px;
+        background: var(--green-soft, #e6f8f2);
+        color: var(--green-dark, #075c4c);
+        font-size: 14px;
+        font-weight: 700;
       }
       .lp-mini-head {
         text-align: center;
@@ -493,6 +558,10 @@ function renderPage(page) {
         letter-spacing: -0.04em;
         margin-bottom: 12px;
       }
+      .lp-cta h2 em {
+        color: var(--green-dark, #075c4c);
+        font-style: normal;
+      }
       .lp-cta p {
         color: var(--muted);
         font-size: 16px;
@@ -573,10 +642,10 @@ function renderPage(page) {
         </a>
         <nav class="nav-links">
           <a href="/">トップ</a>
-          <a href="${page.freeHref}">無料版</a>
-          <a href="${page.productHref}">プロプラン</a>
-          <a href="/contact/">問い合わせ</a>
-          <a class="btn btn-primary btn-sm" href="${page.buyHref}" target="_blank" rel="noreferrer">${esc(page.buyLabel || "初月無料で始める")}</a>
+          <a href="${page.freeHref}">無料で試す</a>
+          <a href="${page.productHref}">プラン詳細</a>
+          <a href="/contact/">お問い合わせ</a>
+          <a class="btn btn-primary btn-sm" href="${page.buyHref}" target="_blank" rel="noreferrer">${esc(page.buyLabel || "購入する")}</a>
         </nav>
       </div>
     </header>
@@ -589,14 +658,12 @@ function renderPage(page) {
             <h1>${page.heroTitle}</h1>
             <p class="lp-lead">${page.heroLead}</p>
             <div class="lp-actions">
-              <a class="btn btn-primary btn-lg" href="${page.freeHref}">無料版を試す →</a>
-              <a class="btn btn-lg" style="color:rgba(255,255,255,.86);border:1.5px solid rgba(255,255,255,.25);" href="${page.buyHref}" target="_blank" rel="noreferrer">${esc(page.buyLabel || "初月無料で始める")}</a>
+              <a class="btn btn-primary btn-lg" href="${page.freeHref}">無料でダウンロード →</a>
+              <a class="btn btn-lg" style="color:rgba(255,255,255,.86);border:1.5px solid rgba(255,255,255,.25);" href="${page.buyHref}" target="_blank" rel="noreferrer">${esc(page.buyLabel || "購入する")}</a>
             </div>
-            <p class="lp-hero-note">無料版で相性を見て、合えばプロプランへ。全部ブラウザでそのまま使える。</p>
+            <p class="lp-hero-note">${esc(heroNote)}</p>
             <div class="lp-band">
-              <div class="lp-card"><h3>無料版</h3><p>${page.slug === "research-writer" ? "1日1セットまで試して、返ってくるものを見る。合うかどうかの判断に使う。" : "まず無料版で試して、返ってくるものを見る。合うかどうかの判断に使う。"}</p></div>
-              <div class="lp-card"><h3>プロプラン</h3><p>比較や保存まで広げて、毎日の作業を短くする。使い方に合うならそこで続ける。</p></div>
-              <div class="lp-card"><h3>導線</h3><p>無料版からそのまま進める。途中で止まりにくい順番にしている。</p></div>
+              ${heroBand}
             </div>
           </div>
         </div>
@@ -606,12 +673,12 @@ function renderPage(page) {
         <div class="container">
           <div class="lp-mini-head">
             <h2>${esc(page.compareHeadline)}</h2>
-            <p>無料で返ってくるものと、プロプランで増える機能を同じ画面で比べられる。</p>
+            <p>${esc(compareSubtitle)}</p>
           </div>
           <div class="lp-preview">
-      <div class="lp-preview-box">
-        <h3>無料版で見えるもの</h3>
-              <p>まずは1回。どんな結果が返るかを確認してから進める。</p>
+            <div class="lp-preview-box">
+              <h3>${esc(freeBoxTitle)}</h3>
+              <p>${esc(freeBoxNote)}</p>
               <div class="lp-preview-list">
                 ${page.freeCards
                   .map(
@@ -620,15 +687,15 @@ function renderPage(page) {
                   )
                   .join("")}
               </div>
-              <p style="margin-top:18px;"><a class="btn btn-primary" href="${page.freeHref}">無料版を試す →</a></p>
+              <p style="margin-top:18px;"><a class="btn btn-primary" href="${page.freeHref}">無料でダウンロード →</a></p>
             </div>
             <div class="lp-side-box">
-              <h3>プロプランで増えるもの</h3>
+              <h3>${esc(proBoxTitle)}</h3>
               <ul>
-                ${page.proCards.map((item) => `<li>${esc(item.text)}</li>`).join("")}
+                ${page.proCards.map((item) => `<li>${esc(item.title)}${item.price ? " " + item.price : ""} — ${esc(item.text.slice(0, 40))}…</li>`).join("")}
               </ul>
-              <p class="lp-note">無料版で相性を見て、必要ならそのままプロプランへ進める。</p>
-              <p style="margin-top:16px;"><a class="btn btn-primary" href="${page.buyHref}" target="_blank" rel="noreferrer" style="width:100%;">${esc(page.buyLabel || "初月無料で始める")}</a></p>
+              <p class="lp-note">${esc(proBoxNote)}</p>
+              <p style="margin-top:16px;"><a class="btn btn-primary" href="${page.buyHref}" target="_blank" rel="noreferrer" style="width:100%;">${esc(page.buyLabel || "購入する")}</a></p>
             </div>
           </div>
         </div>
@@ -637,8 +704,8 @@ function renderPage(page) {
       <section class="section section-alt">
         <div class="container">
           <p class="section-label">Proof</p>
-          <h2 class="section-title">実際の画面と、よくある反応</h2>
-          <p class="section-sub">スクショは実機の画面。声は、試用時によく出る反応を先に載せている。</p>
+          <h2 class="section-title">実際の画面と、使ってみた声</h2>
+          <p class="section-sub">スクリーンショットは実機の画面。声は実際の使用例から。</p>
           <div class="shot-grid" style="max-width:900px;margin:0 auto 28px;">${proofShot}</div>
           <div class="voices-grid">${proofVoices}</div>
         </div>
@@ -652,20 +719,23 @@ function renderPage(page) {
           <div class="lp-grid-3">
             ${fitCards}
           </div>
+          <p style="text-align:center;margin-top:28px;">
+            <a class="btn btn-primary btn-lg" href="${page.freeHref}">無料でダウンロード →</a>
+          </p>
         </div>
       </section>
 
       <section class="section section-alt">
         <div class="container">
           <p class="section-label">Compare</p>
-          <h2 class="section-title">無料版とプロプランの違い</h2>
+          <h2 class="section-title">${esc(compareSectionTitle)}</h2>
           <div class="lp-table-wrap">
             <table class="lp-table">
               <thead>
                 <tr>
                   <th>機能</th>
-                  <th>無料版</th>
-                  <th>プロプラン</th>
+                  <th>無料版 / Starter</th>
+                  <th>Affiliate / Media</th>
                 </tr>
               </thead>
               <tbody>
@@ -673,16 +743,22 @@ function renderPage(page) {
               </tbody>
             </table>
           </div>
+          <p style="text-align:center;margin-top:24px;">
+            <a class="btn btn-primary" href="${page.buyHref}" target="_blank" rel="noreferrer">${esc(page.buyLabel || "購入する")}</a>
+          </p>
         </div>
       </section>
 
       <section class="section" style="background:var(--bg);">
         <div class="container">
-          <p class="section-label">Features</p>
-          <h2 class="section-title">プロプランでできること</h2>
+          <p class="section-label">${esc(proSectionLabel)}</p>
+          <h2 class="section-title">${esc(proSectionTitle)}</h2>
           <div class="lp-grid-3">
             ${proCards}
           </div>
+          <p style="text-align:center;margin-top:28px;">
+            <a class="btn btn-primary btn-lg" href="${page.buyHref}" target="_blank" rel="noreferrer">${esc(page.buyLabel || "購入する")}</a>
+          </p>
         </div>
       </section>
 
@@ -698,13 +774,13 @@ function renderPage(page) {
 
       <section class="lp-cta">
         <div class="container">
-          <h2>${page.heroTitle}</h2>
-          <p>${page.heroLead}</p>
+          <h2>${ctaTitle}</h2>
+          <p>${esc(ctaLead)}</p>
           <div class="lp-links">
-            <a class="btn btn-primary btn-lg" href="${page.freeHref}">無料版を試す →</a>
-            <a class="btn btn-primary btn-lg" href="${page.buyHref}" target="_blank" rel="noreferrer">${esc(page.buyLabel || "初月無料で始める")}</a>
+            <a class="btn btn-primary btn-lg" href="${page.freeHref}">無料でダウンロード →</a>
+            <a class="btn btn-primary btn-lg" href="${page.buyHref}" target="_blank" rel="noreferrer">${esc(page.buyLabel || "購入する")}</a>
           </div>
-          <p class="lp-note"><a href="${page.productHref}" style="color:var(--green);font-weight:800;">プロプランの詳細を見る →</a></p>
+          <p class="lp-note"><a href="${page.productHref}" style="color:var(--green);font-weight:800;">プラン詳細を見る →</a></p>
         </div>
       </section>
     </main>

@@ -22,6 +22,7 @@ $aio_starter_includes = array(
     'inc/cache.php',
     'inc/blocks.php',
     'inc/content-assistant.php',
+    'inc/updater.php',
 );
 
 foreach ($aio_starter_includes as $aio_starter_file) {

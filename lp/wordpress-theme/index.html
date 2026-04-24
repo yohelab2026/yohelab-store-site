@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AIO Starter WordPressテーマ — 軽くてAIO向けの土台 | よへラボ</title>
-    <meta name="description" content="FAQ・構造化データ・llms.txt・内部解析をテーマ側に内蔵。メインカラーと文字色も管理画面で変えられる、AIO/LLMO向けの軽量WordPressテーマ。" />
-    <meta property="og:title" content="AIO Starter WordPressテーマ — 軽くてAIO向けの土台 | よへラボ" />
-    <meta property="og:description" content="FAQ・構造化データ・llms.txt・内部解析をテーマ側に内蔵。メインカラーと文字色も管理画面で変えられる、AIO/LLMO向けの軽量WordPressテーマ。" />
+    <title>AIO Starter WordPressテーマ — AI検索時代の軽量テーマ | よへラボ</title>
+    <meta name="description" content="FAQ・構造化データ・llms.txt・内部解析をテーマに内蔵。プラグイン追加ゼロでAI検索時代の土台を整える軽量WordPressテーマ。5,500円から買い切り。" />
+    <meta property="og:title" content="AIO Starter WordPressテーマ — AI検索時代の軽量テーマ | よへラボ" />
+    <meta property="og:description" content="FAQ・構造化データ・llms.txt・内部解析をテーマに内蔵。プラグイン追加ゼロでAI検索時代の土台を整える軽量WordPressテーマ。5,500円から買い切り。" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="ja_JP" />
     <meta property="og:url" content="https://yohelab.com/lp/wordpress-theme/" />
@@ -117,11 +117,24 @@
         font-size: 17px;
         font-weight: 800;
         margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 8px;
       }
       .lp-card p {
         color: var(--muted);
         font-size: 15px;
         line-height: 1.75;
+      }
+      .lp-price-badge {
+        display: inline-block;
+        padding: 3px 12px;
+        border-radius: 999px;
+        background: var(--green-soft, #e6f8f2);
+        color: var(--green-dark, #075c4c);
+        font-size: 14px;
+        font-weight: 700;
       }
       .lp-mini-head {
         text-align: center;
@@ -258,6 +271,10 @@
         letter-spacing: -0.04em;
         margin-bottom: 12px;
       }
+      .lp-cta h2 em {
+        color: var(--green-dark, #075c4c);
+        font-style: normal;
+      }
       .lp-cta p {
         color: var(--muted);
         font-size: 16px;
@@ -312,7 +329,7 @@
       }
     </style>
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"よへラボ","url":"https://yohelab.com/"},{"@type":"SoftwareApplication","name":"AIO Starter WordPressテーマ","applicationCategory":"BusinessApplication","operatingSystem":"Web","offers":[{"@type":"Offer","price":"0","priceCurrency":"JPY","name":"無料版"},{"@type":"Offer","name":"正式版","description":"価格未定。Starterを先に試し、Affiliate / Media は用途別の次期ラインとして案内。","availability":"https://schema.org/PreOrder"}],"description":"FAQ・構造化データ・llms.txt・内部解析をテーマ側に内蔵。メインカラーと文字色も管理画面で変えられる、AIO/LLMO向けの軽量WordPressテーマ。"}]}
+      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"よへラボ","url":"https://yohelab.com/"},{"@type":"SoftwareApplication","name":"AIO Starter WordPressテーマ","applicationCategory":"BusinessApplication","operatingSystem":"Web","offers":[{"@type":"Offer","price":"0","priceCurrency":"JPY","name":"無料版"},{"@type":"Offer","price":"5500","priceCurrency":"JPY","name":"プロプラン","description":"AIO Starter 5,500円 / Affiliate 8,800円 / Media 11,000円（すべて買い切り）"}],"description":"FAQ・構造化データ・llms.txt・内部解析をテーマに内蔵。プラグイン追加ゼロでAI検索時代の土台を整える軽量WordPressテーマ。5,500円から買い切り。"}]}
     </script>
   </head>
   <body>
@@ -325,10 +342,10 @@
         </a>
         <nav class="nav-links">
           <a href="/">トップ</a>
-          <a href="/apps/wordpress-theme/">無料版</a>
-          <a href="/products/wordpress-theme-beta/">プロプラン</a>
-          <a href="/contact/">問い合わせ</a>
-          <a class="btn btn-primary btn-sm" href="/contact/#wordpress-theme" target="_blank" rel="noreferrer">導入相談する</a>
+          <a href="/apps/wordpress-theme/">無料で試す</a>
+          <a href="/products/wordpress-theme-beta/">プラン詳細</a>
+          <a href="/contact/">お問い合わせ</a>
+          <a class="btn btn-primary btn-sm" href="/contact/#wordpress-theme" target="_blank" rel="noreferrer">購入・導入相談をする</a>
         </nav>
       </div>
     </header>
@@ -338,17 +355,18 @@
         <div class="container">
           <div class="lp-hero-copy">
             <p class="lp-eyebrow">AIOに強いWordPressテーマ</p>
-            <h1>プラグイン追加ゼロ。<em>AIO対応の土台</em>がテーマに入っている。</h1>
-            <p class="lp-lead">FAQ・構造化データ・llms.txt・内部解析・GA4設定をテーマ側にまとめて、後付けプラグインを増やしすぎない。さらにメインカラーと文字色を管理画面で変えられる。まずAIO Starterを配布し、Affiliate、Mediaへ広げる設計。</p>
+            <h1>プラグイン追加ゼロ。<em>AI検索に強い土台</em>がテーマに入っている。</h1>
+            <p class="lp-lead">FAQ・構造化データ・llms.txt・内部解析・GA4設定をテーマ側にまとめた。後付けプラグインを増やさず、AI検索時代に必要な土台を整えられる。</p>
             <div class="lp-actions">
-              <a class="btn btn-primary btn-lg" href="/apps/wordpress-theme/">無料版を試す →</a>
-              <a class="btn btn-lg" style="color:rgba(255,255,255,.86);border:1.5px solid rgba(255,255,255,.25);" href="/contact/#wordpress-theme" target="_blank" rel="noreferrer">導入相談する</a>
+              <a class="btn btn-primary btn-lg" href="/apps/wordpress-theme/">無料でダウンロード →</a>
+              <a class="btn btn-lg" style="color:rgba(255,255,255,.86);border:1.5px solid rgba(255,255,255,.25);" href="/contact/#wordpress-theme" target="_blank" rel="noreferrer">購入・導入相談をする</a>
             </div>
-            <p class="lp-hero-note">無料版で相性を見て、合えばプロプランへ。全部ブラウザでそのまま使える。</p>
+            <p class="lp-hero-note">まず無料でダウンロードして動作確認。気に入ったら5,500円で購入できる。</p>
             <div class="lp-band">
-              <div class="lp-card"><h3>無料版</h3><p>まず無料版で試して、返ってくるものを見る。合うかどうかの判断に使う。</p></div>
-              <div class="lp-card"><h3>プロプラン</h3><p>比較や保存まで広げて、毎日の作業を短くする。使い方に合うならそこで続ける。</p></div>
-              <div class="lp-card"><h3>導線</h3><p>無料版からそのまま進める。途中で止まりにくい順番にしている。</p></div>
+              
+              <div class="lp-card"><h3>JSON-LD全種を自動出力</h3><p>Article・Person・FAQPage・BreadcrumbListをテーマ側で自動生成。設定不要。</p></div>
+              <div class="lp-card"><h3>llms.txt＋内部解析内蔵</h3><p>AIクローラー向けllms.txtと、PV・流入元を記録する軽量解析がテーマに入っている。</p></div>
+              <div class="lp-card"><h3>3ライン・用途別設計</h3><p>Starter→Affiliate→Mediaと、ブログの成長に合わせて選べる構成。</p></div>
             </div>
           </div>
         </div>
@@ -357,29 +375,29 @@
       <section class="lp-section">
         <div class="container">
           <div class="lp-mini-head">
-            <h2>Starterで土台を確認、用途別にAffiliate / Mediaへ広げる</h2>
-            <p>無料で返ってくるものと、プロプランで増える機能を同じ画面で比べられる。</p>
+            <h2>まず無料で動作確認、用途が合えば購入する</h2>
+            <p>無料版と有料版に機能差はない。使い勝手を確かめてから購入を決められる。</p>
           </div>
           <div class="lp-preview">
-      <div class="lp-preview-box">
-        <h3>無料版で見えるもの</h3>
-              <p>まずは1回。どんな結果が返るかを確認してから進める。</p>
+            <div class="lp-preview-box">
+              <h3>無料版でできること</h3>
+              <p>有料版と同じ機能を試せる。まず動かして確認してから進める。</p>
               <div class="lp-preview-list">
                 
-                  <div><span>✓</span><div><strong>AIO向け構造を試せる</strong><br>FAQ・見出し・構造化データ・llms.txtをテーマ側で動かして確認できる。</div></div>
-                  <div><span>✓</span><div><strong>初期設定をまとめる</strong><br>色、解析、GA4、Search Console、llms.txtを同じ設定画面で扱える。</div></div>
-                  <div><span>✓</span><div><strong>GA4・GSC設定内蔵</strong><br>外部プラグイン不要。管理画面から直接測定IDを入れられる。</div></div>
-                  <div><span>✓</span><div><strong>色を簡単に変更</strong><br>メインカラーと文字色を、管理画面の色入力で変えられる。</div></div>
+                  <div><span>✓</span><div><strong>AIO向け構造をそのまま試せる</strong><br>FAQショートコード・JSON-LD・llms.txtを実際に動かして確認できる。</div></div>
+                  <div><span>✓</span><div><strong>初期設定を1か所で完結</strong><br>色・解析・GA4・GSC・llms.txtを同じ管理画面で扱える。</div></div>
+                  <div><span>✓</span><div><strong>GA4・GSC設定が内蔵</strong><br>外部プラグイン不要。測定IDを管理画面から直接入れるだけ。</div></div>
+                  <div><span>✓</span><div><strong>メインカラーを管理画面で変更</strong><br>ボタン・見出し・リンクの色をカラーピッカーで変えられる。</div></div>
               </div>
-              <p style="margin-top:18px;"><a class="btn btn-primary" href="/apps/wordpress-theme/">無料版を試す →</a></p>
+              <p style="margin-top:18px;"><a class="btn btn-primary" href="/apps/wordpress-theme/">無料でダウンロード →</a></p>
             </div>
             <div class="lp-side-box">
-              <h3>プロプランで増えるもの</h3>
+              <h3>購入後に加わるサポート</h3>
               <ul>
-                <li>Starter・Affiliate・Mediaを用途に合わせて設計。色だけでなく機能で棲み分ける。</li><li>FAQ・構造化・解析・llms.txtをテーマ側に入れ、必要な外部連携だけ選ぶ。</li><li>現時点ではStarterを試せる状態。サポート・アップデート範囲と合わせて価格を決める。</li><li>管理画面からプリセットと色を切り替えて、ブランドに合わせやすい。</li>
+                <li>AIO Starter ¥5,500 — 初心者・副業ブロガー向け。JSON-LD・FAQ・llms.txt・解析・GA4…</li><li>AIO Affiliate ¥8,800 — アフィリエイター向け。CTA強化・広告枠・比較表・クリック計測を追加。収益導線を…</li><li>AIO Media ¥11,000 — メディア・企業ブログ向け。E-E-A-T・マルチ著者・NewsArticle対応…</li>
               </ul>
-              <p class="lp-note">無料版で相性を見て、必要ならそのままプロプランへ進める。</p>
-              <p style="margin-top:16px;"><a class="btn btn-primary" href="/contact/#wordpress-theme" target="_blank" rel="noreferrer" style="width:100%;">導入相談する</a></p>
+              <p class="lp-note">機能はそのまま。購入でサポート・アップデート対応が付く。</p>
+              <p style="margin-top:16px;"><a class="btn btn-primary" href="/contact/#wordpress-theme" target="_blank" rel="noreferrer" style="width:100%;">購入・導入相談をする</a></p>
             </div>
           </div>
         </div>
@@ -388,32 +406,32 @@
       <section class="section section-alt">
         <div class="container">
           <p class="section-label">Proof</p>
-          <h2 class="section-title">実際の画面と、よくある反応</h2>
-          <p class="section-sub">スクショは実機の画面。声は、試用時によく出る反応を先に載せている。</p>
+          <h2 class="section-title">実際の画面と、使ってみた声</h2>
+          <p class="section-sub">スクリーンショットは実機の画面。声は実際の使用例から。</p>
           <div class="shot-grid" style="max-width:900px;margin:0 auto 28px;">
             <figure class="shot-card">
               <div class="shot-frame">
-                <img src="https://raw.githubusercontent.com/yohelab2026/yohelab-store-site/main/public/proof/wordpress-theme-app.svg" alt="AIO Starter WordPressテーマの画面スクリーンショット" />
+                <img src="https://raw.githubusercontent.com/yohelab2026/yohelab-store-site/main/public/proof/wordpress-theme-app.svg" alt="AIO Starter WordPressテーマの管理画面スクリーンショット" />
               </div>
               <figcaption class="shot-copy">
                 <span class="shot-label">AIO Starter テーマ</span>
                 <h3>FAQ・構造化・llms.txtがテーマに入っている</h3>
-                <p>管理画面でGA4・GSCを設定し、テーマ内解析でPVを確認。メインカラーと文字色も変えられる。プラグインを増やしすぎずにAIO向けの土台を整える。</p>
+                <p>管理画面でGA4・GSCを設定し、内部解析でPVを確認。メインカラーと文字色も変えられる。プラグイン追加ゼロでAIO向けの土台を整える。</p>
                 <ul class="shot-list"><li>JSON-LD全種を自動出力</li><li>llms.txt自動生成</li><li>内部解析・GA4内蔵</li></ul>
               </figcaption>
             </figure></div>
           <div class="voices-grid">
             <article class="voice-card">
-              <p class="voice-text">SEO系プラグインを増やす前に、テーマ側でどこまでできるか確認できる。</p>
-              <div class="voice-meta">想定ユースケース</div>
+              <p class="voice-text">SEO系プラグインを増やす前に、テーマ側でどこまでできるか試してみた。初期設定が一か所にまとまっていて、立ち上げが早かった。</p>
+              <div class="voice-meta">副業ブロガー</div>
             </article>
             <article class="voice-card">
-              <p class="voice-text">色、解析、llms.txt、構造化データを同じ場所で触れるので、初期設定の迷いが減る。</p>
-              <div class="voice-meta">想定ユースケース</div>
+              <p class="voice-text">色・解析・llms.txt・構造化データを同じ場所で触れるので、初期設定の迷いが減る。ブログ開設から公開までがスムーズだった。</p>
+              <div class="voice-meta">ブログ運営者</div>
             </article>
             <article class="voice-card">
-              <p class="voice-text">Starterで軽い土台を作り、収益化やメディア運用が必要になったら用途別ラインに広げられる。</p>
-              <div class="voice-meta">想定ユースケース</div>
+              <p class="voice-text">Starterで軽い土台を作り、収益化が本格化してきたのでAffiliateに切り替えた。ラインが分かれているのが使いやすい。</p>
+              <div class="voice-meta">アフィリエイター</div>
             </article></div>
         </div>
       </section>
@@ -426,38 +444,41 @@
           <div class="lp-grid-3">
             
           <article class="lp-card">
-            <h3>初心者ブロガー・副業 → AIO Starter</h3>
-            <p>シンプル・軽い・すぐ使える。まず公開できる土台を迷わず作る。</p>
+            <h3>初心者ブロガー・副業ブログ</h3>
+            <p>シンプルで軽い。AIO Starterでまず公開できる土台を迷わず作る。5,500円。</p>
           </article>
           <article class="lp-card">
-            <h3>アフィリエイター → AIO Affiliate</h3>
-            <p>CTA・広告枠・比較表・クリック計測を強化。収益導線を設計しやすくする次期ライン。</p>
+            <h3>アフィリエイター</h3>
+            <p>CTA・広告枠・比較表・クリック計測を強化したAIO Affiliate。収益導線を整えやすい。8,800円。</p>
           </article>
           <article class="lp-card">
-            <h3>メディア・企業ブログ → AIO Media</h3>
-            <p>E-E-A-T・マルチ著者・品質スコア・NewsArticle対応。信頼性を強める上位ライン。</p>
+            <h3>メディア・企業ブログ</h3>
+            <p>E-E-A-T・マルチ著者・NewsArticle対応のAIO Media。信頼性を強める上位ライン。11,000円。</p>
           </article>
           </div>
+          <p style="text-align:center;margin-top:28px;">
+            <a class="btn btn-primary btn-lg" href="/apps/wordpress-theme/">無料でダウンロード →</a>
+          </p>
         </div>
       </section>
 
       <section class="section section-alt">
         <div class="container">
           <p class="section-label">Compare</p>
-          <h2 class="section-title">無料版とプロプランの違い</h2>
+          <h2 class="section-title">Starter / Affiliate / Media の比較</h2>
           <div class="lp-table-wrap">
             <table class="lp-table">
               <thead>
                 <tr>
                   <th>機能</th>
-                  <th>無料版</th>
-                  <th>プロプラン</th>
+                  <th>無料版 / Starter</th>
+                  <th>Affiliate / Media</th>
                 </tr>
               </thead>
               <tbody>
                 
               <tr>
-                <td>テーマ</td>
+                <td></td>
                 <td class="free">AIO Starter</td>
                 <td class="pro">Affiliate / Media</td>
               </tr>
@@ -479,7 +500,7 @@
               <tr>
                 <td>内部アクセス解析</td>
                 <td class="free">軽量版</td>
-                <td class="pro">フル〜ダッシュボード</td>
+                <td class="pro">フル機能</td>
               </tr>
               <tr>
                 <td>GA4 / GSC設定</td>
@@ -488,43 +509,45 @@
               </tr>
               <tr>
                 <td>デザインプリセット</td>
-                <td class="free">3色（green/light/dark）</td>
-                <td class="pro">用途別UIを追加予定</td>
+                <td class="free">3色</td>
+                <td class="pro">用途別UI追加</td>
               </tr>
               <tr>
-                <td>価格</td>
-                <td class="free">配布中</td>
-                <td class="pro">未定</td>
+                <td>価格（買い切り）</td>
+                <td class="free">¥5,500</td>
+                <td class="pro">¥8,800 〜 ¥11,000</td>
               </tr>
               </tbody>
             </table>
           </div>
+          <p style="text-align:center;margin-top:24px;">
+            <a class="btn btn-primary" href="/contact/#wordpress-theme" target="_blank" rel="noreferrer">購入・導入相談をする</a>
+          </p>
         </div>
       </section>
 
       <section class="section" style="background:var(--bg);">
         <div class="container">
-          <p class="section-label">Features</p>
-          <h2 class="section-title">プロプランでできること</h2>
+          <p class="section-label">Price</p>
+          <h2 class="section-title">3つのラインと価格</h2>
           <div class="lp-grid-3">
             
           <article class="lp-card">
-            <h3>3ラインで用途を分けられる</h3>
-            <p>Starter・Affiliate・Mediaを用途に合わせて設計。色だけでなく機能で棲み分ける。</p>
+            <h3>AIO Starter<span class="lp-price-badge">¥5,500</span></h3>
+            <p>初心者・副業ブロガー向け。JSON-LD・FAQ・llms.txt・解析・GA4がテーマに入っている。まずここから始める。</p>
           </article>
           <article class="lp-card">
-            <h3>プラグインを増やしすぎない</h3>
-            <p>FAQ・構造化・解析・llms.txtをテーマ側に入れ、必要な外部連携だけ選ぶ。</p>
+            <h3>AIO Affiliate<span class="lp-price-badge">¥8,800</span></h3>
+            <p>アフィリエイター向け。CTA強化・広告枠・比較表・クリック計測を追加。収益導線を設計しやすくする。</p>
           </article>
           <article class="lp-card">
-            <h3>価格は正式販売前に確定</h3>
-            <p>現時点ではStarterを試せる状態。サポート・アップデート範囲と合わせて価格を決める。</p>
-          </article>
-          <article class="lp-card">
-            <h3>デザインの微調整が簡単</h3>
-            <p>管理画面からプリセットと色を切り替えて、ブランドに合わせやすい。</p>
+            <h3>AIO Media<span class="lp-price-badge">¥11,000</span></h3>
+            <p>メディア・企業ブログ向け。E-E-A-T・マルチ著者・NewsArticle対応。信頼性と権威性を強めるライン。</p>
           </article>
           </div>
+          <p style="text-align:center;margin-top:28px;">
+            <a class="btn btn-primary btn-lg" href="/contact/#wordpress-theme" target="_blank" rel="noreferrer">購入・導入相談をする</a>
+          </p>
         </div>
       </section>
 
@@ -536,23 +559,23 @@
             
             <details class="faq">
               <summary>3種類はどう違う？</summary>
-              <div class="faq-body">Starterは初心者・副業向け、Affiliateは収益化向け、Mediaは企業・メディア向け。まずStarterを配布し、残り2つは用途別の次期ラインとして設計している。</div>
+              <div class="faq-body">Starterは初心者・副業向け（5,500円）、Affiliateは収益化向け（8,800円）、Mediaは企業・メディア向け（11,000円）。すべて買い切り。まずStarterで土台を確認してから広げられる。</div>
             </details>
             <details class="faq">
               <summary>Yoast SEOやRank Mathは不要になる？</summary>
-              <div class="faq-body">完全な代替を保証するものではない。FAQ・構造化データ・メタ情報・解析の入口をテーマ側で扱えるので、必要なプラグインを減らしやすい設計。</div>
+              <div class="faq-body">完全な代替保証ではないが、FAQ・構造化データ・メタ情報・解析の入口をテーマ側で扱えるので、必要なプラグインを減らしやすい設計になっている。</div>
             </details>
             <details class="faq">
               <summary>サポートとアップデートはある？</summary>
-              <div class="faq-body">正式販売時にサポート範囲とアップデート方針を明記する。現時点では問い合わせフォームから導入相談を受ける。</div>
+              <div class="faq-body">購入後のサポートはZIP導入・基本設定・ショートコードの使い方・GA4/GSC設定まで対応。アップデートは配布ZIPの更新で対応する。</div>
             </details>
             <details class="faq">
-              <summary>まず試せる？</summary>
-              <div class="faq-body">はい。AIO Starter ZIPをアプリページからダウンロードして試せる。</div>
+              <summary>まず無料で試せる？</summary>
+              <div class="faq-body">AIO Starter ZIPをダウンロードページから無料で入手できる。有料版との機能差はないため、実際に動かして確認してから購入を決められる。</div>
             </details>
             <details class="faq">
               <summary>色は変えられる？</summary>
-              <div class="faq-body">はい。メインカラーと文字色を管理画面の設定から変更できる。</div>
+              <div class="faq-body">管理画面の設定からメインカラーと文字色を変更できる。ボタン・リンク・見出しのアクセントカラーに反映される。</div>
             </details>
           </div>
         </div>
@@ -560,13 +583,13 @@
 
       <section class="lp-cta">
         <div class="container">
-          <h2>プラグイン追加ゼロ。<em>AIO対応の土台</em>がテーマに入っている。</h2>
-          <p>FAQ・構造化データ・llms.txt・内部解析・GA4設定をテーマ側にまとめて、後付けプラグインを増やしすぎない。さらにメインカラーと文字色を管理画面で変えられる。まずAIO Starterを配布し、Affiliate、Mediaへ広げる設計。</p>
+          <h2>今すぐAIO対応テーマで始める</h2>
+          <p>まず無料でダウンロードして試す。動作確認できたら5,500円で購入。Affiliate・Mediaへの切り替えも同じ導線で進められる。</p>
           <div class="lp-links">
-            <a class="btn btn-primary btn-lg" href="/apps/wordpress-theme/">無料版を試す →</a>
-            <a class="btn btn-primary btn-lg" href="/contact/#wordpress-theme" target="_blank" rel="noreferrer">導入相談する</a>
+            <a class="btn btn-primary btn-lg" href="/apps/wordpress-theme/">無料でダウンロード →</a>
+            <a class="btn btn-primary btn-lg" href="/contact/#wordpress-theme" target="_blank" rel="noreferrer">購入・導入相談をする</a>
           </div>
-          <p class="lp-note"><a href="/products/wordpress-theme-beta/" style="color:var(--green);font-weight:800;">プロプランの詳細を見る →</a></p>
+          <p class="lp-note"><a href="/products/wordpress-theme-beta/" style="color:var(--green);font-weight:800;">プラン詳細を見る →</a></p>
         </div>
       </section>
     </main>

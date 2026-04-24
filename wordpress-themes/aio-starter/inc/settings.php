@@ -78,6 +78,7 @@ function aio_starter_settings_page() {
           </tr>
         </thead>
         <tbody>
+          <tr><td>テーマバージョン / 自動アップデート</td><td><?php echo function_exists('aio_starter_update_status_html') ? aio_starter_update_status_html() : esc_html(AIO_STARTER_VERSION); ?></td><td>新バージョンがあれば 外観 &gt; テーマ から更新ボタンが表示されます。</td></tr>
           <tr><td>テーマ基本ファイル</td><td>OK</td><td>style.css / functions.php / template群あり</td></tr>
           <tr><td>ZIP配布</td><td>OK</td><td>downloads と public に同期済み</td></tr>
           <tr><td>色設定</td><td>OK</td><td>メインカラーと文字色を変更可能</td></tr>
