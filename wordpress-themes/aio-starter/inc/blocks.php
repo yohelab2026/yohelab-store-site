@@ -146,10 +146,8 @@ function aio_starter_add_heading_ids($content) {
         $attrs   = $m[2];
         $text    = $m[3];
         $id      = 'aio-toc-' . $counter++;
-        // すでにidがあれば上書きしない
-        if (strpos($attrs, 'id=') !== false) {
-            return $m[0];
-        }
+        // すでにidがあれば aio-toc-N のidで上書き（TOCリンクと一致させる）
+        $attrs = preg_replace('/\s*id="[^"]*"/', '', $attrs);
         return '<h' . $level . $attrs . ' id="' . esc_attr($id) . '">' . $text . '</h' . $level . '>';
     }, $content);
     return $content;
@@ -161,9 +159,56 @@ function aio_starter_register_patterns() {
         return;
     }
 
-    register_block_pattern('aio-starter/article-template', array(
-        'title' => 'AIO記事テンプレート',
-        'categories' => array('text'),
-        'content' => '<!-- wp:paragraph --><p>[aio_summary]結論を先に3行でまとめます。[/aio_summary]</p><!-- /wp:paragraph --><!-- wp:heading --><h2>結論</h2><!-- /wp:heading --><!-- wp:paragraph --><p>読者が最初に知りたい答えを書きます。</p><!-- /wp:paragraph --><!-- wp:heading --><h2>よくある質問</h2><!-- /wp:heading --><!-- wp:paragraph --><p>[aio_faq question="質問を入れる"]回答を入れます。[/aio_faq]</p><!-- /wp:paragraph -->',
-    ));
+    if (function_exists('register_block_pattern_category')) {
+        register_block_pattern_category('aio-starter-templates', array(
+            'label' => __('AIO記事テンプレート', 'aio-starter'),
+        ));
+    }
+
+    $patterns = array(
+        'aio-article-template' => array(
+            'title'       => __('AIO向け基本記事テンプレート', 'aio-starter'),
+            'description' => __('結論、根拠、注意点、FAQ、要点まとめを最初から入れた基本型。', 'aio-starter'),
+            'content'     => '<!-- wp:shortcode -->[aio_summary title="この記事の結論"]結論を3行で書きます。誰に向いているか、何が分かるか、先に答えを書きます。[/aio_summary]<!-- /wp:shortcode --><!-- wp:heading --><h2>結論</h2><!-- /wp:heading --><!-- wp:paragraph --><p>読者が最初に知りたい答えを書きます。</p><!-- /wp:paragraph --><!-- wp:heading --><h2>根拠</h2><!-- /wp:heading --><!-- wp:paragraph --><p>なぜそう言えるのか、データ、体験、公式情報などを整理します。</p><!-- /wp:paragraph --><!-- wp:heading --><h2>注意点</h2><!-- /wp:heading --><!-- wp:paragraph --><p>向いていないケースや、誤解されやすいポイントを書きます。</p><!-- /wp:paragraph --><!-- wp:heading --><h2>よくある質問</h2><!-- /wp:heading --><!-- wp:shortcode -->[aio_faq question="よくある質問を入れる"]回答を短く具体的に書きます。[/aio_faq]<!-- /wp:shortcode -->',
+        ),
+        'comparison-template' => array(
+            'title'       => __('比較記事テンプレート', 'aio-starter'),
+            'description' => __('複数商品やサービスの比較記事に使う型。', 'aio-starter'),
+            'content'     => '<!-- wp:shortcode -->[aio_summary title="比較の結論"]迷ったら最初に選ぶべきもの、条件別のおすすめ、選ばない方がいいケースを書きます。[/aio_summary]<!-- /wp:shortcode --><!-- wp:heading --><h2>比較するもの</h2><!-- /wp:heading --><!-- wp:paragraph --><p>比較対象と、この記事で見る基準を先に書きます。</p><!-- /wp:paragraph --><!-- wp:shortcode -->[aio_compare]<table><thead><tr><th>項目</th><th>A</th><th>B</th><th>C</th></tr></thead><tbody><tr><td>価格</td><td>入力</td><td>入力</td><td>入力</td></tr><tr><td>向いている人</td><td>入力</td><td>入力</td><td>入力</td></tr><tr><td>注意点</td><td>入力</td><td>入力</td><td>入力</td></tr></tbody></table>[/aio_compare]<!-- /wp:shortcode --><!-- wp:heading --><h2>選び方</h2><!-- /wp:heading --><!-- wp:paragraph --><p>価格、目的、使いやすさ、サポートなどの判断基準を書きます。</p><!-- /wp:paragraph --><!-- wp:heading --><h2>FAQ</h2><!-- /wp:heading --><!-- wp:shortcode -->[aio_faq question="どれを選べばいいですか？"]条件別に短く答えます。[/aio_faq]<!-- /wp:shortcode -->',
+        ),
+        'review-template' => array(
+            'title'       => __('レビュー記事テンプレート', 'aio-starter'),
+            'description' => __('体験、メリット、デメリット、向いている人を整理するレビュー型。', 'aio-starter'),
+            'content'     => '<!-- wp:shortcode -->[aio_summary title="レビューの結論"]実際に使った結論、良かった点、注意点を先にまとめます。[/aio_summary]<!-- /wp:shortcode --><!-- wp:heading --><h2>使って分かったこと</h2><!-- /wp:heading --><!-- wp:paragraph --><p>体験ベースで、何が良かったかを書きます。</p><!-- /wp:paragraph --><!-- wp:heading --><h2>メリット</h2><!-- /wp:heading --><!-- wp:list {"className":"is-style-aio-checklist"} --><ul class="is-style-aio-checklist"><li>良かった点を入れる</li><li>便利だった場面を入れる</li><li>他と違う点を入れる</li></ul><!-- /wp:list --><!-- wp:heading --><h2>デメリット・注意点</h2><!-- /wp:heading --><!-- wp:paragraph --><p>合わない人、気になる点、事前に知るべきことを書きます。</p><!-- /wp:paragraph --><!-- wp:heading --><h2>向いている人</h2><!-- /wp:heading --><!-- wp:paragraph --><p>どんな人なら満足しやすいかを書きます。</p><!-- /wp:paragraph -->',
+        ),
+        'case-introduction-template' => array(
+            'title'       => __('案件紹介記事テンプレート', 'aio-starter'),
+            'description' => __('案件、サービス、募集内容を分かりやすく紹介する型。', 'aio-starter'),
+            'content'     => '<!-- wp:shortcode -->[aio_summary title="この案件の要点"]誰向けか、何をする案件か、応募前に見るべき点をまとめます。[/aio_summary]<!-- /wp:shortcode --><!-- wp:heading --><h2>案件の概要</h2><!-- /wp:heading --><!-- wp:paragraph --><p>案件名、内容、対象者、報酬や条件を書きます。</p><!-- /wp:paragraph --><!-- wp:heading --><h2>向いている人</h2><!-- /wp:heading --><!-- wp:list {"className":"is-style-aio-checklist"} --><ul class="is-style-aio-checklist"><li>向いている条件を入れる</li><li>必要なスキルを入れる</li><li>応募前に確認することを入れる</li></ul><!-- /wp:list --><!-- wp:heading --><h2>応募前の注意点</h2><!-- /wp:heading --><!-- wp:paragraph --><p>確認すべき条件やリスクを書きます。</p><!-- /wp:paragraph --><!-- wp:shortcode -->[aio_faq question="初心者でも応募できますか？"]条件に分けて回答します。[/aio_faq]<!-- /wp:shortcode -->',
+        ),
+        'ai-faq-template' => array(
+            'title'       => __('AI検索向けFAQ記事テンプレート', 'aio-starter'),
+            'description' => __('質問と回答を中心に、AIにも人にも読み取りやすくする型。', 'aio-starter'),
+            'content'     => '<!-- wp:shortcode -->[aio_summary title="先に答え"]この記事で扱う質問への答えを短くまとめます。[/aio_summary]<!-- /wp:shortcode --><!-- wp:heading --><h2>基本の答え</h2><!-- /wp:heading --><!-- wp:paragraph --><p>検索ユーザーが最初に知りたい答えを書きます。</p><!-- /wp:paragraph --><!-- wp:heading --><h2>よくある質問</h2><!-- /wp:heading --><!-- wp:shortcode -->[aio_faq question="質問1"]回答1を具体的に書きます。[/aio_faq]<!-- /wp:shortcode --><!-- wp:shortcode -->[aio_faq question="質問2"]回答2を具体的に書きます。[/aio_faq]<!-- /wp:shortcode --><!-- wp:shortcode -->[aio_faq question="質問3"]回答3を具体的に書きます。[/aio_faq]<!-- /wp:shortcode --><!-- wp:heading --><h2>補足と注意点</h2><!-- /wp:heading --><!-- wp:paragraph --><p>例外、注意点、古くなりやすい情報を書きます。</p><!-- /wp:paragraph -->',
+        ),
+        'ranking-template' => array(
+            'title'       => __('ランキング記事テンプレート', 'aio-starter'),
+            'description' => __('ランキングの根拠と選び方を明確にする型。', 'aio-starter'),
+            'content'     => '<!-- wp:shortcode -->[aio_summary title="ランキングの結論"]1位、2位、3位と、選んだ理由を短くまとめます。[/aio_summary]<!-- /wp:shortcode --><!-- wp:heading --><h2>ランキングの基準</h2><!-- /wp:heading --><!-- wp:paragraph --><p>価格、使いやすさ、機能、信頼性など、評価基準を明記します。</p><!-- /wp:paragraph --><!-- wp:heading --><h2>おすすめランキング</h2><!-- /wp:heading --><!-- wp:list {"ordered":true} --><ol><li><strong>1位：名称</strong><br>理由と向いている人を書きます。</li><li><strong>2位：名称</strong><br>理由と向いている人を書きます。</li><li><strong>3位：名称</strong><br>理由と向いている人を書きます。</li></ol><!-- /wp:list --><!-- wp:heading --><h2>選ぶときの注意点</h2><!-- /wp:heading --><!-- wp:paragraph --><p>ランキングだけで決めない方がいい条件を書きます。</p><!-- /wp:paragraph -->',
+        ),
+        'product-introduction-template' => array(
+            'title'       => __('商品紹介記事テンプレート', 'aio-starter'),
+            'description' => __('商品説明、Q&A、注意点、購入前チェックを整理する型。', 'aio-starter'),
+            'content'     => '<!-- wp:shortcode -->[aio_summary title="商品の要点"]何の商品か、誰に向いているか、購入前の注意点をまとめます。[/aio_summary]<!-- /wp:shortcode --><!-- wp:heading --><h2>商品の特徴</h2><!-- /wp:heading --><!-- wp:paragraph --><p>特徴、強み、使える場面を書きます。</p><!-- /wp:paragraph --><!-- wp:heading --><h2>購入前に見るポイント</h2><!-- /wp:heading --><!-- wp:list {"className":"is-style-aio-checklist"} --><ul class="is-style-aio-checklist"><li>価格と内容が合っているか</li><li>自分の用途に合うか</li><li>注意点を理解しているか</li></ul><!-- /wp:list --><!-- wp:heading --><h2>よくある質問</h2><!-- /wp:heading --><!-- wp:shortcode -->[aio_faq question="どんな人に向いていますか？"]向いている人を具体的に書きます。[/aio_faq]<!-- /wp:shortcode --><!-- wp:shortcode -->[aio_cite source="参考リンク" url="https://example.com"]参考にした情報や公式情報を書きます。[/aio_cite]<!-- /wp:shortcode -->',
+        ),
+    );
+
+    foreach ($patterns as $slug => $pattern) {
+        register_block_pattern('aio-starter/' . $slug, array(
+            'title'       => $pattern['title'],
+            'description' => $pattern['description'],
+            'categories'  => array('aio-starter-templates', 'text'),
+            'content'     => $pattern['content'],
+        ));
+    }
 }

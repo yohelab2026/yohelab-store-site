@@ -1,7 +1,7 @@
 === AIO Starter ===
 Contributors: yohelab
 Requires at least: 6.5
-Tested up to: 6.8
+Tested up to: 6.9.4
 Requires PHP: 8.0
 Stable tag: 0.1.3
 License: GPLv2 or later
@@ -17,6 +17,8 @@ Core features:
 
 * Article, WebSite, Person, BreadcrumbList, and FAQPage JSON-LD output.
 * FAQ, summary, comparison, citation, table of contents, and author shortcodes.
+* Block patterns for comparison posts, reviews, case introductions, AI-search FAQ posts, rankings, and product introductions.
+* Lightweight AIO writing memo on post and page edit screens.
 * llms.txt endpoint.
 * Simple internal analytics and optional GA4/Google Search Console settings.
 * Transient-based page cache option.
@@ -33,6 +35,14 @@ Core features:
 = Is this a plugin replacement? =
 
 No. It reduces the need for common SEO/AIO helper plugins on small sites, but payment, form delivery, advanced security, backup, and full cache/CDN features should remain outside the theme.
+
+= Which plugins are usually unnecessary? =
+
+Simple FAQ schema, table of contents, GA4 tag insertion, Search Console verification, llms.txt generation, and simple analytics plugins often overlap with this theme.
+
+= Which plugins can still be useful? =
+
+Backup, security, forms, commerce/payment, image optimization, and spam protection can still be useful because they are outside the theme's main responsibility.
 
 = Does it require Google Analytics? =
 

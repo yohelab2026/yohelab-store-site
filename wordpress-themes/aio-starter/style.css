@@ -58,6 +58,7 @@ body {
   color: var(--aio-text);
   font-family: var(--aio-font);
   line-height: 1.8;
+  overflow-x: hidden;
 }
 
 img {
@@ -266,6 +267,8 @@ a {
 }
 
 .aio-article {
+  min-width: 0;
+  overflow-wrap: anywhere;
   padding: clamp(24px, 5vw, 46px);
   border: 1px solid var(--aio-line);
   border-radius: var(--aio-radius);
@@ -295,6 +298,7 @@ a {
 }
 
 .aio-entry > * {
+  width: min(100%, var(--aio-content));
   max-width: var(--aio-content);
 }
 
@@ -532,8 +536,18 @@ a {
 }
 
 .aio-comments {
+  width: min(100%, var(--aio-content));
   max-width: var(--aio-content);
   margin: 24px 0;
+  overflow-wrap: anywhere;
+}
+
+.comment-respond,
+.aio-comment-form,
+.aio-comment-form p {
+  max-width: 100%;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .aio-comments-title {
@@ -560,6 +574,7 @@ a {
 .aio-comment-form input[type="url"] {
   width: 100%;
   max-width: 100%;
+  min-width: 0;
   padding: 12px 14px;
   border: 1px solid var(--aio-line);
   border-radius: 14px;
@@ -770,7 +785,7 @@ a {
 
 @media (max-width: 640px) {
   .aio-wrap {
-    width: min(100% - 26px, var(--aio-wide));
+    width: min(calc(100% - 26px), var(--aio-wide));
   }
 
   .aio-header-inner {
@@ -785,5 +800,19 @@ a {
 
   .aio-author-box {
     display: block;
+  }
+
+  .aio-post-title {
+    font-size: clamp(28px, 9vw, 40px);
+    line-height: 1.2;
+  }
+
+  .aio-article {
+    padding: 24px;
+  }
+
+  .aio-entry,
+  .aio-comments {
+    max-width: 100%;
   }
 }

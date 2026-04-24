@@ -21,6 +21,7 @@ $aio_starter_includes = array(
     'inc/llms.php',
     'inc/cache.php',
     'inc/blocks.php',
+    'inc/content-assistant.php',
 );
 
 foreach ($aio_starter_includes as $aio_starter_file) {
@@ -91,6 +92,7 @@ function aio_starter_register_block_styles() {
 add_action('wp_enqueue_scripts', 'aio_starter_assets');
 function aio_starter_assets() {
     wp_enqueue_style('aio-starter-style', get_stylesheet_uri(), array(), AIO_STARTER_VERSION);
+    wp_enqueue_script('aio-starter-main', AIO_STARTER_URI . '/assets/js/main.js', array(), AIO_STARTER_VERSION, true);
 
     if (is_singular() && comments_open() && get_option('thread_comments')) {
         wp_enqueue_script('comment-reply');

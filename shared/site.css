@@ -2117,6 +2117,22 @@ td:first-child, th:first-child { font-weight: 700; }
 
   /* ---- Nav ---- */
   .nav-links a:not(.btn) { display: none; }
+  .nav-inner {
+    width: 100%;
+    padding: 0 14px;
+    gap: 8px;
+    overflow: hidden;
+  }
+  .brand { min-width: 0; }
+  .nav-links .btn {
+    height: 36px;
+    padding: 0 10px;
+    font-size: 12px;
+    border-radius: 10px;
+    max-width: 128px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
   /* ---- LP ---- */
   .lp-hero  { padding: 80px 0 60px; }
@@ -2153,10 +2169,7 @@ td:first-child, th:first-child { font-weight: 700; }
 
   /* ---- Sticky CTA ---- */
   .sticky-cta {
-    display: block;
-    position: fixed;
-    bottom: 14px; left: 14px; right: 14px;
-    z-index: 80;
+    display: none;
   }
   .sticky-cta-inner {
     background: rgba(255,255,255,.97);
@@ -2170,10 +2183,7 @@ td:first-child, th:first-child { font-weight: 700; }
   .sticky-cta-inner .btn { width: 100%; }
 
   .lp-sticky {
-    display: block;
-    position: fixed;
-    bottom: 14px; left: 14px; right: 14px;
-    z-index: 80;
+    display: none;
   }
   .lp-sticky-inner {
     background: rgba(255,255,255,.97);
@@ -2189,6 +2199,7 @@ td:first-child, th:first-child { font-weight: 700; }
 }
 
 @media (max-width: 460px) {
+  .nav-links { display: none; }
   .hero h1 { font-size: clamp(34px, 11vw, 46px); }
   .bundle-row { flex-direction: column; align-items: stretch; text-align: center; }
   .tools-compare-hint { font-size: 13px; }
