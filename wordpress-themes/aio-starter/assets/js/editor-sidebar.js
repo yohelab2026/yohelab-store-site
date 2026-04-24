@@ -13,22 +13,31 @@
   const registerPlugin = wp.plugins.registerPlugin;
 
   const fields = [
-    ["reader", "誰に向けた記事か"],
-    ["intent", "検索意図・知りたい答え"],
-    ["conclusion", "最初に出す結論"],
-    ["evidence", "根拠・比較・参考リンク"],
-    ["caution", "注意点・向かない人"],
-    ["cta", "最後に促す行動"],
+    ["reader", "この記事を読む人"],
+    ["intent", "この記事で答えること"],
+    ["conclusion", "先に言いたい結論"],
+    ["evidence", "理由・比較・参考リンク"],
+    ["caution", "注意点"],
+    ["cta", "最後にしてほしいこと"],
   ];
 
   const checks = [
-    ["conclusion", "上部に結論ボックスがある"],
-    ["evidence", "根拠・比較・参考リンクがある"],
-    ["caution", "注意点や向かない人を書いた"],
-    ["faq", "FAQを入れた"],
-    ["summary", "最後に要点まとめがある"],
-    ["updated", "更新日と情報の鮮度を確認した"],
+    ["conclusion", "最初に答えを書いた"],
+    ["evidence", "理由や比較を書いた"],
+    ["caution", "注意点を書いた"],
+    ["faq", "よくある質問を入れた"],
+    ["summary", "最後にまとめを書いた"],
+    ["updated", "情報が古くないか見た"],
   ];
+
+  const placeholders = {
+    reader: "例：副業でブログを始めたい人",
+    intent: "例：どのテーマを選べばいいか",
+    conclusion: "例：最初は軽くて設定が少ないテーマで十分",
+    evidence: "例：表示速度、設定項目、プラグイン数を比較",
+    caution: "例：検索順位や売上は保証できない",
+    cta: "例：無料版を試す、ZIPをダウンロードする",
+  };
 
   function metaKey(field) {
     return "_aio_assistant_" + field;
@@ -69,12 +78,13 @@
       el(
         "p",
         { style: { marginTop: "8px", color: "#646970" } },
-        "記事を書く前に、読者・検索意図・結論・根拠を固定します。"
+        "むずかしく考えず、この記事の答えを先に決めるためのメモです。"
       ),
       fields.map(function (item) {
         return el(TextareaControl, {
           key: item[0],
           label: item[1],
+          placeholder: placeholders[item[0]],
           value: meta[metaKey(item[0])] || "",
           rows: 2,
           onChange: function (value) {

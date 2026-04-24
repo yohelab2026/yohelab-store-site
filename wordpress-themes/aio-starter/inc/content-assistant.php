@@ -116,12 +116,12 @@ function aio_starter_render_content_assistant_box($post) {
 
       <?php
       $fields = array(
-          'reader'     => __('誰に向けた記事か', 'aio-starter'),
-          'intent'     => __('検索意図・知りたい答え', 'aio-starter'),
-          'conclusion' => __('最初に出す結論', 'aio-starter'),
-          'evidence'   => __('根拠・比較・参考リンク', 'aio-starter'),
-          'caution'    => __('注意点・向かない人', 'aio-starter'),
-          'cta'        => __('最後に促す行動', 'aio-starter'),
+        'reader'     => __('この記事を読む人', 'aio-starter'),
+        'intent'     => __('この記事で答えること', 'aio-starter'),
+        'conclusion' => __('先に言いたい結論', 'aio-starter'),
+        'evidence'   => __('理由・比較・参考リンク', 'aio-starter'),
+        'caution'    => __('注意点', 'aio-starter'),
+        'cta'        => __('最後にしてほしいこと', 'aio-starter'),
       );
       foreach ($fields as $key => $label) :
           ?>
