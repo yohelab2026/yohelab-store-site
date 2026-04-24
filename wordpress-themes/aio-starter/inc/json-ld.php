@@ -97,6 +97,98 @@ function aio_starter_json_ld() {
                 }, $faq),
             );
         }
+
+    } elseif (is_category() || is_tag() || is_tax()) {
+        // カテゴリー・タグ・タクソノミーアーカイブ
+        $term      = get_queried_object();
+        $term_url  = get_term_link($term);
+        $term_name = $term instanceof WP_Term ? $term->name : get_bloginfo('name');
+
+        $graph[] = array(
+            '@type' => 'BreadcrumbList',
+            '@id'   => (is_string($term_url) ? $term_url : home_url('/')) . '#breadcrumb',
+            'itemListElement' => array(
+                array(
+                    '@type'    => 'ListItem',
+                    'position' => 1,
+                    'name'     => get_bloginfo('name'),
+                    'item'     => home_url('/'),
+                ),
+                array(
+                    '@type'    => 'ListItem',
+                    'position' => 2,
+                    'name'     => $term_name,
+                    'item'     => is_string($term_url) ? $term_url : home_url('/'),
+                ),
+            ),
+        );
+
+        // CollectionPage でアーカイブ自体を明示
+        $graph[] = array(
+            '@type'     => 'CollectionPage',
+            '@id'       => is_string($term_url) ? $term_url . '#page' : home_url('/#page'),
+            'name'      => $term_name,
+            'url'       => is_string($term_url) ? $term_url : home_url('/'),
+            'publisher' => $publisher,
+        );
+
+    } elseif (is_author()) {
+        // 著者アーカイブ
+        $author    = get_queried_object();
+        $author_id = $author instanceof WP_User ? (int) $author->ID : 0;
+        $author_url = get_author_posts_url($author_id);
+
+        $graph[] = array(
+            '@type' => 'BreadcrumbList',
+            '@id'   => $author_url . '#breadcrumb',
+            'itemListElement' => array(
+                array(
+                    '@type'    => 'ListItem',
+                    'position' => 1,
+                    'name'     => get_bloginfo('name'),
+                    'item'     => home_url('/'),
+                ),
+                array(
+                    '@type'    => 'ListItem',
+                    'position' => 2,
+                    'name'     => $author instanceof WP_User ? $author->display_name : '',
+                    'item'     => $author_url,
+                ),
+            ),
+        );
+
+        if ($author_id) {
+            $graph[] = array(
+                '@type' => 'Person',
+                '@id'   => $author_url . '#person',
+                'name'  => $author instanceof WP_User ? $author->display_name : '',
+                'url'   => $author_url,
+            );
+        }
+
+    } elseif (is_date()) {
+        // 日付アーカイブ
+        $archive_url  = get_year_link(get_query_var('year'));
+        $archive_name = get_the_archive_title();
+
+        $graph[] = array(
+            '@type' => 'BreadcrumbList',
+            '@id'   => $archive_url . '#breadcrumb',
+            'itemListElement' => array(
+                array(
+                    '@type'    => 'ListItem',
+                    'position' => 1,
+                    'name'     => get_bloginfo('name'),
+                    'item'     => home_url('/'),
+                ),
+                array(
+                    '@type'    => 'ListItem',
+                    'position' => 2,
+                    'name'     => $archive_name,
+                    'item'     => $archive_url,
+                ),
+            ),
+        );
     }
 
     echo '<script type="application/ld+json">' . wp_json_encode(array(

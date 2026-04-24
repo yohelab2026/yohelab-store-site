@@ -393,9 +393,11 @@ a {
 .aio-btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
-  padding: 12px 24px;
-  border-radius: 12px;
+  min-height: 44px;
+  padding: 10px 22px;
+  border-radius: 999px;
   background: var(--aio-green);
   color: #fff;
   font-weight: 800;
@@ -522,18 +524,7 @@ a {
   text-decoration: underline;
 }
 
-.aio-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 44px;
-  padding: 10px 16px;
-  border-radius: 999px;
-  background: var(--aio-green-dark);
-  color: #fff;
-  font-weight: 800;
-  text-decoration: none;
-}
+/* .aio-btn の重複定義を統合 → 上部の定義を参照 */
 
 .aio-comments {
   width: min(100%, var(--aio-content));
