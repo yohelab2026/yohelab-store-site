@@ -46,7 +46,28 @@ function aio_starter_settings_page() {
     ?>
     <div class="wrap">
       <h1>AIO Starter</h1>
-      <p>初心者向けに、AIOの土台、軽量解析、llms.txt、外部計測IDをまとめて設定します。</p>
+      <p>迷いやすい設定を1画面にまとめています。まずは「かんたん初期設定」だけ見れば使い始められます。</p>
+
+      <h2>かんたん初期設定</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;max-width:980px;margin:16px 0 24px;">
+        <div style="background:#fff;border:1px solid #dcdcde;border-radius:12px;padding:16px;">
+          <strong>1. 色を決める</strong>
+          <p style="margin:.5em 0 0;color:#646970;">メインカラーと文字色だけ変更。細かい装飾設定は増やしていません。</p>
+        </div>
+        <div style="background:#fff;border:1px solid #dcdcde;border-radius:12px;padding:16px;">
+          <strong>2. 解析を選ぶ</strong>
+          <p style="margin:.5em 0 0;color:#646970;">テーマ内解析を使うか、GA4を入れるかを選びます。両方なしでも使えます。</p>
+        </div>
+        <div style="background:#fff;border:1px solid #dcdcde;border-radius:12px;padding:16px;">
+          <strong>3. 記事を書く</strong>
+          <p style="margin:.5em 0 0;color:#646970;">投稿画面のAIO記事設計で、記事タイプと答えを決めてから書きます。</p>
+        </div>
+        <div style="background:#fff;border:1px solid #dcdcde;border-radius:12px;padding:16px;">
+          <strong>4. 必要なら追加</strong>
+          <p style="margin:.5em 0 0;color:#646970;">バックアップ、フォーム、決済などテーマ外の機能だけプラグインを足します。</p>
+        </div>
+      </div>
+
       <h2>最終確認表</h2>
       <table class="widefat striped" style="max-width:860px;margin:16px 0 24px;">
         <thead>

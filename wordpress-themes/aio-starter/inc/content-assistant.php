@@ -22,7 +22,7 @@ function aio_starter_add_content_assistant_box() {
 
 add_action('init', 'aio_starter_register_content_assistant_meta');
 function aio_starter_register_content_assistant_meta() {
-    $text_fields = array('reader', 'intent', 'conclusion', 'evidence', 'caution', 'cta');
+    $text_fields = array('type', 'reader', 'intent', 'conclusion', 'evidence', 'caution', 'cta');
     foreach ($text_fields as $field) {
         register_post_meta('', '_aio_assistant_' . $field, array(
             'type'              => 'string',
@@ -61,6 +61,7 @@ function aio_starter_enqueue_content_assistant_sidebar() {
 
 function aio_starter_content_assistant_defaults() {
     return array(
+        'type'       => 'basic',
         'reader'     => '',
         'intent'     => '',
         'conclusion' => '',
@@ -82,12 +83,12 @@ function aio_starter_get_content_assistant($post_id) {
 
 function aio_starter_content_assistant_checks() {
     return array(
-        'conclusion' => __('上部に結論ボックスがある', 'aio-starter'),
-        'evidence'   => __('根拠・比較・参考リンクがある', 'aio-starter'),
-        'caution'    => __('注意点や向かない人を書いた', 'aio-starter'),
-        'faq'        => __('FAQを入れた', 'aio-starter'),
-        'summary'    => __('最後に要点まとめがある', 'aio-starter'),
-        'updated'    => __('更新日と情報の鮮度を確認した', 'aio-starter'),
+        'conclusion' => __('最初に答えがある', 'aio-starter'),
+        'evidence'   => __('理由・比較がある', 'aio-starter'),
+        'caution'    => __('注意点がある', 'aio-starter'),
+        'faq'        => __('FAQがある', 'aio-starter'),
+        'summary'    => __('最後にまとめがある', 'aio-starter'),
+        'updated'    => __('情報が古くない', 'aio-starter'),
     );
 }
 
@@ -116,12 +117,10 @@ function aio_starter_render_content_assistant_box($post) {
 
       <?php
       $fields = array(
-        'reader'     => __('この記事を読む人', 'aio-starter'),
         'intent'     => __('この記事で答えること', 'aio-starter'),
-        'conclusion' => __('先に言いたい結論', 'aio-starter'),
+        'conclusion' => __('先に出す答え', 'aio-starter'),
         'evidence'   => __('理由・比較・参考リンク', 'aio-starter'),
-        'caution'    => __('注意点', 'aio-starter'),
-        'cta'        => __('最後にしてほしいこと', 'aio-starter'),
+        'caution'    => __('注意点・補足', 'aio-starter'),
       );
       foreach ($fields as $key => $label) :
           ?>

@@ -7,36 +7,51 @@
   const PluginDocumentSettingPanel = wp.editPost.PluginDocumentSettingPanel;
   const TextareaControl = wp.components.TextareaControl;
   const CheckboxControl = wp.components.CheckboxControl;
+  const SelectControl = wp.components.SelectControl;
   const Notice = wp.components.Notice;
   const useSelect = wp.data.useSelect;
   const useDispatch = wp.data.useDispatch;
   const registerPlugin = wp.plugins.registerPlugin;
 
+  const articleTypes = [
+    ["basic", "基本記事"],
+    ["compare", "比較記事"],
+    ["review", "レビュー記事"],
+    ["ranking", "ランキング記事"],
+    ["faq", "FAQ記事"],
+    ["product", "商品紹介"],
+  ];
+
+  const typeHints = {
+    basic: "結論、理由、注意点、FAQの順で書く。",
+    compare: "先におすすめを出し、比較表と選び方を書く。",
+    review: "使った感想、良い点、注意点、向いている人を書く。",
+    ranking: "順位の理由と、選び方の基準を先に書く。",
+    faq: "質問ごとに短く答え、最後に注意点をまとめる。",
+    product: "誰向けの商品か、特徴、購入前の注意点を書く。",
+  };
+
   const fields = [
-    ["reader", "この記事を読む人"],
     ["intent", "この記事で答えること"],
-    ["conclusion", "先に言いたい結論"],
+    ["conclusion", "先に出す答え"],
     ["evidence", "理由・比較・参考リンク"],
-    ["caution", "注意点"],
-    ["cta", "最後にしてほしいこと"],
+    ["caution", "注意点・補足"],
   ];
 
   const checks = [
-    ["conclusion", "最初に答えを書いた"],
-    ["evidence", "理由や比較を書いた"],
-    ["caution", "注意点を書いた"],
-    ["faq", "よくある質問を入れた"],
-    ["summary", "最後にまとめを書いた"],
-    ["updated", "情報が古くないか見た"],
+    ["conclusion", "最初に答えがある"],
+    ["evidence", "理由・比較がある"],
+    ["caution", "注意点がある"],
+    ["faq", "FAQがある"],
+    ["summary", "最後にまとめがある"],
+    ["updated", "情報が古くない"],
   ];
 
   const placeholders = {
-    reader: "例：副業でブログを始めたい人",
-    intent: "例：どのテーマを選べばいいか",
-    conclusion: "例：最初は軽くて設定が少ないテーマで十分",
+    intent: "例：どれを選べばいいか",
+    conclusion: "例：初心者は軽くて設定が少ないものがいい",
     evidence: "例：表示速度、設定項目、プラグイン数を比較",
-    caution: "例：検索順位や売上は保証できない",
-    cta: "例：無料版を試す、ZIPをダウンロードする",
+    caution: "例：順位や売上は保証できない",
   };
 
   function metaKey(field) {
@@ -78,7 +93,30 @@
       el(
         "p",
         { style: { marginTop: "8px", color: "#646970" } },
-        "むずかしく考えず、この記事の答えを先に決めるためのメモです。"
+        "記事タイプを選んで、答え・理由・注意点だけ先に決めます。"
+      ),
+      el(SelectControl, {
+        label: "記事タイプ",
+        value: meta[metaKey("type")] || "basic",
+        options: articleTypes.map(function (item) {
+          return { value: item[0], label: item[1] };
+        }),
+        onChange: function (value) {
+          updateMeta(metaKey("type"), value);
+        },
+      }),
+      el(
+        "p",
+        {
+          style: {
+            marginTop: "-6px",
+            padding: "8px 10px",
+            background: "#f6f7f7",
+            borderRadius: "8px",
+            color: "#50575e",
+          },
+        },
+        typeHints[meta[metaKey("type")] || "basic"]
       ),
       fields.map(function (item) {
         return el(TextareaControl, {
