@@ -256,7 +256,7 @@ function pageTemplate(game) {
       </a>
       <nav class="nav-links">
         <a href="/#tool">AIツール</a>
-        <a href="/games/">ゲーム</a>
+        <a href="/games/">Labs</a>
         <a href="/contact/">問い合わせ</a>
       </nav>
     </div>

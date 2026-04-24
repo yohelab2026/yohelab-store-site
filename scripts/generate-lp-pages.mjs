@@ -22,7 +22,7 @@ const pages = [
     buyLabel: "プロプランを始める",
     productHref: "/products/research-writer-beta/",
     proPrice: "1980",
-    proOfferDescription: "月額1,980円・月50回・いつでも解約可",
+    proOfferDescription: "月額1,980円・月50セット・いつでも解約可",
     compareHeadline: "無料版は1日1セット、プロプランは月50セットまで",
     freeCards: [
       { title: "最新情報を自動収集", text: "3キーワードを入れるだけ。Perplexityが最新の情報源を集める。" },
@@ -43,7 +43,7 @@ const pages = [
       ["月額料金", "¥0", "¥1,980"],
     ],
     proCards: [
-      { title: "月50本まで量産できる", text: "AIO向け記事下書きを月50本ペースで回せる。ブログ・メディア運営の実弾になる。" },
+      { title: "月50セットまで量産できる", text: "AIO向け記事下書きを月50セットペースで回せる。ブログ・メディア運営の実弾になる。" },
       { title: "FAQ付きで構造が強い", text: "FAQ・見出し・結論の型が自動で入り、読者とAI検索の両方に伝わりやすい形で量産。" },
       { title: "調査から執筆まで一気通貫", text: "リサーチと記事化を同じ画面で完結。ツールを行き来するロスがない。" },
     ],
