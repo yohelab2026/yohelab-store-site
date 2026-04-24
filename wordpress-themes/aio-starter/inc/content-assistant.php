@@ -9,7 +9,6 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-add_action('add_meta_boxes', 'aio_starter_add_content_assistant_box');
 function aio_starter_add_content_assistant_box() {
     add_meta_box(
         'aio-starter-content-assistant',
@@ -18,6 +17,45 @@ function aio_starter_add_content_assistant_box() {
         array('post', 'page'),
         'side',
         'high'
+    );
+}
+
+add_action('init', 'aio_starter_register_content_assistant_meta');
+function aio_starter_register_content_assistant_meta() {
+    $text_fields = array('reader', 'intent', 'conclusion', 'evidence', 'caution', 'cta');
+    foreach ($text_fields as $field) {
+        register_post_meta('', '_aio_assistant_' . $field, array(
+            'type'              => 'string',
+            'single'            => true,
+            'show_in_rest'      => true,
+            'sanitize_callback' => 'sanitize_textarea_field',
+            'auth_callback'     => static function () {
+                return current_user_can('edit_posts');
+            },
+        ));
+    }
+
+    foreach (array_keys(aio_starter_content_assistant_checks()) as $field) {
+        register_post_meta('', '_aio_assistant_check_' . $field, array(
+            'type'              => 'string',
+            'single'            => true,
+            'show_in_rest'      => true,
+            'sanitize_callback' => 'sanitize_text_field',
+            'auth_callback'     => static function () {
+                return current_user_can('edit_posts');
+            },
+        ));
+    }
+}
+
+add_action('enqueue_block_editor_assets', 'aio_starter_enqueue_content_assistant_sidebar');
+function aio_starter_enqueue_content_assistant_sidebar() {
+    wp_enqueue_script(
+        'aio-starter-editor-sidebar',
+        AIO_STARTER_URI . '/assets/js/editor-sidebar.js',
+        array('wp-plugins', 'wp-edit-post', 'wp-element', 'wp-components', 'wp-data', 'wp-i18n'),
+        AIO_STARTER_VERSION,
+        true
     );
 }
 
