@@ -2,13 +2,11 @@ import {
   getGrantLabel,
   getGrantNextPath,
   makeGrantToken,
+  makeSerial,
   getAllProducts,
 } from "../lib/entitlements.js";
 
-const SUPPORTED_EVENTS = new Set([
-  "checkout.session.completed",
-  "checkout.session.async_payment_succeeded",
-]);
+const SUPPORTED_EVENTS = new Set(["checkout.session.completed", "checkout.session.async_payment_succeeded"]);
 
 export async function onRequestPost(context) {
   try {
@@ -33,23 +31,33 @@ export async function onRequestPost(context) {
     }
 
     const email = session?.customer_details?.email || session?.customer_email;
-    const subscriptionId = session?.subscription;
-    if (!email || !subscriptionId) {
-      return json({ received: true, ignored: "missing_email_or_subscription" });
+    const purchaseId = product === "wordpress-theme"
+      ? (session?.payment_intent || session?.id)
+      : session?.subscription;
+    if (!email || !purchaseId) {
+      return json({ received: true, ignored: product === "wordpress-theme" ? "missing_email_or_payment" : "missing_email_or_subscription" });
     }
 
     const grantToken = await makeGrantToken(
-      { product, subscriptionId, email },
+      { product, subscriptionId: purchaseId, email },
       context.env,
       Date.now(),
     );
+    const serial = product === "wordpress-theme"
+      ? await makeSerial({ product, subscriptionId: purchaseId, email }, context.env)
+      : "";
 
     const siteUrl = (context.env.SITE_URL || "https://yohelab.com").replace(/\/$/, "");
     const next = getGrantNextPath(product);
     const accessUrl = `${siteUrl}/pro/activate?token=${encodeURIComponent(grantToken)}&next=${encodeURIComponent(next)}`;
+    const downloadUrl = serial
+      ? `${siteUrl}/api/theme-download?serial=${encodeURIComponent(serial)}&email=${encodeURIComponent(email)}&purchase=${encodeURIComponent(purchaseId)}`
+      : "";
     await sendGrantEmail({
       to: email,
       accessUrl,
+      downloadUrl,
+      serial,
       product,
       label: getGrantLabel(product),
       from: context.env.RESEND_FROM_EMAIL,
@@ -62,21 +70,47 @@ export async function onRequestPost(context) {
   }
 }
 
-async function sendGrantEmail({ to, accessUrl, product, label, from, apiKey }) {
+async function sendGrantEmail({ to, accessUrl, downloadUrl, serial, product, label, from, apiKey }) {
   if (!apiKey) throw new Error("RESEND_API_KEY is not configured");
   if (!from) throw new Error("RESEND_FROM_EMAIL is not configured");
 
-  const subject = `【よへラボ】${label}の有料版リンク`;
-  const text = [
-    `${label} の有料版を有効にしたよ。`,
-    "",
-    "下のURLを開くと、購入済みの有料版が使える。",
-    accessUrl,
-    "",
-    "無料版と有料版の違いは各ページで確認できる。",
-  ].join("\n");
+  const subject = product === "wordpress-theme"
+    ? `【よへラボ】${label}のZIPとシリアルナンバー`
+    : `【よへラボ】${label}の有料版リンク`;
+  const textLines = product === "wordpress-theme"
+    ? [
+        `${label} の購入ありがとう。`,
+        "",
+        "シリアルナンバー:",
+        serial,
+        "",
+        "ZIPダウンロードURL:",
+        downloadUrl,
+        "",
+        "WordPress管理画面の「外観 > AIO Starter」にシリアルナンバーを入力すると、購入済みとして表示される。",
+        "購入者ページ:",
+        accessUrl,
+      ]
+    : [
+        `${label} の有料版を有効にしたよ。`,
+        "",
+        "下のURLを開くと、購入済みの有料版が使える。",
+        accessUrl,
+        "",
+        "無料版と有料版の違いは各ページで確認できる。",
+      ];
+  const text = textLines.join("\n");
 
-  const html = `
+  const html = product === "wordpress-theme" ? `
+    <div style="font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.7;color:#1f2937">
+      <p>${escapeHtml(label)} の購入ありがとう。</p>
+      <p>下のシリアルナンバーを WordPress管理画面の <strong>外観 &gt; AIO Starter</strong> に入力してね。</p>
+      <p style="padding:12px 16px;border-radius:10px;background:#ecfdf5;border:1px solid #b7ead6;font-size:18px;font-weight:800;letter-spacing:.08em">${escapeHtml(serial)}</p>
+      <p><strong>ZIPダウンロードURL</strong><br><a href="${escapeHtml(downloadUrl)}" style="color:#0d6b58;font-weight:700">${escapeHtml(downloadUrl)}</a></p>
+      <p><strong>購入者ページ</strong><br><a href="${escapeHtml(accessUrl)}" style="color:#0d6b58;font-weight:700">${escapeHtml(accessUrl)}</a></p>
+      <p style="color:#64748b">テーマ自体はシリアルなしでも動きます。シリアルは購入者確認、更新、サポート用です。</p>
+    </div>
+  ` : `
     <div style="font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.7;color:#1f2937">
       <p>${escapeHtml(label)} の有料版を有効にしたよ。</p>
       <p>下のURLを開くと、購入済みの有料版が使える。</p>

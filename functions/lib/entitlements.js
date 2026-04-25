@@ -162,3 +162,18 @@ export function getGrantNextPath(product) {
 export function getGrantLabel(product) {
   return getProductConfig(product)?.label || product;
 }
+
+export async function makeSerial({ product, email, subscriptionId }, env) {
+  const secret = getAccessSecret(env);
+  const normalizedEmail = String(email || "").trim().toLowerCase();
+  const source = `${product}|${normalizedEmail}|${subscriptionId || ""}`;
+  const digest = await hmacBase64Url(secret, source);
+  const body = digest.replace(/[^A-Z0-9]/gi, "").toUpperCase().slice(0, 16);
+  return `AIO-${body.slice(0, 4)}-${body.slice(4, 8)}-${body.slice(8, 12)}-${body.slice(12, 16)}`;
+}
+
+export async function verifySerial({ serial, product, email, subscriptionId }, env) {
+  if (!serial || !product || !email || !subscriptionId) return false;
+  const expected = await makeSerial({ product, email, subscriptionId }, env);
+  return serial.trim().toUpperCase() === expected;
+}

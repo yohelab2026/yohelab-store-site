@@ -92,29 +92,32 @@ const pages = [
     eyebrow: "AIOに強いWordPressテーマ",
     heroTitle: "プラグイン追加ゼロ。<em>AI検索に強い土台</em>がテーマに入っている。",
     heroLead: "FAQ・構造化データ・llms.txt・内部解析・GA4設定をテーマ側にまとめた。後付けプラグインを増やさず、AI検索時代に必要な土台を整えられる。",
-    heroNote: "まず無料でダウンロードして動作確認。気に入ったら5,500円で購入できる。",
+    heroNote: "無料配布はなし。デモとスクショで確認して、購入後にZIPとシリアルナンバーを受け取る。",
     heroBand: [
       { title: "JSON-LD全種を自動出力", text: "Article・Person・FAQPage・BreadcrumbListをテーマ側で自動生成。設定不要。" },
       { title: "llms.txt＋内部解析内蔵", text: "AIクローラー向けllms.txtと、PV・流入元を記録する軽量解析がテーマに入っている。" },
       { title: "3ライン・用途別設計", text: "Starter→Affiliate→Mediaと、ブログの成長に合わせて選べる構成。" },
     ],
     freeHref: "/apps/wordpress-theme/",
-    buyHref: "/contact/#wordpress-theme",
-    buyLabel: "購入・導入相談をする",
+    freeLabel: "デモを見る",
+    freeOffer: false,
+    buyHref: "/api/checkout?product=wordpress-theme",
+    buyLabel: "購入してZIPを受け取る",
     productHref: "/products/wordpress-theme-beta/",
     proPrice: "5500",
     proOfferDescription: "AIO Starter 5,500円 / Affiliate 8,800円 / Media 11,000円（すべて買い切り）",
-    compareHeadline: "まず無料で動作確認、用途が合えば購入する",
-    compareSubtitle: "無料版と有料版に機能差はない。使い勝手を確かめてから購入を決められる。",
-    freeBoxTitle: "無料版でできること",
-    freeBoxNote: "有料版と同じ機能を試せる。まず動かして確認してから進める。",
-    proBoxTitle: "購入後に加わるサポート",
-    proBoxNote: "機能はそのまま。購入でサポート・アップデート対応が付く。",
+    compareHeadline: "デモで確認して、購入後にZIPを受け取る",
+    compareSubtitle: "WordPressテーマはZIPを渡すと商品本体が渡るため、無料体験ではなくデモとスクショで確認する形式。",
+    freeBoxTitle: "デモで確認できること",
+    freeBoxNote: "画面、設定、記事設計、プラグイン削減の考え方を購入前に確認できる。",
+    proBoxTitle: "購入後に届くもの",
+    proBoxNote: "ZIP、シリアルナンバー、購入者向け更新、基本サポートが付く。",
     compareSectionTitle: "Starter / Affiliate / Media の比較",
+    freeColumnLabel: "デモ確認",
     proSectionLabel: "Price",
     proSectionTitle: "3つのラインと価格",
     ctaTitle: "今すぐAIO対応テーマで始める",
-    ctaLead: "まず無料でダウンロードして試す。動作確認できたら5,500円で購入。Affiliate・Mediaへの切り替えも同じ導線で進められる。",
+    ctaLead: "デモで確認してから購入。購入後にZIPとシリアルナンバーがメールで届きます。",
     freeCards: [
       { title: "AIO向け構造をそのまま試せる", text: "FAQショートコード・JSON-LD・llms.txtを実際に動かして確認できる。" },
       { title: "初期設定を1か所で完結", text: "色・解析・GA4・GSC・llms.txtを同じ管理画面で扱える。" },
@@ -145,7 +148,7 @@ const pages = [
       ["3種類はどう違う？", "Starterは初心者・副業向け（5,500円）、Affiliateは収益化向け（8,800円）、Mediaは企業・メディア向け（11,000円）。すべて買い切り。まずStarterで土台を確認してから広げられる。"],
       ["Yoast SEOやRank Mathは不要になる？", "完全な代替保証ではないが、FAQ・構造化データ・メタ情報・解析の入口をテーマ側で扱えるので、必要なプラグインを減らしやすい設計になっている。"],
       ["サポートとアップデートはある？", "購入後のサポートはZIP導入・基本設定・ショートコードの使い方・GA4/GSC設定まで対応。アップデートは配布ZIPの更新で対応する。"],
-      ["まず無料で試せる？", "AIO Starter ZIPをダウンロードページから無料で入手できる。有料版との機能差はないため、実際に動かして確認してから購入を決められる。"],
+      ["無料でZIPを試せる？", "ZIPの無料配布はありません。デモ、スクショ、機能説明を確認してから購入する形式です。購入後にZIPとシリアルナンバーをメールで送ります。"],
       ["色は変えられる？", "管理画面の設定からメインカラーと文字色を変更できる。ボタン・リンク・見出しのアクセントカラーに反映される。"],
     ],
     proofShot: {
@@ -260,7 +263,7 @@ function renderPage(page) {
   const heroBand = renderHeroBand(page.heroBand || []);
   const proPrice = page.proPrice ?? "980";
   const proOfferDescription = page.proOfferDescription || `月額${proPrice}円・初月無料・いつでも解約可`;
-  const offers = [{ "@type": "Offer", price: "0", priceCurrency: "JPY", name: "無料版" }];
+  const offers = page.freeOffer === false ? [] : [{ "@type": "Offer", price: "0", priceCurrency: "JPY", name: "無料版" }];
   if (page.proPrice == null) {
     offers.push({ "@type": "Offer", name: "正式版", description: proOfferDescription, availability: "https://schema.org/PreOrder" });
   } else {
@@ -284,6 +287,7 @@ function renderPage(page) {
   const proSectionTitle = page.proSectionTitle || "プロプランでできること";
   const ctaTitle = page.ctaTitle || page.heroTitle;
   const ctaLead = page.ctaLead || page.heroLead;
+  const freeLabel = page.freeLabel || "無料で試す";
 
   return `<!doctype html>
 <html lang="ja">
@@ -642,7 +646,7 @@ function renderPage(page) {
         </a>
         <nav class="nav-links">
           <a href="/">トップ</a>
-          <a href="${page.freeHref}">無料で試す</a>
+          <a href="${page.freeHref}">${esc(freeLabel)}</a>
           <a href="${page.productHref}">プラン詳細</a>
           <a href="/contact/">お問い合わせ</a>
           <a class="btn btn-primary btn-sm" href="${page.buyHref}" target="_blank" rel="noreferrer">${esc(page.buyLabel || "購入する")}</a>
@@ -658,7 +662,7 @@ function renderPage(page) {
             <h1>${page.heroTitle}</h1>
             <p class="lp-lead">${page.heroLead}</p>
             <div class="lp-actions">
-              <a class="btn btn-primary btn-lg" href="${page.freeHref}">無料でダウンロード →</a>
+              <a class="btn btn-primary btn-lg" href="${page.freeHref}">${esc(freeLabel)} →</a>
               <a class="btn btn-lg" style="color:rgba(255,255,255,.86);border:1.5px solid rgba(255,255,255,.25);" href="${page.buyHref}" target="_blank" rel="noreferrer">${esc(page.buyLabel || "購入する")}</a>
             </div>
             <p class="lp-hero-note">${esc(heroNote)}</p>
@@ -687,7 +691,7 @@ function renderPage(page) {
                   )
                   .join("")}
               </div>
-              <p style="margin-top:18px;"><a class="btn btn-primary" href="${page.freeHref}">無料でダウンロード →</a></p>
+              <p style="margin-top:18px;"><a class="btn btn-primary" href="${page.freeHref}">${esc(freeLabel)} →</a></p>
             </div>
             <div class="lp-side-box">
               <h3>${esc(proBoxTitle)}</h3>
@@ -720,7 +724,7 @@ function renderPage(page) {
             ${fitCards}
           </div>
           <p style="text-align:center;margin-top:28px;">
-            <a class="btn btn-primary btn-lg" href="${page.freeHref}">無料でダウンロード →</a>
+            <a class="btn btn-primary btn-lg" href="${page.freeHref}">${esc(freeLabel)} →</a>
           </p>
         </div>
       </section>
@@ -734,7 +738,7 @@ function renderPage(page) {
               <thead>
                 <tr>
                   <th>機能</th>
-                  <th>無料版 / Starter</th>
+                  <th>${page.freeColumnLabel || "無料版 / Starter"}</th>
                   <th>Affiliate / Media</th>
                 </tr>
               </thead>
@@ -777,7 +781,7 @@ function renderPage(page) {
           <h2>${ctaTitle}</h2>
           <p>${esc(ctaLead)}</p>
           <div class="lp-links">
-            <a class="btn btn-primary btn-lg" href="${page.freeHref}">無料でダウンロード →</a>
+            <a class="btn btn-primary btn-lg" href="${page.freeHref}">${esc(freeLabel)} →</a>
             <a class="btn btn-primary btn-lg" href="${page.buyHref}" target="_blank" rel="noreferrer">${esc(page.buyLabel || "購入する")}</a>
           </div>
           <p class="lp-note"><a href="${page.productHref}" style="color:var(--green);font-weight:800;">プラン詳細を見る →</a></p>

@@ -61,7 +61,7 @@ const wpApp = read(dist("apps/wordpress-theme/index.html"));
 checks.push(["wp app title", wpApp.includes('AIO対応WordPressテーマ')]);
 checks.push(["wp app analytics", wpApp.includes('テーマ内解析') && wpApp.includes('外部解析')]);
 checks.push(["wp app plugin reduction", wpApp.includes('プラグインを増やしすぎない') || wpApp.includes('プラグイン追加ゼロ')]);
-checks.push(["wp app starter download", wpApp.includes('/downloads/aio-starter.zip') && existsSync(dist("downloads/aio-starter.zip"))]);
+checks.push(["wp app starter purchase", wpApp.includes('/api/checkout?product=wordpress-theme') && !wpApp.includes('/downloads/aio-starter.zip') && !existsSync(dist("downloads/aio-starter.zip"))]);
 checks.push(["wp app install guide", wpApp.includes('WordPressに入れる手順') && wpApp.includes('保証しないこと')]);
 
 const wpProduct = read(dist("products/wordpress-theme-beta/index.html"));
