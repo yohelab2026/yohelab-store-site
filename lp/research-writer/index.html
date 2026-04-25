@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AIOに読まれやすい記事を作る | よへラボ</title>
-    <meta name="description" content="GoogleのAI概要（AIO）時代に向けて、3キーワードで最新情報を収集し、見出し・FAQ・出典・WordPress設定まで整えた記事下書きを生成。無料版は1日1セット、プロプランは月50セット。" />
-    <meta property="og:title" content="AIOに読まれやすい記事を作る | よへラボ" />
-    <meta property="og:description" content="GoogleのAI概要（AIO）時代に向けて、3キーワードで最新情報を収集し、見出し・FAQ・出典・WordPress設定まで整えた記事下書きを生成。無料版は1日1セット、プロプランは月50セット。" />
+    <title>AIO・AI検索に読まれやすい記事を作る | よへラボ</title>
+    <meta name="description" content="3キーワード入力で最新情報を収集し、見出し・FAQ・出典まで整えたAIO向け記事下書きを生成。GoogleのAI概要（AIO）・AI Mode対応。無料版は1日1セット、プロプランは月50セット・1,980円。" />
+    <meta property="og:title" content="AIO・AI検索に読まれやすい記事を作る | よへラボ" />
+    <meta property="og:description" content="3キーワード入力で最新情報を収集し、見出し・FAQ・出典まで整えたAIO向け記事下書きを生成。GoogleのAI概要（AIO）・AI Mode対応。無料版は1日1セット、プロプランは月50セット・1,980円。" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="ja_JP" />
     <meta property="og:url" content="https://yohelab.com/lp/research-writer/" />
@@ -313,12 +313,48 @@
       .lp-faq .faq summary {
         cursor: pointer;
       }
+      .voice-card {
+        padding: 24px;
+        border-radius: 18px;
+        border: 1px solid var(--border);
+        background: var(--white);
+        box-shadow: var(--shadow-sm);
+      }
+      .voice-text {
+        font-size: 15px;
+        line-height: 1.8;
+        color: var(--text);
+        margin-bottom: 12px;
+      }
+      .voice-text::before { content: "「"; }
+      .voice-text::after  { content: "」"; }
+      .voice-meta {
+        font-size: 13px;
+        color: var(--muted);
+        font-weight: 700;
+      }
+      .voices-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+        margin-top: 24px;
+      }
+      .lp-footer {
+        background: #0b1613;
+        color: rgba(255,255,255,.5);
+        font-size: 13px;
+        padding: 28px 0;
+        text-align: center;
+      }
+      .lp-footer a { color: rgba(255,255,255,.5); }
+      .lp-footer a:hover { color: #fff; }
+      .lp-footer-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 16px; margin-top: 10px; }
       @media (max-width: 960px) {
         .lp-band,
         .lp-grid-3,
-        .lp-grid-2,
-        .lp-preview {
-          grid-template-columns: 1fr;
+        .lp-preview,
+        .voices-grid {
+          grid-template-columns: 1fr 1fr;
         }
         .lp-hero {
           padding: 72px 0 56px;
@@ -327,9 +363,21 @@
           font-size: clamp(36px, 10vw, 56px);
         }
       }
+      @media (max-width: 640px) {
+        .lp-band,
+        .lp-grid-3,
+        .lp-grid-2,
+        .lp-preview,
+        .voices-grid {
+          grid-template-columns: 1fr;
+        }
+        .lp-table th, .lp-table td { padding: 10px 12px; font-size: 13px; }
+        .lp-hero { padding: 56px 0 44px; }
+        .lp-section { padding: 48px 0; }
+      }
     </style>
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"よへラボ","url":"https://yohelab.com/"},{"@type":"SoftwareApplication","name":"AIO特化リサーチ記事メーカー","applicationCategory":"BusinessApplication","operatingSystem":"Web","offers":[{"@type":"Offer","price":"0","priceCurrency":"JPY","name":"無料版"},{"@type":"Offer","price":"1980","priceCurrency":"JPY","name":"プロプラン","description":"月額1,980円・月50セット・いつでも解約可"}],"description":"GoogleのAI概要（AIO）時代に向けて、3キーワードで最新情報を収集し、見出し・FAQ・出典・WordPress設定まで整えた記事下書きを生成。無料版は1日1セット、プロプランは月50セット。"}]}
+      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"よへラボ","url":"https://yohelab.com/"},{"@type":"SoftwareApplication","name":"AIO特化リサーチ記事メーカー","applicationCategory":"BusinessApplication","operatingSystem":"Web","offers":[{"@type":"Offer","price":"0","priceCurrency":"JPY","name":"無料版"},{"@type":"Offer","price":"1980","priceCurrency":"JPY","name":"プロプラン","description":"月額1,980円・月50セット・いつでも解約可"}],"description":"3キーワード入力で最新情報を収集し、見出し・FAQ・出典まで整えたAIO向け記事下書きを生成。GoogleのAI概要（AIO）・AI Mode対応。無料版は1日1セット、プロプランは月50セット・1,980円。"}]}
     </script>
   </head>
   <body>
@@ -345,7 +393,7 @@
           <a href="/apps/research-writer/">無料で試す</a>
           <a href="/products/research-writer-beta/">プラン詳細</a>
           <a href="/contact/">お問い合わせ</a>
-          <a class="btn btn-primary btn-sm" href="/api/checkout?product=research-writer" target="_blank" rel="noreferrer">プロプランを始める</a>
+          <a class="btn btn-primary btn-sm" href="/api/checkout?product=research-writer" target="_blank" rel="noreferrer">月額1,980円で始める</a>
         </nav>
       </div>
     </header>
@@ -355,18 +403,18 @@
         <div class="container">
           <div class="lp-hero-copy">
             <p class="lp-eyebrow">AIOに読まれやすい記事メーカー</p>
-            <h1>SEOだけで止まらない。<em>AIOに読まれやすい記事</em>を作る。</h1>
-            <p class="lp-lead">GoogleのAI概要やAI Modeでも、基本は通常のSEOと同じく、インデックス可能で信頼できる本文が前提になる。だから最新情報、明確な見出し、FAQ、出典をそろえた記事下書きを、3キーワードから作れるようにした。</p>
+            <h1>3キーワードで、<em>AI検索に読まれやすい記事</em>の下書きが出る。</h1>
+            <p class="lp-lead">見出し・FAQ・出典・結論をそろえた構造が、AIにも人にも伝わりやすい。リサーチと記事化を同じ画面で完結させて、1記事あたりの作業を短くする。</p>
             <div class="lp-actions">
               <a class="btn btn-primary btn-lg" href="/apps/research-writer/">無料で試す →</a>
-              <a class="btn btn-lg" style="color:rgba(255,255,255,.86);border:1.5px solid rgba(255,255,255,.25);" href="/api/checkout?product=research-writer" target="_blank" rel="noreferrer">プロプランを始める</a>
+              <a class="btn btn-lg" style="color:rgba(255,255,255,.86);border:1.5px solid rgba(255,255,255,.25);background:rgba(255,255,255,.06);" href="/api/checkout?product=research-writer" target="_blank" rel="noreferrer">月額1,980円で始める</a>
             </div>
-            <p class="lp-hero-note">無料版で相性を見て、合えばプロプランへ。全部ブラウザでそのまま使える。</p>
+            <p class="lp-hero-note">無料版で1回試して、返ってくるものを見てから判断できる。ブラウザだけで使える。</p>
             <div class="lp-band">
               
-              <div class="lp-card"><h3>無料版</h3><p>1日1セットまで試して、返ってくるものを見る。合うかどうかの判断に使う。</p></div>
-              <div class="lp-card"><h3>プロプラン</h3><p>月50セットまで量産できる。毎日の記事作業を短くする。</p></div>
-              <div class="lp-card"><h3>導線</h3><p>無料版からそのまま進める。途中で止まりにくい順番にしている。</p></div>
+              <div class="lp-card"><h3>無料版で1回試す</h3><p>1日1セット。どんな記事下書きが返るか確認してから進める。</p></div>
+              <div class="lp-card"><h3>プロプランで量産</h3><p>月50セット。毎日の記事作業を短くして、本数を増やす。</p></div>
+              <div class="lp-card"><h3>すぐ使える</h3><p>インストール不要。ブラウザで今すぐ試せる。</p></div>
             </div>
           </div>
         </div>
@@ -375,28 +423,28 @@
       <section class="lp-section">
         <div class="container">
           <div class="lp-mini-head">
-            <h2>無料版は1日1セット、プロプランは月50セットまで</h2>
-            <p>無料で返ってくるものと、プロプランで増える機能を同じ画面で比べられる。</p>
+            <h2>無料で1回試してから、必要なら月額へ</h2>
+            <p>無料版で出てくるものを確認して、合えばそのまま月50セットに移行できる。</p>
           </div>
           <div class="lp-preview">
             <div class="lp-preview-box">
-              <h3>無料版で見えるもの</h3>
-              <p>まずは1回。どんな結果が返るかを確認してから進める。</p>
+              <h3>無料版でできること</h3>
+              <p>まず1回。どんな記事下書きが返るか確認してから進める。</p>
               <div class="lp-preview-list">
                 
-                  <div><span>✓</span><div><strong>最新情報を自動収集</strong><br>3キーワードを入れるだけ。Perplexityが最新の情報源を集める。</div></div>
-                  <div><span>✓</span><div><strong>AIO向け構造で記事化</strong><br>見出し・FAQ・結論を先に置く、AIにも人にも読まれやすい構造で出力。</div></div>
-                  <div><span>✓</span><div><strong>情報を選んで精度を上げる</strong><br>10〜20件の候補から使う情報を選び、精度の高い記事を生成。</div></div>
+                  <div><span>✓</span><div><strong>最新情報を自動収集</strong><br>3キーワードを入れるだけ。Perplexityが最新の情報源を集めてくる。</div></div>
+                  <div><span>✓</span><div><strong>AIO向け構造で出力</strong><br>見出し・FAQ・結論・出典が自動で入る。AIにも人にも読まれやすい構造。</div></div>
+                  <div><span>✓</span><div><strong>情報を選んで精度を上げる</strong><br>10〜20件の候補から使う情報を選び、精度の高い記事下書きを生成。</div></div>
               </div>
               <p style="margin-top:18px;"><a class="btn btn-primary" href="/apps/research-writer/">無料で試す →</a></p>
             </div>
             <div class="lp-side-box">
-              <h3>プロプランで増えるもの</h3>
+              <h3>プロプランで増えること</h3>
               <ul>
-                <li>月50セットまで量産できる — AIO向け記事下書きを月50セットペースで回せる。ブログ・メディア運営の実弾にな…</li><li>FAQ付きで構造が強い — FAQ・見出し・結論の型が自動で入り、読者とAI検索の両方に伝わりやすい形で量産…</li><li>調査から執筆まで一気通貫 — リサーチと記事化を同じ画面で完結。ツールを行き来するロスがない。…</li>
+                <li>月50セットで量産できる — AIO向け記事下書きを月50セット回せる。ブログ・メディア運営の実弾になる量。…</li><li>FAQ付きで構造が強い — FAQ・見出し・結論が自動で入る。読者とAI検索の両方に伝わる型で量産できる。…</li><li>リサーチから記事化まで一画面 — ツールを行き来するロスがない。収集→選択→記事化を同じ画面で完結。…</li>
               </ul>
-              <p class="lp-note">無料版で相性を見て、必要ならそのままプロプランへ進める。</p>
-              <p style="margin-top:16px;"><a class="btn btn-primary" href="/api/checkout?product=research-writer" target="_blank" rel="noreferrer" style="width:100%;">プロプランを始める</a></p>
+              <p class="lp-note">月50セット。毎日使える量に増やして、記事作業のスピードを上げる。</p>
+              <p style="margin-top:16px;"><a class="btn btn-primary" href="/api/checkout?product=research-writer" target="_blank" rel="noreferrer" style="width:100%;">月額1,980円で始める</a></p>
             </div>
           </div>
         </div>
@@ -444,15 +492,15 @@
             
           <article class="lp-card">
             <h3>ブログ・メディア運営者</h3>
-            <p>AI検索時代に合わせて、見出し・FAQ・出典の整った記事を増やしたい人向け。</p>
+            <p>AI検索時代に合わせて、構造の整った記事を量産したい人向け。</p>
           </article>
           <article class="lp-card">
             <h3>コンテンツマーケター</h3>
-            <p>構造化された記事を素早く作り、AIO対策を仕事の武器にしたい人向け。</p>
+            <p>リサーチから記事化まで一気通貫で終わらせて、本数を増やしたい人向け。</p>
           </article>
           <article class="lp-card">
-            <h3>AIライター・副業ライター</h3>
-            <p>AIの補助で記事品質を上げ、クライアントに差をつけたい人向け。</p>
+            <h3>副業ライター・AIライター</h3>
+            <p>記事品質を上げながら、作業時間を短くしてクライアントに差をつけたい人向け。</p>
           </article>
           </div>
           <p style="text-align:center;margin-top:28px;">
@@ -503,14 +551,14 @@
               </tr>
               <tr>
                 <td>月額料金</td>
-                <td class="free">¥0</td>
+                <td class="free">¥0（無料）</td>
                 <td class="pro">¥1,980</td>
               </tr>
               </tbody>
             </table>
           </div>
           <p style="text-align:center;margin-top:24px;">
-            <a class="btn btn-primary" href="/api/checkout?product=research-writer" target="_blank" rel="noreferrer">プロプランを始める</a>
+            <a class="btn btn-primary" href="/api/checkout?product=research-writer" target="_blank" rel="noreferrer">月額1,980円で始める</a>
           </p>
         </div>
       </section>
@@ -522,20 +570,20 @@
           <div class="lp-grid-3">
             
           <article class="lp-card">
-            <h3>月50セットまで量産できる</h3>
-            <p>AIO向け記事下書きを月50セットペースで回せる。ブログ・メディア運営の実弾になる。</p>
+            <h3>月50セットで量産できる</h3>
+            <p>AIO向け記事下書きを月50セット回せる。ブログ・メディア運営の実弾になる量。</p>
           </article>
           <article class="lp-card">
             <h3>FAQ付きで構造が強い</h3>
-            <p>FAQ・見出し・結論の型が自動で入り、読者とAI検索の両方に伝わりやすい形で量産。</p>
+            <p>FAQ・見出し・結論が自動で入る。読者とAI検索の両方に伝わる型で量産できる。</p>
           </article>
           <article class="lp-card">
-            <h3>調査から執筆まで一気通貫</h3>
-            <p>リサーチと記事化を同じ画面で完結。ツールを行き来するロスがない。</p>
+            <h3>リサーチから記事化まで一画面</h3>
+            <p>ツールを行き来するロスがない。収集→選択→記事化を同じ画面で完結。</p>
           </article>
           </div>
           <p style="text-align:center;margin-top:28px;">
-            <a class="btn btn-primary btn-lg" href="/api/checkout?product=research-writer" target="_blank" rel="noreferrer">プロプランを始める</a>
+            <a class="btn btn-primary btn-lg" href="/api/checkout?product=research-writer" target="_blank" rel="noreferrer">月額1,980円で始める</a>
           </p>
         </div>
       </section>
@@ -548,19 +596,27 @@
             
             <details class="faq">
               <summary>AIOとは何ですか？</summary>
-              <div class="faq-body">ここではGoogleのAI概要（AI Overview）など、検索結果内でAIが回答を要約する流れを指している。表示や引用は保証されないが、通常のSEOと同じく技術要件と本文品質が重要になる。</div>
+              <div class="faq-body">GoogleのAI概要（AI Overview）・AI Modeなど、検索結果の中でAIが回答を要約して表示する仕組みを指している。通常のSEOと同じく技術要件と本文品質が重要で、このツールはAIが読みやすい記事構造を作る。</div>
             </details>
             <details class="faq">
-              <summary>どんな記事がAI検索に読まれやすい？</summary>
-              <div class="faq-body">インデックス可能で、見出し構造・FAQ・結論・出典が明確な記事。このツールはその下書き構造を作る。</div>
+              <summary>どんな記事が引用されやすい？</summary>
+              <div class="faq-body">見出し構造・FAQ・結論・出典が明確で、インデックス可能な記事。このツールはその構造を持った下書きを出力する。</div>
             </details>
             <details class="faq">
               <summary>無料版とプロプランの違いは？</summary>
-              <div class="faq-body">無料版は1日1セット。プロプランは月50セットまで使えて、AIO向け構造の強化版出力も使える。</div>
+              <div class="faq-body">無料版は1日1セット。プロプランは月50セットまで使えて、AIO向け構造の強化版出力も使える。月1,980円でいつでも解約可能。</div>
+            </details>
+            <details class="faq">
+              <summary>すぐ使える？</summary>
+              <div class="faq-body">はい。インストール不要でブラウザからすぐ使える。無料版は登録不要で試せる。</div>
+            </details>
+            <details class="faq">
+              <summary>WordPressに直接投稿できる？</summary>
+              <div class="faq-body">現在は記事下書きの生成まで対応している。生成した内容をWordPressに貼り付けて使う形。</div>
             </details>
             <details class="faq">
               <summary>いつでも解約できる？</summary>
-              <div class="faq-body">問い合わせフォームからいつでも解約申請できる。</div>
+              <div class="faq-body">問い合わせフォームからいつでも解約申請できる。解約後は当月末まで利用可能。</div>
             </details>
           </div>
         </div>
@@ -568,15 +624,28 @@
 
       <section class="lp-cta">
         <div class="container">
-          <h2>SEOだけで止まらない。<em>AIOに読まれやすい記事</em>を作る。</h2>
-          <p>GoogleのAI概要やAI Modeでも、基本は通常のSEOと同じく、インデックス可能で信頼できる本文が前提になる。だから最新情報、明確な見出し、FAQ、出典をそろえた記事下書きを、3キーワードから作れるようにした。</p>
+          <h2>今すぐ<em>AI検索向け記事</em>の下書きを作る</h2>
+          <p>無料版で1回試して返ってくるものを確認できる。合えばそのままプロプランへ。月50セット・1,980円・いつでも解約可。</p>
           <div class="lp-links">
-            <a class="btn btn-primary btn-lg" href="/apps/research-writer/">無料で試す →</a>
-            <a class="btn btn-primary btn-lg" href="/api/checkout?product=research-writer" target="_blank" rel="noreferrer">プロプランを始める</a>
+            <a class="btn btn-primary btn-lg" href="/api/checkout?product=research-writer" target="_blank" rel="noreferrer">月額1,980円で始める →</a>
+            <a class="btn btn-lg" style="color:var(--text);border:1.5px solid var(--border);" href="/apps/research-writer/">無料で試す</a>
           </div>
           <p class="lp-note"><a href="/products/research-writer-beta/" style="color:var(--green);font-weight:800;">プラン詳細を見る →</a></p>
         </div>
       </section>
     </main>
+
+    <footer class="lp-footer">
+      <div>© よへラボ / yohelab.com</div>
+      <div class="lp-footer-links">
+        <a href="/">トップ</a>
+        <a href="/apps/research-writer/">無料で試す</a>
+        <a href="/products/research-writer-beta/">プラン詳細</a>
+        <a href="/contact/">問い合わせ</a>
+        <a href="/legal/commerce/">特定商取引法</a>
+        <a href="/legal/privacy/">プライバシー</a>
+        <a href="/legal/terms/">利用規約</a>
+      </div>
+    </footer>
   </body>
 </html>

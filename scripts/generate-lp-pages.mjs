@@ -12,43 +12,43 @@ const pages = [
     slug: "research-writer",
     path: "/lp/research-writer/",
     name: "AIO特化リサーチ記事メーカー",
-    title: "AIOに読まれやすい記事を作る | よへラボ",
-    description: "GoogleのAI概要（AIO）時代に向けて、3キーワードで最新情報を収集し、見出し・FAQ・出典・WordPress設定まで整えた記事下書きを生成。無料版は1日1セット、プロプランは月50セット。",
+    title: "AIO・AI検索に読まれやすい記事を作る | よへラボ",
+    description: "3キーワード入力で最新情報を収集し、見出し・FAQ・出典まで整えたAIO向け記事下書きを生成。GoogleのAI概要（AIO）・AI Mode対応。無料版は1日1セット、プロプランは月50セット・1,980円。",
     eyebrow: "AIOに読まれやすい記事メーカー",
-    heroTitle: "SEOだけで止まらない。<em>AIOに読まれやすい記事</em>を作る。",
-    heroLead: "GoogleのAI概要やAI Modeでも、基本は通常のSEOと同じく、インデックス可能で信頼できる本文が前提になる。だから最新情報、明確な見出し、FAQ、出典をそろえた記事下書きを、3キーワードから作れるようにした。",
-    heroNote: "無料版で相性を見て、合えばプロプランへ。全部ブラウザでそのまま使える。",
+    heroTitle: "3キーワードで、<em>AI検索に読まれやすい記事</em>の下書きが出る。",
+    heroLead: "見出し・FAQ・出典・結論をそろえた構造が、AIにも人にも伝わりやすい。リサーチと記事化を同じ画面で完結させて、1記事あたりの作業を短くする。",
+    heroNote: "無料版で1回試して、返ってくるものを見てから判断できる。ブラウザだけで使える。",
     heroBand: [
-      { title: "無料版", text: "1日1セットまで試して、返ってくるものを見る。合うかどうかの判断に使う。" },
-      { title: "プロプラン", text: "月50セットまで量産できる。毎日の記事作業を短くする。" },
-      { title: "導線", text: "無料版からそのまま進める。途中で止まりにくい順番にしている。" },
+      { title: "無料版で1回試す", text: "1日1セット。どんな記事下書きが返るか確認してから進める。" },
+      { title: "プロプランで量産", text: "月50セット。毎日の記事作業を短くして、本数を増やす。" },
+      { title: "すぐ使える", text: "インストール不要。ブラウザで今すぐ試せる。" },
     ],
     freeHref: "/apps/research-writer/",
     buyHref: "/api/checkout?product=research-writer",
-    buyLabel: "プロプランを始める",
+    buyLabel: "月額1,980円で始める",
     productHref: "/products/research-writer-beta/",
     proPrice: "1980",
     proOfferDescription: "月額1,980円・月50セット・いつでも解約可",
-    compareHeadline: "無料版は1日1セット、プロプランは月50セットまで",
-    compareSubtitle: "無料で返ってくるものと、プロプランで増える機能を同じ画面で比べられる。",
-    freeBoxTitle: "無料版で見えるもの",
-    freeBoxNote: "まずは1回。どんな結果が返るかを確認してから進める。",
-    proBoxTitle: "プロプランで増えるもの",
-    proBoxNote: "無料版で相性を見て、必要ならそのままプロプランへ進める。",
+    compareHeadline: "無料で1回試してから、必要なら月額へ",
+    compareSubtitle: "無料版で出てくるものを確認して、合えばそのまま月50セットに移行できる。",
+    freeBoxTitle: "無料版でできること",
+    freeBoxNote: "まず1回。どんな記事下書きが返るか確認してから進める。",
+    proBoxTitle: "プロプランで増えること",
+    proBoxNote: "月50セット。毎日使える量に増やして、記事作業のスピードを上げる。",
     compareSectionTitle: "無料版とプロプランの違い",
     proSectionLabel: "Features",
     proSectionTitle: "プロプランでできること",
-    ctaTitle: "SEOだけで止まらない。<em>AIOに読まれやすい記事</em>を作る。",
-    ctaLead: "GoogleのAI概要やAI Modeでも、基本は通常のSEOと同じく、インデックス可能で信頼できる本文が前提になる。だから最新情報、明確な見出し、FAQ、出典をそろえた記事下書きを、3キーワードから作れるようにした。",
+    ctaTitle: "今すぐ<em>AI検索向け記事</em>の下書きを作る",
+    ctaLead: "無料版で1回試して返ってくるものを確認できる。合えばそのままプロプランへ。月50セット・1,980円・いつでも解約可。",
     freeCards: [
-      { title: "最新情報を自動収集", text: "3キーワードを入れるだけ。Perplexityが最新の情報源を集める。" },
-      { title: "AIO向け構造で記事化", text: "見出し・FAQ・結論を先に置く、AIにも人にも読まれやすい構造で出力。" },
-      { title: "情報を選んで精度を上げる", text: "10〜20件の候補から使う情報を選び、精度の高い記事を生成。" },
+      { title: "最新情報を自動収集", text: "3キーワードを入れるだけ。Perplexityが最新の情報源を集めてくる。" },
+      { title: "AIO向け構造で出力", text: "見出し・FAQ・結論・出典が自動で入る。AIにも人にも読まれやすい構造。" },
+      { title: "情報を選んで精度を上げる", text: "10〜20件の候補から使う情報を選び、精度の高い記事下書きを生成。" },
     ],
     fitCards: [
-      { title: "ブログ・メディア運営者", text: "AI検索時代に合わせて、見出し・FAQ・出典の整った記事を増やしたい人向け。" },
-      { title: "コンテンツマーケター", text: "構造化された記事を素早く作り、AIO対策を仕事の武器にしたい人向け。" },
-      { title: "AIライター・副業ライター", text: "AIの補助で記事品質を上げ、クライアントに差をつけたい人向け。" },
+      { title: "ブログ・メディア運営者", text: "AI検索時代に合わせて、構造の整った記事を量産したい人向け。" },
+      { title: "コンテンツマーケター", text: "リサーチから記事化まで一気通貫で終わらせて、本数を増やしたい人向け。" },
+      { title: "副業ライター・AIライター", text: "記事品質を上げながら、作業時間を短くしてクライアントに差をつけたい人向け。" },
     ],
     compareRows: [
       ["キーワード入力", "3つ", "3つ"],
@@ -56,18 +56,20 @@ const pages = [
       ["AIO向け構造出力", "✓", "強化版"],
       ["FAQ自動生成", "✓", "✓"],
       ["利用回数", "1日1セットまで", "月50セットまで"],
-      ["月額料金", "¥0", "¥1,980"],
+      ["月額料金", "¥0（無料）", "¥1,980"],
     ],
     proCards: [
-      { title: "月50セットまで量産できる", text: "AIO向け記事下書きを月50セットペースで回せる。ブログ・メディア運営の実弾になる。" },
-      { title: "FAQ付きで構造が強い", text: "FAQ・見出し・結論の型が自動で入り、読者とAI検索の両方に伝わりやすい形で量産。" },
-      { title: "調査から執筆まで一気通貫", text: "リサーチと記事化を同じ画面で完結。ツールを行き来するロスがない。" },
+      { title: "月50セットで量産できる", text: "AIO向け記事下書きを月50セット回せる。ブログ・メディア運営の実弾になる量。" },
+      { title: "FAQ付きで構造が強い", text: "FAQ・見出し・結論が自動で入る。読者とAI検索の両方に伝わる型で量産できる。" },
+      { title: "リサーチから記事化まで一画面", text: "ツールを行き来するロスがない。収集→選択→記事化を同じ画面で完結。" },
     ],
     faq: [
-      ["AIOとは何ですか？", "ここではGoogleのAI概要（AI Overview）など、検索結果内でAIが回答を要約する流れを指している。表示や引用は保証されないが、通常のSEOと同じく技術要件と本文品質が重要になる。"],
-      ["どんな記事がAI検索に読まれやすい？", "インデックス可能で、見出し構造・FAQ・結論・出典が明確な記事。このツールはその下書き構造を作る。"],
-      ["無料版とプロプランの違いは？", "無料版は1日1セット。プロプランは月50セットまで使えて、AIO向け構造の強化版出力も使える。"],
-      ["いつでも解約できる？", "問い合わせフォームからいつでも解約申請できる。"],
+      ["AIOとは何ですか？", "GoogleのAI概要（AI Overview）・AI Modeなど、検索結果の中でAIが回答を要約して表示する仕組みを指している。通常のSEOと同じく技術要件と本文品質が重要で、このツールはAIが読みやすい記事構造を作る。"],
+      ["どんな記事が引用されやすい？", "見出し構造・FAQ・結論・出典が明確で、インデックス可能な記事。このツールはその構造を持った下書きを出力する。"],
+      ["無料版とプロプランの違いは？", "無料版は1日1セット。プロプランは月50セットまで使えて、AIO向け構造の強化版出力も使える。月1,980円でいつでも解約可能。"],
+      ["すぐ使える？", "はい。インストール不要でブラウザからすぐ使える。無料版は登録不要で試せる。"],
+      ["WordPressに直接投稿できる？", "現在は記事下書きの生成まで対応している。生成した内容をWordPressに貼り付けて使う形。"],
+      ["いつでも解約できる？", "問い合わせフォームからいつでも解約申請できる。解約後は当月末まで利用可能。"],
     ],
     proofShot: {
       src: proofUrl("research-writer-app.svg"),
@@ -87,16 +89,16 @@ const pages = [
     slug: "wordpress-theme",
     path: "/lp/wordpress-theme/",
     name: "AIO Starter WordPressテーマ",
-    title: "AIO Starter WordPressテーマ — AI検索時代の軽量テーマ | よへラボ",
-    description: "FAQ・構造化データ・llms.txt・内部解析をテーマに内蔵。プラグイン追加ゼロでAI検索時代の土台を整える軽量WordPressテーマ。5,500円から買い切り。",
-    eyebrow: "AIOに強いWordPressテーマ",
-    heroTitle: "プラグイン追加ゼロ。<em>AI検索に強い土台</em>がテーマに入っている。",
-    heroLead: "FAQ・構造化データ・llms.txt・内部解析・GA4設定をテーマ側にまとめた。後付けプラグインを増やさず、AI検索時代に必要な土台を整えられる。",
-    heroNote: "無料配布はなし。デモとスクショで確認して、購入後にZIPとシリアルナンバーを受け取る。",
+    title: "AIO対応WordPressテーマ — 軽量・買い切り・5,500円から | よへラボ",
+    description: "FAQ・JSON-LD構造化データ・llms.txt・内部解析・GA4設定をテーマに内蔵。プラグイン追加ゼロでAI検索時代の土台を整える軽量WordPressテーマ。Starter 5,500円 / Affiliate 8,800円 / Media 11,000円。すべて買い切り。",
+    eyebrow: "AI検索時代の軽量WordPressテーマ",
+    heroTitle: "プラグイン不要。<em>AI検索に強い土台</em>がテーマに最初から入っている。",
+    heroLead: "FAQ・JSON-LD構造化データ・llms.txt・内部解析・GA4設定をテーマ側にまとめた。後からプラグインを積み上げなくても、AI検索時代に必要なものが最初から揃っている。",
+    heroNote: "ZIPの無料配布はなし。デモで機能を確認して、購入後にZIPとシリアルナンバーをメールで受け取る形式。",
     heroBand: [
-      { title: "JSON-LD全種を自動出力", text: "Article・Person・FAQPage・BreadcrumbListをテーマ側で自動生成。設定不要。" },
-      { title: "llms.txt＋内部解析内蔵", text: "AIクローラー向けllms.txtと、PV・流入元を記録する軽量解析がテーマに入っている。" },
-      { title: "3ライン・用途別設計", text: "Starter→Affiliate→Mediaと、ブログの成長に合わせて選べる構成。" },
+      { title: "JSON-LD全種を自動出力", text: "Article・FAQPage・BreadcrumbListをテーマ側で自動生成。プラグイン不要。" },
+      { title: "llms.txt＋内部解析内蔵", text: "AIクローラー向けllms.txtと、PV・流入元を記録する軽量解析をテーマに内蔵。" },
+      { title: "買い切り・3ライン", text: "Starter 5,500円 / Affiliate 8,800円 / Media 11,000円。月額なし・ずっと使える。" },
     ],
     freeHref: "/apps/wordpress-theme/",
     freeLabel: "デモを見る",
@@ -105,51 +107,53 @@ const pages = [
     buyLabel: "購入してZIPを受け取る",
     productHref: "/products/wordpress-theme-beta/",
     proPrice: "5500",
-    proOfferDescription: "AIO Starter 5,500円 / Affiliate 8,800円 / Media 11,000円（すべて買い切り）",
-    compareHeadline: "デモで確認して、購入後にZIPを受け取る",
-    compareSubtitle: "WordPressテーマはZIPを渡すと商品本体が渡るため、無料体験ではなくデモとスクショで確認する形式。",
+    proOfferDescription: "AIO Starter 5,500円 / Affiliate 8,800円 / Media 11,000円（すべて買い切り・月額なし）",
+    compareHeadline: "デモで全機能を確認してから購入できる",
+    compareSubtitle: "ZIPを渡すと商品本体が渡るため、無料体験ではなくデモで機能・設定・デザインを確認してから購入する形式。",
     freeBoxTitle: "デモで確認できること",
-    freeBoxNote: "画面、設定、記事設計、プラグイン削減の考え方を購入前に確認できる。",
+    freeBoxNote: "画面・設定・記事設計・FAQ・JSON-LD・llms.txtを購入前に動作確認できる。",
     proBoxTitle: "購入後に届くもの",
-    proBoxNote: "ZIP、シリアルナンバー、購入者向け更新、基本サポートが付く。",
-    compareSectionTitle: "Starter / Affiliate / Media の比較",
-    freeColumnLabel: "デモ確認",
+    proBoxNote: "ZIPファイル・シリアルナンバー・自動アップデート・基本サポートがついてくる。",
+    compareSectionTitle: "Starter / Affiliate / Media の違い",
+    freeColumnLabel: "AIO Starter",
     proSectionLabel: "Price",
-    proSectionTitle: "3つのラインと価格",
-    ctaTitle: "今すぐAIO対応テーマで始める",
-    ctaLead: "デモで確認してから購入。購入後にZIPとシリアルナンバーがメールで届きます。",
+    proSectionTitle: "3つのプランと価格",
+    ctaTitle: "AI検索時代の土台を、<em>今すぐ整える</em>",
+    ctaLead: "デモで確認してから購入。購入後すぐにZIPとシリアルナンバーがメールで届く。月額なし・買い切り・5,500円から。",
     freeCards: [
-      { title: "AIO向け構造をそのまま試せる", text: "FAQショートコード・JSON-LD・llms.txtを実際に動かして確認できる。" },
-      { title: "初期設定を1か所で完結", text: "色・解析・GA4・GSC・llms.txtを同じ管理画面で扱える。" },
-      { title: "GA4・GSC設定が内蔵", text: "外部プラグイン不要。測定IDを管理画面から直接入れるだけ。" },
-      { title: "メインカラーを管理画面で変更", text: "ボタン・見出し・リンクの色をカラーピッカーで変えられる。" },
+      { title: "FAQ・JSON-LDをそのまま試せる", text: "FAQショートコード・Article/FAQPage JSON-LD・llms.txtを実際に動かして確認できる。" },
+      { title: "初期設定を1か所で完結", text: "メインカラー・解析・GA4・GSC・llms.txtを同じ管理画面から設定できる。" },
+      { title: "GA4・GSC設定が内蔵", text: "測定IDを管理画面に入れるだけ。Googleタグマネージャー不要。" },
+      { title: "軽量テーマで表示が速い", text: "不要なCSSとJSを極力削減。コアウェブバイタルに配慮した構造。" },
     ],
     fitCards: [
-      { title: "初心者ブロガー・副業ブログ", text: "シンプルで軽い。AIO Starterでまず公開できる土台を迷わず作る。5,500円。" },
-      { title: "アフィリエイター", text: "CTA・広告枠・比較表・クリック計測を強化したAIO Affiliate。収益導線を整えやすい。8,800円。" },
-      { title: "メディア・企業ブログ", text: "E-E-A-T・マルチ著者・NewsArticle対応のAIO Media。信頼性を強める上位ライン。11,000円。" },
+      { title: "これからブログを始める人", text: "プラグインの選び方に迷わなくていい。必要な機能がテーマに最初から入っている。Starter 5,500円。" },
+      { title: "アフィリエイターの人", text: "CTA・広告枠・比較表・クリック計測を強化したAffiliateラインで収益導線を整えやすくなる。8,800円。" },
+      { title: "メディア・企業ブログの担当者", text: "E-E-A-T・マルチ著者・NewsArticle対応のMediaラインで信頼性と権威性を強化できる。11,000円。" },
     ],
     compareRows: [
-      ["", "AIO Starter", "Affiliate / Media"],
+      ["機能", "AIO Starter", "Affiliate / Media"],
       ["JSON-LD自動出力", "✓", "✓（強化）"],
-      ["FAQ・まとめ・目次ブロック", "✓", "✓"],
+      ["FAQ・まとめ・目次ショートコード", "✓", "✓"],
       ["llms.txt自動生成", "✓", "✓（詳細設定）"],
       ["内部アクセス解析", "軽量版", "フル機能"],
       ["GA4 / GSC設定", "✓", "✓"],
-      ["デザインプリセット", "3色", "用途別UI追加"],
-      ["価格（買い切り）", "¥5,500", "¥8,800 〜 ¥11,000"],
+      ["CTA・広告枠・比較表", "基本", "強化版"],
+      ["価格（買い切り）", "¥5,500", "¥8,800〜¥11,000"],
     ],
     proCards: [
-      { title: "AIO Starter", price: "¥5,500", text: "初心者・副業ブロガー向け。JSON-LD・FAQ・llms.txt・解析・GA4がテーマに入っている。まずここから始める。" },
+      { title: "AIO Starter", price: "¥5,500", text: "ブログ初心者・副業ブロガー向け。JSON-LD・FAQ・llms.txt・解析・GA4が全部テーマに入っている。まずここから始める。" },
       { title: "AIO Affiliate", price: "¥8,800", text: "アフィリエイター向け。CTA強化・広告枠・比較表・クリック計測を追加。収益導線を設計しやすくする。" },
-      { title: "AIO Media", price: "¥11,000", text: "メディア・企業ブログ向け。E-E-A-T・マルチ著者・NewsArticle対応。信頼性と権威性を強めるライン。" },
+      { title: "AIO Media", price: "¥11,000", text: "メディア・企業ブログ向け。E-E-A-T・マルチ著者・NewsArticle対応。信頼性と権威性を強める上位ライン。" },
     ],
     faq: [
-      ["3種類はどう違う？", "Starterは初心者・副業向け（5,500円）、Affiliateは収益化向け（8,800円）、Mediaは企業・メディア向け（11,000円）。すべて買い切り。まずStarterで土台を確認してから広げられる。"],
-      ["Yoast SEOやRank Mathは不要になる？", "完全な代替保証ではないが、FAQ・構造化データ・メタ情報・解析の入口をテーマ側で扱えるので、必要なプラグインを減らしやすい設計になっている。"],
-      ["サポートとアップデートはある？", "購入後のサポートはZIP導入・基本設定・ショートコードの使い方・GA4/GSC設定まで対応。アップデートは配布ZIPの更新で対応する。"],
-      ["無料でZIPを試せる？", "ZIPの無料配布はありません。デモ、スクショ、機能説明を確認してから購入する形式です。購入後にZIPとシリアルナンバーをメールで送ります。"],
-      ["色は変えられる？", "管理画面の設定からメインカラーと文字色を変更できる。ボタン・リンク・見出しのアクセントカラーに反映される。"],
+      ["3種類はどう違う？", "Starterは初心者・副業ブロガー向け（5,500円）。Affiliateは収益化・アフィリエイター向け（8,800円）。Mediaはメディア・企業ブログ向け（11,000円）。すべて買い切り・月額なし。まずStarterで土台を作り、必要になったら上のラインに移れる。"],
+      ["月額費用はかかる？", "かからない。Starter 5,500円・Affiliate 8,800円・Media 11,000円の買い切り。一度買えばずっと使える。"],
+      ["Yoast SEOやRank Mathは不要になる？", "完全な代替保証はしないが、JSON-LD・FAQ・メタ情報・解析の入口がテーマに内蔵されているので、多くの場合プラグインを減らせる設計になっている。"],
+      ["購入後すぐに使える？", "Stripe決済完了後、ZIPとシリアルナンバーがメールで届く。WordPressの管理画面からZIPをアップロードして有効化するだけ。"],
+      ["アップデートはある？", "ある。WordPress管理画面から通常のテーマと同じ手順でアップデートできる。シリアルナンバーを設定しておくと自動で更新通知が出る。"],
+      ["色やデザインは変えられる？", "メインカラーと文字色を管理画面から変更できる。ボタン・見出し・リンクに反映される。"],
+      ["サポートはある？", "ZIP導入・基本設定・ショートコードの使い方・GA4/GSCの設定までサポートする。バグは専用フォームから報告できる。"],
     ],
     proofShot: {
       src: proofUrl("wordpress-theme-app.svg"),
@@ -604,12 +608,48 @@ function renderPage(page) {
       .lp-faq .faq summary {
         cursor: pointer;
       }
+      .voice-card {
+        padding: 24px;
+        border-radius: 18px;
+        border: 1px solid var(--border);
+        background: var(--white);
+        box-shadow: var(--shadow-sm);
+      }
+      .voice-text {
+        font-size: 15px;
+        line-height: 1.8;
+        color: var(--text);
+        margin-bottom: 12px;
+      }
+      .voice-text::before { content: "「"; }
+      .voice-text::after  { content: "」"; }
+      .voice-meta {
+        font-size: 13px;
+        color: var(--muted);
+        font-weight: 700;
+      }
+      .voices-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+        margin-top: 24px;
+      }
+      .lp-footer {
+        background: #0b1613;
+        color: rgba(255,255,255,.5);
+        font-size: 13px;
+        padding: 28px 0;
+        text-align: center;
+      }
+      .lp-footer a { color: rgba(255,255,255,.5); }
+      .lp-footer a:hover { color: #fff; }
+      .lp-footer-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 16px; margin-top: 10px; }
       @media (max-width: 960px) {
         .lp-band,
         .lp-grid-3,
-        .lp-grid-2,
-        .lp-preview {
-          grid-template-columns: 1fr;
+        .lp-preview,
+        .voices-grid {
+          grid-template-columns: 1fr 1fr;
         }
         .lp-hero {
           padding: 72px 0 56px;
@@ -617,6 +657,18 @@ function renderPage(page) {
         .lp-hero h1 {
           font-size: clamp(36px, 10vw, 56px);
         }
+      }
+      @media (max-width: 640px) {
+        .lp-band,
+        .lp-grid-3,
+        .lp-grid-2,
+        .lp-preview,
+        .voices-grid {
+          grid-template-columns: 1fr;
+        }
+        .lp-table th, .lp-table td { padding: 10px 12px; font-size: 13px; }
+        .lp-hero { padding: 56px 0 44px; }
+        .lp-section { padding: 48px 0; }
       }
     </style>
     <script type="application/ld+json">
@@ -663,7 +715,7 @@ function renderPage(page) {
             <p class="lp-lead">${page.heroLead}</p>
             <div class="lp-actions">
               <a class="btn btn-primary btn-lg" href="${page.freeHref}">${esc(freeLabel)} →</a>
-              <a class="btn btn-lg" style="color:rgba(255,255,255,.86);border:1.5px solid rgba(255,255,255,.25);" href="${page.buyHref}" target="_blank" rel="noreferrer">${esc(page.buyLabel || "購入する")}</a>
+              <a class="btn btn-lg" style="color:rgba(255,255,255,.86);border:1.5px solid rgba(255,255,255,.25);background:rgba(255,255,255,.06);" href="${page.buyHref}" target="_blank" rel="noreferrer">${esc(page.buyLabel || "購入する")}</a>
             </div>
             <p class="lp-hero-note">${esc(heroNote)}</p>
             <div class="lp-band">
@@ -781,13 +833,26 @@ function renderPage(page) {
           <h2>${ctaTitle}</h2>
           <p>${esc(ctaLead)}</p>
           <div class="lp-links">
-            <a class="btn btn-primary btn-lg" href="${page.freeHref}">${esc(freeLabel)} →</a>
-            <a class="btn btn-primary btn-lg" href="${page.buyHref}" target="_blank" rel="noreferrer">${esc(page.buyLabel || "購入する")}</a>
+            <a class="btn btn-primary btn-lg" href="${page.buyHref}" target="_blank" rel="noreferrer">${esc(page.buyLabel || "購入する")} →</a>
+            <a class="btn btn-lg" style="color:var(--text);border:1.5px solid var(--border);" href="${page.freeHref}">${esc(freeLabel)}</a>
           </div>
           <p class="lp-note"><a href="${page.productHref}" style="color:var(--green);font-weight:800;">プラン詳細を見る →</a></p>
         </div>
       </section>
     </main>
+
+    <footer class="lp-footer">
+      <div>© よへラボ / yohelab.com</div>
+      <div class="lp-footer-links">
+        <a href="/">トップ</a>
+        <a href="${page.freeHref}">${esc(freeLabel)}</a>
+        <a href="${page.productHref}">プラン詳細</a>
+        <a href="/contact/">問い合わせ</a>
+        <a href="/legal/commerce/">特定商取引法</a>
+        <a href="/legal/privacy/">プライバシー</a>
+        <a href="/legal/terms/">利用規約</a>
+      </div>
+    </footer>
   </body>
 </html>`;
 }
