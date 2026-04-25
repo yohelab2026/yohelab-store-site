@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>バグ報告 | よへラボ</title>
+  <meta name="description" content="AIO Starter テーマの不具合・バグ報告フォーム。テーマバージョン・WordPressバージョン・再現手順を記入して送信。" />
+  <meta property="og:title" content="バグ報告 | よへラボ" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://yohelab.com/contact/bug/" />
+  <meta property="og:image" content="https://yohelab.com/yohelab-icon.png" />
+  <meta name="theme-color" content="#050f0c" />
+  <link rel="icon" type="image/png" href="/yohelab-icon.png" />
+  <link rel="stylesheet" href="/shared/site.css" />
+  <link rel="stylesheet" href="/shared/lp.css" />
+  <style>
+    .contact-hero {
+      padding: 80px 0 60px;
+      background: linear-gradient(180deg, #050f0c 0%, #091a14 100%);
+      color: #fff; text-align: center; position: relative; overflow: hidden;
+    }
+    .contact-hero-grid {
+      position: absolute; inset: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(16,184,146,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(16,184,146,.04) 1px, transparent 1px);
+      background-size: 56px 56px;
+      mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 0%, transparent 78%);
+      -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 0%, transparent 78%);
+    }
+    .contact-hero h1 { font-size: clamp(34px,5vw,56px); font-weight:900; letter-spacing:-0.05em; line-height:1.1; margin-bottom:16px; }
+    .contact-hero p  { font-size:16px; color:rgba(255,255,255,.62); max-width:520px; margin:0 auto; line-height:1.88; }
+    .contact-body { background:#fff; border-radius:28px 28px 0 0; margin-top:-28px; position:relative; z-index:2; }
+    .contact-form-box {
+      max-width: 680px; margin: 0 auto;
+      padding:36px 32px; border-radius:24px;
+      border:1.5px solid var(--green-mid);
+      background:linear-gradient(175deg,#fff 0%,#f4fbf8 100%);
+      box-shadow: 0 4px 18px rgba(11,143,114,.10);
+    }
+    .contact-form-box h2 { font-size:22px; font-weight:900; letter-spacing:-0.03em; margin-bottom:22px; }
+    .contact-form-box label { display:grid; gap:6px; font-size:14px; font-weight:700; color:var(--text); margin-bottom:14px; }
+    .contact-form-box input,
+    .contact-form-box textarea,
+    .contact-form-box select { font-size:15px; }
+    .field-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    .contact-notice {
+      padding:14px 18px; border-radius:14px;
+      background:#eff6ff; border:1px solid #bfdbfe;
+      color:#1e40af; font-size:14px; line-height:1.7; margin-bottom:18px;
+    }
+    .contact-notice strong { display:block; margin-bottom:4px; font-size:15px; }
+    .thanks-box { display:none; padding:24px; border-radius:16px; background:var(--green-light); border:1.5px solid var(--green-mid); margin-bottom:20px; }
+    .thanks-box.show { display:block; }
+    .thanks-box h3 { font-size:18px; font-weight:900; color:var(--green-dark); margin-bottom:8px; }
+    .thanks-box p { font-size:14px; color:var(--green-dark); margin:0; line-height:1.75; }
+    .version-hint { font-size:12px; color:var(--muted); font-weight:400; margin-top:2px; }
+    @media(max-width:580px){ .contact-form-box{padding:24px 20px;} .field-row{grid-template-columns:1fr;} .contact-body{border-radius:20px 20px 0 0;} }
+  </style>
+</head>
+<body>
+  <header class="nav lp-nav">
+    <div class="nav-inner">
+      <a class="brand brand-light" href="/">
+        <img src="/yohelab-icon.png" alt="よへラボ" />
+        <span>よへラボ</span>
+        <span class="brand-sub">バグ報告</span>
+      </a>
+      <nav class="nav-links">
+        <a href="/">トップ</a>
+        <a href="/apps/wordpress-theme/">WordPressテーマ</a>
+        <a href="/contact/">問い合わせ</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="contact-hero">
+      <div class="contact-hero-grid" aria-hidden="true"></div>
+      <div class="container" style="position:relative;z-index:1;">
+        <p class="lp-eyebrow reveal" style="justify-content:center;display:inline-flex;">🐛 バグ報告</p>
+        <h1 class="reveal reveal-d1">不具合を見つけたら<br>ここから送って</h1>
+        <p class="reveal reveal-d2">テーマのバージョン・WordPressのバージョン・再現手順を書いてもらえると対応が早い。</p>
+      </div>
+    </section>
+
+    <div class="contact-body">
+      <section style="padding:64px 0 80px;">
+        <div class="container">
+          <div class="contact-form-box reveal">
+            <h2>バグ報告フォーム</h2>
+            <div class="contact-notice">
+              <strong>書いてもらうと助かること</strong>
+              バージョン・再現手順・エラーメッセージの3つがあると、ほとんどのバグはすぐ特定できる。
+            </div>
+            <div class="thanks-box" id="thanks-box">
+              <h3>ありがとう。内容を受け取った。</h3>
+              <p>内容を確認して、修正できたらバージョンアップで反映する。メールアドレスを書いてもらった場合は、対応結果を返す。</p>
+            </div>
+            <form id="bug-form" class="stack">
+              <div class="field-row">
+                <label>
+                  テーマバージョン
+                  <input id="theme-version" name="theme_version" placeholder="例: 0.1.3" required />
+                  <span class="version-hint">WordPress管理画面 → 外観 → AIO Starter で確認</span>
+                </label>
+                <label>
+                  WordPressバージョン
+                  <input id="wp-version" name="wp_version" placeholder="例: 6.5.4" required />
+                  <span class="version-hint">管理画面 → ダッシュボード → 更新 で確認</span>
+                </label>
+              </div>
+              <label>
+                返信先メール（任意）
+                <input id="email" name="email" type="email" placeholder="対応結果を受け取りたい場合に入力" autocomplete="email" />
+              </label>
+              <label>
+                どんな不具合か
+                <textarea id="description" name="description" rows="3" placeholder="例: TOCのリンクをクリックしても該当見出しにジャンプしない" required></textarea>
+              </label>
+              <label>
+                再現手順
+                <textarea id="steps" name="steps" rows="4" placeholder="例:&#10;1. 投稿に [aio_toc] を追加&#10;2. フロントで表示&#10;3. TOC内のリンクをクリック&#10;4. ページが動かない" required></textarea>
+              </label>
+              <label>
+                エラーメッセージ（あれば）
+                <textarea id="error" name="error" rows="3" placeholder="ブラウザのコンソール(F12)に出ているエラーや、画面に表示されているエラー文を貼り付けて"></textarea>
+              </label>
+              <label>
+                その他・補足
+                <textarea id="note" name="note" rows="2" placeholder="使っているプラグイン、サーバー環境など"></textarea>
+              </label>
+              <input style="position:absolute;left:-9999px;" type="text" name="website" tabindex="-1" autocomplete="off" />
+              <button class="btn btn-primary" type="submit" style="width:100%;height:52px;font-size:16px;">バグ報告を送る</button>
+              <p style="font-size:12.5px;color:var(--muted);margin-top:4px;">送信内容は不具合対応のためだけに使う。</p>
+            </form>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="lp-footer">
+    <div class="lp-footer-inner">
+      <div>© よへラボ / yohelab.com</div>
+      <div class="lp-footer-links">
+        <a href="/">トップ</a><a href="/apps/wordpress-theme/">WordPressテーマ</a>
+        <a href="/contact/">問い合わせ</a>
+        <a href="/legal/commerce/">特定商取引法</a><a href="/legal/privacy/">プライバシー</a><a href="/legal/terms/">利用規約</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const obs = new IntersectionObserver(e => e.forEach(el => { if(el.isIntersecting){el.target.classList.add('visible');obs.unobserve(el.target);} }), {threshold:.08,rootMargin:'0px 0px -40px 0px'});
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+    setTimeout(()=>document.querySelectorAll('.reveal:not(.visible)').forEach(el=>el.classList.add('visible')),800);
+
+    const form = document.getElementById('bug-form');
+    const thanksBox = document.getElementById('thanks-box');
+    const hiddenField = form.querySelector('input[name="website"]');
+    const endpoint = ['yohelab2026','gmail.com'];
+
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      if (hiddenField.value.trim() !== '') return;
+      const btn = form.querySelector('button[type="submit"]');
+      btn.disabled = true; btn.textContent = '送信中...';
+      const payload = {
+        theme_version: document.getElementById('theme-version').value.trim(),
+        wp_version: document.getElementById('wp-version').value.trim(),
+        email: document.getElementById('email').value.trim() || '（未記入）',
+        description: document.getElementById('description').value.trim(),
+        steps: document.getElementById('steps').value.trim(),
+        error: document.getElementById('error').value.trim() || 'なし',
+        note: document.getElementById('note').value.trim() || 'なし',
+        _subject: `【バグ報告】AIO Starter v${document.getElementById('theme-version').value.trim()}`,
+        _template: 'table', _captcha: 'false'
+      };
+      try {
+        const res = await fetch(`https://formsubmit.co/ajax/${endpoint.join('@')}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        if (!res.ok) throw new Error('failed');
+        form.reset();
+        thanksBox.classList.add('show');
+        thanksBox.scrollIntoView({ block: 'nearest' });
+      } catch {
+        alert('送信できなかった。時間を置いてもう一度試して。');
+      } finally {
+        btn.disabled = false; btn.textContent = 'バグ報告を送る';
+      }
+    });
+  </script>
+</body>
+</html>
