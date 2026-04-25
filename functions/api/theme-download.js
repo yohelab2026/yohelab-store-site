@@ -1,4 +1,7 @@
 import { makeSerial } from "../lib/entitlements.js";
+import { fetchStripePurchaseStatus } from "../lib/stripe-purchase.js";
+
+const THEME_ZIP_KEY = "aio-starter.zip";
 
 export async function onRequestGet(context) {
   try {
@@ -22,53 +25,28 @@ export async function onRequestGet(context) {
       return text("inactive purchase", 403);
     }
 
-    // R2 binding が設定されていればバケットから直接配信（推奨）
-    if (context.env.THEME_BUCKET) {
-      const obj = await context.env.THEME_BUCKET.get("aio-starter.zip");
-      if (obj) {
-        return new Response(obj.body, {
-          headers: {
-            "Content-Type": "application/zip",
-            "Content-Disposition": 'attachment; filename="aio-starter.zip"',
-            "Cache-Control": "no-store",
-          },
-        });
-      }
-      // R2 にファイルがない場合は THEME_DOWNLOAD_URL へフォールバック
+    const bucket = context.env.THEME_BUCKET;
+    if (!bucket || typeof bucket.get !== "function") {
+      return text("THEME_BUCKET binding is not configured", 503);
     }
 
-    // フォールバック: THEME_DOWNLOAD_URL へリダイレクト
-    const downloadUrl = context.env.THEME_DOWNLOAD_URL;
-    if (!downloadUrl) {
-      return text("THEME_DOWNLOAD_URL is not configured", 503);
+    const obj = await bucket.get(THEME_ZIP_KEY);
+    if (!obj) {
+      return text("theme zip not found", 404);
     }
 
-    return new Response(null, {
-      status: 302,
+    return new Response(obj.body, {
       headers: {
-        Location: downloadUrl,
+        "Content-Type": obj.httpMetadata?.contentType || "application/zip",
+        "Content-Disposition": 'attachment; filename="aio-starter.zip"',
         "Cache-Control": "no-store",
+        "X-Theme-License": "active",
+        "X-Theme-Version": obj.customMetadata?.version || "unknown",
       },
     });
   } catch (error) {
     return text(error.message, 500);
   }
-}
-
-async function fetchStripePurchaseStatus(purchaseId, env) {
-  const key = (env.STRIPE_SECRET_KEY || "").trim();
-  if (!key) throw new Error("STRIPE_SECRET_KEY is not configured");
-  const endpoint = purchaseId.startsWith("pi_")
-    ? `https://api.stripe.com/v1/payment_intents/${purchaseId}`
-    : `https://api.stripe.com/v1/checkout/sessions/${purchaseId}`;
-  const response = await fetch(endpoint, { headers: { Authorization: `Bearer ${key}` } });
-  if (!response.ok) {
-    const text = await response.text();
-    throw new Error(`Stripe purchase lookup failed: ${response.status} ${text}`);
-  }
-  const data = await response.json();
-  const status = data.payment_status || data.status;
-  return { active: status === "paid" || status === "succeeded", status };
 }
 
 function text(body, status = 200) {
