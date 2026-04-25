@@ -2,8 +2,8 @@ node_modules/
 dist/
 .netlify/
 
-# Paid WordPress theme source (kept local/private)
-wordpress-themes/aio-starter/
+# Theme source は yohelab2026/aio-starter (private repo) で管理
+# ZIP は GitHub Actions → R2 で自動デプロイ
 downloads/aio-starter.zip
 public/downloads/aio-starter.zip
 
