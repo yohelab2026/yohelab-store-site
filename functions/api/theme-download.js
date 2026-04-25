@@ -25,16 +25,16 @@ export async function onRequestGet(context) {
     // R2 binding が設定されていればバケットから直接配信（推奨）
     if (context.env.THEME_BUCKET) {
       const obj = await context.env.THEME_BUCKET.get("aio-starter.zip");
-      if (!obj) {
-        return text("theme file not found on server", 503);
+      if (obj) {
+        return new Response(obj.body, {
+          headers: {
+            "Content-Type": "application/zip",
+            "Content-Disposition": 'attachment; filename="aio-starter.zip"',
+            "Cache-Control": "no-store",
+          },
+        });
       }
-      return new Response(obj.body, {
-        headers: {
-          "Content-Type": "application/zip",
-          "Content-Disposition": 'attachment; filename="aio-starter.zip"',
-          "Cache-Control": "no-store",
-        },
-      });
+      // R2 にファイルがない場合は THEME_DOWNLOAD_URL へフォールバック
     }
 
     // フォールバック: THEME_DOWNLOAD_URL へリダイレクト
