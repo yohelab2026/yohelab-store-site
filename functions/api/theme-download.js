@@ -22,6 +22,22 @@ export async function onRequestGet(context) {
       return text("inactive purchase", 403);
     }
 
+    // R2 binding が設定されていればバケットから直接配信（推奨）
+    if (context.env.THEME_BUCKET) {
+      const obj = await context.env.THEME_BUCKET.get("aio-starter.zip");
+      if (!obj) {
+        return text("theme file not found on server", 503);
+      }
+      return new Response(obj.body, {
+        headers: {
+          "Content-Type": "application/zip",
+          "Content-Disposition": 'attachment; filename="aio-starter.zip"',
+          "Cache-Control": "no-store",
+        },
+      });
+    }
+
+    // フォールバック: THEME_DOWNLOAD_URL へリダイレクト
     const downloadUrl = context.env.THEME_DOWNLOAD_URL;
     if (!downloadUrl) {
       return text("THEME_DOWNLOAD_URL is not configured", 503);

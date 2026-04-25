@@ -9,7 +9,8 @@
     "build": "vite build",
     "postbuild": "node scripts/copy-proof.mjs",
     "preview": "vite preview",
-    "test:smoke": "node scripts/smoke-test.mjs"
+    "test:smoke": "node scripts/smoke-test.mjs",
+    "package-theme": "node scripts/package-theme.mjs"
   },
   "devDependencies": {
     "vite": "^8.0.3"

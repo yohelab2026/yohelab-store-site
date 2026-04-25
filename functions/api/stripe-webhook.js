@@ -1,6 +1,7 @@
 import {
   getGrantLabel,
   getGrantNextPath,
+  getProductConfig,
   makeGrantToken,
   makeSerial,
   getAllProducts,
@@ -48,7 +49,7 @@ export async function onRequestPost(context) {
       : "";
 
     const siteUrl = (context.env.SITE_URL || "https://yohelab.com").replace(/\/$/, "");
-    const next = getGrantNextPath(product);
+    const next = getProductConfig(product)?.activatePath || getGrantNextPath(product);
     const accessUrl = `${siteUrl}/pro/activate?token=${encodeURIComponent(grantToken)}&next=${encodeURIComponent(next)}`;
     const downloadUrl = serial
       ? `${siteUrl}/api/theme-download?serial=${encodeURIComponent(serial)}&email=${encodeURIComponent(email)}&purchase=${encodeURIComponent(purchaseId)}`

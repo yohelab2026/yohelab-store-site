@@ -1,8 +1,16 @@
 const COOKIE_NAME = "yohelab_access";
 
 const PRODUCT_CONFIG = {
-  "research-writer": { label: "AIO特化リサーチ記事メーカー", nextPath: "/apps/research-writer/" },
-  "wordpress-theme": { label: "AIO対応WordPressテーマ", nextPath: "/apps/wordpress-theme/" },
+  "research-writer": {
+    label: "AIO特化リサーチ記事メーカー",
+    nextPath: "/apps/research-writer/",
+    activatePath: "/apps/research-writer/",
+  },
+  "wordpress-theme": {
+    label: "AIO対応WordPressテーマ",
+    nextPath: "/apps/wordpress-theme/",      // 決済キャンセル時に戻る先
+    activatePath: "/products/wordpress-theme-beta/", // 購入完了後の遷移先
+  },
 };
 
 function getAccessSecret(env) {
