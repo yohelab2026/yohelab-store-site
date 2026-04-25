@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AIO対応WordPressテーマ — 軽量・買い切り・5,500円から | よへラボ</title>
-    <meta name="description" content="FAQ・JSON-LD構造化データ・llms.txt・内部解析・GA4設定をテーマに内蔵。プラグイン追加ゼロでAI検索時代の土台を整える軽量WordPressテーマ。Starter 5,500円 / Affiliate 8,800円 / Media 11,000円。すべて買い切り。" />
-    <meta property="og:title" content="AIO対応WordPressテーマ — 軽量・買い切り・5,500円から | よへラボ" />
-    <meta property="og:description" content="FAQ・JSON-LD構造化データ・llms.txt・内部解析・GA4設定をテーマに内蔵。プラグイン追加ゼロでAI検索時代の土台を整える軽量WordPressテーマ。Starter 5,500円 / Affiliate 8,800円 / Media 11,000円。すべて買い切り。" />
+    <title>AIO Starter — AI検索対応WordPressテーマ ベータ¥5,500 | よへラボ</title>
+    <meta name="description" content="FAQ・JSON-LD・llms.txt・内部解析・GA4設定をテーマに内蔵した軽量WordPressテーマ。プラグイン追加ゼロでAI検索時代の土台を整える。ベータ価格¥5,500（正式版¥8,800）買い切り。購入後すぐZIPとシリアルナンバーが届く。" />
+    <meta property="og:title" content="AIO Starter — AI検索対応WordPressテーマ ベータ¥5,500 | よへラボ" />
+    <meta property="og:description" content="FAQ・JSON-LD・llms.txt・内部解析・GA4設定をテーマに内蔵した軽量WordPressテーマ。プラグイン追加ゼロでAI検索時代の土台を整える。ベータ価格¥5,500（正式版¥8,800）買い切り。購入後すぐZIPとシリアルナンバーが届く。" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="ja_JP" />
     <meta property="og:url" content="https://yohelab.com/apps/wordpress-theme/" />
@@ -17,6 +17,9 @@
     <link rel="canonical" href="https://yohelab.com/apps/wordpress-theme/" />
     <link rel="icon" type="image/png" href="/yohelab-icon.png" />
     <link rel="stylesheet" href="/shared/site.css" />
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"よへラボ","url":"https://yohelab.com/"},{"@type":"SoftwareApplication","name":"AIO Starter WordPressテーマ","applicationCategory":"BusinessApplication","operatingSystem":"WordPress","offers":{"@type":"Offer","price":"5500","priceCurrency":"JPY","name":"ベータ版","description":"ベータ価格¥5,500（正式版¥8,800）・買い切り・月額なし"},"description":"FAQ・JSON-LD・llms.txt・内部解析・GA4設定をテーマに内蔵した軽量WordPressテーマ。"}]}
+    </script>
     <style>
       body {
         background:
@@ -530,11 +533,21 @@
       }
       @media (max-width: 980px) {
         .hero-inner,
-        .preview-wrap,
-        .feature-grid {
+        .preview-wrap {
           grid-template-columns: 1fr;
         }
-        .variant-grid,
+        .feature-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .lightness-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .settings-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (max-width: 600px) {
+        .feature-grid,
         .lightness-grid {
           grid-template-columns: 1fr;
         }
@@ -564,12 +577,12 @@
           <div>
             <div class="eyebrow"><span class="dot"></span> WordPress theme template</div>
             <h1>プラグイン不要。<em>AI検索に強い土台</em>がテーマに最初から入っている。</h1>
-            <p class="hero-lead">FAQ・JSON-LD構造化データ・llms.txt・内部解析・GA4設定をテーマ側にまとめた。後からプラグインを積み上げなくても、AI検索時代に必要なものが最初から揃っている。Starter 5,500円 / Affiliate 8,800円 / Media 11,000円（すべて買い切り）。</p>
+            <p class="hero-lead">FAQ・JSON-LD構造化データ・llms.txt・内部解析・GA4設定をテーマ側にまとめた。後からプラグインを積み上げなくても、AI検索時代に必要なものが最初から揃っている。</p>
             <div class="hero-actions">
-              <a class="btn btn-white btn-lg" href="/api/checkout?product=wordpress-theme">購入してZIPを受け取る →</a>
-              <a class="btn btn-lg" style="color:rgba(255,255,255,.86);border:1.5px solid rgba(255,255,255,.24);" href="/lp/wordpress-theme/">機能とプランを詳しく見る</a>
+              <a class="btn btn-white btn-lg" href="/api/checkout?product=wordpress-theme">¥5,500（ベータ）で購入してZIPを受け取る →</a>
+              <a class="btn btn-lg" style="color:rgba(255,255,255,.86);border:1.5px solid rgba(255,255,255,.24);" href="/lp/wordpress-theme/">機能を詳しく見る</a>
             </div>
-            <div class="hero-note">購入後すぐにZIPとシリアルナンバーがメールで届く。月額なし・買い切り。</div>
+            <div class="hero-note">ベータ価格 ¥5,500 → 正式版リリース後 ¥8,800 に改定。月額なし・買い切り。購入後すぐにZIPとシリアルナンバーがメールで届く。</div>
           </div>
           <aside class="hero-card">
             <h3>AIO Starterで入れたもの</h3>
@@ -584,86 +597,54 @@
         </div>
       </section>
 
-      <section class="panel alt" id="variants">
+      <section class="panel alt" id="features">
         <div class="container">
           <div class="panel-head">
-            <div class="panel-kicker">3 products</div>
-              <h2>色ではなく、用途と記事の型で分ける</h2>
-            <p>最初はAIO Starterに、売れる記事・読まれる記事のテンプレートを入れる。反応を見てAffiliate、Mediaへ広げる。</p>
+            <div class="panel-kicker">What's inside</div>
+            <h2>AIO Starterに入っているもの、全部</h2>
+            <p>プラグインを追加しなくても、AI検索時代に必要なものが最初から揃っている。</p>
           </div>
-          <div class="variant-grid" id="variant-grid">
-            <button class="variant-card is-active" data-variant="minimal" type="button">
-              <span class="variant-tag">STARTER</span>
-              <h3>AIO Starter</h3>
-              <p>初心者ブロガー・副業向け。シンプルで軽く、すぐ使える。</p>
-              <ul class="variant-list">
-                <li>ワンクリック初期設定</li>
-                <li>軽量内部解析</li>
-                <li>記事テンプレート7種類</li>
-              </ul>
-            </button>
-            <button class="variant-card" data-variant="editorial" type="button">
-              <span class="variant-tag">AFFILIATE</span>
-              <h3>AIO Affiliate</h3>
-              <p>アフィリエイター向け。CTA、広告枠、比較表、クリック計測を強める。</p>
-              <ul class="variant-list">
-                <li>CTA・広告ブロック</li>
-                <li>商品比較テーブル</li>
-                <li>クリック計測</li>
-              </ul>
-            </button>
-            <button class="variant-card" data-variant="landing" type="button">
-              <span class="variant-tag">MEDIA</span>
-              <h3>AIO Media</h3>
-              <p>メディア・企業ブログ向け。E-E-A-T、著者、品質スコアを強める。</p>
-              <ul class="variant-list">
-                <li>マルチ著者管理</li>
-                <li>AIO品質スコア</li>
-                <li>NewsArticle対応</li>
-              </ul>
-            </button>
-          </div>
-
-          <div class="preview-wrap">
-            <div class="preview-shell">
-              <div class="preview-bar">
-                <span class="preview-dot active"></span>
-                <span class="preview-dot"></span>
-                <span class="preview-dot"></span>
-              </div>
-              <div class="preview-body" id="preview-body">
-                <div class="preview-kicker">AIO Starter</div>
-                <div class="preview-title">初心者向け。軽く、すぐ使える。</div>
-                <div class="preview-lead">記事を長く見せるより、必要な情報だけを前に出す。定義文、FAQ、要点、出典を小さく並べる。</div>
-                <div class="preview-grid">
-                  <div class="preview-block">
-                    <h4>メイン導線</h4>
-                    <p>ヒーロー、見出し、FAQ、CTAの順で迷いを減らす。</p>
-                  </div>
-                  <div class="preview-block">
-                    <h4>軽さ</h4>
-                    <p>余分な演出を入れず、表示を先に終わらせる。</p>
-                  </div>
-                  <div class="preview-block">
-                    <h4>AIO向け</h4>
-                    <p>FAQ、Article、Breadcrumb を自然に置く。</p>
-                  </div>
-                  <div class="preview-block">
-                    <h4>向いてる用途</h4>
-                    <p>初心者ブログ、副業サイト、個人サイト。</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <aside class="preview-side">
-              <h3>軽くて強い理由</h3>
-              <ul class="side-list">
-                <li>最初に読む人とAIOの両方が迷わない、素直な階層で組む。</li>
-                <li>画像や動きに寄りすぎず、文字情報を先に届ける。</li>
-                <li>見出し、FAQ、比較表、CTAをテンプレとして固定しやすい。</li>
-                <li>CSSの塊を大きくしすぎず、差し替えを前提にした構成にする。</li>
-              </ul>
-            </aside>
+          <div class="feature-grid">
+            <article class="feature-card">
+              <div class="icon">🧭</div>
+              <h3>JSON-LD 全種自動出力</h3>
+              <p>Article・Person・WebSite・BreadcrumbList・FAQPageをテーマ側で自動生成。プラグイン追加ゼロ。</p>
+            </article>
+            <article class="feature-card">
+              <div class="icon">❔</div>
+              <h3>FAQショートコード</h3>
+              <p>[aio_faq] で開閉式FAQを設置。FAQPage JSON-LDも自動で出力される。</p>
+            </article>
+            <article class="feature-card">
+              <div class="icon">🤖</div>
+              <h3>llms.txt 自動生成</h3>
+              <p>/llms.txt をWordPressの投稿・固定ページから自動生成。AIクローラー向けの入口を整える。</p>
+            </article>
+            <article class="feature-card">
+              <div class="icon">📊</div>
+              <h3>内部解析 + GA4設定</h3>
+              <p>PV・人気記事・流入元をテーマ内で記録。GA4測定IDとGSC認証タグも管理画面から設定できる。</p>
+            </article>
+            <article class="feature-card">
+              <div class="icon">📝</div>
+              <h3>記事テンプレート 7種類</h3>
+              <p>比較・レビュー・案件紹介・AI検索FAQ・ランキング・商品紹介・AIO基本型をブロックパターンで選べる。</p>
+            </article>
+            <article class="feature-card">
+              <div class="icon">🎨</div>
+              <h3>色を管理画面から変更</h3>
+              <p>メインカラーと文字色を設定画面から変えられる。ボタン・見出し・リンクに自動反映。</p>
+            </article>
+            <article class="feature-card">
+              <div class="icon">⚡</div>
+              <h3>軽量設計</h3>
+              <p>不要なCSSとJSを削減。外部APIや重い管理JSは使わない。コアウェブバイタルに配慮した構造。</p>
+            </article>
+            <article class="feature-card">
+              <div class="icon">🔄</div>
+              <h3>自動アップデート</h3>
+              <p>シリアルナンバーを設定しておくとWordPress管理画面から通常テーマと同じ手順で更新できる。</p>
+            </article>
           </div>
         </div>
       </section>
@@ -758,26 +739,40 @@
         <div class="container">
           <div class="panel-head">
             <div class="panel-kicker">Price</div>
-            <h2>3つのプランと価格</h2>
-            <p>すべて買い切り・月額なし。まずStarterで土台を作り、必要になったら上のラインに移れる。</p>
+            <h2>¥5,500（ベータ）→ 正式版 ¥8,800</h2>
+            <p>買い切り・月額なし。ベータ期間中に購入した人はそのまま使い続けられる。正式版リリース後に価格改定。</p>
           </div>
-          <div class="lightness-grid">
-            <article class="lightness-card">
-              <h3>AIO Starter — ¥5,500</h3>
-              <p>初心者ブロガー・副業向け。JSON-LD・FAQ・llms.txt・内部解析・GA4設定がすべて入っている。ここから始めて損はない土台。</p>
-            </article>
-            <article class="lightness-card">
-              <h3>AIO Affiliate — ¥8,800</h3>
-              <p>アフィリエイター向け。CTA強化・広告枠・比較表・クリック計測を追加。Starterの機能をそのまま引き継いで収益導線を強める。</p>
-            </article>
-            <article class="lightness-card">
-              <h3>AIO Media — ¥11,000</h3>
-              <p>メディア・企業ブログ向け。E-E-A-T・マルチ著者・NewsArticle対応。信頼性と権威性を強めたい上位ライン。</p>
-            </article>
+          <div class="preview-wrap" style="max-width:860px;margin:0 auto;">
+            <div class="lp-preview-box" style="padding:32px 36px;">
+              <h3 style="font-size:22px;margin-bottom:6px;">AIO Starter <span style="color:var(--green-dark);font-size:18px;">¥5,500（ベータ）</span></h3>
+              <p style="margin-bottom:20px;font-size:14px;color:var(--muted);">正式版リリース後 ¥8,800 に改定 ／ 買い切り・月額なし</p>
+              <div class="lp-preview-list">
+                <div><span>✓</span><div>JSON-LD全種（Article・FAQPage・Breadcrumb）を自動出力</div></div>
+                <div><span>✓</span><div>llms.txt 自動生成・FAQショートコード内蔵</div></div>
+                <div><span>✓</span><div>内部解析 + GA4・GSC設定を管理画面から一括設定</div></div>
+                <div><span>✓</span><div>記事テンプレート7種類（比較・レビュー・ランキング他）</div></div>
+                <div><span>✓</span><div>メインカラー・文字色を管理画面から変更</div></div>
+                <div><span>✓</span><div>自動アップデート対応（シリアルナンバー認証）</div></div>
+                <div><span>✓</span><div>バグ報告・基本設定サポート付き</div></div>
+              </div>
+              <p style="margin-top:24px;">
+                <a class="btn btn-primary btn-lg" href="/api/checkout?product=wordpress-theme" style="width:100%;justify-content:center;">¥5,500 で購入してZIPを受け取る →</a>
+              </p>
+              <p style="font-size:12.5px;color:var(--muted);margin-top:10px;text-align:center;">購入後すぐにZIPとシリアルナンバーがメールで届く</p>
+            </div>
+            <aside class="preview-side">
+              <h3>こういう人に向いている</h3>
+              <ul class="side-list">
+                <li>ブログやアフィリエイトサイトをAI検索に対応させたい</li>
+                <li>Yoast・Rank Mathなどのプラグインを減らしたい</li>
+                <li>JSON-LD・llms.txtの設定を管理画面だけで完結させたい</li>
+                <li>WordPressを立ち上げてすぐAIO向けの土台を作りたい</li>
+              </ul>
+              <div style="margin-top:20px;padding:14px 16px;border-radius:12px;background:#fffbeb;border:1px solid #fde68a;">
+                <p style="font-size:13px;color:#92400e;margin:0;line-height:1.7;"><strong>ベータ版について</strong><br>現在ベータ版として¥5,500で提供中。WordPress 6.9.4・PHP 8.3で動作確認済み。バグは専用フォームで受け付けて随時修正。</p>
+              </div>
+            </aside>
           </div>
-          <p style="text-align:center;margin-top:28px;">
-            <a class="btn btn-primary btn-lg" href="/api/checkout?product=wordpress-theme">購入してZIPを受け取る →</a>
-          </p>
         </div>
       </section>
 
@@ -952,11 +947,12 @@
       <section class="cta-band">
         <div class="container">
           <h2>AI検索時代の土台を、<br><em>今すぐ整える。</em></h2>
-          <p>デモで機能を確認してから購入。購入後すぐにZIPとシリアルナンバーがメールで届く。月額なし・買い切り・Starter 5,500円から。</p>
+          <p>ベータ価格 ¥5,500 で購入。正式版リリース後は ¥8,800 に改定。購入後すぐにZIPとシリアルナンバーがメールで届く。月額なし・買い切り。</p>
           <div class="cta-actions">
-            <a class="btn btn-white btn-lg" href="/api/checkout?product=wordpress-theme">購入してZIPを受け取る →</a>
-            <a class="btn btn-lg" style="color:rgba(255,255,255,.86);border:1.5px solid rgba(255,255,255,.25);" href="/lp/wordpress-theme/">機能とプランを詳しく見る</a>
+            <a class="btn btn-white btn-lg" href="/api/checkout?product=wordpress-theme">¥5,500（ベータ）で購入してZIPを受け取る →</a>
+            <a class="btn btn-lg" style="color:rgba(255,255,255,.86);border:1.5px solid rgba(255,255,255,.25);" href="/lp/wordpress-theme/">機能を詳しく見る</a>
           </div>
+          <p style="margin-top:14px;color:rgba(255,255,255,.42);font-size:13px;">正式版リリース後 ¥8,800 に改定予定</p>
         </div>
       </section>
     </main>
@@ -975,73 +971,15 @@
     </footer>
 
     <script>
-      const data = {
-        minimal: {
-          tag: "AIO Starter",
-          title: "初心者ブロガー・副業向け。¥5,500 買い切り。",
-          lead: "JSON-LD・FAQ・llms.txt・内部解析・GA4設定がすべて入っている。プラグインを増やさずにAI検索時代の土台をすぐ作れる。",
-          blocks: [
-            ["対象", "初心者ブロガー、副業、個人サイト。"],
-            ["強み", "設定を減らして、AIOの土台をすぐ作る。"],
-            ["内蔵機能", "FAQ・JSON-LD・著者・まとめ・比較表・内部解析。"],
-            ["価格", "¥5,500（買い切り・月額なし）"],
-          ],
-        },
-        editorial: {
-          tag: "AIO Affiliate",
-          title: "アフィリエイター向け。¥8,800 買い切り。",
-          lead: "Starterの機能をそのまま引き継いで、CTA強化・広告枠・比較表・クリック計測を追加。収益導線を設計しやすくする。",
-          blocks: [
-            ["対象", "アフィリエイター、物販ブロガー。"],
-            ["強み", "AIOに読ませながら、クリック導線も作る。"],
-            ["追加機能", "CTA強化・広告枠・比較表・クリック計測。"],
-            ["価格", "¥8,800（買い切り・月額なし）"],
-          ],
-        },
-        landing: {
-          tag: "AIO Media",
-          title: "メディア・企業ブログ向け。¥11,000 買い切り。",
-          lead: "E-E-A-T・マルチ著者・NewsArticle対応まで入れた上位版。信頼性と権威性を強めたいメディアに。",
-          blocks: [
-            ["対象", "企業ブログ、メディア運営、複数ライター。"],
-            ["強み", "著者情報と更新情報で信頼性・権威性を強める。"],
-            ["追加機能", "マルチ著者・品質スコア・NewsArticle・詳細llms.txt。"],
-            ["価格", "¥11,000（買い切り・月額なし）"],
-          ],
-        },
-      };
-
-      const cards = [...document.querySelectorAll(".variant-card")];
-      const preview = document.getElementById("preview-body");
-
-      function render(variant) {
-        const item = data[variant];
-        if (!item) return;
-        preview.innerHTML = `
-          <div class="preview-kicker">${item.tag}</div>
-          <div class="preview-title">${item.title}</div>
-          <div class="preview-lead">${item.lead}</div>
-          <div class="preview-grid">
-            ${item.blocks
-              .map(
-                ([title, text]) => `
-                  <div class="preview-block">
-                    <h4>${title}</h4>
-                    <p>${text}</p>
-                  </div>`,
-              )
-              .join("")}
-          </div>
-        `;
+      if ('IntersectionObserver' in window) {
+        const obs = new IntersectionObserver((entries) => {
+          entries.forEach(el => { if (el.isIntersecting) { el.target.classList.add('visible'); obs.unobserve(el.target); } });
+        }, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
+        document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+        setTimeout(() => document.querySelectorAll('.reveal:not(.visible)').forEach(el => el.classList.add('visible')), 800);
+      } else {
+        document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
       }
-
-      cards.forEach((card) => {
-        card.addEventListener("click", () => {
-          cards.forEach((c) => c.classList.remove("is-active"));
-          card.classList.add("is-active");
-          render(card.dataset.variant);
-        });
-      });
     </script>
   </body>
 </html>
