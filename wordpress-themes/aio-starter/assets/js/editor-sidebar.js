@@ -8,6 +8,7 @@
   const TextareaControl = wp.components.TextareaControl;
   const CheckboxControl = wp.components.CheckboxControl;
   const SelectControl = wp.components.SelectControl;
+  const Button = wp.components.Button;
   const Notice = wp.components.Notice;
   const useSelect = wp.data.useSelect;
   const useDispatch = wp.data.useDispatch;
@@ -21,6 +22,15 @@
     ["faq", "FAQ記事"],
     ["product", "商品紹介"],
   ];
+
+  const templates = {
+    basic: "## 結論\\n\\n## 理由\\n\\n## 注意点\\n\\n## よくある質問\\n\\n## まとめ",
+    compare: "## 比較の結論\\n\\n## 比較表\\n\\n## 選び方\\n\\n## 注意点\\n\\n## よくある質問",
+    review: "## レビューの結論\\n\\n## 使って分かったこと\\n\\n## 良かった点\\n\\n## 気になった点\\n\\n## 向いている人",
+    ranking: "## ランキングの基準\\n\\n## おすすめランキング\\n\\n## 1位\\n\\n## 2位\\n\\n## 3位\\n\\n## 選ぶときの注意点",
+    faq: "## 先に答え\\n\\n## よくある質問\\n\\n### 質問1\\n\\n### 質問2\\n\\n### 質問3\\n\\n## 注意点",
+    product: "## 商品の結論\\n\\n## 特徴\\n\\n## 向いている人\\n\\n## 購入前の注意点\\n\\n## よくある質問",
+  };
 
   const typeHints = {
     basic: "結論、理由、注意点、FAQの順で書く。",
@@ -39,12 +49,12 @@
   ];
 
   const checks = [
-    ["conclusion", "最初に答えがある"],
-    ["evidence", "理由・比較がある"],
-    ["caution", "注意点がある"],
-    ["faq", "FAQがある"],
-    ["summary", "最後にまとめがある"],
-    ["updated", "情報が古くない"],
+    ["conclusion", "最初に答えを書いた"],
+    ["evidence", "理由・比較を書いた"],
+    ["caution", "注意点を書いた"],
+    ["faq", "FAQを入れた"],
+    ["summary", "最後にまとめた"],
+    ["updated", "情報が古くないか見た"],
   ];
 
   const placeholders = {
@@ -67,9 +77,11 @@
       return select("core/editor").getEditedPostAttribute("meta") || {};
     }, []);
     const editPost = useDispatch("core/editor").editPost;
+    const editBlocks = useDispatch("core/block-editor");
     const score = checks.filter(function (item) {
       return meta[checkKey(item[0])] === "1";
     }).length;
+    const selectedType = meta[metaKey("type")] || "basic";
 
     function updateMeta(key, value) {
       const next = {};
@@ -88,7 +100,7 @@
       el(
         Notice,
         { status: "success", isDismissible: false },
-        "AIO準備度 " + score + "/" + checks.length
+        "記事完成チェック " + score + "/" + checks.length
       ),
       el(
         "p",
@@ -116,7 +128,22 @@
             color: "#50575e",
           },
         },
-        typeHints[meta[metaKey("type")] || "basic"]
+        typeHints[selectedType]
+      ),
+      el(Button, {
+        variant: "secondary",
+        style: { width: "100%", justifyContent: "center", marginBottom: "12px" },
+        onClick: function () {
+          if (editBlocks && editBlocks.insertBlocks && wp.blocks && wp.blocks.rawHandler) {
+            editBlocks.insertBlocks(wp.blocks.rawHandler({ HTML: templates[selectedType].replace(/\\n/g, "\n") }));
+          }
+        },
+      }, "この型の見出しを入れる"
+      ),
+      el(
+        "p",
+        { style: { marginTop: "-4px", color: "#646970", fontSize: "12px" } },
+        "見出しだけ入るので、本文はあとから自由に書けます。"
       ),
       fields.map(function (item) {
         return el(TextareaControl, {

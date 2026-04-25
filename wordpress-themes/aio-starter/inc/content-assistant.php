@@ -53,7 +53,7 @@ function aio_starter_enqueue_content_assistant_sidebar() {
     wp_enqueue_script(
         'aio-starter-editor-sidebar',
         AIO_STARTER_URI . '/assets/js/editor-sidebar.js',
-        array('wp-plugins', 'wp-edit-post', 'wp-element', 'wp-components', 'wp-data', 'wp-i18n'),
+        array('wp-plugins', 'wp-edit-post', 'wp-element', 'wp-components', 'wp-data', 'wp-i18n', 'wp-blocks', 'wp-block-editor'),
         AIO_STARTER_VERSION,
         true
     );

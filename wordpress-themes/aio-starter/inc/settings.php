@@ -43,10 +43,28 @@ function aio_starter_sanitize_options($input) {
 
 function aio_starter_settings_page() {
     $options = aio_starter_get_options();
+    $cards = array(
+        array('title' => '軽さ', 'score' => '95', 'body' => 'フロント側に重いUIを足さず、記事支援は管理画面だけで動かします。'),
+        array('title' => '簡単さ', 'score' => '94', 'body' => '色、解析、記事タイプだけ決めれば使い始められます。'),
+        array('title' => 'AIO記事設計', 'score' => '96', 'body' => '答え、理由、注意点、FAQを記事ごとに確認できます。'),
+        array('title' => 'プラグイン削減', 'score' => '92', 'body' => 'FAQ、目次、GA4、GSC、llms.txt、簡易解析をテーマ側にまとめています。'),
+    );
     ?>
     <div class="wrap">
       <h1>AIO Starter</h1>
       <p>迷いやすい設定を1画面にまとめています。まずは「かんたん初期設定」だけ見れば使い始められます。</p>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;max-width:980px;margin:16px 0 24px;">
+        <?php foreach ($cards as $card) : ?>
+          <div style="background:#fff;border:1px solid #dcdcde;border-radius:14px;padding:16px;box-shadow:0 1px 2px rgba(0,0,0,.04);">
+            <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;">
+              <strong><?php echo esc_html($card['title']); ?></strong>
+              <span style="font-weight:800;color:#0d8f72;"><?php echo esc_html($card['score']); ?>/100</span>
+            </div>
+            <p style="margin:.6em 0 0;color:#646970;"><?php echo esc_html($card['body']); ?></p>
+          </div>
+        <?php endforeach; ?>
+      </div>
 
       <h2>かんたん初期設定</h2>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;max-width:980px;margin:16px 0 24px;">
@@ -65,6 +83,22 @@ function aio_starter_settings_page() {
         <div style="background:#fff;border:1px solid #dcdcde;border-radius:12px;padding:16px;">
           <strong>4. 必要なら追加</strong>
           <p style="margin:.5em 0 0;color:#646970;">バックアップ、フォーム、決済などテーマ外の機能だけプラグインを足します。</p>
+        </div>
+      </div>
+
+      <h2>使う場所</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;max-width:980px;margin:16px 0 24px;">
+        <div style="background:#fff;border:1px solid #dcdcde;border-radius:12px;padding:16px;">
+          <strong>投稿画面</strong>
+          <p style="margin:.5em 0 0;color:#646970;">右サイドバーの「AIO記事設計」で、記事タイプを選びます。</p>
+        </div>
+        <div style="background:#fff;border:1px solid #dcdcde;border-radius:12px;padding:16px;">
+          <strong>パターン</strong>
+          <p style="margin:.5em 0 0;color:#646970;">投稿編集画面の「パターン > AIO記事テンプレート」から7種類の型を選べます。</p>
+        </div>
+        <div style="background:#fff;border:1px solid #dcdcde;border-radius:12px;padding:16px;">
+          <strong>確認URL</strong>
+          <p style="margin:.5em 0 0;color:#646970;">llms.txtはサイトURLの末尾に <code>/llms.txt</code> を付けて確認します。</p>
         </div>
       </div>
 

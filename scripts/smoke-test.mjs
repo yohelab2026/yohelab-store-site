@@ -46,7 +46,7 @@ checks.push(["home no legacy tool links", legacyPaths.every((path) => !home.incl
 
 const lpResearchWriter = read(dist("lp/research-writer/index.html"));
 checks.push(["lp research writer title", lpResearchWriter.includes('AIOに読まれやすい記事を作る | よへラボ')]);
-checks.push(["lp research writer free", lpResearchWriter.includes('無料版を試す')]);
+checks.push(["lp research writer free", lpResearchWriter.includes('無料で試す') || lpResearchWriter.includes('無料版を試す')]);
 
 const researchApp = read(dist("apps/research-writer/index.html"));
 checks.push(["research app title", researchApp.includes('AIO特化リサーチ記事メーカー')]);
