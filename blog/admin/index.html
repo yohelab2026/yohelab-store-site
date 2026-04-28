@@ -409,7 +409,16 @@
         return;
       }
       localStorage.setItem('yohelab.blog.lastExport', JSON.stringify(data.post, null, 2));
-      statusEl.textContent = `投稿した。${data.path}`;
+      statusEl.textContent = `公開した ✓`;
+      titleEl.value = '';
+      slugEl.value = '';
+      excerptEl.value = '';
+      bodyEl.innerHTML = '';
+      tagsEl.value = '';
+      eyecatchEl.value = '';
+      eyecatchPreviewEl.style.display = 'none';
+      localStorage.removeItem('yohelab.blog.draft');
+      updatePreview();
     }
 
     document.getElementById('post-json').addEventListener('click', postBlog);
