@@ -8,19 +8,24 @@
   <link rel="icon" type="image/png" href="/yohelab-icon.png" />
   <link rel="stylesheet" href="/shared/site.css" />
   <style>
-    body { background: linear-gradient(180deg,#06110e 0%,#f6fbf8 30%,#fff 100%); }
+    body { background:#f6fbf8; }
     .shell { padding: 84px 0 60px; }
-    .grid { display:grid; grid-template-columns: 400px minmax(0,1fr); gap:20px; align-items:start; }
-    .panel { background:#fff; border:1px solid var(--border); border-radius:22px; box-shadow:var(--shadow); padding:24px; }
-    .panel h1 { font-size:34px; letter-spacing:-.05em; margin-bottom:10px; }
+    .admin-head { display:flex; justify-content:space-between; gap:16px; align-items:center; margin-bottom:18px; }
+    .admin-head h1 { font-size:32px; margin:0; }
+    .grid { display:grid; grid-template-columns:minmax(0,1fr) 340px; gap:20px; align-items:start; }
+    .panel { background:#fff; border:1px solid var(--border); border-radius:14px; box-shadow:var(--shadow-xs); padding:22px; }
+    .panel h1 { font-size:34px; letter-spacing:-.04em; margin-bottom:10px; }
+    .panel h2 { font-size:18px; margin-bottom:14px; }
     .panel p { color:var(--muted); line-height:1.8; }
     .form { display:grid; gap:14px; }
     label { display:grid; gap:6px; font-size:13px; font-weight:700; color:var(--text-sub); }
     input, textarea { width:100%; border:1px solid var(--border); border-radius:12px; padding:12px 14px; font-size:15px; }
     textarea { min-height: 140px; resize: vertical; }
     .toolbar { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px; }
-    .toolbar button { border:1px solid var(--border); background:#fff; color:var(--text); border-radius:10px; padding:8px 10px; font-size:13px; font-weight:700; cursor:pointer; }
-    .editor { min-height: 280px; border:1px solid var(--border); border-radius:16px; padding:16px; background:#fff; outline:none; line-height:1.85; }
+    .toolbar button, .toolbar select, .toolbar input[type="color"] { border:1px solid var(--border); background:#fff; color:var(--text); border-radius:10px; padding:8px 10px; font-size:13px; font-weight:700; cursor:pointer; min-height:38px; }
+    .toolbar input[type="color"] { width:46px; padding:4px; }
+    .title-input { font-size:28px; font-weight:800; padding:16px 18px; }
+    .editor { min-height: 420px; border:1px solid var(--border); border-radius:12px; padding:18px; background:#fff; outline:none; line-height:1.85; }
     .editor:empty::before { content: attr(data-placeholder); color: #94a3b8; }
     .preview { border:1px solid var(--border); border-radius:16px; padding:18px; background:#fff; }
     .preview h2 { font-size:24px; margin-bottom:10px; }
@@ -28,7 +33,11 @@
     .actions { display:flex; gap:10px; flex-wrap:wrap; margin-top:14px; }
     .status { padding:12px 14px; border-radius:12px; background:#f7fbf9; border:1px solid var(--border); color:var(--muted); font-size:14px; }
     .hint { font-size:13px; color:var(--muted); line-height:1.75; }
-    @media (max-width: 920px) { .grid { grid-template-columns:1fr; } }
+    .setup-row { display:grid; gap:10px; }
+    .setup-row.is-saved .setup-input { display:none; }
+    .setup-saved { display:none; padding:12px 14px; border-radius:12px; background:#ecfdf5; border:1px solid #bbf7d0; color:#047857; font-size:14px; font-weight:700; }
+    .setup-row.is-saved .setup-saved { display:block; }
+    @media (max-width: 920px) { .grid { grid-template-columns:1fr; } .admin-head { align-items:flex-start; flex-direction:column; } }
   </style>
 </head>
 <body>
@@ -43,50 +52,87 @@
     </div>
   </header>
   <main class="shell">
+    <div class="container">
+      <div class="admin-head">
+        <h1>新規投稿</h1>
+        <button class="btn btn-primary btn-lg" id="post-json-top" type="button">公開する</button>
+      </div>
+    </div>
     <div class="container grid">
       <div class="panel">
-        <h1>よへ専用の編集画面</h1>
-        <p>ここで記事を作って、パスワードを入れて投稿する。よへだけが入れるブログ編集画面。</p>
-        <p class="hint">普通のブログみたいに、投稿ボタンでそのまま公開する。</p>
-        <div class="status" id="status">下の欄に文章を入れてね。</div>
-        <div class="actions" style="margin-top:14px;">
-          <button class="btn btn-primary btn-lg" id="post-json-top" type="button">投稿する</button>
-        </div>
-        <p class="hint" style="margin-top:14px;">太字、色、見出しだけ使えれば十分。読者に伝わるところだけ整える。</p>
-      </div>
-      <div class="panel">
         <div class="form">
-          <label>パスワード<input id="password" type="password" placeholder="投稿用パスワード" /></label>
-          <label>タイトル<input id="title" placeholder="記事タイトル" /></label>
-          <label>スラッグ<input id="slug" placeholder="example-post" /></label>
-          <label>要約<textarea id="excerpt" placeholder="一覧に出す短い説明"></textarea></label>
+          <label>タイトル<input class="title-input" id="title" placeholder="タイトルを追加" /></label>
           <div>
             <div class="toolbar">
-              <button data-cmd="bold" type="button">太字</button>
-              <button data-cmd="italic" type="button">斜体</button>
-              <button data-size="1.2" type="button">大きく</button>
-              <button data-size="0.9" type="button">小さく</button>
+              <select id="format-select" aria-label="段落">
+                <option value="P">本文</option>
+                <option value="H2">見出し2</option>
+                <option value="H3">見出し3</option>
+                <option value="BLOCKQUOTE">引用</option>
+              </select>
+              <select id="font-select" aria-label="フォント">
+                <option value="">標準</option>
+                <option value="'Yu Gothic', 'Hiragino Kaku Gothic ProN', sans-serif">ゴシック</option>
+                <option value="'Yu Mincho', 'Hiragino Mincho ProN', serif">明朝</option>
+                <option value="'BIZ UDPGothic', sans-serif">読みやすい</option>
+                <option value="'Noto Sans JP', sans-serif">すっきり</option>
+              </select>
+              <select id="size-select" aria-label="文字サイズ">
+                <option value="">サイズ</option>
+                <option value="0.9">小</option>
+                <option value="1">標準</option>
+                <option value="1.2">大</option>
+                <option value="1.45">特大</option>
+              </select>
+              <button data-cmd="bold" type="button">B</button>
+              <button data-cmd="italic" type="button">I</button>
+              <button data-cmd="underline" type="button">U</button>
+              <button data-cmd="insertUnorderedList" type="button">箇条書き</button>
+              <button data-align="left" type="button">左</button>
+              <button data-align="center" type="button">中央</button>
+              <button data-align="right" type="button">右</button>
               <button data-color="#0b8f72" type="button">緑</button>
               <button data-color="#1d6fd8" type="button">青</button>
               <button data-color="#ef4444" type="button">赤</button>
+              <input id="text-color" type="color" value="#0b8f72" aria-label="文字色" />
+              <input id="bg-color" type="color" value="#fff3bf" aria-label="背景色" />
               <button id="clear-style" type="button">色を戻す</button>
             </div>
-            <div id="body" class="editor" contenteditable="true" data-placeholder="本文をここに書く。必要なら太字や色をつける。"></div>
-          </div>
-          <label>タグ<input id="tags" placeholder="AI検索, WordPress, お知らせ" /></label>
-          <div class="actions">
-            <button class="btn btn-primary btn-lg" id="post-json" type="button">投稿する</button>
-            <button class="btn btn-outline btn-lg" id="copy-html" type="button">HTMLをコピー</button>
-            <button class="btn btn-outline btn-lg" id="save-draft" type="button">下書きを保存</button>
+            <div id="body" class="editor" contenteditable="true" data-placeholder="本文を書く"></div>
           </div>
         </div>
       </div>
+      <aside class="panel">
+        <h2>公開</h2>
+        <div class="status" id="status">下書き中</div>
+        <div class="actions">
+          <button class="btn btn-primary btn-lg" id="post-json" type="button">公開する</button>
+          <button class="btn btn-outline btn-lg" id="save-draft" type="button">下書きを保存</button>
+        </div>
+        <hr style="border:0;border-top:1px solid var(--border);margin:18px 0;">
+        <h2>初期設定</h2>
+        <div class="setup-row" id="setup-row">
+          <div class="setup-saved">パスワード設定済み</div>
+          <label class="setup-input">初期設定のパスワード<input id="password" type="password" placeholder="投稿用パスワード" /></label>
+          <div class="actions" style="margin-top:0;">
+            <button class="btn btn-outline btn-lg" id="save-password" type="button">パスワードを保存</button>
+            <button class="btn btn-outline btn-lg" id="change-password" type="button">変更</button>
+          </div>
+        </div>
+        <hr style="border:0;border-top:1px solid var(--border);margin:18px 0;">
+        <h2>記事設定</h2>
+        <div class="form">
+          <label>スラッグ<input id="slug" placeholder="未入力なら自動作成" /></label>
+          <label>要約<textarea id="excerpt" placeholder="一覧に出す短い説明"></textarea></label>
+          <label>タグ<input id="tags" placeholder="AI検索, WordPress, お知らせ" /></label>
+        </div>
+      </aside>
     </div>
 
     <div class="container" style="margin-top:20px;">
       <div class="panel">
         <div class="preview" id="preview">
-          <h2>見え方のプレビュー</h2>
+          <h2>プレビュー</h2>
           <p id="preview-excerpt">要約がここに出る。</p>
           <div id="preview-body" style="margin-top:16px;color:var(--text);line-height:1.9;"></div>
         </div>
@@ -100,9 +146,11 @@
     const bodyEl = document.getElementById('body');
     const tagsEl = document.getElementById('tags');
     const passwordEl = document.getElementById('password');
+    const setupRowEl = document.getElementById('setup-row');
     const statusEl = document.getElementById('status');
     const previewExcerptEl = document.getElementById('preview-excerpt');
     const previewBodyEl = document.getElementById('preview-body');
+    const PASSWORD_KEY = 'yohelab.blog.password';
 
     function updatePreview() {
       previewExcerptEl.textContent = excerptEl.value || '要約がここに出る。';
@@ -113,7 +161,6 @@
         excerpt: excerptEl.value,
         bodyHtml: bodyEl.innerHTML,
         tags: tagsEl.value,
-        password: passwordEl.value,
       }));
     }
 
@@ -140,8 +187,30 @@
     document.querySelectorAll('[data-color]').forEach((btn) => {
       btn.addEventListener('click', () => wrapSelection('span', `color:${btn.dataset.color};font-weight:700;`));
     });
-    document.querySelectorAll('[data-size]').forEach((btn) => {
-      btn.addEventListener('click', () => wrapSelection('span', `font-size:${btn.dataset.size}em;`));
+    document.querySelectorAll('[data-align]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        document.execCommand(`justify${btn.dataset.align[0].toUpperCase()}${btn.dataset.align.slice(1)}`, false, null);
+        updatePreview();
+      });
+    });
+    document.getElementById('format-select').addEventListener('change', (event) => {
+      document.execCommand('formatBlock', false, event.target.value);
+      event.target.value = 'P';
+      updatePreview();
+    });
+    document.getElementById('font-select').addEventListener('change', (event) => {
+      if (event.target.value) wrapSelection('span', `font-family:${event.target.value};`);
+      event.target.value = '';
+    });
+    document.getElementById('size-select').addEventListener('change', (event) => {
+      if (event.target.value) wrapSelection('span', `font-size:${event.target.value}em;`);
+      event.target.value = '';
+    });
+    document.getElementById('text-color').addEventListener('input', (event) => {
+      wrapSelection('span', `color:${event.target.value};font-weight:700;`);
+    });
+    document.getElementById('bg-color').addEventListener('input', (event) => {
+      wrapSelection('span', `background:${event.target.value};padding:0 .18em;border-radius:4px;`);
     });
     document.getElementById('clear-style').addEventListener('click', () => {
       document.execCommand('removeFormat', false, null);
@@ -162,8 +231,12 @@
         excerptEl.value = parsed.excerpt || '';
         bodyEl.innerHTML = parsed.bodyHtml || '';
         tagsEl.value = parsed.tags || '';
-        passwordEl.value = parsed.password || '';
       } catch (_) {}
+    }
+    const savedPassword = localStorage.getItem(PASSWORD_KEY) || '';
+    if (savedPassword) {
+      passwordEl.value = savedPassword;
+      setupRowEl.classList.add('is-saved');
     }
     updatePreview();
 
@@ -202,9 +275,9 @@
 
     async function postBlog() {
       const post = buildJson();
-      const password = passwordEl.value.trim();
+      const password = (localStorage.getItem(PASSWORD_KEY) || passwordEl.value || '').trim();
       if (!password) {
-        statusEl.textContent = 'パスワードを入れて。';
+        statusEl.textContent = '初期設定のパスワードを保存して。';
         return;
       }
       const response = await fetch('/api/blog-post', {
@@ -226,6 +299,21 @@
 
     document.getElementById('post-json').addEventListener('click', postBlog);
     document.getElementById('post-json-top').addEventListener('click', postBlog);
+    document.getElementById('save-password').addEventListener('click', () => {
+      const password = passwordEl.value.trim();
+      if (!password) {
+        statusEl.textContent = 'パスワードを入れて。';
+        return;
+      }
+      localStorage.setItem(PASSWORD_KEY, password);
+      setupRowEl.classList.add('is-saved');
+      statusEl.textContent = 'パスワードを保存した。次から入力はいらない。';
+    });
+    document.getElementById('change-password').addEventListener('click', () => {
+      setupRowEl.classList.remove('is-saved');
+      passwordEl.focus();
+      statusEl.textContent = '新しいパスワードを入れて保存して。';
+    });
 
     document.getElementById('copy-html').addEventListener('click', async () => {
       const html = `<h1>${titleEl.value}</h1>\n<p>${excerptEl.value}</p>\n${bodyEl.innerHTML}`;
