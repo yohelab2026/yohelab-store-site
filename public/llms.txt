@@ -1,0 +1,21 @@
+# よへラボ
+
+> AI検索時代の記事メーカーとWordPressテーマを提供するサイト。
+
+## ツール
+
+- [AI検索に拾われやすい記事メーカー](https://yohelab.com/apps/research-writer/): 3キーワードから最新情報を収集し、見出し・FAQ・出典を整えたAI検索向け記事下書きを生成するWebツール。無料版は1日1セット・登録不要。プロプランは月50セット・月額1,980円。
+- [AI検索時代の記事ブログテーマ](https://yohelab.com/apps/wordpress-theme/): FAQ・JSON-LD・llms.txt・内部解析・GA4設定をテーマに内蔵した軽量WordPressテーマ。プラグイン追加ゼロでAI検索に引用されやすい記事ブログの土台を整える。ベータ価格¥5,500・買い切り。
+
+## LP・詳細ページ
+
+- [記事メーカー LP](https://yohelab.com/lp/research-writer/): 記事メーカーの詳細・比較表・FAQ
+- [WordPressテーマ LP](https://yohelab.com/lp/wordpress-theme/): テーマの詳細・機能一覧・購入方法
+
+## サポート・法務
+
+- [問い合わせ](https://yohelab.com/contact/)
+- [バグ報告](https://yohelab.com/contact/bug/)
+- [特定商取引法](https://yohelab.com/legal/commerce/)
+- [プライバシーポリシー](https://yohelab.com/legal/privacy/)
+- [利用規約](https://yohelab.com/legal/terms/)

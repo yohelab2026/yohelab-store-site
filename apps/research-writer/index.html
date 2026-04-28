@@ -4,9 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AI検索向けリサーチ記事メーカー | よへラボ</title>
-    <meta name="description" content="3キーワードから最新情報を集め、選んだ情報だけでAI検索向けの記事にまとめるWebツール。note、ブログ、WordPress向け。" />
-    <meta property="og:title" content="AI検索向けリサーチ記事メーカー | よへラボ" />
-    <meta property="og:description" content="3キーワードから最新情報を集め、選んだ情報だけでAI検索向けの記事にまとめるWebツール。note、ブログ、WordPress向け。" />
+    <meta name="description" content="3キーワードから最新情報を集め、AIに引用されやすい記事下書きを作るWebツール。見出し・FAQ・出典まで自動出力。登録不要・無料版は1日1セット。" />
+    <meta property="og:title" content="AI検索に拾われやすい記事メーカー | よへラボ" />
+    <meta property="og:description" content="3キーワードから最新情報を集め、AIに引用されやすい記事下書きを作るWebツール。見出し・FAQ・出典まで自動出力。登録不要・無料版は1日1セット。" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="ja_JP" />
     <meta property="og:url" content="https://yohelab.com/apps/research-writer/" />
@@ -381,7 +381,7 @@
     <main>
       <div class="container">
         <div class="app-intro">
-        <h1>3キーワードで、調べて、選んで、AI検索向けにまとめる。</h1>
+        <h1>3キーワードで、調べて、選んで、AI検索に拾われやすくまとめる。</h1>
           <p>最新情報を拾って、使う材料だけ選び、見出し・FAQ・本文までひと続きで整える。note、ブログ、クラウドワークス向けの下書きを短くする。</p>
           <div class="app-chips">
             <span class="app-chip">登録不要</span>
@@ -446,7 +446,7 @@
               <label style="display:flex;gap:10px;align-items:flex-start;">
                 <input id="seoMode" type="checkbox" style="margin-top:4px;accent-color:var(--green);" />
                 <span>
-        <strong style="display:block;margin-bottom:2px;">AI検索寄せ</strong>
+        <strong style="display:block;margin-bottom:2px;">AI検索向け</strong>
                   <span style="font-size:13px;color:var(--muted);line-height:1.6;">見出し・FAQ・SEOタイトルも一緒に整える。</span>
                 </span>
               </label>
@@ -520,7 +520,7 @@
                 <div class="header-actions" style="margin-top:4px;">
                   <div>
                     <h3 style="margin-bottom:6px;">記事の出力</h3>
-      <div style="color:var(--muted);font-size:13px;line-height:1.7;">選んだ情報だけを材料に、AI検索向けの読みやすい形へまとめる。</div>
+      <div style="color:var(--muted);font-size:13px;line-height:1.7;">選んだ情報だけを材料に、AI検索に引用されやすい形へまとめる。</div>
               </div>
                   <div class="article-actions">
                     <button class="btn btn-outline btn-sm" id="copy-result" type="button" disabled>全文コピー</button>
@@ -546,7 +546,7 @@
 
     <footer class="footer">
       <div class="footer-inner">
-    <div>© よへラボ / AI検索向けリサーチ記事メーカー</div>
+    <div>© よへラボ / AI検索に拾われやすい記事メーカー</div>
         <div class="footer-links">
           <a href="/">トップ</a>
           <a href="/lp/research-writer/">LPを見る</a>
@@ -895,7 +895,7 @@
         articleOutputEl.className = "article-empty";
         articleOutputEl.textContent = payload.wordpressMode
     ? "検索結果を選ぶと、AI検索向けの記事とWordPress設定がここに出る。"
-    : "検索結果を選ぶと、AI検索向けの記事がここに出る。";
+    : "検索結果を選ぶと、AI検索に拾われやすい記事がここに出る。";
         copyBtn.disabled = true;
 
         try {
