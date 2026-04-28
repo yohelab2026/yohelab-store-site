@@ -46,8 +46,12 @@
     <div class="container grid">
       <div class="panel">
         <h1>よへ専用の編集画面</h1>
-        <p>ここで記事を作って、最後に JSON をコピーして `content/blog/posts/` に置く。サーバーに負担をかけない静的方式。</p>
+        <p>ここで記事を作って、最後に JSON をコピーして <code>content/blog/posts/</code> に置く。サーバーに負担をかけない静的方式。</p>
+        <p class="hint">投稿先は <code>/content/blog/posts/</code>。ここには送信ボタンはなくて、公開用ファイルを作る場所。</p>
         <div class="status" id="status">下の欄に文章を入れてね。</div>
+        <div class="actions" style="margin-top:14px;">
+          <button class="btn btn-primary btn-lg" id="post-json-top" type="button">投稿する</button>
+        </div>
         <p class="hint" style="margin-top:14px;">太字、色、見出しだけ使えれば十分。読者に伝わるところだけ整える。</p>
       </div>
       <div class="panel">
@@ -59,6 +63,8 @@
             <div class="toolbar">
               <button data-cmd="bold" type="button">太字</button>
               <button data-cmd="italic" type="button">斜体</button>
+              <button data-size="1.2" type="button">大きく</button>
+              <button data-size="0.9" type="button">小さく</button>
               <button data-color="#0b8f72" type="button">緑</button>
               <button data-color="#1d6fd8" type="button">青</button>
               <button data-color="#ef4444" type="button">赤</button>
@@ -68,7 +74,7 @@
           </div>
           <label>タグ<input id="tags" placeholder="AI検索, WordPress, お知らせ" /></label>
           <div class="actions">
-            <button class="btn btn-primary btn-lg" id="copy-json" type="button">JSONをコピー</button>
+            <button class="btn btn-primary btn-lg" id="post-json" type="button">投稿する</button>
             <button class="btn btn-outline btn-lg" id="copy-html" type="button">HTMLをコピー</button>
             <button class="btn btn-outline btn-lg" id="save-draft" type="button">下書きを保存</button>
           </div>
@@ -131,6 +137,9 @@
     document.querySelectorAll('[data-color]').forEach((btn) => {
       btn.addEventListener('click', () => wrapSelection('span', `color:${btn.dataset.color};font-weight:700;`));
     });
+    document.querySelectorAll('[data-size]').forEach((btn) => {
+      btn.addEventListener('click', () => wrapSelection('span', `font-size:${btn.dataset.size}em;`));
+    });
     document.getElementById('clear-style').addEventListener('click', () => {
       document.execCommand('removeFormat', false, null);
       updatePreview();
@@ -186,10 +195,30 @@
       statusEl.textContent = 'コピーした。';
     }
 
-    document.getElementById('copy-json').addEventListener('click', async () => {
-      const json = JSON.stringify(buildJson(), null, 2);
+    function downloadText(filename, text) {
+      const blob = new Blob([text], { type: 'application/json;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+      statusEl.textContent = 'JSONを書き出した。';
+    }
+
+    async function postBlog() {
+      const post = buildJson();
+      const filename = `${post.date}-${post.slug || 'post'}.json`;
+      const json = JSON.stringify(post, null, 2);
       await copyText(json);
-    });
+      downloadText(filename, json);
+      statusEl.textContent = `投稿用ファイルを作った。${filename}`;
+    }
+
+    document.getElementById('post-json').addEventListener('click', postBlog);
+    document.getElementById('post-json-top').addEventListener('click', postBlog);
 
     document.getElementById('copy-html').addEventListener('click', async () => {
       const html = `<h1>${titleEl.value}</h1>\n<p>${excerptEl.value}</p>\n${bodyEl.innerHTML}`;
