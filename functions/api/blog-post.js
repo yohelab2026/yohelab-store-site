@@ -4,7 +4,12 @@ const BLOG_DIR = "content/blog/posts";
 export async function onRequestPost(context) {
   try {
     const body = await readJsonBody(context.request);
-    const password = String(context.env.BLOG_PASSWORD || "").trim();
+    const password = String(
+      context.env.BLOG_PASSWORD ||
+      context.env.BLOG_ADMIN_TOKEN ||
+      context.env.ACCESS_SECRET ||
+      "",
+    ).trim();
     const requestPassword = String(context.request.headers.get("x-yohelab-password") || "").trim();
 
     if (!password) return json({ error: "BLOG_PASSWORD is not configured" }, 500);
