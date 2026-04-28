@@ -319,8 +319,8 @@ function renderPage(page) {
         padding: 88px 0 72px;
         background:
           radial-gradient(ellipse 85% 65% at 50% 0%, rgba(13,107,88,.16), transparent 58%),
-          linear-gradient(180deg, #0f221d 0%, #0b1613 100%);
-        color: #fff;
+          linear-gradient(180deg, #f8fbff 0%, #eef5ff 100%);
+        color: var(--text);
       }
       .lp-hero .container {
         width: min(1100px, 100% - 48px);
@@ -336,28 +336,31 @@ function renderPage(page) {
         gap: 8px;
         padding: 6px 16px;
         border-radius: 999px;
-        background: rgba(255,255,255,.09);
-        border: 1px solid rgba(255,255,255,.16);
-        color: rgba(255,255,255,.92);
+        background: rgba(255,255,255,.92);
+        border: 1px solid rgba(11,143,114,.18);
+        color: var(--green-dark);
         font-size: 13px;
         font-weight: 700;
         margin-bottom: 28px;
       }
       .lp-hero h1 {
-        color: #fff;
+        color: var(--text);
         font-size: clamp(42px, 6.4vw, 74px);
         letter-spacing: -0.05em;
         line-height: 1.06;
         margin-bottom: 18px;
       }
       .lp-hero h1 em {
-        color: #4fd1b8;
+        background: linear-gradient(135deg, #0b8f72 0%, #1fb6cf 55%, #3f8cff 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
         font-style: normal;
       }
       .lp-lead {
         max-width: 760px;
         margin: 0 auto 28px;
-        color: rgba(255,255,255,.76);
+        color: var(--muted);
         font-size: 19px;
         line-height: 1.9;
       }
@@ -369,7 +372,7 @@ function renderPage(page) {
         margin-bottom: 20px;
       }
       .lp-hero-note {
-        color: rgba(255,255,255,.55);
+        color: var(--muted-light);
         font-size: 13px;
       }
       .lp-band {
@@ -379,16 +382,16 @@ function renderPage(page) {
         gap: 14px;
       }
       .lp-band .lp-card {
-        background: rgba(255,255,255,.07);
-        border: 1px solid rgba(255,255,255,.12);
-        color: #fff;
+        background: rgba(255,255,255,.88);
+        border: 1px solid rgba(11,143,114,.12);
+        color: var(--text);
         box-shadow: none;
       }
       .lp-band .lp-card h3 {
-        color: #fff;
+        color: var(--text);
       }
       .lp-band .lp-card p {
-        color: rgba(255,255,255,.72);
+        color: var(--muted);
       }
       .lp-section {
         padding: 72px 0;
@@ -696,7 +699,6 @@ function renderPage(page) {
         <a class="brand" href="/">
           <img src="/yohelab-icon.png" alt="よへラボのアイコン" />
           <span>よへラボ</span>
-          <span class="brand-sub">AIOツール</span>
         </a>
         <nav class="nav-links">
         <a href="/apps/research-writer/">ツール</a>

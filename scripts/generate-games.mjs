@@ -252,7 +252,6 @@ function pageTemplate(game) {
       <a class="brand brand-light" href="/">
         <img src="/yohelab-icon.png" alt="よへラボ" />
         <span>よへラボ</span>
-        <span class="brand-sub">ブログ</span>
       </a>
       <nav class="nav-links">
         <a href="/apps/research-writer/">ツール</a>
@@ -266,11 +265,11 @@ function pageTemplate(game) {
   <main>
     <section class="arcade-hero">
       <div class="container">
-        <p class="arcade-eyebrow">🎮 ブラウザで1分</p>
+        <p class="arcade-eyebrow">🧪 ブラウザで1分</p>
         <h1>${game.name}</h1>
         <p>${game.lead}</p>
         <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:18px;">
-          ${badges.map((b) => `<span class="hero-chip" style="background:rgba(255,255,255,.07);color:#fff;border-color:rgba(255,255,255,.15)">${b}</span>`).join("")}
+          ${badges.map((b) => `<span class="hero-chip" style="background:#ffffff;color:var(--arcade-green);border-color:rgba(16,184,146,.2)">${b}</span>`).join("")}
         </div>
       </div>
     </section>

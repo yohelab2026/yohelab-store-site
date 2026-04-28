@@ -11,9 +11,9 @@
 
 .arcade-hero {
   background:
-    radial-gradient(ellipse 70% 60% at 60% -10%, rgba(16,184,146,.20) 0%, transparent 60%),
-    linear-gradient(180deg, #07120f 0%, #0a1a15 100%);
-  color: #fff;
+    radial-gradient(ellipse 70% 60% at 60% -10%, rgba(16,184,146,.18) 0%, transparent 60%),
+    linear-gradient(180deg, #f8fbff 0%, #eef5ff 100%);
+  color: var(--arcade-text);
   padding: 96px 0 56px;
 }
 
@@ -23,9 +23,9 @@
   gap: 8px;
   padding: 7px 16px;
   border-radius: 999px;
-  background: rgba(16,184,146,.13);
-  border: 1px solid rgba(16,184,146,.28);
-  color: #88e6d0;
+  background: rgba(255,255,255,.92);
+  border: 1px solid rgba(16,184,146,.24);
+  color: var(--arcade-green);
   font-size: 12px;
   font-weight: 800;
   letter-spacing: .08em;
@@ -44,7 +44,7 @@
 
 .arcade-hero p {
   max-width: 760px;
-  color: rgba(255,255,255,.72);
+  color: var(--arcade-muted);
   line-height: 1.85;
   font-size: 16px;
 }
