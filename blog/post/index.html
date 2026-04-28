@@ -8,108 +8,222 @@
   <link rel="icon" type="image/png" href="/yohelab-icon.png" />
   <link rel="stylesheet" href="/shared/site.css" />
   <style>
-    body { background: #f8fbf9; }
-    .post-wrap { max-width: 760px; margin: 0 auto; padding: 48px 24px 80px; }
-    .post-eyecatch { border-radius: 18px; overflow: hidden; margin-bottom: 36px; }
-    .post-eyecatch img { width: 100%; max-height: 420px; object-fit: cover; display: block; }
-    .post-meta { font-size: 13px; color: var(--muted); margin-bottom: 12px; display: flex; gap: 12px; flex-wrap: wrap; }
-    .post-tag { background: var(--bg); border: 1px solid var(--border); border-radius: 999px; padding: 2px 10px; font-size: 12px; color: var(--muted); }
-    .post-title { font-size: clamp(28px, 5vw, 48px); font-weight: 900; letter-spacing: -.04em; line-height: 1.15; margin-bottom: 28px; color: var(--text); }
-    .post-excerpt { font-size: 18px; color: var(--muted); line-height: 1.8; margin-bottom: 36px; padding-bottom: 28px; border-bottom: 1px solid var(--border); }
-    .post-body { font-size: 17px; line-height: 1.95; color: var(--text); }
-    .post-body h2 { font-size: 24px; font-weight: 900; margin: 36px 0 14px; letter-spacing: -.03em; }
-    .post-body h3 { font-size: 20px; font-weight: 800; margin: 28px 0 10px; }
-    .post-body p { margin-bottom: 18px; }
-    .post-body ul, .post-body ol { padding-left: 24px; margin-bottom: 18px; }
-    .post-body li { margin-bottom: 8px; line-height: 1.8; }
-    .post-body blockquote { border-left: 4px solid var(--green); padding: 12px 18px; background: var(--bg); border-radius: 0 10px 10px 0; margin: 20px 0; color: var(--muted); }
-    .back-link { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); font-size: 14px; font-weight: 700; margin-bottom: 32px; text-decoration: none; }
-    .back-link:hover { color: var(--green); }
-    .not-found { text-align: center; padding: 80px 24px; color: var(--muted); }
+    body { background:#fff;color:var(--text); }
+
+    /* カバー画像（フルワイド・ヒーロー） */
+    .cover-hero {
+      width:100%;max-height:520px;overflow:hidden;
+      background:#0b1613;
+    }
+    .cover-hero img {
+      width:100%;max-height:520px;object-fit:cover;display:block;
+      animation:fadeIn .6s ease;
+    }
+    @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+    /* ナビ（カバーの上に透過） */
+    .nav { background:rgba(5,15,12,.88) !important; }
+
+    /* 記事本体 */
+    .post-outer { max-width:720px;margin:0 auto;padding:48px 24px 100px; }
+
+    .post-meta {
+      display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+      font-size:13px;color:var(--muted);margin-bottom:20px;
+    }
+    .post-tag {
+      background:#f0f8f4;color:var(--green-dark,#075c4c);
+      border-radius:999px;padding:3px 12px;font-size:12px;font-weight:700;
+    }
+
+    .post-title {
+      font-size:clamp(28px,5.5vw,52px);font-weight:900;
+      letter-spacing:-.05em;line-height:1.12;
+      margin-bottom:24px;color:var(--text);
+    }
+
+    .post-excerpt {
+      font-size:19px;color:var(--muted);line-height:1.85;
+      margin-bottom:40px;padding-bottom:32px;
+      border-bottom:1px solid var(--border);
+    }
+
+    /* 本文 */
+    .post-body { font-size:17px;line-height:2;color:var(--text); }
+    .post-body h2 {
+      font-size:clamp(20px,3.5vw,26px);font-weight:900;
+      margin:44px 0 16px;letter-spacing:-.03em;
+      padding-bottom:10px;border-bottom:2px solid var(--border);
+    }
+    .post-body h3 {
+      font-size:clamp(17px,3vw,21px);font-weight:800;
+      margin:32px 0 12px;
+    }
+    .post-body p { margin-bottom:20px; }
+    .post-body ul,.post-body ol { padding-left:26px;margin-bottom:20px; }
+    .post-body li { margin-bottom:8px;line-height:1.85; }
+    .post-body blockquote {
+      border-left:4px solid var(--green);
+      padding:14px 20px;background:#f0f8f4;
+      border-radius:0 12px 12px 0;margin:24px 0;
+      color:var(--muted);font-size:16px;
+    }
+    .post-body img {
+      max-width:100%;border-radius:12px;margin:24px 0;display:block;
+    }
+    .post-body a { color:var(--green);text-decoration:underline; }
+
+    /* フッター */
+    .post-footer {
+      margin-top:56px;padding-top:28px;
+      border-top:1px solid var(--border);
+    }
+    .post-footer-inner {
+      display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;
+    }
+    .back-link {
+      display:inline-flex;align-items:center;gap:6px;
+      color:var(--muted);font-size:14px;font-weight:700;
+      text-decoration:none;transition:color .2s;
+    }
+    .back-link:hover { color:var(--green); }
+    .share-btn {
+      display:inline-flex;align-items:center;gap:6px;
+      background:#1d9bf0;color:#fff;border:none;border-radius:999px;
+      padding:8px 18px;font-size:13px;font-weight:700;cursor:pointer;
+      text-decoration:none;
+    }
+
+    /* 関連リンク */
+    .related {
+      margin-top:48px;padding:24px;
+      background:#f6fbf8;border-radius:18px;
+      border:1px solid var(--border);
+    }
+    .related p { font-size:13px;font-weight:700;color:var(--muted);margin-bottom:14px; }
+    .related-links { display:flex;flex-wrap:wrap;gap:10px; }
+    .related-links a {
+      padding:8px 16px;background:#fff;border:1px solid var(--border);
+      border-radius:999px;font-size:13px;font-weight:700;color:var(--text);
+      text-decoration:none;transition:border-color .2s;
+    }
+    .related-links a:hover { border-color:var(--green);color:var(--green); }
+
+    .not-found { text-align:center;padding:80px 24px;color:var(--muted);font-size:18px; }
+
+    @media (max-width:600px) {
+      .post-outer { padding:32px 18px 80px; }
+      .cover-hero { max-height:260px; }
+      .cover-hero img { max-height:260px; }
+    }
   </style>
 </head>
 <body>
   <header class="nav">
     <div class="nav-inner">
-      <a class="brand" href="/"><img src="/yohelab-icon.png" alt="よへラボのアイコン" /><span>よへラボ</span></a>
+      <a class="brand" href="/"><img src="/yohelab-icon.png" alt="よへラボ" /><span>よへラボ</span></a>
       <nav class="nav-links">
         <a href="/">トップ</a>
         <a href="/blog/">ブログ</a>
         <a href="/apps/research-writer/">記事メーカー</a>
-        <a href="/apps/wordpress-theme/">テーマ</a>
       </nav>
     </div>
   </header>
+
+  <div id="cover-wrap"></div>
+
   <main>
-    <div class="post-wrap" id="post-wrap">
-      <div class="not-found">読み込み中...</div>
+    <div class="post-outer" id="post-outer">
+      <div class="not-found" style="color:var(--muted);">読み込み中...</div>
     </div>
   </main>
+
   <footer class="footer">
     <div class="footer-inner">
       <div>© よへラボ / ブログ</div>
       <div class="footer-links">
         <a href="/blog/">記事一覧</a>
         <a href="/apps/research-writer/">記事メーカー</a>
+        <a href="/apps/wordpress-theme/">WPテーマ</a>
       </div>
     </div>
   </footer>
+
   <script>
-    const slug = new URLSearchParams(location.search).get('slug') || '';
+  const slug = new URLSearchParams(location.search).get('slug') || '';
 
-    function escHtml(str) {
-      return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  function esc(str) {
+    return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  async function loadPost() {
+    if (!slug) { showError('記事が見つかりません。'); return; }
+    try {
+      const res = await fetch(`/api/blog-post-get?slug=${encodeURIComponent(slug)}`);
+      if (!res.ok) { showError('記事が見つかりません。'); return; }
+      const { post } = await res.json();
+      render(post);
+    } catch(e) { showError('読み込みに失敗しました。'); }
+  }
+
+  function render(post) {
+    // メタタグ更新
+    document.title = `${post.title || '記事'} | よへラボブログ`;
+    setMeta('description', post.excerpt || post.title || '');
+    setMeta('og:title', `${post.title} | よへラボブログ`);
+    setMeta('og:description', post.excerpt || '');
+    if (post.eyecatch) setMeta('og:image', post.eyecatch);
+
+    // カバー画像（フルワイド）
+    if (post.eyecatch) {
+      document.getElementById('cover-wrap').innerHTML =
+        `<div class="cover-hero"><img src="${esc(post.eyecatch)}" alt="${esc(post.title)}" /></div>`;
     }
 
-    async function loadPost() {
-      if (!slug) { showError('記事が見つかりません。'); return; }
-      try {
-        const res = await fetch(`/api/blog-post-get?slug=${encodeURIComponent(slug)}`);
-        if (!res.ok) { showError('記事が見つかりません。'); return; }
-        const { post } = await res.json();
-        render(post);
-      } catch (e) {
-        showError('読み込みに失敗しました。');
-      }
-    }
+    const tags = (post.tags||[]).map(t=>`<span class="post-tag">${esc(t)}</span>`).join('');
+    const excerpt = post.excerpt ? `<p class="post-excerpt">${esc(post.excerpt)}</p>` : '';
+    const bodyContent = post.bodyHtml || (post.body||'').split('\n\n').map(p=>`<p>${esc(p)}</p>`).join('');
+    const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(location.href)}`;
 
-    function render(post) {
-      document.title = `${post.title || '記事'} | よへラボブログ`;
-
-      const tags = (post.tags || []).map(t => `<span class="post-tag">${escHtml(t)}</span>`).join('');
-      const eyecatch = post.eyecatch
-        ? `<div class="post-eyecatch"><img src="${escHtml(post.eyecatch)}" alt="${escHtml(post.title)}" /></div>`
-        : '';
-      const excerpt = post.excerpt
-        ? `<p class="post-excerpt">${escHtml(post.excerpt)}</p>`
-        : '';
-
-      // bodyHtml があればそのまま、なければ body テキストを改行変換
-      const bodyContent = post.bodyHtml
-        ? post.bodyHtml
-        : (post.body || '').split('\n\n').map(p => `<p>${escHtml(p)}</p>`).join('');
-
-      document.getElementById('post-wrap').innerHTML = `
-        <a class="back-link" href="/blog/">← 記事一覧に戻る</a>
-        ${eyecatch}
-        <div class="post-meta">
-          <span>${escHtml(post.date || '')}</span>
-          ${tags}
+    document.getElementById('post-outer').innerHTML = `
+      <div class="post-meta">
+        <span>${esc(post.date||'')}</span>
+        ${tags}
+      </div>
+      <h1 class="post-title">${esc(post.title||'')}</h1>
+      ${excerpt}
+      <div class="post-body">${bodyContent}</div>
+      <div class="post-footer">
+        <div class="post-footer-inner">
+          <a class="back-link" href="/blog/">← 記事一覧に戻る</a>
+          <a class="share-btn" href="${twitterUrl}" target="_blank" rel="noreferrer">𝕏 シェア</a>
         </div>
-        <h1 class="post-title">${escHtml(post.title || '')}</h1>
-        ${excerpt}
-        <div class="post-body">${bodyContent}</div>
-      `;
-    }
+      </div>
+      <div class="related">
+        <p>よへラボのツール</p>
+        <div class="related-links">
+          <a href="/apps/research-writer/">AI検索に拾われやすい記事メーカー</a>
+          <a href="/apps/wordpress-theme/">AI検索時代のWPテーマ</a>
+          <a href="/blog/">ブログ一覧</a>
+        </div>
+      </div>
+    `;
+  }
 
-    function showError(msg) {
-      document.getElementById('post-wrap').innerHTML = `
-        <a class="back-link" href="/blog/">← 記事一覧に戻る</a>
-        <div class="not-found">${escHtml(msg)}</div>
-      `;
-    }
+  function setMeta(name, content) {
+    let el = document.querySelector(`meta[name="${name}"], meta[property="${name}"]`);
+    if (!el) { el = document.createElement('meta'); el.setAttribute(name.includes(':') ? 'property' : 'name', name); document.head.appendChild(el); }
+    el.setAttribute('content', content);
+  }
 
-    loadPost();
+  function showError(msg) {
+    document.getElementById('post-outer').innerHTML = `
+      <a class="back-link" href="/blog/" style="display:inline-flex;align-items:center;gap:6px;color:var(--muted);font-size:14px;font-weight:700;text-decoration:none;margin-bottom:32px;">← 記事一覧に戻る</a>
+      <div class="not-found">${esc(msg)}</div>
+    `;
+  }
+
+  loadPost();
   </script>
 </body>
 </html>
