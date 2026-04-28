@@ -290,7 +290,13 @@
       });
       const data = await response.json().catch(() => ({}));
       if (!response.ok) {
-        statusEl.textContent = data.error || '投稿に失敗した。';
+        const messages = {
+          'BLOG_PASSWORD is not configured': 'Cloudflare側に投稿用パスワードが未設定です。',
+          'GITHUB_TOKEN is not configured': 'Cloudflare側にGitHub連携が未設定です。',
+          unauthorized: 'パスワードが違います。',
+          title_slug_body_required: 'タイトルと本文を入れてください。',
+        };
+        statusEl.textContent = messages[data.error] || data.error || '投稿に失敗した。';
         return;
       }
       localStorage.setItem('yohelab.blog.lastExport', JSON.stringify(data.post, null, 2));
