@@ -118,8 +118,8 @@
         <h1>パスワードを決める</h1>
         <p>好きな数字4桁を決めてください。次回からこれで入れます。</p>
         <div style="display:grid;gap:12px;">
-          <input id="setup-pin" inputmode="numeric" maxlength="4" autocomplete="new-password" placeholder="4桁の数字" style="font-size:22px;letter-spacing:.24em;text-align:center;border:1px solid var(--border);border-radius:12px;padding:12px;" />
-          <input id="setup-pin2" inputmode="numeric" maxlength="4" autocomplete="new-password" placeholder="もう一度" style="font-size:22px;letter-spacing:.24em;text-align:center;border:1px solid var(--border);border-radius:12px;padding:12px;" />
+          <input id="setup-pin" type="password" inputmode="numeric" maxlength="4" autocomplete="new-password" placeholder="4桁の数字" style="font-size:22px;letter-spacing:.24em;text-align:center;border:1px solid var(--border);border-radius:12px;padding:12px;" />
+          <input id="setup-pin2" type="password" inputmode="numeric" maxlength="4" autocomplete="new-password" placeholder="もう一度" style="font-size:22px;letter-spacing:.24em;text-align:center;border:1px solid var(--border);border-radius:12px;padding:12px;" />
           <button class="btn btn-primary btn-lg" id="setup-submit" type="button">このパスワードで始める</button>
         </div>
         <p style="font-size:13px;color:var(--muted);margin-top:12px;" id="setup-status"></p>
@@ -128,7 +128,7 @@
         <h1>ブログ管理</h1>
         <p>4桁のパスワードで入る。</p>
         <div style="display:grid;gap:12px;">
-          <input id="admin-pin" inputmode="numeric" maxlength="4" autocomplete="current-password" placeholder="●●●●" style="font-size:22px;letter-spacing:.24em;text-align:center;border:1px solid var(--border);border-radius:12px;padding:12px;" />
+          <input id="admin-pin" type="password" inputmode="numeric" maxlength="4" autocomplete="current-password" placeholder="●●●●" style="font-size:22px;letter-spacing:.24em;text-align:center;border:1px solid var(--border);border-radius:12px;padding:12px;" />
           <button class="btn btn-primary btn-lg" id="unlock-admin" type="button">入る</button>
         </div>
         <p style="font-size:13px;color:var(--muted);margin-top:12px;" id="lock-status"></p>
