@@ -171,6 +171,18 @@
         </div>
       </div>
     </div>
+
+    <div class="container" style="margin-top:20px;margin-bottom:40px;">
+      <div class="panel">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+          <h2 style="margin:0;">投稿済み記事</h2>
+          <button class="btn btn-outline" id="refresh-posts" type="button">更新</button>
+        </div>
+        <div id="post-list" style="display:grid;gap:10px;">
+          <p style="color:var(--muted);font-size:14px;">読み込み中...</p>
+        </div>
+      </div>
+    </div>
   </main>
   <script>
     const titleEl = document.getElementById('title');
@@ -505,6 +517,64 @@
       localStorage.setItem('yohelab.blog.lastExport', JSON.stringify(buildJson(), null, 2));
       statusEl.textContent = '下書きを保存した。';
     });
+
+    // ── 投稿済み記事一覧 & 削除 ──────────────────────────────
+    const postListEl = document.getElementById('post-list');
+
+    async function loadPostList() {
+      postListEl.innerHTML = '<p style="color:var(--muted);font-size:14px;">読み込み中...</p>';
+      try {
+        const res = await fetch('/api/blog-posts');
+        const data = await res.json().catch(() => ({}));
+        const posts = data.posts || [];
+        if (!posts.length) {
+          postListEl.innerHTML = '<p style="color:var(--muted);font-size:14px;">投稿済みの記事はありません。</p>';
+          return;
+        }
+        postListEl.innerHTML = posts.map(p => `
+          <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--bg);border-radius:12px;border:1px solid var(--border);">
+            ${p.eyecatch ? `<img src="${p.eyecatch}" style="width:56px;height:40px;object-fit:cover;border-radius:8px;flex-shrink:0;" />` : ''}
+            <div style="flex:1;min-width:0;">
+              <div style="font-weight:700;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${p.title || '無題'}</div>
+              <div style="font-size:12px;color:var(--muted);">${p.date}</div>
+            </div>
+            <a href="/blog/post/?slug=${encodeURIComponent(p.slug)}" target="_blank" style="font-size:13px;color:var(--green);font-weight:700;white-space:nowrap;">表示</a>
+            <button class="btn btn-outline" data-slug="${p.kvKey}" style="font-size:12px;padding:6px 12px;color:#ef4444;border-color:#ef4444;" type="button" onclick="deletePost('${p.kvKey}', this)">削除</button>
+          </div>
+        `).join('');
+      } catch (e) {
+        postListEl.innerHTML = '<p style="color:#ef4444;font-size:14px;">読み込み失敗。</p>';
+      }
+    }
+
+    async function deletePost(kvKey, btn) {
+      if (!confirm('この記事を削除しますか？')) return;
+      const pin = (localStorage.getItem(PIN_KEY) || '').trim();
+      if (!pin) return;
+      const slug = kvKey.replace(/^post:/, '');
+      btn.textContent = '削除中...';
+      btn.disabled = true;
+      const res = await fetch('/api/blog-post', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json', 'X-Yohelab-Pin': pin },
+        body: JSON.stringify({ slug }),
+      });
+      if (res.ok) {
+        loadPostList();
+      } else {
+        btn.textContent = '失敗';
+        btn.disabled = false;
+      }
+    }
+
+    document.getElementById('refresh-posts').addEventListener('click', loadPostList);
+
+    // ログイン後に一覧を自動読み込み
+    if (sessionStorage.getItem(SESSION_KEY)) loadPostList();
+    // セットアップ後・ログイン後も呼ぶ
+    const _origUnlock = document.getElementById('unlock-admin').onclick;
+    document.getElementById('unlock-admin').addEventListener('click', () => setTimeout(loadPostList, 300));
+    document.getElementById('setup-submit').addEventListener('click', () => setTimeout(loadPostList, 300));
   </script>
 </body>
 </html>

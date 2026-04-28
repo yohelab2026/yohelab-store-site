@@ -17,14 +17,16 @@ function renderPosts(posts) {
     postsEl.innerHTML = '<div class="empty">まだ記事がありません。よへが最初の記事を追加するとここに出る。</div>';
     return;
   }
-  postsEl.innerHTML = posts.map((post) => `
-    <article class="post">
+  postsEl.innerHTML = posts.map((post) => {
+    const url = `/blog/post/?slug=${encodeURIComponent(post.slug)}`;
+    return `
+    <a class="post" href="${url}" style="text-decoration:none;color:inherit;display:block;cursor:pointer;">
       ${post.eyecatch ? `<div class="post-eyecatch"><img src="${escHtml(post.eyecatch)}" alt="${escHtml(post.title)}" loading="lazy" /></div>` : ''}
       <div class="meta">${escHtml(post.date)}${post.tags?.length ? ' · ' + post.tags.map(escHtml).join(' / ') : ''}</div>
       <h2>${escHtml(post.title)}</h2>
       <p>${escHtml(post.excerpt)}</p>
-    </article>
-  `).join('');
+    </a>
+  `}).join('');
 }
 
 function escHtml(str) {

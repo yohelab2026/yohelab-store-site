@@ -40,6 +40,7 @@ export default defineConfig({
         contact: "contact/index.html",
         blog: "blog/index.html",
         blogAdmin: "blog/admin/index.html",
+        blogPost: "blog/post/index.html",
         commerce: "legal/commerce/index.html",
         privacy: "legal/privacy/index.html",
         terms: "legal/terms/index.html",
