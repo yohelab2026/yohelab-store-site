@@ -47,13 +47,27 @@
 <body>
   <div class="lock-screen" id="lock-screen">
     <div class="lock-box">
-      <h1>ブログ管理</h1>
-      <p>4桁のパスワードで入る。</p>
-      <div class="form">
-        <label>パスワード<input id="admin-pin" inputmode="numeric" maxlength="4" autocomplete="current-password" placeholder="1030" value="1030" /></label>
-        <button class="btn btn-primary btn-lg" id="unlock-admin" type="button">入る</button>
+      <!-- 初回セットアップ画面 -->
+      <div id="setup-view" style="display:none;">
+        <h1>パスワードを決める</h1>
+        <p>好きな数字4桁を決めて入れてください。次回からこのパスワードで入れます。</p>
+        <div class="form">
+          <label>パスワード（4桁の数字）<input id="setup-pin" inputmode="numeric" maxlength="4" autocomplete="new-password" placeholder="例: 7392" /></label>
+          <label>確認（もう一度）<input id="setup-pin2" inputmode="numeric" maxlength="4" autocomplete="new-password" placeholder="もう一度入れる" /></label>
+          <button class="btn btn-primary btn-lg" id="setup-submit" type="button">このパスワードで始める</button>
+        </div>
+        <p class="hint" id="setup-status" style="margin-top:14px;"></p>
       </div>
-      <p class="hint" id="lock-status" style="margin-top:14px;"></p>
+      <!-- ログイン画面 -->
+      <div id="login-view" style="display:none;">
+        <h1>ブログ管理</h1>
+        <p>4桁のパスワードで入る。</p>
+        <div class="form">
+          <label>パスワード<input id="admin-pin" inputmode="numeric" maxlength="4" autocomplete="current-password" placeholder="●●●●" /></label>
+          <button class="btn btn-primary btn-lg" id="unlock-admin" type="button">入る</button>
+        </div>
+        <p class="hint" id="lock-status" style="margin-top:14px;"></p>
+      </div>
     </div>
   </div>
   <header class="nav">
@@ -158,39 +172,73 @@
     const eyecatchEl = document.getElementById('eyecatch');
     const eyecatchPreviewEl = document.getElementById('eyecatch-preview');
     const eyecatchImgEl = document.getElementById('eyecatch-img');
-    const adminPinEl = document.getElementById('admin-pin');
-    const lockStatusEl = document.getElementById('lock-status');
     const statusEl = document.getElementById('status');
     const previewExcerptEl = document.getElementById('preview-excerpt');
     const previewBodyEl = document.getElementById('preview-body');
-    const PIN_KEY = 'yohelab.blog.pin';
-    const DEFAULT_PIN = '1030';
+    const PIN_KEY = 'yohelab.blog.pin';      // localStorage: 保存PIN
+    const SESSION_KEY = 'yohelab.blog.sess'; // sessionStorage: ログイン済みフラグ
 
-    function unlock(pin) {
-      const nextPin = pin || DEFAULT_PIN;
-      if (!/^\d{4}$/.test(nextPin)) {
-        lockStatusEl.textContent = '数字4桁で入れて。';
-        return;
+    const setupView  = document.getElementById('setup-view');
+    const loginView  = document.getElementById('login-view');
+    const setupPinEl  = document.getElementById('setup-pin');
+    const setupPin2El = document.getElementById('setup-pin2');
+    const setupStatusEl = document.getElementById('setup-status');
+    const adminPinEl    = document.getElementById('admin-pin');
+    const lockStatusEl  = document.getElementById('lock-status');
+
+    // 保存済みPINがあるかで初回セットアップかログインかを切り替える
+    function showLockScreen() {
+      const stored = localStorage.getItem(PIN_KEY);
+      if (stored) {
+        setupView.style.display = 'none';
+        loginView.style.display = '';
+        adminPinEl.focus();
+      } else {
+        setupView.style.display = '';
+        loginView.style.display = 'none';
+        setupPinEl.focus();
       }
-      sessionStorage.setItem(PIN_KEY, nextPin);
-      document.body.classList.add('is-unlocked');
     }
 
-    const savedPin = sessionStorage.getItem(PIN_KEY) || '';
-    if (savedPin) {
+    // セッション済みなら即開く
+    if (sessionStorage.getItem(SESSION_KEY)) {
       document.body.classList.add('is-unlocked');
-      adminPinEl.value = savedPin;
+    } else {
+      showLockScreen();
     }
-    document.getElementById('unlock-admin').addEventListener('click', () => unlock(adminPinEl.value.trim()));
-    adminPinEl.addEventListener('keydown', (event) => {
-      if (event.key === 'Enter') unlock(adminPinEl.value.trim());
-    });
+
+    // 初回セットアップ
+    function handleSetup() {
+      const p1 = setupPinEl.value.trim();
+      const p2 = setupPin2El.value.trim();
+      if (!/^\d{4}$/.test(p1)) { setupStatusEl.textContent = '数字4桁で入れて。'; return; }
+      if (p1 !== p2) { setupStatusEl.textContent = '2つのパスワードが一致しない。'; return; }
+      localStorage.setItem(PIN_KEY, p1);
+      sessionStorage.setItem(SESSION_KEY, '1');
+      document.body.classList.add('is-unlocked');
+    }
+    document.getElementById('setup-submit').addEventListener('click', handleSetup);
+    setupPin2El.addEventListener('keydown', (e) => { if (e.key === 'Enter') handleSetup(); });
+
+    // ログイン
+    function handleLogin() {
+      const stored = localStorage.getItem(PIN_KEY);
+      const input = adminPinEl.value.trim();
+      if (!stored) { showLockScreen(); return; }
+      if (input !== stored) { lockStatusEl.textContent = 'パスワードが違う。'; adminPinEl.value = ''; adminPinEl.focus(); return; }
+      sessionStorage.setItem(SESSION_KEY, '1');
+      document.body.classList.add('is-unlocked');
+    }
+    document.getElementById('unlock-admin').addEventListener('click', handleLogin);
+    adminPinEl.addEventListener('keydown', (e) => { if (e.key === 'Enter') handleLogin(); });
+
+    // ログアウト
     document.getElementById('logout-admin').addEventListener('click', () => {
-      sessionStorage.removeItem(PIN_KEY);
+      sessionStorage.removeItem(SESSION_KEY);
       document.body.classList.remove('is-unlocked');
-      adminPinEl.value = DEFAULT_PIN;
-      lockStatusEl.textContent = 'ログアウトした。もう一度 1030 を入れて。';
-      adminPinEl.focus();
+      adminPinEl.value = '';
+      lockStatusEl.textContent = 'ログアウトした。';
+      showLockScreen();
     });
 
     function updatePreview() {
@@ -334,9 +382,11 @@
 
     async function postBlog() {
       const post = buildJson();
-      const pin = (sessionStorage.getItem(PIN_KEY) || '').trim();
+      const pin = (localStorage.getItem(PIN_KEY) || '').trim();
       if (!pin) {
         document.body.classList.remove('is-unlocked');
+        sessionStorage.removeItem(SESSION_KEY);
+        showLockScreen();
         statusEl.textContent = 'もう一度ログインして。';
         return;
       }

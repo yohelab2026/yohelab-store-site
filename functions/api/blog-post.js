@@ -1,19 +1,26 @@
-const PIN = "1030";
-
 export async function onRequestPost(context) {
   try {
+    const kv = context.env.BLOG_KV;
+    if (!kv) return json({ error: "BLOG_KV is not configured" }, 500);
+
     const requestPin = String(
       context.request.headers.get("x-yohelab-pin") ||
       context.request.headers.get("x-yohelab-password") ||
       "",
     ).trim();
 
-    if (!requestPin || requestPin !== PIN) {
+    if (!requestPin || !/^\d{4}$/.test(requestPin)) {
       return json({ error: "unauthorized" }, 401);
     }
 
-    const kv = context.env.BLOG_KV;
-    if (!kv) return json({ error: "BLOG_KV is not configured" }, 500);
+    // KVに保存済みPINがあれば照合、なければ初回セットアップとして保存
+    const storedPin = await kv.get("config:pin");
+    if (storedPin) {
+      if (requestPin !== storedPin) return json({ error: "unauthorized" }, 401);
+    } else {
+      // 初回: このPINをマスターPINとして保存
+      await kv.put("config:pin", requestPin);
+    }
 
     const body = await readJsonBody(context.request);
 
@@ -47,12 +54,14 @@ export async function onRequestPost(context) {
 
 export async function onRequestDelete(context) {
   try {
+    const kv = context.env.BLOG_KV;
+    if (!kv) return json({ error: "BLOG_KV is not configured" }, 500);
+
     const requestPin = String(
       context.request.headers.get("x-yohelab-pin") || "",
     ).trim();
-    if (!requestPin || requestPin !== PIN) return json({ error: "unauthorized" }, 401);
-
-    const kv = context.env.BLOG_KV;
+    const storedPin = await kv.get("config:pin");
+    if (!storedPin || requestPin !== storedPin) return json({ error: "unauthorized" }, 401);
     if (!kv) return json({ error: "BLOG_KV is not configured" }, 500);
 
     const body = await readJsonBody(context.request);
