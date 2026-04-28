@@ -8,7 +8,7 @@ export async function onRequestGet(context) {
     // メタデータだけで一覧を返す（本文は含めない）
     const posts = list.keys
       .map((key) => ({
-        slug: key.metadata?.slug || key.name.replace(/^post:/, ""),
+        slug: key.name.replace(/^post:/, ""),
         title: key.metadata?.title || "",
         date: key.metadata?.date || "",
         excerpt: key.metadata?.excerpt || "",
