@@ -13,7 +13,7 @@
     <meta property="og:image" content="https://yohelab.com/yohelab-icon.png" />
     <meta name="twitter:card" content="summary" />
     <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
-    <meta name="theme-color" content="#08110f" />
+    <meta name="theme-color" content="#f5fbff" />
     <link rel="canonical" href="https://yohelab.com/apps/wordpress-theme/" />
     <link rel="icon" type="image/png" href="/yohelab-icon.png" />
     <link rel="stylesheet" href="/shared/site.css" />
@@ -25,11 +25,11 @@
         background:
           radial-gradient(circle at top left, rgba(11, 143, 114, 0.12), transparent 28%),
           radial-gradient(circle at top right, rgba(29, 78, 216, 0.08), transparent 26%),
-          linear-gradient(180deg, #07100e 0%, #f7faf8 16%, #f9fbfa 100%);
+          linear-gradient(180deg, #f8fbff 0%, #f7faf8 16%, #f9fbfa 100%);
       }
       .hero {
         padding: 92px 0 62px;
-        color: #fff;
+        color: var(--text);
         position: relative;
         overflow: hidden;
       }
@@ -41,7 +41,7 @@
         background:
           radial-gradient(ellipse 72% 56% at 50% -10%, rgba(79, 209, 184, 0.24) 0%, transparent 56%),
           radial-gradient(ellipse 42% 42% at 10% 85%, rgba(29, 78, 216, 0.09) 0%, transparent 60%),
-          linear-gradient(180deg, rgba(8, 17, 15, 0.98) 0%, rgba(10, 27, 22, 0.92) 100%);
+          linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(238, 245, 255, 0.92) 100%);
       }
       .hero::after {
         content: "";
@@ -49,8 +49,8 @@
         inset: 0;
         pointer-events: none;
         background-image:
-          linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+          linear-gradient(rgba(11,143,114,.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(11,143,114,.03) 1px, transparent 1px);
         background-size: 58px 58px;
         mask-image: radial-gradient(ellipse 76% 60% at 50% 38%, #000 0%, transparent 72%);
         -webkit-mask-image: radial-gradient(ellipse 76% 60% at 50% 38%, #000 0%, transparent 72%);
@@ -70,9 +70,9 @@
         margin-bottom: 22px;
         padding: 7px 16px;
         border-radius: 999px;
-        border: 1px solid rgba(255,255,255,.16);
-        background: rgba(255,255,255,.06);
-        color: rgba(255,255,255,.8);
+        border: 1px solid rgba(11,143,114,.18);
+        background: rgba(255,255,255,.92);
+        color: var(--green-dark);
         font-size: 12px;
         font-weight: 800;
         letter-spacing: .12em;
@@ -82,7 +82,7 @@
         width: 6px;
         height: 6px;
         border-radius: 50%;
-        background: #4fd1b8;
+        background: var(--green);
       }
       .hero h1 {
         font-size: clamp(44px, 6.8vw, 78px);
@@ -92,11 +92,13 @@
       }
       .hero h1 em {
         font-style: normal;
-        color: #6be5c9;
+        background: linear-gradient(135deg, #0b8f72 0%, #1fb6cf 55%, #3f8cff 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
       }
       .hero-lead {
         max-width: 680px;
-        color: rgba(255,255,255,.72);
+        color: var(--muted);
         font-size: 18px;
         line-height: 1.88;
         margin-bottom: 28px;
@@ -108,12 +110,12 @@
         margin-bottom: 18px;
       }
       .hero-note {
-        color: rgba(255,255,255,.48);
+        color: var(--muted-light);
         font-size: 13px;
       }
       .hero-card {
-        border: 1px solid rgba(255,255,255,.12);
-        background: rgba(255,255,255,.06);
+        border: 1px solid rgba(11,143,114,.12);
+        background: rgba(255,255,255,.88);
         border-radius: 22px;
         padding: 22px;
         box-shadow: 0 18px 42px rgba(0,0,0,.15);
@@ -122,7 +124,7 @@
         font-size: 16px;
         font-weight: 900;
         margin-bottom: 12px;
-        color: #fff;
+        color: var(--text);
       }
       .hero-points {
         display: grid;
@@ -133,7 +135,7 @@
         grid-template-columns: 28px 1fr;
         gap: 10px;
         align-items: start;
-        color: rgba(255,255,255,.74);
+        color: var(--muted);
         font-size: 13px;
         line-height: 1.6;
       }

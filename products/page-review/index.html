@@ -13,7 +13,7 @@
     <meta property="og:image" content="https://yohelab.com/yohelab-icon.png" />
     <meta name="twitter:card" content="summary" />
     <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
-    <meta name="theme-color" content="#07110e" />
+    <meta name="theme-color" content="#f5fbff" />
     <link rel="canonical" href="https://yohelab.com/products/page-review/" />
     <link rel="icon" type="image/png" href="/yohelab-icon.png" />
     <link rel="stylesheet" href="/shared/site.css" />
@@ -31,8 +31,8 @@
         padding: 92px 0 64px;
         background:
           radial-gradient(ellipse 70% 58% at 50% -12%, rgba(79, 209, 184, 0.18) 0%, transparent 58%),
-          linear-gradient(180deg, #06110e 0%, #0c1d18 100%);
-        color: #fff;
+          linear-gradient(180deg, #f8fbff 0%, #eef5ff 100%);
+        color: var(--text);
         overflow: hidden;
       }
       .hero-inner {
@@ -47,9 +47,9 @@
         gap: 8px;
         padding: 7px 14px;
         border-radius: 999px;
-        border: 1px solid rgba(255,255,255,.14);
-        background: rgba(255,255,255,.06);
-        color: rgba(255,255,255,.82);
+        border: 1px solid rgba(11,143,114,.16);
+        background: rgba(255,255,255,.92);
+        color: var(--green-dark);
         font-size: 12px;
         font-weight: 800;
         letter-spacing: .12em;
@@ -60,7 +60,7 @@
         width: 6px;
         height: 6px;
         border-radius: 50%;
-        background: #4fd1b8;
+        background: var(--green);
       }
       .hero h1 {
         font-size: clamp(38px, 6vw, 72px);
@@ -70,10 +70,12 @@
       }
       .hero h1 em {
         font-style: normal;
-        color: #6be5c9;
+        background: linear-gradient(135deg, #0b8f72 0%, #1fb6cf 55%, #3f8cff 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
       }
       .lead {
-        color: rgba(255,255,255,.74);
+        color: var(--muted);
         font-size: 18px;
         line-height: 1.9;
         max-width: 700px;
@@ -87,8 +89,8 @@
       .hero-card {
         padding: 24px;
         border-radius: 24px;
-        background: rgba(255,255,255,.08);
-        border: 1px solid rgba(255,255,255,.12);
+        background: rgba(255,255,255,.9);
+        border: 1px solid rgba(11,143,114,.12);
         box-shadow: 0 24px 60px rgba(0,0,0,.18);
       }
       .hero-card h3 {
@@ -103,13 +105,13 @@
         display: grid;
         grid-template-columns: 18px 1fr;
         gap: 8px;
-        color: rgba(255,255,255,.76);
+        color: var(--muted);
         font-size: 13px;
         line-height: 1.7;
       }
       .hero-list li::before {
         content: "✓";
-        color: #6be5c9;
+        color: var(--green);
         font-weight: 900;
       }
       .section-grid {
