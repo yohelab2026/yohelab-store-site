@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>よへラボ | 記事メーカー・商品ページ改善レビュー・WordPressテーマ</title>
+  <title>よへラボ | 記事メーカー・商品ページ改善レビュー・WordPressテーマ</title>
   <meta name="description" content="3キーワードで記事下書きを生成する記事メーカー、商品ページの伝わり方を整える改善レビュー、FAQ・JSON-LD・llms.txtを内蔵したWordPressテーマを提供。" />
   <meta property="og:title" content="よへラボ | 記事メーカー・商品ページ改善レビュー・WordPressテーマ" />
   <meta property="og:description" content="3キーワードで記事下書きを生成する記事メーカー、商品ページの伝わり方を整える改善レビュー、FAQ・JSON-LD・llms.txtを内蔵したWordPressテーマを提供。" />
@@ -13,7 +13,7 @@
   <meta property="og:image" content="https://yohelab.com/yohelab-icon.png" />
   <meta name="twitter:card" content="summary" />
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
-  <meta name="theme-color" content="#050f0c" />
+  <meta name="theme-color" content="#f5fbff" />
   <link rel="canonical" href="https://yohelab.com/" />
   <script type="application/ld+json">
   {"@context":"https://schema.org","@graph":[
@@ -30,502 +30,1168 @@
   <link rel="icon" type="image/png" href="yohelab-icon.png" />
   <link rel="stylesheet" href="/shared/site.css" />
   <style>
-    html { scroll-behavior: smooth; }
-
-    .reveal { opacity:0; transform:translateY(24px); transition:opacity .65s cubic-bezier(.22,1,.36,1),transform .65s cubic-bezier(.22,1,.36,1); }
-    .reveal.visible { opacity:1; transform:none; }
-    .reveal-d1{transition-delay:.08s} .reveal-d2{transition-delay:.16s}
-    .reveal-d3{transition-delay:.24s} .reveal-d4{transition-delay:.32s}
-
-    /* ── NAV ── */
-    .nav { background:rgba(5,15,12,.94); backdrop-filter:blur(18px); }
-
-    /* ── HERO ── */
-    .hero-wrap {
-      position:relative; min-height:100svh;
-      display:flex; flex-direction:column; justify-content:center;
-      overflow:hidden; background:#050f0c; padding:120px 0 80px;
+    :root {
+      --home-bg: #f4f8ff;
+      --home-card: #ffffff;
+      --home-line: #dce7fb;
+      --home-blue: #0b8f72;
+      --home-cyan: #1fb6cf;
+      --home-purple: #3f8cff;
+      --home-text: #102243;
+      --home-muted: #5b6f8f;
+      --home-shadow: 0 24px 60px rgba(22, 112, 126, 0.12);
     }
-    .hero-bg {
-      position:absolute; inset:0; pointer-events:none;
+
+    body {
       background:
-        radial-gradient(ellipse 90% 60% at 55% -5%, rgba(11,184,146,.26) 0%, transparent 52%),
-        radial-gradient(ellipse 50% 50% at 5% 80%, rgba(11,143,114,.12) 0%, transparent 60%),
-        radial-gradient(ellipse 40% 40% at 95% 90%, rgba(99,102,241,.07) 0%, transparent 60%);
+        radial-gradient(circle at top left, rgba(11, 143, 114, 0.14), transparent 24%),
+        radial-gradient(circle at top right, rgba(31, 182, 207, 0.18), transparent 26%),
+        linear-gradient(180deg, #f8fbff 0%, #eef5ff 100%);
+      color: var(--home-text);
     }
-    .hero-grid-bg {
-      position:absolute; inset:0; pointer-events:none;
-      background-image:
-        linear-gradient(rgba(16,184,146,.04) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(16,184,146,.04) 1px,transparent 1px);
-      background-size:56px 56px;
-      mask-image:radial-gradient(ellipse 80% 70% at 50% 40%,#000 0%,transparent 75%);
-      -webkit-mask-image:radial-gradient(ellipse 80% 70% at 50% 40%,#000 0%,transparent 75%);
+
+    .nav {
+      background: rgba(255,255,255,.82);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(213, 225, 247, 0.88);
     }
-    .hero-inner {
-      position:relative; z-index:2;
-      width:min(1180px, calc(100% - 44px)); margin:0 auto;
-      display:grid; grid-template-columns:1fr 520px; gap:56px; align-items:center;
+
+    .nav .brand,
+    .nav-links a:not(.btn) {
+      color: var(--home-text);
     }
-    .hero-label {
-      display:inline-flex; align-items:center; gap:10px;
-      padding:6px 16px; border-radius:999px;
-      background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.14);
-      color:rgba(255,255,255,.72); font-size:12px; font-weight:800;
-      letter-spacing:.1em; text-transform:uppercase; margin-bottom:28px;
+
+    .nav-links a:not(.btn):hover {
+      color: var(--home-blue);
+      background: rgba(57, 120, 255, 0.07);
     }
-    .hero-label .dot { width:6px; height:6px; border-radius:50%; background:#4fd1b8; animation:blink 2s ease-in-out infinite; }
-    @keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+
+    .nav .brand-sub {
+      color: rgba(15, 34, 71, 0.48);
+    }
+
+    .home-shell {
+      width: min(1220px, calc(100% - 36px));
+      margin: 18px auto 42px;
+    }
+
+    .hero-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 34px;
+      background:
+        radial-gradient(circle at 78% 22%, rgba(31, 182, 207, 0.18), transparent 18%),
+        radial-gradient(circle at 88% 84%, rgba(63, 140, 255, 0.12), transparent 18%),
+        linear-gradient(145deg, rgba(255,255,255,.98), rgba(244,249,255,.94));
+      border: 1px solid rgba(219, 230, 250, 0.95);
+      box-shadow: var(--home-shadow);
+      padding: 46px 46px 42px;
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(rgba(11, 143, 114, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(11, 143, 114, 0.03) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: radial-gradient(circle at 62% 40%, #000 25%, transparent 82%);
+      -webkit-mask-image: radial-gradient(circle at 62% 40%, #000 25%, transparent 82%);
+      pointer-events: none;
+    }
+
+    .hero-layout {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
+      gap: 28px;
+      align-items: center;
+    }
+
+    .hero-copy {
+      padding-top: 8px;
+    }
+
+    .hero-kicker-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 16px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #0b8f72, #3f8cff);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .02em;
+      box-shadow: 0 12px 24px rgba(11, 143, 114, 0.22);
+    }
+
+    .hero-pill.alt {
+      background: linear-gradient(135deg, #1fb6cf, #3f8cff);
+    }
 
     .hero-title {
-      font-size:clamp(48px,7.5vw,92px); font-weight:900;
-      letter-spacing:-0.065em; line-height:1.0;
-      color:#fff; margin-bottom:28px; text-wrap:balance;
+      font-size: clamp(42px, 7vw, 86px);
+      line-height: 1.06;
+      letter-spacing: -0.065em;
+      margin-bottom: 22px;
+      font-weight: 900;
+      color: #0e1f47;
+      text-wrap: balance;
     }
-    .hero-title .line-accent {
-      background:linear-gradient(135deg,#6be5c9 0%,#0bbe96 55%,#0b8f72 100%);
-      -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
-      display:block;
+
+    .hero-title .accent {
+      color: var(--home-blue);
     }
-    .hero-title .line-strike {
-      color:rgba(255,255,255,.28); text-decoration:line-through;
-      text-decoration-color:rgba(255,100,100,.6);
-      font-size:.72em; display:block; letter-spacing:-0.04em;
-      margin-bottom:4px;
-    }
+
     .hero-lead {
-      font-size:clamp(16px,1.8vw,19px); color:rgba(255,255,255,.65);
-      line-height:1.9; max-width:520px; margin-bottom:36px;
+      max-width: 560px;
+      color: var(--home-muted);
+      font-size: 19px;
+      line-height: 1.9;
+      margin-bottom: 28px;
     }
-    .hero-lead strong { color:#fff; font-weight:800; }
-    .hero-ctas { display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:28px; }
-    .hero-trust { display:flex; flex-wrap:wrap; gap:8px 20px; font-size:13px; color:rgba(255,255,255,.35); font-weight:600; }
 
-    /* Right panel */
-    .hero-proof {
-      position:relative;
-      padding:14px;
-      border-radius:26px;
-      background:linear-gradient(145deg,rgba(255,255,255,.14),rgba(255,255,255,.045));
-      border:1px solid rgba(255,255,255,.14);
-      backdrop-filter:blur(18px);
-      box-shadow:0 26px 70px rgba(0,0,0,.34);
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 26px;
     }
-    .hero-proof::before {
-      content:"";
-      position:absolute;
-      inset:10px 10px -10px -10px;
-      border-radius:30px;
-      background:rgba(255,255,255,.04);
-      transform:rotate(-2deg);
-      z-index:-1;
+
+    .btn-home-primary {
+      background: linear-gradient(135deg, #0b8f72, #3f8cff);
+      color: #fff;
+      border: none;
+      box-shadow: 0 14px 28px rgba(11, 143, 114, 0.24);
     }
-    .search-shot {
-      border-radius:18px;
-      overflow:hidden;
-      background:#fff;
-      color:#0f172a;
-      box-shadow:0 14px 38px rgba(2,6,23,.2);
+
+    .btn-home-primary:hover {
+      filter: brightness(1.02);
     }
-    .search-top {
-      display:grid;
-      grid-template-columns:auto 1fr auto;
-      gap:14px;
-      align-items:center;
-      padding:16px 18px 12px;
-      border-bottom:1px solid #e5e7eb;
+
+    .btn-home-secondary {
+      background: #fff;
+      color: var(--home-text);
+      border: 1px solid rgba(197, 214, 245, 0.96);
+      box-shadow: 0 10px 22px rgba(64, 102, 189, 0.08);
     }
-    .search-brand {
-      font-size:20px;
-      font-weight:900;
-      letter-spacing:0;
+
+    .btn-home-secondary:hover {
+      border-color: rgba(112, 145, 235, 0.96);
+      color: var(--home-blue);
     }
-    .search-brand span:nth-child(1){color:#2563eb}
-    .search-brand span:nth-child(2){color:#ef4444}
-    .search-brand span:nth-child(3){color:#f59e0b}
-    .search-brand span:nth-child(4){color:#2563eb}
-    .search-brand span:nth-child(5){color:#16a34a}
-    .search-brand span:nth-child(6){color:#ef4444}
-    .search-box {
-      min-width:0;
-      border:1px solid #dde3ea;
-      box-shadow:0 4px 16px rgba(15,23,42,.1);
-      border-radius:999px;
-      padding:10px 16px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      font-size:15px;
-      font-weight:700;
-      color:#111827;
+
+    .hero-note {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      color: var(--home-muted);
+      font-size: 15px;
+      line-height: 1.8;
+      max-width: 440px;
     }
-    .search-icons { color:#6b7280; font-size:14px; letter-spacing:.28em; white-space:nowrap; }
-    .search-tabs {
-      display:flex;
-      gap:18px;
-      padding:0 18px 10px;
-      color:#6b7280;
-      font-size:12px;
-      font-weight:800;
-      white-space:nowrap;
-      overflow:hidden;
+
+    .hero-avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 22px;
+      background: linear-gradient(180deg, #ffffff, #e7f1ff);
+      border: 1px solid rgba(203, 217, 244, 0.95);
+      box-shadow: 0 12px 22px rgba(66, 101, 189, 0.08);
+      flex-shrink: 0;
     }
-    .search-tabs span:nth-child(2) {
-      color:#111827;
-      position:relative;
+
+    .hero-visual {
+      position: relative;
+      min-height: 560px;
     }
-    .search-tabs span:nth-child(2)::after {
-      content:"";
-      position:absolute;
-      left:0;
-      right:0;
-      bottom:-10px;
-      height:3px;
-      background:#111827;
-      border-radius:999px;
+
+    .hero-orbit {
+      position: absolute;
+      inset: auto 36px 10px 14px;
+      height: 260px;
+      border-radius: 50%;
+      border: 2px solid rgba(11, 143, 114, 0.14);
+      box-shadow: 0 0 0 10px rgba(11, 143, 114, 0.05), 0 0 0 22px rgba(11, 143, 114, 0.03);
+      transform: perspective(800px) rotateX(68deg);
+      pointer-events: none;
     }
-    .ai-result {
-      padding:22px 24px 20px;
-      border-bottom:1px solid #edf2f7;
+
+    .device-stack {
+      position: absolute;
+      right: 14px;
+      bottom: 48px;
+      width: min(100%, 610px);
+      height: 470px;
+    }
+
+    .floating-tag {
+      position: absolute;
+      padding: 10px 16px;
+      border-radius: 999px;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .01em;
+      box-shadow: 0 14px 26px rgba(18, 105, 123, 0.18);
+      z-index: 4;
+    }
+
+    .tag-tools {
+      left: 40px;
+      top: 6px;
+      background: linear-gradient(135deg, #0b8f72, #3f8cff);
+    }
+
+    .tag-service {
+      right: 18px;
+      top: -2px;
+      background: linear-gradient(135deg, #1fb6cf, #3f8cff);
+    }
+
+    .tag-game {
+      right: 42px;
+      bottom: 54px;
+      background: linear-gradient(135deg, #3f8cff, #6a8dff);
+    }
+
+    .panel {
+      position: absolute;
+      background: rgba(255,255,255,.95);
+      border: 1px solid rgba(216, 227, 247, 0.95);
+      box-shadow: 0 18px 40px rgba(60, 95, 175, 0.14);
+      backdrop-filter: blur(10px);
+    }
+
+    .panel.window {
+      width: 290px;
+      height: 186px;
+      border-radius: 22px;
+      padding: 16px;
+      left: 58px;
+      top: 54px;
+      transform: rotate(-3deg);
+      z-index: 2;
+    }
+
+    .panel.window::before {
+      content: "";
+      display: block;
+      width: 72px;
+      height: 10px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #3f8cff, #9ecff2);
+      margin-bottom: 16px;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .metric-box {
+      background: linear-gradient(180deg, #f8fbff, #eef5ff);
+      border: 1px solid rgba(218, 229, 248, 0.98);
+      border-radius: 16px;
+      padding: 14px 10px;
+      text-align: center;
+    }
+
+    .metric-box strong {
+      display: block;
+      font-size: 21px;
+      color: var(--home-blue);
+      letter-spacing: -0.04em;
+      margin-bottom: 4px;
+    }
+
+    .metric-box span {
+      color: var(--home-muted);
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .panel.phone {
+      width: 164px;
+      height: 312px;
+      right: 96px;
+      top: 62px;
+      border-radius: 28px;
+      padding: 18px 16px;
+      z-index: 3;
+      transform: rotate(6deg);
+    }
+
+    .phone-line,
+    .phone-chat,
+    .phone-check {
+      border-radius: 14px;
+      background: linear-gradient(180deg, #eef7ff, #ffffff);
+      border: 1px solid rgba(214, 227, 248, 0.95);
+    }
+
+    .phone-line {
+      height: 52px;
+      margin-bottom: 14px;
+    }
+
+    .phone-chat {
+      height: 124px;
+      margin-bottom: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .phone-chat::before,
+    .phone-chat::after {
+      content: "";
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      height: 12px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(11, 143, 114, 0.22), rgba(31, 182, 207, 0.34));
+    }
+
+    .phone-chat::before { top: 18px; }
+    .phone-chat::after { top: 44px; right: 44px; }
+
+    .phone-check {
+      padding: 14px 12px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .phone-check span {
+      display: grid;
+      grid-template-columns: 16px 1fr;
+      gap: 8px;
+      color: var(--home-muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .phone-check span::before {
+      content: "✓";
+      color: #0b8f72;
+      font-weight: 900;
+    }
+
+    .laptop-shell {
+      position: absolute;
+      left: 160px;
+      bottom: 10px;
+      width: 356px;
+      height: 230px;
+      z-index: 2;
+    }
+
+    .laptop-screen {
+      position: absolute;
+      inset: 0 24px 38px;
+      border-radius: 20px 20px 14px 14px;
+      padding: 18px;
+      background: linear-gradient(180deg, #16364d, #255e88);
+      box-shadow: 0 24px 42px rgba(25, 95, 124, 0.28);
+      overflow: hidden;
+    }
+
+    .laptop-screen::before {
+      content: "";
+      position: absolute;
+      inset: 12px;
+      border-radius: 14px;
+      background: linear-gradient(180deg, #fbfdff, #edf5ff);
+      border: 1px solid rgba(214, 226, 248, 0.9);
+    }
+
+    .laptop-ui {
+      position: absolute;
+      inset: 30px 34px 28px;
+      display: grid;
+      grid-template-columns: 1.25fr .9fr;
+      gap: 12px;
+      z-index: 1;
+    }
+
+    .chart-box,
+    .side-box,
+    .mini-chart,
+    .mini-bars {
+      border-radius: 18px;
+      background: #fff;
+      border: 1px solid rgba(216, 227, 247, 0.94);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.8);
+    }
+
+    .chart-box {
+      padding: 14px;
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .chart-box span {
+      width: 16%;
+      border-radius: 999px 999px 6px 6px;
+      background: linear-gradient(180deg, rgba(11, 143, 114, 0.32), rgba(11, 143, 114, 0.9));
+    }
+
+    .chart-box span:nth-child(1) { height: 44%; }
+    .chart-box span:nth-child(2) { height: 62%; }
+    .chart-box span:nth-child(3) { height: 38%; }
+    .chart-box span:nth-child(4) { height: 78%; }
+    .chart-box span:nth-child(5) { height: 58%; }
+
+    .side-stack {
+      display: grid;
+      gap: 12px;
+    }
+
+    .side-box {
+      padding: 14px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .line {
+      height: 12px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(31, 182, 207, 0.45), rgba(11, 143, 114, 0.24));
+    }
+
+    .line.short { width: 72%; }
+
+    .mini-chart {
+      height: 66px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mini-chart::before {
+      content: "";
+      position: absolute;
+      inset: 16px 12px;
+      border-bottom: 2px solid rgba(11, 143, 114, 0.2);
+      border-left: 2px solid rgba(11, 143, 114, 0.2);
+      border-radius: 0 0 0 10px;
+    }
+
+    .mini-chart::after {
+      content: "";
+      position: absolute;
+      left: 20px;
+      right: 18px;
+      top: 34px;
+      height: 2px;
+      background: linear-gradient(90deg, #0b8f72, #1fb6cf, #3f8cff);
+      transform: skewY(-14deg);
+      box-shadow: 0 -16px 0 rgba(11, 143, 114, 0.16);
+    }
+
+    .mini-bars {
+      display: flex;
+      align-items: end;
+      gap: 6px;
+      padding: 12px;
+      height: 88px;
+    }
+
+    .mini-bars span {
+      flex: 1;
+      border-radius: 999px 999px 6px 6px;
+      background: linear-gradient(180deg, rgba(31, 182, 207, 0.22), rgba(63, 140, 255, 0.88));
+    }
+
+    .mini-bars span:nth-child(1) { height: 28px; }
+    .mini-bars span:nth-child(2) { height: 56px; }
+    .mini-bars span:nth-child(3) { height: 42px; }
+    .mini-bars span:nth-child(4) { height: 64px; }
+
+    .laptop-base {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 54px;
+      border-radius: 0 0 26px 26px;
+      background: linear-gradient(180deg, #fefefe, #dfe9ff);
+      border: 1px solid rgba(193, 207, 235, 0.98);
+      box-shadow: 0 18px 30px rgba(63, 99, 179, 0.16);
+    }
+
+    .laptop-base::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 16px;
+      transform: translateX(-50%);
+      width: 72px;
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(105, 136, 210, 0.26);
+    }
+
+    .robot-badge,
+    .game-card,
+    .controller,
+    .icon-float {
+      position: absolute;
+      background: rgba(255,255,255,.96);
+      border: 1px solid rgba(212, 224, 247, 0.96);
+      box-shadow: 0 18px 40px rgba(56, 97, 188, 0.14);
+    }
+
+    .robot-badge {
+      left: 14px;
+      bottom: 92px;
+      width: 90px;
+      height: 116px;
+      border-radius: 26px;
+      display: grid;
+      place-items: center;
+      font-size: 42px;
+      z-index: 3;
+    }
+
+    .game-card {
+      right: 4px;
+      bottom: 42px;
+      width: 210px;
+      height: 144px;
+      border-radius: 22px;
+      overflow: hidden;
+      z-index: 3;
+      background: linear-gradient(180deg, #2f78c9, #20447b 56%, #14294c 100%);
+    }
+
+    .game-sky {
+      position: absolute;
+      inset: 0;
       background:
-        linear-gradient(180deg,#ffffff 0%,#f8fffd 100%);
-    }
-    .ai-kicker {
-      display:flex;
-      align-items:center;
-      gap:8px;
-      color:#0f766e;
-      font-size:13px;
-      font-weight:900;
-      margin-bottom:14px;
-    }
-    .ai-kicker::before {
-      content:"";
-      width:15px;
-      height:15px;
-      border-radius:40% 60% 45% 55%;
-      background:linear-gradient(135deg,#2563eb,#10b981);
-      box-shadow:0 0 18px rgba(16,185,129,.32);
-    }
-    .ai-result h3 {
-      font-size:17px;
-      line-height:1.65;
-      letter-spacing:0;
-      margin:0 0 14px;
-      font-weight:900;
-      color:#0f172a;
-    }
-    .ai-result h3 strong { color:#0b8f72; }
-    .ai-list {
-      display:grid;
-      gap:8px;
-      margin:0 0 18px;
-      padding:0;
-      list-style:none;
-      color:#334155;
-      font-size:13px;
-      line-height:1.65;
-      font-weight:700;
-    }
-    .ai-list li {
-      display:grid;
-      grid-template-columns:18px 1fr;
-      gap:8px;
-    }
-    .ai-list li::before {
-      content:"✓";
-      color:#0b8f72;
-      font-weight:900;
-    }
-    .ai-more {
-      width:100%;
-      border:1.5px solid #93c5fd;
-      color:#1d4ed8;
-      background:#fff;
-      border-radius:999px;
-      padding:11px 16px;
-      font-size:13px;
-      font-weight:900;
-      text-align:center;
-    }
-    .organic-card {
-      padding:18px 24px 22px;
-      background:#fff;
-    }
-    .site-line {
-      display:flex;
-      align-items:center;
-      gap:10px;
-      color:#475569;
-      font-size:12px;
-      margin-bottom:6px;
-    }
-    .site-icon {
-      width:28px;
-      height:28px;
-      border-radius:50%;
-      display:grid;
-      place-items:center;
-      background:#e8faf3;
-      color:#0b8f72;
-      font-weight:900;
-      flex-shrink:0;
-    }
-    .organic-title {
-      font-size:18px;
-      line-height:1.45;
-      color:#6d28d9;
-      font-weight:900;
-      letter-spacing:0;
-      margin:0 0 6px;
-    }
-    .organic-card p {
-      margin:0;
-      color:#64748b;
-      font-size:13px;
-      line-height:1.7;
-      font-weight:700;
+        radial-gradient(circle at 18% 18%, #fff 0 2px, transparent 3px),
+        radial-gradient(circle at 42% 22%, #fff 0 2px, transparent 3px),
+        radial-gradient(circle at 74% 14%, #fff 0 2px, transparent 3px),
+        linear-gradient(180deg, rgba(255,255,255,0.18), transparent 45%);
     }
 
-    .scroll-hint {
-      position:absolute; bottom:32px; left:50%; transform:translateX(-50%);
-      display:flex; flex-direction:column; align-items:center; gap:8px;
-      color:rgba(255,255,255,.25); font-size:11px; font-weight:700;
-      letter-spacing:.1em; text-transform:uppercase;
-      animation:scrollBounce 2.5s ease-in-out infinite;
-    }
-    @keyframes scrollBounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(6px)}}
-    .scroll-hint::after { content:""; width:1px; height:40px; background:linear-gradient(to bottom,rgba(255,255,255,.22),transparent); }
-
-    /* ── CONTENT ── */
-    .content-wrap { background:#fff; border-radius:32px 32px 0 0; margin-top:-32px; position:relative; z-index:2; }
-    .pillar { padding:88px 0; }
-    .pillar+.pillar { border-top:1px solid var(--border); }
-    .pillar-alt { background:#fafcfb; }
-
-    /* What changed section */
-    .change-banner {
-      background:linear-gradient(135deg,#0d1a16,#0c2420);
-      border-radius:24px; padding:52px 48px; margin-bottom:48px;
-      position:relative; overflow:hidden;
-    }
-    .change-banner::before {
-      content:""; position:absolute; inset:0;
-      background:radial-gradient(ellipse 60% 70% at 90% 50%,rgba(16,184,146,.12) 0%,transparent 55%),
-        linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);
-      background-size:auto,48px 48px,48px 48px;
-    }
-    .change-banner-inner { position:relative; z-index:1; max-width:760px; }
-    .change-kicker { font-size:11px; font-weight:900; letter-spacing:.14em; text-transform:uppercase; color:#4fd1b8; margin-bottom:16px; }
-    .change-banner h2 { font-size:clamp(28px,4vw,44px); font-weight:900; letter-spacing:-0.05em; color:#fff; line-height:1.15; margin-bottom:16px; }
-    .change-banner p { color:rgba(255,255,255,.65); font-size:16px; line-height:1.9; }
-    .change-banner strong { color:#fff; font-weight:800; }
-    .change-stat {
-      margin-top:28px; display:flex; gap:24px; flex-wrap:wrap;
-    }
-    .stat-item { background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.12); border-radius:16px; padding:18px 22px; }
-    .stat-num { font-size:32px; font-weight:900; color:#4fd1b8; letter-spacing:-0.05em; line-height:1; margin-bottom:4px; }
-    .stat-label { font-size:12px; color:rgba(255,255,255,.52); font-weight:600; }
-
-    /* Section kicker */
-    .section-kicker {
-      display:inline-flex; align-items:center; gap:10px;
-      padding:8px 20px; border-radius:999px;
-      font-size:12px; font-weight:900; letter-spacing:.1em; text-transform:uppercase; margin-bottom:20px;
-    }
-    .kicker-green { background:#e8faf3; color:var(--green-dark); border:1px solid var(--green-mid); }
-    .kicker-blue  { background:#eff3ff; color:#1d4ed8; border:1px solid #bfdbfe; }
-
-    .pillar-head { display:grid; grid-template-columns:1fr auto; gap:24px; align-items:end; margin-bottom:48px; }
-    .pillar-title { font-size:clamp(30px,4.5vw,52px); font-weight:900; letter-spacing:-0.05em; line-height:1.1; margin-bottom:14px; }
-    .pillar-sub { color:var(--muted); font-size:15.5px; line-height:1.88; max-width:580px; }
-
-    /* Step flow */
-    .step-flow { display:grid; grid-template-columns:repeat(3,1fr); gap:0; margin:40px 0; position:relative; }
-    .step-flow::before {
-      content:""; position:absolute; top:32px; left:calc(16.66% + 32px); right:calc(16.66% + 32px); height:2px;
-      background:linear-gradient(90deg,var(--green-mid),var(--green),var(--green-mid));
-    }
-    .step-item {
-      display:flex; flex-direction:column; align-items:center; text-align:center;
-      padding:0 16px;
-    }
-    .step-circle {
-      width:64px; height:64px; border-radius:50%;
-      background:linear-gradient(135deg,#14c4a0,#0b8f72);
-      display:grid; place-items:center; font-size:24px;
-      box-shadow:0 8px 24px rgba(11,143,114,.3);
-      margin-bottom:18px; position:relative; z-index:1;
-      flex-shrink:0;
-    }
-    .step-item strong { font-size:16px; font-weight:900; letter-spacing:-0.02em; margin-bottom:6px; display:block; }
-    .step-item span { font-size:13px; color:var(--muted); line-height:1.65; }
-
-    /* Tool card */
-    .tool-feature-card {
-      display:grid; grid-template-columns:1fr 1fr; gap:32px; align-items:start;
-      padding:40px; border-radius:28px;
-      border:1.5px solid var(--green-mid);
-      background:linear-gradient(160deg,#fff 0%,#f2fbf7 100%);
-      box-shadow:0 4px 24px rgba(11,143,114,.1), 0 1px 0 rgba(11,143,114,.1) inset;
-      text-decoration:none; color:inherit; margin-bottom:24px;
-    }
-    .tool-tag { font-size:10.5px; font-weight:900; letter-spacing:.1em; text-transform:uppercase; color:var(--green); background:var(--green-light); border:1px solid var(--green-mid); padding:3px 10px; border-radius:999px; display:inline-block; margin-bottom:14px; }
-    .tool-feature-card h3 { font-size:clamp(24px,3vw,34px); font-weight:900; letter-spacing:-0.04em; margin-bottom:12px; }
-    .tool-feature-card .card-lead { font-size:16px; color:var(--muted); line-height:1.85; margin-bottom:24px; }
-    .feature-list { display:grid; gap:10px; }
-    .feature-list li { display:flex; gap:10px; font-size:14px; color:var(--text-sub); line-height:1.55; }
-    .feature-list li::before { content:"✓"; color:var(--green); font-weight:900; flex-shrink:0; }
-    .tool-cta-row { display:flex; gap:10px; flex-wrap:wrap; margin-top:24px; }
-
-    .tool-right { display:flex; flex-direction:column; gap:14px; }
-    .aio-point {
-      background:linear-gradient(135deg,#e8faf3,#d0f5e8); border:1px solid var(--green-mid);
-      border-radius:18px; padding:20px; display:flex; gap:14px; align-items:flex-start;
-    }
-    .aio-point-icon { font-size:26px; flex-shrink:0; }
-    .aio-point strong { display:block; font-size:14px; font-weight:900; margin-bottom:4px; }
-    .aio-point span { font-size:13px; color:var(--muted); line-height:1.6; }
-
-    /* Comparison: SEO vs AIO */
-    .compare-shift {
-      display:grid; grid-template-columns:1fr auto 1fr; gap:0; align-items:stretch;
-      border-radius:24px; overflow:hidden; border:1.5px solid var(--border);
-      margin:40px 0;
-    }
-    .compare-col { padding:32px; }
-    .compare-col.seo-col { background:#fff9f9; }
-    .compare-col.aio-col { background:#f0fdf7; }
-    .compare-divider {
-      background:var(--border); display:flex; align-items:center; justify-content:center;
-      padding:0 16px; font-size:24px; color:var(--muted);
-    }
-    .compare-tag { font-size:10px; font-weight:900; letter-spacing:.12em; text-transform:uppercase; padding:4px 12px; border-radius:999px; display:inline-block; margin-bottom:16px; }
-    .compare-tag.seo { background:#ffe4e4; color:#c53030; }
-    .compare-tag.aio { background:#d1fae5; color:#065f46; }
-    .compare-col h3 { font-size:20px; font-weight:900; letter-spacing:-0.03em; margin-bottom:14px; }
-    .compare-col ul { display:grid; gap:8px; }
-    .compare-col li { font-size:14px; line-height:1.6; display:flex; gap:8px; }
-    .compare-col.seo-col li::before { content:"✗"; color:#c53030; font-weight:900; flex-shrink:0; }
-    .compare-col.aio-col li::before { content:"✓"; color:#059669; font-weight:900; flex-shrink:0; }
-    .compare-col.seo-col h3 { color:#c53030; }
-    .compare-col.aio-col h3 { color:#065f46; }
-
-    /* Games */
-    .games-banner {
-      background:linear-gradient(135deg,#0d1b4a,#1a1a4e,#0a1a3a);
-      border-radius:24px; padding:40px; position:relative; overflow:hidden;
-      display:flex; align-items:center; justify-content:space-between; gap:32px;
-    }
-    .games-banner::before {
-      content:""; position:absolute; inset:0; pointer-events:none;
-      background-image:radial-gradient(circle at 80% 50%,rgba(99,102,241,.15) 0%,transparent 50%),
-        linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);
-      background-size:auto,40px 40px,40px 40px;
-    }
-    .games-copy { position:relative; z-index:1; }
-    .games-copy h3 { font-size:clamp(22px,3vw,36px); font-weight:900; letter-spacing:-0.04em; color:#fff; margin-bottom:12px; line-height:1.1; }
-    .games-copy h3 em { background:linear-gradient(135deg,#a5b4fc,#818cf8); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
-    .games-copy p { color:rgba(255,255,255,.6); font-size:15px; line-height:1.8; max-width:380px; margin-bottom:24px; }
-    .games-emoji { font-size:72px; position:relative; z-index:1; filter:drop-shadow(0 8px 24px rgba(99,102,241,.4)); flex-shrink:0; }
-    .games-mini { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:24px; }
-    .games-mini-card {
-      padding:18px 16px; border-radius:16px;
-      border:1.5px solid rgba(99,102,241,.3); background:rgba(255,255,255,.06);
-      text-decoration:none; color:#fff;
-      transition:background .18s, transform .18s;
-    }
-    .games-mini-card:hover { background:rgba(255,255,255,.1); transform:translateY(-3px); }
-    .games-mini-card .g-icon { font-size:28px; margin-bottom:8px; display:block; }
-    .games-mini-card strong { font-size:14px; font-weight:800; display:block; margin-bottom:4px; }
-    .games-mini-card span { font-size:12px; color:rgba(255,255,255,.5); }
-
-    /* Final CTA */
-    .final-cta {
+    .pixel-row {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 38px;
       background:
-        radial-gradient(ellipse 80% 70% at 50% -10%,rgba(16,201,154,.38),transparent 55%),
-        linear-gradient(180deg,#076050 0%,#043d33 100%);
-      padding:112px 0; text-align:center; color:#fff; position:relative; overflow:hidden;
+        linear-gradient(180deg, #2d7b45 0%, #164824 100%);
     }
-    .final-cta::before {
-      content:""; position:absolute; inset:0;
-      background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
-      background-size:56px 56px;
-      mask-image:radial-gradient(ellipse 70% 60% at 50% 50%,#000,transparent 80%);
-      -webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 50%,#000,transparent 80%);
-    }
-    .final-cta .container { position:relative; z-index:1; }
-    .final-cta h2 { font-size:clamp(34px,6vw,68px); font-weight:900; letter-spacing:-0.06em; line-height:1.06; margin-bottom:20px; text-wrap:balance; }
-    .final-cta p { font-size:17px; color:rgba(255,255,255,.72); max-width:520px; margin:0 auto 40px; line-height:1.88; }
-    .final-cta-btns { display:flex; align-items:center; justify-content:center; gap:14px; flex-wrap:wrap; }
 
-    .contact-strip { background:#050f0c; border-top:1px solid rgba(255,255,255,.07); padding:32px 0; }
-    .contact-strip-inner { display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; width:min(1120px,100% - 44px); margin:0 auto; }
-    .contact-strip p { color:rgba(255,255,255,.5); font-size:14px; margin:0; line-height:1.7; }
-    .contact-strip strong { color:rgba(255,255,255,.85); display:block; margin-bottom:4px; font-size:15px; }
+    .pixel-row::before,
+    .pixel-row::after {
+      content: "";
+      position: absolute;
+      bottom: 18px;
+      width: 22px;
+      height: 22px;
+      background: #17c36b;
+      border-radius: 6px;
+      box-shadow: 0 8px 0 #103d20;
+    }
 
-    .footer-dark { background:#030b09; border-top:1px solid rgba(255,255,255,.06); }
-    .footer-dark .footer-links a { color:rgba(255,255,255,.32); }
-    .footer-dark .footer-links a:hover { color:rgba(255,255,255,.72); }
+    .pixel-row::before { left: 18px; }
+    .pixel-row::after { left: 66px; width: 18px; height: 18px; }
 
-    @media(max-width:960px){
-      .hero-inner { grid-template-columns:1fr; }
-      .hero-proof { max-width:680px; margin-top:28px; }
-      .pillar-head { grid-template-columns:1fr; }
-      .pillar-head .btn { align-self:flex-start; }
-      .tool-feature-card { grid-template-columns:1fr; }
-      .step-flow::before { display:none; }
-      .compare-shift { grid-template-columns:1fr; }
-      .compare-divider { padding:16px; font-size:16px; }
+    .pixel-hero {
+      position: absolute;
+      left: 122px;
+      bottom: 26px;
+      width: 22px;
+      height: 34px;
+      background: #24a3cf;
+      border-radius: 6px;
+      box-shadow:
+        0 -10px 0 #ffcf5f,
+        0 18px 0 #20479f,
+        16px -6px 0 0 #ff5ea8,
+        34px -12px 0 0 #ffc54b;
     }
-    @media(max-width:800px){
-      .games-banner { flex-direction:column; gap:20px; padding:28px 24px; }
-      .games-emoji { font-size:48px; }
-      .games-mini { grid-template-columns:1fr 1fr; }
-      .change-banner { padding:36px 28px; }
-      .step-flow { grid-template-columns:1fr; gap:20px; }
+
+    .controller {
+      right: 112px;
+      bottom: -6px;
+      width: 138px;
+      height: 76px;
+      border-radius: 999px;
+      z-index: 4;
+      background: linear-gradient(180deg, #ffffff, #eef4ff);
     }
-    @media(max-width:600px){
-      .hero-wrap { padding:90px 0 72px; min-height:auto; }
-      .hero-inner { width:calc(100% - 32px); }
-      .hero-title { font-size:clamp(34px,9vw,42px); line-height:1.08; }
-      .hero-lead { font-size:15px; }
-      .hero-ctas { flex-direction:column; align-items:stretch; }
-      .hero-ctas .btn { text-align:center; justify-content:center; }
-      .scroll-hint { display:none; }
-      .content-wrap { border-radius:20px 20px 0 0; }
-      .pillar { padding:56px 0; }
-      .pillar-title { font-size:clamp(26px,8vw,38px); }
-      .games-mini { grid-template-columns:1fr; }
-      .final-cta { padding:72px 0; }
-      .final-cta h2 { font-size:clamp(28px,9vw,44px); }
-      .final-cta-btns { flex-direction:column; align-items:stretch; }
-      .final-cta-btns .btn { text-align:center; justify-content:center; }
-      .contact-strip-inner { flex-direction:column; align-items:flex-start; }
-      .nav-links a:not(.btn) { display:none; }
-      .nav-links { gap:8px; }
-      .nav-inner { width:100%; padding:0 14px; gap:8px; overflow:hidden; }
-      .brand { min-width:0; }
-      .nav-links .btn { height:36px; padding:0 10px; font-size:12px; max-width:128px; overflow:hidden; text-overflow:ellipsis; }
-      .search-top { grid-template-columns:1fr; }
-      .search-brand { display:none; }
-      .search-tabs { gap:14px; font-size:11px; }
-      .ai-result { padding:18px; }
-      .organic-card { padding:16px 18px 18px; }
+
+    .controller::before,
+    .controller::after {
+      content: "";
+      position: absolute;
+      top: 26px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #0b8f72;
     }
-    @media(max-width:460px){
-      .nav-links { display:none; }
+
+    .controller::before { left: 34px; }
+      .controller::after { right: 36px; background: #1fb6cf; }
+
+    .controller-pad {
+      position: absolute;
+      left: 54px;
+      top: 24px;
+      width: 18px;
+      height: 18px;
+      border-radius: 4px;
+      background: #2f4f95;
+      box-shadow: 0 10px 0 #2f4f95, -10px 10px 0 #2f4f95, 10px 10px 0 #2f4f95;
+    }
+
+    .icon-float {
+      width: 78px;
+      height: 78px;
+      border-radius: 22px;
+      display: grid;
+      place-items: center;
+      color: var(--home-blue);
+      font-size: 32px;
+      z-index: 4;
+    }
+
+    .icon-settings {
+      left: 288px;
+      top: 32px;
+    }
+
+    .icon-note {
+      right: -2px;
+      bottom: 148px;
+      color: var(--home-cyan);
+    }
+
+    .section-block {
+      margin-top: 26px;
+      background: rgba(255,255,255,.7);
+      border-radius: 30px;
+      border: 1px solid rgba(220, 231, 249, 0.88);
+      box-shadow: 0 18px 42px rgba(47, 92, 187, 0.08);
+      padding: 24px;
+    }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .category-card {
+      display: grid;
+      grid-template-columns: 124px 1fr;
+      gap: 20px;
+      align-items: center;
+      padding: 22px;
+      border-radius: 24px;
+      background: linear-gradient(180deg, #ffffff, #f8fbff);
+      border: 1px solid rgba(220, 230, 248, 0.98);
+      box-shadow: 0 14px 28px rgba(57, 98, 188, 0.08);
+      color: inherit;
+      text-decoration: none;
+      transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+    }
+
+    .category-card:hover,
+    .feature-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(120, 154, 236, 0.92);
+      box-shadow: 0 20px 36px rgba(57, 98, 188, 0.12);
+    }
+
+    .category-visual {
+      height: 110px;
+      border-radius: 22px;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(180deg, #edf5ff, #dfeefe);
+    }
+
+    .visual-doc::before,
+    .visual-chat::before,
+    .visual-game::before {
+      content: "";
+      position: absolute;
+      inset: 14px;
+      border-radius: 18px;
+      background: #fff;
+      border: 1px solid rgba(217, 228, 248, 0.95);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.88);
+    }
+
+    .visual-doc::after {
+      content: "";
+      position: absolute;
+      left: 28px;
+      right: 28px;
+      bottom: 22px;
+      height: 10px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(57, 120, 255, 0.28), rgba(39, 199, 223, 0.34));
+      box-shadow: 0 -18px 0 rgba(57, 120, 255, 0.18), 0 -36px 0 rgba(57, 120, 255, 0.12);
+    }
+
+    .visual-chat::after {
+      content: "💬";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 40px;
+    }
+
+    .visual-game::after {
+      content: "🎮";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 44px;
+    }
+
+    .category-card h3 {
+      font-size: 19px;
+      margin-bottom: 8px;
+      color: var(--home-blue);
+      letter-spacing: -0.03em;
+    }
+
+    .category-card p {
+      color: var(--home-muted);
+      font-size: 14px;
+      line-height: 1.82;
+      margin-bottom: 16px;
+    }
+
+    .category-link {
+      font-weight: 800;
+      color: var(--home-blue);
+      font-size: 14px;
+    }
+
+    .block-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .block-head h2,
+    .bottom-copy h2 {
+      font-size: clamp(28px, 4vw, 46px);
+      line-height: 1.14;
+      letter-spacing: -0.05em;
+      color: var(--home-text);
+      margin-bottom: 10px;
+    }
+
+    .block-head p,
+    .bottom-copy p {
+      color: var(--home-muted);
+      font-size: 15px;
+      line-height: 1.86;
+      max-width: 620px;
+    }
+
+    .head-link {
+      color: var(--home-blue);
+      font-weight: 800;
+      font-size: 15px;
+      text-decoration: none;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .feature-card {
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
+      padding: 18px;
+      border-radius: 22px;
+      background: linear-gradient(180deg, #ffffff, #f9fbff);
+      border: 1px solid rgba(220, 231, 249, 0.98);
+      box-shadow: 0 12px 24px rgba(57, 98, 188, 0.06);
+      text-decoration: none;
+      color: inherit;
+      transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+    }
+
+    .feature-icon {
+      width: 82px;
+      height: 82px;
+      border-radius: 24px;
+      display: grid;
+      place-items: center;
+      font-size: 38px;
+      margin-bottom: 14px;
+      background: linear-gradient(180deg, #eef5ff, #dcecff);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.92);
+    }
+
+    .feature-card h3 {
+      font-size: 20px;
+      line-height: 1.3;
+      letter-spacing: -0.03em;
+      margin-bottom: 10px;
+      color: var(--home-text);
+    }
+
+    .feature-card p {
+      color: var(--home-muted);
+      font-size: 14px;
+      line-height: 1.8;
+      flex: 1;
+    }
+
+    .badge-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 24px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .01em;
+    }
+
+    .badge-blue { background: rgba(57, 120, 255, 0.1); color: #2b67f3; }
+    .badge-cyan { background: rgba(39, 199, 223, 0.12); color: #0c9ab4; }
+    .badge-purple { background: rgba(123, 97, 255, 0.12); color: #6d4ff1; }
+    .badge-orange { background: rgba(255, 168, 76, 0.16); color: #f08a10; }
+
+    .feature-arrow {
+      margin-top: 16px;
+      color: var(--home-blue);
+      font-weight: 800;
+      font-size: 20px;
+      line-height: 1;
+      align-self: flex-end;
+    }
+
+    .bottom-grid {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 20px;
+      align-items: stretch;
+      padding: 28px;
+      border-radius: 28px;
+      background:
+        radial-gradient(circle at top right, rgba(123, 97, 255, 0.12), transparent 24%),
+        linear-gradient(180deg, #f9fbff, #edf4ff);
+      border: 1px solid rgba(216, 227, 247, 0.98);
+      box-shadow: 0 18px 42px rgba(57, 98, 188, 0.08);
+    }
+
+    .bottom-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 12px;
+      padding-right: 12px;
+    }
+
+    .bottom-copy strong {
+      font-size: 15px;
+      color: var(--home-blue);
+    }
+
+    .bottom-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .stat-card {
+      padding: 18px 16px;
+      border-radius: 22px;
+      background: rgba(255,255,255,.88);
+      border: 1px solid rgba(219, 229, 248, 0.98);
+      text-align: center;
+      box-shadow: 0 12px 24px rgba(57, 98, 188, 0.06);
+    }
+
+    .stat-card .stat-icon {
+      width: 58px;
+      height: 58px;
+      margin: 0 auto 12px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 28px;
+      background: linear-gradient(180deg, #ffffff, #e8f2ff);
+      border: 1px solid rgba(215, 227, 248, 0.98);
+    }
+
+    .stat-card strong {
+      display: block;
+      font-size: 17px;
+      line-height: 1.45;
+      margin-bottom: 8px;
+      color: var(--home-text);
+    }
+
+    .stat-card .stat-big {
+      display: block;
+      font-size: clamp(34px, 5vw, 52px);
+      line-height: 1;
+      letter-spacing: -0.06em;
+      color: var(--home-blue);
+      margin-bottom: 6px;
+      font-weight: 900;
+    }
+
+    .stat-card span:last-child {
+      color: var(--home-muted);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .bottom-footer-pills {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    .mini-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.84);
+      border: 1px solid rgba(217, 228, 248, 0.98);
+      color: var(--home-muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .home-footer {
+      margin-top: 26px;
+      padding: 30px 0 12px;
+    }
+
+    .home-footer .footer {
+      background: transparent;
+      border-top: none;
+      padding: 0;
+    }
+
+    .home-footer .footer-inner {
+      color: rgba(15, 34, 71, 0.52);
+    }
+
+    .home-footer .footer-links a {
+      color: rgba(15, 34, 71, 0.58);
+    }
+
+    .home-footer .footer-links a:hover {
+      color: var(--home-blue);
+    }
+
+    @media (max-width: 1180px) {
+      .hero-layout,
+      .bottom-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        min-height: 500px;
+      }
+
+      .bottom-copy {
+        padding-right: 0;
+      }
+    }
+
+    @media (max-width: 960px) {
+      .category-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .feature-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .category-card {
+        grid-template-columns: 108px 1fr;
+      }
+
+      .device-stack {
+        left: 0;
+        right: 0;
+        width: 100%;
+        transform: scale(.92);
+        transform-origin: center bottom;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .home-shell {
+        width: min(100% - 18px, 100%);
+        margin-top: 12px;
+      }
+
+      .hero-card {
+        border-radius: 28px;
+        padding: 28px 18px 26px;
+      }
+
+      .hero-title {
+        font-size: clamp(36px, 12vw, 56px);
+      }
+
+      .hero-lead {
+        font-size: 16px;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .hero-actions .btn {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .hero-note {
+        align-items: flex-start;
+      }
+
+      .hero-visual {
+        min-height: 440px;
+      }
+
+      .device-stack {
+        transform: scale(.72);
+      }
+
+      .section-block {
+        padding: 18px 14px;
+        border-radius: 24px;
+      }
+
+      .feature-grid,
+      .bottom-stats {
+        grid-template-columns: 1fr;
+      }
+
+      .block-head h2,
+      .bottom-copy h2 {
+        font-size: clamp(26px, 10vw, 38px);
+      }
+    }
+
+    @media (max-width: 520px) {
+      .nav-links a:not(.btn) {
+        display: none;
+      }
+
+      .nav-links {
+        gap: 8px;
+      }
+
+      .nav-inner {
+        width: calc(100% - 20px);
+      }
+
+      .nav-links .btn {
+        height: 38px;
+        padding: 0 12px;
+        font-size: 12px;
+      }
+
+      .category-card {
+        grid-template-columns: 1fr;
+      }
+
+      .category-visual {
+        height: 96px;
+      }
+
+      .hero-visual {
+        min-height: 360px;
+      }
+
+      .device-stack {
+        transform: scale(.58);
+      }
+
+      .hero-orbit {
+        inset: auto 6px 18px 6px;
+        height: 180px;
+      }
+
+      .home-footer .footer-inner {
+        gap: 14px;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hero-visual {
+        min-height: 320px;
+      }
+
+      .device-stack {
+        transform: scale(.52);
+      }
     }
   </style>
 </head>
-<body class="hub-page">
-
+<body>
   <header class="nav">
     <div class="nav-inner">
-      <a class="brand brand-light" href="/">
+      <a class="brand" href="/">
         <img src="/yohelab-icon.png" alt="よへラボ" />
         <span>よへラボ</span>
         <span class="brand-sub">AIOツール</span>
@@ -540,446 +1206,226 @@
     </div>
   </header>
 
-  <main>
-    <section class="hero-wrap">
-      <div class="hero-bg" aria-hidden="true"></div>
-      <div class="hero-grid-bg" aria-hidden="true"></div>
-
-      <div class="hero-inner">
-        <div>
-      <p class="hero-label reveal"><span class="dot"></span>AIに引用される記事を作る</p>
-          <h1 class="hero-title reveal reveal-d1">
-            <span class="line-strike">SEO記事だけで止まらない</span>
-          <span class="line-accent">AI検索に<br>拾われやすい記事へ</span>
+  <main class="home-shell">
+    <section class="hero-card">
+      <div class="hero-layout">
+        <div class="hero-copy">
+          <div class="hero-kicker-row">
+            <span class="hero-pill">ツール / 自動化</span>
+            <span class="hero-pill alt">サービス / サポート</span>
+          </div>
+          <h1 class="hero-title">
+            ひとりで<br />
+            稼ぐ・売る・発信する<br />
+            ための<span class="accent">AIツール</span>
           </h1>
-          <p class="hero-lead reveal reveal-d2">
-            GoogleはSEO1位の上に、もう<strong>「答え」を返している</strong>。<br>
-            だから通常のSEOに加えて、<strong>見出し・FAQ・出典が伝わる構成</strong>が必要になる。<br>
-        キーワード3つで、<strong>AI検索に拾われやすい記事下書き</strong>を作る。
-          </p>
-          <div class="hero-ctas reveal reveal-d3">
-            <a class="btn btn-primary btn-xl" href="/apps/research-writer/">無料で試す →</a>
-            <a class="btn btn-ghost-white btn-lg" href="#tool">仕組みを見る</a>
+          <p class="hero-lead">Webツール、ミニサービス、ゲーム制作まで。個人で動くための実用的な仕組みを、よへラボでまとめて見られるようにした。</p>
+          <div class="hero-actions">
+            <a class="btn btn-xl btn-home-primary" href="/apps/research-writer/">ツールを見る</a>
+            <a class="btn btn-lg btn-home-secondary" href="/products/page-review/">サービスを見る</a>
           </div>
-          <div class="hero-trust reveal reveal-d4">
-            <span>✓ 登録不要</span>
-            <span>✓ 無料版は1日1セット</span>
-            <span>✓ 価格は各ページで案内</span>
-            <span>✓ プロは月50セット</span>
+          <div class="hero-note">
+            <div class="hero-avatar">🧑🏻</div>
+            <p>よへラボは、個人で活動するクリエイターのためのAI活用ラボです。</p>
           </div>
         </div>
 
-        <div class="hero-proof reveal reveal-d2">
-          <div class="search-shot" aria-label="AI検索結果風の表示例">
-            <div class="search-top">
-              <div class="search-brand" aria-hidden="true"><span>S</span><span>e</span><span>a</span><span>r</span><span>c</span><span>h</span></div>
-              <div class="search-box">
-                <span>よへラボ AI検索 記事メーカー</span>
-                <span class="search-icons">× ● 🔍</span>
-              </div>
-          <div class="proof-pill">AI SEARCH READY</div>
-            </div>
-            <div class="search-tabs" aria-hidden="true">
-              <span>AIモード</span><span>すべて</span><span>画像</span><span>動画</span><span>ニュース</span><span>もっと見る</span>
-            </div>
-            <div class="ai-result">
-              <div class="ai-kicker">AIによる概要</div>
-              <h3>よへラボは、<strong>AI検索に引用されやすい記事下書き</strong>を3つのキーワードから作れるツールです。</h3>
-              <ul class="ai-list">
-                <li>最新情報を集めて、使う情報だけを選べる</li>
-                <li>見出し・FAQ・出典を整理した記事構成にする</li>
-                <li>WordPress向けのタグやメタ説明まで一緒に出す</li>
-              </ul>
-              <div class="ai-more">もっと見る</div>
-            </div>
-            <div class="organic-card">
-              <div class="site-line"><span class="site-icon">よ</span><span>yohelab.com</span></div>
-              <h3 class="organic-title">SEOの時代は終わった。AIに引用される記事を作れ。</h3>
-              <p>検索の上に答えが出る時代に、クリック前から伝わる記事構成を作る。</p>
-            </div>
-          </div>
-        </div>
-      </div>
+        <div class="hero-visual" aria-hidden="true">
+          <div class="hero-orbit"></div>
+          <div class="device-stack">
+            <div class="floating-tag tag-tools">ツール / 自動化</div>
+            <div class="floating-tag tag-service">サービス / サポート</div>
+            <div class="floating-tag tag-game">ゲーム / 遊び</div>
 
-      <div class="scroll-hint">scroll</div>
-    </section>
+            <div class="panel window">
+              <div class="line short"></div>
+              <div class="line"></div>
+              <div class="metric-grid">
+                <div class="metric-box"><strong>3</strong><span>キーワードから記事下書き</span></div>
+                <div class="metric-box"><strong>1</strong><span>ページだけ見る改善レビュー</span></div>
+                <div class="metric-box"><strong>14</strong><span>すぐ遊べるミニゲーム</span></div>
+              </div>
+            </div>
 
-    <div class="content-wrap">
+            <div class="icon-float icon-settings">⚙️</div>
 
-      <!-- What changed -->
-      <section class="pillar" id="shift">
-        <div class="container">
-          <div class="change-banner reveal">
-            <div class="change-banner-inner">
-              <p class="change-kicker">パラダイムシフト</p>
-              <h2>SEOで上がっても、<br>クリックされにくい場面が増えた。</h2>
-              <p>
-                Google検索の一番上に「AI Overview」が出る場面がある。ユーザーはそこで答えを読んで、そのまま戻ることもある。<br>
-                <strong>だから、記事本文・見出し・FAQ・出典を、検索にもAIにも分かりやすく整える。</strong><br>
-                SEOを捨てるのではなく、AI検索時代の読み取りやすさまで含めて作る。
-              </p>
-              <div class="change-stat">
-                <div class="stat-item">
-                  <div class="stat-num">AI</div>
-                  <div class="stat-label">検索結果内で答えが要約される時代</div>
-                </div>
-                <div class="stat-item">
-                  <div class="stat-num">2024</div>
-                  <div class="stat-label">Google、AI Overviewを全面展開開始</div>
-                </div>
-                <div class="stat-item">
-                  <div class="stat-num">3つ</div>
-                  <div class="stat-label">キーワードを入れるだけで下書き作成</div>
-                </div>
+            <div class="panel phone">
+              <div class="phone-line"></div>
+              <div class="phone-chat"></div>
+              <div class="phone-check">
+                <span>課題をヒアリング</span>
+                <span>改善提案を整理</span>
+                <span>実装サポート</span>
+                <span>運用アドバイス</span>
               </div>
             </div>
-          </div>
 
-          <div class="compare-shift reveal">
-            <div class="compare-col seo-col">
-              <span class="compare-tag seo">SEOだけの時代</span>
-              <h3>順位だけを狙う</h3>
-              <ul>
-                <li>上位表示できても、AIが先に答える</li>
-                <li>クリックされにくい検索面が増えている</li>
-                <li>キーワード詰め込みが逆効果になる</li>
-                <li>更新しても効果が出にくくなった</li>
-              </ul>
+            <div class="laptop-shell">
+              <div class="laptop-screen">
+                <div class="laptop-ui">
+                  <div class="chart-box">
+                    <span></span><span></span><span></span><span></span><span></span>
+                  </div>
+                  <div class="side-stack">
+                    <div class="side-box">
+                      <div class="line"></div>
+                      <div class="line short"></div>
+                      <div class="mini-chart"></div>
+                    </div>
+                    <div class="mini-bars"><span></span><span></span><span></span><span></span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="laptop-base"></div>
             </div>
-            <div class="compare-divider">→</div>
-            <div class="compare-col aio-col">
-                <span class="compare-tag aio">AI検索時代（今ここ）</span>
-              <h3>AIにも人にも読まれる記事を作る</h3>
-              <ul>
-                <li>結論・FAQ・出典を先に伝えられる</li>
-                <li>FAQ・構造化・信頼ソースが鍵</li>
-                <li>最新情報 × 明確な構成が評価される</li>
-                <li>1記事の質で長く効き続ける</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      <!-- Tool -->
-      <section class="pillar pillar-alt" id="tool">
-        <div class="container">
-          <div class="pillar-head reveal">
-            <div>
-              <div class="section-kicker kicker-green">🔍 AI検索向け記事メーカー</div>
-            <h2 class="pillar-title">3ステップで<br>AI検索向け記事が完成する</h2>
-              <p class="pillar-sub">調べる・選ぶ・書く、この3つを自動でつなぐ。キーワードを入れるだけで、最新情報 × AI検索に拾われやすい構成の記事が出てくる。</p>
+            <div class="robot-badge">🤖</div>
+            <div class="game-card">
+              <div class="game-sky"></div>
+              <div class="pixel-hero"></div>
+              <div class="pixel-row"></div>
             </div>
-            <a class="btn btn-primary btn-lg" href="/apps/research-writer/">無料で試す →</a>
+            <div class="controller">
+              <div class="controller-pad"></div>
+            </div>
+            <div class="icon-float icon-note">📝</div>
           </div>
-
-          <div class="step-flow reveal">
-            <div class="step-item">
-              <div class="step-circle">🔍</div>
-              <strong>キーワードを3つ入れる</strong>
-              <span>最新のウェブ情報が自動で収集される。自分で探す必要なし。</span>
-            </div>
-            <div class="step-item">
-              <div class="step-circle">✅</div>
-              <strong>使う情報だけ選ぶ</strong>
-              <span>検索結果を一覧で見て、使いたいものだけチェック。ノイズを除く。</span>
-            </div>
-            <div class="step-item">
-              <div class="step-circle">📄</div>
-              <strong>AI検索向け記事が出る</strong>
-              <span>見出し・FAQ・本文・メタ情報まで、読み取りやすい構成で出力。</span>
-            </div>
-          </div>
-
-          <div class="tool-feature-card reveal">
-            <div>
-              <span class="tool-tag">AI検索向け · 記事メーカー</span>
-              <h3>AI検索向けリサーチ記事メーカー</h3>
-              <p class="card-lead">キーワードを入れると最新情報を集めてくる。選んだ情報だけでAI検索に引用されやすい記事を作る。note・ブログ・WordPressにそのまま使える形で出力。</p>
-              <ul class="feature-list">
-                <li>最新情報を自動収集。調べる時間が消える</li>
-                <li>GoogleのAI概要に拾われやすい構成へ整える</li>
-                <li>FAQ・見出し・本文・SNS投稿まで一括出力</li>
-                <li>WordPressのタグ・スラッグ・メタ説明まで出てくる</li>
-              </ul>
-              <div class="tool-cta-row">
-                <a class="btn btn-primary btn-lg" href="/apps/research-writer/">まず無料で試す →</a>
-                <a class="btn btn-outline btn-lg" href="/lp/research-writer/">詳細を見る</a>
-              </div>
-            </div>
-            <div class="tool-right">
-              <div class="aio-point">
-                <div class="aio-point-icon">📌</div>
-                <div>
-                  <strong>AIに引用されやすい記事構成</strong>
-                  <span>FAQ形式・明確な見出し・信頼ソースの引用を自動で組み込む。</span>
-                </div>
-              </div>
-              <div class="aio-point">
-                <div class="aio-point-icon">⚡</div>
-                <div>
-                  <strong>最新情報ベースで書ける</strong>
-                  <span>古い情報ではなく今日の検索結果をベースに記事を作る。</span>
-                </div>
-              </div>
-              <div class="aio-point">
-                <div class="aio-point-icon">📝</div>
-                <div>
-                  <strong>そのまま公開できる形で出る</strong>
-                  <span>note・ブログ・WordPress向けの下書きとしてそのまま使える。</span>
-                </div>
-              </div>
-              <div class="aio-point">
-                <div class="aio-point-icon">🆓</div>
-                <div>
-                  <strong>無料で1日1セット試せる</strong>
-                  <span>登録なし。キーワードを入れるだけで、返ってくるものが確認できる。</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="tool-feature-card reveal reveal-d1">
-            <div>
-              <span class="tool-tag">レビューサービス · 伝わり方改善</span>
-              <h3>商品ページ改善レビュー</h3>
-              <p class="card-lead">BASE、STORES、note、自サイトの商品ページを1ページ見て、伝わりにくい点、見出し、説明文、FAQ、要約の改善案を返す小さなレビューサービス。最初は広げすぎず、1ページだけ見る。</p>
-              <ul class="feature-list">
-                <li>どこが弱いかを3点に絞って返す</li>
-                <li>見出しと説明文の書き換え例がつく</li>
-                <li>購入前の不安を潰すFAQ案も返す</li>
-                <li>初回モニター980円、24〜48時間で返答</li>
-              </ul>
-              <div class="tool-cta-row">
-                <a class="btn btn-primary btn-lg" href="/products/page-review/">内容を見る →</a>
-                <a class="btn btn-outline btn-lg" href="/contact/#page-review">申し込む</a>
-              </div>
-            </div>
-            <div class="tool-right">
-              <div class="aio-point">
-                <div class="aio-point-icon">🎯</div>
-                <div>
-                  <strong>誰向けかを見えやすくする</strong>
-                  <span>最初の見出しで、どんな人向けの商品かがすぐ伝わる形へ整える。</span>
-                </div>
-              </div>
-              <div class="aio-point">
-                <div class="aio-point-icon">✍️</div>
-                <div>
-                  <strong>説明文をそのまま直しやすくする</strong>
-                  <span>抽象的な指摘ではなく、書き換え例として返すから反映しやすい。</span>
-                </div>
-              </div>
-              <div class="aio-point">
-                <div class="aio-point-icon">❓</div>
-                <div>
-                  <strong>FAQにできる不安を拾う</strong>
-                  <span>購入前に止まりやすい疑問を、質問と答えの形で整理して返す。</span>
-                </div>
-              </div>
-              <div class="aio-point">
-                <div class="aio-point-icon">⏱️</div>
-                <div>
-                  <strong>重いコンサルではなく小さく頼める</strong>
-                  <span>まず1ページだけ見て、今すぐ直せるところから始められる。</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="tool-feature-card reveal reveal-d1">
-            <div>
-              <span class="tool-tag">AI検索向け · スターターキット</span>
-              <h3>AI検索記事スターターキット</h3>
-              <p class="card-lead">何を書けばいいかで止まらないように、記事の型・見出し・FAQ・比較・注意点をひとまとめにした入門キット。記事メーカーやテーマを使う前の土台をそろえる。</p>
-              <ul class="feature-list">
-                <li>記事の種類ごとに、書く順番を先に決められる</li>
-                <li>WordPressでもnoteでもそのまま使いやすい</li>
-                <li>AI検索に拾われやすい見出しの型を入れやすい</li>
-                <li>最初の1本を早く出したい人向け</li>
-              </ul>
-              <div class="tool-cta-row">
-                <a class="btn btn-primary btn-lg" href="/products/article-starter-kit/">内容を見る →</a>
-                <a class="btn btn-outline btn-lg" href="/contact/#starter-kit">相談する</a>
-              </div>
-            </div>
-            <div class="tool-right">
-              <div class="aio-point">
-                <div class="aio-point-icon">🧭</div>
-                <div>
-                  <strong>迷う前に型が見える</strong>
-                  <span>記事の骨組みを先に置いて、何を書くかを決めやすくする。</span>
-                </div>
-              </div>
-              <div class="aio-point">
-                <div class="aio-point-icon">📚</div>
-                <div>
-                  <strong>種類ごとのテンプレがある</strong>
-                  <span>レビュー、比較、ランキング、FAQ、紹介記事を分けて考えられる。</span>
-                </div>
-              </div>
-              <div class="aio-point">
-                <div class="aio-point-icon">⚙️</div>
-                <div>
-                  <strong>記事メーカーとテーマにつながる</strong>
-                  <span>このキットを経由すると、次のツール選びが分かりやすい。</span>
-                </div>
-              </div>
-              <div class="aio-point">
-                <div class="aio-point-icon">🪴</div>
-                <div>
-                  <strong>最初の1本を早く出すための入口</strong>
-                  <span>売る前の準備を短くして、実際に書くところまで早く進める。</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="tool-feature-card reveal reveal-d1">
-            <div>
-              <span class="tool-tag">AI検索向け · テーマ</span>
-              <h3>AI検索時代の記事ブログテーマ</h3>
-              <p class="card-lead">FAQ・JSON-LD・llms.txt・内部解析・GA4設定をテーマに内蔵。プラグインを積み上げなくても、AI検索時代に必要なものが最初から揃っている買い切りテーマ。</p>
-              <ul class="feature-list">
-                <li>JSON-LD構造化データ（Article・FAQPage・Breadcrumb）を自動出力</li>
-                <li>llms.txt自動生成・内部解析・GA4設定をテーマ内に内蔵</li>
-                <li>ベータ価格¥5,500・買い切り（正式版¥8,800に改定予定）</li>
-                <li>購入後すぐにZIPとシリアルナンバーがメールで届く</li>
-              </ul>
-              <div class="tool-cta-row">
-                <a class="btn btn-primary btn-lg" href="/lp/wordpress-theme/">ベータ¥5,500で購入する →</a>
-                <a class="btn btn-outline btn-lg" href="/apps/wordpress-theme/">機能を見る</a>
-              </div>
-            </div>
-            <div class="tool-right">
-              <div class="aio-point">
-                <div class="aio-point-icon">🧩</div>
-                <div>
-                  <strong>プラグインを増やしすぎない</strong>
-                  <span>テーマ側でできる設定を先に用意し、必要な外部連携だけ選べるようにする。</span>
-                </div>
-              </div>
-              <div class="aio-point">
-                <div class="aio-point-icon">📊</div>
-                <div>
-                  <strong>解析の入れ方を最初に固定できる</strong>
-                  <span>テーマ内解析か外部解析か、後から迷わないよう最初に決めて固定。</span>
-                </div>
-              </div>
-              <div class="aio-point">
-                <div class="aio-point-icon">🏗️</div>
-                <div>
-                  <strong>読み取りやすい構成の型が入っている</strong>
-                  <span>FAQ→見出し→CTAの順番がテンプレ化済み。毎記事で迷わない。</span>
-                </div>
-              </div>
-              <div class="aio-point">
-                <div class="aio-point-icon">💴</div>
-                <div>
-                  <strong>買い切り・月額なし</strong>
-                  <span>ベータ¥5,500で購入。正式版リリース後¥8,800に改定。一度買えばずっと使える。</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Games -->
-      <section class="pillar" id="games">
-        <div class="container">
-          <div class="pillar-head reveal">
-            <div>
-                <div class="section-kicker kicker-blue">🧪 Labs</div>
-                <h2 class="pillar-title">本筋とは別の<br>遊び場</h2>
-                <p class="pillar-sub">インストールなし、登録なし。タブを開くだけ。気分転換用の小さなコンテンツとして置いている。</p>
-              </div>
-            <a class="btn btn-outline btn-lg" href="/games/" style="color:#4f46e5;border-color:#bfdbfe;background:#fff;">Labsを見る →</a>
-          </div>
-
-          <div class="games-banner reveal">
-            <div class="games-copy">
-              <h3>登録なし・インストールなし<br><em>タブを開けば始まる</em></h3>
-              <p>反射・記憶・タイピング・計算。スマホでもPCでも、14種類のゲームが無料で遊べる。</p>
-              <div class="games-mini">
-                <a class="games-mini-card" href="/games/reaction/">
-                  <span class="g-icon">⚡</span>
-                  <strong>反応速度テスト</strong>
-                  <span>あなたは何ms？</span>
-                </a>
-                <a class="games-mini-card" href="/games/typing/">
-                  <span class="g-icon">⌨️</span>
-                  <strong>タイピングラッシュ</strong>
-                  <span>30秒で何語？</span>
-                </a>
-                <a class="games-mini-card" href="/games/">
-                  <span class="g-icon">🎮</span>
-                  <strong>Labsを見る</strong>
-                  <span>一覧へ →</span>
-                </a>
-              </div>
-            </div>
-            <div class="games-emoji">🎲</div>
-          </div>
-        </div>
-      </section>
-
-    </div>
-
-    <!-- FINAL CTA -->
-      <section class="final-cta">
-        <div class="container">
-          <h2 class="reveal">SEOだけで終わらせず、<br>AI検索に拾われやすい構成まで作る。<br><span style="font-size:.75em;opacity:.85">検索にもAIにも伝わる記事へ。</span></h2>
-        <p class="reveal reveal-d1">キーワードを3つ入れるだけ。最新情報を集めて、選んで、AI検索向けの記事下書きにまとめる。登録なし、無料から始められる。</p>
-        <div class="final-cta-btns reveal reveal-d2">
-          <a class="btn btn-white btn-xl" href="/apps/research-writer/" style="color:var(--green-dark);">まず無料で試す →</a>
-          <a class="btn btn-ghost-white btn-lg" href="/lp/research-writer/">詳細ページを見る</a>
         </div>
       </div>
     </section>
 
-    <div class="contact-strip">
-      <div class="contact-strip-inner">
+    <section class="section-block">
+      <div class="category-grid">
+        <a class="category-card" href="/apps/research-writer/">
+          <div class="category-visual visual-doc"></div>
+          <div>
+            <h3>ツール</h3>
+            <p>ブラウザで使えるAIツール。調べる、まとめる、出すところを短くして、作業時間を削る。</p>
+            <span class="category-link">ツール一覧へ →</span>
+          </div>
+        </a>
+        <a class="category-card" href="/products/page-review/">
+          <div class="category-visual visual-chat"></div>
+          <div>
+            <h3>サービス</h3>
+            <p>診断、レビュー、小さな実装まで。あなたのアイデアや売るページを、前に進めるための支援。</p>
+            <span class="category-link">サービスを見る →</span>
+          </div>
+        </a>
+        <a class="category-card" href="/games/">
+          <div class="category-visual visual-game"></div>
+          <div>
+            <h3>ゲーム</h3>
+            <p>遊んで楽しい、ちょっと実験的な作品たち。気軽に遊べるミニコンテンツも並べている。</p>
+            <span class="category-link">ゲーム一覧へ →</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <div class="block-head">
         <div>
-          <strong>相談・個別依頼</strong>
-          <p>ツールで足りない場面や、個別相談はこちらから。</p>
+          <h2>おすすめのツール・サービス・ゲーム</h2>
+          <p>いまのよへラボで、すぐ触れるものを先に並べた。調べる、整える、試すの3つがすぐ始められる。</p>
         </div>
-        <a class="btn btn-ghost-white" href="/contact/">問い合わせる →</a>
+        <a class="head-link" href="/blog/">ブログも見る →</a>
       </div>
-    </div>
+      <div class="feature-grid">
+        <a class="feature-card" href="/apps/research-writer/">
+          <div class="feature-icon">📡</div>
+          <div class="badge-row">
+            <span class="badge badge-blue">ツール</span>
+            <span class="badge badge-orange">人気</span>
+          </div>
+          <h3>記事メーカー</h3>
+          <p>3キーワードから、調査・整理・記事下書きまで一気に返す。まず最初に試すならここ。</p>
+          <span class="feature-arrow">→</span>
+        </a>
+        <a class="feature-card" href="/products/page-review/">
+          <div class="feature-icon">🧾</div>
+          <div class="badge-row">
+            <span class="badge badge-cyan">サービス</span>
+            <span class="badge badge-blue">おすすめ</span>
+          </div>
+          <h3>商品ページ改善レビュー</h3>
+          <p>AI検索や購入者目線で、商品ページの弱点を1ページだけ見る。改善案を短く返す。</p>
+          <span class="feature-arrow">→</span>
+        </a>
+        <a class="feature-card" href="/apps/wordpress-theme/">
+          <div class="feature-icon">🧩</div>
+          <div class="badge-row">
+            <span class="badge badge-blue">ツール</span>
+            <span class="badge badge-cyan">買い切り</span>
+          </div>
+          <h3>WordPressテーマ</h3>
+          <p>FAQ、JSON-LD、llms.txt、解析設定をテーマに寄せて、プラグインを増やしすぎない構成にした。</p>
+          <span class="feature-arrow">→</span>
+        </a>
+        <a class="feature-card" href="/games/">
+          <div class="feature-icon">🎮</div>
+          <div class="badge-row">
+            <span class="badge badge-purple">ゲーム</span>
+            <span class="badge badge-cyan">プレイ可能</span>
+          </div>
+          <h3>ミニWebゲーム</h3>
+          <p>ちょっとした時間に触れる小さなゲーム集。ブラウザでそのまま遊べる。</p>
+          <span class="feature-arrow">→</span>
+        </a>
+      </div>
+    </section>
 
+    <section class="section-block">
+      <div class="bottom-grid">
+        <div class="bottom-copy">
+          <strong>作るだけで終わらない。</strong>
+          <h2>売る・伝える・試すまで。</h2>
+          <p>よへラボは、ひとりで活動する人の「やりたい」を、AIと仕組みで前に進めるための置き場。使って終わりではなく、そのあと公開したり、見直したり、試したりするところまでつないでいく。</p>
+          <p>ー よへラボ / Yohe Lab</p>
+          <div class="bottom-footer-pills">
+            <span class="mini-pill">🔒 セキュリティに配慮</span>
+            <span class="mini-pill">🛡️ データは大切に保護</span>
+            <span class="mini-pill">🔄 継続的にアップデート</span>
+          </div>
+        </div>
+        <div class="bottom-stats">
+          <div class="stat-card">
+            <div class="stat-icon">👤</div>
+            <strong>個人向け</strong>
+            <span class="stat-big">1人</span>
+            <span>でも使いやすいシンプル設計</span>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">🌐</div>
+            <strong>ブラウザで使える</strong>
+            <span class="stat-big">100%</span>
+            <span>インストール不要でどこでもアクセス</span>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">⚡</div>
+            <strong>すぐ試せる</strong>
+            <span class="stat-big">1分</span>
+            <span>最短でスタートできる導線</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="home-footer">
+      <footer class="footer">
+        <div class="footer-inner">
+          <div>© よへラボ / yohelab.com</div>
+          <div class="footer-links">
+            <a href="/apps/research-writer/">記事メーカー</a>
+            <a href="/products/page-review/">商品ページ改善レビュー</a>
+            <a href="/apps/wordpress-theme/">WordPressテーマ</a>
+            <a href="/games/">Labs</a>
+            <a href="/blog/">ブログ</a>
+            <a href="/contact/">問い合わせ</a>
+          </div>
+        </div>
+      </footer>
+    </div>
   </main>
-
-  <footer class="footer footer-dark">
-    <div class="footer-inner">
-      <div style="color:rgba(255,255,255,.28);">© よへラボ / yohelab.com</div>
-      <div class="footer-links">
-        <a href="#shift">AIOとは</a>
-        <a href="#tool">ツール</a>
-        <a href="/blog/">ブログ</a>
-        <a href="/games/">Labs</a>
-        <a href="/contact/">問い合わせ</a>
-        <a href="/legal/commerce/">特定商取引法</a>
-        <a href="/legal/privacy/">プライバシー</a>
-        <a href="/legal/terms/">利用規約</a>
-      </div>
-    </div>
-  </footer>
-
-  <div class="sticky-cta">
-    <div class="sticky-cta-inner">
-      <a class="btn btn-primary" href="/apps/research-writer/">無料で試す →</a>
-      <a class="btn btn-outline" href="/lp/research-writer/">詳細を見る</a>
-    </div>
-  </div>
-
-  <script>
-    if ('IntersectionObserver' in window) {
-      const obs = new IntersectionObserver((entries) => {
-        entries.forEach(el => { if (el.isIntersecting) { el.target.classList.add('visible'); obs.unobserve(el.target); } });
-      }, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
-      document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-      setTimeout(() => document.querySelectorAll('.reveal:not(.visible)').forEach(el => el.classList.add('visible')), 800);
-    } else {
-      document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
-    }
-  </script>
 </body>
 </html>
