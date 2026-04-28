@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>よへラボブログ | 読めるだけの公開ノート</title>
+  <meta name="description" content="よへラボの公開ブログ。記事メーカー、WordPressテーマ、AI検索向けの考え方を読むだけで見られるブログ。" />
+  <meta property="og:title" content="よへラボブログ | 読めるだけの公開ノート" />
+  <meta property="og:description" content="よへラボの公開ブログ。記事メーカー、WordPressテーマ、AI検索向けの考え方を読むだけで見られるブログ。" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="ja_JP" />
+  <meta property="og:url" content="https://yohelab.com/blog/" />
+  <meta property="og:image" content="https://yohelab.com/yohelab-icon.png" />
+  <link rel="canonical" href="https://yohelab.com/blog/" />
+  <link rel="icon" type="image/png" href="/yohelab-icon.png" />
+  <link rel="stylesheet" href="/shared/site.css" />
+  <style>
+    body { background: linear-gradient(180deg,#f6fbf8 0%,#ffffff 100%); }
+    .hero { padding: 88px 0 48px; background: linear-gradient(180deg,#08110f 0%,#0c1c18 100%); color:#fff; }
+    .hero h1 { font-size: clamp(40px, 6vw, 74px); line-height:1.05; letter-spacing:-.06em; margin-bottom:14px; }
+    .hero p { max-width: 760px; color: rgba(255,255,255,.74); font-size:18px; line-height:1.9; }
+    .toolbar { padding: 18px 0 0; }
+    .posts { display:grid; grid-template-columns: repeat(3,1fr); gap:16px; }
+    .post { padding:24px; border-radius:20px; background:#fff; border:1px solid var(--border); box-shadow:var(--shadow-xs); }
+    .post h2 { font-size:22px; line-height:1.35; margin:10px 0 10px; }
+    .post .meta { font-size:12px; color:var(--muted); margin-bottom:12px; }
+    .post p { color:var(--muted); line-height:1.8; font-size:14px; }
+    .empty { padding: 28px; border-radius: 18px; border: 1px dashed var(--border); color: var(--muted); background: #fff; }
+    @media (max-width: 920px) { .posts { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="/"><img src="/yohelab-icon.png" alt="よへラボのアイコン" /><span>よへラボ</span></a>
+      <nav class="nav-links">
+        <a href="/">トップ</a>
+        <a href="/apps/research-writer/">記事メーカー</a>
+        <a href="/apps/wordpress-theme/">テーマ</a>
+        <a class="btn btn-primary btn-sm" href="/blog/admin/">投稿する</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <section class="hero">
+      <div class="container">
+        <p class="section-label" style="color:#6be5c9;border-color:rgba(107,229,201,.32);">Blog</p>
+        <h1>読むだけの公開ブログ。</h1>
+        <p>ここはみんなが読める場所。投稿はよへだけができるように分ける。記事メーカーの話、WordPressテーマの考え方、AI検索の整理を置いていく。</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="toolbar">
+          <p class="section-label">Latest</p>
+          <h2 class="section-title">最新の記事</h2>
+        </div>
+        <div id="posts" class="posts"></div>
+      </div>
+    </section>
+  </main>
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>© よへラボ / ブログ</div>
+      <div class="footer-links">
+        <a href="/apps/research-writer/">記事メーカー</a>
+        <a href="/apps/wordpress-theme/">テーマ</a>
+        <a href="/blog/admin/">投稿する</a>
+      </div>
+    </div>
+  </footer>
+  <script type="module" src="/blog/main.js"></script>
+</body>
+</html>

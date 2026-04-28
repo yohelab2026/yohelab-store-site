@@ -38,6 +38,8 @@ export default defineConfig({
         main: "index.html",
         games: "games/index.html",
         contact: "contact/index.html",
+        blog: "blog/index.html",
+        blogAdmin: "blog/admin/index.html",
         commerce: "legal/commerce/index.html",
         privacy: "legal/privacy/index.html",
         terms: "legal/terms/index.html",

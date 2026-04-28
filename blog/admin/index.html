@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ブログ編集 | よへラボ</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <link rel="icon" type="image/png" href="/yohelab-icon.png" />
+  <link rel="stylesheet" href="/shared/site.css" />
+  <style>
+    body { background: linear-gradient(180deg,#06110e 0%,#f6fbf8 30%,#fff 100%); }
+    .shell { padding: 84px 0 60px; }
+    .grid { display:grid; grid-template-columns: 400px minmax(0,1fr); gap:20px; align-items:start; }
+    .panel { background:#fff; border:1px solid var(--border); border-radius:22px; box-shadow:var(--shadow); padding:24px; }
+    .panel h1 { font-size:34px; letter-spacing:-.05em; margin-bottom:10px; }
+    .panel p { color:var(--muted); line-height:1.8; }
+    .form { display:grid; gap:14px; }
+    label { display:grid; gap:6px; font-size:13px; font-weight:700; color:var(--text-sub); }
+    input, textarea { width:100%; border:1px solid var(--border); border-radius:12px; padding:12px 14px; font-size:15px; }
+    textarea { min-height: 140px; resize: vertical; }
+    .toolbar { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px; }
+    .toolbar button { border:1px solid var(--border); background:#fff; color:var(--text); border-radius:10px; padding:8px 10px; font-size:13px; font-weight:700; cursor:pointer; }
+    .editor { min-height: 280px; border:1px solid var(--border); border-radius:16px; padding:16px; background:#fff; outline:none; line-height:1.85; }
+    .editor:empty::before { content: attr(data-placeholder); color: #94a3b8; }
+    .preview { border:1px solid var(--border); border-radius:16px; padding:18px; background:#fff; }
+    .preview h2 { font-size:24px; margin-bottom:10px; }
+    .preview p { color:var(--text); line-height:1.9; }
+    .actions { display:flex; gap:10px; flex-wrap:wrap; margin-top:14px; }
+    .status { padding:12px 14px; border-radius:12px; background:#f7fbf9; border:1px solid var(--border); color:var(--muted); font-size:14px; }
+    .hint { font-size:13px; color:var(--muted); line-height:1.75; }
+    @media (max-width: 920px) { .grid { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="/"><img src="/yohelab-icon.png" alt="よへラボのアイコン" /><span>よへラボ</span></a>
+      <nav class="nav-links">
+        <a href="/blog/">ブログ</a>
+        <a href="/apps/research-writer/">記事メーカー</a>
+        <a href="/apps/wordpress-theme/">テーマ</a>
+      </nav>
+    </div>
+  </header>
+  <main class="shell">
+    <div class="container grid">
+      <div class="panel">
+        <h1>よへ専用の編集画面</h1>
+        <p>ここで記事を作って、最後に JSON をコピーして `content/blog/posts/` に置く。サーバーに負担をかけない静的方式。</p>
+        <div class="status" id="status">下の欄に文章を入れてね。</div>
+        <p class="hint" style="margin-top:14px;">太字、色、見出しだけ使えれば十分。読者に伝わるところだけ整える。</p>
+      </div>
+      <div class="panel">
+        <div class="form">
+          <label>タイトル<input id="title" placeholder="記事タイトル" /></label>
+          <label>スラッグ<input id="slug" placeholder="example-post" /></label>
+          <label>要約<textarea id="excerpt" placeholder="一覧に出す短い説明"></textarea></label>
+          <div>
+            <div class="toolbar">
+              <button data-cmd="bold" type="button">太字</button>
+              <button data-cmd="italic" type="button">斜体</button>
+              <button data-color="#0b8f72" type="button">緑</button>
+              <button data-color="#1d6fd8" type="button">青</button>
+              <button data-color="#ef4444" type="button">赤</button>
+              <button id="clear-style" type="button">色を戻す</button>
+            </div>
+            <div id="body" class="editor" contenteditable="true" data-placeholder="本文をここに書く。必要なら太字や色をつける。"></div>
+          </div>
+          <label>タグ<input id="tags" placeholder="AI検索, WordPress, お知らせ" /></label>
+          <div class="actions">
+            <button class="btn btn-primary btn-lg" id="copy-json" type="button">JSONをコピー</button>
+            <button class="btn btn-outline btn-lg" id="copy-html" type="button">HTMLをコピー</button>
+            <button class="btn btn-outline btn-lg" id="save-draft" type="button">下書きを保存</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container" style="margin-top:20px;">
+      <div class="panel">
+        <div class="preview" id="preview">
+          <h2>見え方のプレビュー</h2>
+          <p id="preview-excerpt">要約がここに出る。</p>
+          <div id="preview-body" style="margin-top:16px;color:var(--text);line-height:1.9;"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script>
+    const titleEl = document.getElementById('title');
+    const slugEl = document.getElementById('slug');
+    const excerptEl = document.getElementById('excerpt');
+    const bodyEl = document.getElementById('body');
+    const tagsEl = document.getElementById('tags');
+    const statusEl = document.getElementById('status');
+    const previewExcerptEl = document.getElementById('preview-excerpt');
+    const previewBodyEl = document.getElementById('preview-body');
+
+    function updatePreview() {
+      previewExcerptEl.textContent = excerptEl.value || '要約がここに出る。';
+      previewBodyEl.innerHTML = bodyEl.innerHTML || '<p>本文がここに出る。</p>';
+      localStorage.setItem('yohelab.blog.draft', JSON.stringify({
+        title: titleEl.value,
+        slug: slugEl.value,
+        excerpt: excerptEl.value,
+        bodyHtml: bodyEl.innerHTML,
+        tags: tagsEl.value,
+      }));
+    }
+
+    function wrapSelection(tagName, style = '') {
+      const sel = window.getSelection();
+      if (!sel || !sel.rangeCount) return;
+      const range = sel.getRangeAt(0);
+      if (range.collapsed) return;
+      const wrapper = document.createElement(tagName);
+      if (style) wrapper.setAttribute('style', style);
+      wrapper.appendChild(range.extractContents());
+      range.insertNode(wrapper);
+      sel.removeAllRanges();
+      updatePreview();
+    }
+
+    document.querySelectorAll('[data-cmd]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const cmd = btn.dataset.cmd;
+        document.execCommand(cmd, false, null);
+        updatePreview();
+      });
+    });
+    document.querySelectorAll('[data-color]').forEach((btn) => {
+      btn.addEventListener('click', () => wrapSelection('span', `color:${btn.dataset.color};font-weight:700;`));
+    });
+    document.getElementById('clear-style').addEventListener('click', () => {
+      document.execCommand('removeFormat', false, null);
+      updatePreview();
+    });
+
+    ['input', 'keyup', 'paste'].forEach((eventName) => {
+      [titleEl, slugEl, excerptEl, tagsEl, bodyEl].forEach((el) => el.addEventListener(eventName, updatePreview));
+    });
+    bodyEl.addEventListener('blur', updatePreview);
+
+    const draft = localStorage.getItem('yohelab.blog.draft');
+    if (draft) {
+      try {
+        const parsed = JSON.parse(draft);
+        titleEl.value = parsed.title || '';
+        slugEl.value = parsed.slug || '';
+        excerptEl.value = parsed.excerpt || '';
+        bodyEl.innerHTML = parsed.bodyHtml || '';
+        tagsEl.value = parsed.tags || '';
+      } catch (_) {}
+    }
+    updatePreview();
+
+    function htmlToMarkdown(html) {
+      return html
+        .replace(/<strong>(.*?)<\/strong>/gi, '**$1**')
+        .replace(/<b>(.*?)<\/b>/gi, '**$1**')
+        .replace(/<em>(.*?)<\/em>/gi, '*$1*')
+        .replace(/<i>(.*?)<\/i>/gi, '*$1*')
+        .replace(/<br\s*\/?>/gi, '\n')
+        .replace(/<div>/gi, '')
+        .replace(/<\/div>/gi, '\n')
+        .replace(/<p>/gi, '')
+        .replace(/<\/p>/gi, '\n\n')
+        .replace(/<[^>]+>/g, '')
+        .replace(/\n{3,}/g, '\n\n')
+        .trim();
+    }
+
+    function buildJson() {
+      return {
+        title: titleEl.value.trim(),
+        slug: slugEl.value.trim(),
+        date: new Date().toISOString().slice(0, 10),
+        excerpt: excerptEl.value.trim(),
+        body: htmlToMarkdown(bodyEl.innerHTML),
+        tags: tagsEl.value.split(',').map(v => v.trim()).filter(Boolean),
+      };
+    }
+
+    async function copyText(text) {
+      await navigator.clipboard.writeText(text);
+      statusEl.textContent = 'コピーした。';
+    }
+
+    document.getElementById('copy-json').addEventListener('click', async () => {
+      const json = JSON.stringify(buildJson(), null, 2);
+      await copyText(json);
+    });
+
+    document.getElementById('copy-html').addEventListener('click', async () => {
+      const html = `<h1>${titleEl.value}</h1>\n<p>${excerptEl.value}</p>\n${bodyEl.innerHTML}`;
+      await copyText(html);
+    });
+
+    document.getElementById('save-draft').addEventListener('click', () => {
+      localStorage.setItem('yohelab.blog.lastExport', JSON.stringify(buildJson(), null, 2));
+      statusEl.textContent = '下書きを保存した。';
+    });
+  </script>
+</body>
+</html>
