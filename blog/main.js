@@ -16,6 +16,7 @@ function renderPosts() {
   }
   postsEl.innerHTML = posts.map((post) => `
     <article class="post">
+      ${post.eyecatch ? `<div class="post-eyecatch"><img src="${post.eyecatch}" alt="${post.title || ''}" loading="lazy" /></div>` : ''}
       <div class="meta">${post.date || ''}${post.tags?.length ? ' · ' + post.tags.join(' / ') : ''}</div>
       <h2>${post.title || ''}</h2>
       <p>${post.excerpt || ''}</p>

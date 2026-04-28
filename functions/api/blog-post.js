@@ -26,6 +26,7 @@ export async function onRequestPost(context) {
     const bodyText = htmlToMarkdown(html);
     const date = sanitizeDate(body?.date) || new Date().toISOString().slice(0, 10);
     const tags = normalizeTags(body?.tags);
+    const eyecatch = sanitizeUrl(body?.eyecatch);
 
     if (!title || !slug || !bodyText) {
       return json({ error: "title_slug_body_required" }, 400);
@@ -39,6 +40,7 @@ export async function onRequestPost(context) {
       body: bodyText,
       tags,
     };
+    if (eyecatch) post.eyecatch = eyecatch;
 
     const path = `${BLOG_DIR}/${date}-${slug}.json`;
     const content = `${JSON.stringify(post, null, 2)}\n`;
@@ -113,6 +115,17 @@ function sanitizeSlug(value) {
 function sanitizeDate(value) {
   const text = String(value || "").trim();
   return /^\d{4}-\d{2}-\d{2}$/.test(text) ? text : "";
+}
+
+function sanitizeUrl(value) {
+  const url = String(value || "").trim();
+  if (!url) return "";
+  try {
+    const parsed = new URL(url);
+    return parsed.protocol === "https:" ? parsed.href : "";
+  } catch {
+    return "";
+  }
 }
 
 function normalizeTags(value) {

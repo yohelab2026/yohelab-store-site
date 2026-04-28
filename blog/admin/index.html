@@ -133,6 +133,8 @@
           <label>スラッグ<input id="slug" placeholder="未入力なら自動作成" /></label>
           <label>要約<textarea id="excerpt" placeholder="一覧に出す短い説明"></textarea></label>
           <label>タグ<input id="tags" placeholder="AI検索, WordPress, お知らせ" /></label>
+          <label>アイキャッチ画像URL<input id="eyecatch" placeholder="https://... （省略可）" /></label>
+          <div id="eyecatch-preview" style="display:none;margin-top:6px;border-radius:10px;overflow:hidden;border:1px solid var(--border);"><img id="eyecatch-img" src="" alt="アイキャッチ" style="width:100%;display:block;max-height:160px;object-fit:cover;" /></div>
         </div>
       </aside>
     </div>
@@ -153,6 +155,9 @@
     const excerptEl = document.getElementById('excerpt');
     const bodyEl = document.getElementById('body');
     const tagsEl = document.getElementById('tags');
+    const eyecatchEl = document.getElementById('eyecatch');
+    const eyecatchPreviewEl = document.getElementById('eyecatch-preview');
+    const eyecatchImgEl = document.getElementById('eyecatch-img');
     const adminPinEl = document.getElementById('admin-pin');
     const lockStatusEl = document.getElementById('lock-status');
     const statusEl = document.getElementById('status');
@@ -191,12 +196,20 @@
     function updatePreview() {
       previewExcerptEl.textContent = excerptEl.value || '要約がここに出る。';
       previewBodyEl.innerHTML = bodyEl.innerHTML || '<p>本文がここに出る。</p>';
+      const eyecatchUrl = eyecatchEl.value.trim();
+      if (eyecatchUrl) {
+        eyecatchImgEl.src = eyecatchUrl;
+        eyecatchPreviewEl.style.display = '';
+      } else {
+        eyecatchPreviewEl.style.display = 'none';
+      }
       localStorage.setItem('yohelab.blog.draft', JSON.stringify({
         title: titleEl.value,
         slug: slugEl.value,
         excerpt: excerptEl.value,
         bodyHtml: bodyEl.innerHTML,
         tags: tagsEl.value,
+        eyecatch: eyecatchEl.value,
       }));
     }
 
@@ -254,7 +267,7 @@
     });
 
     ['input', 'keyup', 'paste'].forEach((eventName) => {
-      [titleEl, slugEl, excerptEl, tagsEl, bodyEl].forEach((el) => el.addEventListener(eventName, updatePreview));
+      [titleEl, slugEl, excerptEl, tagsEl, bodyEl, eyecatchEl].forEach((el) => el.addEventListener(eventName, updatePreview));
     });
     bodyEl.addEventListener('blur', updatePreview);
 
@@ -267,6 +280,7 @@
         excerptEl.value = parsed.excerpt || '';
         bodyEl.innerHTML = parsed.bodyHtml || '';
         tagsEl.value = parsed.tags || '';
+        eyecatchEl.value = parsed.eyecatch || '';
       } catch (_) {}
     }
     updatePreview();
@@ -299,7 +313,8 @@
     }
 
     function buildJson() {
-      return {
+      const eyecatch = eyecatchEl.value.trim();
+      const post = {
         title: titleEl.value.trim(),
         slug: slugEl.value.trim() || makeSlug(titleEl.value),
         date: new Date().toISOString().slice(0, 10),
@@ -308,6 +323,8 @@
         body: htmlToMarkdown(bodyEl.innerHTML),
         tags: tagsEl.value.split(',').map(v => v.trim()).filter(Boolean),
       };
+      if (eyecatch) post.eyecatch = eyecatch;
+      return post;
     }
 
     async function copyText(text) {
@@ -348,7 +365,8 @@
     document.getElementById('post-json').addEventListener('click', postBlog);
     document.getElementById('post-json-top').addEventListener('click', postBlog);
 
-    document.getElementById('copy-html').addEventListener('click', async () => {
+    const copyHtmlBtn = document.getElementById('copy-html');
+    if (copyHtmlBtn) copyHtmlBtn.addEventListener('click', async () => {
       const html = `<h1>${titleEl.value}</h1>\n<p>${excerptEl.value}</p>\n${bodyEl.innerHTML}`;
       await copyText(html);
     });
