@@ -207,7 +207,12 @@
       <div class="meta-panel" id="meta-panel" style="display:none;">
         <label class="meta-label">要約（一覧に出る短い説明）<textarea id="excerpt" placeholder="この記事の要約を書く"></textarea></label>
         <label class="meta-label">タグ<input id="tags" placeholder="AI検索, WordPress, お知らせ" /></label>
-        <label class="meta-label">スラッグ（URL）<input id="slug" placeholder="未入力なら自動生成" /></label>
+        <label class="meta-label">スラッグ（URL）
+          <div style="display:flex;gap:8px;align-items:center;">
+            <input id="slug" placeholder="未入力ならタイトルから生成" style="flex:1;" />
+            <button type="button" id="gen-slug" style="white-space:nowrap;border:1px solid var(--border);background:#fff;border-radius:10px;padding:8px 12px;font-size:13px;font-weight:700;cursor:pointer;flex-shrink:0;">🎲 自動生成</button>
+          </div>
+        </label>
       </div>
     </div>
 
@@ -390,6 +395,16 @@
       return res.ok ? data.url : null;
     } catch { return null; }
   }
+
+  // ── スラッグ自動生成 ──────────────────────────────────────
+  function genShortId() {
+    const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    return Array.from({length: 7}, () => chars[Math.floor(Math.random() * chars.length)]).join('');
+  }
+  document.getElementById('gen-slug').addEventListener('click', () => {
+    slugEl.value = genShortId();
+    saveDraftLocal();
+  });
 
   // ── メタパネル開閉 ────────────────────────────────────────
   document.getElementById('meta-toggle').addEventListener('click', () => {
