@@ -4,16 +4,21 @@ const BLOG_DIR = "content/blog/posts";
 export async function onRequestPost(context) {
   try {
     const body = await readJsonBody(context.request);
-    const password = String(
+    const pin = String(
+      context.env.BLOG_PIN ||
       context.env.BLOG_PASSWORD ||
       context.env.BLOG_ADMIN_TOKEN ||
       context.env.ACCESS_SECRET ||
       "",
     ).trim();
-    const requestPassword = String(context.request.headers.get("x-yohelab-password") || "").trim();
+    const requestPin = String(
+      context.request.headers.get("x-yohelab-pin") ||
+      context.request.headers.get("x-yohelab-password") ||
+      "",
+    ).trim();
 
-    if (!password) return json({ error: "BLOG_PASSWORD is not configured" }, 500);
-    if (!requestPassword || requestPassword !== password) return json({ error: "unauthorized" }, 401);
+    if (!pin) return json({ error: "BLOG_PIN is not configured" }, 500);
+    if (!requestPin || requestPin !== pin) return json({ error: "unauthorized" }, 401);
 
     const githubToken = String(context.env.GITHUB_TOKEN || "").trim();
     const repo = String(context.env.GITHUB_REPO || "yohelab2026/yohelab-store-site").trim();

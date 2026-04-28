@@ -33,14 +33,28 @@
     .actions { display:flex; gap:10px; flex-wrap:wrap; margin-top:14px; }
     .status { padding:12px 14px; border-radius:12px; background:#f7fbf9; border:1px solid var(--border); color:var(--muted); font-size:14px; }
     .hint { font-size:13px; color:var(--muted); line-height:1.75; }
-    .setup-row { display:grid; gap:10px; }
-    .setup-row.is-saved .setup-input { display:none; }
-    .setup-saved { display:none; padding:12px 14px; border-radius:12px; background:#ecfdf5; border:1px solid #bbf7d0; color:#047857; font-size:14px; font-weight:700; }
-    .setup-row.is-saved .setup-saved { display:block; }
+    .lock-screen { position:fixed; inset:0; z-index:50; display:grid; place-items:center; padding:20px; background:#f6fbf8; }
+    .lock-box { width:min(420px,100%); background:#fff; border:1px solid var(--border); border-radius:16px; box-shadow:var(--shadow); padding:28px; }
+    .lock-box h1 { font-size:28px; margin-bottom:10px; }
+    .lock-box p { color:var(--muted); line-height:1.8; margin-bottom:18px; }
+    .lock-box input { font-size:24px; letter-spacing:.28em; text-align:center; }
+    body.is-unlocked .lock-screen { display:none; }
+    body:not(.is-unlocked) .shell, body:not(.is-unlocked) header { display:none; }
     @media (max-width: 920px) { .grid { grid-template-columns:1fr; } .admin-head { align-items:flex-start; flex-direction:column; } }
   </style>
 </head>
 <body>
+  <div class="lock-screen" id="lock-screen">
+    <div class="lock-box">
+      <h1>ブログ管理</h1>
+      <p>4桁のパスワードで入る。</p>
+      <div class="form">
+        <label>パスワード<input id="admin-pin" inputmode="numeric" maxlength="4" autocomplete="current-password" placeholder="0000" /></label>
+        <button class="btn btn-primary btn-lg" id="unlock-admin" type="button">入る</button>
+      </div>
+      <p class="hint" id="lock-status" style="margin-top:14px;"></p>
+    </div>
+  </div>
   <header class="nav">
     <div class="nav-inner">
       <a class="brand" href="/"><img src="/yohelab-icon.png" alt="よへラボのアイコン" /><span>よへラボ</span></a>
@@ -110,16 +124,6 @@
           <button class="btn btn-outline btn-lg" id="save-draft" type="button">下書きを保存</button>
         </div>
         <hr style="border:0;border-top:1px solid var(--border);margin:18px 0;">
-        <h2>初期設定</h2>
-        <div class="setup-row" id="setup-row">
-          <div class="setup-saved">パスワード設定済み</div>
-          <label class="setup-input">初期設定のパスワード<input id="password" type="password" placeholder="投稿用パスワード" /></label>
-          <div class="actions" style="margin-top:0;">
-            <button class="btn btn-outline btn-lg" id="save-password" type="button">パスワードを保存</button>
-            <button class="btn btn-outline btn-lg" id="change-password" type="button">変更</button>
-          </div>
-        </div>
-        <hr style="border:0;border-top:1px solid var(--border);margin:18px 0;">
         <h2>記事設定</h2>
         <div class="form">
           <label>スラッグ<input id="slug" placeholder="未入力なら自動作成" /></label>
@@ -145,12 +149,28 @@
     const excerptEl = document.getElementById('excerpt');
     const bodyEl = document.getElementById('body');
     const tagsEl = document.getElementById('tags');
-    const passwordEl = document.getElementById('password');
-    const setupRowEl = document.getElementById('setup-row');
+    const adminPinEl = document.getElementById('admin-pin');
+    const lockStatusEl = document.getElementById('lock-status');
     const statusEl = document.getElementById('status');
     const previewExcerptEl = document.getElementById('preview-excerpt');
     const previewBodyEl = document.getElementById('preview-body');
-    const PASSWORD_KEY = 'yohelab.blog.password';
+    const PIN_KEY = 'yohelab.blog.pin';
+
+    function unlock(pin) {
+      if (!/^\d{4}$/.test(pin)) {
+        lockStatusEl.textContent = '数字4桁で入れて。';
+        return;
+      }
+      sessionStorage.setItem(PIN_KEY, pin);
+      document.body.classList.add('is-unlocked');
+    }
+
+    const savedPin = sessionStorage.getItem(PIN_KEY) || '';
+    if (savedPin) document.body.classList.add('is-unlocked');
+    document.getElementById('unlock-admin').addEventListener('click', () => unlock(adminPinEl.value.trim()));
+    adminPinEl.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') unlock(adminPinEl.value.trim());
+    });
 
     function updatePreview() {
       previewExcerptEl.textContent = excerptEl.value || '要約がここに出る。';
@@ -233,11 +253,6 @@
         tagsEl.value = parsed.tags || '';
       } catch (_) {}
     }
-    const savedPassword = localStorage.getItem(PASSWORD_KEY) || '';
-    if (savedPassword) {
-      passwordEl.value = savedPassword;
-      setupRowEl.classList.add('is-saved');
-    }
     updatePreview();
 
     function htmlToMarkdown(html) {
@@ -256,10 +271,21 @@
         .trim();
     }
 
+    function makeSlug(text) {
+      const fallback = `post-${new Date().toISOString().slice(0, 10)}`;
+      return String(text || fallback)
+        .trim()
+        .toLowerCase()
+        .replace(/[^a-z0-9ぁ-んァ-ヶ一-龠ー._-]+/g, '-')
+        .replace(/-+/g, '-')
+        .replace(/^-+|-+$/g, '')
+        .slice(0, 80) || fallback;
+    }
+
     function buildJson() {
       return {
         title: titleEl.value.trim(),
-        slug: slugEl.value.trim(),
+        slug: slugEl.value.trim() || makeSlug(titleEl.value),
         date: new Date().toISOString().slice(0, 10),
         excerpt: excerptEl.value.trim(),
         bodyHtml: bodyEl.innerHTML,
@@ -275,23 +301,25 @@
 
     async function postBlog() {
       const post = buildJson();
-      const password = (localStorage.getItem(PASSWORD_KEY) || passwordEl.value || '').trim();
-      if (!password) {
-        statusEl.textContent = '初期設定のパスワードを保存して。';
+      const pin = (sessionStorage.getItem(PIN_KEY) || '').trim();
+      if (!pin) {
+        document.body.classList.remove('is-unlocked');
+        statusEl.textContent = 'もう一度ログインして。';
         return;
       }
       const response = await fetch('/api/blog-post', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'X-Yohelab-Password': password,
+          'X-Yohelab-Pin': pin,
         },
         body: JSON.stringify(post),
       });
       const data = await response.json().catch(() => ({}));
       if (!response.ok) {
         const messages = {
-          'BLOG_PASSWORD is not configured': 'Cloudflare側に投稿用パスワードが未設定です。',
+          'BLOG_PASSWORD is not configured': 'Cloudflare側に4桁パスワードが未設定です。',
+          'BLOG_PIN is not configured': 'Cloudflare側に4桁パスワードが未設定です。',
           'GITHUB_TOKEN is not configured': 'Cloudflare側にGitHub連携が未設定です。',
           unauthorized: 'パスワードが違います。',
           title_slug_body_required: 'タイトルと本文を入れてください。',
@@ -305,21 +333,6 @@
 
     document.getElementById('post-json').addEventListener('click', postBlog);
     document.getElementById('post-json-top').addEventListener('click', postBlog);
-    document.getElementById('save-password').addEventListener('click', () => {
-      const password = passwordEl.value.trim();
-      if (!password) {
-        statusEl.textContent = 'パスワードを入れて。';
-        return;
-      }
-      localStorage.setItem(PASSWORD_KEY, password);
-      setupRowEl.classList.add('is-saved');
-      statusEl.textContent = 'パスワードを保存した。次から入力はいらない。';
-    });
-    document.getElementById('change-password').addEventListener('click', () => {
-      setupRowEl.classList.remove('is-saved');
-      passwordEl.focus();
-      statusEl.textContent = '新しいパスワードを入れて保存して。';
-    });
 
     document.getElementById('copy-html').addEventListener('click', async () => {
       const html = `<h1>${titleEl.value}</h1>\n<p>${excerptEl.value}</p>\n${bodyEl.innerHTML}`;
