@@ -11,6 +11,7 @@
     body { background:#f6fbf8; }
     .shell { padding: 84px 0 60px; }
     .admin-head { display:flex; justify-content:space-between; gap:16px; align-items:center; margin-bottom:18px; }
+    .admin-actions { display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
     .admin-head h1 { font-size:32px; margin:0; }
     .grid { display:grid; grid-template-columns:minmax(0,1fr) 340px; gap:20px; align-items:start; }
     .panel { background:#fff; border:1px solid var(--border); border-radius:14px; box-shadow:var(--shadow-xs); padding:22px; }
@@ -69,7 +70,10 @@
     <div class="container">
       <div class="admin-head">
         <h1>新規投稿</h1>
-        <button class="btn btn-primary btn-lg" id="post-json-top" type="button">公開する</button>
+        <div class="admin-actions">
+          <button class="btn btn-outline btn-lg" id="logout-admin" type="button">ログアウト</button>
+          <button class="btn btn-primary btn-lg" id="post-json-top" type="button">公開する</button>
+        </div>
       </div>
     </div>
     <div class="container grid">
@@ -168,10 +172,20 @@
     }
 
     const savedPin = sessionStorage.getItem(PIN_KEY) || '';
-    if (savedPin) document.body.classList.add('is-unlocked');
+    if (savedPin) {
+      document.body.classList.add('is-unlocked');
+      adminPinEl.value = savedPin;
+    }
     document.getElementById('unlock-admin').addEventListener('click', () => unlock(adminPinEl.value.trim()));
     adminPinEl.addEventListener('keydown', (event) => {
       if (event.key === 'Enter') unlock(adminPinEl.value.trim());
+    });
+    document.getElementById('logout-admin').addEventListener('click', () => {
+      sessionStorage.removeItem(PIN_KEY);
+      document.body.classList.remove('is-unlocked');
+      adminPinEl.value = DEFAULT_PIN;
+      lockStatusEl.textContent = 'ログアウトした。もう一度入るなら 1030 を入れて。';
+      adminPinEl.focus();
     });
 
     function updatePreview() {
