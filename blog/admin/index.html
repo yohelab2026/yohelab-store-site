@@ -56,6 +56,7 @@
       </div>
       <div class="panel">
         <div class="form">
+          <label>管理トークン<input id="token" type="password" placeholder="Cloudflare側の管理トークン" /></label>
           <label>タイトル<input id="title" placeholder="記事タイトル" /></label>
           <label>スラッグ<input id="slug" placeholder="example-post" /></label>
           <label>要約<textarea id="excerpt" placeholder="一覧に出す短い説明"></textarea></label>
@@ -98,6 +99,7 @@
     const excerptEl = document.getElementById('excerpt');
     const bodyEl = document.getElementById('body');
     const tagsEl = document.getElementById('tags');
+    const tokenEl = document.getElementById('token');
     const statusEl = document.getElementById('status');
     const previewExcerptEl = document.getElementById('preview-excerpt');
     const previewBodyEl = document.getElementById('preview-body');
@@ -111,6 +113,7 @@
         excerpt: excerptEl.value,
         bodyHtml: bodyEl.innerHTML,
         tags: tagsEl.value,
+        token: tokenEl.value,
       }));
     }
 
@@ -159,6 +162,7 @@
         excerptEl.value = parsed.excerpt || '';
         bodyEl.innerHTML = parsed.bodyHtml || '';
         tagsEl.value = parsed.tags || '';
+        tokenEl.value = parsed.token || '';
       } catch (_) {}
     }
     updatePreview();
@@ -185,6 +189,7 @@
         slug: slugEl.value.trim(),
         date: new Date().toISOString().slice(0, 10),
         excerpt: excerptEl.value.trim(),
+        bodyHtml: bodyEl.innerHTML,
         body: htmlToMarkdown(bodyEl.innerHTML),
         tags: tagsEl.value.split(',').map(v => v.trim()).filter(Boolean),
       };
@@ -195,26 +200,28 @@
       statusEl.textContent = 'コピーした。';
     }
 
-    function downloadText(filename, text) {
-      const blob = new Blob([text], { type: 'application/json;charset=utf-8' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      URL.revokeObjectURL(url);
-      statusEl.textContent = 'JSONを書き出した。';
-    }
-
     async function postBlog() {
       const post = buildJson();
-      const filename = `${post.date}-${post.slug || 'post'}.json`;
-      const json = JSON.stringify(post, null, 2);
-      await copyText(json);
-      downloadText(filename, json);
-      statusEl.textContent = `投稿用ファイルを作った。${filename}`;
+      const token = tokenEl.value.trim();
+      if (!token) {
+        statusEl.textContent = '管理トークンを入れて。';
+        return;
+      }
+      const response = await fetch('/api/blog-post', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Yohelab-Admin-Token': token,
+        },
+        body: JSON.stringify(post),
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        statusEl.textContent = data.error || '投稿に失敗した。';
+        return;
+      }
+      localStorage.setItem('yohelab.blog.lastExport', JSON.stringify(data.post, null, 2));
+      statusEl.textContent = `投稿した。${data.path}`;
     }
 
     document.getElementById('post-json').addEventListener('click', postBlog);
