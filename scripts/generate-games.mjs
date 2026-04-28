@@ -241,7 +241,7 @@ function pageTemplate(game) {
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://yohelab.com/games/${game.slug}/" />
   <meta property="og:image" content="https://yohelab.com/yohelab-icon.png" />
-  <meta name="theme-color" content="#07120f" />
+  <meta name="theme-color" content="#f5fbff" />
   <link rel="icon" type="image/png" href="/yohelab-icon.png" />
   <link rel="stylesheet" href="/shared/site.css" />
   <link rel="stylesheet" href="${sharedCss}" />
@@ -252,11 +252,12 @@ function pageTemplate(game) {
       <a class="brand brand-light" href="/">
         <img src="/yohelab-icon.png" alt="よへラボ" />
         <span>よへラボ</span>
-        <span class="brand-sub">ゲーム</span>
+        <span class="brand-sub">ブログ</span>
       </a>
       <nav class="nav-links">
-        <a href="/#tool">AIツール</a>
-        <a href="/games/">Labs</a>
+        <a href="/apps/research-writer/">ツール</a>
+        <a href="/products/page-review/">サービス</a>
+        <a href="/blog/">ブログ</a>
         <a href="/contact/">問い合わせ</a>
       </nav>
     </div>

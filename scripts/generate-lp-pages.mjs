@@ -699,12 +699,11 @@ function renderPage(page) {
           <span class="brand-sub">AIOツール</span>
         </a>
         <nav class="nav-links">
-          <a href="/">トップ</a>
-          <a href="${page.freeHref}">${esc(freeLabel)}</a>
-          <a href="${page.productHref}">プラン詳細</a>
-          <a href="/contact/">お問い合わせ</a>
-          <a class="btn btn-primary btn-sm" href="${page.buyHref}" target="_blank" rel="noreferrer">${esc(page.buyLabel || "購入する")}</a>
-        </nav>
+        <a href="/apps/research-writer/">ツール</a>
+        <a href="/products/page-review/">サービス</a>
+        <a href="/blog/">ブログ</a>
+        <a href="/contact/">問い合わせ</a>
+      </nav>
       </div>
     </header>
 

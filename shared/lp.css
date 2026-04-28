@@ -10,8 +10,8 @@
 .reveal-d3 { transition-delay: .24s; }
 
 /* ── NAV ── */
-.lp-nav { background: rgba(5,15,12,.92); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); }
-.lp-nav .brand-sub { color: rgba(255,255,255,.45); }
+.lp-nav { background: rgba(255,255,255,.88); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); border-bottom: 1px solid rgba(213,225,247,.88); }
+.lp-nav .brand-sub { color: rgba(15,34,71,.48); }
 
 /* ── HERO ── */
 .lp-hero {

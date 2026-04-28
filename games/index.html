@@ -9,7 +9,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://yohelab.com/games/" />
   <meta property="og:image" content="https://yohelab.com/yohelab-icon.png" />
-  <meta name="theme-color" content="#050f0c" />
+  <meta name="theme-color" content="#f5fbff" />
   <link rel="icon" type="image/png" href="../yohelab-icon.png" />
   <link rel="stylesheet" href="/shared/site.css" />
   <link rel="stylesheet" href="/shared/lp.css" />
@@ -18,16 +18,16 @@
       position: relative; overflow: hidden;
       padding: 100px 0 72px;
       background:
-        radial-gradient(ellipse 70% 55% at 60% -5%, rgba(99,102,241,.28) 0%, transparent 52%),
-        radial-gradient(ellipse 45% 45% at 5% 80%, rgba(59,130,246,.12) 0%, transparent 60%),
-        linear-gradient(180deg, #07091a 0%, #0d1035 100%);
-      color: #fff;
+        radial-gradient(ellipse 70% 55% at 60% -5%, rgba(31,182,207,.18) 0%, transparent 52%),
+        radial-gradient(ellipse 45% 45% at 5% 80%, rgba(63,140,255,.08) 0%, transparent 60%),
+        linear-gradient(180deg, #f8fbff 0%, #eef5ff 100%);
+      color: var(--text);
     }
     .games-hero-grid {
       position: absolute; inset: 0; pointer-events: none;
       background-image:
-        linear-gradient(rgba(99,102,241,.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(99,102,241,.04) 1px, transparent 1px);
+        linear-gradient(rgba(11,143,114,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(11,143,114,.04) 1px, transparent 1px);
       background-size: 56px 56px;
       mask-image: radial-gradient(ellipse 75% 65% at 50% 40%, #000 0%, transparent 78%);
       -webkit-mask-image: radial-gradient(ellipse 75% 65% at 50% 40%, #000 0%, transparent 78%);
@@ -35,20 +35,20 @@
     .games-eyebrow {
       display: inline-flex; align-items: center; gap: 8px;
       padding: 7px 18px; border-radius: 999px;
-      background: rgba(99,102,241,.14); border: 1px solid rgba(99,102,241,.32);
-      color: #a5b4fc; font-size: 12px; font-weight: 800;
+      background: rgba(255,255,255,.9); border: 1px solid rgba(11,143,114,.18);
+      color: var(--green-dark); font-size: 12px; font-weight: 800;
       letter-spacing: .08em; text-transform: uppercase; margin-bottom: 24px;
     }
     .games-hero h1 {
       font-size: clamp(40px, 6.5vw, 72px);
       font-weight: 900; letter-spacing: -0.055em; line-height: 1.06;
-      color: #fff; margin-bottom: 20px; text-wrap: balance;
+      color: var(--text); margin-bottom: 20px; text-wrap: balance;
     }
     .games-hero h1 em {
-      background: linear-gradient(135deg, #a5b4fc 0%, #818cf8 55%, #6366f1 100%);
+      background: linear-gradient(135deg, #0b8f72 0%, #1fb6cf 55%, #3f8cff 100%);
       -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
     }
-    .games-lead { font-size: clamp(16px,1.8vw,18px); color: rgba(255,255,255,.65); line-height:1.9; max-width:640px; margin:0 auto 32px; }
+    .games-lead { font-size: clamp(16px,1.8vw,18px); color: var(--muted); line-height:1.9; max-width:640px; margin:0 auto 32px; }
     .games-body { background: #fff; border-radius: 28px 28px 0 0; margin-top: -28px; position: relative; z-index: 2; }
     /* Category filter tabs */
     .cat-filter {
@@ -137,14 +137,12 @@
       <a class="brand brand-light" href="/">
         <img src="/yohelab-icon.png" alt="よへラボ" />
         <span>よへラボ</span>
-        <span class="brand-sub">Labs</span>
+          <span class="brand-sub">ブログ</span>
       </a>
       <nav class="nav-links">
-        <div class="nav-tabs" id="navTabs">
-          <a href="/#tool">🤖 AIツール</a>
-          <a href="/games/">🎮 Labs</a>
-          <a href="/apps/wordpress-theme/">🧩 WordPressテーマ</a>
-        </div>
+        <a href="/apps/research-writer/">ツール</a>
+        <a href="/products/page-review/">サービス</a>
+        <a href="/blog/">ブログ</a>
         <a href="/contact/">問い合わせ</a>
       </nav>
     </div>
