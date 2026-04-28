@@ -49,7 +49,7 @@
       <h1>ブログ管理</h1>
       <p>4桁のパスワードで入る。</p>
       <div class="form">
-        <label>パスワード<input id="admin-pin" inputmode="numeric" maxlength="4" autocomplete="current-password" placeholder="0000" /></label>
+        <label>パスワード<input id="admin-pin" inputmode="numeric" maxlength="4" autocomplete="current-password" placeholder="1030" value="1030" /></label>
         <button class="btn btn-primary btn-lg" id="unlock-admin" type="button">入る</button>
       </div>
       <p class="hint" id="lock-status" style="margin-top:14px;"></p>
@@ -155,13 +155,15 @@
     const previewExcerptEl = document.getElementById('preview-excerpt');
     const previewBodyEl = document.getElementById('preview-body');
     const PIN_KEY = 'yohelab.blog.pin';
+    const DEFAULT_PIN = '1030';
 
     function unlock(pin) {
-      if (!/^\d{4}$/.test(pin)) {
+      const nextPin = pin || DEFAULT_PIN;
+      if (!/^\d{4}$/.test(nextPin)) {
         lockStatusEl.textContent = '数字4桁で入れて。';
         return;
       }
-      sessionStorage.setItem(PIN_KEY, pin);
+      sessionStorage.setItem(PIN_KEY, nextPin);
       document.body.classList.add('is-unlocked');
     }
 

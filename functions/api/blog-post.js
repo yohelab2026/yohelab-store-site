@@ -9,7 +9,7 @@ export async function onRequestPost(context) {
       context.env.BLOG_PASSWORD ||
       context.env.BLOG_ADMIN_TOKEN ||
       context.env.ACCESS_SECRET ||
-      "",
+      "1030",
     ).trim();
     const requestPin = String(
       context.request.headers.get("x-yohelab-pin") ||
