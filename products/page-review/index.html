@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>商品ページ改善レビュー | よへラボ</title>
+    <meta name="description" content="BASE・STORES・note・自サイトの商品ページを見て、伝わりにくい点、FAQ案、説明文の書き換え案を返す小さな改善サービス。初回モニター980円。" />
+    <meta property="og:title" content="商品ページ改善レビュー | よへラボ" />
+    <meta property="og:description" content="商品ページを1ページ見て、見出し、説明文、FAQ、要約の改善案を返す。初回モニター980円。" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta property="og:url" content="https://yohelab.com/products/page-review/" />
+    <meta property="og:image" content="https://yohelab.com/yohelab-icon.png" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
+    <meta name="theme-color" content="#07110e" />
+    <link rel="canonical" href="https://yohelab.com/products/page-review/" />
+    <link rel="icon" type="image/png" href="/yohelab-icon.png" />
+    <link rel="stylesheet" href="/shared/site.css" />
+    <script type="application/ld+json">
+      {"@context":"https://schema.org","@graph":[{"@type":"Organization","name":"よへラボ","url":"https://yohelab.com/","logo":"https://yohelab.com/yohelab-icon.png"},{"@type":"Service","name":"商品ページ改善レビュー","provider":{"@type":"Organization","name":"よへラボ"},"url":"https://yohelab.com/products/page-review/","description":"BASE・STORES・note・自サイトの商品ページを見て、伝わりにくい点、FAQ案、説明文の書き換え案を返す改善レビュー。","areaServed":"JP","offers":{"@type":"Offer","priceCurrency":"JPY","price":"980","availability":"https://schema.org/InStock","url":"https://yohelab.com/products/page-review/"}}]}
+    </script>
+    <style>
+      body {
+        background:
+          radial-gradient(circle at top left, rgba(11, 143, 114, 0.10), transparent 30%),
+          radial-gradient(circle at top right, rgba(29, 78, 216, 0.08), transparent 26%),
+          linear-gradient(180deg, #f5fbf8 0%, #ffffff 24%, #ffffff 100%);
+      }
+      .hero {
+        padding: 92px 0 64px;
+        background:
+          radial-gradient(ellipse 70% 58% at 50% -12%, rgba(79, 209, 184, 0.18) 0%, transparent 58%),
+          linear-gradient(180deg, #06110e 0%, #0c1d18 100%);
+        color: #fff;
+        overflow: hidden;
+      }
+      .hero-inner {
+        display: grid;
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: 28px;
+        align-items: center;
+      }
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 14px;
+        border-radius: 999px;
+        border: 1px solid rgba(255,255,255,.14);
+        background: rgba(255,255,255,.06);
+        color: rgba(255,255,255,.82);
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+      }
+      .eyebrow .dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #4fd1b8;
+      }
+      .hero h1 {
+        font-size: clamp(38px, 6vw, 72px);
+        line-height: 1.06;
+        letter-spacing: -0.06em;
+        margin-bottom: 16px;
+      }
+      .hero h1 em {
+        font-style: normal;
+        color: #6be5c9;
+      }
+      .lead {
+        color: rgba(255,255,255,.74);
+        font-size: 18px;
+        line-height: 1.9;
+        max-width: 700px;
+        margin-bottom: 24px;
+      }
+      .hero-actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .hero-card {
+        padding: 24px;
+        border-radius: 24px;
+        background: rgba(255,255,255,.08);
+        border: 1px solid rgba(255,255,255,.12);
+        box-shadow: 0 24px 60px rgba(0,0,0,.18);
+      }
+      .hero-card h3 {
+        font-size: 15px;
+        margin-bottom: 14px;
+      }
+      .hero-list {
+        display: grid;
+        gap: 10px;
+      }
+      .hero-list li {
+        display: grid;
+        grid-template-columns: 18px 1fr;
+        gap: 8px;
+        color: rgba(255,255,255,.76);
+        font-size: 13px;
+        line-height: 1.7;
+      }
+      .hero-list li::before {
+        content: "✓";
+        color: #6be5c9;
+        font-weight: 900;
+      }
+      .section-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+      }
+      .card {
+        padding: 26px;
+        border-radius: 20px;
+        background: #fff;
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow-xs);
+      }
+      .card h3 {
+        font-size: 18px;
+        margin-bottom: 10px;
+      }
+      .card p {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.85;
+      }
+      .deliverable {
+        display: grid;
+        gap: 12px;
+      }
+      .deliverable-item {
+        padding: 18px 20px;
+        border-radius: 18px;
+        background: linear-gradient(180deg, #ffffff 0%, #f5fbf8 100%);
+        border: 1px solid #d9ece4;
+      }
+      .deliverable-item strong {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 15px;
+      }
+      .deliverable-item span {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.8;
+      }
+      .example-box {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        gap: 0;
+        border: 1px solid var(--border);
+        border-radius: 22px;
+        overflow: hidden;
+        background: #fff;
+      }
+      .example-col {
+        padding: 28px;
+      }
+      .example-col.bad {
+        background: #fff7f7;
+      }
+      .example-col.good {
+        background: #f3fcf7;
+      }
+      .example-col h3 {
+        font-size: 18px;
+        margin-bottom: 14px;
+      }
+      .example-col ul {
+        display: grid;
+        gap: 10px;
+      }
+      .example-col li {
+        font-size: 14px;
+        line-height: 1.7;
+        display: flex;
+        gap: 8px;
+      }
+      .example-col.bad li::before {
+        content: "✗";
+        color: #dc2626;
+        font-weight: 900;
+      }
+      .example-col.good li::before {
+        content: "✓";
+        color: #059669;
+        font-weight: 900;
+      }
+      .example-divider {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 14px;
+        color: var(--muted);
+        background: #f8fafc;
+        font-size: 22px;
+        font-weight: 800;
+      }
+      .price-box {
+        padding: 30px;
+        border-radius: 24px;
+        background: linear-gradient(180deg, #eefbf5, #e6f8ef);
+        border: 1px solid #cde8dd;
+      }
+      .price {
+        font-size: 44px;
+        font-weight: 900;
+        letter-spacing: -0.05em;
+        color: var(--green-dark);
+        margin-bottom: 6px;
+      }
+      .price small {
+        font-size: 15px;
+        color: var(--muted);
+        font-weight: 600;
+      }
+      .price-note {
+        margin-top: 14px;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.8;
+      }
+      .bullet-list {
+        display: grid;
+        gap: 10px;
+      }
+      .bullet-list li {
+        display: flex;
+        gap: 10px;
+        font-size: 14px;
+        color: var(--text-sub);
+        line-height: 1.7;
+      }
+      .bullet-list li::before {
+        content: "✓";
+        color: var(--green);
+        font-weight: 900;
+        flex-shrink: 0;
+      }
+      .note-box {
+        padding: 18px 20px;
+        border-radius: 18px;
+        border: 1px solid #bfdbfe;
+        background: #eff6ff;
+        color: #1d4ed8;
+        font-size: 14px;
+        line-height: 1.8;
+      }
+      @media (max-width: 900px) {
+        .hero-inner,
+        .section-grid,
+        .example-box {
+          grid-template-columns: 1fr;
+        }
+        .example-divider {
+          padding: 14px 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="nav">
+      <div class="nav-inner">
+        <a class="brand" href="/"><img src="/yohelab-icon.png" alt="よへラボのアイコン" /><span>よへラボ</span></a>
+        <nav class="nav-links">
+          <a href="/">トップ</a>
+          <a href="/apps/research-writer/">記事メーカー</a>
+          <a href="/apps/wordpress-theme/">WordPressテーマ</a>
+          <a href="/blog/">ブログ</a>
+          <a class="btn btn-primary btn-sm" href="/contact/#page-review">申し込む</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container hero-inner">
+          <div>
+            <p class="eyebrow"><span class="dot"></span> Review service</p>
+            <h1><em>売るページ</em>を、伝わるページに直す。</h1>
+            <p class="lead">BASE、STORES、note、自サイトの商品ページを1ページ見て、伝わりにくい点、足りない説明、FAQにできる要素、要約の弱さを整理して返す。派手な診断ではなく、今すぐ直せるところを短く返す。</p>
+            <div class="hero-actions">
+              <a class="btn btn-white btn-lg" href="/contact/#page-review">初回モニターを申し込む</a>
+              <a class="btn btn-ghost-white btn-lg" href="#deliverables">返す内容を見る</a>
+            </div>
+          </div>
+          <div class="hero-card">
+            <h3>こんな人向け</h3>
+            <ul class="hero-list">
+              <li>商品ページを作ったけど、何が弱いか分からない</li>
+              <li>説明文を書いても、誰向けかぼやける</li>
+              <li>FAQや要約をどう置けばいいか迷う</li>
+              <li>AI検索でも人にも伝わる形に整えたい</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <p class="section-label">What you get</p>
+          <h2 class="section-title">返すものは、直せる形の5点だけ。</h2>
+          <div class="deliverable" id="deliverables">
+            <div class="deliverable-item">
+              <strong>1. 弱点3つ</strong>
+              <span>まずどこが伝わっていないかを、長くせずに3点に絞って返す。</span>
+            </div>
+            <div class="deliverable-item">
+              <strong>2. 見出しの修正案</strong>
+              <span>「誰向けか」「何が得られるか」が一瞬で伝わる言い方に整える。</span>
+            </div>
+            <div class="deliverable-item">
+              <strong>3. 説明文の書き換え例</strong>
+              <span>今の説明をベースに、読みやすい形へ短く書き換える。</span>
+            </div>
+            <div class="deliverable-item">
+              <strong>4. FAQ案 3〜5個</strong>
+              <span>購入前に止まりやすい不安を、質問と答えの形で見える化する。</span>
+            </div>
+            <div class="deliverable-item">
+              <strong>5. 要約文 1本</strong>
+              <span>商品ページの上や導入に置きやすい、短い要約文を返す。</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" style="background:var(--bg);">
+        <div class="container">
+          <p class="section-label">What changes</p>
+          <h2 class="section-title">見るのは「かっこよさ」より、伝わり方。</h2>
+          <div class="example-box">
+            <div class="example-col bad">
+              <h3>止まりやすいページ</h3>
+              <ul>
+                <li>誰向けの商品かが最初に見えない</li>
+                <li>特徴だけ並んでいて、買う理由になっていない</li>
+                <li>FAQがなく、不安が残る</li>
+                <li>要約が弱く、ページ全体を読まないと分からない</li>
+              </ul>
+            </div>
+            <div class="example-divider">→</div>
+            <div class="example-col good">
+              <h3>伝わりやすいページ</h3>
+              <ul>
+                <li>最初の見出しで、誰向けかが分かる</li>
+                <li>特徴より先に、得られる変化が見える</li>
+                <li>質問と答えで購入前の不安を潰せる</li>
+                <li>短い要約だけで内容の全体像がつかめる</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <p class="section-label">Target</p>
+          <h2 class="section-title">まずはこのあたりを想定している。</h2>
+          <div class="section-grid">
+            <div class="card">
+              <h3>BASE / STORES</h3>
+              <p>商品説明、購入前の不安、レビュー前のFAQづくりを整えたい人向け。</p>
+            </div>
+            <div class="card">
+              <h3>note販売ページ</h3>
+              <p>何を買うページなのかがぼやけやすい時に、見出しと導入を見直す。</p>
+            </div>
+            <div class="card">
+              <h3>自サイトのサービスページ</h3>
+              <p>サービス紹介が長くなりすぎた時に、要約とFAQの入口を作る。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" style="background:var(--bg);">
+        <div class="container">
+          <p class="section-label">Flow</p>
+          <h2 class="section-title">流れはかなりシンプル。</h2>
+          <div class="section-grid">
+            <div class="card">
+              <h3>1. URLを送る</h3>
+              <p>見てほしいページURLと、何を売っているかを送る。</p>
+            </div>
+            <div class="card">
+              <h3>2. 24〜48時間で返す</h3>
+              <p>弱点、改善案、FAQ案、要約文をまとめて返す。</p>
+            </div>
+            <div class="card">
+              <h3>3. そのまま直す</h3>
+              <p>返した内容をもとに、自分のページへ反映していく。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="price-box">
+            <div class="price">¥980 <small>初回モニター</small></div>
+            <ul class="bullet-list" style="margin-top:16px;">
+              <li>1ページだけ見る</li>
+              <li>納期は24〜48時間</li>
+              <li>返す内容は5点で固定</li>
+              <li>売上保証や順位保証はしない</li>
+            </ul>
+            <p class="price-note">最初は大きいコンサルではなく、小さい改善レビューとして出す。必要以上に広げず、まず1ページだけ見る。</p>
+            <div style="margin-top:18px;display:flex;gap:12px;flex-wrap:wrap;">
+              <a class="btn btn-primary btn-lg" href="/contact/#page-review">申し込む →</a>
+              <a class="btn btn-outline btn-lg" href="/blog/">ブログを見る</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" style="padding-top:0;">
+        <div class="container">
+          <div class="note-box">
+            これは教材販売ではなく、ページを実際に見て返すレビューサービス。検索順位や売上の保証はしない。その代わり、今のページでどこが伝わりにくいかを具体的に返す。
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <div>© よへラボ / 商品ページ改善レビュー</div>
+        <div class="footer-links">
+          <a href="/">トップ</a>
+          <a href="/apps/research-writer/">記事メーカー</a>
+          <a href="/apps/wordpress-theme/">WordPressテーマ</a>
+          <a href="/contact/">問い合わせ</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

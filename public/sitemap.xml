@@ -2,74 +2,86 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://yohelab.com/</loc>
-    <lastmod>2026-04-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://yohelab.com/lp/research-writer/</loc>
-    <lastmod>2026-04-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <loc>https://yohelab.com/games/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
   </url>
-  <url>
-    <loc>https://yohelab.com/lp/wordpress-theme/</loc>
-    <lastmod>2026-04-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
+  <url><loc>https://yohelab.com/games/clear-road/</loc><changefreq>monthly</changefreq><priority>0.2</priority></url>
+  <url><loc>https://yohelab.com/games/coin-run/</loc><changefreq>monthly</changefreq><priority>0.2</priority></url>
+  <url><loc>https://yohelab.com/games/fruit-catch/</loc><changefreq>monthly</changefreq><priority>0.2</priority></url>
+  <url><loc>https://yohelab.com/games/stack-tower/</loc><changefreq>monthly</changefreq><priority>0.2</priority></url>
+  <url><loc>https://yohelab.com/games/blink-rush/</loc><changefreq>monthly</changefreq><priority>0.2</priority></url>
+  <url><loc>https://yohelab.com/games/color-switch/</loc><changefreq>monthly</changefreq><priority>0.2</priority></url>
+  <url><loc>https://yohelab.com/games/pair-memory/</loc><changefreq>monthly</changefreq><priority>0.2</priority></url>
+  <url><loc>https://yohelab.com/games/orbit-escape/</loc><changefreq>monthly</changefreq><priority>0.2</priority></url>
+  <url><loc>https://yohelab.com/games/tap-rush/</loc><changefreq>monthly</changefreq><priority>0.2</priority></url>
+  <url><loc>https://yohelab.com/games/number-order/</loc><changefreq>monthly</changefreq><priority>0.2</priority></url>
+  <url><loc>https://yohelab.com/games/reaction/</loc><changefreq>monthly</changefreq><priority>0.2</priority></url>
+  <url><loc>https://yohelab.com/games/typing/</loc><changefreq>monthly</changefreq><priority>0.2</priority></url>
+  <url><loc>https://yohelab.com/games/math-rush/</loc><changefreq>monthly</changefreq><priority>0.2</priority></url>
+  <url><loc>https://yohelab.com/games/sequence/</loc><changefreq>monthly</changefreq><priority>0.2</priority></url>
   <url>
     <loc>https://yohelab.com/apps/research-writer/</loc>
-    <lastmod>2026-04-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yohelab.com/lp/research-writer/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://yohelab.com/apps/wordpress-theme/</loc>
-    <lastmod>2026-04-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yohelab.com/lp/wordpress-theme/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://yohelab.com/products/research-writer-beta/</loc>
-    <lastmod>2026-04-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://yohelab.com/products/article-starter-kit/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://yohelab.com/products/wordpress-theme-beta/</loc>
-    <lastmod>2026-04-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://yohelab.com/blog/</loc>
-    <lastmod>2026-04-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://yohelab.com/contact/</loc>
-    <lastmod>2026-04-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
-  </url>
-  <url>
-    <loc>https://yohelab.com/legal/commerce/</loc>
-    <lastmod>2026-04-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
-  </url>
-  <url>
     <loc>https://yohelab.com/legal/privacy/</loc>
-    <lastmod>2026-04-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://yohelab.com/legal/terms/</loc>
-    <lastmod>2026-04-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://yohelab.com/legal/commerce/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://yohelab.com/contact/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://yohelab.com/blog/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
   </url>
 </urlset>
