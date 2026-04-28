@@ -16,7 +16,15 @@
   <meta name="theme-color" content="#050f0c" />
   <link rel="canonical" href="https://yohelab.com/" />
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"よへラボ","url":"https://yohelab.com/","description":"AI検索時代の記事メーカーとWordPressテーマを提供"},{"@type":"Organization","name":"よへラボ","url":"https://yohelab.com/","logo":{"@type":"ImageObject","url":"https://yohelab.com/yohelab-icon.png"}}]}
+  {"@context":"https://schema.org","@graph":[
+    {"@type":"Organization","@id":"https://yohelab.com/#org","name":"よへラボ","url":"https://yohelab.com/","logo":{"@type":"ImageObject","url":"https://yohelab.com/yohelab-icon.png"},"contactPoint":{"@type":"ContactPoint","url":"https://yohelab.com/contact/","contactType":"customer support","availableLanguage":"Japanese"}},
+    {"@type":"WebSite","@id":"https://yohelab.com/#site","name":"よへラボ","url":"https://yohelab.com/","description":"AI検索時代の記事メーカーとWordPressテーマを提供。AI検索に引用されやすい記事下書きを生成するツールと、FAQ・JSON-LD・llms.txtを内蔵したWordPressテーマを販売。","publisher":{"@id":"https://yohelab.com/#org"},"potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://yohelab.com/apps/research-writer/?q={search_term_string}"},"query-input":"required name=search_term_string"}},
+    {"@type":"WebPage","@id":"https://yohelab.com/#page","url":"https://yohelab.com/","name":"よへラボ | AI検索時代の記事メーカーとWordPressテーマ","description":"3キーワードでAI検索に引用されやすい記事下書きを生成するツールと、AI検索対応WordPressテーマを提供するサイト。","isPartOf":{"@id":"https://yohelab.com/#site"}},
+    {"@type":"ItemList","name":"よへラボのツール一覧","itemListElement":[
+      {"@type":"ListItem","position":1,"name":"AI検索に拾われやすい記事メーカー","url":"https://yohelab.com/apps/research-writer/","description":"3キーワードからAI検索に引用されやすい記事下書きを生成。無料版あり・プロプラン月1,980円。"},
+      {"@type":"ListItem","position":2,"name":"AI検索時代の記事ブログテーマ","url":"https://yohelab.com/apps/wordpress-theme/","description":"FAQ・JSON-LD・llms.txtを内蔵した軽量WordPressテーマ。ベータ¥5,500・買い切り。"}
+    ]}
+  ]}
   </script>
   <link rel="icon" type="image/png" href="yohelab-icon.png" />
   <link rel="stylesheet" href="/shared/site.css" />

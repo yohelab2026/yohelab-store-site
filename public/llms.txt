@@ -1,21 +1,34 @@
 # よへラボ
 
-> AI検索時代の記事メーカーとWordPressテーマを提供するサイト。
+> AI検索時代の記事メーカーとWordPressテーマを提供するサイト。3キーワードからAI検索に引用されやすい記事下書きを生成するWebツールと、FAQ・JSON-LD・llms.txtをテーマに内蔵した軽量WordPressテーマを販売する。
 
-## ツール
+## ツール・製品
 
-- [AI検索に拾われやすい記事メーカー](https://yohelab.com/apps/research-writer/): 3キーワードから最新情報を収集し、見出し・FAQ・出典を整えたAI検索向け記事下書きを生成するWebツール。無料版は1日1セット・登録不要。プロプランは月50セット・月額1,980円。
-- [AI検索時代の記事ブログテーマ](https://yohelab.com/apps/wordpress-theme/): FAQ・JSON-LD・llms.txt・内部解析・GA4設定をテーマに内蔵した軽量WordPressテーマ。プラグイン追加ゼロでAI検索に引用されやすい記事ブログの土台を整える。ベータ価格¥5,500・買い切り。
+- [AI検索に拾われやすい記事メーカー](https://yohelab.com/apps/research-writer/): 3キーワードから最新情報を収集し、見出し・FAQ・出典を整えたAI検索向け記事下書きを生成するWebツール。無料版は1日1セット・登録不要。プロプランは月50セット・月額1,980円・いつでも解約可。
+- [AI検索時代の記事ブログテーマ](https://yohelab.com/apps/wordpress-theme/): FAQ・JSON-LD・llms.txt・内部解析・GA4設定をテーマに内蔵した軽量WordPressテーマ。プラグイン追加ゼロでAI検索に引用されやすい記事ブログの土台を整える。ベータ価格¥5,500・買い切り・月額なし。正式版リリース後¥8,800に改定予定。
 
 ## LP・詳細ページ
 
-- [記事メーカー LP](https://yohelab.com/lp/research-writer/): 記事メーカーの詳細・比較表・FAQ
-- [WordPressテーマ LP](https://yohelab.com/lp/wordpress-theme/): テーマの詳細・機能一覧・購入方法
+- [記事メーカー LP](https://yohelab.com/lp/research-writer/): 機能詳細・料金比較・FAQ・サンプル出力
+- [WordPressテーマ LP](https://yohelab.com/lp/wordpress-theme/): 機能一覧・他テーマとの比較（Cocoon・SWELL）・FAQ・購入方法
+- [記事メーカー プラン詳細](https://yohelab.com/products/research-writer-beta/): 無料版とプロプランの機能比較
+- [WordPressテーマ プラン詳細](https://yohelab.com/products/wordpress-theme-beta/): ベータ版の詳細・購入フロー
+
+## ブログ
+
+- [よへラボブログ](https://yohelab.com/blog/): AI検索・記事メーカー・WordPressテーマに関する公開ノート
+
+## よくある質問
+
+- AI検索に引用されやすい記事とは: 見出し構造・FAQ・結論・出典が明確で、インデックス可能な記事。
+- 記事メーカーの料金: 無料版は1日1セット・登録不要。プロプランは月1,980円・月50セット。
+- WordPressテーマの料金: ベータ¥5,500・買い切り・月額なし。正式版は¥8,800予定。
+- 記事メーカーとWordPressテーマの違い: 記事メーカーはAI検索向け記事下書きを生成するブラウザツール。WordPressテーマはAI検索に引用されやすい構造をWordPressに組み込むテーマ。
 
 ## サポート・法務
 
-- [問い合わせ](https://yohelab.com/contact/)
+- [お問い合わせ](https://yohelab.com/contact/)
 - [バグ報告](https://yohelab.com/contact/bug/)
-- [特定商取引法](https://yohelab.com/legal/commerce/)
+- [特定商取引法に基づく表記](https://yohelab.com/legal/commerce/)
 - [プライバシーポリシー](https://yohelab.com/legal/privacy/)
 - [利用規約](https://yohelab.com/legal/terms/)

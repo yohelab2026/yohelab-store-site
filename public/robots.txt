@@ -1,4 +1,20 @@
 User-agent: *
 Allow: /
+Disallow: /blog/admin/
+Disallow: /api/
+Disallow: /pro/
+
+# AI crawlers (explicitly allowed for AIO optimization)
+User-agent: GPTBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Googlebot
+Allow: /
 
 Sitemap: https://yohelab.com/sitemap.xml
