@@ -32,18 +32,22 @@ export async function onRequestPost(context) {
     const tags = normalizeTags(body?.tags);
     const eyecatch = sanitizeUrl(body?.eyecatch);
 
-    if (!title || !slugRaw) {
+    // タイトルがなくてもアイキャッチ画像があればOK（画像がタイトル代わり）
+    if (!title && !eyecatch) {
       return json({ error: "title_required" }, 400);
     }
 
     // slug に日付プレフィックスを付けてユニークにする
-    const slug = `${date}-${slugRaw}`;
+    // タイトルなし（画像のみ）の場合はスラッグとタイトルをフォールバック
+    const effectiveTitle = title || `post-${date}`;
+    const effectiveSlugRaw = slugRaw || sanitizeSlug(effectiveTitle);
+    const slug = `${date}-${effectiveSlugRaw}`;
 
-    const post = { title, slug: slugRaw, date, excerpt, bodyHtml, tags };
+    const post = { title: effectiveTitle, slug: effectiveSlugRaw, date, excerpt, bodyHtml, tags };
     if (eyecatch) post.eyecatch = eyecatch;
 
     await kv.put(`post:${slug}`, JSON.stringify(post), {
-      metadata: { title, date, excerpt, slug: slugRaw, eyecatch: eyecatch || "" },
+      metadata: { title: effectiveTitle, date, excerpt, slug: effectiveSlugRaw, eyecatch: eyecatch || "" },
     });
 
     return json({ ok: true, slug, post });

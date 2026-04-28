@@ -465,7 +465,8 @@
     const pin = (localStorage.getItem(PIN_KEY)||'').trim();
     if (!pin) { sessionStorage.removeItem(SESSION_KEY); showLock(); return; }
     const title = titleEl.value.trim();
-    if (!title) { statusEl.textContent='タイトルを入れてください。'; return; }
+    const eyecatch = eyecatchEl.value.trim();
+    if (!title && !eyecatch) { statusEl.textContent='タイトルか画像のどちらかを入れてください。'; return; }
     statusEl.textContent = '公開中...';
     const post = {
       title,
