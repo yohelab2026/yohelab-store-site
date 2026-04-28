@@ -12,11 +12,11 @@
 
     /* カバー画像（フルワイド・ヒーロー） */
     .cover-hero {
-      width:100%;max-height:520px;overflow:hidden;
+      width:100%;overflow:hidden;
       background:#0b1613;
     }
     .cover-hero img {
-      width:100%;max-height:520px;object-fit:cover;display:block;
+      width:100%;aspect-ratio:16/9;max-height:560px;object-fit:cover;display:block;
       animation:fadeIn .6s ease;
     }
     @keyframes fadeIn { from{opacity:0} to{opacity:1} }
@@ -113,8 +113,7 @@
 
     @media (max-width:600px) {
       .post-outer { padding:32px 18px 80px; }
-      .cover-hero { max-height:260px; }
-      .cover-hero img { max-height:260px; }
+      .cover-hero img { max-height:300px; }
     }
   </style>
 </head>
