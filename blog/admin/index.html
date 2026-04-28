@@ -184,7 +184,7 @@
       sessionStorage.removeItem(PIN_KEY);
       document.body.classList.remove('is-unlocked');
       adminPinEl.value = DEFAULT_PIN;
-      lockStatusEl.textContent = 'ログアウトした。もう一度入るなら 1030 を入れて。';
+      lockStatusEl.textContent = 'ログアウトした。もう一度 1030 を入れて。';
       adminPinEl.focus();
     });
 
@@ -334,8 +334,6 @@
       const data = await response.json().catch(() => ({}));
       if (!response.ok) {
         const messages = {
-          'BLOG_PASSWORD is not configured': 'Cloudflare側に4桁パスワードが未設定です。',
-          'BLOG_PIN is not configured': 'Cloudflare側に4桁パスワードが未設定です。',
           'GITHUB_TOKEN is not configured': 'Cloudflare側にGitHub連携が未設定です。',
           unauthorized: 'パスワードが違います。',
           title_slug_body_required: 'タイトルと本文を入れてください。',
