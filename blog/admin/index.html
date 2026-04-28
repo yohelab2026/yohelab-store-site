@@ -46,8 +46,8 @@
     <div class="container grid">
       <div class="panel">
         <h1>よへ専用の編集画面</h1>
-        <p>ここで記事を作って、最後に JSON をコピーして <code>content/blog/posts/</code> に置く。サーバーに負担をかけない静的方式。</p>
-        <p class="hint">投稿先は <code>/content/blog/posts/</code>。ここには送信ボタンはなくて、公開用ファイルを作る場所。</p>
+        <p>ここで記事を作って、パスワードを入れて投稿する。よへだけが入れるブログ編集画面。</p>
+        <p class="hint">普通のブログみたいに、投稿ボタンでそのまま公開する。</p>
         <div class="status" id="status">下の欄に文章を入れてね。</div>
         <div class="actions" style="margin-top:14px;">
           <button class="btn btn-primary btn-lg" id="post-json-top" type="button">投稿する</button>
@@ -56,7 +56,7 @@
       </div>
       <div class="panel">
         <div class="form">
-          <label>管理トークン<input id="token" type="password" placeholder="Cloudflare側の管理トークン" /></label>
+          <label>パスワード<input id="password" type="password" placeholder="投稿用パスワード" /></label>
           <label>タイトル<input id="title" placeholder="記事タイトル" /></label>
           <label>スラッグ<input id="slug" placeholder="example-post" /></label>
           <label>要約<textarea id="excerpt" placeholder="一覧に出す短い説明"></textarea></label>
@@ -99,7 +99,7 @@
     const excerptEl = document.getElementById('excerpt');
     const bodyEl = document.getElementById('body');
     const tagsEl = document.getElementById('tags');
-    const tokenEl = document.getElementById('token');
+    const passwordEl = document.getElementById('password');
     const statusEl = document.getElementById('status');
     const previewExcerptEl = document.getElementById('preview-excerpt');
     const previewBodyEl = document.getElementById('preview-body');
@@ -113,7 +113,7 @@
         excerpt: excerptEl.value,
         bodyHtml: bodyEl.innerHTML,
         tags: tagsEl.value,
-        token: tokenEl.value,
+        password: passwordEl.value,
       }));
     }
 
@@ -162,7 +162,7 @@
         excerptEl.value = parsed.excerpt || '';
         bodyEl.innerHTML = parsed.bodyHtml || '';
         tagsEl.value = parsed.tags || '';
-        tokenEl.value = parsed.token || '';
+        passwordEl.value = parsed.password || '';
       } catch (_) {}
     }
     updatePreview();
@@ -202,16 +202,16 @@
 
     async function postBlog() {
       const post = buildJson();
-      const token = tokenEl.value.trim();
-      if (!token) {
-        statusEl.textContent = '管理トークンを入れて。';
+      const password = passwordEl.value.trim();
+      if (!password) {
+        statusEl.textContent = 'パスワードを入れて。';
         return;
       }
       const response = await fetch('/api/blog-post', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'X-Yohelab-Admin-Token': token,
+          'X-Yohelab-Password': password,
         },
         body: JSON.stringify(post),
       });

@@ -4,11 +4,11 @@ const BLOG_DIR = "content/blog/posts";
 export async function onRequestPost(context) {
   try {
     const body = await readJsonBody(context.request);
-    const adminToken = String(context.env.BLOG_ADMIN_TOKEN || context.env.ACCESS_SECRET || "").trim();
-    const requestToken = String(context.request.headers.get("x-yohelab-admin-token") || "").trim();
+    const password = String(context.env.BLOG_PASSWORD || "").trim();
+    const requestPassword = String(context.request.headers.get("x-yohelab-password") || "").trim();
 
-    if (!adminToken) return json({ error: "BLOG_ADMIN_TOKEN is not configured" }, 500);
-    if (!requestToken || requestToken !== adminToken) return json({ error: "unauthorized" }, 401);
+    if (!password) return json({ error: "BLOG_PASSWORD is not configured" }, 500);
+    if (!requestPassword || requestPassword !== password) return json({ error: "unauthorized" }, 401);
 
     const githubToken = String(context.env.GITHUB_TOKEN || "").trim();
     const repo = String(context.env.GITHUB_REPO || "yohelab2026/yohelab-store-site").trim();
@@ -19,7 +19,7 @@ export async function onRequestPost(context) {
     const title = sanitizeText(body?.title);
     const slug = sanitizeSlug(body?.slug);
     const excerpt = sanitizeText(body?.excerpt);
-    const html = String(body?.bodyHtml || "").trim();
+    const html = String(body?.bodyHtml || body?.body || "").trim();
     const bodyText = htmlToMarkdown(html);
     const date = sanitizeDate(body?.date) || new Date().toISOString().slice(0, 10);
     const tags = normalizeTags(body?.tags);
@@ -39,7 +39,7 @@ export async function onRequestPost(context) {
 
     const path = `${BLOG_DIR}/${date}-${slug}.json`;
     const content = `${JSON.stringify(post, null, 2)}\n`;
-    const encoded = btoa(unescape(encodeURIComponent(content)));
+    const encoded = Buffer.from(content, "utf8").toString("base64");
 
     const existing = await githubRequest(repo, `/contents/${encodeURIComponent(path).replace(/%2F/g, "/")}?ref=${encodeURIComponent(branch)}`, {
       method: "GET",
