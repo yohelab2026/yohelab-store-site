@@ -1,115 +1,88 @@
-const GITHUB_API = "https://api.github.com";
-const BLOG_DIR = "content/blog/posts";
+const PIN = "1030";
 
 export async function onRequestPost(context) {
   try {
-    const body = await readJsonBody(context.request);
-    const pin = "1030";
     const requestPin = String(
       context.request.headers.get("x-yohelab-pin") ||
       context.request.headers.get("x-yohelab-password") ||
       "",
     ).trim();
 
-    if (!requestPin || requestPin !== pin) return json({ error: "unauthorized" }, 401);
+    if (!requestPin || requestPin !== PIN) {
+      return json({ error: "unauthorized" }, 401);
+    }
 
-    const githubToken = String(context.env.GITHUB_TOKEN || "").trim();
-    const repo = String(context.env.GITHUB_REPO || "yohelab2026/yohelab-store-site").trim();
-    const branch = String(context.env.GITHUB_BLOG_BRANCH || "main").trim();
+    const kv = context.env.BLOG_KV;
+    if (!kv) return json({ error: "BLOG_KV is not configured" }, 500);
 
-    if (!githubToken) return json({ error: "GITHUB_TOKEN is not configured" }, 500);
+    const body = await readJsonBody(context.request);
 
     const title = sanitizeText(body?.title);
-    const slug = sanitizeSlug(body?.slug);
+    const slugRaw = sanitizeSlug(body?.slug || body?.title);
     const excerpt = sanitizeText(body?.excerpt);
-    const html = String(body?.bodyHtml || body?.body || "").trim();
-    const bodyText = htmlToMarkdown(html);
+    const bodyHtml = String(body?.bodyHtml || "").trim();
     const date = sanitizeDate(body?.date) || new Date().toISOString().slice(0, 10);
     const tags = normalizeTags(body?.tags);
     const eyecatch = sanitizeUrl(body?.eyecatch);
 
-    if (!title || !slug || !bodyText) {
-      return json({ error: "title_slug_body_required" }, 400);
+    if (!title || !slugRaw) {
+      return json({ error: "title_required" }, 400);
     }
 
-    const post = {
-      title,
-      slug,
-      date,
-      excerpt,
-      body: bodyText,
-      tags,
-    };
+    // slug に日付プレフィックスを付けてユニークにする
+    const slug = `${date}-${slugRaw}`;
+
+    const post = { title, slug: slugRaw, date, excerpt, bodyHtml, tags };
     if (eyecatch) post.eyecatch = eyecatch;
 
-    const path = `${BLOG_DIR}/${date}-${slug}.json`;
-    const content = `${JSON.stringify(post, null, 2)}\n`;
-    const encoded = Buffer.from(content, "utf8").toString("base64");
-
-    const existing = await githubRequest(repo, `/contents/${encodeURIComponent(path).replace(/%2F/g, "/")}?ref=${encodeURIComponent(branch)}`, {
-      method: "GET",
-      token: githubToken,
-    }).catch((error) => (error?.status === 404 ? null : Promise.reject(error)));
-
-    const putBody = {
-      message: `Add blog post: ${title}`,
-      content: encoded,
-      branch,
-    };
-    if (existing?.sha) putBody.sha = existing.sha;
-
-    const saved = await githubRequest(repo, `/contents/${encodeURIComponent(path).replace(/%2F/g, "/")}`, {
-      method: "PUT",
-      token: githubToken,
-      body: putBody,
+    await kv.put(`post:${slug}`, JSON.stringify(post), {
+      metadata: { title, date, excerpt, slug: slugRaw, eyecatch: eyecatch || "" },
     });
 
-    return json({
-      ok: true,
-      path,
-      commit: saved?.commit?.sha || "",
-      url: saved?.content?.html_url || "",
-      post,
-    });
+    return json({ ok: true, slug, post });
   } catch (error) {
     return json({ error: error?.message || "unexpected_error" }, 500);
   }
 }
 
-async function githubRequest(repo, path, { method = "GET", token, body } = {}) {
-  const response = await fetch(`${GITHUB_API}/repos/${repo}${path}`, {
-    method,
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: "application/vnd.github+json",
-      "Content-Type": "application/json",
-      "User-Agent": "yohelab-blog-publisher",
-    },
-    body: body ? JSON.stringify(body) : undefined,
-  });
+export async function onRequestDelete(context) {
+  try {
+    const requestPin = String(
+      context.request.headers.get("x-yohelab-pin") || "",
+    ).trim();
+    if (!requestPin || requestPin !== PIN) return json({ error: "unauthorized" }, 401);
 
-  if (!response.ok) {
-    const text = await response.text();
-    const error = new Error(`github_request_failed:${response.status}:${text}`);
-    error.status = response.status;
-    throw error;
+    const kv = context.env.BLOG_KV;
+    if (!kv) return json({ error: "BLOG_KV is not configured" }, 500);
+
+    const body = await readJsonBody(context.request);
+    const slug = String(body?.slug || "").trim();
+    if (!slug) return json({ error: "slug_required" }, 400);
+
+    await kv.delete(`post:${slug}`);
+    return json({ ok: true, slug });
+  } catch (error) {
+    return json({ error: error?.message || "unexpected_error" }, 500);
   }
-
-  return response.json();
 }
+
+// ── helpers ────────────────────────────────────────────────
 
 function sanitizeText(value) {
   return String(value || "").trim().replace(/\s+/g, " ");
 }
 
 function sanitizeSlug(value) {
-  return String(value || "")
-    .trim()
-    .toLowerCase()
-    .replace(/[^a-z0-9ぁ-んァ-ヶ一-龠ー._-]+/g, "-")
-    .replace(/-+/g, "-")
-    .replace(/^-+|-+$/g, "")
-    .slice(0, 80);
+  const fallback = `post-${new Date().toISOString().slice(0, 10)}`;
+  return (
+    String(value || "")
+      .trim()
+      .toLowerCase()
+      .replace(/[^a-z0-9ぁ-んァ-ヶ一-龠ー._-]+/g, "-")
+      .replace(/-+/g, "-")
+      .replace(/^-+|-+$/g, "")
+      .slice(0, 80) || fallback
+  );
 }
 
 function sanitizeDate(value) {
@@ -130,42 +103,25 @@ function sanitizeUrl(value) {
 
 function normalizeTags(value) {
   return Array.isArray(value)
-    ? value.map((item) => sanitizeText(item)).filter(Boolean).slice(0, 10)
+    ? value.map((t) => sanitizeText(t)).filter(Boolean).slice(0, 10)
     : String(value || "")
         .split(/[\n,、]/)
-        .map((item) => sanitizeText(item))
+        .map((t) => sanitizeText(t))
         .filter(Boolean)
         .slice(0, 10);
 }
 
-function htmlToMarkdown(html) {
-  return String(html || "")
-    .replace(/<strong>(.*?)<\/strong>/gi, '**$1**')
-    .replace(/<b>(.*?)<\/b>/gi, '**$1**')
-    .replace(/<em>(.*?)<\/em>/gi, '*$1*')
-    .replace(/<i>(.*?)<\/i>/gi, '*$1*')
-    .replace(/<br\s*\/?>/gi, '\n')
-    .replace(/<div>/gi, '')
-    .replace(/<\/div>/gi, '\n')
-    .replace(/<p>/gi, '')
-    .replace(/<\/p>/gi, '\n\n')
-    .replace(/<[^>]+>/g, '')
-    .replace(/\n{3,}/g, '\n\n')
-    .trim();
-}
-
 async function readJsonBody(request) {
   const text = await request.text();
-  try {
-    return text ? JSON.parse(text) : {};
-  } catch {
-    return {};
-  }
+  try { return text ? JSON.parse(text) : {}; } catch { return {}; }
 }
 
 function json(body, status = 200) {
   return new Response(JSON.stringify(body), {
     status,
-    headers: { "Content-Type": "application/json; charset=utf-8" },
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+      "Access-Control-Allow-Origin": "*",
+    },
   });
 }

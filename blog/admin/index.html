@@ -351,9 +351,9 @@
       const data = await response.json().catch(() => ({}));
       if (!response.ok) {
         const messages = {
-          'GITHUB_TOKEN is not configured': 'Cloudflare側にGitHub連携が未設定です。',
+          'BLOG_KV is not configured': 'CloudflareにBLOG_KVの設定が必要です。',
           unauthorized: 'パスワードが違います。',
-          title_slug_body_required: 'タイトルと本文を入れてください。',
+          title_required: 'タイトルを入れてください。',
         };
         statusEl.textContent = messages[data.error] || data.error || '投稿に失敗した。';
         return;
