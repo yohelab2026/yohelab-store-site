@@ -30,7 +30,6 @@ const legacyPaths = [
   `/lp/${"x"}-${"helper"}/`,
   `/lp/${"ec"}-${"copy"}/`,
   `/lp/${"aio"}-${"mini"}/`,
-  `/${"tool"}${"s"}/`,
 ];
 const legacyLabels = [
   `案件${"レーダー"}`,
@@ -43,9 +42,11 @@ const legacyLabels = [
 ];
 checks.push(["home links research writer app", home.includes('/apps/research-writer/')]);
 checks.push(["home no legacy tool links", legacyPaths.every((path) => !home.includes(path))]);
+checks.push(["home links tools hub", home.includes('/tools/')]);
+checks.push(["home links services hub", home.includes('/services/')]);
 
 const lpResearchWriter = read(dist("lp/research-writer/index.html"));
-checks.push(["lp research writer title", lpResearchWriter.includes('3キーワードで記事の材料と下書きを作る | よへラボ')]);
+checks.push(["lp research writer title", lpResearchWriter.includes('記事メーカー') && lpResearchWriter.includes('よへラボ')]);
 checks.push(["lp research writer free", lpResearchWriter.includes('無料で試す') || lpResearchWriter.includes('無料版を試す')]);
 
 const researchApp = read(dist("apps/research-writer/index.html"));
