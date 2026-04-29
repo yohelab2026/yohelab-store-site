@@ -1,4 +1,30 @@
 const postsEl = document.getElementById('posts');
+const fallbackPosts = [
+  {
+    title: 'よへラボのブログで残していくもの',
+    slug: 'yohelab-blog-start',
+    date: '2026-04-29',
+    excerpt: 'ツールの使い方、作った理由、改善の記録を、短く読める形で残していく。',
+    body: 'よへラボのブログは、ただのお知らせ置き場ではなく、作ったものの背景を残す場所にする。\n\n記事メーカーなら、なぜ3キーワードから始めるのか。WordPressテーマなら、なぜFAQや構造化データを最初から入れるのか。そういう判断の理由を短く読める形で置いていく。\n\n問い合わせの前に見られる説明、購入前に知っておきたいこと、実験で分かったこともここに寄せる。',
+    tags: ['ブログ', '運用メモ', 'よへラボ'],
+  },
+  {
+    title: 'AI検索記事スターターキットを作った理由',
+    slug: 'starter-kit',
+    date: '2026-04-28',
+    excerpt: '最初の1本を迷わず出すために、記事の型を先に置くようにした。',
+    body: '記事を書く前に迷う時間を減らすために、レビュー、比較、ランキング、FAQ、商品紹介を先に分けるようにした。\n\n見出しの順番が決まると、書く側の負担がかなり減る。検索にも人にも伝わる形を先に置くのが大事だと思っている。',
+    tags: ['記事テンプレート', 'WordPress'],
+  },
+  {
+    title: 'WordPressテーマで減らしたいもの',
+    slug: 'theme-note',
+    date: '2026-04-28',
+    excerpt: 'プラグインを増やしすぎず、最初から入れておくものを絞る。',
+    body: 'テーマは見た目だけじゃなくて、記事を書く時の迷いも減らしたい。\n\nFAQ、構造化データ、llms.txt、簡単な解析だけ先に置いて、あとから足すものを減らす。そうすると初期設定がかなり軽くなる。',
+    tags: ['WordPress', 'テーマ'],
+  },
+];
 
 function esc(str) {
   return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
@@ -10,9 +36,9 @@ async function loadPosts() {
     const res = await fetch('/api/blog-posts');
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
-    render(data.posts || []);
+    render((data.posts && data.posts.length) ? data.posts : fallbackPosts);
   } catch(e) {
-    postsEl.innerHTML = '<div class="empty">記事を取得できませんでした。</div>';
+    render(fallbackPosts);
   }
 }
 
@@ -70,10 +96,14 @@ function render(posts) {
 
       try {
         if (!preview.dataset.loaded) {
-          const res = await fetch(`/api/blog-post-get?slug=${encodeURIComponent(slug)}`);
-          if (!res.ok) throw new Error(`HTTP ${res.status}`);
-          const data = await res.json();
-          const post = data.post || {};
+          let post = fallbackPosts.find((item) => item.slug === slug) || {};
+          try {
+            const res = await fetch(`/api/blog-post-get?slug=${encodeURIComponent(slug)}`);
+            if (res.ok) {
+              const data = await res.json();
+              post = data.post || post;
+            }
+          } catch (_) {}
           const body = post.bodyHtml || '';
           const text = body
             ? body.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()
