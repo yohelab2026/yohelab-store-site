@@ -38,6 +38,7 @@ export default defineConfig({
         main: "index.html",
         games: "games/index.html",
         contact: "contact/index.html",
+        contactBug: "contact/bug/index.html",
         blog: "blog/index.html",
         blogAdmin: "blog/admin/index.html",
         blogPost: "blog/post/index.html",
