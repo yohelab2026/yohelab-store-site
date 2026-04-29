@@ -30,8 +30,23 @@ function matomoSnippetPlugin() {
   };
 }
 
+function backToTopPlugin() {
+  const snippet = `<script defer src="/shared/back-to-top.js"></script>`;
+
+  return {
+    name: "back-to-top",
+    transformIndexHtml(html, ctx) {
+      if (!ctx?.path || ctx.path === "/google0009e82266fc5714.html") return html;
+      if (html.includes("back-to-top.js")) return html;
+      // 管理画面はロックスクリーンが優先なので除外
+      if (ctx.path && ctx.path.includes("/blog/admin/")) return html;
+      return html.replace("</head>", `    ${snippet}\n  </head>`);
+    },
+  };
+}
+
 export default defineConfig({
-  plugins: [matomoSnippetPlugin()],
+  plugins: [matomoSnippetPlugin(), backToTopPlugin()],
   build: {
     rollupOptions: {
       input: {
