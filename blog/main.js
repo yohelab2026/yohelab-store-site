@@ -36,13 +36,17 @@ async function loadPosts() {
     const res = await fetch('/api/blog-posts');
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
-    render((data.posts && data.posts.length) ? data.posts : fallbackPosts);
+    if (data.posts && data.posts.length) {
+      render(data.posts, true);
+    } else {
+      render(fallbackPosts, false);
+    }
   } catch(e) {
-    render(fallbackPosts);
+    render(fallbackPosts, false);
   }
 }
 
-function render(posts) {
+function render(posts, hasLink = true) {
   if (!posts.length) {
     postsEl.innerHTML = '<div class="empty">まだ記事がありません。</div>';
     return;
@@ -66,7 +70,7 @@ function render(posts) {
           <div class="post-card-preview"></div>
           <div class="post-card-footer">
             <button class="read-more" type="button" data-action="toggle">続きを読む</button>
-            <a class="open-link" href="${url}">記事ページへ →</a>
+            ${hasLink ? `<a class="open-link" href="${url}">記事ページへ →</a>` : ''}
           </div>
         </div>
       </article>
