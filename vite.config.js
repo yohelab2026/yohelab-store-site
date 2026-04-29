@@ -36,6 +36,8 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: "index.html",
+        tools: "tools/index.html",
+        services: "services/index.html",
         games: "games/index.html",
         contact: "contact/index.html",
         contactBug: "contact/bug/index.html",
