@@ -45,8 +45,26 @@ function backToTopPlugin() {
   };
 }
 
+/**
+ * canonical タグがあるページに hreflang ja / x-default を自動注入する
+ * 単一言語サイトでも明示しておくと国際SEOで損しない
+ */
+function hreflangPlugin() {
+  return {
+    name: "hreflang-injector",
+    transformIndexHtml(html) {
+      if (html.includes('hreflang="ja"')) return html;
+      const m = html.match(/<link\s+rel="canonical"\s+href="([^"]+)"\s*\/?>/i);
+      if (!m) return html;
+      const url = m[1];
+      const tags = `\n    <link rel="alternate" hreflang="ja" href="${url}" />\n    <link rel="alternate" hreflang="x-default" href="${url}" />`;
+      return html.replace(m[0], `${m[0]}${tags}`);
+    },
+  };
+}
+
 export default defineConfig({
-  plugins: [matomoSnippetPlugin(), backToTopPlugin()],
+  plugins: [matomoSnippetPlugin(), backToTopPlugin(), hreflangPlugin()],
   build: {
     rollupOptions: {
       input: {
