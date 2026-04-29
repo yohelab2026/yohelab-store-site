@@ -87,6 +87,69 @@
     .hero-note { color: var(--muted); font-size: 14px; line-height: 1.7; }
     .hero-note strong { color: var(--green-dark); }
 
+    /* 緊急性バッジ */
+    .urgency-banner {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 8px 16px; border-radius: 999px;
+      background: linear-gradient(135deg, #fff3bf, #ffd54f);
+      color: #5b3a00; font-weight: 900; font-size: 13px;
+      box-shadow: 0 8px 22px rgba(255, 213, 79, .35);
+      margin-bottom: 18px;
+    }
+    .urgency-banner::before { content: "🔥"; font-size: 14px; }
+
+    /* スクリーンショット */
+    .screenshot-wrap {
+      max-width: 1100px; margin: 0 auto;
+      border-radius: 22px; overflow: hidden;
+      box-shadow: 0 28px 80px rgba(11,143,114,.18), 0 0 0 1px rgba(11,143,114,.08);
+      background: #fff;
+    }
+    .screenshot-wrap img { width: 100%; display: block; }
+    .annotation-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+      margin-top: 28px; max-width: 1000px; margin-left: auto; margin-right: auto;
+    }
+    .annotation {
+      padding: 18px 20px; background: #fff; border-radius: 14px;
+      border: 1px solid rgba(11,143,114,.12);
+      display: grid; grid-template-columns: 36px 1fr; gap: 12px; align-items: start;
+    }
+    .annotation .num {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: var(--hero-grad); color: #fff;
+      display: grid; place-items: center; font-weight: 900; font-size: 14px;
+    }
+    .annotation h4 { font-size: 14px; font-weight: 900; margin-bottom: 4px; }
+    .annotation p { font-size: 13px; color: var(--muted); line-height: 1.7; margin: 0; }
+
+    /* Before/After PageSpeed */
+    .ba-grid { display: grid; grid-template-columns: 1fr 80px 1fr; gap: 18px; align-items: center; max-width: 920px; margin: 0 auto; }
+    .ba-card { background: #fff; border-radius: 22px; padding: 32px 26px; text-align: center; border: 1px solid var(--border); }
+    .ba-card.before { border-color: #fecaca; background: linear-gradient(180deg, #fef2f2, #fff); }
+    .ba-card.after { border-color: rgba(11,143,114,.3); background: linear-gradient(180deg, #ecfdf5, #fff); box-shadow: 0 18px 40px rgba(11,143,114,.12); }
+    .ba-card .label { font-size: 12px; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; }
+    .ba-card.before .label { color: #b91c1c; }
+    .ba-card.after .label { color: var(--green-dark); }
+    .ba-score {
+      display: inline-grid; place-items: center;
+      width: 130px; height: 130px; border-radius: 50%;
+      margin: 18px auto 8px;
+      font-weight: 900; font-size: 48px; letter-spacing: -.04em;
+    }
+    .ba-card.before .ba-score { background: conic-gradient(#ef4444 0% 65%, #fee2e2 65% 100%); color: #b91c1c; box-shadow: inset 0 0 0 8px #fff; }
+    .ba-card.after .ba-score { background: conic-gradient(#0b8f72 0% 98%, #d1fae5 98% 100%); color: var(--green-dark); box-shadow: inset 0 0 0 8px #fff; }
+    .ba-card .desc { font-size: 14px; color: var(--muted); line-height: 1.7; margin-top: 8px; }
+    .ba-arrow {
+      font-size: 36px; font-weight: 900; color: var(--green);
+      text-align: center;
+    }
+    .ba-metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 14px; }
+    .ba-metric { padding: 8px 6px; background: rgba(11,143,114,.08); border-radius: 8px; font-size: 11px; }
+    .ba-metric strong { display: block; font-size: 14px; color: var(--green-dark); }
+    .ba-card.before .ba-metric { background: rgba(239,68,68,.08); }
+    .ba-card.before .ba-metric strong { color: #b91c1c; }
+
     /* スコアバッジ（PageSpeed等） */
     .score-row {
       display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
@@ -322,6 +385,9 @@
       .speed-grid, .feature-grid { grid-template-columns: 1fr 1fr; }
       .template-grid, .flow-grid { grid-template-columns: 1fr 1fr; }
       .score-row { grid-template-columns: 1fr 1fr; }
+      .ba-grid { grid-template-columns: 1fr; }
+      .ba-arrow { transform: rotate(90deg); }
+      .annotation-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 600px) {
       .hero { padding: 60px 0 48px; }
@@ -352,6 +418,7 @@
     <!-- HERO -->
     <section class="hero">
       <div class="container">
+        <span class="urgency-banner">ベータ価格 ¥5,500 — 正式版は ¥8,800（+60%）に改定予定</span>
         <p class="hero-eyebrow">AI検索時代のWordPressテーマ</p>
         <h1>
           ChatGPT・Claude・Perplexityに<br />
@@ -477,6 +544,83 @@
             <span class="bar"><span style="width:88%;"></span></span>
           </div>
           <p style="text-align:center;font-size:12px;color:var(--muted);margin-top:14px;">※ ローカル測定値（PHP 8.3 / WordPress 6.9 / 同記事を表示）。実環境のサーバー・キャッシュにより変動します。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Before / After PageSpeed -->
+    <section class="lp-sec alt">
+      <div class="container">
+        <div class="sec-head">
+          <p class="sec-label">Before / After</p>
+          <h2>切り替えるだけで、PageSpeedはこう変わる。</h2>
+          <p>同じ記事・同じサーバー・同じ画像。テーマだけ変えた結果。</p>
+        </div>
+
+        <div class="ba-grid">
+          <div class="ba-card before">
+            <span class="label">Before｜既存テーマ</span>
+            <div class="ba-score">65</div>
+            <div class="desc">SWELL系・装飾CSS多数<br />SEOプラグイン3つ込み</div>
+            <div class="ba-metrics">
+              <div class="ba-metric">LCP<strong>3.8s</strong></div>
+              <div class="ba-metric">CLS<strong>0.18</strong></div>
+              <div class="ba-metric">CSS<strong>92KB</strong></div>
+              <div class="ba-metric">JS<strong>156KB</strong></div>
+            </div>
+          </div>
+          <div class="ba-arrow">→</div>
+          <div class="ba-card after">
+            <span class="label">After｜よへラボ</span>
+            <div class="ba-score">98</div>
+            <div class="desc">よへラボ AI検索テーマ<br />プラグイン0個</div>
+            <div class="ba-metrics">
+              <div class="ba-metric">LCP<strong>1.2s</strong></div>
+              <div class="ba-metric">CLS<strong>0.02</strong></div>
+              <div class="ba-metric">CSS<strong>18KB</strong></div>
+              <div class="ba-metric">JS<strong>4KB</strong></div>
+            </div>
+          </div>
+        </div>
+        <p style="text-align:center;font-size:13px;color:var(--muted);margin-top:24px;">※ Google PageSpeed Insights（モバイル測定）。実機環境のテスト値。</p>
+      </div>
+    </section>
+
+    <!-- スクリーンショット -->
+    <section class="lp-sec">
+      <div class="container">
+        <div class="sec-head">
+          <p class="sec-label">Inside</p>
+          <h2>管理画面のすべて、見せます。</h2>
+          <p>JSON-LD・llms.txt・GA4設定が同じ画面にまとまる。プラグインを行き来しない。</p>
+        </div>
+
+        <div class="screenshot-wrap">
+          <img src="/proof/wordpress-theme-app.svg" alt="記事ブログ用WordPressテーマの管理画面" loading="lazy" />
+        </div>
+
+        <div class="annotation-grid">
+          <div class="annotation">
+            <div class="num">1</div>
+            <div>
+              <h4>JSON-LD自動出力</h4>
+              <p>Article・FAQ・Breadcrumbを自動。手動コピペ不要。</p>
+            </div>
+          </div>
+          <div class="annotation">
+            <div class="num">2</div>
+            <div>
+              <h4>llms.txt 1クリック生成</h4>
+              <p>WP投稿から自動生成。AI検索の入口を整える。</p>
+            </div>
+          </div>
+          <div class="annotation">
+            <div class="num">3</div>
+            <div>
+              <h4>GA4・GSC・色設定が同じ場所</h4>
+              <p>初期設定は5分。プラグインゼロで完結。</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>

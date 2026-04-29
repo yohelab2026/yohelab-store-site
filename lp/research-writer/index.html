@@ -93,6 +93,31 @@
     .output-demo .src-mock { font-size: 12px; color: var(--muted-light); border-top: 1px dashed var(--border); padding-top: 12px; margin-top: 12px; }
     .output-demo .src-mock a { color: var(--green-dark); text-decoration: underline; }
 
+    /* スクリーンショット */
+    .screenshot-wrap { max-width: 1100px; margin: 0 auto; border-radius: 22px; overflow: hidden; box-shadow: 0 28px 80px rgba(11,143,114,.18), 0 0 0 1px rgba(11,143,114,.08); background: #fff; }
+    .screenshot-wrap img { width: 100%; display: block; }
+    .annotation-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 28px; max-width: 1000px; margin-left: auto; margin-right: auto; }
+    .annotation { padding: 18px 20px; background: #fff; border-radius: 14px; border: 1px solid rgba(11,143,114,.12); display: grid; grid-template-columns: 36px 1fr; gap: 12px; align-items: start; }
+    .annotation .num { width: 32px; height: 32px; border-radius: 50%; background: var(--hero-grad); color: #fff; display: grid; place-items: center; font-weight: 900; font-size: 14px; }
+    .annotation h4 { font-size: 14px; font-weight: 900; margin-bottom: 4px; }
+    .annotation p { font-size: 13px; color: var(--muted); line-height: 1.7; margin: 0; }
+
+    /* ROI計算 */
+    .roi-card { max-width: 720px; margin: 0 auto; background: linear-gradient(160deg, #0b8f72 0%, #1fb6cf 100%); color: #fff; border-radius: 24px; padding: 36px 32px; box-shadow: 0 24px 60px rgba(11,143,114,.32); }
+    .roi-card h3 { font-size: 18px; margin-bottom: 22px; opacity: .9; letter-spacing: .04em; }
+    .roi-grid { display: grid; grid-template-columns: 1fr 30px 1fr 30px 1fr; gap: 14px; align-items: center; }
+    .roi-box { background: rgba(255,255,255,.12); border-radius: 16px; padding: 20px 16px; text-align: center; }
+    .roi-box .label { font-size: 12px; opacity: .7; font-weight: 700; }
+    .roi-box .num { font-size: clamp(24px, 4vw, 36px); font-weight: 900; letter-spacing: -.04em; line-height: 1; margin: 6px 0; }
+    .roi-box .unit { font-size: 12px; opacity: .8; }
+    .roi-arrow { font-size: 24px; opacity: .7; text-align: center; }
+    .roi-foot { text-align: center; margin-top: 18px; font-size: 14px; opacity: .9; }
+    .roi-foot strong { font-size: 22px; color: #ffd54f; font-weight: 900; }
+
+    /* 緊急性 */
+    .urgency-banner { display: inline-flex; align-items: center; gap: 10px; padding: 8px 16px; border-radius: 999px; background: linear-gradient(135deg, #fff3bf, #ffd54f); color: #5b3a00; font-weight: 900; font-size: 13px; box-shadow: 0 8px 22px rgba(255, 213, 79, .35); margin-bottom: 18px; }
+    .urgency-banner::before { content: "✨"; font-size: 14px; }
+
     .compare-table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 18px; overflow: hidden; box-shadow: 0 12px 36px rgba(11,143,114,.08); }
     .compare-table thead th { background: linear-gradient(135deg, #075c4c, #0b8f72); color: #fff; padding: 16px 14px; font-size: 13px; font-weight: 800; text-align: left; }
     .compare-table thead th.us { background: linear-gradient(135deg, #0b8f72, #1fb6cf); }
@@ -144,6 +169,9 @@
     @media (max-width: 960px) {
       .pain-grid, .steps-grid, .pricing { grid-template-columns: 1fr; }
       .score-row { grid-template-columns: 1fr 1fr; }
+      .roi-grid { grid-template-columns: 1fr; gap: 8px; }
+      .roi-arrow { transform: rotate(90deg); }
+      .annotation-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 600px) {
       .hero { padding: 56px 0 44px; }
@@ -171,6 +199,7 @@
   <main>
     <section class="hero">
       <div class="container">
+        <span class="urgency-banner">無料で1日1セット試せる｜登録不要・ブラウザだけ</span>
         <p class="hero-eyebrow">3キーワード記事メーカー</p>
         <h1>3キーワード入れるだけ。<br /><em>AIに引用される記事</em>が出る。</h1>
         <p class="hero-lead">リサーチ・見出し・FAQ・出典の整った記事下書きが、3つのキーワードを入れるだけで完成。<br />人間が書くと2時間かかる構造化作業を、ブラウザで30秒。</p>
@@ -286,6 +315,62 @@
             <a href="#">経済産業省 副業実態調査 2025</a> ／
             <a href="#">クラウドワークス AI活用レポート</a> ／
             <a href="#">日本AI協会 動向データ</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 実機スクリーンショット -->
+    <section class="lp-sec">
+      <div class="container">
+        <div class="sec-head">
+          <p class="sec-label">Inside</p>
+          <h2>実際の画面、こんな感じ。</h2>
+          <p>左で3キーワードを入れて、中央で情報源を選び、右で記事下書きを受け取る。</p>
+        </div>
+        <div class="screenshot-wrap">
+          <img src="/proof/research-writer-app.svg" alt="3キーワード記事メーカーの画面" loading="lazy" />
+        </div>
+        <div class="annotation-grid">
+          <div class="annotation"><div class="num">1</div><div><h4>3キーワード入力</h4><p>テーマ・読者層・切り口の3つだけ。</p></div></div>
+          <div class="annotation"><div class="num">2</div><div><h4>情報源を選ぶ</h4><p>10〜20件の候補から、信頼できるものをチェック。</p></div></div>
+          <div class="annotation"><div class="num">3</div><div><h4>記事下書きが完成</h4><p>見出し・FAQ・出典付き。コピーして使うだけ。</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ROI計算 -->
+    <section class="lp-sec alt">
+      <div class="container">
+        <div class="sec-head">
+          <p class="sec-label">ROI</p>
+          <h2>外注より、自分で書くより、圧倒的に安い。</h2>
+          <p>1記事あたりのコストを、外注・自作・記事メーカーで比較する。</p>
+        </div>
+
+        <div class="roi-card">
+          <h3 style="text-align:center;">1記事あたりの実コスト比較</h3>
+          <div class="roi-grid">
+            <div class="roi-box">
+              <div class="label">外注（クラウドソーシング）</div>
+              <div class="num">¥3,000<span class="unit">+</span></div>
+              <div class="unit">納期1〜3日</div>
+            </div>
+            <div class="roi-arrow">vs</div>
+            <div class="roi-box">
+              <div class="label">自分で書く（時給換算）</div>
+              <div class="num">¥3,000<span class="unit">/記事</span></div>
+              <div class="unit">時給¥1,500×2時間</div>
+            </div>
+            <div class="roi-arrow">vs</div>
+            <div class="roi-box" style="background: rgba(255,213,79,.25); border: 2px solid #ffd54f;">
+              <div class="label" style="color:#ffd54f;">記事メーカー（プロ）</div>
+              <div class="num">¥39<span class="unit">/記事</span></div>
+              <div class="unit">¥1,980÷50本</div>
+            </div>
+          </div>
+          <div class="roi-foot">
+            外注の<strong>1/77</strong>、自作の<strong>1/77</strong>のコスト。50記事書けば実質元が取れる。
           </div>
         </div>
       </div>
