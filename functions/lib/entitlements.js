@@ -2,12 +2,12 @@ const COOKIE_NAME = "yohelab_access";
 
 const PRODUCT_CONFIG = {
   "research-writer": {
-    label: "AI検索に拾われやすい記事メーカー",
+    label: "3キーワードの記事メーカー",
     nextPath: "/apps/research-writer/",
     activatePath: "/apps/research-writer/",
   },
   "wordpress-theme": {
-    label: "AI検索時代の記事ブログテーマ",
+    label: "記事ブログ用WordPressテーマ",
     nextPath: "/apps/wordpress-theme/",      // 決済キャンセル時に戻る先
     activatePath: "/products/wordpress-theme-beta/", // 購入完了後の遷移先
   },

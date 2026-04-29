@@ -257,10 +257,53 @@
         font-size: 14px;
         line-height: 1.8;
       }
+      .sample-report {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+        align-items: stretch;
+      }
+      .sample-card {
+        padding: 24px;
+        border-radius: 22px;
+        background: #fff;
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow);
+      }
+      .sample-card h3 {
+        font-size: 20px;
+        margin-bottom: 12px;
+      }
+      .sample-card p,
+      .sample-card li {
+        color: var(--muted);
+        line-height: 1.85;
+      }
+      .sample-card ul {
+        padding-left: 20px;
+      }
+      .proof-note-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+      }
+      .proof-note {
+        padding: 20px;
+        border-radius: 20px;
+        background: linear-gradient(180deg, #ffffff, #f8fbff);
+        border: 1px solid var(--line);
+      }
+      .proof-note strong {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--green-dark);
+      }
       @media (max-width: 900px) {
         .hero-inner,
         .section-grid,
-        .example-box {
+        .example-box,
+        .sample-report,
+        .proof-note-grid {
           grid-template-columns: 1fr;
         }
         .example-divider {
@@ -290,8 +333,8 @@
             <h1><em>売るページ</em>を、伝わるページに直す。</h1>
             <p class="lead">BASE、STORES、note、自サイトの商品ページを1ページ見て、伝わりにくい点、足りない説明、FAQにできる要素、要約の弱さを整理して返す。派手な診断ではなく、今すぐ直せるところを短く返す。</p>
             <div class="hero-actions">
-              <a class="btn btn-white btn-lg" href="/contact/#page-review">初回モニターを申し込む</a>
-              <a class="btn btn-ghost-white btn-lg" href="#deliverables">返す内容を見る</a>
+              <a class="btn btn-primary btn-lg" href="/contact/#page-review">初回モニターを申し込む</a>
+              <a class="btn btn-outline btn-lg" href="#sample">改善例を見る</a>
             </div>
           </div>
           <div class="hero-card">
@@ -300,7 +343,7 @@
               <li>商品ページを作ったけど、何が弱いか分からない</li>
               <li>説明文を書いても、誰向けかぼやける</li>
               <li>FAQや要約をどう置けばいいか迷う</li>
-              <li>AI検索でも人にも伝わる形に整えたい</li>
+              <li>検索にも人にも伝わる形に整えたい</li>
             </ul>
           </div>
         </div>
@@ -363,6 +406,29 @@
         </div>
       </section>
 
+      <section class="section" id="sample">
+        <div class="container">
+          <p class="section-label">Sample</p>
+          <h2 class="section-title">返ってくる内容のイメージ。</h2>
+          <div class="sample-report">
+            <div class="sample-card">
+              <h3>例: 商品ページの弱点</h3>
+              <ul>
+                <li>最初の見出しで「誰のための商品か」が見えにくい。</li>
+                <li>機能説明が多く、買った後の変化が弱い。</li>
+                <li>料金、納期、返金、サポートの不安がFAQで潰れていない。</li>
+              </ul>
+            </div>
+            <div class="sample-card">
+              <h3>例: 直す提案</h3>
+              <p><strong>見出し案:</strong> 「ひとりで販売ページを作った人へ。購入前の不安が残る場所を1ページだけ直します。」</p>
+              <p><strong>FAQ案:</strong> 納期は？ 何を送ればいい？ 売上保証はある？ 修正はどこまで？</p>
+              <p><strong>要約文:</strong> 商品ページを1ページ確認し、弱点、見出し案、説明文、FAQ案、要約文を返す小さな改善レビューです。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section class="section">
         <div class="container">
           <p class="section-label">Target</p>
@@ -379,6 +445,27 @@
             <div class="card">
               <h3>自サイトのサービスページ</h3>
               <p>サービス紹介が長くなりすぎた時に、要約とFAQの入口を作る。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" style="background:var(--bg);">
+        <div class="container">
+          <p class="section-label">Trust</p>
+          <h2 class="section-title">盛らずに、先に不安を減らす。</h2>
+          <div class="proof-note-grid">
+            <div class="proof-note">
+              <strong>実績はこれから公開</strong>
+              <p>公開できる事例はモニター対応後に増やす。今はサンプルと返す内容を先に見せる。</p>
+            </div>
+            <div class="proof-note">
+              <strong>保証しないことを明記</strong>
+              <p>売上、検索順位、AIの回答表示は保証しない。直せる文章と構成に絞って返す。</p>
+            </div>
+            <div class="proof-note">
+              <strong>1ページだけで試せる</strong>
+              <p>大きな契約ではなく、まず1ページだけ。合わなければそこで止められる。</p>
             </div>
           </div>
         </div>

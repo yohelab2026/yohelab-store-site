@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AI検索時代の記事ブログテーマ ベータ¥5,500 | よへラボ</title>
-    <meta name="description" content="FAQ・JSON-LD・llms.txt・内部解析・GA4設定をテーマに内蔵した軽量WordPressテーマ。プラグイン追加ゼロでAI検索に引用されやすい記事ブログの土台を整える。ベータ価格¥5,500（正式版¥8,800）買い切り。購入後すぐZIPとシリアルナンバーが届く。" />
-    <meta property="og:title" content="AI検索時代の記事ブログテーマ ベータ¥5,500 | よへラボ" />
-    <meta property="og:description" content="FAQ・JSON-LD・llms.txt・内部解析・GA4設定をテーマに内蔵した軽量WordPressテーマ。プラグイン追加ゼロでAI検索に引用されやすい記事ブログの土台を整える。ベータ価格¥5,500（正式版¥8,800）買い切り。" />
+    <title>記事ブログ用WordPressテーマ ベータ¥5,500 | よへラボ</title>
+    <meta name="description" content="FAQ、構造化データ、記事テンプレート、内部解析、GA4設定を内蔵した軽量WordPressテーマ。プラグインを増やしすぎず、読者にも検索にも伝わる記事ブログの土台を整える。ベータ価格¥5,500（正式版¥8,800）買い切り。購入後すぐZIPとシリアルナンバーが届く。" />
+    <meta property="og:title" content="記事ブログ用WordPressテーマ ベータ¥5,500 | よへラボ" />
+    <meta property="og:description" content="FAQ、構造化データ、記事テンプレート、内部解析、GA4設定を内蔵した軽量WordPressテーマ。プラグインを増やしすぎず、読者にも検索にも伝わる記事ブログの土台を整える。ベータ価格¥5,500（正式版¥8,800）買い切り。" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="ja_JP" />
     <meta property="og:url" content="https://yohelab.com/apps/wordpress-theme/" />
@@ -18,7 +18,7 @@
     <link rel="icon" type="image/png" href="/yohelab-icon.png" />
     <link rel="stylesheet" href="/shared/site.css" />
     <script type="application/ld+json">
-    {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"よへラボ","url":"https://yohelab.com/"},{"@type":"SoftwareApplication","name":"AI検索時代の記事ブログテーマ","applicationCategory":"BusinessApplication","operatingSystem":"WordPress","offers":{"@type":"Offer","price":"5500","priceCurrency":"JPY","name":"ベータ版","description":"ベータ価格¥5,500（正式版¥8,800）・買い切り・月額なし"},"description":"FAQ・JSON-LD・llms.txt・内部解析・GA4設定をテーマに内蔵した軽量WordPressテーマ。AI検索に引用されやすい記事ブログの土台をプラグイン追加ゼロで整える。"}]}
+    {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"よへラボ","url":"https://yohelab.com/"},{"@type":"SoftwareApplication","name":"記事ブログ用WordPressテーマ","applicationCategory":"BusinessApplication","operatingSystem":"WordPress","offers":{"@type":"Offer","price":"5500","priceCurrency":"JPY","name":"ベータ版","description":"ベータ価格¥5,500（正式版¥8,800）・買い切り・月額なし"},"description":"FAQ、構造化データ、内部解析、GA4設定、記事テンプレートをテーマに内蔵した軽量WordPressテーマ。読者にも検索にも伝わる記事ブログの土台をプラグイン追加を抑えて整える。"}]}
     </script>
     <style>
       body {
@@ -26,6 +26,7 @@
           radial-gradient(circle at top left, rgba(11, 143, 114, 0.12), transparent 28%),
           radial-gradient(circle at top right, rgba(29, 78, 216, 0.08), transparent 26%),
           linear-gradient(180deg, #f8fbff 0%, #f7faf8 16%, #f9fbfa 100%);
+        overflow-x: hidden;
       }
       .hero {
         padding: 92px 0 62px;
@@ -549,6 +550,24 @@
         }
       }
       @media (max-width: 600px) {
+        .hero {
+          padding: 60px 0 56px;
+        }
+        .hero h1 {
+          font-size: clamp(36px, 12vw, 48px);
+          letter-spacing: -0.05em;
+          max-width: 100%;
+          overflow-wrap: anywhere;
+          word-break: keep-all;
+        }
+        .hero-lead {
+          font-size: 15px;
+          overflow-wrap: anywhere;
+        }
+        .hero-actions .btn {
+          width: 100%;
+          justify-content: center;
+        }
         .feature-grid,
         .lightness-grid {
           grid-template-columns: 1fr;
@@ -577,8 +596,8 @@
         <div class="container hero-inner">
           <div>
             <div class="eyebrow"><span class="dot"></span> WordPress theme template</div>
-            <h1>プラグイン不要。<em>AI検索に強い土台</em>がテーマに最初から入っている。</h1>
-            <p class="hero-lead">FAQ・JSON-LD構造化データ・llms.txt・内部解析・GA4設定をテーマ側にまとめた。後からプラグインを積み上げなくても、AI検索時代に必要なものが最初から揃っている。</p>
+            <h1>プラグインを増やさず、<em>読まれる記事の型</em>を最初から入れる。</h1>
+            <p class="hero-lead">FAQ、構造化データ、記事テンプレート、内部解析、GA4設定をテーマ側にまとめた。後から設定を積み上げなくても、読者にも検索にも伝わる記事ブログの土台を作れる。</p>
             <div class="hero-actions">
               <a class="btn btn-white btn-lg" href="/api/checkout?product=wordpress-theme">¥5,500（ベータ）で購入してZIPを受け取る →</a>
               <a class="btn btn-lg" style="color:rgba(255,255,255,.86);border:1.5px solid rgba(255,255,255,.24);" href="/lp/wordpress-theme/">機能を詳しく見る</a>
@@ -589,7 +608,7 @@
               <h3>最初から入れたもの</h3>
             <div class="hero-points">
               <div class="hero-point"><i>1</i><div><strong>JSON-LD自動出力</strong><span>Article、Person、Breadcrumb、FAQPageを出す。</span></div></div>
-              <div class="hero-point"><i>2</i><div><strong>llms.txt自動生成</strong><span>AIクローラー向けの入口をテーマ側で用意する。</span></div></div>
+            <div class="hero-point"><i>2</i><div><strong>AI向け案内ファイル</strong><span>llms.txtをテーマ側で自動生成する。</span></div></div>
               <div class="hero-point"><i>3</i><div><strong>軽量内部解析</strong><span>PV、人気記事、流入元を管理画面で見る。</span></div></div>
               <div class="hero-point"><i>4</i><div><strong>GA4・GSC設定</strong><span>測定IDと認証タグを管理画面から入れる。</span></div></div>
               <div class="hero-point"><i>5</i><div><strong>色を設定で変更</strong><span>メインカラーと文字色を、管理画面から簡単に変えられる。</span></div></div>
@@ -598,28 +617,52 @@
         </div>
       </section>
 
+      <section class="panel" id="proof">
+        <div class="container">
+          <div class="panel-head">
+            <div class="panel-kicker">Before you buy</div>
+            <h2>買う前に分かるようにしたこと</h2>
+            <p>無料テーマと比べて強いのは、デザインだけではなく「記事を書く前の型」が入っているところ。</p>
+          </div>
+          <div class="lightness-grid">
+            <article class="lightness-card">
+              <h3>誰向けか</h3>
+              <p>ブログ初心者、アフィリエイト記事を書く人、小さなメディアを運営する人向け。企業サイト全体の大型テーマではない。</p>
+            </article>
+            <article class="lightness-card">
+              <h3>何が楽になるか</h3>
+              <p>比較、レビュー、ランキング、FAQ、商品紹介など、記事の流れをパターンから選んで書き始められる。</p>
+            </article>
+            <article class="lightness-card">
+              <h3>何を保証しないか</h3>
+              <p>検索順位、売上、AIの回答表示は保証しない。テーマは読み取りやすい構造と運用の手間を減らすための土台。</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
       <section class="panel alt" id="features">
         <div class="container">
           <div class="panel-head">
             <div class="panel-kicker">What's inside</div>
           <h2>最初から入っているもの、全部</h2>
-            <p>プラグインを追加しなくても、AI検索時代に必要なものが最初から揃っている。</p>
+            <p>プラグインを追加しなくても、記事ブログに必要な基本機能が最初から揃っている。</p>
           </div>
           <div class="feature-grid">
             <article class="feature-card">
               <div class="icon">🧭</div>
               <h3>JSON-LD 全種自動出力</h3>
-              <p>Article・Person・WebSite・BreadcrumbList・FAQPageをテーマ側で自動生成。プラグイン追加ゼロ。</p>
+              <p>Article・Person・WebSite・BreadcrumbList・FAQPageをテーマ側で自動生成。検索エンジンにページ内容を伝えやすくする。</p>
             </article>
             <article class="feature-card">
               <div class="icon">❔</div>
               <h3>FAQショートコード</h3>
-              <p>[aio_faq] で開閉式FAQを設置。FAQPage JSON-LDも自動で出力される。</p>
+              <p>専用ショートコードで開閉式FAQを設置。FAQPage JSON-LDも自動で出力される。</p>
             </article>
             <article class="feature-card">
               <div class="icon">🤖</div>
               <h3>llms.txt 自動生成</h3>
-              <p>/llms.txt をWordPressの投稿・固定ページから自動生成。AIクローラー向けの入口を整える。</p>
+              <p>/llms.txt をWordPressの投稿・固定ページから自動生成。AIがサイト内容を見つけやすい入口を整える。</p>
             </article>
             <article class="feature-card">
               <div class="icon">📊</div>
@@ -629,7 +672,7 @@
             <article class="feature-card">
               <div class="icon">📝</div>
               <h3>記事テンプレート 7種類</h3>
-              <p>比較・レビュー・案件紹介・AI検索FAQ・ランキング・商品紹介・AIO基本型をブロックパターンで選べる。</p>
+              <p>比較・レビュー・案件紹介・FAQ記事・ランキング・商品紹介・基本型をブロックパターンで選べる。</p>
             </article>
             <article class="feature-card">
               <div class="icon">🎨</div>
@@ -655,7 +698,7 @@
           <div class="panel-head">
             <div class="panel-kicker">Download ready</div>
           <h2>購入後に受け取れる中身</h2>
-        <p>WordPressテーマとして最低限動く形にしつつ、記事作成の型とAI検索に引用されやすい構造を先に入れている。</p>
+        <p>WordPressテーマとして最低限動く形にしつつ、記事作成の型と読み取りやすい構造を先に入れている。</p>
           </div>
           <div class="feature-grid">
             <article class="feature-card">
@@ -687,7 +730,7 @@
           <div class="panel-head">
             <div class="panel-kicker">Simple setup</div>
             <h2>設定は少なく、機能は多く</h2>
-            <p>入力する場所は絞る。けれど、アクセス解析とAIOチェックは最初から入れておく。</p>
+            <p>入力する場所は絞る。けれど、アクセス解析と記事チェックは最初から入れておく。</p>
           </div>
           <div class="settings-grid reveal">
             <div class="settings-card">
@@ -716,7 +759,7 @@
               </ul>
             </div>
             <div class="settings-card">
-              <h3>AIOチェック</h3>
+              <h3>記事チェック</h3>
               <p>何を直せばいいかをチェック式で扱う。細かくしすぎず、必要なところだけONにする。</p>
               <div class="check-grid">
                 <label class="check-pill"><input type="checkbox" checked /> FAQを有効</label>
@@ -745,7 +788,7 @@
           </div>
           <div class="preview-wrap" style="max-width:860px;margin:0 auto;">
             <div class="lp-preview-box" style="padding:32px 36px;">
-        <h3 style="font-size:22px;margin-bottom:6px;">AI検索時代の記事ブログテーマ <span style="color:var(--green-dark);font-size:18px;">¥5,500（ベータ）</span></h3>
+        <h3 style="font-size:22px;margin-bottom:6px;">記事ブログ用WordPressテーマ <span style="color:var(--green-dark);font-size:18px;">¥5,500（ベータ）</span></h3>
               <p style="margin-bottom:20px;font-size:14px;color:var(--muted);">正式版リリース後 ¥8,800 に改定 ／ 買い切り・月額なし</p>
               <div class="lp-preview-list">
                 <div><span>✓</span><div>JSON-LD全種（Article・FAQPage・Breadcrumb）を自動出力</div></div>
@@ -764,10 +807,10 @@
             <aside class="preview-side">
               <h3>こういう人に向いている</h3>
               <ul class="side-list">
-                <li>ブログやアフィリエイトサイトをAI検索に対応させたい</li>
+                <li>ブログやアフィリエイトサイトの記事構造を整えたい</li>
                 <li>Yoast・Rank Mathなどのプラグインを減らしたい</li>
-                <li>JSON-LD・llms.txtの設定を管理画面だけで完結させたい</li>
-                <li>WordPressを立ち上げてすぐAI検索に引用されやすい土台を作りたい</li>
+                <li>構造化データやAI向け案内ファイルの設定を管理画面だけで完結させたい</li>
+                <li>WordPressを立ち上げてすぐ、読者にも検索にも伝わりやすい土台を作りたい</li>
               </ul>
               <div style="margin-top:20px;padding:14px 16px;border-radius:12px;background:#fffbeb;border:1px solid #fde68a;">
                 <p style="font-size:13px;color:#92400e;margin:0;line-height:1.7;"><strong>ベータ版について</strong><br>現在ベータ版として¥5,500で提供中。WordPress 6.9.4・PHP 8.3で動作確認済み。バグは専用フォームで受け付けて随時修正。</p>
@@ -791,7 +834,7 @@
             </article>
             <article class="lightness-card">
         <h3>2. テーマを有効化</h3>
-        <p>テーマを有効化したあと、外観 → AI検索対応テーマ で設定画面を開く。</p>
+        <p>テーマを有効化したあと、外観 → よへラボ記事テーマ で設定画面を開く。</p>
             </article>
             <article class="lightness-card">
               <h3>3. 色と解析を設定</h3>
@@ -799,15 +842,15 @@
             </article>
             <article class="lightness-card">
               <h3>4. 記事テンプレートを使う</h3>
-              <p>投稿編集画面の「パターン」から、比較、レビュー、案件紹介、AI検索FAQ、ランキング、商品紹介を選ぶ。</p>
+              <p>投稿編集画面の「パターン」から、比較、レビュー、案件紹介、FAQ記事、ランキング、商品紹介を選ぶ。</p>
             </article>
             <article class="lightness-card">
               <h3>5. 解析を見る</h3>
-        <p>外観 → AI検索対応テーマ の解析欄で、PV、人気記事、流入元を確認する。</p>
+        <p>外観 → よへラボ記事テーマ の解析欄で、PV、人気記事、流入元を確認する。</p>
             </article>
             <article class="lightness-card">
-              <h3>6. llms.txtを確認</h3>
-              <p>サイトURLの末尾に /llms.txt を付けて、AIクローラー向けの案内が出るか確認する。</p>
+              <h3>6. AI向け案内ファイルを確認</h3>
+              <p>サイトURLの末尾に /llms.txt を付けて、案内ファイルが出るか確認する。</p>
             </article>
           </div>
         </div>
@@ -827,7 +870,7 @@
             </article>
             <article class="lightness-card">
               <h3>基本設定</h3>
-        <p>WordPress管理画面の「外観 → AI検索対応テーマ」。色、解析、GA4、GSC、llms.txtをまとめて設定する。</p>
+        <p>WordPress管理画面の「外観 → よへラボ記事テーマ」。色、解析、GA4、GSC、llms.txtをまとめて設定する。</p>
             </article>
             <article class="lightness-card">
               <h3>記事の型</h3>
@@ -907,7 +950,7 @@
           <div class="lightness-grid">
             <article class="lightness-card">
               <h3>記事テンプレート7種類</h3>
-              <p>比較、レビュー、案件紹介、AI検索FAQ、ランキング、商品紹介、AIO基本型を最初から入れる。</p>
+              <p>比較、レビュー、案件紹介、FAQ記事、ランキング、商品紹介、基本型を最初から入れる。</p>
             </article>
             <article class="lightness-card">
         <h3>記事設計メモ</h3>
@@ -947,7 +990,7 @@
 
       <section class="cta-band">
         <div class="container">
-          <h2>AI検索時代の土台を、<br><em>今すぐ整える。</em></h2>
+          <h2>読まれる記事の土台を、<br><em>今すぐ整える。</em></h2>
           <p>ベータ価格 ¥5,500 で購入。正式版リリース後は ¥8,800 に改定。購入後すぐにZIPとシリアルナンバーがメールで届く。月額なし・買い切り。</p>
           <div class="cta-actions">
             <a class="btn btn-white btn-lg" href="/api/checkout?product=wordpress-theme">¥5,500（ベータ）で購入してZIPを受け取る →</a>
@@ -960,7 +1003,7 @@
 
     <footer class="footer">
       <div class="footer-inner">
-        <div>© よへラボ / AI検索時代の記事ブログテーマ</div>
+        <div>© よへラボ / 記事ブログ用WordPressテーマ</div>
         <div class="footer-links">
           <a href="/">トップ</a>
           <a href="/lp/wordpress-theme/">LP</a>

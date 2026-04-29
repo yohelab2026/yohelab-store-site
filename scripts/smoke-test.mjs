@@ -41,41 +41,41 @@ const legacyLabels = [
   `${"EC"}商品説明・Q&A整備`,
   `${"AIO"}ミニ診断`,
 ];
-checks.push(["home links research writer lp", home.includes('/lp/research-writer/')]);
+checks.push(["home links research writer app", home.includes('/apps/research-writer/')]);
 checks.push(["home no legacy tool links", legacyPaths.every((path) => !home.includes(path))]);
 
 const lpResearchWriter = read(dist("lp/research-writer/index.html"));
-checks.push(["lp research writer title", lpResearchWriter.includes('AIOに読まれやすい記事を作る | よへラボ')]);
+checks.push(["lp research writer title", lpResearchWriter.includes('3キーワードで記事の材料と下書きを作る | よへラボ')]);
 checks.push(["lp research writer free", lpResearchWriter.includes('無料で試す') || lpResearchWriter.includes('無料版を試す')]);
 
 const researchApp = read(dist("apps/research-writer/index.html"));
-checks.push(["research app title", researchApp.includes('AIO特化リサーチ記事メーカー')]);
+checks.push(["research app title", researchApp.includes('3キーワードで、記事の材料と下書きを作る')]);
 checks.push(["research app pro cap", researchApp.includes('プロ版は月50セット')]);
 checks.push(["research app wp mode", researchApp.includes('WordPress設定も出す')]);
 
 const researchProduct = read(dist("products/research-writer-beta/index.html"));
-checks.push(["research product title", researchProduct.includes('AIO特化リサーチ記事メーカー プロプラン')]);
+checks.push(["research product title", researchProduct.includes('3キーワードの記事メーカー プロプラン')]);
 checks.push(["research product price", researchProduct.includes('¥1,980')]);
 
 const wpApp = read(dist("apps/wordpress-theme/index.html"));
-checks.push(["wp app title", wpApp.includes('AIO対応WordPressテーマ')]);
+checks.push(["wp app title", wpApp.includes('記事ブログ用WordPressテーマ')]);
 checks.push(["wp app analytics", wpApp.includes('テーマ内解析') && wpApp.includes('外部解析')]);
-checks.push(["wp app plugin reduction", wpApp.includes('プラグインを増やしすぎない') || wpApp.includes('プラグイン追加ゼロ')]);
+checks.push(["wp app plugin reduction", wpApp.includes('プラグインを増やしすぎない') || wpApp.includes('プラグインを増やさず')]);
 checks.push(["wp app starter purchase", wpApp.includes('/api/checkout?product=wordpress-theme') && !wpApp.includes('/downloads/aio-starter.zip') && !existsSync(dist("downloads/aio-starter.zip"))]);
 checks.push(["wp app install guide", wpApp.includes('WordPressに入れる手順') && wpApp.includes('保証しないこと')]);
 
 const wpProduct = read(dist("products/wordpress-theme-beta/index.html"));
-checks.push(["wp product title", wpProduct.includes('AIO対応WordPressテーマ 用途別ライン')]);
+checks.push(["wp product title", wpProduct.includes('記事ブログ用WordPressテーマ')]);
 checks.push(["wp product analytics", wpProduct.includes('テーマ内解析') && wpProduct.includes('外部解析')]);
-checks.push(["wp product price pending", wpProduct.includes('価格未定')]);
-checks.push(["wp product support policy", wpProduct.includes('サポートと保証の線引き') && wpProduct.includes('販売前の最終確認表')]);
+checks.push(["wp product price", wpProduct.includes('¥5,500')]);
+checks.push(["wp product support policy", wpProduct.includes('サポートと保証の線引き') && wpProduct.includes('購入前に確認してほしいこと')]);
 
 checks.push(["research product sample and purchase flow", researchProduct.includes('プロプランで返すもの') && researchProduct.includes('購入後の流れ')]);
 checks.push(["research product checkout cta", researchProduct.includes('/api/checkout?product=research-writer') && researchProduct.includes('1日1セットまで')]);
 
 const contact = read(dist("contact/index.html"));
-checks.push(["contact includes research writer", contact.includes('AIO特化リサーチ記事メーカー')]);
-checks.push(["contact includes wordpress theme", contact.includes('AIO対応WordPressテーマ')]);
+checks.push(["contact includes research writer", contact.includes('3キーワードの記事メーカー')]);
+checks.push(["contact includes wordpress theme", contact.includes('記事ブログ用WordPressテーマ')]);
 checks.push(["contact no legacy tools", legacyLabels.every((label) => !contact.includes(label))]);
 
 const sitemap = read(dist("sitemap.xml"));

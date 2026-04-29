@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>よへラボ | 記事メーカー・商品ページ改善レビュー・WordPressテーマ</title>
-  <meta name="description" content="3キーワードで記事下書きを生成する記事メーカー、商品ページの伝わり方を整える改善レビュー、FAQ・JSON-LD・llms.txtを内蔵したWordPressテーマを提供。" />
+  <meta name="description" content="ひとりで記事を書き、商品ページを直し、WordPressで発信したい人向け。3キーワードの記事メーカー、商品ページ改善レビュー、軽いWordPressテーマをまとめて提供。" />
   <meta property="og:title" content="よへラボ | 記事メーカー・商品ページ改善レビュー・WordPressテーマ" />
-  <meta property="og:description" content="3キーワードで記事下書きを生成する記事メーカー、商品ページの伝わり方を整える改善レビュー、FAQ・JSON-LD・llms.txtを内蔵したWordPressテーマを提供。" />
+  <meta property="og:description" content="ひとりで記事を書き、商品ページを直し、WordPressで発信したい人向け。3キーワードの記事メーカー、商品ページ改善レビュー、軽いWordPressテーマをまとめて提供。" />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="ja_JP" />
   <meta property="og:url" content="https://yohelab.com/" />
@@ -21,9 +21,9 @@
     {"@type":"WebSite","@id":"https://yohelab.com/#site","name":"よへラボ","url":"https://yohelab.com/","description":"記事メーカー、商品ページ改善レビュー、WordPressテーマを提供。調べて書くツール、売るページの伝わり方を整えるサービス、軽量テーマをまとめて案内。","publisher":{"@id":"https://yohelab.com/#org"},"potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://yohelab.com/apps/research-writer/?q={search_term_string}"},"query-input":"required name=search_term_string"}},
     {"@type":"WebPage","@id":"https://yohelab.com/#page","url":"https://yohelab.com/","name":"よへラボ | 記事メーカー・商品ページ改善レビュー・WordPressテーマ","description":"記事メーカー、商品ページ改善レビュー、WordPressテーマを提供するサイト。","isPartOf":{"@id":"https://yohelab.com/#site"}},
     {"@type":"ItemList","name":"よへラボのツール一覧","itemListElement":[
-      {"@type":"ListItem","position":1,"name":"AI検索に拾われやすい記事メーカー","url":"https://yohelab.com/apps/research-writer/","description":"3キーワードからAI検索に引用されやすい記事下書きを生成。無料版あり・プロプラン月1,980円。"},
+      {"@type":"ListItem","position":1,"name":"記事メーカー","url":"https://yohelab.com/apps/research-writer/","description":"3キーワードから最新情報を集め、見出し、FAQ、本文、WordPress設定までまとめる。無料版あり・プロプラン月1,980円。"},
       {"@type":"ListItem","position":2,"name":"商品ページ改善レビュー","url":"https://yohelab.com/products/page-review/","description":"商品ページの伝わりにくい点、FAQ案、説明文の書き換え案を返す小さなレビューサービス。初回モニター980円。"},
-      {"@type":"ListItem","position":3,"name":"AI検索時代の記事ブログテーマ","url":"https://yohelab.com/apps/wordpress-theme/","description":"FAQ・JSON-LD・llms.txtを内蔵した軽量WordPressテーマ。ベータ¥5,500・買い切り。"}
+      {"@type":"ListItem","position":3,"name":"記事ブログ用WordPressテーマ","url":"https://yohelab.com/apps/wordpress-theme/","description":"FAQ、構造化データ、解析設定、記事テンプレートを内蔵した軽量WordPressテーマ。ベータ¥5,500・買い切り。"}
     ]}
   ]}
   </script>
@@ -48,6 +48,7 @@
         radial-gradient(circle at top right, rgba(31, 182, 207, 0.18), transparent 26%),
         linear-gradient(180deg, #f8fbff 0%, #eef5ff 100%);
       color: var(--home-text);
+      overflow-x: hidden;
     }
 
     .nav {
@@ -837,6 +838,85 @@
       gap: 16px;
     }
 
+    .audience-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .audience-card {
+      padding: 26px;
+      border-radius: 24px;
+      background: linear-gradient(180deg, #ffffff, #f7fbff);
+      border: 1px solid rgba(215, 228, 248, 0.95);
+      box-shadow: 0 14px 34px rgba(47, 89, 145, 0.07);
+    }
+
+    .audience-card strong {
+      display: inline-flex;
+      margin-bottom: 14px;
+      color: var(--home-blue);
+      font-size: 13px;
+      letter-spacing: .08em;
+    }
+
+    .audience-card h3 {
+      font-size: 24px;
+      line-height: 1.35;
+      margin-bottom: 12px;
+      color: var(--home-text);
+    }
+
+    .audience-card p {
+      color: var(--home-muted);
+      line-height: 1.8;
+      font-size: 15px;
+    }
+
+    .proof-grid {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 20px;
+      align-items: stretch;
+    }
+
+    .proof-card {
+      border-radius: 28px;
+      padding: 30px;
+      background:
+        radial-gradient(circle at 92% 12%, rgba(31, 182, 207, 0.16), transparent 26%),
+        linear-gradient(180deg, #ffffff, #f7fbff);
+      border: 1px solid rgba(215, 228, 248, 0.95);
+      box-shadow: var(--home-shadow);
+    }
+
+    .proof-card h3 {
+      font-size: 28px;
+      margin: 12px 0;
+      color: var(--home-text);
+    }
+
+    .proof-card p {
+      color: var(--home-muted);
+      line-height: 1.85;
+    }
+
+    .proof-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .proof-list span {
+      display: block;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(11, 143, 114, 0.08);
+      color: #0b6d59;
+      font-weight: 800;
+      line-height: 1.6;
+    }
+
     .feature-card {
       display: flex;
       flex-direction: column;
@@ -1057,6 +1137,11 @@
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
+      .audience-grid,
+      .proof-grid {
+        grid-template-columns: 1fr;
+      }
+
       .category-card {
         grid-template-columns: 108px 1fr;
       }
@@ -1083,10 +1168,14 @@
 
       .hero-title {
         font-size: clamp(36px, 12vw, 56px);
+        max-width: 100%;
+        overflow-wrap: anywhere;
+        word-break: keep-all;
       }
 
       .hero-lead {
         font-size: 16px;
+        overflow-wrap: anywhere;
       }
 
       .hero-actions {
@@ -1118,6 +1207,7 @@
       }
 
       .feature-grid,
+      .audience-grid,
       .bottom-stats {
         grid-template-columns: 1fr;
       }
@@ -1129,16 +1219,15 @@
     }
 
     @media (max-width: 520px) {
-      .nav-links a:not(.btn) {
-        display: none;
-      }
-
       .nav-links {
-        gap: 8px;
+        gap: 10px;
       }
 
       .nav-inner {
         width: calc(100% - 20px);
+        gap: 12px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
       }
 
       .nav-links .btn {
@@ -1214,17 +1303,18 @@
           </div>
           <h1 class="hero-title">
             ひとりで<br />
-            稼ぐ・売る・発信する<br />
-            ための<span class="accent">ツールと知見</span>
+            記事を書く・<br />
+            商品を売る・<br />
+            発信する<span class="accent">道具箱</span>
           </h1>
-          <p class="hero-lead">使えるツールだけじゃなく、売るページの整え方、開発の裏側、公開して試した記録までまとめて見られるようにした。</p>
+          <p class="hero-lead">難しい用語より、まず「何を書けばいいか」「どこを直せば売れやすいか」が分かることを大事にした。記事メーカー、ページ改善、WordPressテーマをまとめて使える。</p>
           <div class="hero-actions">
             <a class="btn btn-xl btn-home-primary" href="/apps/research-writer/">ツールを見る</a>
             <a class="btn btn-lg btn-home-secondary" href="/products/page-review/">サービスを見る</a>
           </div>
           <div class="hero-note">
             <div class="hero-avatar">🧑🏻</div>
-            <p>よへラボは、ひとりで作って売って直していく人のための置き場です。</p>
+            <p>ブログ、note、BASE、自分のサイト。ひとりで作って売る人が、迷う時間を減らすための場所です。</p>
           </div>
         </div>
 
@@ -1293,6 +1383,32 @@
     </section>
 
     <section class="section-block">
+      <div class="block-head">
+        <div>
+          <h2>誰に向けているか</h2>
+          <p>広く見せすぎると伝わらないので、よへラボではこの3つの人を中心にしている。</p>
+        </div>
+      </div>
+      <div class="audience-grid">
+        <article class="audience-card">
+          <strong>01 / 書く人</strong>
+          <h3>ブログやnoteで記事を書きたい人</h3>
+          <p>3キーワードから材料を集めて、見出し、本文、FAQ、要約まで作る。ゼロから悩む時間を減らす。</p>
+        </article>
+        <article class="audience-card">
+          <strong>02 / 売る人</strong>
+          <h3>商品ページを作ったけど売れにくい人</h3>
+          <p>誰向けか、何が良いのか、購入前の不安が見えているかを1ページ単位で見直す。</p>
+        </article>
+        <article class="audience-card">
+          <strong>03 / 育てる人</strong>
+          <h3>WordPressで記事サイトを育てたい人</h3>
+          <p>FAQ、出典、比較表、著者情報など、読者にも検索にも伝わりやすい型を最初から使える。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-block">
       <div class="category-grid">
         <a class="category-card" href="/apps/research-writer/">
           <div class="category-visual visual-doc"></div>
@@ -1347,7 +1463,7 @@
             <span class="badge badge-blue">おすすめ</span>
           </div>
           <h3>商品ページ改善レビュー</h3>
-          <p>AI検索や購入者目線で、商品ページの弱点を1ページだけ見る。改善案を短く返す。</p>
+          <p>購入者目線で、商品ページの弱点を1ページだけ見る。改善案、FAQ案、要約文を短く返す。</p>
           <span class="feature-arrow">→</span>
         </a>
         <a class="feature-card" href="/apps/wordpress-theme/">
@@ -1357,7 +1473,7 @@
             <span class="badge badge-cyan">買い切り</span>
           </div>
           <h3>WordPressテーマ</h3>
-          <p>FAQ、JSON-LD、llms.txt、解析設定をテーマに寄せて、プラグインを増やしすぎない構成にした。</p>
+          <p>FAQ、構造化データ、解析設定、記事テンプレートをテーマに寄せて、プラグインを増やしすぎない構成にした。</p>
           <span class="feature-arrow">→</span>
         </a>
         <a class="feature-card" href="/games/">
@@ -1418,6 +1534,30 @@
           <p>ゲームや試作を、遊びだけで終わらせず実験の記録としてつなげる。</p>
           <span class="feature-arrow">→</span>
         </a>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <div class="proof-grid">
+        <div class="proof-card">
+          <span class="badge badge-cyan">買う前に見えるもの</span>
+          <h3>説明だけで終わらせない。</h3>
+          <p>レビューや実績はこれから積み上げる段階。だから今は、出力例、返す内容、確認済み環境、保証しないことを先に見せる方針にしている。</p>
+          <div class="proof-list">
+            <span>記事メーカー: 検索候補、見出し、本文、FAQ、WordPress設定の出力例</span>
+            <span>改善レビュー: 弱点3つ、見出し案、説明文、FAQ案、要約文のサンプル</span>
+            <span>WordPressテーマ: 導入手順、確認済み環境、減らせるプラグイン、価格を明記</span>
+          </div>
+        </div>
+        <div class="proof-card">
+          <span class="badge badge-blue">信頼の出し方</span>
+          <h3>盛らずに、確認できる情報を出す。</h3>
+          <p>「必ず売れる」「必ず検索に出る」とは言わない。代わりに、読者に伝わる構成、購入前の不安を減らすFAQ、軽いWordPress運用を作りやすくする。</p>
+          <div class="hero-actions" style="margin-top:22px;">
+            <a class="btn btn-home-primary" href="/products/page-review/#sample">改善例を見る</a>
+            <a class="btn btn-home-secondary" href="/apps/wordpress-theme/#proof">テーマの中身を見る</a>
+          </div>
+        </div>
       </div>
     </section>
 
