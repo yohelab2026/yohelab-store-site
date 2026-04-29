@@ -50,6 +50,11 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://yohelab.com/products/page-review/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://yohelab.com/products/article-starter-kit/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
