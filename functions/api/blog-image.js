@@ -3,6 +3,8 @@
  * POST /api/blog-image           → 画像をアップロードして URL を返す（PIN認証必須）
  */
 
+import { getBlogPin, isValidPin, timingSafeEqual } from "../lib/blog-auth.js";
+
 const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
 const MAX_BYTES = 4 * 1024 * 1024; // 4MB
 
@@ -26,31 +28,35 @@ export async function onRequestGet(context) {
 }
 
 export async function onRequestPost(context) {
+  if (!isAllowedOrigin(context.request)) {
+    return json({ error: "forbidden_origin" }, 403, context.request);
+  }
+
   const kv = context.env.BLOG_KV;
-  if (!kv) return json({ error: "BLOG_KV is not configured" }, 500);
+  if (!kv) return json({ error: "BLOG_KV is not configured" }, 500, context.request);
 
   // PIN 認証
   const requestPin = String(
     context.request.headers.get("x-yohelab-pin") || "",
   ).trim();
-  const storedPin = await kv.get("config:pin");
-  if (!storedPin || requestPin !== storedPin) {
-    return json({ error: "unauthorized" }, 401);
+  const storedPin = getBlogPin(context.env);
+  if (!isValidPin(requestPin) || !timingSafeEqual(requestPin, storedPin)) {
+    return json({ error: "unauthorized" }, 401, context.request);
   }
 
   const contentType = context.request.headers.get("content-type") || "";
   if (!contentType.includes("multipart/form-data")) {
-    return json({ error: "multipart required" }, 400);
+    return json({ error: "multipart required" }, 400, context.request);
   }
 
   const formData = await context.request.formData();
   const file = formData.get("file");
 
-  if (!file || typeof file === "string") return json({ error: "no file" }, 400);
-  if (!ALLOWED_TYPES.includes(file.type)) return json({ error: "unsupported type" }, 400);
+  if (!file || typeof file === "string") return json({ error: "no file" }, 400, context.request);
+  if (!ALLOWED_TYPES.includes(file.type)) return json({ error: "unsupported type" }, 400, context.request);
 
   const buffer = await file.arrayBuffer();
-  if (buffer.byteLength > MAX_BYTES) return json({ error: "too large (max 4MB)" }, 400);
+  if (buffer.byteLength > MAX_BYTES) return json({ error: "too large (max 4MB)" }, 400, context.request);
 
   const key = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
   await kv.put(`img:${key}`, buffer, {
@@ -59,15 +65,47 @@ export async function onRequestPost(context) {
   });
 
   const url = `/api/blog-image?key=${key}`;
-  return json({ ok: true, url, key });
+  return json({ ok: true, url, key }, 200, context.request);
 }
 
-function json(body, status = 200) {
+export async function onRequestOptions(context) {
+  return new Response(null, { status: 204, headers: corsHeaders(context.request) });
+}
+
+function json(body, status = 200, request = null) {
   return new Response(JSON.stringify(body), {
     status,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
-      "Access-Control-Allow-Origin": "*",
+      ...corsHeaders(request),
     },
   });
+}
+
+function corsHeaders(request) {
+  const origin = request?.headers?.get("Origin") || "";
+  return {
+    "Access-Control-Allow-Origin": allowedOrigin(origin),
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type, x-yohelab-pin",
+    Vary: "Origin",
+  };
+}
+
+function isAllowedOrigin(request) {
+  return Boolean(allowedOrigin(request.headers.get("Origin") || ""));
+}
+
+function allowedOrigin(origin) {
+  if (!origin) return "https://yohelab.com";
+  try {
+    const { hostname, protocol } = new URL(origin);
+    if (protocol !== "https:" && hostname !== "localhost" && hostname !== "127.0.0.1") return "";
+    if (hostname === "yohelab.com" || hostname.endsWith(".yohelab.pages.dev") || hostname === "localhost" || hostname === "127.0.0.1") {
+      return origin;
+    }
+  } catch {
+    return "";
+  }
+  return "";
 }

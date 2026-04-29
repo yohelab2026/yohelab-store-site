@@ -1,7 +1,12 @@
+import { getBlogPin, isValidPin, timingSafeEqual } from "../lib/blog-auth.js";
+
 export async function onRequestPost(context) {
   try {
+    if (!isAllowedOrigin(context.request)) {
+      return json({ error: "forbidden_origin" }, 403, context.request);
+    }
     const kv = context.env.BLOG_KV;
-    if (!kv) return json({ error: "BLOG_KV is not configured" }, 500);
+    if (!kv) return json({ error: "BLOG_KV is not configured" }, 500, context.request);
 
     const requestPin = String(
       context.request.headers.get("x-yohelab-pin") ||
@@ -9,17 +14,9 @@ export async function onRequestPost(context) {
       "",
     ).trim();
 
-    if (!requestPin || !/^\d{4}$/.test(requestPin)) {
-      return json({ error: "unauthorized" }, 401);
-    }
-
-    // KVに保存済みPINがあれば照合、なければ初回セットアップとして保存
-    const storedPin = await kv.get("config:pin");
-    if (storedPin) {
-      if (requestPin !== storedPin) return json({ error: "unauthorized" }, 401);
-    } else {
-      // 初回: このPINをマスターPINとして保存
-      await kv.put("config:pin", requestPin);
+    const storedPin = getBlogPin(context.env);
+    if (!isValidPin(requestPin) || !timingSafeEqual(requestPin, storedPin)) {
+      return json({ error: "unauthorized" }, 401, context.request);
     }
 
     const body = await readJsonBody(context.request);
@@ -34,7 +31,7 @@ export async function onRequestPost(context) {
 
     // タイトルがなくてもアイキャッチ画像があればOK（画像がタイトル代わり）
     if (!title && !eyecatch) {
-      return json({ error: "title_required" }, 400);
+      return json({ error: "title_required" }, 400, context.request);
     }
 
     // slug に日付プレフィックスを付けてユニークにする
@@ -50,33 +47,41 @@ export async function onRequestPost(context) {
       metadata: { title: effectiveTitle, date, excerpt, slug: effectiveSlugRaw, eyecatch: eyecatch || "" },
     });
 
-    return json({ ok: true, slug, post });
+    return json({ ok: true, slug, post }, 200, context.request);
   } catch (error) {
-    return json({ error: error?.message || "unexpected_error" }, 500);
+    return json({ error: error?.message || "unexpected_error" }, 500, context.request);
   }
 }
 
 export async function onRequestDelete(context) {
   try {
+    if (!isAllowedOrigin(context.request)) {
+      return json({ error: "forbidden_origin" }, 403, context.request);
+    }
     const kv = context.env.BLOG_KV;
-    if (!kv) return json({ error: "BLOG_KV is not configured" }, 500);
+    if (!kv) return json({ error: "BLOG_KV is not configured" }, 500, context.request);
 
     const requestPin = String(
       context.request.headers.get("x-yohelab-pin") || "",
     ).trim();
-    const storedPin = await kv.get("config:pin");
-    if (!storedPin || requestPin !== storedPin) return json({ error: "unauthorized" }, 401);
-    if (!kv) return json({ error: "BLOG_KV is not configured" }, 500);
+    const storedPin = getBlogPin(context.env);
+    if (!isValidPin(requestPin) || !timingSafeEqual(requestPin, storedPin)) {
+      return json({ error: "unauthorized" }, 401, context.request);
+    }
 
     const body = await readJsonBody(context.request);
     const slug = String(body?.slug || "").trim();
-    if (!slug) return json({ error: "slug_required" }, 400);
+    if (!slug) return json({ error: "slug_required" }, 400, context.request);
 
     await kv.delete(`post:${slug}`);
-    return json({ ok: true, slug });
+    return json({ ok: true, slug }, 200, context.request);
   } catch (error) {
-    return json({ error: error?.message || "unexpected_error" }, 500);
+    return json({ error: error?.message || "unexpected_error" }, 500, context.request);
   }
+}
+
+export async function onRequestOptions(context) {
+  return new Response(null, { status: 204, headers: corsHeaders(context.request) });
 }
 
 // ── helpers ────────────────────────────────────────────────
@@ -131,12 +136,40 @@ async function readJsonBody(request) {
   try { return text ? JSON.parse(text) : {}; } catch { return {}; }
 }
 
-function json(body, status = 200) {
+function json(body, status = 200, request = null) {
   return new Response(JSON.stringify(body), {
     status,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
-      "Access-Control-Allow-Origin": "*",
+      ...corsHeaders(request),
     },
   });
+}
+
+function corsHeaders(request) {
+  const origin = request?.headers?.get("Origin") || "";
+  return {
+    "Access-Control-Allow-Origin": allowedOrigin(origin),
+    "Access-Control-Allow-Methods": "POST, DELETE, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type, x-yohelab-pin, x-yohelab-password",
+    Vary: "Origin",
+  };
+}
+
+function isAllowedOrigin(request) {
+  return Boolean(allowedOrigin(request.headers.get("Origin") || ""));
+}
+
+function allowedOrigin(origin) {
+  if (!origin) return "https://yohelab.com";
+  try {
+    const { hostname, protocol } = new URL(origin);
+    if (protocol !== "https:" && hostname !== "localhost" && hostname !== "127.0.0.1") return "";
+    if (hostname === "yohelab.com" || hostname.endsWith(".yohelab.pages.dev") || hostname === "localhost" || hostname === "127.0.0.1") {
+      return origin;
+    }
+  } catch {
+    return "";
+  }
+  return "";
 }

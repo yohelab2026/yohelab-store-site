@@ -13,12 +13,12 @@
 
 ## ツール一覧
 
-現在の主力は2つです。AIO特化リサーチ記事メーカーはプロプランあり、AIO対応WordPressテーマは価格未定で導入相談から案内します。
+現在の主力は2つです。3キーワード記事メーカーはプロプランあり、記事ブログ用WordPressテーマはベータ価格¥5,500の買い切りで案内します。
 
 | キー | ツール名 | アプリパス |
 |------|---------|-----------|
-| `research-writer` | AIO特化リサーチ記事メーカー | /apps/research-writer/ |
-| `wordpress-theme` | AIO対応WordPressテーマ | /apps/wordpress-theme/ |
+| `research-writer` | 3キーワード記事メーカー | /apps/research-writer/ |
+| `wordpress-theme` | 記事ブログ用WordPressテーマ | /apps/wordpress-theme/ |
 
 ---
 
@@ -75,8 +75,8 @@ apps/
 
 ```js
 const PRODUCT_CONFIG = {
-  "research-writer": { label: "AIO特化リサーチ記事メーカー", nextPath: "/apps/research-writer/" },
-  "wordpress-theme": { label: "AIO対応WordPressテーマ", nextPath: "/apps/wordpress-theme/" },
+  "research-writer": { label: "3キーワード記事メーカー", nextPath: "/apps/research-writer/" },
+  "wordpress-theme": { label: "記事ブログ用WordPressテーマ", nextPath: "/apps/wordpress-theme/" },
   // ↓ 新しいツールをここに追加
   "new-tool": { label: "新しいツール名", nextPath: "/apps/new-tool/" },
 };

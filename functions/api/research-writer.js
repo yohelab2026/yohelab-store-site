@@ -3,40 +3,42 @@ const ANTHROPIC_URL = "https://api.anthropic.com/v1/messages";
 const ANTHROPIC_MODEL = "claude-sonnet-4-20250514";
 
 const CORS_HEADERS = {
-  "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "POST, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type",
 };
 
-export async function onRequestOptions() {
-  return new Response(null, { status: 204, headers: CORS_HEADERS });
+export async function onRequestOptions(context) {
+  return new Response(null, { status: 204, headers: corsHeaders(context.request) });
 }
 
 export async function onRequestPost(context) {
   try {
+    if (!isAllowedOrigin(context.request)) {
+      return json({ error: "forbidden_origin" }, 403, context.request);
+    }
     const body = await readJsonBody(context.request);
     const action = String(body?.action || "").trim();
 
     if (action === "search") {
-      return await handleSearch(body, context.env);
+      return await handleSearch(body, context.env, context.request);
     }
 
     if (action === "generate") {
-      return await handleGenerate(body, context.env);
+      return await handleGenerate(body, context.env, context.request);
     }
 
-    return json({ error: "unknown_action" }, 400);
+    return json({ error: "unknown_action" }, 400, context.request);
   } catch (error) {
-    return json({ error: error?.message || "unexpected_error" }, 500);
+    return json({ error: error?.message || "unexpected_error" }, 500, context.request);
   }
 }
 
-async function handleSearch(body, env) {
+async function handleSearch(body, env, request) {
   const apiKey = (env.PERPLEXITY_API_KEY || "").trim();
-  if (!apiKey) return json({ error: "PERPLEXITY_API_KEY is not configured" }, 500);
+  if (!apiKey) return json({ error: "PERPLEXITY_API_KEY is not configured" }, 500, request);
 
   const keywords = normalizeKeywords(body?.keywords);
-  if (!keywords.length) return json({ error: "keywords_required" }, 400);
+  if (!keywords.length) return json({ error: "keywords_required" }, 400, request);
 
   const queryList = buildQueries(keywords);
   const response = await fetch(PERPLEXITY_URL, {
@@ -57,7 +59,7 @@ async function handleSearch(body, env) {
 
   if (!response.ok) {
     const text = await response.text();
-    return json({ error: `perplexity_search_failed: ${response.status}`, detail: text }, response.status);
+    return json({ error: `perplexity_search_failed: ${response.status}`, detail: text }, response.status, request);
   }
 
   const data = await response.json();
@@ -66,17 +68,17 @@ async function handleSearch(body, env) {
   return json({
     query: queryList,
     results,
-  });
+  }, 200, request);
 }
 
-async function handleGenerate(body, env) {
+async function handleGenerate(body, env, request) {
   const apiKey = (env.ANTHROPIC_API_KEY || "").trim();
-  if (!apiKey) return json({ error: "ANTHROPIC_API_KEY is not configured" }, 500);
+  if (!apiKey) return json({ error: "ANTHROPIC_API_KEY is not configured" }, 500, request);
 
   const keywords = normalizeKeywords(body?.keywords);
   const selectedResults = Array.isArray(body?.selectedResults) ? body.selectedResults : [];
   if (!keywords.length || !selectedResults.length) {
-    return json({ error: "selected_results_required" }, 400);
+    return json({ error: "selected_results_required" }, 400, request);
   }
 
   const tone = String(body?.tone || "丁寧").trim();
@@ -205,7 +207,7 @@ ${selectedResults
 
   if (!response.ok) {
     const text = await response.text();
-    return json({ error: `anthropic_generation_failed: ${response.status}`, detail: text }, response.status);
+    return json({ error: `anthropic_generation_failed: ${response.status}`, detail: text }, response.status, request);
   }
 
   const data = await response.json();
@@ -214,7 +216,7 @@ ${selectedResults
   return json({
     result,
     model: ANTHROPIC_MODEL,
-  });
+  }, 200, request);
 }
 
 function normalizeKeywords(value) {
@@ -285,12 +287,40 @@ async function readJsonBody(request) {
   }
 }
 
-function json(body, status = 200) {
+function json(body, status = 200, request = null) {
   return new Response(JSON.stringify(body), {
     status,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
-      ...CORS_HEADERS,
+      ...corsHeaders(request),
     },
   });
+}
+
+function corsHeaders(request) {
+  const origin = request?.headers?.get("Origin") || "";
+  return {
+    ...CORS_HEADERS,
+    "Access-Control-Allow-Origin": allowedOrigin(origin),
+    Vary: "Origin",
+  };
+}
+
+function isAllowedOrigin(request) {
+  const origin = request.headers.get("Origin") || "";
+  return Boolean(allowedOrigin(origin));
+}
+
+function allowedOrigin(origin) {
+  if (!origin) return "https://yohelab.com";
+  try {
+    const { hostname, protocol } = new URL(origin);
+    if (protocol !== "https:" && hostname !== "localhost" && hostname !== "127.0.0.1") return "";
+    if (hostname === "yohelab.com" || hostname.endsWith(".yohelab.pages.dev") || hostname === "localhost" || hostname === "127.0.0.1") {
+      return origin;
+    }
+  } catch {
+    return "";
+  }
+  return "";
 }

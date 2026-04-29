@@ -51,7 +51,7 @@ try {
   const ok = await onRequestGet({ request: await requestFor({ serial }), env: makeEnv() });
   assert(ok.status === 200, `expected 200, got ${ok.status}`);
   assert(ok.headers.get("Content-Type") === "application/zip", "expected zip content type");
-  assert(ok.headers.get("Content-Disposition")?.includes("aio-starter.zip"), "expected attachment filename");
+  assert(ok.headers.get("Content-Disposition")?.includes("yohe-blog-starter.zip"), "expected attachment filename");
   assert(ok.headers.get("X-Theme-License") === "active", "expected active license header");
 
   const invalid = await onRequestGet({ request: await requestFor({ serial: "AIO-BAD0-BAD0-BAD0-BAD0" }), env: makeEnv() });

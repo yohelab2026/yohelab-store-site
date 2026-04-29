@@ -4,7 +4,7 @@ Disallow: /blog/admin/
 Disallow: /api/
 Disallow: /pro/
 
-# AI crawlers (explicitly allowed for AIO optimization)
+# AI crawlers (explicitly allowed for AI search visibility)
 User-agent: GPTBot
 Allow: /
 
