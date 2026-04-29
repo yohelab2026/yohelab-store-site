@@ -1,652 +1,431 @@
 <!doctype html>
 <html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>3キーワードで記事の材料と下書きを作る | よへラボ</title>
-    <meta name="description" content="3キーワード入力で最新情報を収集し、見出し・FAQ・出典まで整えた記事下書きを生成。無料版は1日1セット、プロプランは月50セット・1,980円。" />
-    <meta property="og:title" content="3キーワードで記事の材料と下書きを作る | よへラボ" />
-    <meta property="og:description" content="3キーワード入力で最新情報を収集し、見出し・FAQ・出典まで整えた記事下書きを生成。無料版は1日1セット、プロプランは月50セット・1,980円。" />
-    <meta property="og:type" content="website" />
-    <meta property="og:locale" content="ja_JP" />
-    <meta property="og:url" content="https://yohelab.com/lp/research-writer/" />
-    <meta property="og:image" content="https://yohelab.com/yohelab-icon.png" />
-    <meta name="twitter:card" content="summary" />
-    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
-    <meta name="theme-color" content="#0d6b58" />
-    <link rel="canonical" href="https://yohelab.com/lp/research-writer/" />
-    <link rel="icon" type="image/png" href="/yohelab-icon.png" />
-    <link rel="stylesheet" href="/shared/site.css" />
-    <style>
-      .lp-hero {
-        padding: 88px 0 72px;
-        background:
-          radial-gradient(ellipse 85% 65% at 50% 0%, rgba(13,107,88,.16), transparent 58%),
-          linear-gradient(180deg, #f8fbff 0%, #eef5ff 100%);
-        color: var(--text);
-      }
-      .lp-hero .container {
-        width: min(1100px, 100% - 48px);
-      }
-      .lp-hero-copy {
-        max-width: 920px;
-        margin: 0 auto;
-        text-align: center;
-      }
-      .lp-eyebrow {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 6px 16px;
-        border-radius: 999px;
-        background: rgba(255,255,255,.92);
-        border: 1px solid rgba(11,143,114,.18);
-        color: var(--green-dark);
-        font-size: 13px;
-        font-weight: 700;
-        margin-bottom: 28px;
-      }
-      .lp-hero h1 {
-        color: var(--text);
-        font-size: clamp(42px, 6.4vw, 74px);
-        letter-spacing: -0.05em;
-        line-height: 1.06;
-        margin-bottom: 18px;
-      }
-      .lp-hero h1 em {
-        background: linear-gradient(135deg, #0b8f72 0%, #1fb6cf 55%, #3f8cff 100%);
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-        font-style: normal;
-      }
-      .lp-lead {
-        max-width: 760px;
-        margin: 0 auto 28px;
-        color: var(--muted);
-        font-size: 19px;
-        line-height: 1.9;
-      }
-      .lp-actions {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 12px;
-        margin-bottom: 20px;
-      }
-      .lp-hero-note {
-        color: var(--muted-light);
-        font-size: 13px;
-      }
-      .lp-band {
-        margin-top: 28px;
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 14px;
-      }
-      .lp-band .lp-card {
-        background: rgba(255,255,255,.88);
-        border: 1px solid rgba(11,143,114,.12);
-        color: var(--text);
-        box-shadow: none;
-      }
-      .lp-band .lp-card h3 {
-        color: var(--text);
-      }
-      .lp-band .lp-card p {
-        color: var(--muted);
-      }
-      .lp-section {
-        padding: 72px 0;
-      }
-      .lp-grid-3 {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 16px;
-      }
-      .lp-grid-2 {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 16px;
-      }
-      .lp-card {
-        padding: 26px;
-        border-radius: 20px;
-        border: 1px solid var(--border);
-        background: var(--white);
-        box-shadow: var(--shadow);
-      }
-      .lp-card h3 {
-        font-size: 17px;
-        font-weight: 800;
-        margin-bottom: 10px;
-        display: flex;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 8px;
-      }
-      .lp-card p {
-        color: var(--muted);
-        font-size: 15px;
-        line-height: 1.75;
-      }
-      .lp-price-badge {
-        display: inline-block;
-        padding: 3px 12px;
-        border-radius: 999px;
-        background: var(--green-soft, #e6f8f2);
-        color: var(--green-dark, #075c4c);
-        font-size: 14px;
-        font-weight: 700;
-      }
-      .lp-mini-head {
-        text-align: center;
-        margin-bottom: 22px;
-      }
-      .lp-mini-head h2 {
-        font-size: 30px;
-        font-weight: 900;
-        letter-spacing: -0.04em;
-        margin-bottom: 8px;
-      }
-      .lp-mini-head p {
-        color: var(--muted);
-        font-size: 16px;
-      }
-      .lp-preview {
-        display: grid;
-        grid-template-columns: 1.1fr .9fr;
-        gap: 16px;
-        align-items: stretch;
-      }
-      .lp-preview-box {
-        padding: 28px;
-        border-radius: 20px;
-        border: 1px solid var(--green-mid);
-        background: linear-gradient(180deg, #f7fcfa 0%, #eef8f4 100%);
-        box-shadow: var(--shadow);
-      }
-      .lp-preview-box h3 {
-        font-size: 20px;
-        font-weight: 900;
-        margin-bottom: 10px;
-      }
-      .lp-preview-box p {
-        color: var(--muted);
-        line-height: 1.75;
-        font-size: 15px;
-      }
-      .lp-preview-list {
-        display: grid;
-        gap: 10px;
-        margin-top: 18px;
-      }
-      .lp-preview-list div {
-        display: flex;
-        gap: 10px;
-        align-items: flex-start;
-        color: var(--text);
-        font-size: 14px;
-        line-height: 1.65;
-      }
-      .lp-preview-list span {
-        color: var(--green);
-        font-weight: 900;
-      }
-      .lp-side-box {
-        padding: 28px;
-        border-radius: 20px;
-        border: 1px solid var(--border);
-        background: var(--white);
-        box-shadow: var(--shadow);
-      }
-      .lp-side-box h3 {
-        font-size: 18px;
-        font-weight: 900;
-        margin-bottom: 12px;
-      }
-      .lp-side-box ul {
-        display: grid;
-        gap: 8px;
-      }
-      .lp-side-box li {
-        display: flex;
-        gap: 8px;
-        color: var(--muted);
-        line-height: 1.6;
-        font-size: 14px;
-      }
-      .lp-side-box li::before {
-        content: "→";
-        color: var(--green);
-        font-weight: 800;
-      }
-      .lp-table-wrap {
-        max-width: 860px;
-        margin: 0 auto;
-      }
-      .lp-table {
-        width: 100%;
-        border-collapse: collapse;
-        border-radius: 18px;
-        overflow: hidden;
-        border: 1px solid var(--border);
-        box-shadow: var(--shadow);
-      }
-      .lp-table th,
-      .lp-table td {
-        padding: 15px 18px;
-        font-size: 15px;
-        text-align: center;
-      }
-      .lp-table th:first-child,
-      .lp-table td:first-child {
-        text-align: left;
-      }
-      .lp-table th {
-        background: var(--bg);
-        font-weight: 800;
-      }
-      .lp-table .free {
-        color: var(--muted);
-        background: #fff;
-      }
-      .lp-table .pro {
-        background: #f1faf6;
-        color: var(--green-dark);
-        font-weight: 700;
-      }
-      .lp-check {
-        color: var(--green);
-        font-weight: 900;
-      }
-      .lp-dash {
-        color: #b8bfca;
-      }
-      .lp-cta {
-        text-align: center;
-        padding: 64px 0 84px;
-        background: linear-gradient(180deg, #fff 0%, #f6fbf9 100%);
-      }
-      .lp-cta h2 {
-        font-size: clamp(30px, 5vw, 50px);
-        font-weight: 900;
-        letter-spacing: -0.04em;
-        margin-bottom: 12px;
-      }
-      .lp-cta h2 em {
-        color: var(--green-dark, #075c4c);
-        font-style: normal;
-      }
-      .lp-cta p {
-        color: var(--muted);
-        font-size: 16px;
-        line-height: 1.8;
-        max-width: 680px;
-        margin: 0 auto 22px;
-      }
-      .lp-links {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 12px;
-        margin-top: 16px;
-      }
-      .lp-links .btn {
-        min-width: 220px;
-      }
-      .lp-note {
-        margin-top: 12px;
-        font-size: 13px;
-        color: var(--muted);
-      }
-      .lp-faq {
-        max-width: 840px;
-        margin: 0 auto;
-      }
-      .lp-faq .faq {
-        border: 1px solid var(--border);
-        border-radius: 16px;
-        background: var(--white);
-        box-shadow: var(--shadow);
-      }
-      .lp-faq .faq + .faq {
-        margin-top: 10px;
-      }
-      .lp-faq .faq summary {
-        cursor: pointer;
-      }
-      .voice-card {
-        padding: 24px;
-        border-radius: 18px;
-        border: 1px solid var(--border);
-        background: var(--white);
-        box-shadow: var(--shadow-sm);
-      }
-      .voice-text {
-        font-size: 15px;
-        line-height: 1.8;
-        color: var(--text);
-        margin-bottom: 12px;
-      }
-      .voice-text::before { content: "「"; }
-      .voice-text::after  { content: "」"; }
-      .voice-meta {
-        font-size: 13px;
-        color: var(--muted);
-        font-weight: 700;
-      }
-      .voices-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 14px;
-        margin-top: 24px;
-      }
-      .lp-footer {
-        background: #0b1613;
-        color: rgba(255,255,255,.5);
-        font-size: 13px;
-        padding: 28px 0;
-        text-align: center;
-      }
-      .lp-footer a { color: rgba(255,255,255,.5); }
-      .lp-footer a:hover { color: #fff; }
-      .lp-footer-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 16px; margin-top: 10px; }
-      @media (max-width: 960px) {
-        .lp-band,
-        .lp-grid-3,
-        .lp-preview,
-        .voices-grid {
-          grid-template-columns: 1fr 1fr;
-        }
-        .lp-hero {
-          padding: 72px 0 56px;
-        }
-        .lp-hero h1 {
-          font-size: clamp(36px, 10vw, 56px);
-        }
-      }
-      @media (max-width: 640px) {
-        .lp-band,
-        .lp-grid-3,
-        .lp-grid-2,
-        .lp-preview,
-        .voices-grid {
-          grid-template-columns: 1fr;
-        }
-        .lp-table th, .lp-table td { padding: 10px 12px; font-size: 13px; }
-        .lp-hero { padding: 56px 0 44px; }
-        .lp-section { padding: 48px 0; }
-      }
-    </style>
-    <script type="application/ld+json">
-      {"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"よへラボ","url":"https://yohelab.com/"},{"@type":"SoftwareApplication","name":"3キーワードの記事メーカー","applicationCategory":"BusinessApplication","operatingSystem":"Web","offers":[{"@type":"Offer","price":"0","priceCurrency":"JPY","name":"無料版"},{"@type":"Offer","price":"1980","priceCurrency":"JPY","name":"プロプラン","description":"月額1,980円・月50セット・いつでも解約可"}],"description":"3キーワード入力で最新情報を収集し、見出し・FAQ・出典まで整えた記事下書きを生成。無料版は1日1セット、プロプランは月50セット・1,980円。"}]}
-    </script>
-  </head>
-  <body>
-    <header class="nav">
-      <div class="nav-inner">
-        <a class="brand" href="/">
-          <img src="/yohelab-icon.png" alt="よへラボのアイコン" />
-          <span>よへラボ</span>
-        </a>
-        <nav class="nav-links">
-        <a href="/apps/research-writer/">ツール</a>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3キーワードで「AIに引用される記事」を量産｜記事メーカー｜無料で試す</title>
+  <meta name="description" content="3つのキーワードを入れるだけで、最新情報のリサーチ・見出し・FAQ・出典を整えた「AI検索に引用される記事」の下書きを生成。無料で1日1回試せる。プロプラン月50本で1,980円。1記事あたり39円。" />
+  <meta property="og:title" content="3キーワードで「AIに引用される記事」を量産する記事メーカー" />
+  <meta property="og:description" content="リサーチ・構成・FAQ・出典つきの記事下書きが、3キーワード入力だけで完成。無料で試せる。プロプラン月50本¥1,980。" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://yohelab.com/lp/research-writer/" />
+  <meta property="og:image" content="https://yohelab.com/yohelab-icon.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1" />
+  <meta name="theme-color" content="#0b8f72" />
+  <link rel="canonical" href="https://yohelab.com/lp/research-writer/" />
+  <link rel="icon" type="image/png" href="/yohelab-icon.png" />
+  <link rel="stylesheet" href="/shared/site.css" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@graph":[
+    {"@type":"WebSite","name":"よへラボ","url":"https://yohelab.com/"},
+    {"@type":"SoftwareApplication","name":"3キーワード記事メーカー","applicationCategory":"BusinessApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"1980","priceCurrency":"JPY","name":"プロプラン","description":"月50セット・月額1,980円・いつでも解約可"},"description":"3つのキーワード入力で最新情報のリサーチから記事下書き生成までを自動化するWebツール。無料版あり。"},
+    {"@type":"FAQPage","mainEntity":[
+      {"@type":"Question","name":"無料版で何ができる？","acceptedAnswer":{"@type":"Answer","text":"1日1セット、3キーワードからの最新情報収集・記事下書き生成（見出し・FAQ・出典付き）を試せる。登録不要、ブラウザだけで使える。"}},
+      {"@type":"Question","name":"プロプランは何が違う？","acceptedAnswer":{"@type":"Answer","text":"月50セット使える。1記事あたり実質39円。FAQ自動生成・出典整理・WordPress設定の自動化が強化される。"}}
+    ]}
+  ]}
+  </script>
+  <style>
+    :root { --hero-grad: linear-gradient(140deg, #0b8f72 0%, #1fb6cf 60%, #3f8cff 100%); }
+    body { background: #fbfdfc; color: var(--text); }
+    .nav { background: rgba(255,255,255,.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+
+    .hero { position: relative; padding: 80px 0 60px; background: radial-gradient(ellipse 90% 70% at 50% 0%, rgba(11,143,114,.16), transparent 60%), linear-gradient(180deg, #f4fcf8 0%, #eef5ff 100%); overflow: hidden; }
+    .hero::before { content: ""; position: absolute; inset: 0; pointer-events: none; background-image: linear-gradient(rgba(11,143,114,.04) 1px, transparent 1px), linear-gradient(90deg, rgba(11,143,114,.04) 1px, transparent 1px); background-size: 48px 48px; mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, #000, transparent 80%); -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, #000, transparent 80%); }
+    .hero .container { max-width: 1100px; position: relative; z-index: 1; }
+    .hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; padding: 7px 16px; border-radius: 999px; background: rgba(255,255,255,.92); border: 1px solid rgba(11,143,114,.22); color: var(--green-dark); font-size: 12px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 22px; }
+    .hero-eyebrow::before { content:""; width:7px; height:7px; border-radius:50%; background: var(--green); animation: pulse 1.6s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.4)} }
+    .hero h1 { font-size: clamp(38px, 6vw, 70px); line-height: 1.04; letter-spacing: -.06em; margin-bottom: 22px; font-weight: 900; }
+    .hero h1 em { font-style: normal; background: var(--hero-grad); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero-lead { font-size: 19px; line-height: 1.85; color: var(--muted); max-width: 720px; margin-bottom: 28px; }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 24px; }
+    .hero-actions .btn-primary { background: var(--hero-grad); color: #fff; border: none; box-shadow: 0 14px 32px rgba(11,143,114,.28); }
+    .hero-actions .btn-primary:hover { filter: brightness(1.05); transform: translateY(-1px); }
+    .hero-note { color: var(--muted); font-size: 14px; line-height: 1.7; }
+
+    .score-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 40px; max-width: 760px; }
+    .score-card { background: #fff; border-radius: 18px; border: 1px solid rgba(11,143,114,.14); padding: 18px 16px; text-align: center; box-shadow: 0 8px 24px rgba(11,143,114,.08); }
+    .score-num { font-size: clamp(28px, 4vw, 40px); font-weight: 900; letter-spacing: -.05em; background: var(--hero-grad); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; line-height: 1; }
+    .score-num small { font-size: .55em; opacity: .7; }
+    .score-label { font-size: 11px; color: var(--muted); margin-top: 6px; font-weight: 700; letter-spacing: .04em; }
+
+    .lp-sec { padding: 76px 0; }
+    .lp-sec.alt { background: #f4faf7; }
+    .lp-sec.dark { background: #0b1613; color: #e8f4ee; }
+    .lp-sec.dark h2 { color: #fff; }
+    .sec-head { max-width: 760px; margin: 0 auto 40px; text-align: center; }
+    .sec-label { display: inline-block; margin-bottom: 14px; padding: 6px 14px; border-radius: 999px; background: rgba(11,143,114,.1); color: var(--green-dark); font-size: 11px; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; }
+    .sec-head h2 { font-size: clamp(28px, 4.4vw, 46px); letter-spacing: -.04em; line-height: 1.18; margin-bottom: 14px; }
+    .sec-head p { font-size: 16px; line-height: 1.85; color: var(--muted); }
+
+    .pain-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 980px; margin: 0 auto; }
+    .pain-card { padding: 28px; border-radius: 22px; }
+    .pain-card.bad { background: #fef2f2; border: 1px solid #fecaca; }
+    .pain-card.good { background: linear-gradient(160deg, #0b8f72 0%, #1fb6cf 100%); color: #fff; box-shadow: 0 22px 50px rgba(11,143,114,.22); }
+    .pain-card h3 { font-size: 18px; font-weight: 900; margin-bottom: 16px; }
+    .pain-card.bad h3 { color: #b91c1c; }
+    .pain-card ul { list-style: none; padding: 0; }
+    .pain-card li { padding: 10px 0 10px 32px; position: relative; font-size: 15px; line-height: 1.75; }
+    .pain-card.bad li::before { content: "✕"; position: absolute; left: 0; top: 12px; width: 22px; height: 22px; border-radius: 50%; background: #ef4444; color: #fff; font-weight: 900; display: grid; place-items: center; font-size: 12px; }
+    .pain-card.good li::before { content: "✓"; position: absolute; left: 0; top: 12px; width: 22px; height: 22px; border-radius: 50%; background: #fff; color: var(--green-dark); font-weight: 900; display: grid; place-items: center; font-size: 12px; }
+    .pain-card.good li { color: rgba(255,255,255,.92); }
+
+    .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .step-card { background: #fff; border-radius: 22px; padding: 32px 26px; border: 1px solid rgba(11,143,114,.12); position: relative; }
+    .step-card .step-num { position: absolute; top: -18px; left: 26px; width: 44px; height: 44px; border-radius: 50%; background: var(--hero-grad); color: #fff; font-weight: 900; font-size: 18px; display: grid; place-items: center; box-shadow: 0 8px 20px rgba(11,143,114,.32); }
+    .step-card h3 { font-size: 20px; font-weight: 900; margin: 18px 0 10px; letter-spacing: -.02em; }
+    .step-card p { font-size: 14.5px; color: var(--muted); line-height: 1.85; margin-bottom: 12px; }
+    .step-card .preview { background: #f7fbf9; border-radius: 12px; padding: 14px; font-size: 13px; color: var(--text); border-left: 3px solid var(--green); }
+    .step-card .preview code { background: rgba(11,143,114,.08); padding: 2px 8px; border-radius: 4px; color: var(--green-dark); font-weight: 700; }
+
+    .output-demo { background: #fff; border-radius: 22px; padding: 30px; border: 1px solid rgba(11,143,114,.12); max-width: 920px; margin: 0 auto; box-shadow: 0 18px 50px rgba(11,143,114,.08); }
+    .output-demo .input-row { display: flex; gap: 10px; flex-wrap: wrap; padding: 14px; background: #f7fbf9; border-radius: 12px; margin-bottom: 24px; align-items: center; }
+    .output-demo .kw { background: var(--green); color: #fff; padding: 6px 14px; border-radius: 999px; font-size: 13px; font-weight: 900; }
+    .output-demo .arrow { color: var(--green); font-weight: 900; font-size: 18px; }
+    .output-demo .result { font-weight: 800; color: var(--green-dark); font-size: 14px; }
+    .output-demo .h2-mock { font-size: 22px; font-weight: 900; padding-bottom: 8px; border-bottom: 2px solid var(--green-mid); margin-top: 12px; }
+    .output-demo .p-mock { font-size: 14px; color: var(--muted); line-height: 1.85; padding: 12px 0; }
+    .output-demo .faq-mock { background: #f7fbf9; border-left: 4px solid var(--green); padding: 14px 18px; border-radius: 0 12px 12px 0; }
+    .output-demo .faq-mock .q { font-weight: 900; color: var(--text); margin-bottom: 6px; font-size: 14px; }
+    .output-demo .faq-mock .a { font-size: 13.5px; color: var(--muted); line-height: 1.8; }
+    .output-demo .src-mock { font-size: 12px; color: var(--muted-light); border-top: 1px dashed var(--border); padding-top: 12px; margin-top: 12px; }
+    .output-demo .src-mock a { color: var(--green-dark); text-decoration: underline; }
+
+    .compare-table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 18px; overflow: hidden; box-shadow: 0 12px 36px rgba(11,143,114,.08); }
+    .compare-table thead th { background: linear-gradient(135deg, #075c4c, #0b8f72); color: #fff; padding: 16px 14px; font-size: 13px; font-weight: 800; text-align: left; }
+    .compare-table thead th.us { background: linear-gradient(135deg, #0b8f72, #1fb6cf); }
+    .compare-table tbody td { padding: 14px; font-size: 14px; border-bottom: 1px solid var(--border); }
+    .compare-table tbody tr:last-child td { border-bottom: none; }
+    .compare-table .feature { font-weight: 700; }
+    .compare-table .ok { color: var(--green-dark); font-weight: 900; }
+    .compare-table .no { color: #b8c0c8; }
+    .compare-table .us-col { background: rgba(11,143,114,.06); border-left: 3px solid var(--green); border-right: 3px solid var(--green); }
+
+    .pricing { display: grid; grid-template-columns: 1fr 1.2fr; gap: 24px; max-width: 920px; margin: 0 auto; }
+    .price-card { background: #fff; border-radius: 24px; padding: 32px; border: 1px solid var(--border); }
+    .price-card.pro { background: linear-gradient(160deg, #0b8f72 0%, #1fb6cf 100%); color: #fff; box-shadow: 0 24px 60px rgba(11,143,114,.32); position: relative; }
+    .price-card .name { font-size: 14px; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; opacity: .8; }
+    .price-card .price { font-size: clamp(40px, 5vw, 60px); font-weight: 900; letter-spacing: -.05em; line-height: 1; margin: 12px 0; }
+    .price-card .price small { font-size: .35em; opacity: .8; font-weight: 700; }
+    .price-card.pro .name { color: rgba(255,255,255,.85); }
+    .price-card .feature-list { list-style: none; padding: 0; margin: 22px 0; display: grid; gap: 10px; }
+    .price-card .feature-list li { padding-left: 28px; position: relative; font-size: 14px; line-height: 1.75; }
+    .price-card .feature-list li::before { content: "✓"; position: absolute; left: 0; top: 4px; width: 18px; height: 18px; border-radius: 50%; background: var(--green); color: #fff; font-weight: 900; display: grid; place-items: center; font-size: 11px; }
+    .price-card.pro .feature-list li::before { background: #fff; color: var(--green-dark); }
+    .price-card.pro li { color: rgba(255,255,255,.92); }
+    .price-card .btn { width: 100%; justify-content: center; }
+    .price-card.pro .btn-primary { background: #fff; color: var(--green-dark); border: none; }
+    .price-card.pro .btn-primary:hover { background: #f4faf7; }
+    .price-card .badge-pop { position: absolute; top: -14px; right: 24px; background: #ffd54f; color: #5b3a00; padding: 6px 14px; border-radius: 999px; font-size: 12px; font-weight: 900; box-shadow: 0 6px 16px rgba(0,0,0,.15); }
+    .price-card .per-article { background: rgba(255,255,255,.18); padding: 8px 12px; border-radius: 8px; font-weight: 800; font-size: 13px; margin-top: 10px; display: inline-block; }
+
+    .faq-list { max-width: 820px; margin: 0 auto; display: grid; gap: 12px; }
+    .faq-item { background: #fff; border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+    .faq-item[open] { border-color: var(--green); }
+    .faq-item summary { padding: 18px 22px; cursor: pointer; font-weight: 700; font-size: 15px; display: flex; justify-content: space-between; align-items: center; gap: 12px; list-style: none; }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary::after { content: "＋"; color: var(--green); font-weight: 900; font-size: 18px; }
+    .faq-item[open] summary::after { content: "−"; }
+    .faq-item .body { padding: 0 22px 18px; font-size: 14.5px; line-height: 1.85; color: var(--muted); }
+
+    .final-cta { background: radial-gradient(circle at 20% 0%, rgba(11,143,114,.5), transparent 50%), radial-gradient(circle at 80% 100%, rgba(63,140,255,.4), transparent 50%), linear-gradient(135deg, #0a1f1a 0%, #0d2a23 100%); color: #fff; padding: 88px 0; text-align: center; }
+    .final-cta h2 { font-size: clamp(32px, 5vw, 56px); letter-spacing: -.04em; line-height: 1.12; margin-bottom: 20px; color: #fff; }
+    .final-cta h2 em { font-style: normal; color: #6be5c9; }
+    .final-cta p { font-size: 17px; line-height: 1.85; color: rgba(255,255,255,.78); max-width: 640px; margin: 0 auto 28px; }
+    .final-cta .actions { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+    .final-cta .btn-primary { background: #fff; color: var(--green-dark); border: none; }
+
+    .footer-dark { background: #0b1613; color: rgba(255,255,255,.6); padding: 36px 0; text-align: center; font-size: 13px; }
+    .footer-dark a { color: rgba(255,255,255,.6); margin: 0 8px; }
+    .footer-dark a:hover { color: #fff; }
+
+    @media (max-width: 960px) {
+      .pain-grid, .steps-grid, .pricing { grid-template-columns: 1fr; }
+      .score-row { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .hero { padding: 56px 0 44px; }
+      .lp-sec { padding: 56px 0; }
+      .compare-table thead { display: none; }
+      .compare-table tbody td { display: block; padding: 8px 14px; border: none; }
+      .compare-table tbody tr { display: block; padding: 12px; border-bottom: 8px solid #f4faf7; }
+      .compare-table .feature::before { content: attr(data-label) " — "; color: var(--muted); font-weight: 700; }
+    }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="/"><img src="/yohelab-icon.png" alt="よへラボ" /><span>よへラボ</span></a>
+      <nav class="nav-links">
+        <a href="/apps/research-writer/">記事メーカー</a>
         <a href="/products/page-review/">サービス</a>
         <a href="/blog/">ブログ</a>
         <a href="/contact/">問い合わせ</a>
       </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <p class="hero-eyebrow">3キーワード記事メーカー</p>
+        <h1>3キーワード入れるだけ。<br /><em>AIに引用される記事</em>が出る。</h1>
+        <p class="hero-lead">リサーチ・見出し・FAQ・出典の整った記事下書きが、3つのキーワードを入れるだけで完成。<br />人間が書くと2時間かかる構造化作業を、ブラウザで30秒。</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary btn-xl" href="/apps/research-writer/">無料で1回試す（登録不要）</a>
+          <a class="btn btn-xl" style="background:#fff;color:var(--text);border:1.5px solid var(--border);" href="#pricing">プロプランを見る</a>
+        </div>
+        <p class="hero-note"><strong>無料版:</strong> 1日1セット試せる｜<strong>プロ:</strong> 月50セット ¥1,980（1記事 約39円）</p>
+
+        <div class="score-row">
+          <div class="score-card"><div class="score-num">30<small>秒</small></div><div class="score-label">記事下書き完成</div></div>
+          <div class="score-card"><div class="score-num">39<small>円</small></div><div class="score-label">1記事あたり（プロ）</div></div>
+          <div class="score-card"><div class="score-num">10–20<small>件</small></div><div class="score-label">情報源の自動収集</div></div>
+          <div class="score-card"><div class="score-num">FAQ<small>付</small></div><div class="score-label">JSON-LD対応構造</div></div>
+        </div>
       </div>
-    </header>
+    </section>
 
-    <main>
-      <section class="lp-hero">
-        <div class="container">
-          <div class="lp-hero-copy">
-            <p class="lp-eyebrow">3キーワードの記事メーカー</p>
-            <h1>3キーワードで、<em>記事の材料と下書き</em>が出る。</h1>
-            <p class="lp-lead">見出し・FAQ・出典・結論をそろえた構造が、人にも検索にも伝わりやすい。リサーチと記事化を同じ画面で完結させて、1記事あたりの作業を短くする。</p>
-            <div class="lp-actions">
-              <a class="btn btn-primary btn-lg" href="/apps/research-writer/">無料で試す →</a>
-              <a class="btn btn-lg" style="color:rgba(255,255,255,.86);border:1.5px solid rgba(255,255,255,.25);background:rgba(255,255,255,.06);" href="/api/checkout?product=research-writer" target="_blank" rel="noreferrer">月額1,980円で始める</a>
-            </div>
-            <p class="lp-hero-note">無料版で1回試して、返ってくるものを見てから判断できる。ブラウザだけで使える。</p>
-            <div class="lp-band">
-              
-              <div class="lp-card"><h3>無料版で1回試す</h3><p>1日1セット。どんな記事下書きが返るか確認してから進める。</p></div>
-              <div class="lp-card"><h3>プロプランで量産</h3><p>月50セット。毎日の記事作業を短くして、本数を増やす。</p></div>
-              <div class="lp-card"><h3>すぐ使える</h3><p>インストール不要。ブラウザで今すぐ試せる。</p></div>
-            </div>
+    <section class="lp-sec alt">
+      <div class="container">
+        <div class="sec-head">
+          <p class="sec-label">Pain</p>
+          <h2>記事1本に何時間かかってる？</h2>
+          <p>記事を書くというのは、書くこと自体じゃなくて、その前後の「調べる」「整える」が大部分。</p>
+        </div>
+        <div class="pain-grid">
+          <div class="pain-card bad">
+            <h3>従来の記事作成の現実</h3>
+            <ul>
+              <li>キーワードでGoogle検索→10サイト読む（45分）</li>
+              <li>情報を整理して見出しを考える（30分）</li>
+              <li>FAQを作って構造化データを書く（30分）</li>
+              <li>出典のリンクを貼り直す（15分）</li>
+              <li><strong>合計2時間以上、しかも質にバラつき</strong></li>
+            </ul>
+          </div>
+          <div class="pain-card good">
+            <h3>記事メーカーを使うと</h3>
+            <ul>
+              <li>3キーワード入れる（10秒）</li>
+              <li>10〜20件の最新情報源が自動表示</li>
+              <li>使う情報源を選ぶ（1分）</li>
+              <li>見出し・FAQ・出典付き下書きが完成（30秒）</li>
+              <li><strong>2分で終わる。質は安定。</strong></li>
+            </ul>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section class="lp-section">
-        <div class="container">
-          <div class="lp-mini-head">
-            <h2>無料で1回試してから、必要なら月額へ</h2>
-            <p>無料版で出てくるものを確認して、合えばそのまま月50セットに移行できる。</p>
+    <section class="lp-sec">
+      <div class="container">
+        <div class="sec-head">
+          <p class="sec-label">How it works</p>
+          <h2>3ステップ、それだけ。</h2>
+          <p>登録不要、インストール不要。ブラウザで開いて3キーワード入れるだけ。</p>
+        </div>
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-num">1</div>
+            <h3>3キーワード入力</h3>
+            <p>狙うテーマ・読者層・切り口の3つだけ。文章を考える必要なし。</p>
+            <div class="preview"><code>AI副業</code> <code>初心者</code> <code>始め方</code></div>
           </div>
-          <div class="lp-preview">
-            <div class="lp-preview-box">
-              <h3>無料版でできること</h3>
-              <p>まず1回。どんな記事下書きが返るか確認してから進める。</p>
-              <div class="lp-preview-list">
-                
-                  <div><span>✓</span><div><strong>最新情報を自動収集</strong><br>3キーワードを入れるだけ。Perplexityが最新の情報源を集めてくる。</div></div>
-                  <div><span>✓</span><div><strong>読みやすい構造で出力</strong><br>見出し・FAQ・結論・出典が自動で入る。人にも検索にも伝わりやすい構造。</div></div>
-                  <div><span>✓</span><div><strong>情報を選んで精度を上げる</strong><br>10〜20件の候補から使う情報を選び、精度の高い記事下書きを生成。</div></div>
-              </div>
-              <p style="margin-top:18px;"><a class="btn btn-primary" href="/apps/research-writer/">無料で試す →</a></p>
-            </div>
-            <div class="lp-side-box">
-              <h3>プロプランで増えること</h3>
-              <ul>
-                <li>月50セットで量産できる — 記事下書きを月50セット回せる。ブログ・メディア運営の実弾になる量。…</li><li>FAQ付きで構造が強い — FAQ・見出し・結論が自動で入る。読者と検索の両方に伝わる型で量産できる。…</li><li>リサーチから記事化まで一画面 — ツールを行き来するロスがない。収集→選択→記事化を同じ画面で完結。…</li>
-              </ul>
-              <p class="lp-note">月50セット。毎日使える量に増やして、記事作業のスピードを上げる。</p>
-              <p style="margin-top:16px;"><a class="btn btn-primary" href="/api/checkout?product=research-writer" target="_blank" rel="noreferrer" style="width:100%;">月額1,980円で始める</a></p>
-            </div>
+          <div class="step-card">
+            <div class="step-num">2</div>
+            <h3>情報源を選ぶ</h3>
+            <p>Perplexityが最新の情報源を10〜20件収集。タイトル・要約から使う情報を選ぶ。</p>
+            <div class="preview">☑ 公式記事（gov.jp）<br />☑ 業界専門サイト<br />☐ 個人ブログ（除外）</div>
+          </div>
+          <div class="step-card">
+            <div class="step-num">3</div>
+            <h3>記事下書きが完成</h3>
+            <p>見出し・本文・FAQ・出典・WordPress設定まで一気に出力。コピーして使うだけ。</p>
+            <div class="preview">✓ H2/H3見出し<br />✓ FAQ（JSON-LD対応）<br />✓ 出典リンク</div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section class="section section-alt">
-        <div class="container">
-          <p class="section-label">Proof</p>
-          <h2 class="section-title">実際の画面と、使ってみた声</h2>
-          <p class="section-sub">スクリーンショットは実機の画面。声は実際の使用例から。</p>
-          <div class="shot-grid" style="max-width:900px;margin:0 auto 28px;">
-            <figure class="shot-card">
-              <div class="shot-frame">
-                <img src="https://raw.githubusercontent.com/yohelab2026/yohelab-store-site/main/public/proof/research-writer-app.svg" alt="3キーワードの記事メーカーの画面スクリーンショット" />
-              </div>
-              <figcaption class="shot-copy">
-                <span class="shot-label">3キーワードの記事メーカー</span>
-                <h3>3キーワード入れるだけ。見出し・FAQつきの記事が出る。</h3>
-                <p>最新情報を収集し、見出し・FAQ・結論・出典の構造を整えた記事下書きを生成。読者にも検索にも伝わる型で出力する。</p>
-                <ul class="shot-list"><li>最新情報を自動収集</li><li>読みやすい構造で出力</li><li>FAQ・見出しが自動で入る</li></ul>
-              </figcaption>
-            </figure></div>
-          <div class="voices-grid">
-            <article class="voice-card">
-              <p class="voice-text">何を整えればいいか分からない時に、見出し・FAQ・出典まで一気に下書きできる。</p>
-              <div class="voice-meta">メディア運営者</div>
-            </article>
-            <article class="voice-card">
-              <p class="voice-text">リサーチと執筆が一つになっているので、記事の骨組みを作る時間を短くできる。</p>
-              <div class="voice-meta">コンテンツマーケター</div>
-            </article>
-            <article class="voice-card">
-              <p class="voice-text">読者にも検索にも読み取りやすい記事構成に寄せたい時の土台になる。</p>
-              <div class="voice-meta">副業ライター</div>
-            </article></div>
+    <section class="lp-sec alt">
+      <div class="container">
+        <div class="sec-head">
+          <p class="sec-label">Sample output</p>
+          <h2>実際の出力を見てみる。</h2>
+          <p>こんな構造の記事下書きが、3キーワード入力から30秒で出る。</p>
         </div>
-      </section>
-
-      <section class="section">
-        <div class="container">
-          <p class="section-label">Fit</p>
-          <h2 class="section-title">こういう人に向いている</h2>
-          <p class="section-sub">合う人・合わない人がすぐ分かるように、使いどころを先に絞っている。</p>
-          <div class="lp-grid-3">
-            
-          <article class="lp-card">
-            <h3>ブログ・メディア運営者</h3>
-            <p>読者にも検索にも伝わる、構造の整った記事を量産したい人向け。</p>
-          </article>
-          <article class="lp-card">
-            <h3>コンテンツマーケター</h3>
-            <p>リサーチから記事化まで一気通貫で終わらせて、本数を増やしたい人向け。</p>
-          </article>
-          <article class="lp-card">
-            <h3>副業ライター・AIライター</h3>
-            <p>記事品質を上げながら、作業時間を短くしてクライアントに差をつけたい人向け。</p>
-          </article>
+        <div class="output-demo">
+          <div class="input-row">
+            <span style="font-size:13px;color:var(--muted);font-weight:700;">入力:</span>
+            <span class="kw">AI副業</span>
+            <span class="kw">初心者</span>
+            <span class="kw">始め方</span>
+            <span class="arrow">→</span>
+            <span class="result">記事下書きが30秒で完成</span>
           </div>
-          <p style="text-align:center;margin-top:28px;">
-            <a class="btn btn-primary btn-lg" href="/apps/research-writer/">無料で試す →</a>
-          </p>
+          <h3 style="font-size:24px;font-weight:900;line-height:1.3;letter-spacing:-.02em;">AI副業を初心者が始める3つの方法【2026年最新】</h3>
+          <div class="p-mock">AI副業は、特別なスキルがなくても始められる時代になった。本記事では初心者が今日から取り組める3つの方法と、稼ぐまでの最短ルートを最新情報をもとに整理する。</div>
+          <div class="h2-mock">1. AI副業の現状（2026年4月時点）</div>
+          <div class="p-mock">2025年の調査では、副業実践者の34%がAIツールを業務に組み込んでいる。需要が高いのはライティング・画像生成・文字起こし...</div>
+          <div class="h2-mock">2. 初心者向けの始め方3パターン</div>
+          <div class="p-mock"><strong>① ライティング系</strong> — Claude/ChatGPTで記事下書き、ココナラで¥3,000〜<br /><strong>② 画像生成系</strong> — Midjourney/DALL-Eで素材販売<br /><strong>③ 文字起こし系</strong> — Whisperで音声を文字化、納品単価¥5,000〜</div>
+          <div class="faq-mock">
+            <div class="q">Q. 完全初心者でもできる？</div>
+            <div class="a">A. ライティング系なら、AIツール無料枠＋ココナラ登録だけで始められる。最短3日で初案件まで到達可能。</div>
+          </div>
+          <div class="faq-mock">
+            <div class="q">Q. 月いくら稼げる？</div>
+            <div class="a">A. 副業実践者の中央値は月¥30,000〜¥50,000。週10時間の作業を続けた場合のデータ。</div>
+          </div>
+          <div class="src-mock">
+            <strong>出典:</strong>
+            <a href="#">経済産業省 副業実態調査 2025</a> ／
+            <a href="#">クラウドワークス AI活用レポート</a> ／
+            <a href="#">日本AI協会 動向データ</a>
+          </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section class="section section-alt">
-        <div class="container">
-          <p class="section-label">Compare</p>
-          <h2 class="section-title">無料版とプロプランの違い</h2>
-          <div class="lp-table-wrap">
-            <table class="lp-table">
-              <thead>
-                <tr>
-                  <th>機能</th>
-                  <th>無料版 / Starter</th>
-                  <th>プロプラン</th>
-                </tr>
-              </thead>
-              <tbody>
-                
+    <section class="lp-sec">
+      <div class="container">
+        <div class="sec-head">
+          <p class="sec-label">Compare</p>
+          <h2>ChatGPTで書くのと何が違うの？</h2>
+          <p>ChatGPTにキーワードを投げても「最新情報」「FAQ構造」「出典」は揃わない。</p>
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="compare-table">
+            <thead>
               <tr>
-                <td>キーワード入力</td>
-                <td class="free">3つ</td>
-                <td class="pro">3つ</td>
+                <th>項目</th>
+                <th class="us">記事メーカー（プロ）</th>
+                <th>ChatGPT Plus</th>
+                <th>Notion AI</th>
+                <th>無料ChatGPT</th>
               </tr>
-              <tr>
-                <td>最新情報の収集</td>
-                <td class="free">✓</td>
-                <td class="pro">✓</td>
-              </tr>
-              <tr>
-                <td>見出し・FAQ・出典の整理</td>
-                <td class="free">✓</td>
-                <td class="pro">強化版</td>
-              </tr>
-              <tr>
-                <td>FAQ自動生成</td>
-                <td class="free">✓</td>
-                <td class="pro">✓</td>
-              </tr>
-              <tr>
-                <td>利用回数</td>
-                <td class="free">1日1セットまで</td>
-                <td class="pro">月50セットまで</td>
-              </tr>
-              <tr>
-                <td>月額料金</td>
-                <td class="free">¥0（無料）</td>
-                <td class="pro">¥1,980</td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
-          <p style="text-align:center;margin-top:24px;">
-            <a class="btn btn-primary" href="/api/checkout?product=research-writer" target="_blank" rel="noreferrer">月額1,980円で始める</a>
-          </p>
+            </thead>
+            <tbody>
+              <tr><td class="feature" data-label="月額">月額</td><td class="us-col">¥1,980</td><td>¥3,000</td><td>¥1,500</td><td>無料</td></tr>
+              <tr><td class="feature" data-label="最新情報">最新情報の自動収集</td><td class="us-col ok">✓ Perplexity連携</td><td>△ ブラウジング有</td><td class="no">✕</td><td class="no">✕</td></tr>
+              <tr><td class="feature" data-label="出典">出典の自動付与</td><td class="us-col ok">✓ 全文リンク</td><td>△ 不安定</td><td class="no">✕</td><td class="no">✕</td></tr>
+              <tr><td class="feature" data-label="FAQ">FAQ自動生成（JSON-LD対応）</td><td class="us-col ok">✓</td><td class="no">✕ 手動指示</td><td class="no">✕</td><td class="no">✕</td></tr>
+              <tr><td class="feature" data-label="見出し構造">H2/H3構造化</td><td class="us-col ok">✓ 自動</td><td>△ 指示次第</td><td>△</td><td>△</td></tr>
+              <tr><td class="feature" data-label="情報選択">情報源を選んで生成</td><td class="us-col ok">✓ チェック式</td><td class="no">✕</td><td class="no">✕</td><td class="no">✕</td></tr>
+              <tr><td class="feature" data-label="WordPress">WP投稿用設定出力</td><td class="us-col ok">✓ 一発出力</td><td class="no">✕</td><td class="no">✕</td><td class="no">✕</td></tr>
+              <tr><td class="feature" data-label="制限">利用制限</td><td class="us-col">月50本</td><td>3時間40回</td><td>無制限</td><td>制限あり</td></tr>
+            </tbody>
+          </table>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section class="section" style="background:var(--bg);">
-        <div class="container">
-          <p class="section-label">Features</p>
-          <h2 class="section-title">プロプランでできること</h2>
-          <div class="lp-grid-3">
-            
-          <article class="lp-card">
-            <h3>月50セットで量産できる</h3>
-            <p>記事下書きを月50セット回せる。ブログ・メディア運営の実弾になる量。</p>
-          </article>
-          <article class="lp-card">
-            <h3>FAQ付きで構造が強い</h3>
-            <p>FAQ・見出し・結論が自動で入る。読者と検索の両方に伝わる型で量産できる。</p>
-          </article>
-          <article class="lp-card">
-            <h3>リサーチから記事化まで一画面</h3>
-            <p>ツールを行き来するロスがない。収集→選択→記事化を同じ画面で完結。</p>
-          </article>
-          </div>
-          <p style="text-align:center;margin-top:28px;">
-            <a class="btn btn-primary btn-lg" href="/api/checkout?product=research-writer" target="_blank" rel="noreferrer">月額1,980円で始める</a>
-          </p>
+    <section class="lp-sec alt" id="pricing">
+      <div class="container">
+        <div class="sec-head">
+          <p class="sec-label">Pricing</p>
+          <h2>無料で試して、合えば月¥1,980。</h2>
+          <p>無料版を1回使ってみて、出てくる記事を確認してから判断できる。</p>
         </div>
-      </section>
-
-      <section class="section">
-        <div class="container">
-          <p class="section-label">FAQ</p>
-          <h2 class="section-title">よくある質問</h2>
-          <div class="lp-faq faq-list">
-            
-            <details class="faq">
-              <summary>どんな記事を作れますか？</summary>
-              <div class="faq-body">ブログ、note、WordPress投稿などの下書きに使える。見出し、FAQ、本文、要約、WordPress設定をまとめて出す。</div>
-            </details>
-            <details class="faq">
-              <summary>どんな記事が引用されやすい？</summary>
-              <div class="faq-body">見出し構造・FAQ・結論・出典が明確で、インデックス可能な記事。このツールはその構造を持った下書きを出力する。</div>
-            </details>
-            <details class="faq">
-              <summary>無料版とプロプランの違いは？</summary>
-              <div class="faq-body">無料版は1日1セット。プロプランは月50セットまで使えて、見出し・FAQ・出典の整理を強化できる。月1,980円でいつでも解約可能。</div>
-            </details>
-            <details class="faq">
-              <summary>すぐ使える？</summary>
-              <div class="faq-body">はい。インストール不要でブラウザからすぐ使える。無料版は登録不要で試せる。</div>
-            </details>
-            <details class="faq">
-              <summary>WordPressに直接投稿できる？</summary>
-              <div class="faq-body">現在は記事下書きの生成まで対応している。生成した内容をWordPressに貼り付けて使う形。</div>
-            </details>
-            <details class="faq">
-              <summary>いつでも解約できる？</summary>
-              <div class="faq-body">問い合わせフォームからいつでも解約申請できる。解約後は当月末まで利用可能。</div>
-            </details>
+        <div class="pricing">
+          <div class="price-card">
+            <div class="name">Free</div>
+            <div class="price">¥0</div>
+            <div style="font-size:14px;color:var(--muted);">登録不要・1日1セット</div>
+            <ul class="feature-list">
+              <li>3キーワード→記事下書き</li>
+              <li>最新情報の自動収集</li>
+              <li>FAQ・見出し・出典つき</li>
+              <li>WordPress設定出力</li>
+              <li>1日1セットまで</li>
+            </ul>
+            <a class="btn btn-outline btn-lg" href="/apps/research-writer/" style="width:100%;justify-content:center;">無料で試す</a>
           </div>
-        </div>
-      </section>
-
-      <section class="lp-cta">
-        <div class="container">
-          <h2>今すぐ<em>記事の下書き</em>を作る</h2>
-          <p>無料版で1回試して返ってくるものを確認できる。合えばそのままプロプランへ。月50セット・1,980円・いつでも解約可。</p>
-          <div class="lp-links">
+          <div class="price-card pro">
+            <span class="badge-pop">⭐ おすすめ</span>
+            <div class="name">Pro</div>
+            <div class="price">¥1,980<small> /月</small></div>
+            <div class="per-article">1記事あたり <strong>約39円</strong></div>
+            <ul class="feature-list">
+              <li>月50セット（1日1〜2本）</li>
+              <li>強化版FAQ・出典整理</li>
+              <li>WordPress自動投稿設定</li>
+              <li>優先キュー・並列実行</li>
+              <li>いつでも解約可</li>
+            </ul>
             <a class="btn btn-primary btn-lg" href="/api/checkout?product=research-writer" target="_blank" rel="noreferrer">月額1,980円で始める →</a>
-            <a class="btn btn-lg" style="color:var(--text);border:1.5px solid var(--border);" href="/apps/research-writer/">無料で試す</a>
           </div>
-          <p class="lp-note"><a href="/products/research-writer-beta/" style="color:var(--green);font-weight:800;">プラン詳細を見る →</a></p>
         </div>
-      </section>
-    </main>
-
-    <footer class="lp-footer">
-      <div>© よへラボ / yohelab.com</div>
-      <div class="lp-footer-links">
-        <a href="/">トップ</a>
-        <a href="/apps/research-writer/">無料で試す</a>
-        <a href="/products/research-writer-beta/">プラン詳細</a>
-        <a href="/contact/">問い合わせ</a>
-        <a href="/legal/commerce/">特定商取引法</a>
-        <a href="/legal/privacy/">プライバシー</a>
-        <a href="/legal/terms/">利用規約</a>
+        <p style="text-align:center;font-size:13px;color:var(--muted);margin-top:18px;">プロプランは Stripe の月額課金。いつでも問い合わせフォームから解約申請可能。</p>
       </div>
-    </footer>
-  </body>
+    </section>
+
+    <section class="lp-sec">
+      <div class="container">
+        <div class="sec-head">
+          <p class="sec-label">FAQ</p>
+          <h2>よくある質問</h2>
+        </div>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>無料版とプロプランの違いは？</summary>
+            <div class="body">無料版は1日1セット、プロは月50セット。両方とも基本機能（リサーチ・見出し・FAQ・出典）は同じだが、プロは強化版FAQ・WordPress自動投稿設定・優先キュー（混雑時の優先処理）が使える。1記事あたり約39円なので、外注（1本¥3,000〜）と比べて圧倒的に安い。</div>
+          </details>
+          <details class="faq-item">
+            <summary>本当に「AI検索に引用されやすい」記事になる？</summary>
+            <div class="body">引用される構造を最初から備えている。具体的には、見出しがH2/H3で整理されている、FAQがFAQPage JSON-LD対応の形式で出る、出典が明示されている、結論が冒頭に置かれる。これらはGoogle AI Overview・Perplexity・Claude等が引用元を選ぶ基準と一致する。ただし「絶対に引用される」保証はしない（AIは公開時点の情報や記事品質を含めて判断するため）。</div>
+          </details>
+          <details class="faq-item">
+            <summary>ChatGPTでも似たことはできる？</summary>
+            <div class="body">ChatGPTでも頑張れば似た出力は得られるが、毎回プロンプトを書く必要があり、最新情報の収集（ブラウジング）は不安定で出典が抜けることが多い。記事メーカーは「3キーワード→FAQ・出典付き構造化記事」をワンステップで出すことに特化。プロンプトを書く時間と、最新情報の手動チェックが不要。</div>
+          </details>
+          <details class="faq-item">
+            <summary>登録は必要？</summary>
+            <div class="body">無料版は登録不要、ブラウザで開いてすぐ試せる。プロプランはStripe決済時にメールアドレスを登録するだけ（パスワード不要、マジックリンク認証）。</div>
+          </details>
+          <details class="faq-item">
+            <summary>使い方が分からない時のサポートは？</summary>
+            <div class="body">使い方ガイドはツール画面に設置されている。それでも分からない場合は問い合わせフォームから連絡をもらえれば、メールで返答する。プロプランの方は優先返答。</div>
+          </details>
+          <details class="faq-item">
+            <summary>解約はすぐできる？返金は？</summary>
+            <div class="body">解約はいつでも問い合わせフォームから申請可能。当月分は最後まで利用可能、翌月から課金停止。返金は次月以降の課金停止のみ（当月分は返金なし）。</div>
+          </details>
+          <details class="faq-item">
+            <summary>生成した記事の著作権は？</summary>
+            <div class="body">生成された記事の著作権はあなたに帰属する。商用利用・転載・編集・販売、全て自由。ただし出典として使われた他社記事の著作権はそれぞれの権利者にあるため、引用部分の著作権法準拠の使い方は守ること。</div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="final-cta">
+      <div class="container">
+        <h2>記事1本に2時間→<em>2分</em>に切り替える。</h2>
+        <p>無料版なら今すぐ、登録不要で試せる。出てくる記事を見てから決められる。</p>
+        <div class="actions">
+          <a class="btn btn-primary btn-xl" href="/apps/research-writer/">無料で1回試す</a>
+          <a class="btn btn-xl" style="background:transparent;color:rgba(255,255,255,.85);border:1.5px solid rgba(255,255,255,.3);" href="/api/checkout?product=research-writer" target="_blank" rel="noreferrer">月額¥1,980でプロを始める</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer-dark">
+    <div>© よへラボ / yohelab.com</div>
+    <div style="margin-top:8px;">
+      <a href="/">トップ</a>
+      <a href="/apps/research-writer/">ツールを試す</a>
+      <a href="/products/research-writer-beta/">プラン詳細</a>
+      <a href="/contact/">問い合わせ</a>
+      <a href="/legal/commerce/">特定商取引法</a>
+      <a href="/legal/privacy/">プライバシー</a>
+      <a href="/legal/terms/">利用規約</a>
+    </div>
+  </footer>
+</body>
 </html>

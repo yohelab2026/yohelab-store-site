@@ -701,7 +701,7 @@ function renderPage(page) {
           <span>よへラボ</span>
         </a>
         <nav class="nav-links">
-        <a href="/apps/research-writer/">ツール</a>
+        <a href="/apps/research-writer/">記事メーカー</a>
         <a href="/products/page-review/">サービス</a>
         <a href="/blog/">ブログ</a>
         <a href="/contact/">問い合わせ</a>
@@ -860,11 +860,13 @@ function renderPage(page) {
 </html>`;
 }
 
-for (const page of pages) {
-  const filePath = out(`lp/${page.slug}/index.html`);
-  mkdirSync(dirname(filePath), { recursive: true });
-  writeFileSync(filePath, renderPage(page), "utf8");
-}
+// LPページは個別にカスタムHTMLとしてメンテしているため、ジェネレーターは無効化
+// （以前はテンプレートベースで全LPを生成していた）
+// for (const page of pages) {
+//   const filePath = out(`lp/${page.slug}/index.html`);
+//   mkdirSync(dirname(filePath), { recursive: true });
+//   writeFileSync(filePath, renderPage(page), "utf8");
+// }
 
 const sitemapSource = out("sitemap.xml");
 const sitemapTarget = out("public/sitemap.xml");
