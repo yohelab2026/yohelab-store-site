@@ -838,6 +838,28 @@
       gap: 16px;
     }
 
+    .solution-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .solution-card {
+      padding: 24px;
+    }
+
+    .solution-card .feature-icon {
+      width: 76px;
+      height: 76px;
+      margin-bottom: 16px;
+    }
+
+    .solution-card h3 {
+      font-size: 24px;
+    }
+
+    .codex-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
     .audience-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -915,6 +937,35 @@
       color: #0b6d59;
       font-weight: 800;
       line-height: 1.6;
+    }
+
+    .trust-row {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .trust-item {
+      padding: 20px;
+      border-radius: 20px;
+      background: linear-gradient(180deg, #ffffff, #f8fbff);
+      border: 1px solid rgba(220, 231, 249, 0.98);
+      box-shadow: 0 12px 24px rgba(57, 98, 188, 0.06);
+    }
+
+    .trust-item strong {
+      display: block;
+      color: var(--home-text);
+      font-size: 17px;
+      line-height: 1.45;
+      margin-bottom: 8px;
+    }
+
+    .trust-item span {
+      display: block;
+      color: var(--home-muted);
+      font-size: 14px;
+      line-height: 1.7;
     }
 
     .feature-card {
@@ -1137,6 +1188,12 @@
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
+      .solution-grid,
+      .codex-grid,
+      .trust-row {
+        grid-template-columns: 1fr;
+      }
+
       .audience-grid,
       .proof-grid {
         grid-template-columns: 1fr;
@@ -1302,15 +1359,13 @@
             <span class="hero-pill alt">サービス / サポート</span>
           </div>
           <h1 class="hero-title">
-            ひとりで<br />
-            記事を書く・<br />
-            商品を売る・<br />
-            発信する<span class="accent">道具箱</span>
+            ひとりで、<br />
+            迷わず、<br />
+            形にする。
           </h1>
-          <p class="hero-lead">難しい用語より、まず「何を書けばいいか」「どこを直せば売れやすいか」が分かることを大事にした。記事メーカー、ページ改善、WordPressテーマをまとめて使える。</p>
+          <p class="hero-lead">記事作成、ページ改善、WordPressテーマ。ひとりで書く・売る・発信する人が、次に何をすればいいか分かるようにまとめた。</p>
           <div class="hero-actions">
-            <a class="btn btn-xl btn-home-primary" href="/apps/research-writer/">ツールを見る</a>
-            <a class="btn btn-lg btn-home-secondary" href="/products/page-review/">サービスを見る</a>
+            <a class="btn btn-xl btn-home-primary" href="/apps/research-writer/">ツールを今すぐ試す</a>
           </div>
           <div class="hero-note">
             <div class="hero-avatar">🧑🏻</div>
@@ -1385,106 +1440,37 @@
     <section class="section-block">
       <div class="block-head">
         <div>
-          <h2>誰に向けているか</h2>
-          <p>広く見せすぎると伝わらないので、よへラボではこの3つの人を中心にしている。</p>
+          <h2>いま困っていることから選ぶ</h2>
+          <p>トップページでは3つだけに絞る。詳しい説明は、それぞれのページで見られる。</p>
         </div>
       </div>
-      <div class="audience-grid">
-        <article class="audience-card">
-          <strong>01 / 書く人</strong>
-          <h3>ブログやnoteで記事を書きたい人</h3>
-          <p>3キーワードから材料を集めて、見出し、本文、FAQ、要約まで作る。ゼロから悩む時間を減らす。</p>
-        </article>
-        <article class="audience-card">
-          <strong>02 / 売る人</strong>
-          <h3>商品ページを作ったけど売れにくい人</h3>
-          <p>誰向けか、何が良いのか、購入前の不安が見えているかを1ページ単位で見直す。</p>
-        </article>
-        <article class="audience-card">
-          <strong>03 / 育てる人</strong>
-          <h3>WordPressで記事サイトを育てたい人</h3>
-          <p>FAQ、出典、比較表、著者情報など、読者にも検索にも伝わりやすい型を最初から使える。</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="section-block">
-      <div class="category-grid">
-        <a class="category-card" href="/apps/research-writer/">
-          <div class="category-visual visual-doc"></div>
-          <div>
-            <h3>ツール</h3>
-            <p>ブラウザで使えるAIツール。調べる、まとめる、出すところを短くして、作業時間を削る。</p>
-            <span class="category-link">ツール一覧へ →</span>
-          </div>
-        </a>
-        <a class="category-card" href="/products/page-review/">
-          <div class="category-visual visual-chat"></div>
-          <div>
-            <h3>サービス</h3>
-            <p>診断、レビュー、小さな実装まで。あなたのアイデアや売るページを、前に進めるための支援。</p>
-            <span class="category-link">サービスを見る →</span>
-          </div>
-        </a>
-        <a class="category-card" href="/games/">
-          <div class="category-visual visual-game"></div>
-          <div>
-            <h3>実験</h3>
-            <p>遊べるミニゲームや試作を、実験の結果としてまとめている。公開しながら反応を見る場所。</p>
-            <span class="category-link">実験一覧へ →</span>
-          </div>
-        </a>
-      </div>
-    </section>
-
-    <section class="section-block">
-      <div class="block-head">
-        <div>
-          <h2>おすすめのツール・サービス・実験</h2>
-          <p>まず触れるものを先に並べ、その後ろに知見と更新ログが続く形にしている。使って終わりにしないための並び。</p>
-        </div>
-        <a class="head-link" href="/blog/">ブログも見る →</a>
-      </div>
-      <div class="feature-grid">
-        <a class="feature-card" href="/apps/research-writer/">
+      <div class="feature-grid solution-grid">
+        <a class="feature-card solution-card" href="/apps/research-writer/">
           <div class="feature-icon">📡</div>
           <div class="badge-row">
-            <span class="badge badge-blue">ツール</span>
-            <span class="badge badge-orange">人気</span>
+            <span class="badge badge-blue">記事を書く人</span>
           </div>
           <h3>記事メーカー</h3>
-          <p>3キーワードから、調査・整理・記事下書きまで一気に返す。まず最初に試すならここ。</p>
-          <span class="feature-arrow">→</span>
+          <p>ブログやnoteの記事を、3キーワードからリサーチ・構成・下書きまで進める。</p>
+          <span class="category-link">記事を作る →</span>
         </a>
-        <a class="feature-card" href="/products/page-review/">
+        <a class="feature-card solution-card" href="/products/page-review/">
           <div class="feature-icon">🧾</div>
           <div class="badge-row">
-            <span class="badge badge-cyan">サービス</span>
-            <span class="badge badge-blue">おすすめ</span>
+            <span class="badge badge-cyan">売るページを直す人</span>
           </div>
           <h3>商品ページ改善レビュー</h3>
-          <p>購入者目線で、商品ページの弱点を1ページだけ見る。改善案、FAQ案、要約文を短く返す。</p>
-          <span class="feature-arrow">→</span>
+          <p>商品ページを1枚だけ見て、弱点、改善案、FAQ案、説明文を返す。</p>
+          <span class="category-link">改善を依頼する →</span>
         </a>
-        <a class="feature-card" href="/apps/wordpress-theme/">
+        <a class="feature-card solution-card" href="/apps/wordpress-theme/">
           <div class="feature-icon">🧩</div>
           <div class="badge-row">
-            <span class="badge badge-blue">ツール</span>
-            <span class="badge badge-cyan">買い切り</span>
+            <span class="badge badge-orange">WordPressで育てる人</span>
           </div>
           <h3>WordPressテーマ</h3>
-          <p>FAQ、構造化データ、解析設定、記事テンプレートをテーマに寄せて、プラグインを増やしすぎない構成にした。</p>
-          <span class="feature-arrow">→</span>
-        </a>
-        <a class="feature-card" href="/games/">
-          <div class="feature-icon">🎮</div>
-          <div class="badge-row">
-            <span class="badge badge-purple">ゲーム</span>
-            <span class="badge badge-cyan">プレイ可能</span>
-          </div>
-          <h3>実験置き場</h3>
-          <p>ちょっとした時間に触れる試作集。遊べる形で公開して、共有や反応まで見られるようにした。</p>
-          <span class="feature-arrow">→</span>
+          <p>FAQ、構造化データ、解析、記事テンプレートを入れた軽い記事ブログ用テーマ。</p>
+          <span class="category-link">機能を見る →</span>
         </a>
       </div>
     </section>
@@ -1497,7 +1483,7 @@
         </div>
         <a class="head-link" href="/blog/">ブログを見る →</a>
       </div>
-      <div class="feature-grid">
+      <div class="feature-grid codex-grid">
         <a class="feature-card" href="/blog/post/?slug=yohelab-blog-start">
           <div class="feature-icon">📘</div>
           <div class="badge-row">
@@ -1516,84 +1502,15 @@
           <p>レビュー、比較、ランキング、FAQを先に分ける理由を残す。</p>
           <span class="feature-arrow">→</span>
         </a>
-        <a class="feature-card" href="/blog/post/?slug=theme-note">
-          <div class="feature-icon">🧭</div>
-          <div class="badge-row">
-            <span class="badge badge-orange">WordPress</span>
-          </div>
-          <h3>テーマで減らしたいもの</h3>
-          <p>プラグインを増やしすぎないために、最初から入れるものを絞る。</p>
-          <span class="feature-arrow">→</span>
-        </a>
-        <a class="feature-card" href="/games/">
-          <div class="feature-icon">🧪</div>
-          <div class="badge-row">
-            <span class="badge badge-purple">実験</span>
-          </div>
-          <h3>実験を見る</h3>
-          <p>ゲームや試作を、遊びだけで終わらせず実験の記録としてつなげる。</p>
-          <span class="feature-arrow">→</span>
-        </a>
       </div>
     </section>
 
     <section class="section-block">
-      <div class="proof-grid">
-        <div class="proof-card">
-          <span class="badge badge-cyan">買う前に見えるもの</span>
-          <h3>説明だけで終わらせない。</h3>
-          <p>レビューや実績はこれから積み上げる段階。だから今は、出力例、返す内容、確認済み環境、保証しないことを先に見せる方針にしている。</p>
-          <div class="proof-list">
-            <span>記事メーカー: 検索候補、見出し、本文、FAQ、WordPress設定の出力例</span>
-            <span>改善レビュー: 弱点3つ、見出し案、説明文、FAQ案、要約文のサンプル</span>
-            <span>WordPressテーマ: 導入手順、確認済み環境、減らせるプラグイン、価格を明記</span>
-          </div>
-        </div>
-        <div class="proof-card">
-          <span class="badge badge-blue">信頼の出し方</span>
-          <h3>盛らずに、確認できる情報を出す。</h3>
-          <p>「必ず売れる」「必ず検索に出る」とは言わない。代わりに、読者に伝わる構成、購入前の不安を減らすFAQ、軽いWordPress運用を作りやすくする。</p>
-          <div class="hero-actions" style="margin-top:22px;">
-            <a class="btn btn-home-primary" href="/products/page-review/#sample">改善例を見る</a>
-            <a class="btn btn-home-secondary" href="/apps/wordpress-theme/#proof">テーマの中身を見る</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section-block">
-      <div class="bottom-grid">
-        <div class="bottom-copy">
-          <strong>作るだけで終わらない。</strong>
-          <h2>売る・伝える・試すまで。</h2>
-          <p>よへラボは、ひとりで活動する人の「やりたい」を、AIと仕組みで前に進めるための置き場。使って終わりではなく、そのあと公開したり、見直したり、試したりするところまでつないでいく。</p>
-          <p>ー よへラボ / Yohe Lab</p>
-          <div class="bottom-footer-pills">
-            <span class="mini-pill">🔒 セキュリティに配慮</span>
-            <span class="mini-pill">🛡️ データは大切に保護</span>
-            <span class="mini-pill">🔄 継続的にアップデート</span>
-          </div>
-        </div>
-        <div class="bottom-stats">
-          <div class="stat-card">
-            <div class="stat-icon">👤</div>
-            <strong>個人向け</strong>
-            <span class="stat-big">1人</span>
-            <span>でも使いやすいシンプル設計</span>
-          </div>
-          <div class="stat-card">
-            <div class="stat-icon">🌐</div>
-            <strong>ブラウザで使える</strong>
-            <span class="stat-big">100%</span>
-            <span>インストール不要でどこでもアクセス</span>
-          </div>
-          <div class="stat-card">
-            <div class="stat-icon">⚡</div>
-            <strong>すぐ試せる</strong>
-            <span class="stat-big">1分</span>
-            <span>最短でスタートできる導線</span>
-          </div>
-        </div>
+      <div class="trust-row">
+        <div class="trust-item"><strong>出力例を公開</strong><span>買う前に中身を見られる。</span></div>
+        <div class="trust-item"><strong>確認済み環境を明記</strong><span>WordPressテーマは動作環境を出す。</span></div>
+        <div class="trust-item"><strong>保証しないことも明記</strong><span>過度な成果保証はしない。</span></div>
+        <div class="trust-item"><strong>継続的に更新</strong><span>直した理由はブログに残す。</span></div>
       </div>
     </section>
 
