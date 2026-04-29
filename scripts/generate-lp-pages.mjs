@@ -701,8 +701,8 @@ function renderPage(page) {
           <span>よへラボ</span>
         </a>
         <nav class="nav-links">
-        <a href="/apps/research-writer/">記事メーカー</a>
-        <a href="/products/page-review/">サービス</a>
+        <a href="/tools/">ツール</a>
+        <a href="/services/">サービス</a>
         <a href="/blog/">ブログ</a>
         <a href="/contact/">問い合わせ</a>
       </nav>
