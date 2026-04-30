@@ -7,7 +7,7 @@ const PRODUCT_CONFIG = {
     activatePath: "/apps/research-writer/",
   },
   "wordpress-theme": {
-    label: "記事ブログ用WordPressテーマ",
+    label: "文標（ぶんしるべ）",
     nextPath: "/apps/wordpress-theme/",      // 決済キャンセル時に戻る先
     activatePath: "/products/wordpress-theme-beta/", // 購入完了後の遷移先
   },

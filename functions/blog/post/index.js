@@ -275,7 +275,7 @@ function renderPostHTML(post, slug, requestUrl) {
         <p>よへラボのツール</p>
         <div class="related-links">
           <a href="/lp/research-writer/">AI検索に拾われやすい記事メーカー</a>
-          <a href="/lp/wordpress-theme/">AI検索時代のWPテーマ</a>
+          <a href="/lp/wordpress-theme/">文標（ぶんしるべ）</a>
           <a href="/blog/">ブログ一覧</a>
         </div>
       </div>

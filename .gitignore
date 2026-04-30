@@ -3,7 +3,7 @@ dist/
 .netlify/
 
 # Embedded git repo (theme source is in separate private repo)
-wordpress-themes/aio-starter
+wordpress-themes/bunsirube
 
 
 # Theme source は yohelab2026/aio-starter (private repo) で管理
