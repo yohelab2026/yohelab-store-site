@@ -1,7 +1,8 @@
 (() => {
   const hostname = window.location.hostname;
   const isLocal = hostname === "localhost" || hostname === "127.0.0.1" || hostname === "::1";
-  const baseUrl = window.YOHELAB_MATOMO_URL || (isLocal ? "http://localhost:8080/" : "https://analytics.yohelab.com/");
+  if (isLocal && !window.YOHELAB_MATOMO_URL) return;
+  const baseUrl = window.YOHELAB_MATOMO_URL || "https://analytics.yohelab.com/";
   const siteId = String(window.YOHELAB_MATOMO_SITE_ID || "1");
   const u = baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`;
 

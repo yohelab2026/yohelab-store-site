@@ -6,7 +6,7 @@
   <title>よへラボ | 記事メーカー・商品ページ改善レビュー・WordPressテーマ</title>
   <meta name="description" content="AI検索でも人にも読み取られやすいブログを、ひとりで作る。3キーワード記事メーカー（無料あり）・商品ページ改善レビュー（¥980〜）・文標（ぶんしるべ）（買い切り¥5,500）。" />
   <meta property="og:title" content="よへラボ｜AI検索でも人にも伝わるブログを、ひとりで作る" />
-  <meta property="og:description" content="3キーワード記事メーカー（無料あり）・商品ページ改善レビュー（¥980〜）・AI検索対応WPテーマ（¥5,500）。" />
+  <meta property="og:description" content="3キーワード記事メーカー（無料あり）・商品ページ改善レビュー（¥980〜）・文標（ぶんしるべ）WordPressテーマ（¥5,500）。" />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="ja_JP" />
   <meta property="og:url" content="https://yohelab.com/" />
@@ -1265,8 +1265,9 @@
 
       .feature-grid,
       .audience-grid,
-      .bottom-stats {
-        grid-template-columns: 1fr;
+      .bottom-stats,
+      .stats-grid {
+        grid-template-columns: 1fr !important;
       }
 
       .block-head h2,
@@ -1321,7 +1322,7 @@
 
     @media (max-width: 400px) {
       .nav-links {
-        display: none;
+        display: flex;
       }
 
       .hero-visual {
@@ -1359,14 +1360,14 @@
             <span class="hero-pill alt">サービス / サポート</span>
           </div>
           <h1 class="hero-title">
-            <span class="accent">AI検索に読み取られやすい</span><br />
+            <span class="accent">AI検索にも人にも伝わる</span><br />
             ブログを、<br />
             ひとりで作る。
           </h1>
           <p class="hero-lead">記事を書く、売るページを直す、WordPressで発信する。ひとりで動く人が、必要なものを迷わず選べるようにまとめた場所です。</p>
           <div class="hero-actions">
-            <a class="btn btn-xl btn-home-primary" href="/apps/research-writer/">記事メーカーを無料で試す</a>
-            <a class="btn btn-xl btn-home-secondary" href="/tools/">ツール一覧を見る</a>
+            <a class="btn btn-xl btn-home-primary" href="/tools/">ツールを選ぶ</a>
+            <a class="btn btn-xl btn-home-secondary" href="/services/">サービスを見る</a>
           </div>
           <div class="hero-note">
             <div class="hero-avatar">🧑🏻</div>
@@ -1487,10 +1488,10 @@
         <div>
           <p style="color:#6be5c9;font-size:11px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;margin-bottom:12px;">Why AI now</p>
           <h2 style="color:#fff;font-size:clamp(28px,4vw,42px);">検索の入口は<span style="color:#6be5c9;">AIにも広がった</span>。</h2>
-          <p style="color:rgba(255,255,255,.78);max-width:720px;">Google検索、ChatGPT、Claude、Perplexity。入口が増えた今は、見出し・FAQ・出典が整理された「読み取られやすい記事」が強い。</p>
+          <p style="color:rgba(255,255,255,.78);max-width:720px;">Google検索、ChatGPT、Claude、Perplexity。入口が増えた今は、見出し・FAQ・出典が整理された「人が読んでも分かりやすい記事」が土台になる。</p>
         </div>
       </div>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;">
+      <div class="stats-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;">
         <div style="background:rgba(107,229,201,.08);border:1px solid rgba(107,229,201,.18);border-radius:18px;padding:24px;">
           <div style="font-size:clamp(32px,4vw,44px);font-weight:900;letter-spacing:-.04em;background:linear-gradient(135deg,#6be5c9,#3f8cff);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1;">8%</div>
           <h3 style="color:#fff;font-size:15px;font-weight:900;margin:8px 0 6px;">AI要約ありの通常結果クリック</h3>
@@ -1518,7 +1519,7 @@
           <p style="color:#52525b;max-width:760px;font-size:16px;line-height:1.85;">SNSは流れて消える。動画は撮影と編集が大変。<strong style="color:#1f2937;">ブログとnoteは、あとから検索される記事として残しやすい媒体</strong>。AI検索時代に入って、構造化された記事の価値は上がってる。</p>
         </div>
       </div>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;">
+      <div class="stats-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;">
         <div style="background:#fff;border-radius:16px;padding:22px;border:1px solid rgba(245,158,11,.18);">
           <div style="font-size:clamp(28px,3.6vw,40px);font-weight:900;letter-spacing:-.04em;background:linear-gradient(135deg,#d97706,#dc2626);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1;">43<small style="font-size:.55em;opacity:.85;">%</small></div>
           <h3 style="font-size:14px;font-weight:900;margin:10px 0 4px;color:#1f2937;">WordPressの占有率</h3>
@@ -1538,9 +1539,9 @@
       <div style="margin-top:24px;background:rgba(255,255,255,.72);border-radius:14px;padding:18px 22px;border:1px dashed rgba(245,158,11,.32);">
         <p style="font-size:14px;color:#1f2937;line-height:1.85;margin:0;">
           <strong style="color:#b45309;">3つの事実:</strong>
-          ①ブログを動かす土台（WordPress）は<strong>世界中のWebサイトの43%</strong>でまだ伸びている。
-          ②記事から稼ぐ仕組み（アフィリエイト市場）は<strong>5,000億円超で成長中</strong>。
-          ③AI検索（ChatGPT等）は<strong>記事を引用元に選ぶ</strong>ので、構造化された記事の価値はむしろ上がっている。
+          ①ブログを動かす土台（WordPress）は<strong>世界中のWebサイトの約42%</strong>で使われている。
+          ②記事から稼ぐ仕組み（アフィリエイト市場）は<strong>2024年度見込み4,382億円</strong>。
+          ③Google公式はAI機能向けの特別な最適化は不要としているので、結局は<strong>役立つ内容を分かりやすく整理すること</strong>が土台になる。
         </p>
       </div>
       <p style="text-align:center;margin-top:18px;color:#71717a;font-size:12px;">※ 個人の収益は記事数・ジャンル・運用次第で大きく変動するため、保証はしません。</p>

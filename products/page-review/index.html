@@ -298,12 +298,58 @@
         margin-bottom: 8px;
         color: var(--green-dark);
       }
+      .value-stack {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+        align-items: stretch;
+      }
+      .value-panel {
+        padding: 26px;
+        border-radius: 22px;
+        background: #fff;
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow);
+      }
+      .value-panel.good {
+        background: linear-gradient(160deg, #0b8f72 0%, #1fb6cf 100%);
+        color: #fff;
+        border: none;
+      }
+      .value-panel h3 {
+        font-size: 20px;
+        margin-bottom: 14px;
+      }
+      .value-panel ul {
+        display: grid;
+        gap: 10px;
+      }
+      .value-panel li {
+        position: relative;
+        padding-left: 24px;
+        color: var(--muted);
+        line-height: 1.75;
+      }
+      .value-panel.good li {
+        color: rgba(255,255,255,.9);
+      }
+      .value-panel li::before {
+        content: "✓";
+        position: absolute;
+        left: 0;
+        color: var(--green);
+        font-weight: 900;
+      }
+      .value-panel.good li::before {
+        color: #fff;
+      }
       @media (max-width: 900px) {
         .hero-inner,
         .section-grid,
         .example-box,
         .sample-report,
-        .proof-note-grid {
+        .proof-note-grid,
+        .value-stack {
           grid-template-columns: 1fr;
         }
         .example-divider {
@@ -487,6 +533,33 @@
             <div class="card">
               <h3>3. そのまま直す</h3>
               <p>返した内容をもとに、自分のページへ反映していく。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <p class="section-label">Why ¥980</p>
+          <h2 class="section-title">初回を安くしている理由。</h2>
+          <div class="value-stack">
+            <div class="value-panel">
+              <h3>通常の相談にすると重くなる</h3>
+              <ul>
+                <li>ヒアリングが長い</li>
+                <li>改善範囲が広がりすぎる</li>
+                <li>納品物がぼやける</li>
+                <li>初回から数万円だと試しにくい</li>
+              </ul>
+            </div>
+            <div class="value-panel good">
+              <h3>だから1ページ・5点固定にする</h3>
+              <ul>
+                <li>見るページは1枚だけ</li>
+                <li>弱点3つ、見出し案、説明文、FAQ、要約に絞る</li>
+                <li>24〜48時間で返す</li>
+                <li>通常¥3,980の前に、初回¥980で相性を見られる</li>
+              </ul>
             </div>
           </div>
         </div>

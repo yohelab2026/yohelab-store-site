@@ -528,6 +528,54 @@
       border-radius:inherit;
       background:linear-gradient(90deg,var(--lp-blue),var(--lp-cyan));
     }
+    .compare-wrap {
+      overflow-x:auto;
+      border-radius:24px;
+      box-shadow:var(--lp-shadow);
+      border:1px solid #dbeaf8;
+      background:#fff;
+    }
+    .compare-table {
+      width:100%;
+      border-collapse:collapse;
+      min-width:760px;
+    }
+    .compare-table th,
+    .compare-table td {
+      padding:18px 20px;
+      border-bottom:1px solid #e8f0f8;
+      text-align:left;
+      vertical-align:top;
+      font-size:14px;
+      line-height:1.7;
+    }
+    .compare-table th {
+      background:#f5f9ff;
+      color:var(--lp-ink);
+      font-weight:900;
+      letter-spacing:-.02em;
+    }
+    .compare-table th:last-child,
+    .compare-table td:last-child {
+      background:#effcf8;
+      border-left:3px solid var(--lp-green);
+    }
+    .compare-table tr:last-child td {
+      border-bottom:0;
+    }
+    .compare-table strong {
+      color:var(--lp-green);
+    }
+    .value-note {
+      margin-top:18px;
+      padding:18px 20px;
+      border-radius:18px;
+      background:#fff;
+      border:1px dashed rgba(11,155,127,.28);
+      color:var(--lp-muted);
+      font-size:14px;
+      line-height:1.9;
+    }
     .price-wrap {
       max-width:760px;
       margin:0 auto;
@@ -912,6 +960,50 @@
           <article class="template-card"><div class="template-num">05</div><h3>商品紹介</h3><p>特徴、メリット、注意点、購入前の確認を一枚で伝える。</p></article>
           <article class="template-card"><div class="template-num">06</div><h3>案件紹介</h3><p>募集内容、向き不向き、応募前の確認事項を整理する。</p></article>
         </div>
+      </div>
+    </section>
+
+    <section class="lp-section alt">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-label">Value</span>
+          <h2>無料テーマと正面勝負しない。<br />文標は「記事を書く型」で選ぶ。</h2>
+          <p>Cocoonのような無料テーマは強い。だから文標は、見た目だけではなく「記事テンプレート・FAQ・解析・設定の迷いを減らす」方向に絞る。</p>
+        </div>
+        <div class="compare-wrap">
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th>見るポイント</th>
+                <th>無料テーマでやる場合</th>
+                <th>文標（¥5,500）でやる場合</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>記事の型</td>
+                <td>見た目の器はあるが、比較・レビュー・FAQなどの構成は自分で作る。</td>
+                <td><strong>7種類の記事テンプレート</strong>から始められる。何を書くかで迷う時間を減らす。</td>
+              </tr>
+              <tr>
+                <td>FAQ / 構造化データ</td>
+                <td>プラグイン追加や手動設定が必要になりやすい。</td>
+                <td><strong>FAQブロックとJSON-LD</strong>をテーマ側にまとめる。</td>
+              </tr>
+              <tr>
+                <td>アクセス解析</td>
+                <td>GA4、解析プラグイン、タグ管理などを別々に設定する。</td>
+                <td><strong>内部解析か外部解析を選ぶ</strong>だけ。最初の設定場所を絞る。</td>
+              </tr>
+              <tr>
+                <td>価格の考え方</td>
+                <td>テーマ代は無料。ただし、設定調査やプラグイン選びに時間がかかる。</td>
+                <td><strong>買い切り¥5,500</strong>で、記事サイトの初期迷いを減らす。</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="value-note">文標は「無料テーマより万能」とは言わない。すでにCocoonやSWELLで満足している人には不要。これから記事ブログを作る人、設定や記事の型で止まりやすい人向け。</p>
       </div>
     </section>
 
