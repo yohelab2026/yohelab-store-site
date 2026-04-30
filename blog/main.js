@@ -26,23 +26,60 @@ const fallbackPosts = [
   },
 ];
 
+let currentPage = 1;
+let totalPages = 1;
+
 function esc(str) {
   return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-async function loadPosts() {
+async function loadPosts(page = 1) {
   postsEl.innerHTML = '<div class="empty">読み込み中...</div>';
   try {
-    const res = await fetch('/api/blog-posts');
+    const res = await fetch(`/api/blog-posts?page=${page}`);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
     if (data.posts && data.posts.length) {
+      currentPage = data.page || 1;
+      totalPages = data.totalPages || 1;
       render(data.posts, true);
+      renderPagination();
     } else {
       render(fallbackPosts, false);
     }
   } catch(e) {
     render(fallbackPosts, false);
+  }
+}
+
+function renderPagination() {
+  let pager = document.getElementById('pager');
+  if (!pager) {
+    pager = document.createElement('div');
+    pager.id = 'pager';
+    pager.style.cssText = 'display:flex;justify-content:center;align-items:center;gap:12px;margin:40px 0 20px;';
+    postsEl.after(pager);
+  }
+  if (totalPages <= 1) { pager.innerHTML = ''; return; }
+
+  const prevDisabled = currentPage <= 1;
+  const nextDisabled = currentPage >= totalPages;
+  pager.innerHTML = `
+    <button id="btn-prev" ${prevDisabled ? 'disabled' : ''} style="padding:8px 20px;border-radius:999px;border:1.5px solid var(--border);background:${prevDisabled?'#f5f5f5':'#fff'};color:${prevDisabled?'#aaa':'var(--text)'};font-weight:700;cursor:${prevDisabled?'default':'pointer'};font-size:14px;">← 前へ</button>
+    <span style="font-size:14px;color:var(--muted);font-weight:700;">${currentPage} / ${totalPages}</span>
+    <button id="btn-next" ${nextDisabled ? 'disabled' : ''} style="padding:8px 20px;border-radius:999px;border:1.5px solid var(--border);background:${nextDisabled?'#f5f5f5':'var(--green)'};color:${nextDisabled?'#aaa':'#fff'};font-weight:700;cursor:${nextDisabled?'default':'pointer'};font-size:14px;">次へ →</button>
+  `;
+  if (!prevDisabled) {
+    document.getElementById('btn-prev').addEventListener('click', () => {
+      loadPosts(currentPage - 1);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+  if (!nextDisabled) {
+    document.getElementById('btn-next').addEventListener('click', () => {
+      loadPosts(currentPage + 1);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
   }
 }
 
@@ -119,6 +156,7 @@ function render(posts, hasLink = true) {
         excerpt?.classList.add('is-open');
         button.textContent = '閉じる';
       } catch (error) {
+        const url = `/blog/post/?slug=${encodeURIComponent(slug)}`;
         preview.innerHTML = `<div style="color:var(--muted);">本文の読み込みに失敗した。<a href="${url}">記事ページで開く</a></div>`;
         preview.classList.add('is-open');
         button.textContent = '閉じる';
