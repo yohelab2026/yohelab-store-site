@@ -186,6 +186,20 @@
     return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 
+  function sanitizeBodyHtml(html) {
+    return String(html || '')
+      .replace(/<\s*(script|style|iframe|object|embed|form|input|button|select|textarea|meta|link|base|svg|math)\b[^>]*>[\s\S]*?<\s*\/\s*\1\s*>/gi, '')
+      .replace(/<\s*(script|style|iframe|object|embed|form|input|button|select|textarea|meta|link|base|svg|math)\b[^>]*\/?>/gi, '')
+      .replace(/\son[a-z]+\s*=\s*"[^"]*"/gi, '')
+      .replace(/\son[a-z]+\s*=\s*'[^']*'/gi, '')
+      .replace(/\son[a-z]+\s*=\s*[^\s>]+/gi, '')
+      .replace(/\s(srcdoc|formaction)\s*=\s*"[^"]*"/gi, '')
+      .replace(/\s(srcdoc|formaction)\s*=\s*'[^']*'/gi, '')
+      .replace(/\s(srcdoc|formaction)\s*=\s*[^\s>]+/gi, '')
+      .replace(/(href|src)\s*=\s*(['"]?)\s*(javascript:|data:text\/html|vbscript:)[^'"\s>]*/gi, '$1="#"')
+      .replace(/<\/script/gi, '<\\/script');
+  }
+
   async function loadPost() {
     if (!slug) { showError('記事が見つかりません。'); return; }
     try {
@@ -216,7 +230,7 @@
 
     const tags = (post.tags||[]).map(t=>`<span class="post-tag">${esc(t)}</span>`).join('');
     const excerpt = post.excerpt ? `<p class="post-excerpt">${esc(post.excerpt)}</p>` : '';
-    const bodyContent = post.bodyHtml || (post.body||'').split('\n\n').map(p=>`<p>${esc(p)}</p>`).join('');
+    const bodyContent = post.bodyHtml ? sanitizeBodyHtml(post.bodyHtml) : (post.body||'').split('\n\n').map(p=>`<p>${esc(p)}</p>`).join('');
     const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(location.href)}`;
 
     document.getElementById('post-outer').innerHTML = `

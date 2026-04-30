@@ -114,17 +114,7 @@
   <!-- ロック画面 -->
   <div class="lock-screen" id="lock-screen">
     <div class="lock-box">
-      <div id="setup-view" style="display:none;">
-        <h1>パスワードを決める</h1>
-        <p>好きな数字4桁を決めてください。次回からこれで入れます。</p>
-        <div style="display:grid;gap:12px;">
-          <input id="setup-pin" type="password" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="4桁の数字" style="font-size:22px;letter-spacing:.24em;text-align:center;border:1px solid var(--border);border-radius:12px;padding:12px;" />
-          <input id="setup-pin2" type="password" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="もう一度" style="font-size:22px;letter-spacing:.24em;text-align:center;border:1px solid var(--border);border-radius:12px;padding:12px;" />
-          <button class="btn btn-primary btn-lg" id="setup-submit" type="button">このパスワードで始める</button>
-        </div>
-        <p style="font-size:13px;color:var(--muted);margin-top:12px;" id="setup-status"></p>
-      </div>
-      <div id="login-view" style="display:none;">
+      <div id="login-view">
         <h1>ブログ管理</h1>
         <p>4桁のパスワードで入る。</p>
         <div style="display:grid;gap:12px;">
@@ -230,8 +220,8 @@
 
   <script>
   // ── 定数・要素 ──────────────────────────────────────────────
-  const PIN_KEY = 'yohelab.blog.pin';
   const SESSION_KEY = 'yohelab.blog.sess';
+  const SESSION_PIN_KEY = 'yohelab.blog.pin.session';
 
   const titleEl    = document.getElementById('title');
   const bodyEl     = document.getElementById('body');
@@ -243,19 +233,13 @@
   const postListEl = document.getElementById('post-list');
 
   // ── 認証 ────────────────────────────────────────────────────
-  const setupView  = document.getElementById('setup-view');
   const loginView  = document.getElementById('login-view');
-  const setupPinEl = document.getElementById('setup-pin');
-  const setupPin2El= document.getElementById('setup-pin2');
-  const setupStatusEl = document.getElementById('setup-status');
   const adminPinEl = document.getElementById('admin-pin');
   const lockStatusEl = document.getElementById('lock-status');
 
   function showLock() {
-    const stored = localStorage.getItem(PIN_KEY);
-    setupView.style.display = stored ? 'none' : '';
-    loginView.style.display = stored ? '' : 'none';
-    (stored ? adminPinEl : setupPinEl).focus();
+    loginView.style.display = '';
+    adminPinEl.focus();
   }
 
   if (sessionStorage.getItem(SESSION_KEY)) {
@@ -265,24 +249,14 @@
     showLock();
   }
 
-  function handleSetup() {
-    const p1 = setupPinEl.value.trim(), p2 = setupPin2El.value.trim();
-    if (!/^\d{4}$/.test(p1)) { setupStatusEl.textContent='数字4桁で入れて。'; return; }
-    if (p1 !== p2) { setupStatusEl.textContent='2つが一致しない。'; return; }
-    localStorage.setItem(PIN_KEY, p1);
-    sessionStorage.setItem(SESSION_KEY, '1');
-    document.body.classList.add('is-unlocked');
-    setTimeout(loadPostList, 200);
-  }
-  document.getElementById('setup-submit').addEventListener('click', handleSetup);
-  setupPin2El.addEventListener('keydown', e => { if(e.key==='Enter') handleSetup(); });
-
-  function handleLogin() {
-    const stored = localStorage.getItem(PIN_KEY);
+  async function handleLogin() {
     const input = adminPinEl.value.trim();
-    if (!stored) { showLock(); return; }
-    if (input !== stored) { lockStatusEl.textContent='パスワードが違う。'; adminPinEl.value=''; adminPinEl.focus(); return; }
+    if (!/^\d{4}$/.test(input)) { lockStatusEl.textContent='数字4桁で入れて。'; adminPinEl.focus(); return; }
+    lockStatusEl.textContent='確認中...';
+    const ok = await validatePin(input);
+    if (!ok) { lockStatusEl.textContent='パスワードが違う。'; adminPinEl.value=''; adminPinEl.focus(); return; }
     sessionStorage.setItem(SESSION_KEY, '1');
+    sessionStorage.setItem(SESSION_PIN_KEY, input);
     document.body.classList.add('is-unlocked');
     setTimeout(loadPostList, 200);
   }
@@ -291,11 +265,32 @@
 
   document.getElementById('logout-admin').addEventListener('click', () => {
     sessionStorage.removeItem(SESSION_KEY);
+    sessionStorage.removeItem(SESSION_PIN_KEY);
     document.body.classList.remove('is-unlocked');
     adminPinEl.value='';
     lockStatusEl.textContent='ログアウトした。';
     showLock();
   });
+
+  async function validatePin(pin) {
+    try {
+      const res = await fetch('/api/blog-auth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pin }),
+      });
+      const type = res.headers.get('content-type') || '';
+      if (res.ok && type.includes('application/json')) return true;
+      if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') return pin === '1030';
+      return false;
+    } catch {
+      return (location.hostname === 'localhost' || location.hostname === '127.0.0.1') && pin === '1030';
+    }
+  }
+
+  function currentPin() {
+    return (sessionStorage.getItem(SESSION_PIN_KEY) || '').trim();
+  }
 
   // ── タイトル auto-resize ────────────────────────────────────
   titleEl.addEventListener('input', () => {
@@ -382,7 +377,7 @@
   }
 
   async function uploadImage(file) {
-    const pin = (localStorage.getItem(PIN_KEY) || '').trim();
+    const pin = currentPin();
     if (!pin) return null;
     const fd = new FormData(); fd.append('file', file);
     try {
@@ -462,7 +457,7 @@
   }
 
   async function publish() {
-    const pin = (localStorage.getItem(PIN_KEY)||'').trim();
+    const pin = currentPin();
     if (!pin) { sessionStorage.removeItem(SESSION_KEY); showLock(); return; }
     const title = titleEl.value.trim();
     const eyecatch = eyecatchEl.value.trim();
@@ -527,7 +522,7 @@
 
   async function deletePost(kvKey, btn) {
     if (!confirm('この記事を削除しますか？')) return;
-    const pin = (localStorage.getItem(PIN_KEY)||'').trim();
+    const pin = currentPin();
     if (!pin) return;
     const slug = kvKey.replace(/^post:/,'');
     btn.textContent='削除中...'; btn.disabled=true;

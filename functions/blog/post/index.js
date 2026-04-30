@@ -77,13 +77,18 @@ function escJsonString(value) {
 }
 
 function sanitizeBodyHtml(html) {
-  // 投稿者は管理画面でしか書けないので過度なサニタイズは不要だが、
-  // <script> や on* イベント属性は念のため除去する
+  // 管理画面からの投稿でも、公開HTMLに出す前に危険なタグと属性は落とす。
   return String(html || "")
-    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "")
+    .replace(/<\s*(script|style|iframe|object|embed|form|input|button|select|textarea|meta|link|base|svg|math)\b[^>]*>[\s\S]*?<\s*\/\s*\1\s*>/gi, "")
+    .replace(/<\s*(script|style|iframe|object|embed|form|input|button|select|textarea|meta|link|base|svg|math)\b[^>]*\/?>/gi, "")
     .replace(/\son[a-z]+\s*=\s*"[^"]*"/gi, "")
     .replace(/\son[a-z]+\s*=\s*'[^']*'/gi, "")
-    .replace(/javascript:/gi, "");
+    .replace(/\son[a-z]+\s*=\s*[^\s>]+/gi, "")
+    .replace(/\s(srcdoc|formaction)\s*=\s*"[^"]*"/gi, "")
+    .replace(/\s(srcdoc|formaction)\s*=\s*'[^']*'/gi, "")
+    .replace(/\s(srcdoc|formaction)\s*=\s*[^\s>]+/gi, "")
+    .replace(/(href|src)\s*=\s*(['"]?)\s*(javascript:|data:text\/html|vbscript:)[^'"\s>]*/gi, '$1="#"')
+    .replace(/<\/script/gi, "<\\/script");
 }
 
 function bodyToHtml(post) {
@@ -274,7 +279,7 @@ function renderPostHTML(post, slug, requestUrl) {
       <div class="related">
         <p>よへラボのツール</p>
         <div class="related-links">
-          <a href="/lp/research-writer/">AI検索に拾われやすい記事メーカー</a>
+          <a href="/lp/research-writer/">3キーワードの記事メーカー</a>
           <a href="/lp/bunsirube/">文標（ぶんしるべ）</a>
           <a href="/blog/">ブログ一覧</a>
         </div>
