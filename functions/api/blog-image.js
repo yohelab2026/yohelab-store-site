@@ -29,41 +29,45 @@ export async function onRequestGet(context) {
 }
 
 export async function onRequestPost(context) {
-  if (!isAllowedOrigin(context.request)) {
-    return json({ error: "forbidden_origin" }, 403, context.request);
+  try {
+    if (!isAllowedOrigin(context.request)) {
+      return json({ error: "forbidden_origin" }, 403, context.request);
+    }
+
+    const storage = getImageStorage(context.env);
+    if (!storage) return json({ error: "BLOG_IMAGES or BLOG_KV is not configured" }, 500, context.request);
+
+    // PIN 認証
+    const requestPin = String(
+      context.request.headers.get("x-yohelab-pin") || "",
+    ).trim();
+    const storedPin = getBlogPin(context.env);
+    if (!isValidPin(requestPin) || !timingSafeEqual(requestPin, storedPin)) {
+      return json({ error: "unauthorized" }, 401, context.request);
+    }
+
+    const contentType = context.request.headers.get("content-type") || "";
+    if (!contentType.includes("multipart/form-data")) {
+      return json({ error: "multipart required" }, 400, context.request);
+    }
+
+    const formData = await context.request.formData();
+    const file = formData.get("file");
+
+    if (!file || typeof file === "string") return json({ error: "no file" }, 400, context.request);
+    if (!ALLOWED_TYPES.includes(file.type)) return json({ error: "unsupported type", type: file.type || "" }, 400, context.request);
+
+    const buffer = await file.arrayBuffer();
+    if (buffer.byteLength > MAX_BYTES) return json({ error: "too large (max 25MB)" }, 400, context.request);
+
+    const key = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+    await writeImage(storage, key, buffer, file);
+
+    const url = publicImageUrl(context.env, key, storage);
+    return json({ ok: true, url, key }, 200, context.request);
+  } catch (error) {
+    return json({ error: "upload_failed", message: error?.message || "unexpected_error" }, 500, context.request);
   }
-
-  const storage = getImageStorage(context.env);
-  if (!storage) return json({ error: "BLOG_IMAGES or BLOG_KV is not configured" }, 500, context.request);
-
-  // PIN 認証
-  const requestPin = String(
-    context.request.headers.get("x-yohelab-pin") || "",
-  ).trim();
-  const storedPin = getBlogPin(context.env);
-  if (!isValidPin(requestPin) || !timingSafeEqual(requestPin, storedPin)) {
-    return json({ error: "unauthorized" }, 401, context.request);
-  }
-
-  const contentType = context.request.headers.get("content-type") || "";
-  if (!contentType.includes("multipart/form-data")) {
-    return json({ error: "multipart required" }, 400, context.request);
-  }
-
-  const formData = await context.request.formData();
-  const file = formData.get("file");
-
-  if (!file || typeof file === "string") return json({ error: "no file" }, 400, context.request);
-  if (!ALLOWED_TYPES.includes(file.type)) return json({ error: "unsupported type" }, 400, context.request);
-
-  const buffer = await file.arrayBuffer();
-  if (buffer.byteLength > MAX_BYTES) return json({ error: "too large (max 25MB)" }, 400, context.request);
-
-  const key = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
-  await writeImage(storage, key, buffer, file);
-
-  const url = publicImageUrl(context.env, key, storage);
-  return json({ ok: true, url, key }, 200, context.request);
 }
 
 export async function onRequestOptions(context) {
@@ -95,7 +99,7 @@ function getImageStorage(env) {
 }
 
 function isR2Storage(storage) {
-  return typeof storage?.head === "function";
+  return typeof storage?.getWithMetadata !== "function";
 }
 
 async function readImage(storage, key) {
