@@ -25,11 +25,23 @@
     body { background:#fbfdff; color:var(--text); }
     .nav { background:rgba(255,255,255,.94); backdrop-filter:blur(16px); border-bottom:1px solid rgba(223,234,245,.95); }
     .hero-shell {
-      padding:78px 0 44px;
+      padding:86px 0 58px;
       background:
-        radial-gradient(circle at 84% 10%, rgba(63,140,255,.10), transparent 24%),
-        radial-gradient(circle at 12% 72%, rgba(31,182,207,.12), transparent 28%),
-        linear-gradient(180deg,#ffffff 0%,#edf7ff 100%);
+        linear-gradient(180deg, rgba(255,255,255,.96) 0%, rgba(255,255,255,.9) 38%, rgba(230,248,255,.9) 100%),
+        linear-gradient(135deg, rgba(31,182,207,.16), rgba(63,140,255,.14));
+      position:relative;
+      overflow:hidden;
+      border-bottom:1px solid #dcecf8;
+    }
+    .hero-shell::after {
+      content:"";
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:0;
+      height:88px;
+      background:linear-gradient(180deg, transparent, rgba(4,30,27,.16));
+      pointer-events:none;
     }
     .hero-grid {
       display:grid;
@@ -82,17 +94,28 @@
     .hero-actions { display:flex; gap:12px; flex-wrap:wrap; margin-top:28px; }
     .service-stage {
       position:relative;
-      min-height:530px;
+      min-height:500px;
     }
     .stage-panel {
       position:absolute;
-      inset:28px 0 auto auto;
+      inset:10px 0 auto auto;
       width:min(560px,100%);
-      border-radius:30px;
-      padding:22px;
+      border-radius:34px;
+      padding:24px;
       background:linear-gradient(145deg,#ffffff,#eef8ff);
       border:1px solid rgba(31,182,207,.16);
-      box-shadow:0 24px 70px rgba(38,78,118,.14);
+      box-shadow:0 28px 80px rgba(38,78,118,.18);
+    }
+    .stage-panel::before {
+      content:"";
+      position:absolute;
+      inset:36px 34px auto auto;
+      width:86px;
+      height:86px;
+      border-radius:26px;
+      background:linear-gradient(135deg,#1fb6cf,#3f8cff);
+      opacity:.14;
+      transform:rotate(9deg);
     }
     .stage-top { display:flex; gap:8px; padding:6px 4px 14px; }
     .stage-dot { width:10px; height:10px; border-radius:50%; background:#d5e0ee; }
@@ -102,10 +125,11 @@
       gap:14px;
     }
     .stage-card {
-      border-radius:20px;
-      padding:18px;
+      border-radius:22px;
+      padding:20px;
       background:#fff;
       border:1px solid #e3edf8;
+      box-shadow:0 14px 28px rgba(38,78,118,.07);
     }
     .stage-card h3 { margin:10px 0 10px; font-size:20px; letter-spacing:-.03em; line-height:1.22; }
     .mini-chip {
@@ -160,7 +184,8 @@
     }
     .hero-signals span::before { content:"•"; color:#1fb6cf; font-weight:900; }
     .service-card-grid {
-      padding: 18px 0 96px;
+      padding: 42px 0 96px;
+      background:linear-gradient(180deg,#fbfffd 0%,#f3fbf8 100%);
     }
     .service-card-grid .container { max-width:1100px; }
     .service-card {
@@ -169,8 +194,8 @@
       gap:28px;
       align-items:stretch;
       background:#fff;
-      border-radius:28px;
-      padding:32px;
+      border-radius:30px;
+      padding:34px;
       border:1px solid #e2edf7;
       box-shadow:0 14px 40px rgba(38,78,118,.08);
       text-decoration:none;
@@ -232,7 +257,7 @@
       border-radius:22px;
       background:linear-gradient(160deg,#f1fbff,#eefaf4);
       border:1px solid #dbeaf8;
-      min-height:260px;
+      min-height:300px;
       padding:20px;
       display:grid;
       align-content:space-between;
@@ -290,6 +315,14 @@
     }
     .future-services h3 { font-size:16px; font-weight:900; margin-bottom:8px; color:#0c9ab4; }
     .future-services p { font-size:14px; color:var(--muted); line-height:1.85; margin:0; }
+    .section-spacer {
+      height:58px;
+      border-radius:999px;
+      background:rgba(255,255,255,.82);
+      border:1px solid #dcecf8;
+      box-shadow:0 12px 34px rgba(38,78,118,.06);
+      margin-bottom:22px;
+    }
     @media (max-width:900px) {
       .hero-grid, .service-card, .flow-grid { grid-template-columns:1fr; }
       .service-stage { min-height:auto; }
@@ -365,6 +398,8 @@
 
     <section class="service-card-grid">
       <div class="container">
+        <div class="section-spacer" aria-hidden="true"></div>
+
         <a class="service-card" href="/products/page-review/">
           <div class="service-info">
             <div class="badge-row">
