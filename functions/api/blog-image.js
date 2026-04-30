@@ -9,17 +9,17 @@ const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
 const MAX_BYTES = 4 * 1024 * 1024; // 4MB
 
 export async function onRequestGet(context) {
-  const kv = context.env.BLOG_KV;
-  if (!kv) return new Response("Not configured", { status: 500 });
+  const storage = getImageStorage(context.env);
+  if (!storage) return new Response("Not configured", { status: 500 });
 
   const key = new URL(context.request.url).searchParams.get("key") || "";
   if (!key) return new Response("Not found", { status: 404 });
 
-  const entry = await kv.getWithMetadata(`img:${key}`, { type: "arrayBuffer" });
-  if (!entry.value) return new Response("Not found", { status: 404 });
+  const entry = await storage.get(key);
+  if (!entry) return new Response("Not found", { status: 404 });
 
-  const contentType = entry.metadata?.contentType || "image/jpeg";
-  return new Response(entry.value, {
+  const contentType = entry.httpMetadata?.contentType || entry.customMetadata?.contentType || "image/jpeg";
+  return new Response(entry.body, {
     headers: {
       "Content-Type": contentType,
       "Cache-Control": "public, max-age=31536000, immutable",
@@ -32,8 +32,8 @@ export async function onRequestPost(context) {
     return json({ error: "forbidden_origin" }, 403, context.request);
   }
 
-  const kv = context.env.BLOG_KV;
-  if (!kv) return json({ error: "BLOG_KV is not configured" }, 500, context.request);
+  const storage = getImageStorage(context.env);
+  if (!storage) return json({ error: "BLOG_IMAGES or BLOG_KV is not configured" }, 500, context.request);
 
   // PIN 認証
   const requestPin = String(
@@ -59,10 +59,17 @@ export async function onRequestPost(context) {
   if (buffer.byteLength > MAX_BYTES) return json({ error: "too large (max 4MB)" }, 400, context.request);
 
   const key = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
-  await kv.put(`img:${key}`, buffer, {
-    metadata: { contentType: file.type, name: file.name || key },
-    expirationTtl: 60 * 60 * 24 * 365 * 5, // 5年
-  });
+  if (isR2Storage(storage)) {
+    await storage.put(key, buffer, {
+      httpMetadata: { contentType: file.type },
+      customMetadata: { name: file.name || key },
+    });
+  } else {
+    await storage.put(`img:${key}`, buffer, {
+      metadata: { contentType: file.type, name: file.name || key },
+      expirationTtl: 60 * 60 * 24 * 365 * 5, // 5年
+    });
+  }
 
   const url = `/api/blog-image?key=${key}`;
   return json({ ok: true, url, key }, 200, context.request);
@@ -90,6 +97,14 @@ function corsHeaders(request) {
     "Access-Control-Allow-Headers": "Content-Type, x-yohelab-pin",
     Vary: "Origin",
   };
+}
+
+function getImageStorage(env) {
+  return env.BLOG_IMAGES || env.BLOG_KV || null;
+}
+
+function isR2Storage(storage) {
+  return typeof storage?.get === "function" && typeof storage?.put === "function" && typeof storage?.delete === "function" && typeof storage?.list === "function";
 }
 
 function isAllowedOrigin(request) {
