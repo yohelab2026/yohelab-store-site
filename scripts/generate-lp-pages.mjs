@@ -144,7 +144,7 @@ const pages = [
       ["価格", "¥0（確認のみ）", "¥5,500（ベータ）"],
     ],
     proCards: [
-      { title: "JSON-LD + FAQショートコード", text: "Article・FAQPage・Breadcrumb・Personを自動出力。[aio_faq]でFAQを設置するとJSON-LDも一緒に出る。" },
+      { title: "JSON-LD + FAQショートコード", text: "Article・FAQPage・Breadcrumb・Personを自動出力。FAQショートコードでFAQを設置するとJSON-LDも一緒に出る。" },
       { title: "llms.txt 自動生成", text: "/llms.txtをWordPressの投稿・固定ページから自動生成。AI向けの入口をテーマ側で整える。" },
       { title: "記事テンプレート 7種類", text: "比較・レビュー・案件紹介・FAQ記事・ランキング・商品紹介・基本型をブロックパターンで選べる。" },
     ],

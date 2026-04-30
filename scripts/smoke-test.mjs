@@ -44,10 +44,12 @@ checks.push(["home links research writer app", home.includes('/apps/research-wri
 checks.push(["home no legacy tool links", legacyPaths.every((path) => !home.includes(path))]);
 checks.push(["home links tools hub", home.includes('/tools/')]);
 checks.push(["home links services hub", home.includes('/services/')]);
+checks.push(["home avoids overstated claims", !home.includes("AIに引用される") && !home.includes("引用されないブログ") && !home.includes("5,377億") && !home.includes("3.6兆")]);
 
 const lpResearchWriter = read(dist("lp/research-writer/index.html"));
 checks.push(["lp research writer title", lpResearchWriter.includes('記事メーカー') && lpResearchWriter.includes('よへラボ')]);
 checks.push(["lp research writer free", lpResearchWriter.includes('無料で試す') || lpResearchWriter.includes('無料版を試す')]);
+checks.push(["lp research writer safe claims", !lpResearchWriter.includes("AIに引用される") && !lpResearchWriter.includes("唯一の媒体") && !lpResearchWriter.includes("5,377億") && !lpResearchWriter.includes("3.6兆")]);
 
 const researchApp = read(dist("apps/research-writer/index.html"));
 checks.push(["research app title", researchApp.includes('3キーワードで、記事の材料と下書きを作る')]);
@@ -62,7 +64,7 @@ const wpApp = read(dist("apps/wordpress-theme/index.html"));
 checks.push(["wp app title", wpApp.includes('記事ブログ用WordPressテーマ')]);
 checks.push(["wp app analytics", wpApp.includes('テーマ内解析') && wpApp.includes('外部解析')]);
 checks.push(["wp app plugin reduction", wpApp.includes('プラグインを増やしすぎない') || wpApp.includes('プラグインを増やさず')]);
-checks.push(["wp app starter purchase", wpApp.includes('/api/checkout?product=wordpress-theme') && !wpApp.includes('/downloads/aio-starter.zip') && !existsSync(dist("downloads/aio-starter.zip"))]);
+checks.push(["wp app starter purchase", wpApp.includes('/api/checkout?product=wordpress-theme') && !wpApp.includes('/downloads/bunsirube.zip') && !existsSync(dist("downloads/bunsirube.zip"))]);
 checks.push(["wp app install guide", wpApp.includes('WordPressに入れる手順') && wpApp.includes('保証しないこと')]);
 
 const wpProduct = read(dist("products/wordpress-theme-beta/index.html"));
@@ -90,6 +92,7 @@ checks.push(["game share keeps result data", gameScript.includes('searchParams.s
 
 const ent = read(src("functions/lib/entitlements.js"));
 const checkout = read(src("functions/api/checkout.js"));
+checks.push(["theme serial uses bunsirube prefix", ent.includes("BUN-") && !ent.includes("AIO-")]);
 checks.push(["entitlement keeps research writer", ent.includes('"research-writer"')]);
 checks.push(["entitlement adds wordpress theme", ent.includes('"wordpress-theme"')]);
 checks.push(["entitlement drops legacy tools", !ent.includes(`"${"rad"}${"ar"}"`) && !ent.includes(`"${oldPropToken}-${oldOptimizer}"`) && !ent.includes(`"${"article"}-${"polish"}"` ) && !ent.includes(`"${oldPropToken}"` ) && !ent.includes(`"${"x"}-${"helper"}"` ) && !ent.includes(`"${"ec"}-${"copy"}"` ) && !ent.includes(`"${"aio"}-${"mini"}"` )]);

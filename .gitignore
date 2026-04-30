@@ -10,4 +10,9 @@ wordpress-themes/bunsirube
 # ZIP は GitHub Actions → R2 で自動デプロイ
 downloads/aio-starter.zip
 public/downloads/aio-starter.zip
+bunsirube.zip
+downloads/bunsirube.zip
+public/downloads/bunsirube.zip
 
+.aidesigner/*
+!.aidesigner/.gitkeep

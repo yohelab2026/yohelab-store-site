@@ -29,7 +29,7 @@ services:
       - "8088:80"
     volumes:
       - wp_test_html:/var/www/html
-      - ./wordpress-themes/aio-starter:/var/www/html/wp-content/themes/aio-starter
+      - ./wordpress-themes/bunsirube:/var/www/html/wp-content/themes/bunsirube
 
   cli:
     image: wordpress:cli-php8.3
@@ -45,7 +45,7 @@ services:
       WORDPRESS_DB_NAME: wordpress
     volumes:
       - wp_test_html:/var/www/html
-      - ./wordpress-themes/aio-starter:/var/www/html/wp-content/themes/aio-starter
+      - ./wordpress-themes/bunsirube:/var/www/html/wp-content/themes/bunsirube
 
 volumes:
   wp_test_db:

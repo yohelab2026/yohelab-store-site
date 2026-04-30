@@ -1,10 +1,10 @@
 /**
  * scripts/package-theme.mjs
  *
- * wordpress-themes/aio-starter/ を aio-starter.zip にまとめる。
+ * wordpress-themes/bunsirube/ を bunsirube.zip にまとめる。
  * 生成した ZIP は R2 へアップロードして使う:
  *   npm run package-theme
- *   wrangler r2 object put theme-assets/aio-starter.zip --file=aio-starter.zip
+ *   wrangler r2 object put theme-assets/bunsirube.zip --file=bunsirube.zip
  */
 
 import { createWriteStream, readdirSync, statSync } from "node:fs";
@@ -14,8 +14,10 @@ import { createGzip } from "node:zlib";
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 const ROOT = join(__dirname, "..");
-const THEME_DIR = join(ROOT, "wordpress-themes", "aio-starter");
-const OUT_FILE = join(ROOT, "aio-starter.zip");
+const THEME_SLUG = "bunsirube";
+const OUT_NAME = "bunsirube.zip";
+const THEME_DIR = join(ROOT, "wordpress-themes", THEME_SLUG);
+const OUT_FILE = join(ROOT, OUT_NAME);
 
 // ---- 除外パターン ----
 const EXCLUDE = [
@@ -35,7 +37,7 @@ function collectFiles(dir) {
   for (const entry of readdirSync(dir)) {
     const full = join(dir, entry);
     const rel = relative(THEME_DIR, full);
-    const zipPath = "aio-starter/" + rel.replace(/\\/g, "/");
+    const zipPath = `${THEME_SLUG}/` + rel.replace(/\\/g, "/");
     if (shouldExclude("/" + zipPath)) continue;
     const stat = statSync(full);
     if (stat.isDirectory()) {
@@ -152,14 +154,14 @@ async function buildZip(files) {
 
 // ---- メイン ----
 const files = collectFiles(THEME_DIR);
-console.log(`Packaging ${files.length} files from wordpress-themes/aio-starter/ ...`);
+console.log(`Packaging ${files.length} files from wordpress-themes/${THEME_SLUG}/ ...`);
 
 const zip = await buildZip(files);
 import { writeFileSync } from "node:fs";
 writeFileSync(OUT_FILE, zip);
 
 const kb = (zip.length / 1024).toFixed(1);
-console.log(`✓ aio-starter.zip (${kb} KB)`);
+console.log(`✓ ${OUT_NAME} (${kb} KB)`);
 console.log("");
 console.log("To upload to R2:");
-console.log("  wrangler r2 object put theme-assets/aio-starter.zip --file=aio-starter.zip");
+console.log(`  wrangler r2 object put theme-assets/${OUT_NAME} --file=${OUT_NAME}`);

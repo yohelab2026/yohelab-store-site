@@ -177,7 +177,7 @@ export async function makeSerial({ product, email, subscriptionId }, env) {
   const source = `${product}|${normalizedEmail}|${subscriptionId || ""}`;
   const digest = await hmacBase64Url(secret, source);
   const body = digest.replace(/[^A-Z0-9]/gi, "").toUpperCase().slice(0, 16);
-  return `AIO-${body.slice(0, 4)}-${body.slice(4, 8)}-${body.slice(8, 12)}-${body.slice(12, 16)}`;
+  return `BUN-${body.slice(0, 4)}-${body.slice(4, 8)}-${body.slice(8, 12)}-${body.slice(12, 16)}`;
 }
 
 export async function verifySerial({ serial, product, email, subscriptionId }, env) {

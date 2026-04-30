@@ -1,7 +1,7 @@
 import { makeSerial } from "../lib/entitlements.js";
 import { fetchStripePurchaseStatus } from "../lib/stripe-purchase.js";
 
-const THEME_ZIP_KEY = "aio-starter.zip";
+const THEME_ZIP_KEY = "bunsirube.zip";
 
 export async function onRequestGet(context) {
   try {

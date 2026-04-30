@@ -16,7 +16,7 @@ function makeEnv({ paid = true, bucket = true } = {}) {
   if (bucket) {
     env.THEME_BUCKET = {
       async get(key) {
-        if (key !== "aio-starter.zip") return null;
+        if (key !== "bunsirube.zip") return null;
         return {
           body: new Uint8Array([80, 75, 3, 4]),
           httpMetadata: { contentType: "application/zip" },
@@ -54,7 +54,7 @@ try {
   assert(ok.headers.get("Content-Disposition")?.includes("yohe-blog-starter.zip"), "expected attachment filename");
   assert(ok.headers.get("X-Theme-License") === "active", "expected active license header");
 
-  const invalid = await onRequestGet({ request: await requestFor({ serial: "AIO-BAD0-BAD0-BAD0-BAD0" }), env: makeEnv() });
+  const invalid = await onRequestGet({ request: await requestFor({ serial: "BUN-BAD0-BAD0-BAD0-BAD0" }), env: makeEnv() });
   assert(invalid.status === 403, `expected invalid serial 403, got ${invalid.status}`);
 
   const missingBucket = await onRequestGet({ request: await requestFor({ serial }), env: makeEnv({ bucket: false }) });
