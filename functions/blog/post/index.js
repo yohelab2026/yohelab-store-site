@@ -275,7 +275,7 @@ function renderPostHTML(post, slug, requestUrl) {
         <p>よへラボのツール</p>
         <div class="related-links">
           <a href="/lp/research-writer/">AI検索に拾われやすい記事メーカー</a>
-          <a href="/lp/wordpress-theme/">文標（ぶんしるべ）</a>
+          <a href="/lp/bunsirube/">文標（ぶんしるべ）</a>
           <a href="/blog/">ブログ一覧</a>
         </div>
       </div>
@@ -288,7 +288,7 @@ function renderPostHTML(post, slug, requestUrl) {
       <div class="footer-links">
         <a href="/blog/">記事一覧</a>
         <a href="/lp/research-writer/">記事メーカー</a>
-        <a href="/lp/wordpress-theme/">WPテーマ</a>
+        <a href="/lp/bunsirube/">WPテーマ</a>
       </div>
     </div>
   </footer>
