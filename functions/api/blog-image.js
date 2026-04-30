@@ -6,7 +6,8 @@
 import { getBlogPin, isValidPin, timingSafeEqual } from "../lib/blog-auth.js";
 
 const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
-const MAX_BYTES = 4 * 1024 * 1024; // 4MB
+const MAX_BYTES = 25 * 1024 * 1024; // 25MB
+const DEFAULT_PUBLIC_IMAGE_BASE = "https://images.yohelab.com";
 
 export async function onRequestGet(context) {
   const storage = getImageStorage(context.env);
@@ -15,10 +16,10 @@ export async function onRequestGet(context) {
   const key = new URL(context.request.url).searchParams.get("key") || "";
   if (!key) return new Response("Not found", { status: 404 });
 
-  const entry = await storage.get(key);
+  const entry = await readImage(storage, key);
   if (!entry) return new Response("Not found", { status: 404 });
 
-  const contentType = entry.httpMetadata?.contentType || entry.customMetadata?.contentType || "image/jpeg";
+  const contentType = entry.contentType || "image/jpeg";
   return new Response(entry.body, {
     headers: {
       "Content-Type": contentType,
@@ -56,22 +57,12 @@ export async function onRequestPost(context) {
   if (!ALLOWED_TYPES.includes(file.type)) return json({ error: "unsupported type" }, 400, context.request);
 
   const buffer = await file.arrayBuffer();
-  if (buffer.byteLength > MAX_BYTES) return json({ error: "too large (max 4MB)" }, 400, context.request);
+  if (buffer.byteLength > MAX_BYTES) return json({ error: "too large (max 25MB)" }, 400, context.request);
 
   const key = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
-  if (isR2Storage(storage)) {
-    await storage.put(key, buffer, {
-      httpMetadata: { contentType: file.type },
-      customMetadata: { name: file.name || key },
-    });
-  } else {
-    await storage.put(`img:${key}`, buffer, {
-      metadata: { contentType: file.type, name: file.name || key },
-      expirationTtl: 60 * 60 * 24 * 365 * 5, // 5年
-    });
-  }
+  await writeImage(storage, key, buffer, file);
 
-  const url = `/api/blog-image?key=${key}`;
+  const url = publicImageUrl(context.env, key, storage);
   return json({ ok: true, url, key }, 200, context.request);
 }
 
@@ -104,7 +95,46 @@ function getImageStorage(env) {
 }
 
 function isR2Storage(storage) {
-  return typeof storage?.get === "function" && typeof storage?.put === "function" && typeof storage?.delete === "function" && typeof storage?.list === "function";
+  return typeof storage?.head === "function";
+}
+
+async function readImage(storage, key) {
+  if (isR2Storage(storage)) {
+    const object = await storage.get(key);
+    if (!object) return null;
+    return {
+      body: object.body,
+      contentType: object.httpMetadata?.contentType || object.customMetadata?.contentType || "image/jpeg",
+    };
+  }
+
+  const entry = await storage.getWithMetadata(`img:${key}`, { type: "arrayBuffer" });
+  if (!entry.value) return null;
+  return {
+    body: entry.value,
+    contentType: entry.metadata?.contentType || "image/jpeg",
+  };
+}
+
+async function writeImage(storage, key, buffer, file) {
+  if (isR2Storage(storage)) {
+    await storage.put(key, buffer, {
+      httpMetadata: { contentType: file.type },
+      customMetadata: { name: file.name || key },
+    });
+    return;
+  }
+
+  await storage.put(`img:${key}`, buffer, {
+    metadata: { contentType: file.type, name: file.name || key },
+    expirationTtl: 60 * 60 * 24 * 365 * 5, // 5年
+  });
+}
+
+function publicImageUrl(env, key, storage) {
+  if (!isR2Storage(storage)) return `/api/blog-image?key=${key}`;
+  const base = String(env.BLOG_IMAGES_PUBLIC_URL || DEFAULT_PUBLIC_IMAGE_BASE).replace(/\/+$/, "");
+  return `${base}/${key}`;
 }
 
 function isAllowedOrigin(request) {
