@@ -45,12 +45,12 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://yohelab.com/apps/bunsirube/</loc>
+    <loc>https://yohelab.com/apps/wordpress-theme/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://yohelab.com/lp/bunsirube/</loc>
+    <loc>https://yohelab.com/lp/wordpress-theme/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -70,7 +70,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://yohelab.com/products/bunsirube/</loc>
+    <loc>https://yohelab.com/products/wordpress-theme-beta/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>

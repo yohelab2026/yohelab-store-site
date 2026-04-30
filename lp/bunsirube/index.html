@@ -3,477 +3,715 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>文標（ぶんしるべ）｜AI検索に引用されるWordPressテーマ｜ベータ¥5,500 買い切り｜よへラボ</title>
-  <meta name="description" content="文標（ぶんしるべ）はJSON-LD・llms.txt・FAQを内蔵したWordPressテーマ。ChatGPT・Claude・Perplexity・AI Overviewに引用されるブログに。PageSpeed 95+、CSS 18KB、必要プラグイン0個。¥5,500買い切り。" />
-  <meta property="og:title" content="文標（ぶんしるべ）｜AI検索に引用されるWordPressテーマ｜ベータ¥5,500 買い切り" />
-  <meta property="og:description" content="JSON-LD全種・llms.txt・FAQをテーマに内蔵。PageSpeed 95+。他テーマの1/3価格、買い切り。AI時代のブログの土台。" />
+  <title>文標（ぶんしるべ）| 迷わず記事を書けるWordPressテーマ | よへラボ</title>
+  <meta name="description" content="文標（ぶんしるべ）は、記事テンプレート・FAQ・構造化データ・llms.txt・アクセス解析をまとめた軽量WordPressテーマ。ブログ、レビュー、比較記事を迷わず作れる土台を買い切りで。" />
+  <meta property="og:title" content="文標（ぶんしるべ）| 迷わず記事を書けるWordPressテーマ" />
+  <meta property="og:description" content="記事テンプレート・FAQ・構造化データ・llms.txt・アクセス解析をまとめた軽量WordPressテーマ。" />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="ja_JP" />
   <meta property="og:url" content="https://yohelab.com/lp/bunsirube/" />
   <meta property="og:image" content="https://yohelab.com/yohelab-icon.png" />
   <meta name="twitter:card" content="summary" />
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1" />
-  <meta name="theme-color" content="#0b8f72" />
+  <meta name="theme-color" content="#ffffff" />
   <link rel="canonical" href="https://yohelab.com/lp/bunsirube/" />
   <link rel="icon" type="image/png" href="/yohelab-icon.png" />
   <link rel="stylesheet" href="/shared/site.css" />
   <script type="application/ld+json">
   {"@context":"https://schema.org","@graph":[
     {"@type":"WebSite","name":"よへラボ","url":"https://yohelab.com/"},
-    {"@type":"SoftwareApplication","name":"文標（ぶんしるべ）","applicationCategory":"BusinessApplication","operatingSystem":"WordPress","offers":{"@type":"Offer","price":"5500","priceCurrency":"JPY","name":"ベータ版","description":"ベータ価格¥5,500（正式版¥8,800）・買い切り・月額なし"},"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.8","ratingCount":"12"},"description":"JSON-LD・llms.txt・FAQショートコード・記事テンプレート7種を内蔵した軽量WordPressテーマ。AI検索（ChatGPT・Claude・Perplexity・Google AI Overview）に引用される構造を最初から備える。"},
-    {"@type":"FAQPage","mainEntity":[
-      {"@type":"Question","name":"なぜAI検索対応のテーマが必要なの？","acceptedAnswer":{"@type":"Answer","text":"2025年、検索の入口がGoogleからChatGPT・Claude・Perplexity・Google AI Overviewに移った。AIに引用されないブログは、もう見つからない。AIは構造化データ・FAQ・llms.txtを読んで引用元を選ぶ。だからAI時代のブログにはAI向けの構造が必要。"}},
-      {"@type":"Question","name":"なぜこの価格で出せるの？","acceptedAnswer":{"@type":"Answer","text":"サポートを最小限（バグ報告メールのみ）にしているため。カスタマイズはClaude Code・Codex・ChatGPT等のAIツールで自分でできる時代。手厚いサポートを削った分、価格に反映している。"}},
-      {"@type":"Question","name":"他テーマとの違いは？","acceptedAnswer":{"@type":"Answer","text":"テーマA（¥17,600）・テーマB（¥14,800）・テーマC（¥19,800）は装飾・ブロック機能が中心。よへラボのテーマはAI検索対応を中心に置き、JSON-LD全種自動出力・llms.txt自動生成・FAQ構造を最初から備える。"}},
-      {"@type":"Question","name":"購入後の流れは？","acceptedAnswer":{"@type":"Answer","text":"Stripeで決済すると、即座にZIPファイルとシリアルナンバーがメールで届く。WordPress管理画面からZIPをアップロード→有効化するだけ。"}}
-    ]}
+    {"@type":"SoftwareApplication","name":"文標（ぶんしるべ）","applicationCategory":"WordPressTheme","operatingSystem":"WordPress","offers":{"@type":"Offer","price":"5500","priceCurrency":"JPY","name":"ベータ版","description":"ベータ価格¥5,500・買い切り・月額なし"},"description":"記事テンプレート、FAQ、構造化データ、llms.txt、アクセス解析をまとめた軽量WordPressテーマ。"}
   ]}
   </script>
   <style>
     :root {
-      --hero-grad: linear-gradient(140deg, #0b8f72 0%, #1fb6cf 60%, #3f8cff 100%);
+      --lp-blue:#2f7df6;
+      --lp-blue-2:#7a4dff;
+      --lp-cyan:#22c7d5;
+      --lp-green:#0b9b7f;
+      --lp-ink:#101b31;
+      --lp-muted:#5b6b84;
+      --lp-soft:#f3f8ff;
+      --lp-line:#dfeaf5;
+      --lp-shadow:0 24px 70px rgba(38,78,118,.13);
     }
-    body { background: #fbfdfc; color: var(--text); }
-    .nav { background: rgba(255,255,255,.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
-
-    /* HERO */
-    .hero {
-      position: relative;
-      padding: 88px 0 72px;
+    body {
+      background:#fbfdff;
+      color:var(--lp-ink);
+    }
+    .nav {
+      background:rgba(255,255,255,.92);
+      backdrop-filter:blur(16px);
+      border-bottom:1px solid var(--lp-line);
+    }
+    .btn-primary {
+      background:linear-gradient(135deg,var(--lp-blue),var(--lp-blue-2));
+      color:#fff;
+      border:none;
+      box-shadow:0 16px 34px rgba(47,125,246,.28);
+    }
+    .btn-primary:hover { filter:brightness(1.04); transform:translateY(-1px); }
+    .theme-hero {
+      position:relative;
+      overflow:hidden;
+      padding:82px 0 58px;
       background:
-        radial-gradient(ellipse 90% 70% at 50% 0%, rgba(11,143,114,.18), transparent 60%),
-        radial-gradient(ellipse 60% 50% at 80% 30%, rgba(63,140,255,.10), transparent 60%),
-        linear-gradient(180deg, #f4fcf8 0%, #eef5ff 100%);
-      overflow: hidden;
+        radial-gradient(circle at 85% 12%, rgba(122,77,255,.16), transparent 32%),
+        radial-gradient(circle at 18% 72%, rgba(34,199,213,.14), transparent 36%),
+        linear-gradient(180deg,#ffffff 0%,#edf6ff 100%);
     }
-    .hero::before {
-      content: ""; position: absolute; inset: 0; pointer-events: none;
+    .theme-hero::before {
+      content:"";
+      position:absolute;
+      inset:0;
       background-image:
-        linear-gradient(rgba(11,143,114,.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(11,143,114,.04) 1px, transparent 1px);
-      background-size: 48px 48px;
-      mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, #000, transparent 80%);
-      -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, #000, transparent 80%);
+        linear-gradient(rgba(47,125,246,.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(47,125,246,.045) 1px, transparent 1px);
+      background-size:52px 52px;
+      mask-image:radial-gradient(ellipse 78% 70% at 50% 35%,#000,transparent 82%);
+      -webkit-mask-image:radial-gradient(ellipse 78% 70% at 50% 35%,#000,transparent 82%);
     }
-    .hero .container { max-width: 1100px; position: relative; z-index: 1; }
-    .hero-product-name {
-      font-size: clamp(42px, 7vw, 80px); font-weight: 900; letter-spacing: -.05em;
-      line-height: 1; margin-bottom: 6px;
-      background: var(--hero-grad); -webkit-background-clip: text;
-      background-clip: text; -webkit-text-fill-color: transparent;
+    .hero-layout {
+      position:relative;
+      z-index:1;
+      display:grid;
+      grid-template-columns:minmax(0,1fr) minmax(380px,.92fr);
+      gap:46px;
+      align-items:center;
     }
-    .hero-product-ruby {
-      display: block; font-size: clamp(15px, 2vw, 20px); font-weight: 700;
-      color: var(--green-dark); letter-spacing: .12em; margin-bottom: 20px;
-      opacity: .85;
+    .eyebrow {
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 15px;
+      border-radius:999px;
+      background:#fff;
+      border:1px solid rgba(47,125,246,.18);
+      color:#235fcf;
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.13em;
+      text-transform:uppercase;
+      box-shadow:0 8px 24px rgba(47,125,246,.08);
+      margin-bottom:20px;
     }
-    .hero-eyebrow {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 7px 16px; border-radius: 999px;
-      background: rgba(255,255,255,.92); border: 1px solid rgba(11,143,114,.22);
-      color: var(--green-dark); font-size: 12px; font-weight: 800; letter-spacing: .14em;
-      text-transform: uppercase; margin-bottom: 22px;
+    .eyebrow::before {
+      content:"";
+      width:8px;
+      height:8px;
+      border-radius:50%;
+      background:var(--lp-cyan);
+      box-shadow:0 0 0 5px rgba(34,199,213,.14);
     }
-    .hero-eyebrow::before { content:""; width:7px; height:7px; border-radius:50%; background: var(--green); animation: pulse 1.6s infinite; }
-    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.4)} }
-    .hero h1 {
-      font-size: clamp(38px, 6vw, 72px); line-height: 1.04; letter-spacing: -.06em;
-      margin-bottom: 22px; font-weight: 900;
+    .theme-hero h1 {
+      font-size:clamp(38px,5.8vw,72px);
+      line-height:1.06;
+      letter-spacing:-.055em;
+      margin:0 0 20px;
+      color:var(--lp-ink);
     }
-    .hero h1 em {
-      font-style: normal;
-      background: var(--hero-grad); -webkit-background-clip: text;
-      background-clip: text; -webkit-text-fill-color: transparent;
+    .theme-hero h1 strong {
+      background:linear-gradient(135deg,var(--lp-blue),var(--lp-cyan));
+      -webkit-background-clip:text;
+      background-clip:text;
+      -webkit-text-fill-color:transparent;
     }
     .hero-lead {
-      font-size: 19px; line-height: 1.85; color: var(--muted);
-      max-width: 700px; margin-bottom: 32px;
+      max-width:680px;
+      color:var(--lp-muted);
+      font-size:18px;
+      line-height:1.9;
+      margin:0 0 24px;
     }
-    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 28px; }
-    .hero-actions .btn-primary {
-      background: var(--hero-grad); color: #fff; border: none;
-      box-shadow: 0 14px 32px rgba(11,143,114,.28);
+    .hero-actions {
+      display:flex;
+      flex-wrap:wrap;
+      gap:14px;
+      margin:30px 0 18px;
     }
-    .hero-actions .btn-primary:hover { filter: brightness(1.05); transform: translateY(-1px); }
-    .hero-note { color: var(--muted); font-size: 14px; line-height: 1.7; }
-    .hero-note strong { color: var(--green-dark); }
-
-    /* 緊急性バッジ */
-    .urgency-banner {
-      display: inline-flex; align-items: center; gap: 10px;
-      padding: 8px 16px; border-radius: 999px;
-      background: linear-gradient(135deg, #fff3bf, #ffd54f);
-      color: #5b3a00; font-weight: 900; font-size: 13px;
-      box-shadow: 0 8px 22px rgba(255, 213, 79, .35);
-      margin-bottom: 18px;
+    .hero-mini {
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      color:#567;
+      font-size:13px;
     }
-    .urgency-banner::before { content: "🔥"; font-size: 14px; }
-
-    /* スクリーンショット */
-    .screenshot-wrap {
-      max-width: 1100px; margin: 0 auto;
-      border-radius: 22px; overflow: hidden;
-      box-shadow: 0 28px 80px rgba(11,143,114,.18), 0 0 0 1px rgba(11,143,114,.08);
-      background: #fff;
+    .hero-mini span {
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:8px 11px;
+      border-radius:999px;
+      background:rgba(255,255,255,.75);
+      border:1px solid rgba(47,125,246,.12);
     }
-    .screenshot-wrap img { width: 100%; display: block; }
-    .annotation-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
-      margin-top: 28px; max-width: 1000px; margin-left: auto; margin-right: auto;
+    .product-stage {
+      position:relative;
+      min-height:500px;
     }
-    .annotation {
-      padding: 18px 20px; background: #fff; border-radius: 14px;
-      border: 1px solid rgba(11,143,114,.12);
-      display: grid; grid-template-columns: 36px 1fr; gap: 12px; align-items: start;
+    .mock-device {
+      position:absolute;
+      inset:34px 0 auto auto;
+      width:min(520px,100%);
+      border-radius:28px;
+      padding:18px;
+      background:linear-gradient(145deg,#ffffff,#eaf4ff);
+      border:1px solid rgba(47,125,246,.16);
+      box-shadow:var(--lp-shadow);
+      transform:rotate(-1.5deg);
     }
-    .annotation .num {
-      width: 32px; height: 32px; border-radius: 50%;
-      background: var(--hero-grad); color: #fff;
-      display: grid; place-items: center; font-weight: 900; font-size: 14px;
+    .mock-top {
+      display:flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 8px 14px;
     }
-    .annotation h4 { font-size: 14px; font-weight: 900; margin-bottom: 4px; }
-    .annotation p { font-size: 13px; color: var(--muted); line-height: 1.7; margin: 0; }
-
-    /* Before/After PageSpeed */
-    .ba-grid { display: grid; grid-template-columns: 1fr 80px 1fr; gap: 18px; align-items: center; max-width: 920px; margin: 0 auto; }
-    .ba-card { background: #fff; border-radius: 22px; padding: 32px 26px; text-align: center; border: 1px solid var(--border); }
-    .ba-card.before { border-color: #fecaca; background: linear-gradient(180deg, #fef2f2, #fff); }
-    .ba-card.after { border-color: rgba(11,143,114,.3); background: linear-gradient(180deg, #ecfdf5, #fff); box-shadow: 0 18px 40px rgba(11,143,114,.12); }
-    .ba-card .label { font-size: 12px; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; }
-    .ba-card.before .label { color: #b91c1c; }
-    .ba-card.after .label { color: var(--green-dark); }
-    .ba-score {
-      display: inline-grid; place-items: center;
-      width: 130px; height: 130px; border-radius: 50%;
-      margin: 18px auto 8px;
-      font-weight: 900; font-size: 48px; letter-spacing: -.04em;
+    .dot { width:10px; height:10px; border-radius:50%; background:#c9d7e8; }
+    .mock-screen {
+      display:grid;
+      grid-template-columns:1fr .72fr;
+      gap:14px;
+      padding:16px;
+      border-radius:18px;
+      background:#fff;
+      border:1px solid #e3edf8;
     }
-    .ba-card.before .ba-score { background: conic-gradient(#ef4444 0% 65%, #fee2e2 65% 100%); color: #b91c1c; box-shadow: inset 0 0 0 8px #fff; }
-    .ba-card.after .ba-score { background: conic-gradient(#0b8f72 0% 98%, #d1fae5 98% 100%); color: var(--green-dark); box-shadow: inset 0 0 0 8px #fff; }
-    .ba-card .desc { font-size: 14px; color: var(--muted); line-height: 1.7; margin-top: 8px; }
-    .ba-arrow {
-      font-size: 36px; font-weight: 900; color: var(--green);
-      text-align: center;
+    .editor-card,
+    .panel-card {
+      border-radius:16px;
+      border:1px solid #e7eef7;
+      background:#fff;
+      padding:16px;
     }
-    .ba-metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 14px; }
-    .ba-metric { padding: 8px 6px; background: rgba(11,143,114,.08); border-radius: 8px; font-size: 11px; }
-    .ba-metric strong { display: block; font-size: 14px; color: var(--green-dark); }
-    .ba-card.before .ba-metric { background: rgba(239,68,68,.08); }
-    .ba-card.before .ba-metric strong { color: #b91c1c; }
-
-    /* スコアバッジ（PageSpeed等） */
-    .score-row {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
-      margin-top: 38px; max-width: 760px;
+    .editor-card h3 {
+      font-size:20px;
+      line-height:1.25;
+      margin:8px 0 12px;
+      letter-spacing:-.03em;
     }
-    .score-card {
-      background: #fff; border-radius: 18px; border: 1px solid rgba(11,143,114,.14);
-      padding: 18px 16px; text-align: center;
-      box-shadow: 0 8px 24px rgba(11,143,114,.08);
+    .line {
+      height:10px;
+      border-radius:999px;
+      background:#eaf1fa;
+      margin:8px 0;
     }
-    .score-num {
-      font-size: clamp(28px, 4vw, 40px); font-weight: 900; letter-spacing: -.05em;
-      background: var(--hero-grad); -webkit-background-clip: text; background-clip: text;
-      -webkit-text-fill-color: transparent; line-height: 1;
+    .line.w60 { width:60%; }
+    .line.w78 { width:78%; }
+    .template-chip {
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:6px 10px;
+      border-radius:999px;
+      background:#eaf7ff;
+      color:#2264c8;
+      font-size:12px;
+      font-weight:800;
+      margin:3px;
     }
-    .score-num small { font-size: .55em; opacity: .7; }
-    .score-label { font-size: 11px; color: var(--muted); margin-top: 6px; font-weight: 700; letter-spacing: .04em; }
-
-    /* セクション共通 */
-    .lp-sec { padding: 76px 0; }
-    .lp-sec.alt { background: #f4faf7; }
-    .lp-sec.dark { background: #0b1613; color: #e8f4ee; }
-    .lp-sec.dark h2 { color: #fff; }
-    .lp-sec.dark p { color: rgba(255,255,255,.72); }
-    .sec-head { max-width: 760px; margin: 0 auto 40px; text-align: center; }
-    .sec-label {
-      display: inline-block; margin-bottom: 14px; padding: 6px 14px;
-      border-radius: 999px; background: rgba(11,143,114,.1); color: var(--green-dark);
-      font-size: 11px; font-weight: 900; letter-spacing: .14em; text-transform: uppercase;
+    .panel-card {
+      display:grid;
+      gap:10px;
     }
-    .lp-sec.dark .sec-label { background: rgba(63,140,255,.22); color: #6be5c9; }
-    .sec-head h2 { font-size: clamp(28px, 4.4vw, 46px); letter-spacing: -.04em; line-height: 1.18; margin-bottom: 14px; }
-    .sec-head p { font-size: 16px; line-height: 1.85; color: var(--muted); }
-
-    /* こんな人に向けて */
-    .for-whom-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; max-width: 960px; margin: 0 auto; }
-    .for-whom-card {
-      background: #fff; border-radius: 22px; padding: 32px 28px;
-      border: 1px solid rgba(11,143,114,.12);
+    .setting {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:10px;
+      border-radius:12px;
+      background:#f6faff;
+      font-size:12px;
+      color:#45546a;
+      font-weight:700;
     }
-    .for-whom-card.good { border-color: rgba(11,143,114,.3); background: linear-gradient(180deg, #ecfdf5, #fff); }
-    .for-whom-card.bad { border-color: #fecaca; background: linear-gradient(180deg, #fef2f2, #fff); }
-    .for-whom-card .card-title {
-      font-size: 13px; font-weight: 900; letter-spacing: .1em; text-transform: uppercase;
-      margin-bottom: 20px; display: flex; align-items: center; gap: 8px;
+    .toggle {
+      width:38px;
+      height:22px;
+      border-radius:999px;
+      background:linear-gradient(135deg,var(--lp-green),var(--lp-cyan));
+      position:relative;
     }
-    .for-whom-card.good .card-title { color: var(--green-dark); }
-    .for-whom-card.bad .card-title { color: #b91c1c; }
-    .for-whom-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
-    .for-whom-list li {
-      font-size: 15px; line-height: 1.75; padding: 12px 16px 12px 44px; position: relative;
-      border-radius: 12px;
+    .toggle::after {
+      content:"";
+      position:absolute;
+      right:3px;
+      top:3px;
+      width:16px;
+      height:16px;
+      border-radius:50%;
+      background:#fff;
     }
-    .for-whom-card.good .for-whom-list li { background: rgba(11,143,114,.07); }
-    .for-whom-card.bad .for-whom-list li { background: rgba(239,68,68,.06); }
-    .for-whom-list li::before {
-      position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
-      width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center;
-      font-size: 12px; font-weight: 900; color: #fff;
+    .float-card {
+      position:absolute;
+      border-radius:20px;
+      background:#fff;
+      border:1px solid rgba(47,125,246,.12);
+      box-shadow:0 18px 46px rgba(38,78,118,.15);
+      padding:16px 18px;
+      z-index:2;
     }
-    .for-whom-card.good .for-whom-list li::before { content: "✓"; background: var(--green); }
-    .for-whom-card.bad .for-whom-list li::before { content: "✕"; background: #ef4444; }
-
-    /* WHY AI セクション */
-    .why-ai { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; align-items: center; }
-    .why-ai .stat-stack { display: grid; gap: 18px; }
-    .stat-bar {
-      background: #fff; border-radius: 18px; padding: 22px 24px;
-      border: 1px solid rgba(11,143,114,.12); box-shadow: 0 6px 20px rgba(11,143,114,.06);
+    .float-card strong {
+      display:block;
+      font-size:14px;
+      margin-bottom:4px;
     }
-    .stat-bar h3 { font-size: 17px; font-weight: 900; margin-bottom: 8px; color: var(--text); }
-    .stat-bar .num {
-      font-size: clamp(40px, 6vw, 64px); font-weight: 900; letter-spacing: -.05em;
-      background: var(--hero-grad); -webkit-background-clip: text; background-clip: text;
-      -webkit-text-fill-color: transparent; line-height: 1; margin: 6px 0 8px;
+    .float-card span {
+      color:var(--lp-muted);
+      font-size:12px;
     }
-    .stat-bar p { font-size: 14px; color: var(--muted); line-height: 1.75; margin: 0; }
-    .stat-bar .src { font-size: 11px; color: var(--muted-light); margin-top: 8px; }
-
-    .why-ai-copy h2 { font-size: clamp(28px, 4.4vw, 46px); letter-spacing: -.04em; line-height: 1.16; margin-bottom: 20px; }
-    .why-ai-copy h2 em {
-      font-style: normal;
-      background: var(--hero-grad); -webkit-background-clip: text;
-      background-clip: text; -webkit-text-fill-color: transparent;
+    .float-analytics { left:0; top:14px; transform:rotate(2deg); }
+    .float-faq { right:10px; bottom:18px; transform:rotate(2deg); }
+    .float-speed { left:20px; bottom:82px; transform:rotate(-2deg); }
+    .value-strip {
+      background:#fff;
+      border-top:1px solid var(--lp-line);
+      border-bottom:1px solid var(--lp-line);
+      padding:20px 0;
     }
-    .why-ai-copy p { font-size: 16px; line-height: 1.95; color: var(--muted); margin-bottom: 18px; }
-    .why-ai-copy ul { list-style: none; padding: 0; }
-    .why-ai-copy li {
-      padding: 10px 0 10px 32px; position: relative;
-      font-size: 15px; line-height: 1.75;
+    .value-grid {
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:14px;
     }
-    .why-ai-copy li::before {
-      content: "✓"; position: absolute; left: 0; top: 10px;
-      width: 22px; height: 22px; border-radius: 50%;
-      background: var(--green); color: #fff; font-weight: 900;
-      display: grid; place-items: center; font-size: 12px;
+    .value-item {
+      text-align:center;
+      padding:16px 12px;
+      border-radius:18px;
+      background:#f7fbff;
+      border:1px solid #e3edf8;
     }
-
-    /* 速度の数値 */
-    .speed-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-    .speed-card {
-      background: #fff; border-radius: 22px; padding: 28px 24px;
-      border: 1px solid rgba(11,143,114,.14); position: relative; overflow: hidden;
+    .value-item strong {
+      display:block;
+      color:var(--lp-blue);
+      font-size:22px;
+      letter-spacing:-.03em;
+      margin-bottom:4px;
     }
-    .speed-card::after {
-      content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px;
-      background: var(--hero-grad);
+    .value-item span {
+      color:var(--lp-muted);
+      font-size:12px;
+      font-weight:700;
     }
-    .speed-card .label { font-size: 13px; color: var(--muted); font-weight: 700; }
-    .speed-card .value {
-      font-size: clamp(40px, 5.5vw, 60px); font-weight: 900; letter-spacing: -.05em;
-      background: var(--hero-grad); -webkit-background-clip: text; background-clip: text;
-      -webkit-text-fill-color: transparent; line-height: 1; margin: 8px 0;
+    .lp-section {
+      padding:78px 0;
     }
-    .speed-card .value small { font-size: .4em; opacity: .8; }
-    .speed-card .desc { font-size: 13px; color: var(--muted); line-height: 1.7; }
-    .speed-bench { margin-top: 28px; display: grid; gap: 12px; max-width: 720px; margin-left: auto; margin-right: auto; }
-    .speed-bench-row { display: grid; grid-template-columns: 1fr 100px 2.5fr; gap: 14px; align-items: center; padding: 12px 16px; background: #fff; border: 1px solid var(--border); border-radius: 12px; }
-    .speed-bench-row .name { font-weight: 700; font-size: 14px; }
-    .speed-bench-row .ms { font-weight: 900; color: var(--green-dark); font-size: 15px; }
-    .speed-bench-row .bar { height: 8px; background: #e8f4ef; border-radius: 999px; overflow: hidden; }
-    .speed-bench-row .bar > span { display: block; height: 100%; border-radius: 999px; }
-    .speed-bench-row.us .bar > span { background: var(--hero-grad); }
-    .speed-bench-row.them .bar > span { background: linear-gradient(90deg, #ddd, #c7d0d8); }
-
-    /* 比較表 */
-    .compare-table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 18px; overflow: hidden; box-shadow: 0 12px 36px rgba(11,143,114,.08); }
-    .compare-table thead th {
-      background: linear-gradient(135deg, #075c4c, #0b8f72);
-      color: #fff; padding: 16px 14px; font-size: 13px; font-weight: 800; text-align: left;
+    .lp-section.alt {
+      background:#f4f9ff;
     }
-    .compare-table thead th.us { background: linear-gradient(135deg, #0b8f72, #1fb6cf); }
-    .compare-table tbody td { padding: 14px; font-size: 14px; border-bottom: 1px solid var(--border); }
-    .compare-table tbody tr:last-child td { border-bottom: none; }
-    .compare-table tbody tr:hover { background: #f8fdfb; }
-    .compare-table .feature { font-weight: 700; color: var(--text); }
-    .compare-table .ok { color: var(--green-dark); font-weight: 900; }
-    .compare-table .no { color: #b8c0c8; }
-    .compare-table .price-row td { font-weight: 900; font-size: 16px; background: #f7fbf9; }
-    .compare-table .us-col { background: rgba(11,143,114,.06); border-left: 3px solid var(--green); border-right: 3px solid var(--green); }
-    .compare-table .us-col.price-cell { background: rgba(11,143,114,.12); }
-
-    /* なぜ安いか */
-    .why-cheap-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 32px; align-items: start; }
-    .why-cheap-card {
-      background: #fff; border-radius: 22px; padding: 32px;
-      border: 1px solid rgba(11,143,114,.14);
+    .section-head {
+      max-width:780px;
+      margin:0 auto 36px;
+      text-align:center;
     }
-    .why-cheap-card h3 { font-size: 22px; font-weight: 900; margin-bottom: 14px; letter-spacing: -.02em; }
-    .why-cheap-list { display: grid; gap: 16px; margin: 20px 0; }
-    .why-cheap-item {
-      display: grid; grid-template-columns: 36px 1fr; gap: 14px; align-items: start;
-      padding: 14px 16px; border-radius: 14px; background: #f7fbf9; border-left: 3px solid var(--green);
+    .section-label {
+      display:inline-block;
+      margin-bottom:12px;
+      color:var(--lp-green);
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.16em;
+      text-transform:uppercase;
     }
-    .why-cheap-item .icon {
-      width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center;
-      background: linear-gradient(135deg, #0b8f72, #1fb6cf); color: #fff; font-weight: 900; font-size: 15px;
+    .section-head h2 {
+      font-size:clamp(30px,4.6vw,52px);
+      line-height:1.16;
+      letter-spacing:-.05em;
+      margin:0 0 14px;
+      color:var(--lp-ink);
     }
-    .why-cheap-item h4 { font-size: 15px; font-weight: 900; margin-bottom: 4px; }
-    .why-cheap-item p { font-size: 13.5px; color: var(--muted); line-height: 1.7; margin: 0; }
-
-    .price-callout {
-      background: linear-gradient(160deg, #0b8f72 0%, #1fb6cf 100%);
-      color: #fff; border-radius: 24px; padding: 36px 32px;
-      box-shadow: 0 24px 60px rgba(11,143,114,.32);
+    .section-head p {
+      color:var(--lp-muted);
+      line-height:1.9;
+      font-size:16px;
+      margin:0;
     }
-    .price-callout .label { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; opacity: .8; font-weight: 800; margin-bottom: 8px; }
-    .price-callout .price { font-size: clamp(48px, 6vw, 72px); font-weight: 900; letter-spacing: -.06em; line-height: 1; }
-    .price-callout .price small { font-size: .35em; opacity: .8; font-weight: 700; }
-    .price-callout .strike { text-decoration: line-through; opacity: .5; font-size: 18px; margin-top: 8px; }
-    .price-callout .savings { background: rgba(255,255,255,.18); padding: 10px 14px; border-radius: 10px; font-weight: 800; font-size: 14px; margin-top: 16px; }
-    .price-callout .btn { width: 100%; justify-content: center; margin-top: 22px; background: #fff; color: var(--green-dark); border: none; }
-    .price-callout .btn:hover { background: #f4faf7; }
-    .price-callout .note { font-size: 12px; opacity: .8; margin-top: 12px; line-height: 1.7; }
-
-    /* 機能カード */
-    .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .problem-grid,
+    .feature-grid,
+    .template-grid {
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:18px;
+    }
+    .problem-card,
+    .feature-card,
+    .template-card,
+    .trust-card {
+      border-radius:24px;
+      background:#fff;
+      border:1px solid #e2edf7;
+      box-shadow:0 12px 34px rgba(38,78,118,.07);
+      padding:26px;
+    }
+    .icon-bubble {
+      width:48px;
+      height:48px;
+      border-radius:16px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg,#ecf5ff,#dffcff);
+      margin-bottom:16px;
+      font-size:24px;
+    }
+    .problem-card h3,
+    .feature-card h3,
+    .template-card h3,
+    .trust-card h3 {
+      font-size:18px;
+      margin:0 0 10px;
+      letter-spacing:-.03em;
+    }
+    .problem-card p,
+    .feature-card p,
+    .template-card p,
+    .trust-card p {
+      color:var(--lp-muted);
+      line-height:1.8;
+      font-size:14px;
+      margin:0;
+    }
     .feature-card {
-      background: #fff; border-radius: 20px; padding: 28px 24px;
-      border: 1px solid rgba(11,143,114,.12); transition: transform .18s, box-shadow .18s;
+      min-height:210px;
     }
-    .feature-card:hover { transform: translateY(-3px); box-shadow: 0 16px 36px rgba(11,143,114,.12); }
-    .feature-card .icon {
-      width: 56px; height: 56px; border-radius: 16px; display: grid; place-items: center;
-      background: linear-gradient(135deg, #eafaf3, #d8f0e8); font-size: 26px; margin-bottom: 16px;
+    .feature-card .mini-tag {
+      display:inline-block;
+      padding:5px 9px;
+      border-radius:999px;
+      background:#edf7ff;
+      color:#2368ca;
+      font-size:11px;
+      font-weight:900;
+      letter-spacing:.08em;
+      margin-bottom:12px;
     }
-    .feature-card h3 { font-size: 17px; font-weight: 900; margin-bottom: 8px; letter-spacing: -.02em; }
-    .feature-card p { font-size: 14px; color: var(--muted); line-height: 1.85; }
-    .feature-card code {
-      display: inline-block; background: #f4f8f6; padding: 2px 8px;
-      border-radius: 6px; font-size: 12px; color: var(--green-dark); margin-top: 8px;
+    .before-after {
+      display:grid;
+      grid-template-columns:1fr 72px 1fr;
+      gap:18px;
+      align-items:center;
+      max-width:960px;
+      margin:0 auto;
     }
-
-    /* テンプレート */
-    .template-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
-    .template-pill {
-      padding: 16px 14px; background: #fff; border: 1px solid var(--border); border-radius: 14px;
-      text-align: center; transition: border-color .18s, transform .18s;
+    .ba-box {
+      border-radius:26px;
+      padding:30px;
+      border:1px solid #e2edf7;
+      background:#fff;
     }
-    .template-pill:hover { border-color: var(--green); transform: translateY(-2px); }
-    .template-pill .emoji { font-size: 26px; margin-bottom: 6px; }
-    .template-pill .name { font-size: 13px; font-weight: 900; }
-
-    /* 購入後フロー */
-    .flow-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; position: relative; }
-    .flow-step {
-      background: #fff; border-radius: 16px; padding: 22px 18px;
-      border: 1px solid var(--border); text-align: center; position: relative;
+    .ba-box.before {
+      background:linear-gradient(180deg,#fff7f7,#fff);
+      border-color:#ffdada;
     }
-    .flow-step .num {
-      width: 32px; height: 32px; border-radius: 50%; background: var(--hero-grad);
-      color: #fff; font-weight: 900; display: grid; place-items: center;
-      margin: 0 auto 10px; font-size: 14px;
+    .ba-box.after {
+      background:linear-gradient(180deg,#edfff9,#fff);
+      border-color:#bff4df;
+      box-shadow:var(--lp-shadow);
     }
-    .flow-step h4 { font-size: 14px; font-weight: 900; margin-bottom: 6px; }
-    .flow-step p { font-size: 12.5px; color: var(--muted); line-height: 1.6; }
-
-    /* 購入カード */
-    .purchase-card {
-      max-width: 760px; margin: 0 auto;
-      background: linear-gradient(160deg, #0b8f72 0%, #1fb6cf 100%);
-      border-radius: 28px; padding: 48px 44px;
-      box-shadow: 0 32px 80px rgba(11,143,114,.32);
-      color: #fff;
+    .ba-box small {
+      display:inline-block;
+      margin-bottom:10px;
+      font-weight:900;
+      letter-spacing:.13em;
+      color:#9aa8ba;
+      text-transform:uppercase;
     }
-    .purchase-card-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; align-items: start; }
-    .purchase-card .p-label { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; opacity: .8; font-weight: 800; margin-bottom: 10px; }
-    .purchase-card .p-price { font-size: clamp(52px, 7vw, 80px); font-weight: 900; letter-spacing: -.06em; line-height: 1; }
-    .purchase-card .p-price small { font-size: .32em; opacity: .8; font-weight: 700; }
-    .purchase-card .p-strike { text-decoration: line-through; opacity: .5; font-size: 17px; margin-top: 8px; }
-    .purchase-card .p-includes-title { font-size: 13px; font-weight: 900; letter-spacing: .06em; opacity: .8; margin-bottom: 12px; text-transform: uppercase; }
-    .purchase-card .p-includes { list-style: none; padding: 0; margin: 0 0 20px; display: grid; gap: 9px; }
-    .purchase-card .p-includes li { font-size: 14.5px; padding-left: 26px; position: relative; line-height: 1.6; opacity: .92; }
-    .purchase-card .p-includes li::before { content: "✓"; position: absolute; left: 0; font-weight: 900; color: #6be5c9; }
-    .purchase-card .p-beta-title { font-size: 13px; font-weight: 900; letter-spacing: .06em; opacity: .8; margin-bottom: 10px; text-transform: uppercase; }
-    .purchase-card .p-beta-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
-    .purchase-card .p-beta-list li { font-size: 14px; padding-left: 22px; position: relative; line-height: 1.65; opacity: .88; }
-    .purchase-card .p-beta-list li::before { content: "→"; position: absolute; left: 0; font-weight: 900; color: #ffd54f; }
-    .purchase-card .p-btn { display: block; width: 100%; text-align: center; margin-top: 28px; background: #fff; color: var(--green-dark); border: none; font-size: 17px; font-weight: 900; padding: 18px 24px; border-radius: 14px; text-decoration: none; transition: background .18s, transform .18s; }
-    .purchase-card .p-btn:hover { background: #f4faf7; transform: translateY(-1px); }
-    .purchase-card .p-note { font-size: 12px; opacity: .7; margin-top: 14px; line-height: 1.8; text-align: center; }
-
-    /* FAQ */
-    .faq-list { max-width: 820px; margin: 0 auto; display: grid; gap: 12px; }
+    .ba-box h3 {
+      font-size:26px;
+      margin:0 0 16px;
+      letter-spacing:-.04em;
+    }
+    .ba-list {
+      list-style:none;
+      padding:0;
+      margin:0;
+      display:grid;
+      gap:10px;
+      color:var(--lp-muted);
+      font-size:14px;
+      line-height:1.7;
+    }
+    .ba-list li {
+      position:relative;
+      padding-left:26px;
+    }
+    .before .ba-list li::before {
+      content:"×";
+      position:absolute;
+      left:0;
+      color:#e35a5a;
+      font-weight:900;
+    }
+    .after .ba-list li::before {
+      content:"✓";
+      position:absolute;
+      left:0;
+      color:var(--lp-green);
+      font-weight:900;
+    }
+    .ba-arrow {
+      width:72px;
+      height:72px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg,var(--lp-blue),var(--lp-cyan));
+      color:#fff;
+      font-size:28px;
+      font-weight:900;
+      box-shadow:0 16px 34px rgba(47,125,246,.22);
+    }
+    .template-card {
+      position:relative;
+      overflow:hidden;
+    }
+    .template-card::after {
+      content:"";
+      position:absolute;
+      right:-34px;
+      top:-34px;
+      width:110px;
+      height:110px;
+      border-radius:50%;
+      background:rgba(47,125,246,.08);
+    }
+    .template-num {
+      color:var(--lp-blue);
+      font-size:13px;
+      font-weight:900;
+      margin-bottom:10px;
+      letter-spacing:.1em;
+    }
+    .dashboard-preview {
+      max-width:1040px;
+      margin:0 auto;
+      border-radius:30px;
+      padding:22px;
+      background:linear-gradient(145deg,#ffffff,#eef7ff);
+      border:1px solid #dbeaf8;
+      box-shadow:var(--lp-shadow);
+    }
+    .dashboard-grid {
+      display:grid;
+      grid-template-columns:.72fr 1fr .9fr;
+      gap:16px;
+    }
+    .dash-panel {
+      border-radius:20px;
+      background:#fff;
+      border:1px solid #e2edf7;
+      padding:18px;
+      min-height:210px;
+    }
+    .dash-panel h3 {
+      font-size:16px;
+      margin:0 0 12px;
+    }
+    .dash-row {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:10px 0;
+      border-bottom:1px solid #edf3f9;
+      color:#56677e;
+      font-size:13px;
+    }
+    .dash-row:last-child { border-bottom:0; }
+    .bar {
+      height:10px;
+      border-radius:999px;
+      background:#e8f1fb;
+      overflow:hidden;
+      margin:12px 0;
+    }
+    .bar span {
+      display:block;
+      height:100%;
+      border-radius:inherit;
+      background:linear-gradient(90deg,var(--lp-blue),var(--lp-cyan));
+    }
+    .price-wrap {
+      max-width:760px;
+      margin:0 auto;
+      display:grid;
+      grid-template-columns:1fr .9fr;
+      gap:20px;
+      align-items:stretch;
+    }
+    .price-card {
+      border-radius:30px;
+      padding:34px;
+      background:linear-gradient(145deg,#0d8f80,#25bfd0);
+      color:#fff;
+      box-shadow:0 28px 70px rgba(11,155,127,.25);
+    }
+    .price-card h3 {
+      font-size:22px;
+      margin:0 0 12px;
+    }
+    .price {
+      font-size:56px;
+      font-weight:900;
+      letter-spacing:-.06em;
+      margin:10px 0 6px;
+    }
+    .price small {
+      font-size:16px;
+      letter-spacing:0;
+      opacity:.8;
+    }
+    .price-card p,
+    .price-card li {
+      color:rgba(255,255,255,.82);
+      line-height:1.8;
+      font-size:14px;
+    }
+    .price-card ul {
+      list-style:none;
+      padding:0;
+      margin:20px 0 26px;
+      display:grid;
+      gap:10px;
+    }
+    .price-card li {
+      position:relative;
+      padding-left:24px;
+    }
+    .price-card li::before {
+      content:"✓";
+      position:absolute;
+      left:0;
+      color:#fff;
+      font-weight:900;
+    }
+    .price-card .btn {
+      width:100%;
+      justify-content:center;
+      background:#fff;
+      color:#087365;
+      border:none;
+    }
+    .trust-stack {
+      display:grid;
+      gap:14px;
+    }
+    .trust-card {
+      padding:20px;
+    }
+    .faq-list {
+      max-width:880px;
+      margin:0 auto;
+      display:grid;
+      gap:12px;
+    }
     .faq-item {
-      background: #fff; border: 1px solid var(--border); border-radius: 14px;
-      overflow: hidden; transition: border-color .2s;
+      border:1px solid #e2edf7;
+      border-radius:18px;
+      background:#fff;
+      overflow:hidden;
     }
-    .faq-item[open] { border-color: var(--green); }
     .faq-item summary {
-      padding: 18px 22px; cursor: pointer; font-weight: 700; font-size: 15px;
-      display: flex; justify-content: space-between; align-items: center; gap: 12px;
-      list-style: none;
+      cursor:pointer;
+      padding:20px 22px;
+      font-weight:900;
+      list-style:none;
+      display:flex;
+      justify-content:space-between;
+      gap:18px;
     }
-    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary::-webkit-details-marker { display:none; }
     .faq-item summary::after {
-      content: "＋"; color: var(--green); font-weight: 900; font-size: 18px;
-      transition: transform .2s;
+      content:"+";
+      color:var(--lp-green);
+      font-size:22px;
+      line-height:1;
     }
-    .faq-item[open] summary::after { content: "−"; }
-    .faq-item .body {
-      padding: 0 22px 18px; font-size: 14.5px; line-height: 1.85; color: var(--muted);
+    .faq-item[open] summary::after { content:"−"; }
+    .faq-body {
+      padding:0 22px 20px;
+      color:var(--lp-muted);
+      line-height:1.9;
+      font-size:14px;
     }
-
-    /* CTA最終 */
     .final-cta {
+      padding:88px 0;
+      text-align:center;
+      color:#fff;
       background:
-        radial-gradient(circle at 20% 0%, rgba(11,143,114,.5), transparent 50%),
-        radial-gradient(circle at 80% 100%, rgba(63,140,255,.4), transparent 50%),
-        linear-gradient(135deg, #0a1f1a 0%, #0d2a23 100%);
-      color: #fff; padding: 88px 0; text-align: center;
+        radial-gradient(circle at 30% 0%, rgba(34,199,213,.34), transparent 36%),
+        linear-gradient(135deg,#0d2948,#0b6a72 58%,#0c8b77);
     }
-    .final-cta h2 { font-size: clamp(32px, 5vw, 56px); letter-spacing: -.04em; line-height: 1.12; margin-bottom: 20px; color: #fff; }
-    .final-cta h2 em { font-style: normal; color: #6be5c9; }
-    .final-cta p { font-size: 17px; line-height: 1.85; color: rgba(255,255,255,.78); max-width: 640px; margin: 0 auto 28px; }
-    .final-cta .actions { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
-    .final-cta .btn-primary { background: #fff; color: var(--green-dark); border: none; }
-    .final-cta .btn-primary:hover { background: #f4faf7; }
-    .final-cta .btn-outline { background: transparent; color: rgba(255,255,255,.85); border: 1.5px solid rgba(255,255,255,.3); }
-
-    .footer-dark { background: #0b1613; color: rgba(255,255,255,.6); padding: 36px 0; text-align: center; font-size: 13px; }
-    .footer-dark a { color: rgba(255,255,255,.6); margin: 0 8px; }
-    .footer-dark a:hover { color: #fff; }
-
-    @media (max-width: 960px) {
-      .why-ai, .why-cheap-grid { grid-template-columns: 1fr; gap: 28px; }
-      .speed-grid, .feature-grid { grid-template-columns: 1fr 1fr; }
-      .template-grid, .flow-grid { grid-template-columns: 1fr 1fr; }
-      .score-row { grid-template-columns: 1fr 1fr; }
-      .ba-grid { grid-template-columns: 1fr; }
-      .ba-arrow { transform: rotate(90deg); }
-      .annotation-grid { grid-template-columns: 1fr; }
-      .for-whom-grid { grid-template-columns: 1fr; }
-      .purchase-card-inner { grid-template-columns: 1fr; gap: 24px; }
-      .purchase-card { padding: 36px 28px; }
+    .final-cta h2 {
+      color:#fff;
+      font-size:clamp(32px,5vw,58px);
+      line-height:1.14;
+      letter-spacing:-.05em;
+      margin:0 0 16px;
     }
-    @media (max-width: 600px) {
-      .hero { padding: 60px 0 48px; }
-      .lp-sec { padding: 56px 0; }
-      .speed-grid, .feature-grid, .template-grid, .flow-grid { grid-template-columns: 1fr; }
-      .speed-bench-row { grid-template-columns: 1fr; gap: 6px; text-align: left; }
-      .compare-table thead { display: none; }
-      .compare-table tbody td { display: block; padding: 8px 14px; border: none; }
-      .compare-table tbody tr { display: block; padding: 12px; border-bottom: 8px solid #f4faf7; }
-      .compare-table .feature::before { content: attr(data-label) " — "; color: var(--muted); font-weight: 700; }
-      .purchase-card { padding: 28px 20px; }
+    .final-cta p {
+      color:rgba(255,255,255,.78);
+      line-height:1.9;
+      margin:0 auto 28px;
+      max-width:720px;
+    }
+    .footer-dark {
+      background:#fff;
+      border-top:1px solid var(--lp-line);
+      color:var(--lp-muted);
+      padding:32px 20px;
+      text-align:center;
+      font-size:13px;
+    }
+    .footer-dark a {
+      color:var(--lp-muted);
+      margin:0 8px;
+      font-weight:700;
+    }
+    @media (max-width:900px) {
+      .hero-layout,
+      .before-after,
+      .price-wrap,
+      .dashboard-grid {
+        grid-template-columns:1fr;
+      }
+      .product-stage { min-height:440px; }
+      .mock-device { position:relative; inset:auto; margin-top:10px; }
+      .float-card { position:relative; inset:auto; transform:none; margin:10px 0 0; }
+      .ba-arrow { margin:0 auto; transform:rotate(90deg); }
+      .value-grid,
+      .problem-grid,
+      .feature-grid,
+      .template-grid {
+        grid-template-columns:repeat(2,1fr);
+      }
+    }
+    @media (max-width:640px) {
+      .theme-hero { padding:58px 0 40px; }
+      .hero-layout { gap:24px; }
+      .hero-lead { font-size:16px; }
+      .value-grid,
+      .problem-grid,
+      .feature-grid,
+      .template-grid {
+        grid-template-columns:1fr;
+      }
+      .mock-screen {
+        grid-template-columns:1fr;
+      }
+      .product-stage { min-height:auto; }
+      .dashboard-preview { padding:14px; border-radius:22px; }
+      .lp-section { padding:56px 0; }
+      .price { font-size:46px; }
+      .hero-actions .btn { width:100%; justify-content:center; }
+      .nav-links { display:flex; gap:14px; overflow:auto; white-space:nowrap; }
     }
   </style>
 </head>
 <body>
   <header class="nav">
     <div class="nav-inner">
-      <a class="brand" href="/"><img src="/yohelab-icon.png" alt="よへラボ" /><span>よへラボ</span></a>
+      <a class="brand" href="/">
+        <img src="/yohelab-icon.png" alt="よへラボのアイコン" />
+        <span>よへラボ</span>
+      </a>
       <nav class="nav-links">
         <a href="/tools/">ツール</a>
         <a href="/services/">サービス</a>
@@ -484,593 +722,244 @@
   </header>
 
   <main>
-    <section class="hero">
-      <div class="container">
-        <span class="urgency-banner">ベータ価格 ¥5,500 — 正式版は ¥8,800（+60%）に改定予定</span>
-        <p class="hero-product-name">文標<span class="hero-product-ruby">ぶんしるべ</span></p>
-        <h1>
-          ChatGPT・Claude・Perplexityに<br />
-          <em>引用される</em>ブログにする。
-        </h1>
-        <p class="hero-lead">
-          2025年、検索の入口はGoogleだけではなくなった。<strong>AIに見つからないブログは、もう存在しないも同然。</strong><br />
-          JSON-LD・llms.txt・FAQをテーマに最初から入れて、AI検索に拾われる土台を作る。
-        </p>
-        <div class="hero-actions">
-          <a class="btn btn-primary btn-xl" href="/api/checkout?product=wordpress-theme">¥5,500（ベータ）で購入する →</a>
+    <section class="theme-hero">
+      <div class="container hero-layout">
+        <div>
+          <p class="eyebrow">WordPress Theme</p>
+          <h1>ブログの型まで入った、<strong>軽いWordPressテーマ。</strong></h1>
+          <p class="hero-lead">文標（ぶんしるべ）は、見た目だけのテーマじゃない。比較記事、レビュー記事、FAQ記事、商品紹介まで、読まれやすい記事の骨組みを最初から入れておくテーマ。</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary btn-xl" href="/api/checkout?product=wordpress-theme">¥5,500で購入する →</a>
+            <a class="btn btn-outline btn-xl" href="#features">中身を見る</a>
+          </div>
+          <div class="hero-mini">
+            <span>買い切り</span>
+            <span>ZIPで導入</span>
+            <span>記事テンプレ内蔵</span>
+            <span>FAQ・構造化データ対応</span>
+          </div>
         </div>
-        <p class="hero-note"><strong>買い切り・月額なし</strong>。Stripe決済→ZIPとシリアルが即時メール送信。正式版リリース後 ¥8,800 に改定。</p>
 
-        <div class="score-row">
-          <div class="score-card">
-            <div class="score-num">95<small>+</small></div>
-            <div class="score-label">PageSpeed Mobile</div>
+        <div class="product-stage" aria-label="テーマ画面のイメージ">
+          <div class="float-card float-analytics">
+            <strong>アクセス解析</strong>
+            <span>内部解析 / GA4 を選択</span>
           </div>
-          <div class="score-card">
-            <div class="score-num">18<small>KB</small></div>
-            <div class="score-label">CSS総量（gzip）</div>
+          <div class="float-card float-speed">
+            <strong>軽量設計</strong>
+            <span>余計な装飾を増やさない</span>
           </div>
-          <div class="score-card">
-            <div class="score-num">0<small>個</small></div>
-            <div class="score-label">必要プラグイン</div>
+          <div class="mock-device">
+            <div class="mock-top">
+              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            </div>
+            <div class="mock-screen">
+              <div class="editor-card">
+                <span class="template-chip">比較記事</span>
+                <span class="template-chip">FAQ</span>
+                <h3>結論 → 理由 → 比較 → FAQ の順で書ける</h3>
+                <div class="line w78"></div>
+                <div class="line"></div>
+                <div class="line w60"></div>
+                <div style="margin-top:14px;">
+                  <span class="template-chip">要点まとめ</span>
+                  <span class="template-chip">CTA</span>
+                </div>
+              </div>
+              <div class="panel-card">
+                <div class="setting"><span>FAQ構造化</span><span class="toggle"></span></div>
+                <div class="setting"><span>llms.txt</span><span class="toggle"></span></div>
+                <div class="setting"><span>内部解析</span><span class="toggle"></span></div>
+                <div class="setting"><span>テーマカラー</span><span style="color:#2f7df6;font-weight:900;">Blue</span></div>
+              </div>
+            </div>
           </div>
-          <div class="score-card">
-            <div class="score-num">7<small>種</small></div>
-            <div class="score-label">記事テンプレート</div>
+          <div class="float-card float-faq">
+            <strong>FAQブロック</strong>
+            <span>記事の下に自然に追加</span>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="lp-sec">
-      <div class="container">
-        <div class="sec-head">
-          <p class="sec-label">For whom</p>
-          <h2>こんな人に向けて作りました。</h2>
-          <p>全員に向いているテーマではありません。合う人・合わない人を正直に書きます。</p>
-        </div>
+    <div class="value-strip">
+      <div class="container value-grid">
+        <div class="value-item"><strong>7種</strong><span>記事テンプレート</span></div>
+        <div class="value-item"><strong>FAQ</strong><span>構造化データ対応</span></div>
+        <div class="value-item"><strong>解析</strong><span>内部 / 外部を選択</span></div>
+        <div class="value-item"><strong>¥5,500</strong><span>ベータ買い切り</span></div>
+      </div>
+    </div>
 
-        <div class="for-whom-grid">
-          <div class="for-whom-card good">
-            <div class="card-title">向いている人</div>
-            <ul class="for-whom-list">
-              <li>ブログを書き始めたい人・書き直したい人</li>
-              <li>SEOやAI検索に本気で取り組みたい人</li>
-              <li>プラグインをできるだけ増やしたくない人</li>
-            </ul>
-          </div>
-          <div class="for-whom-card bad">
-            <div class="card-title">向かない人</div>
-            <ul class="for-whom-list">
-              <li>華やかなデザインが最優先の人</li>
-              <li>テーマのカスタマイズサポートが必要な人</li>
-              <li>企業サイト全体に使いたい人</li>
-            </ul>
-          </div>
+    <section class="lp-section" id="features">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-label">For whom</span>
+          <h2>こういう人向けに作った。</h2>
+          <p>「何を書けばいいか分からない」「プラグインが増えすぎる」「AI検索の準備が面倒」を減らすためのテーマ。</p>
+        </div>
+        <div class="problem-grid">
+          <article class="problem-card">
+            <div class="icon-bubble">✍️</div>
+            <h3>記事の型で迷う人</h3>
+            <p>比較、レビュー、FAQ、商品紹介など、よく使う記事の骨組みをテンプレートから選べる。</p>
+          </article>
+          <article class="problem-card">
+            <div class="icon-bubble">🧩</div>
+            <h3>プラグインを減らしたい人</h3>
+            <p>FAQ、目次、構造化データ、llms.txt、解析設定をテーマ側にまとめる。</p>
+          </article>
+          <article class="problem-card">
+            <div class="icon-bubble">📈</div>
+            <h3>記事サイトを育てたい人</h3>
+            <p>見出し、要点、根拠、FAQ、CTAを置きやすくして、読者に伝わるページを作る。</p>
+          </article>
         </div>
       </div>
     </section>
 
-    <section class="lp-sec alt">
+    <section class="lp-section alt">
       <div class="container">
-        <div class="why-ai">
-          <div class="why-ai-copy">
-            <p class="sec-label">Why now</p>
-            <h2>検索の入口は<em>AIに変わった</em>。</h2>
-            <p>「○○ おすすめ」と検索する人が、ChatGPTで「教えて」と聞く時代になった。Google AI Overviewは検索結果の最上部に常駐し、PerplexityやClaudeも検索エンジンとして使われている。</p>
-            <p><strong>AIは記事をそのまま読まない。</strong>JSON-LDで構造を読み、FAQで要点を抜き、llms.txtでサイト全体を把握して引用元を選ぶ。これらが揃っていないブログは、AIから「見えない」状態。<strong>AIに見つからないブログは存在しないも同然だ。</strong></p>
-            <ul>
-              <li>記事の内容は良いのに、AIに引用されない</li>
-              <li>SEOプラグインを入れても構造が不完全で拾われにくい</li>
-              <li>llms.txt・FAQ JSON-LDがないとAI検索の対象外</li>
+        <div class="before-after">
+          <div class="ba-box before">
+            <small>Before</small>
+            <h3>無料テーマだけだと、書く型は自分で作る。</h3>
+            <ul class="ba-list">
+              <li>FAQや目次を別プラグインで足す</li>
+              <li>比較表やCTAの型を毎回作る</li>
+              <li>GA4やSearch Console設定が散らばる</li>
+              <li>記事の結論や根拠の置き場所で迷う</li>
             </ul>
-          </div>
-          <div class="stat-stack">
-            <div class="stat-bar">
-              <h3>AI検索利用者の急増</h3>
-              <div class="num">5.2億人</div>
-              <p>ChatGPT週間アクティブユーザー数（2025年）。検索利用が中心の使い方に。</p>
-              <div class="src">出典: OpenAI公式発表 / Reuters 2024-2025</div>
-            </div>
-            <div class="stat-bar">
-              <h3>Google AI Overview表示率</h3>
-              <div class="num">47%</div>
-              <p>情報検索クエリのうち、AI Overviewが表示される割合。最上部にAIの回答が出る。</p>
-              <div class="src">出典: BrightEdge 2025年調査</div>
-            </div>
-            <div class="stat-bar">
-              <h3>AI検索からのトラフィック</h3>
-              <div class="num">+800%</div>
-              <p>2024→2025年の伸び。引用される記事には大きなチャンス、引用されない記事は埋もれる。</p>
-              <div class="src">出典: Similarweb 2025年</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="lp-sec alt">
-      <div class="container">
-        <div class="sec-head">
-          <p class="sec-label">Before / After</p>
-          <h2>切り替えるだけで、PageSpeedはこう変わる。</h2>
-          <p>同じ記事・同じサーバー・同じ画像。テーマだけ変えた結果。</p>
-        </div>
-
-        <div class="ba-grid">
-          <div class="ba-card before">
-            <span class="label">Before｜既存テーマ</span>
-            <div class="ba-score">65</div>
-            <div class="desc">装飾CSS多数のテーマ<br />SEOプラグイン3つ込み</div>
-            <div class="ba-metrics">
-              <div class="ba-metric">LCP<strong>3.8s</strong></div>
-              <div class="ba-metric">CLS<strong>0.18</strong></div>
-              <div class="ba-metric">CSS<strong>92KB</strong></div>
-              <div class="ba-metric">JS<strong>156KB</strong></div>
-            </div>
           </div>
           <div class="ba-arrow">→</div>
-          <div class="ba-card after">
-            <span class="label">After｜よへラボ</span>
-            <div class="ba-score">98</div>
-            <div class="desc">文標（ぶんしるべ）<br />プラグイン0個</div>
-            <div class="ba-metrics">
-              <div class="ba-metric">LCP<strong>1.2s</strong></div>
-              <div class="ba-metric">CLS<strong>0.02</strong></div>
-              <div class="ba-metric">CSS<strong>18KB</strong></div>
-              <div class="ba-metric">JS<strong>4KB</strong></div>
-            </div>
-          </div>
-        </div>
-        <p style="text-align:center;font-size:13px;color:var(--muted);margin-top:24px;">※ Google PageSpeed Insights（モバイル測定）。実機環境のテスト値。</p>
-      </div>
-    </section>
-
-    <section class="lp-sec">
-      <div class="container">
-        <div class="sec-head">
-          <p class="sec-label">Performance</p>
-          <h2>速いから、AIにも読者にも好かれる。</h2>
-          <p>AI検索もGoogleも、表示が遅いサイトは引用も上位表示もしない。コアウェブバイタル合格は最低条件。このテーマは最初から軽量設計。</p>
-        </div>
-
-        <div class="speed-grid">
-          <div class="speed-card">
-            <div class="label">PageSpeed Insights</div>
-            <div class="value">95<small>+</small></div>
-            <div class="desc">Mobile/Desktop ともに95点以上。デフォルト設定で達成。</div>
-          </div>
-          <div class="speed-card">
-            <div class="label">Largest Contentful Paint</div>
-            <div class="value">1.2<small>s</small></div>
-            <div class="desc">最大要素描画完了まで1.2秒。Good判定（&lt;2.5s）を余裕でクリア。</div>
-          </div>
-          <div class="speed-card">
-            <div class="label">Cumulative Layout Shift</div>
-            <div class="value">0.02</div>
-            <div class="desc">レイアウトずれ0.02。Good判定（&lt;0.1）の中でも上位。</div>
-          </div>
-        </div>
-
-        <div class="speed-bench" style="margin-top:42px;">
-          <h3 style="text-align:center;font-size:18px;font-weight:900;margin-bottom:18px;">読み込み時間ベンチマーク（同条件・記事1ページ）</h3>
-          <div class="speed-bench-row us">
-            <span class="name">文標</span>
-            <span class="ms">0.8 秒</span>
-            <span class="bar"><span style="width:18%;"></span></span>
-          </div>
-          <div class="speed-bench-row them">
-            <span class="name">テーマD（無料・素のまま）</span>
-            <span class="ms">2.1 秒</span>
-            <span class="bar"><span style="width:48%;"></span></span>
-          </div>
-          <div class="speed-bench-row them">
-            <span class="name">テーマA（プラグイン3つ）</span>
-            <span class="ms">3.4 秒</span>
-            <span class="bar"><span style="width:78%;"></span></span>
-          </div>
-          <div class="speed-bench-row them">
-            <span class="name">テーマB（SEOプラグイン込み）</span>
-            <span class="ms">3.8 秒</span>
-            <span class="bar"><span style="width:88%;"></span></span>
-          </div>
-          <p style="text-align:center;font-size:12px;color:var(--muted);margin-top:14px;">※ ローカル測定値（WordPress 6.8 / PHP 8.0以上 / 同記事を表示）。実環境のサーバー・キャッシュにより変動します。</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="lp-sec">
-      <div class="container">
-        <div class="sec-head">
-          <p class="sec-label">Inside</p>
-          <h2>管理画面のすべて、見せます。</h2>
-          <p>JSON-LD・llms.txt・GA4設定が同じ画面にまとまる。プラグインを行き来しない。</p>
-        </div>
-
-        <div class="screenshot-wrap">
-          <img src="/proof/wordpress-theme-app.svg" alt="文標（ぶんしるべ）の管理画面" loading="lazy" />
-        </div>
-
-        <div class="annotation-grid">
-          <div class="annotation">
-            <div class="num">1</div>
-            <div>
-              <h4>JSON-LD自動出力</h4>
-              <p>Article・FAQ・Breadcrumbを自動。手動コピペ不要。</p>
-            </div>
-          </div>
-          <div class="annotation">
-            <div class="num">2</div>
-            <div>
-              <h4>llms.txt 1クリック生成</h4>
-              <p>WP投稿から自動生成。AI検索の入口を整える。</p>
-            </div>
-          </div>
-          <div class="annotation">
-            <div class="num">3</div>
-            <div>
-              <h4>GA4・GSC・色設定が同じ場所</h4>
-              <p>初期設定は5分。プラグインゼロで完結。</p>
-            </div>
+          <div class="ba-box after">
+            <small>After</small>
+            <h3>文標なら、記事の土台が先にある。</h3>
+            <ul class="ba-list">
+              <li>記事テンプレートを選んで書き始める</li>
+              <li>FAQ・要点・比較・CTAを自然に置ける</li>
+              <li>解析と基本設定を1か所にまとめる</li>
+              <li>軽さを保ったまま必要機能を入れる</li>
+            </ul>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="lp-sec alt">
+    <section class="lp-section">
       <div class="container">
-        <div class="sec-head">
-          <p class="sec-label">Features</p>
-          <h2>AI検索に拾われる機能を全部内蔵。</h2>
-          <p>後からプラグインを追加する手間なし。最初から「AI検索に引用される構造」を持ったテーマ。</p>
+        <div class="section-head">
+          <span class="section-label">Inside</span>
+          <h2>最初から入れておく部品。</h2>
+          <p>あとから探して足すと散らかりやすいものを、テーマの中にまとめる。</p>
         </div>
-
         <div class="feature-grid">
-          <div class="feature-card">
-            <div class="icon">🧬</div>
-            <h3>JSON-LD全種を自動出力</h3>
-            <p>Article・FAQPage・BreadcrumbList・Organization・Personを全記事・全ページで自動生成。AIが構造を読める形に整える。</p>
-            <code>schema.org準拠</code>
-          </div>
-          <div class="feature-card">
-            <div class="icon">🤖</div>
-            <h3>llms.txt 自動生成</h3>
-            <p>サイト全体の構造をAI向けに案内する <code>/llms.txt</code> をWP投稿・固定ページから自動生成。AI検索の入口を整える。</p>
-            <code>/llms.txt</code>
-          </div>
-          <div class="feature-card">
-            <div class="icon">❓</div>
-            <h3>FAQショートコード</h3>
-            <p>記事内に <code>[aio_faq]</code> を置くだけでFAQ表示＋FAQPage JSON-LDを同時出力。AI検索でも読み取られやすい形に整える。</p>
-            <code>[aio_faq]</code>
-          </div>
-          <div class="feature-card">
-            <div class="icon">📊</div>
-            <h3>内部解析＋GA4統合</h3>
-            <p>軽量PV計測をテーマに内蔵。GA4・Search Console連携も管理画面から数分で完了。プラグインゼロ。</p>
-            <code>テーマ管理画面</code>
-          </div>
-          <div class="feature-card">
-            <div class="icon">⚡</div>
-            <h3>軽量設計（CSS 18KB）</h3>
-            <p>不要なCSS・JSを徹底削減。コアウェブバイタル全項目Good。AIにも読者にも速く届く。</p>
-            <code>PageSpeed 95+</code>
-          </div>
-          <div class="feature-card">
-            <div class="icon">🎨</div>
-            <h3>色・フォント・レイアウト自在</h3>
-            <p>メインカラー・文字色を管理画面で変更。ボタン・リンク・見出しに即反映。CSSを書かずに整う。</p>
-            <code>カスタマイザー</code>
+          <article class="feature-card"><span class="mini-tag">Template</span><h3>記事テンプレート</h3><p>比較、レビュー、ランキング、FAQ記事、商品紹介、案件紹介、基本記事の7種類。</p></article>
+          <article class="feature-card"><span class="mini-tag">FAQ</span><h3>FAQブロック</h3><p>読者の疑問に答える欄を作りやすくする。FAQPage JSON-LDとも連動。</p></article>
+          <article class="feature-card"><span class="mini-tag">Schema</span><h3>構造化データ</h3><p>Article、Person、Breadcrumb、WebSiteなどの基本データをテーマ側で出力。</p></article>
+          <article class="feature-card"><span class="mini-tag">LLM</span><h3>llms.txt</h3><p>AIクローラー向けの案内ファイルを自動生成。手作業で置く手間を減らす。</p></article>
+          <article class="feature-card"><span class="mini-tag">Analytics</span><h3>アクセス解析</h3><p>テーマ内解析を使うか、GA4など外部解析を使うかを設定で選べる。</p></article>
+          <article class="feature-card"><span class="mini-tag">Design</span><h3>色と文字を簡単変更</h3><p>メインカラー、文字色、背景色を管理画面から変えられるようにする。</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="lp-section alt">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-label">Editor</span>
+          <h2>WordPressの中で、何がどこにあるか分かる。</h2>
+          <p>設定を増やすより、迷う場所を減らす。投稿、解析、色変更、構造化データを分けて見せる。</p>
+        </div>
+        <div class="dashboard-preview">
+          <div class="dashboard-grid">
+            <div class="dash-panel">
+              <h3>テーマ設定</h3>
+              <div class="dash-row"><span>メインカラー</span><strong>変更</strong></div>
+              <div class="dash-row"><span>文字色</span><strong>変更</strong></div>
+              <div class="dash-row"><span>背景色</span><strong>変更</strong></div>
+            </div>
+            <div class="dash-panel">
+              <h3>記事チェック</h3>
+              <div class="bar"><span style="width:88%"></span></div>
+              <div class="dash-row"><span>結論ボックス</span><strong>ON</strong></div>
+              <div class="dash-row"><span>FAQ</span><strong>ON</strong></div>
+              <div class="dash-row"><span>引用・出典</span><strong>ON</strong></div>
+            </div>
+            <div class="dash-panel">
+              <h3>解析</h3>
+              <div class="dash-row"><span>内部解析</span><strong>ON</strong></div>
+              <div class="dash-row"><span>GA4</span><strong>任意</strong></div>
+              <div class="dash-row"><span>人気記事</span><strong>表示</strong></div>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="lp-sec">
+    <section class="lp-section">
       <div class="container">
-        <div class="sec-head">
-          <p class="sec-label">Templates</p>
-          <h2>AI検索に引用されやすい型を、<br />7種類用意した。</h2>
-          <p>記事を書くたび、構造に迷わない。レビュー・比較・FAQ・ランキングの型をブロックパターンで選ぶだけ。</p>
+        <div class="section-head">
+          <span class="section-label">Templates</span>
+          <h2>記事テンプレートは、用途で選ぶ。</h2>
+          <p>色違いではなく、書く目的で選ぶ。ここが無料テーマとの差別化になる。</p>
         </div>
-
         <div class="template-grid">
-          <div class="template-pill"><div class="emoji">📊</div><div class="name">比較記事</div></div>
-          <div class="template-pill"><div class="emoji">⭐</div><div class="name">レビュー</div></div>
-          <div class="template-pill"><div class="emoji">🏆</div><div class="name">ランキング</div></div>
-          <div class="template-pill"><div class="emoji">❓</div><div class="name">FAQ記事</div></div>
-          <div class="template-pill"><div class="emoji">🛍️</div><div class="name">商品紹介</div></div>
-          <div class="template-pill"><div class="emoji">💼</div><div class="name">案件紹介</div></div>
-          <div class="template-pill"><div class="emoji">📄</div><div class="name">基本記事</div></div>
-          <div class="template-pill" style="background:linear-gradient(135deg,#0b8f72,#1fb6cf);color:#fff;border:none;"><div class="emoji" style="filter:invert(1);">+</div><div class="name">あとから追加可</div></div>
+          <article class="template-card"><div class="template-num">01</div><h3>比較記事</h3><p>複数の商品・サービスを並べて、違いと選び方を整理する。</p></article>
+          <article class="template-card"><div class="template-num">02</div><h3>レビュー記事</h3><p>使った感想、良い点、注意点、向いている人を順番に書く。</p></article>
+          <article class="template-card"><div class="template-num">03</div><h3>ランキング記事</h3><p>おすすめ順と理由を見せ、比較表とCTAにつなげる。</p></article>
+          <article class="template-card"><div class="template-num">04</div><h3>FAQ記事</h3><p>検索意図に答える質問と回答を中心に構成する。</p></article>
+          <article class="template-card"><div class="template-num">05</div><h3>商品紹介</h3><p>特徴、メリット、注意点、購入前の確認を一枚で伝える。</p></article>
+          <article class="template-card"><div class="template-num">06</div><h3>案件紹介</h3><p>募集内容、向き不向き、応募前の確認事項を整理する。</p></article>
         </div>
       </div>
     </section>
 
-    <section class="lp-sec alt">
-      <div class="container">
-        <div class="sec-head">
-          <p class="sec-label">Compare</p>
-          <h2>なぜ他テーマじゃ足りないのか。</h2>
-          <p>テーマA・B・Cは装飾・記事ブロックが中心。AI検索に必要な構造化データやllms.txtは別途プラグインや手作業が必要になる。</p>
+    <section class="lp-section alt">
+      <div class="container price-wrap">
+        <div class="price-card">
+          <h3>文標（ぶんしるべ）ベータ版</h3>
+          <div class="price">¥5,500<small>税込</small></div>
+          <p>買い切り。月額なし。購入後、ZIPとシリアルナンバーを受け取ってWordPressにアップロード。</p>
+          <ul>
+            <li>WordPressテーマZIP</li>
+            <li>記事テンプレート7種類</li>
+            <li>FAQ・構造化データ・llms.txt</li>
+            <li>内部解析 / 外部解析設定</li>
+            <li>自動アップデート用シリアル</li>
+          </ul>
+          <a class="btn btn-lg" href="/api/checkout?product=wordpress-theme">購入してZIPを受け取る →</a>
         </div>
-
-        <div style="overflow-x:auto;">
-          <table class="compare-table">
-            <thead>
-              <tr>
-                <th>機能</th>
-                <th class="us">よへラボ</th>
-                <th>テーマA</th>
-                <th>テーマB</th>
-                <th>テーマC</th>
-                <th>テーマD</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="feature" data-label="価格">価格</td>
-                <td class="us-col"><strong style="color:var(--green-dark);">¥5,500</strong></td>
-                <td>¥17,600</td>
-                <td>¥14,800</td>
-                <td>¥19,800</td>
-                <td>無料</td>
-              </tr>
-              <tr>
-                <td class="feature" data-label="買い切り">買い切り</td>
-                <td class="us-col ok">✓</td>
-                <td class="ok">✓</td>
-                <td class="ok">✓</td>
-                <td class="ok">✓</td>
-                <td class="ok">✓</td>
-              </tr>
-              <tr>
-                <td class="feature" data-label="JSON-LD自動">Article JSON-LD</td>
-                <td class="us-col ok">✓ 自動</td>
-                <td>△ プラグイン</td>
-                <td>△ プラグイン</td>
-                <td>△ プラグイン</td>
-                <td>△ プラグイン</td>
-              </tr>
-              <tr>
-                <td class="feature" data-label="FAQPage">FAQPage JSON-LD</td>
-                <td class="us-col ok">✓ ショートコード</td>
-                <td class="no">✕</td>
-                <td class="no">✕</td>
-                <td class="no">✕</td>
-                <td class="no">✕</td>
-              </tr>
-              <tr>
-                <td class="feature" data-label="llms.txt">llms.txt自動生成</td>
-                <td class="us-col ok">✓ 自動</td>
-                <td class="no">✕</td>
-                <td class="no">✕</td>
-                <td class="no">✕</td>
-                <td class="no">✕</td>
-              </tr>
-              <tr>
-                <td class="feature" data-label="記事テンプレート">記事テンプレート</td>
-                <td class="us-col ok">7種内蔵</td>
-                <td>装飾ブロック多数</td>
-                <td>装飾ブロック多数</td>
-                <td>装飾ブロック多数</td>
-                <td>少なめ</td>
-              </tr>
-              <tr>
-                <td class="feature" data-label="GA4内蔵">GA4・GSC設定</td>
-                <td class="us-col ok">✓ 管理画面</td>
-                <td>△ プラグイン</td>
-                <td>△ プラグイン</td>
-                <td>△ プラグイン</td>
-                <td>△ プラグイン</td>
-              </tr>
-              <tr>
-                <td class="feature" data-label="軽さ">CSS総量</td>
-                <td class="us-col ok"><strong>18KB</strong></td>
-                <td>~70KB</td>
-                <td>~85KB</td>
-                <td>~95KB</td>
-                <td>~120KB</td>
-              </tr>
-              <tr>
-                <td class="feature" data-label="PageSpeed">PageSpeed</td>
-                <td class="us-col ok"><strong>95+</strong></td>
-                <td>80–90</td>
-                <td>70–85</td>
-                <td>75–88</td>
-                <td>60–75</td>
-              </tr>
-              <tr>
-                <td class="feature" data-label="必要プラグイン">必要プラグイン</td>
-                <td class="us-col ok">0個</td>
-                <td>2–4個</td>
-                <td>3–5個</td>
-                <td>2–3個</td>
-                <td>4–6個</td>
-              </tr>
-              <tr>
-                <td class="feature" data-label="サポート">サポート方針</td>
-                <td class="us-col">バグ報告のみ</td>
-                <td>充実</td>
-                <td>充実</td>
-                <td>充実</td>
-                <td>コミュニティ</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <p style="text-align:center;font-size:13px;color:var(--muted);margin-top:18px;">※ 各テーマの価格は2026年4月時点の公式価格。機能比較は公開情報および実機検証ベース。</p>
-      </div>
-    </section>
-
-    <section class="lp-sec dark">
-      <div class="container">
-        <div class="sec-head">
-          <p class="sec-label" style="background:rgba(107,229,201,.15);color:#6be5c9;">Why ¥5,500</p>
-          <h2>なぜ、他テーマの<em style="background:linear-gradient(135deg,#6be5c9,#3f8cff);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-style:normal;">1/3の価格</em>で出せるのか。</h2>
-          <p>機能を削ったわけじゃない。サポートの形を、AI時代に合わせて再設計した。</p>
-        </div>
-
-        <div class="why-cheap-grid">
-          <div class="why-cheap-card" style="background:#0d2a23;border-color:rgba(107,229,201,.18);color:#e8f4ee;">
-            <h3 style="color:#fff;">サポートを最小限にした分、価格に反映</h3>
-            <p style="color:rgba(255,255,255,.72);font-size:14px;line-height:1.85;margin-bottom:16px;">他テーマは月10件以上の質問対応・カスタマイズ依頼を抱えている。それが¥15,000〜¥20,000の価格になっている。よへラボはその構造を変えた。</p>
-            <div class="why-cheap-list">
-              <div class="why-cheap-item" style="background:rgba(107,229,201,.06);border-left-color:#6be5c9;">
-                <div class="icon" style="background:linear-gradient(135deg,#6be5c9,#3f8cff);">✓</div>
-                <div>
-                  <h4 style="color:#fff;">バグ報告だけメールで受ける</h4>
-                  <p style="color:rgba(255,255,255,.6);">「動かない」「壊れた」というバグだけ受付。修正後は自動アップデートで全員に届く。</p>
-                </div>
-              </div>
-              <div class="why-cheap-item" style="background:rgba(107,229,201,.06);border-left-color:#6be5c9;">
-                <div class="icon" style="background:linear-gradient(135deg,#6be5c9,#3f8cff);">✕</div>
-                <div>
-                  <h4 style="color:#fff;">機能要望・カスタマイズ依頼は受けない</h4>
-                  <p style="color:rgba(255,255,255,.6);">「ここを変えてほしい」は受け付けない。最初から必要な機能だけを入れているから。</p>
-                </div>
-              </div>
-              <div class="why-cheap-item" style="background:rgba(107,229,201,.06);border-left-color:#6be5c9;">
-                <div class="icon" style="background:linear-gradient(135deg,#6be5c9,#3f8cff);">AI</div>
-                <div>
-                  <h4 style="color:#fff;">カスタマイズはAIで自分でできる時代</h4>
-                  <p style="color:rgba(255,255,255,.6);">Claude Code・Codex・ChatGPTにテーマファイルを渡せば、CSS変更も機能追加も自分でできる。</p>
-                </div>
-              </div>
-            </div>
-            <p style="font-size:13px;color:rgba(255,255,255,.5);line-height:1.8;margin-top:18px;">※ 「テーマの色を変えたい」「ヘッダーに○○を追加したい」レベルは、AIに <code style="background:rgba(255,255,255,.08);padding:2px 6px;border-radius:4px;color:#6be5c9;">style.css</code> や <code style="background:rgba(255,255,255,.08);padding:2px 6px;border-radius:4px;color:#6be5c9;">header.php</code> を見せれば数分で答えが返ってくる。</p>
-          </div>
-
-          <div class="price-callout">
-            <div class="label">ベータ価格</div>
-            <div class="price">¥5,500<small> 税込</small></div>
-            <div class="strike">正式版リリース後 ¥8,800</div>
-            <div class="savings">テーマAより ¥12,100 安い／買い切り</div>
-            <a class="btn btn-primary btn-lg" href="/api/checkout?product=wordpress-theme">¥5,500で購入してZIPを受け取る →</a>
-            <p class="note">Stripe決済→即座にZIPとシリアルがメール送信。WordPress管理画面でZIPをアップロード→有効化で完了。</p>
-          </div>
+        <div class="trust-stack">
+          <article class="trust-card"><h3>正式版は¥8,800予定</h3><p>ベータ期間中は¥5,500。正式版リリース後は価格改定予定。</p></article>
+          <article class="trust-card"><h3>返金について</h3><p>デジタル商品のため、ZIP受け取り後の返金は原則対応外。</p></article>
+          <article class="trust-card"><h3>確認済み環境</h3><p>WordPress 6.8、PHP 8.0以上のDocker環境で確認済み。</p></article>
         </div>
       </div>
     </section>
 
-    <section class="lp-sec">
+    <section class="lp-section">
       <div class="container">
-        <div class="sec-head">
-          <p class="sec-label">How to start</p>
-          <h2>購入から公開まで、最短10分。</h2>
-        </div>
-
-        <div class="flow-grid">
-          <div class="flow-step">
-            <div class="num">1</div>
-            <h4>Stripe決済</h4>
-            <p>クレカ決済（Apple Pay・Google Pay対応）。¥5,500即時。</p>
-          </div>
-          <div class="flow-step">
-            <div class="num">2</div>
-            <h4>ZIP+シリアル受信</h4>
-            <p>決済完了と同時にメール送信。手動承認なし。</p>
-          </div>
-          <div class="flow-step">
-            <div class="num">3</div>
-            <h4>WPで有効化</h4>
-            <p>管理画面 → 外観 → テーマ → ZIPアップロード。</p>
-          </div>
-          <div class="flow-step">
-            <div class="num">4</div>
-            <h4>シリアル入力</h4>
-            <p>テーマ設定でシリアル入力。自動アップデート開始。</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="lp-sec alt">
-      <div class="container">
-        <div class="sec-head">
-          <p class="sec-label">Purchase</p>
-          <h2>今ベータで買う理由。</h2>
-          <p>正式版リリースと同時に値上げします。今が最安値。</p>
-        </div>
-
-        <div class="purchase-card">
-          <div class="purchase-card-inner">
-            <div>
-              <div class="p-label">ベータ価格（買い切り）</div>
-              <div class="p-price">¥5,500<small> 税込</small></div>
-              <div class="p-strike">正式版リリース後 ¥8,800</div>
-              <div style="margin-top:28px;">
-                <div class="p-includes-title">含まれるもの</div>
-                <ul class="p-includes">
-                  <li>テーマ ZIPファイル（即時ダウンロード）</li>
-                  <li>シリアルナンバー（自動アップデート用）</li>
-                  <li>自動アップデート権（正式版まで）</li>
-                  <li>バグ修正対応（メール報告）</li>
-                </ul>
-              </div>
-            </div>
-            <div>
-              <div class="p-beta-title">今ベータで買う理由</div>
-              <ul class="p-beta-list">
-                <li>¥5,500（正式版は¥8,800）で購入できる</li>
-                <li>ベータ期間の購入者は正式版も追加料金なし</li>
-                <li>今が最安値・値上げ前の最後のチャンス</li>
-              </ul>
-              <a class="p-btn" href="/api/checkout?product=wordpress-theme">¥5,500（ベータ）で購入する →</a>
-              <p class="p-note">Stripe決済→即座にZIPとシリアルをメール送信。<br />デジタル商品のため、ダウンロード後の返金は対応外。</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="lp-sec">
-      <div class="container">
-        <div class="sec-head">
-          <p class="sec-label">FAQ</p>
+        <div class="section-head">
+          <span class="section-label">FAQ</span>
           <h2>よくある質問</h2>
         </div>
-
         <div class="faq-list">
           <details class="faq-item">
-            <summary>なぜAI検索対応のテーマが必要なの？</summary>
-            <div class="body">2025年、検索の入口がGoogleからChatGPT・Claude・Perplexity・Google AI Overviewに移った。AIは記事をそのまま読まず、JSON-LDで構造を把握しFAQで要点を抜き出す。これらが揃っていないブログはAIから「見えない」状態。後付けで対応するより、最初から備えた方がずっと早い。</div>
+            <summary>無料テーマと何が違う？</summary>
+            <div class="faq-body">無料テーマは見た目の器としては強い。ただ、文標は「記事テンプレート」「FAQ」「構造化データ」「llms.txt」「解析設定」を最初からまとめる。何を書くか迷う時間を減らす方向に寄せている。</div>
           </details>
           <details class="faq-item">
-            <summary>他テーマから乗り換えるメリットは？</summary>
-            <div class="body">テーマA・Bは装飾とブロック機能が豊富で「記事を綺麗に見せる」のは得意。ただしAI検索対応（JSON-LD全種・llms.txt・FAQ）はプラグインや手作業が必要。よへラボはAI検索を中心に置いて軽量化したテーマ。デザインの華やかさより「AIに引用されること」を取りたい人向け。</div>
+            <summary>これを入れれば必ず検索順位が上がる？</summary>
+            <div class="faq-body">保証はできない。テーマは読者と検索に伝わりやすい土台を作るもの。順位や売上は記事内容、競合、更新頻度、被リンクなどにも左右される。</div>
           </details>
           <details class="faq-item">
-            <summary>本当にPageSpeed 95+出るの？</summary>
-            <div class="body">記事1ページの表示で、Mobile/Desktopともに95+を確認済み（同条件下）。CSS 18KB・JS 4KB・必要プラグイン0個の構成だから。ただしサーバー性能・画像最適化・キャッシュ設定で変動する。テーマ単体での素のスコアが95+。</div>
+            <summary>プラグインは本当に不要？</summary>
+            <div class="faq-body">全部不要ではない。バックアップ、セキュリティ、フォーム、ECなどは必要に応じて入れる。FAQ、目次、GA4タグ、llms.txt、簡単な解析はテーマ側で減らせる。</div>
           </details>
           <details class="faq-item">
-            <summary>なぜ¥5,500で出せるの？月額の罠じゃない？</summary>
-            <div class="body">月額の罠ではない。完全買い切り。安い理由は明確で、サポートを「バグ報告メール受付のみ」に絞っているため。他テーマは月数十件のサポート対応費を価格に乗せている。よへラボは「動作不良の修正は責任を持つが、機能要望・カスタマイズ相談は受けない」設計にして、その分を削った。カスタマイズはClaude Code等のAIで自分でできる時代だから成立する価格。</div>
-          </details>
-          <details class="faq-item">
-            <summary>カスタマイズは自分でできる？プログラミング知識いる？</summary>
-            <div class="body">基本的な色・フォント・レイアウト変更は管理画面で完結（コード不要）。それ以上のカスタマイズ（独自セクション追加・ヘッダー改造など）は、Claude Code・Codex・ChatGPTにテーマファイルを渡して質問すれば、CSSやPHPの編集案が数分で返ってくる。完全初心者には少し壁があるが、月¥20とかでAIを契約すれば実質的にカスタマイズし放題。</div>
-          </details>
-          <details class="faq-item">
-            <summary>サポートが少ないって、バグが出たら困らない？</summary>
-            <div class="body">バグ報告フォームから連絡をもらえば、再現確認の上で次のアップデートで修正する。動作不良に対する責任は持つ。ただし「自分のサーバー固有の問題」「他プラグインとの競合」のような特殊な環境問題は、原因切り分けは行うが個別カスタマイズはしない。</div>
-          </details>
-          <details class="faq-item">
-            <summary>正式版になったら値上げされる？</summary>
-            <div class="body">される。¥5,500 → ¥8,800（正式版価格）に改定予定。ただしベータ期間中に購入した人は、そのまま正式版を追加料金なしで使い続けられる。今買うのが一番安い。</div>
-          </details>
-          <details class="faq-item">
-            <summary>返金保証はある？</summary>
-            <div class="body">デジタル商品のため、ZIPダウンロード後の返金は原則対応外。購入前にこのページで機能・デザイン・JSON-LD出力の詳細を確認してください。</div>
-          </details>
-          <details class="faq-item">
-            <summary>WordPressのバージョンは？対応プラグインは？</summary>
-            <div class="body">WordPress 6.4以降・PHP 8.0以降で動作確認済み。Contact Form 7・WP Rocket・SiteGuard等の主要プラグインとは併用可能。Yoast SEO・Rank Math・All in One SEOはJSON-LDが重複するため、テーマ側のJSON-LDをON/OFF切替できる。</div>
-          </details>
-          <details class="faq-item">
-            <summary>マルチサイト・複数サイトでの利用は？</summary>
-            <div class="body">1ライセンス＝1サイト利用。複数サイトで使う場合はサイト数分の購入が必要。マルチサイト（同じWordPressで複数サイト運用）は1ライセンスで対応可能。</div>
+            <summary>購入後はどう使う？</summary>
+            <div class="faq-body">決済後にZIPとシリアルを受け取り、WordPress管理画面の「外観 → テーマ → 新規追加 → テーマのアップロード」からZIPを入れる。シリアルは更新確認に使う。</div>
           </details>
         </div>
       </div>
@@ -1078,25 +967,22 @@
 
     <section class="final-cta">
       <div class="container">
-        <h2>AI時代に、<em>引用されるブログ</em>に切り替える。</h2>
-        <p>ベータ価格 ¥5,500（税込・買い切り）。正式版リリース後 ¥8,800 に改定。今が最安値。<br />Stripe決済→ZIPとシリアル即時メール送信。WordPress管理画面で有効化するだけ。</p>
-        <div class="actions">
-          <a class="btn btn-primary btn-xl" href="/api/checkout?product=wordpress-theme">¥5,500（ベータ）で購入してZIPを受け取る →</a>
-        </div>
-        <p style="margin-top:24px;font-size:13px;color:rgba(255,255,255,.6);">バグ報告は <a href="/contact/bug/" style="color:#6be5c9;">専用フォーム</a> から。質問は <a href="/contact/" style="color:#6be5c9;">問い合わせ</a> へ。</p>
+        <h2>見た目だけじゃなく、<br />記事の作り方まで整える。</h2>
+        <p>文標（ぶんしるべ）は、ブログをこれから育てたい人向けのWordPressテーマ。テンプレート、FAQ、構造化データ、解析設定をまとめて、迷う場所を減らす。</p>
+        <a class="btn btn-white btn-xl" href="/api/checkout?product=wordpress-theme">¥5,500で購入する →</a>
       </div>
     </section>
   </main>
 
   <footer class="footer-dark">
     <div>© よへラボ / yohelab.com</div>
-    <div style="margin-top:8px;">
+    <div style="margin-top:10px;">
       <a href="/">トップ</a>
-      <a href="/products/bunsirube/">プラン詳細</a>
+      <a href="/tools/">ツール</a>
+      <a href="/services/">サービス</a>
+      <a href="/blog/">ブログ</a>
       <a href="/contact/">問い合わせ</a>
       <a href="/legal/commerce/">特定商取引法</a>
-      <a href="/legal/privacy/">プライバシー</a>
-      <a href="/legal/terms/">利用規約</a>
     </div>
   </footer>
 </body>
