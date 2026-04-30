@@ -73,6 +73,20 @@ export async function onRequestDelete(context) {
     const slug = String(body?.slug || "").trim();
     if (!slug) return json({ error: "slug_required" }, 400, context.request);
 
+    // 投稿を取得してアイキャッチ画像のキーを確認
+    const raw = await kv.get(`post:${slug}`);
+    if (raw) {
+      try {
+        const post = JSON.parse(raw);
+        const eyecatch = post?.eyecatch || "";
+        // R2画像（images.yohelab.com または pub-xxx.r2.dev）なら削除
+        if (eyecatch && context.env.BLOG_IMAGES) {
+          const r2Key = extractR2Key(eyecatch);
+          if (r2Key) await context.env.BLOG_IMAGES.delete(r2Key);
+        }
+      } catch { /* JSON parse失敗は無視 */ }
+    }
+
     await kv.delete(`post:${slug}`);
     return json({ ok: true, slug }, 200, context.request);
   } catch (error) {
@@ -85,6 +99,17 @@ export async function onRequestOptions(context) {
 }
 
 // ── helpers ────────────────────────────────────────────────
+
+// R2画像URLからキーを抽出（images.yohelab.com/KEY または pub-xxx.r2.dev/KEY）
+function extractR2Key(url) {
+  try {
+    const { hostname, pathname } = new URL(url);
+    if (hostname === "images.yohelab.com" || hostname.endsWith(".r2.dev")) {
+      return pathname.replace(/^\//, "") || null;
+    }
+  } catch { /* ignore */ }
+  return null;
+}
 
 function sanitizeText(value) {
   return String(value || "").trim().replace(/\s+/g, " ");
