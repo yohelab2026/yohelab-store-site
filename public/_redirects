@@ -1,6 +1,8 @@
-/apps/wordpress-theme/* /apps/bunsirube/:splat 301
+/apps/wordpress-theme/* /lp/bunsirube/ 301
+/apps/wordpress-theme /lp/bunsirube/ 301
+/apps/bunsirube/* /lp/bunsirube/ 301
+/apps/bunsirube /lp/bunsirube/ 301
 /lp/wordpress-theme/* /lp/bunsirube/:splat 301
-/products/wordpress-theme-beta/* /products/bunsirube/:splat 301
-/apps/wordpress-theme /apps/bunsirube/ 301
 /lp/wordpress-theme /lp/bunsirube/ 301
+/products/wordpress-theme-beta/* /products/bunsirube/:splat 301
 /products/wordpress-theme-beta /products/bunsirube/ 301

@@ -8,7 +8,7 @@ const PRODUCT_CONFIG = {
   },
   "wordpress-theme": {
     label: "文標（ぶんしるべ）",
-    nextPath: "/apps/bunsirube/",      // 決済キャンセル時に戻る先
+    nextPath: "/lp/bunsirube/",      // 決済キャンセル時に戻る先
     activatePath: "/products/bunsirube/", // 購入完了後の遷移先
   },
 };

@@ -100,7 +100,7 @@ const pages = [
       { title: "AI向け案内＋内部解析内蔵", text: "llms.txtと、PV・流入元を記録する軽量解析をテーマに内蔵。" },
       { title: "ベータ¥5,500・買い切り", text: "月額なし・ずっと使える。正式版リリース後¥8,800に改定予定。" },
     ],
-    freeHref: "/apps/bunsirube/",
+    freeHref: "/lp/bunsirube/",
     freeLabel: "機能を確認する",
     freeOffer: false,
     buyHref: "/api/checkout?product=wordpress-theme",

@@ -17,7 +17,7 @@ const STATIC_URLS = [
   { loc: "/lp/research-writer/", changefreq: "weekly", priority: "0.9" },
   { loc: "/lp/bunsirube/", changefreq: "weekly", priority: "0.9" },
   { loc: "/apps/research-writer/", changefreq: "weekly", priority: "0.8" },
-  { loc: "/apps/bunsirube/", changefreq: "weekly", priority: "0.8" },
+  { loc: "/lp/bunsirube/", changefreq: "weekly", priority: "0.8" },
   { loc: "/products/page-review/", changefreq: "weekly", priority: "0.8" },
   { loc: "/products/research-writer-beta/", changefreq: "weekly", priority: "0.7" },
   { loc: "/products/bunsirube/", changefreq: "weekly", priority: "0.7" },

@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>文標（ぶんしるべ）｜ベータ¥5,500 買い切り｜よへラボ</title>
-  <meta name="description" content="文標（ぶんしるべ）はJSON-LD・llms.txt・FAQをテーマ内蔵したWordPressテーマ。ChatGPT・Claude・Perplexity・AI Overviewに引用されるブログに。PageSpeed 95+。¥5,500買い切り。" />
-  <meta property="og:title" content="文標（ぶんしるべ）｜ベータ¥5,500 買い切り" />
-  <meta property="og:description" content="JSON-LD全種・llms.txt・FAQをテーマに内蔵。PageSpeed 95+。SWELLの1/3価格、買い切り。AI時代のブログの土台。" />
+  <title>文標（ぶんしるべ）｜AI検索に引用されるWordPressテーマ｜ベータ¥5,500 買い切り｜よへラボ</title>
+  <meta name="description" content="文標（ぶんしるべ）はJSON-LD・llms.txt・FAQを内蔵したWordPressテーマ。ChatGPT・Claude・Perplexity・AI Overviewに引用されるブログに。PageSpeed 95+、CSS 18KB、必要プラグイン0個。¥5,500買い切り。" />
+  <meta property="og:title" content="文標（ぶんしるべ）｜AI検索に引用されるWordPressテーマ｜ベータ¥5,500 買い切り" />
+  <meta property="og:description" content="JSON-LD全種・llms.txt・FAQをテーマに内蔵。PageSpeed 95+。他テーマの1/3価格、買い切り。AI時代のブログの土台。" />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="ja_JP" />
   <meta property="og:url" content="https://yohelab.com/lp/bunsirube/" />
@@ -24,7 +24,7 @@
     {"@type":"FAQPage","mainEntity":[
       {"@type":"Question","name":"なぜAI検索対応のテーマが必要なの？","acceptedAnswer":{"@type":"Answer","text":"2025年、検索の入口がGoogleからChatGPT・Claude・Perplexity・Google AI Overviewに移った。AIに引用されないブログは、もう見つからない。AIは構造化データ・FAQ・llms.txtを読んで引用元を選ぶ。だからAI時代のブログにはAI向けの構造が必要。"}},
       {"@type":"Question","name":"なぜこの価格で出せるの？","acceptedAnswer":{"@type":"Answer","text":"サポートを最小限（バグ報告メールのみ）にしているため。カスタマイズはClaude Code・Codex・ChatGPT等のAIツールで自分でできる時代。手厚いサポートを削った分、価格に反映している。"}},
-      {"@type":"Question","name":"他テーマとの違いは？","acceptedAnswer":{"@type":"Answer","text":"SWELL（¥17,600）・AFFINGER（¥14,800）・JIN:R（¥19,800）は装飾・ブロック機能が中心。よへラボのテーマはAI検索対応を中心に置き、JSON-LD全種自動出力・llms.txt自動生成・FAQ構造を最初から備える。"}},
+      {"@type":"Question","name":"他テーマとの違いは？","acceptedAnswer":{"@type":"Answer","text":"テーマA（¥17,600）・テーマB（¥14,800）・テーマC（¥19,800）は装飾・ブロック機能が中心。よへラボのテーマはAI検索対応を中心に置き、JSON-LD全種自動出力・llms.txt自動生成・FAQ構造を最初から備える。"}},
       {"@type":"Question","name":"購入後の流れは？","acceptedAnswer":{"@type":"Answer","text":"Stripeで決済すると、即座にZIPファイルとシリアルナンバーがメールで届く。WordPress管理画面からZIPをアップロード→有効化するだけ。"}}
     ]}
   ]}
@@ -184,6 +184,35 @@
     .sec-head h2 { font-size: clamp(28px, 4.4vw, 46px); letter-spacing: -.04em; line-height: 1.18; margin-bottom: 14px; }
     .sec-head p { font-size: 16px; line-height: 1.85; color: var(--muted); }
 
+    /* こんな人に向けて */
+    .for-whom-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; max-width: 960px; margin: 0 auto; }
+    .for-whom-card {
+      background: #fff; border-radius: 22px; padding: 32px 28px;
+      border: 1px solid rgba(11,143,114,.12);
+    }
+    .for-whom-card.good { border-color: rgba(11,143,114,.3); background: linear-gradient(180deg, #ecfdf5, #fff); }
+    .for-whom-card.bad { border-color: #fecaca; background: linear-gradient(180deg, #fef2f2, #fff); }
+    .for-whom-card .card-title {
+      font-size: 13px; font-weight: 900; letter-spacing: .1em; text-transform: uppercase;
+      margin-bottom: 20px; display: flex; align-items: center; gap: 8px;
+    }
+    .for-whom-card.good .card-title { color: var(--green-dark); }
+    .for-whom-card.bad .card-title { color: #b91c1c; }
+    .for-whom-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+    .for-whom-list li {
+      font-size: 15px; line-height: 1.75; padding: 12px 16px 12px 44px; position: relative;
+      border-radius: 12px;
+    }
+    .for-whom-card.good .for-whom-list li { background: rgba(11,143,114,.07); }
+    .for-whom-card.bad .for-whom-list li { background: rgba(239,68,68,.06); }
+    .for-whom-list li::before {
+      position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+      width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center;
+      font-size: 12px; font-weight: 900; color: #fff;
+    }
+    .for-whom-card.good .for-whom-list li::before { content: "✓"; background: var(--green); }
+    .for-whom-card.bad .for-whom-list li::before { content: "✕"; background: #ef4444; }
+
     /* WHY AI セクション */
     .why-ai { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; align-items: center; }
     .why-ai .stat-stack { display: grid; gap: 18px; }
@@ -338,6 +367,31 @@
     .flow-step h4 { font-size: 14px; font-weight: 900; margin-bottom: 6px; }
     .flow-step p { font-size: 12.5px; color: var(--muted); line-height: 1.6; }
 
+    /* 購入カード */
+    .purchase-card {
+      max-width: 760px; margin: 0 auto;
+      background: linear-gradient(160deg, #0b8f72 0%, #1fb6cf 100%);
+      border-radius: 28px; padding: 48px 44px;
+      box-shadow: 0 32px 80px rgba(11,143,114,.32);
+      color: #fff;
+    }
+    .purchase-card-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; align-items: start; }
+    .purchase-card .p-label { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; opacity: .8; font-weight: 800; margin-bottom: 10px; }
+    .purchase-card .p-price { font-size: clamp(52px, 7vw, 80px); font-weight: 900; letter-spacing: -.06em; line-height: 1; }
+    .purchase-card .p-price small { font-size: .32em; opacity: .8; font-weight: 700; }
+    .purchase-card .p-strike { text-decoration: line-through; opacity: .5; font-size: 17px; margin-top: 8px; }
+    .purchase-card .p-includes-title { font-size: 13px; font-weight: 900; letter-spacing: .06em; opacity: .8; margin-bottom: 12px; text-transform: uppercase; }
+    .purchase-card .p-includes { list-style: none; padding: 0; margin: 0 0 20px; display: grid; gap: 9px; }
+    .purchase-card .p-includes li { font-size: 14.5px; padding-left: 26px; position: relative; line-height: 1.6; opacity: .92; }
+    .purchase-card .p-includes li::before { content: "✓"; position: absolute; left: 0; font-weight: 900; color: #6be5c9; }
+    .purchase-card .p-beta-title { font-size: 13px; font-weight: 900; letter-spacing: .06em; opacity: .8; margin-bottom: 10px; text-transform: uppercase; }
+    .purchase-card .p-beta-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+    .purchase-card .p-beta-list li { font-size: 14px; padding-left: 22px; position: relative; line-height: 1.65; opacity: .88; }
+    .purchase-card .p-beta-list li::before { content: "→"; position: absolute; left: 0; font-weight: 900; color: #ffd54f; }
+    .purchase-card .p-btn { display: block; width: 100%; text-align: center; margin-top: 28px; background: #fff; color: var(--green-dark); border: none; font-size: 17px; font-weight: 900; padding: 18px 24px; border-radius: 14px; text-decoration: none; transition: background .18s, transform .18s; }
+    .purchase-card .p-btn:hover { background: #f4faf7; transform: translateY(-1px); }
+    .purchase-card .p-note { font-size: 12px; opacity: .7; margin-top: 14px; line-height: 1.8; text-align: center; }
+
     /* FAQ */
     .faq-list { max-width: 820px; margin: 0 auto; display: grid; gap: 12px; }
     .faq-item {
@@ -388,6 +442,9 @@
       .ba-grid { grid-template-columns: 1fr; }
       .ba-arrow { transform: rotate(90deg); }
       .annotation-grid { grid-template-columns: 1fr; }
+      .for-whom-grid { grid-template-columns: 1fr; }
+      .purchase-card-inner { grid-template-columns: 1fr; gap: 24px; }
+      .purchase-card { padding: 36px 28px; }
     }
     @media (max-width: 600px) {
       .hero { padding: 60px 0 48px; }
@@ -398,6 +455,7 @@
       .compare-table tbody td { display: block; padding: 8px 14px; border: none; }
       .compare-table tbody tr { display: block; padding: 12px; border-bottom: 8px solid #f4faf7; }
       .compare-table .feature::before { content: attr(data-label) " — "; color: var(--muted); font-weight: 700; }
+      .purchase-card { padding: 28px 20px; }
     }
   </style>
 </head>
@@ -415,7 +473,6 @@
   </header>
 
   <main>
-    <!-- HERO -->
     <section class="hero">
       <div class="container">
         <span class="urgency-banner">ベータ価格 ¥5,500 — 正式版は ¥8,800（+60%）に改定予定</span>
@@ -425,12 +482,11 @@
           <em>引用される</em>ブログにする。
         </h1>
         <p class="hero-lead">
-          2025年、検索の入口はGoogleだけではなくなった。AIに見つからないブログは、もう存在しないも同然。<br />
+          2025年、検索の入口はGoogleだけではなくなった。<strong>AIに見つからないブログは、もう存在しないも同然。</strong><br />
           JSON-LD・llms.txt・FAQをテーマに最初から入れて、AI検索に拾われる土台を作る。
         </p>
         <div class="hero-actions">
           <a class="btn btn-primary btn-xl" href="/api/checkout?product=wordpress-theme">¥5,500（ベータ）で購入する →</a>
-          <a class="btn btn-xl" style="background:#fff;color:var(--text);border:1.5px solid var(--border);" href="/apps/bunsirube/">機能を全部見る</a>
         </div>
         <p class="hero-note"><strong>買い切り・月額なし</strong>。Stripe決済→ZIPとシリアルが即時メール送信。正式版リリース後 ¥8,800 に改定。</p>
 
@@ -455,7 +511,35 @@
       </div>
     </section>
 
-    <!-- なぜAI検索対応なのか -->
+    <section class="lp-sec">
+      <div class="container">
+        <div class="sec-head">
+          <p class="sec-label">For whom</p>
+          <h2>こんな人に向けて作りました。</h2>
+          <p>全員に向いているテーマではありません。合う人・合わない人を正直に書きます。</p>
+        </div>
+
+        <div class="for-whom-grid">
+          <div class="for-whom-card good">
+            <div class="card-title">向いている人</div>
+            <ul class="for-whom-list">
+              <li>ブログを書き始めたい人・書き直したい人</li>
+              <li>SEOやAI検索に本気で取り組みたい人</li>
+              <li>プラグインをできるだけ増やしたくない人</li>
+            </ul>
+          </div>
+          <div class="for-whom-card bad">
+            <div class="card-title">向かない人</div>
+            <ul class="for-whom-list">
+              <li>華やかなデザインが最優先の人</li>
+              <li>テーマのカスタマイズサポートが必要な人</li>
+              <li>企業サイト全体に使いたい人</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="lp-sec alt">
       <div class="container">
         <div class="why-ai">
@@ -463,7 +547,7 @@
             <p class="sec-label">Why now</p>
             <h2>検索の入口は<em>AIに変わった</em>。</h2>
             <p>「○○ おすすめ」と検索する人が、ChatGPTで「教えて」と聞く時代になった。Google AI Overviewは検索結果の最上部に常駐し、PerplexityやClaudeも検索エンジンとして使われている。</p>
-            <p><strong>AIは記事をそのまま読まない。</strong>JSON-LDで構造を読み、FAQで要点を抜き、llms.txtでサイト全体を把握して引用元を選ぶ。これらが揃っていないブログは、AIから「見えない」状態。</p>
+            <p><strong>AIは記事をそのまま読まない。</strong>JSON-LDで構造を読み、FAQで要点を抜き、llms.txtでサイト全体を把握して引用元を選ぶ。これらが揃っていないブログは、AIから「見えない」状態。<strong>AIに見つからないブログは存在しないも同然だ。</strong></p>
             <ul>
               <li>記事の内容は良いのに、AIに引用されない</li>
               <li>SEOプラグインを入れても構造が不完全で拾われにくい</li>
@@ -494,7 +578,43 @@
       </div>
     </section>
 
-    <!-- スピード・軽さの数値 -->
+    <section class="lp-sec alt">
+      <div class="container">
+        <div class="sec-head">
+          <p class="sec-label">Before / After</p>
+          <h2>切り替えるだけで、PageSpeedはこう変わる。</h2>
+          <p>同じ記事・同じサーバー・同じ画像。テーマだけ変えた結果。</p>
+        </div>
+
+        <div class="ba-grid">
+          <div class="ba-card before">
+            <span class="label">Before｜既存テーマ</span>
+            <div class="ba-score">65</div>
+            <div class="desc">装飾CSS多数のテーマ<br />SEOプラグイン3つ込み</div>
+            <div class="ba-metrics">
+              <div class="ba-metric">LCP<strong>3.8s</strong></div>
+              <div class="ba-metric">CLS<strong>0.18</strong></div>
+              <div class="ba-metric">CSS<strong>92KB</strong></div>
+              <div class="ba-metric">JS<strong>156KB</strong></div>
+            </div>
+          </div>
+          <div class="ba-arrow">→</div>
+          <div class="ba-card after">
+            <span class="label">After｜よへラボ</span>
+            <div class="ba-score">98</div>
+            <div class="desc">文標（ぶんしるべ）<br />プラグイン0個</div>
+            <div class="ba-metrics">
+              <div class="ba-metric">LCP<strong>1.2s</strong></div>
+              <div class="ba-metric">CLS<strong>0.02</strong></div>
+              <div class="ba-metric">CSS<strong>18KB</strong></div>
+              <div class="ba-metric">JS<strong>4KB</strong></div>
+            </div>
+          </div>
+        </div>
+        <p style="text-align:center;font-size:13px;color:var(--muted);margin-top:24px;">※ Google PageSpeed Insights（モバイル測定）。実機環境のテスト値。</p>
+      </div>
+    </section>
+
     <section class="lp-sec">
       <div class="container">
         <div class="sec-head">
@@ -529,17 +649,17 @@
             <span class="bar"><span style="width:18%;"></span></span>
           </div>
           <div class="speed-bench-row them">
-            <span class="name">Cocoon（無料・素のまま）</span>
+            <span class="name">テーマD（無料・素のまま）</span>
             <span class="ms">2.1 秒</span>
             <span class="bar"><span style="width:48%;"></span></span>
           </div>
           <div class="speed-bench-row them">
-            <span class="name">SWELL（プラグイン3つ）</span>
+            <span class="name">テーマA（プラグイン3つ）</span>
             <span class="ms">3.4 秒</span>
             <span class="bar"><span style="width:78%;"></span></span>
           </div>
           <div class="speed-bench-row them">
-            <span class="name">AFFINGER6（SEOプラグイン込み）</span>
+            <span class="name">テーマB（SEOプラグイン込み）</span>
             <span class="ms">3.8 秒</span>
             <span class="bar"><span style="width:88%;"></span></span>
           </div>
@@ -548,45 +668,6 @@
       </div>
     </section>
 
-    <!-- Before / After PageSpeed -->
-    <section class="lp-sec alt">
-      <div class="container">
-        <div class="sec-head">
-          <p class="sec-label">Before / After</p>
-          <h2>切り替えるだけで、PageSpeedはこう変わる。</h2>
-          <p>同じ記事・同じサーバー・同じ画像。テーマだけ変えた結果。</p>
-        </div>
-
-        <div class="ba-grid">
-          <div class="ba-card before">
-            <span class="label">Before｜既存テーマ</span>
-            <div class="ba-score">65</div>
-            <div class="desc">SWELL系・装飾CSS多数<br />SEOプラグイン3つ込み</div>
-            <div class="ba-metrics">
-              <div class="ba-metric">LCP<strong>3.8s</strong></div>
-              <div class="ba-metric">CLS<strong>0.18</strong></div>
-              <div class="ba-metric">CSS<strong>92KB</strong></div>
-              <div class="ba-metric">JS<strong>156KB</strong></div>
-            </div>
-          </div>
-          <div class="ba-arrow">→</div>
-          <div class="ba-card after">
-            <span class="label">After｜よへラボ</span>
-            <div class="ba-score">98</div>
-            <div class="desc">文標（ぶんしるべ）<br />プラグイン0個</div>
-            <div class="ba-metrics">
-              <div class="ba-metric">LCP<strong>1.2s</strong></div>
-              <div class="ba-metric">CLS<strong>0.02</strong></div>
-              <div class="ba-metric">CSS<strong>18KB</strong></div>
-              <div class="ba-metric">JS<strong>4KB</strong></div>
-            </div>
-          </div>
-        </div>
-        <p style="text-align:center;font-size:13px;color:var(--muted);margin-top:24px;">※ Google PageSpeed Insights（モバイル測定）。実機環境のテスト値。</p>
-      </div>
-    </section>
-
-    <!-- スクリーンショット -->
     <section class="lp-sec">
       <div class="container">
         <div class="sec-head">
@@ -625,13 +706,82 @@
       </div>
     </section>
 
-    <!-- 競合比較 -->
+    <section class="lp-sec alt">
+      <div class="container">
+        <div class="sec-head">
+          <p class="sec-label">Features</p>
+          <h2>AI検索に拾われる機能を全部内蔵。</h2>
+          <p>後からプラグインを追加する手間なし。最初から「AI検索に引用される構造」を持ったテーマ。</p>
+        </div>
+
+        <div class="feature-grid">
+          <div class="feature-card">
+            <div class="icon">🧬</div>
+            <h3>JSON-LD全種を自動出力</h3>
+            <p>Article・FAQPage・BreadcrumbList・Organization・Personを全記事・全ページで自動生成。AIが構造を読める形に整える。</p>
+            <code>schema.org準拠</code>
+          </div>
+          <div class="feature-card">
+            <div class="icon">🤖</div>
+            <h3>llms.txt 自動生成</h3>
+            <p>サイト全体の構造をAI向けに案内する <code>/llms.txt</code> をWP投稿・固定ページから自動生成。AI検索の入口を整える。</p>
+            <code>/llms.txt</code>
+          </div>
+          <div class="feature-card">
+            <div class="icon">❓</div>
+            <h3>FAQショートコード</h3>
+            <p>記事内に <code>[aio_faq]</code> を置くだけでFAQ表示＋FAQPage JSON-LDを同時出力。AI検索でも読み取られやすい形に整える。</p>
+            <code>[aio_faq]</code>
+          </div>
+          <div class="feature-card">
+            <div class="icon">📊</div>
+            <h3>内部解析＋GA4統合</h3>
+            <p>軽量PV計測をテーマに内蔵。GA4・Search Console連携も管理画面から数分で完了。プラグインゼロ。</p>
+            <code>テーマ管理画面</code>
+          </div>
+          <div class="feature-card">
+            <div class="icon">⚡</div>
+            <h3>軽量設計（CSS 18KB）</h3>
+            <p>不要なCSS・JSを徹底削減。コアウェブバイタル全項目Good。AIにも読者にも速く届く。</p>
+            <code>PageSpeed 95+</code>
+          </div>
+          <div class="feature-card">
+            <div class="icon">🎨</div>
+            <h3>色・フォント・レイアウト自在</h3>
+            <p>メインカラー・文字色を管理画面で変更。ボタン・リンク・見出しに即反映。CSSを書かずに整う。</p>
+            <code>カスタマイザー</code>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="lp-sec">
+      <div class="container">
+        <div class="sec-head">
+          <p class="sec-label">Templates</p>
+          <h2>AI検索に引用されやすい型を、<br />7種類用意した。</h2>
+          <p>記事を書くたび、構造に迷わない。レビュー・比較・FAQ・ランキングの型をブロックパターンで選ぶだけ。</p>
+        </div>
+
+        <div class="template-grid">
+          <div class="template-pill"><div class="emoji">📊</div><div class="name">比較記事</div></div>
+          <div class="template-pill"><div class="emoji">⭐</div><div class="name">レビュー</div></div>
+          <div class="template-pill"><div class="emoji">🏆</div><div class="name">ランキング</div></div>
+          <div class="template-pill"><div class="emoji">❓</div><div class="name">FAQ記事</div></div>
+          <div class="template-pill"><div class="emoji">🛍️</div><div class="name">商品紹介</div></div>
+          <div class="template-pill"><div class="emoji">💼</div><div class="name">案件紹介</div></div>
+          <div class="template-pill"><div class="emoji">📄</div><div class="name">基本記事</div></div>
+          <div class="template-pill" style="background:linear-gradient(135deg,#0b8f72,#1fb6cf);color:#fff;border:none;"><div class="emoji" style="filter:invert(1);">+</div><div class="name">あとから追加可</div></div>
+        </div>
+      </div>
+    </section>
+
     <section class="lp-sec alt">
       <div class="container">
         <div class="sec-head">
           <p class="sec-label">Compare</p>
-          <h2>なぜ他テーマじゃダメなのか。</h2>
-          <p>SWELL・AFFINGER・JIN:Rは「装飾・記事ブロック」が中心。AI検索に必要な構造化データやllms.txtは別途プラグインや手作業が必要。</p>
+          <h2>なぜ他テーマじゃ足りないのか。</h2>
+          <p>テーマA・B・Cは装飾・記事ブロックが中心。AI検索に必要な構造化データやllms.txtは別途プラグインや手作業が必要になる。</p>
         </div>
 
         <div style="overflow-x:auto;">
@@ -640,10 +790,10 @@
               <tr>
                 <th>機能</th>
                 <th class="us">よへラボ</th>
-                <th>SWELL</th>
-                <th>AFFINGER6</th>
-                <th>JIN:R</th>
-                <th>Cocoon</th>
+                <th>テーマA</th>
+                <th>テーマB</th>
+                <th>テーマC</th>
+                <th>テーマD</th>
               </tr>
             </thead>
             <tbody>
@@ -742,7 +892,6 @@
       </div>
     </section>
 
-    <!-- なぜ¥5,500か（価格の根拠） -->
     <section class="lp-sec dark">
       <div class="container">
         <div class="sec-head">
@@ -785,7 +934,7 @@
             <div class="label">ベータ価格</div>
             <div class="price">¥5,500<small> 税込</small></div>
             <div class="strike">正式版リリース後 ¥8,800</div>
-            <div class="savings">SWELLより ¥12,100 安い／買い切り</div>
+            <div class="savings">テーマAより ¥12,100 安い／買い切り</div>
             <a class="btn btn-primary btn-lg" href="/api/checkout?product=wordpress-theme">¥5,500で購入してZIPを受け取る →</a>
             <p class="note">Stripe決済→即座にZIPとシリアルがメール送信。WordPress管理画面でZIPをアップロード→有効化で完了。</p>
           </div>
@@ -793,79 +942,6 @@
       </div>
     </section>
 
-    <!-- 機能 -->
-    <section class="lp-sec">
-      <div class="container">
-        <div class="sec-head">
-          <p class="sec-label">Features</p>
-          <h2>AI検索に拾われる機能を全部内蔵。</h2>
-          <p>後からプラグインを追加する手間なし。最初から「AI検索に引用される構造」を持ったテーマ。</p>
-        </div>
-
-        <div class="feature-grid">
-          <div class="feature-card">
-            <div class="icon">🧬</div>
-            <h3>JSON-LD全種を自動出力</h3>
-            <p>Article・FAQPage・BreadcrumbList・Organization・Personを全記事・全ページで自動生成。AIが構造を読める形に整える。</p>
-            <code>schema.org準拠</code>
-          </div>
-          <div class="feature-card">
-            <div class="icon">🤖</div>
-            <h3>llms.txt 自動生成</h3>
-            <p>サイト全体の構造をAI向けに案内する <code>/llms.txt</code> をWP投稿・固定ページから自動生成。AI検索の入口を整える。</p>
-            <code>/llms.txt</code>
-          </div>
-          <div class="feature-card">
-            <div class="icon">❓</div>
-            <h3>FAQショートコード</h3>
-            <p>記事内に <code>[aio_faq]</code> を置くだけでFAQ表示＋FAQPage JSON-LDを同時出力。AI検索でも読み取られやすい形に整える。</p>
-            <code>[aio_faq]</code>
-          </div>
-          <div class="feature-card">
-            <div class="icon">📊</div>
-            <h3>内部解析＋GA4統合</h3>
-            <p>軽量PV計測をテーマに内蔵。GA4・Search Console連携も管理画面から数分で完了。プラグインゼロ。</p>
-            <code>テーマ管理画面</code>
-          </div>
-          <div class="feature-card">
-            <div class="icon">⚡</div>
-            <h3>軽量設計（CSS 18KB）</h3>
-            <p>不要なCSS・JSを徹底削減。コアウェブバイタル全項目Good。AIにも読者にも速く届く。</p>
-            <code>PageSpeed 95+</code>
-          </div>
-          <div class="feature-card">
-            <div class="icon">🎨</div>
-            <h3>色・フォント・レイアウト自在</h3>
-            <p>メインカラー・文字色を管理画面で変更。ボタン・リンク・見出しに即反映。CSSを書かずに整う。</p>
-            <code>カスタマイザー</code>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 記事テンプレート7種 -->
-    <section class="lp-sec alt">
-      <div class="container">
-        <div class="sec-head">
-          <p class="sec-label">Templates</p>
-          <h2>AI検索に引用されやすい型を、<br />7種類用意した。</h2>
-          <p>記事を書くたび、構造に迷わない。レビュー・比較・FAQ・ランキングの型をブロックパターンで選ぶだけ。</p>
-        </div>
-
-        <div class="template-grid">
-          <div class="template-pill"><div class="emoji">📊</div><div class="name">比較記事</div></div>
-          <div class="template-pill"><div class="emoji">⭐</div><div class="name">レビュー</div></div>
-          <div class="template-pill"><div class="emoji">🏆</div><div class="name">ランキング</div></div>
-          <div class="template-pill"><div class="emoji">❓</div><div class="name">FAQ記事</div></div>
-          <div class="template-pill"><div class="emoji">🛍️</div><div class="name">商品紹介</div></div>
-          <div class="template-pill"><div class="emoji">💼</div><div class="name">案件紹介</div></div>
-          <div class="template-pill"><div class="emoji">📄</div><div class="name">基本記事</div></div>
-          <div class="template-pill" style="background:linear-gradient(135deg,#0b8f72,#1fb6cf);color:#fff;border:none;"><div class="emoji" style="filter:invert(1);">+</div><div class="name">あとから追加可</div></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 購入後フロー -->
     <section class="lp-sec">
       <div class="container">
         <div class="sec-head">
@@ -898,8 +974,46 @@
       </div>
     </section>
 
-    <!-- FAQ -->
     <section class="lp-sec alt">
+      <div class="container">
+        <div class="sec-head">
+          <p class="sec-label">Purchase</p>
+          <h2>今ベータで買う理由。</h2>
+          <p>正式版リリースと同時に値上げします。今が最安値。</p>
+        </div>
+
+        <div class="purchase-card">
+          <div class="purchase-card-inner">
+            <div>
+              <div class="p-label">ベータ価格（買い切り）</div>
+              <div class="p-price">¥5,500<small> 税込</small></div>
+              <div class="p-strike">正式版リリース後 ¥8,800</div>
+              <div style="margin-top:28px;">
+                <div class="p-includes-title">含まれるもの</div>
+                <ul class="p-includes">
+                  <li>テーマ ZIPファイル（即時ダウンロード）</li>
+                  <li>シリアルナンバー（自動アップデート用）</li>
+                  <li>自動アップデート権（正式版まで）</li>
+                  <li>バグ修正対応（メール報告）</li>
+                </ul>
+              </div>
+            </div>
+            <div>
+              <div class="p-beta-title">今ベータで買う理由</div>
+              <ul class="p-beta-list">
+                <li>¥5,500（正式版は¥8,800）で購入できる</li>
+                <li>ベータ期間の購入者は正式版も追加料金なし</li>
+                <li>今が最安値・値上げ前の最後のチャンス</li>
+              </ul>
+              <a class="p-btn" href="/api/checkout?product=wordpress-theme">¥5,500（ベータ）で購入する →</a>
+              <p class="p-note">Stripe決済→即座にZIPとシリアルをメール送信。<br />デジタル商品のため、ダウンロード後の返金は対応外。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="lp-sec">
       <div class="container">
         <div class="sec-head">
           <p class="sec-label">FAQ</p>
@@ -912,8 +1026,8 @@
             <div class="body">2025年、検索の入口がGoogleからChatGPT・Claude・Perplexity・Google AI Overviewに移った。AIは記事をそのまま読まず、JSON-LDで構造を把握しFAQで要点を抜き出す。これらが揃っていないブログはAIから「見えない」状態。後付けで対応するより、最初から備えた方がずっと早い。</div>
           </details>
           <details class="faq-item">
-            <summary>SWELLやAFFINGERから乗り換えるメリットは？</summary>
-            <div class="body">SWELL・AFFINGERは装飾とブロック機能が豊富で「記事を綺麗に見せる」のは得意。ただしAI検索対応（JSON-LD全種・llms.txt・FAQ）はプラグインや手作業が必要。よへラボはAI検索を中心に置いて軽量化したテーマ。デザインの華やかさより「AIに引用されること」を取りたい人向け。</div>
+            <summary>他テーマから乗り換えるメリットは？</summary>
+            <div class="body">テーマA・Bは装飾とブロック機能が豊富で「記事を綺麗に見せる」のは得意。ただしAI検索対応（JSON-LD全種・llms.txt・FAQ）はプラグインや手作業が必要。よへラボはAI検索を中心に置いて軽量化したテーマ。デザインの華やかさより「AIに引用されること」を取りたい人向け。</div>
           </details>
           <details class="faq-item">
             <summary>本当にPageSpeed 95+出るの？</summary>
@@ -937,7 +1051,7 @@
           </details>
           <details class="faq-item">
             <summary>返金保証はある？</summary>
-            <div class="body">デジタル商品のため、ZIPダウンロード後の返金は原則対応外。購入前にデモページ（<a href="/apps/bunsirube/" style="color:var(--green);">機能ページ</a>）で機能・デザイン・JSON-LD出力を確認できる。</div>
+            <div class="body">デジタル商品のため、ZIPダウンロード後の返金は原則対応外。購入前にこのページで機能・デザイン・JSON-LD出力の詳細を確認してください。</div>
           </details>
           <details class="faq-item">
             <summary>WordPressのバージョンは？対応プラグインは？</summary>
@@ -951,14 +1065,12 @@
       </div>
     </section>
 
-    <!-- 最終CTA -->
     <section class="final-cta">
       <div class="container">
         <h2>AI時代に、<em>引用されるブログ</em>に切り替える。</h2>
         <p>ベータ価格 ¥5,500（税込・買い切り）。正式版リリース後 ¥8,800 に改定。今が最安値。<br />Stripe決済→ZIPとシリアル即時メール送信。WordPress管理画面で有効化するだけ。</p>
         <div class="actions">
           <a class="btn btn-primary btn-xl" href="/api/checkout?product=wordpress-theme">¥5,500（ベータ）で購入してZIPを受け取る →</a>
-          <a class="btn btn-outline btn-xl" href="/apps/bunsirube/">機能を全部見る</a>
         </div>
         <p style="margin-top:24px;font-size:13px;color:rgba(255,255,255,.6);">バグ報告は <a href="/contact/bug/" style="color:#6be5c9;">専用フォーム</a> から。質問は <a href="/contact/" style="color:#6be5c9;">問い合わせ</a> へ。</p>
       </div>
@@ -969,7 +1081,6 @@
     <div>© よへラボ / yohelab.com</div>
     <div style="margin-top:8px;">
       <a href="/">トップ</a>
-      <a href="/apps/bunsirube/">機能を見る</a>
       <a href="/products/bunsirube/">プラン詳細</a>
       <a href="/contact/">問い合わせ</a>
       <a href="/legal/commerce/">特定商取引法</a>
