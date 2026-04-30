@@ -56,6 +56,17 @@
       -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, #000, transparent 80%);
     }
     .hero .container { max-width: 1100px; position: relative; z-index: 1; }
+    .hero-product-name {
+      font-size: clamp(42px, 7vw, 80px); font-weight: 900; letter-spacing: -.05em;
+      line-height: 1; margin-bottom: 6px;
+      background: var(--hero-grad); -webkit-background-clip: text;
+      background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero-product-ruby {
+      display: block; font-size: clamp(15px, 2vw, 20px); font-weight: 700;
+      color: var(--green-dark); letter-spacing: .12em; margin-bottom: 20px;
+      opacity: .85;
+    }
     .hero-eyebrow {
       display: inline-flex; align-items: center; gap: 8px;
       padding: 7px 16px; border-radius: 999px;
@@ -476,7 +487,7 @@
     <section class="hero">
       <div class="container">
         <span class="urgency-banner">ベータ価格 ¥5,500 — 正式版は ¥8,800（+60%）に改定予定</span>
-        <p class="hero-eyebrow">文標（ぶんしるべ）</p>
+        <p class="hero-product-name">文標<span class="hero-product-ruby">ぶんしるべ</span></p>
         <h1>
           ChatGPT・Claude・Perplexityに<br />
           <em>引用される</em>ブログにする。
