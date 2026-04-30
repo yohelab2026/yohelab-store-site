@@ -5,9 +5,6 @@ dist/
 # Embedded git repo (theme source is in separate private repo)
 wordpress-themes/aio-starter
 
-# 旧設計のblog-auth（KV方式に置き換え済み・コミット禁止）
-functions/api/blog-auth.js
-functions/lib/blog-auth.js
 
 # Theme source は yohelab2026/aio-starter (private repo) で管理
 # ZIP は GitHub Actions → R2 で自動デプロイ
