@@ -121,7 +121,8 @@ checks.push(["research product checkout cta", researchProduct.includes('/api/che
 
 const contact = read(dist("contact/index.html"));
 checks.push(["contact includes research writer", contact.includes('3キーワードの記事メーカー')]);
-checks.push(["contact includes wordpress theme", contact.includes('記事ブログ用WordPressテーマ')]);
+checks.push(["contact removes shortcut cards", !contact.includes('ツール一覧') && !contact.includes('サービス一覧') && !contact.includes('各ページへ直接行く')]);
+checks.push(["contact removes cancellation wording", !contact.includes('解約')]);
 checks.push(["contact no legacy tools", legacyLabels.every((label) => !contact.includes(label))]);
 
 const sitemap = read(dist("sitemap.xml"));

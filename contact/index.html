@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>問い合わせ | よへラボ</title>
-  <meta name="description" content="よへラボへの問い合わせ窓口。使い方の質問、不具合連絡、購入前の確認、解約申請をここから送れる。" />
+  <meta name="description" content="よへラボへの問い合わせ窓口。使い方の質問、不具合連絡、購入前の確認、ページ改善の相談をここから送れる。" />
   <meta property="og:title" content="問い合わせ | よへラボ" />
-  <meta property="og:description" content="使い方の質問、不具合連絡、購入前の確認、解約申請を送れる問い合わせページ。" />
+  <meta property="og:description" content="使い方の質問、不具合連絡、購入前の確認、ページ改善の相談を送れる問い合わせページ。" />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="ja_JP" />
   <meta property="og:url" content="https://yohelab.com/contact/" />
@@ -16,7 +16,7 @@
   <meta name="theme-color" content="#f5fbff" />
   <link rel="canonical" href="https://yohelab.com/contact/" />
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"ContactPage","name":"問い合わせ | よへラボ","url":"https://yohelab.com/contact/","description":"使い方の質問、不具合連絡、購入前の確認、解約申請を送れる問い合わせ窓口","mainEntity":{"@type":"Organization","name":"よへラボ","url":"https://yohelab.com/","contactPoint":{"@type":"ContactPoint","contactType":"customer support","availableLanguage":"Japanese","url":"https://yohelab.com/contact/"}}}
+  {"@context":"https://schema.org","@type":"ContactPage","name":"問い合わせ | よへラボ","url":"https://yohelab.com/contact/","description":"使い方の質問、不具合連絡、購入前の確認、ページ改善の相談を送れる問い合わせ窓口","mainEntity":{"@type":"Organization","name":"よへラボ","url":"https://yohelab.com/","contactPoint":{"@type":"ContactPoint","contactType":"customer support","availableLanguage":"Japanese","url":"https://yohelab.com/contact/"}}}
   </script>
   <link rel="icon" type="image/png" href="../yohelab-icon.png" />
   <link rel="stylesheet" href="/shared/site.css" />
@@ -51,27 +51,6 @@
     .contact-form-box input,
     .contact-form-box textarea,
     .contact-form-box select { font-size:15px; }
-    .contact-help-list {
-      display:grid;
-      grid-template-columns:repeat(2,minmax(0,1fr));
-      gap:10px;
-      margin:0 0 18px;
-    }
-    .contact-help-list a {
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      padding:12px 14px;
-      border-radius:14px;
-      border:1px solid var(--border);
-      background:#fff;
-      color:var(--green-dark);
-      font-size:14px;
-      font-weight:800;
-      text-decoration:none;
-    }
-    .contact-help-list a::after { content:"→"; color:var(--green); }
     .contact-notice {
       padding:14px 18px; border-radius:14px;
       background:#eff6ff; border:1px solid #bfdbfe;
@@ -82,7 +61,7 @@
     .thanks-box.show { display:block; }
     .thanks-box h3 { font-size:18px; font-weight:900; color:var(--green-dark); margin-bottom:8px; }
     .thanks-box p { font-size:14px; color:var(--green-dark); margin:0; line-height:1.75; }
-    @media(max-width:780px){ .contact-body{border-radius:20px 20px 0 0;} .contact-help-list{grid-template-columns:1fr;} }
+    @media(max-width:780px){ .contact-body{border-radius:20px 20px 0 0;} }
     @media(max-width:580px){ .contact-form-box{padding:24px 20px;} }
   </style>
 </head>
@@ -108,7 +87,7 @@
       <div class="container" style="position:relative;z-index:1;">
         <p class="lp-eyebrow reveal" style="justify-content:center;display:inline-flex;">💬 問い合わせ</p>
         <h1 class="reveal reveal-d1">質問や不具合は<br>ここから送る</h1>
-        <p class="reveal reveal-d2">使い方の確認、購入前の相談、不具合、解約申請をまとめて受け付ける。必要な内容だけ送ってもらえれば大丈夫。</p>
+        <p class="reveal reveal-d2">使い方の確認、購入前の相談、不具合、ページ改善の相談をまとめて受け付ける。必要な内容だけ送ってもらえれば大丈夫。</p>
       </div>
     </section>
 
@@ -121,14 +100,8 @@
 <div id="page-review"></div>
 <h2 id="starter-kit">問い合わせフォーム</h2>
               <div class="contact-notice">
-                <strong>送る前に見たい人だけ</strong>
-                詳細ページを見たい場合は、下のリンクから確認できます。急ぎならそのままフォームで送ってください。
-              </div>
-              <div class="contact-help-list">
-                <a href="/tools/">ツール一覧</a>
-                <a href="/services/">サービス一覧</a>
-                <a href="/lp/bunsirube/">WordPressテーマ</a>
-                <a href="/blog/">ブログ</a>
+                <strong>わかる範囲で大丈夫</strong>
+                商品名・困っていること・見てほしいURLがあれば一緒に送ってください。
               </div>
               <div class="thanks-box" id="thanks-box">
                 <h3>ありがとう。内容を受け取った。</h3>
@@ -151,9 +124,9 @@
                 <label>何をしたいか
                   <select id="purpose" name="purpose" required>
                     <option value="使い方を確認したい">使い方を確認したい</option>
-                    <option value="解約したい">解約したい</option>
+                    <option value="購入前に確認したい">購入前に確認したい</option>
                     <option value="リンク切れや不具合を伝えたい">リンク切れや不具合を伝えたい</option>
-                    <option value="導線や自動化を相談したい">導線や自動化を相談したい</option>
+                    <option value="ページ改善を相談したい">ページ改善を相談したい</option>
                     <option value="その他">その他</option>
                   </select>
                 </label>
