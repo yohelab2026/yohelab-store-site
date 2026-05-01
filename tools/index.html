@@ -396,6 +396,53 @@
       .tool-visual { min-height:220px; }
       .hero-actions .btn { width:100%; justify-content:center; }
     }
+    .showcase-page { background:#f5f8fc; }
+    .showcase-wrap { width:min(1180px, calc(100% - 32px)); margin:0 auto; }
+    .showcase-hero { position:relative; overflow:hidden; padding:52px 0 38px; background:radial-gradient(circle at 80% 18%, rgba(47,125,246,.16), transparent 28%), radial-gradient(circle at 12% 20%, rgba(16,184,146,.14), transparent 30%), linear-gradient(135deg,#fff 0%,#f3fbff 58%,#eaf9f5 100%); border-bottom:1px solid #dcecf8; }
+    .showcase-hero::after { content:""; position:absolute; inset:auto 0 0; height:72px; background:linear-gradient(180deg,transparent,rgba(3,25,22,.22)); pointer-events:none; }
+    .showcase-hero-grid { position:relative; z-index:1; display:grid; grid-template-columns:1fr 430px; gap:54px; align-items:center; }
+    .showcase-kicker { display:inline-flex; padding:8px 14px; border:1px solid rgba(16,184,146,.22); border-radius:999px; background:#fff; color:#0b8f72; font-size:12px; font-weight:900; letter-spacing:.16em; text-transform:uppercase; margin-bottom:18px; }
+    .showcase-title { margin:0 0 18px; font-size:clamp(42px,6vw,74px); line-height:1.04; letter-spacing:-.06em; }
+    .showcase-title .grad { background:linear-gradient(135deg,#0b8f72 0%,#19b6d2 45%,#2f7df6 100%); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+    .showcase-lead { max-width:620px; margin:0; color:#40546d; font-size:16px; line-height:1.9; font-weight:600; }
+    .hero-illust { position:relative; min-height:260px; }
+    .mock-window { position:absolute; right:70px; top:12px; width:285px; padding:18px; border-radius:20px; background:#fff; border:1px solid #dbe8f6; box-shadow:0 26px 70px rgba(47,125,246,.18); }
+    .mock-window::before { content:""; display:block; height:28px; border-radius:10px; background:linear-gradient(90deg,#2f7df6,#55d5c4); margin-bottom:14px; }
+    .mock-chart { height:90px; border-radius:16px; background:linear-gradient(135deg,#f2f7ff,#e8fff9); position:relative; overflow:hidden; }
+    .mock-chart::after { content:""; position:absolute; left:22px; right:22px; bottom:24px; height:44px; border-left:6px solid #2f7df6; border-bottom:6px solid #2f7df6; transform:skew(-28deg); border-radius:4px; opacity:.7; }
+    .robot { position:absolute; right:0; bottom:12px; width:118px; height:128px; border-radius:42px 42px 30px 30px; background:linear-gradient(180deg,#fff,#dff6ff); border:1px solid #d4e7f5; box-shadow:0 22px 50px rgba(31,182,207,.16); }
+    .robot::before { content:""; position:absolute; left:24px; right:24px; top:26px; height:44px; border-radius:20px; background:#102243; box-shadow:inset 20px 0 0 #193e78; }
+    .robot::after { content:"● ●"; position:absolute; top:35px; left:39px; color:#66f0ff; font-size:12px; letter-spacing:12px; }
+    .bubble { position:absolute; right:8px; top:36px; width:72px; height:58px; border-radius:18px; background:#5fdac8; box-shadow:0 16px 30px rgba(16,184,146,.18); }
+    .bubble::after { content:""; position:absolute; left:18px; top:19px; width:34px; height:6px; border-radius:99px; background:#fff; box-shadow:0 13px 0 #fff; opacity:.9; }
+    .showcase-body { padding:42px 0 48px; }
+    .product-card { display:grid; grid-template-columns:1fr 470px; gap:30px; align-items:center; padding:28px; margin-bottom:24px; border-radius:22px; background:#fff; border:1px solid #dfeaf5; box-shadow:0 12px 36px rgba(28,61,96,.08); }
+    .product-left { display:grid; grid-template-columns:84px 1fr; gap:22px; align-items:start; }
+    .product-icon { width:64px; height:64px; border-radius:16px; display:grid; place-items:center; color:#fff; font-size:31px; background:linear-gradient(135deg,#2f7df6,#44d3ca); box-shadow:0 18px 34px rgba(47,125,246,.22); }
+    .pill { display:inline-flex; padding:7px 12px; border-radius:999px; font-size:12px; font-weight:900; color:#087965; background:#e1fbf3; }
+    .pill.blue { color:#246bd8; background:#e8f1ff; }
+    .pill.orange { color:#d97706; background:#fff2df; }
+    .product-card h2 { margin:0 0 12px; font-size:clamp(27px,3vw,38px); letter-spacing:-.045em; line-height:1.16; }
+    .check-list { display:grid; gap:8px; margin:0; padding:0; list-style:none; color:#17243a; font-weight:700; font-size:14px; }
+    .check-list li::before { content:"✓"; display:inline-grid; place-items:center; width:18px; height:18px; border-radius:50%; margin-right:8px; color:#fff; background:#16a085; font-size:12px; }
+    .price-line { display:flex; align-items:baseline; flex-wrap:wrap; gap:14px; margin-top:22px; padding-top:18px; border-top:1px solid #edf3f8; }
+    .price-line strong { font-size:32px; color:#0b9b81; letter-spacing:-.04em; }
+    .price-line span { color:#60728a; font-size:13px; font-weight:700; }
+    .mock-card { padding:18px; border-radius:18px; background:linear-gradient(135deg,#f7fbff,#effff9); border:1px solid #dfeaf5; }
+    .mock-card.dark { background:linear-gradient(135deg,#06372e,#0b1613); color:#fff; }
+    .mini-form { display:grid; gap:10px; }
+    .mini-form div { height:28px; border-radius:8px; background:#fff; border:1px solid #dbe8f6; }
+    .mock-card.dark .mini-form div { background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.16); }
+    .done-list { display:grid; gap:8px; margin-top:14px; color:#0b8f72; font-size:13px; font-weight:800; }
+    .mock-card.dark .done-list { color:#72f0ce; }
+    .card-cta { display:flex; justify-content:flex-end; margin-top:18px; }
+    .choice-box { display:grid; grid-template-columns:1fr auto 1fr; gap:18px; align-items:center; padding:24px; border:1px solid #cfe6ef; border-radius:18px; background:linear-gradient(135deg,#fff,#f4fffb); }
+    .choice-box h3 { grid-column:1 / -1; margin:0; text-align:center; font-size:22px; letter-spacing:-.04em; }
+    .choice-col { padding:14px; border-radius:16px; background:#fff; border:1px solid #dfeaf5; }
+    .choice-col h4 { margin:0 0 10px; color:#087965; }
+    .choice-col ul { margin:0; padding-left:18px; color:#40546d; line-height:1.9; font-weight:600; }
+    .or { display:grid; place-items:center; width:48px; height:48px; border-radius:50%; background:#fff; border:1px solid #dfeaf5; font-weight:900; color:#40546d; }
+    @media (max-width: 900px) { .showcase-hero-grid, .product-card, .choice-box { grid-template-columns:1fr; } .hero-illust { min-height:220px; } .product-left { grid-template-columns:1fr; } .or { margin:auto; } }
   </style>
 </head>
 <body>
@@ -411,167 +458,83 @@
     </div>
   </header>
 
-  <main>
-    <section class="hero-shell">
-      <div class="container hero-grid">
+  <main class="showcase-page">
+    <section class="showcase-hero">
+      <div class="showcase-wrap showcase-hero-grid">
         <div>
-          <span class="eyebrow">Tools</span>
-          <h1><strong>AI検索でも人にも伝わる</strong>ブログを作る、<br />2つのツール。</h1>
-          <p>書くものと、載せるものを分けて整える。3キーワード記事メーカーで下書きを作り、文標（ぶんしるべ）でブログの土台を整える。</p>
-          <div class="hero-actions">
-            <a class="btn btn-primary btn-lg" href="/lp/research-writer/">記事メーカーを見る</a>
-            <a class="btn btn-outline btn-lg" href="/lp/bunsirube/">文標を見る</a>
-          </div>
-          <div class="hero-signals">
-            <span>無料あり</span>
-            <span>買い切り</span>
-            <span>AI検索向け</span>
-            <span>軽量設計</span>
-          </div>
+          <span class="showcase-kicker">Tools</span>
+          <h1 class="showcase-title"><span class="grad">AIに引用される</span><br />ブログを作る、2つのツール。</h1>
+          <p class="showcase-lead">記事作成から構造化データ、AI検索最適化まで。よへラボのツールが、あなたのブログの価値を高めます。</p>
         </div>
-
-        <div class="tool-stage" aria-label="ツール一覧のイメージ">
-          <div class="stage-panel">
-            <div class="stage-top"><span class="stage-dot"></span><span class="stage-dot"></span><span class="stage-dot"></span></div>
-            <div class="stage-grid">
-              <div class="stage-card">
-                <span class="mini-chip">記事を書く</span>
-                <span class="mini-chip">無料あり</span>
-                <h3>3キーワード記事メーカー</h3>
-                <div class="mock-bars"><span></span><span></span><span></span></div>
-                <div class="mock-bullets">
-                  <div>最新情報を集めて見出しを出す</div>
-                  <div>FAQと出典を一緒に出力する</div>
-                  <div>下書きをそのまま記事にしやすい</div>
-                </div>
-              </div>
-              <div class="stage-card">
-                <span class="mini-chip">記事を載せる</span>
-                <span class="mini-chip">買い切り</span>
-                <h3>文標（ぶんしるべ）</h3>
-                <div class="mock-bars"><span></span><span style="width:78%"></span><span style="width:58%"></span></div>
-                <div class="mock-bullets">
-                  <div>FAQ・構造化データを内蔵</div>
-                  <div>解析と色変更を設定からまとめる</div>
-                  <div>プラグインを増やしすぎない</div>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div class="hero-illust" aria-hidden="true">
+          <div class="mock-window"><div class="mock-chart"></div></div>
+          <div class="bubble"></div>
+          <div class="robot"></div>
         </div>
       </div>
     </section>
 
-    <section class="card-grid">
-      <div class="container">
-        <div class="section-spacer" aria-hidden="true"></div>
-
-        <a class="tool-card" href="/lp/research-writer/">
-          <div class="tool-info">
-            <div class="badge-row">
-              <span class="badge green">記事を書く</span>
-              <span class="badge blue">無料あり</span>
-            </div>
-            <h2>3キーワード記事メーカー</h2>
-            <p class="summary">3つのキーワードを入れるだけで、最新情報のリサーチ・見出し・FAQ・出典つきの記事下書きの材料を生成。AI検索でも人にも読み取りやすい構造で出力する。</p>
-            <ul class="tool-list">
-              <li>10〜20件の最新情報源を自動収集（Perplexity連携）</li>
-              <li>FAQ・H2/H3・出典・WordPress設定まで一発出力</li>
-              <li>記事1本あたり実質39円（プロプラン）</li>
-            </ul>
-            <div class="tool-meta">
-              <span class="price">¥0</span>
-              <span class="note">無料版で1日1セット試せる</span>
-              <span class="price" style="font-size:.72em;">／ ¥1,980<small>/月</small></span>
-              <span class="note">プロプラン・月50本</span>
-            </div>
-            <div class="tool-actions">
-              <span class="btn btn-primary btn-lg">詳しく見る →</span>
-              <a class="btn btn-outline btn-lg" href="/apps/research-writer/" onclick="event.stopPropagation();">いますぐ無料で試す</a>
-            </div>
-          </div>
-          <div class="tool-visual">
-            <div class="visual-head"><strong>Draft / Search / FAQ</strong><span class="badge blue">AI検索向け</span></div>
-            <div class="visual-frame">
-              <div class="preview-pill">3キーワード</div>
-              <div class="preview-pill">見出し</div>
-              <div class="preview-pill">FAQ</div>
-              <div class="preview-line w84"></div>
-              <div class="preview-line w70"></div>
-              <div class="preview-line w56"></div>
-              <div class="preview-checklist">
-                <div>検索結果から材料を集める</div>
-                <div>下書きをそのまま記事にしやすい</div>
-                <div>WordPressへ載せる前提で整える</div>
-              </div>
-            </div>
-          </div>
-        </a>
-
-        <a class="tool-card" href="/lp/bunsirube/">
-          <div class="tool-info">
-            <div class="badge-row">
-              <span class="badge green">記事を載せる</span>
-              <span class="badge amber">買い切り</span>
-              <span class="badge blue">PageSpeed 95+</span>
-            </div>
-            <h2>文標（ぶんしるべ）</h2>
-            <p class="summary">JSON-LD全種・llms.txt・FAQショートコード・記事テンプレ7種をテーマに内蔵。プラグインを増やさず、人にも検索にも伝わりやすいブログ土台を作る。CSS 18KBの軽量設計。</p>
-            <ul class="tool-list">
-              <li>Article・FAQPage・BreadcrumbListのJSON-LD自動出力</li>
-              <li>llms.txt自動生成・GA4・GSCを管理画面1つで</li>
-              <li>SWELLの1/3価格・買い切り・月額なし</li>
-            </ul>
-            <div class="tool-meta">
-              <span class="price">¥5,500<small> 税込</small></span>
-              <span class="note">ベータ価格・買い切り（正式版¥8,800へ改定予定）</span>
-            </div>
-            <div class="tool-actions">
-              <span class="btn btn-primary btn-lg">詳しく見る →</span>
-              <a class="btn btn-outline btn-lg" href="/api/checkout?product=wordpress-theme" onclick="event.stopPropagation();">いますぐ購入</a>
-            </div>
-          </div>
-          <div class="tool-visual">
-            <div class="visual-head"><strong>Theme / Schema / Analytics</strong><span class="badge amber">買い切り</span></div>
-            <div class="visual-frame">
-              <div class="preview-pill">FAQ</div>
-              <div class="preview-pill">JSON-LD</div>
-              <div class="preview-pill">llms.txt</div>
-              <div class="preview-line w84"></div>
-              <div class="preview-line w70"></div>
-              <div class="preview-line w56"></div>
-              <div class="preview-checklist">
-                <div>テーマ内解析か外部解析を選べる</div>
-                <div>記事テンプレートを先に入れておく</div>
-                <div>色と文字色を設定から変えられる</div>
-              </div>
-            </div>
-          </div>
-        </a>
-
-        <div class="compare-box">
-          <h3>2つのツールの使い分け</h3>
-          <div class="compare-grid">
-            <div class="compare-col">
-              <h4>記事メーカーが向いている人</h4>
-              <ul>
-                <li>記事の下書きを毎日量産したい人</li>
-                <li>リサーチに時間をかけすぎている人</li>
-                <li>ブログ・noteの記事ネタを増やしたい人</li>
-                <li>外注ライター費を月¥30,000以上使っている人</li>
+    <section class="showcase-body">
+      <div class="showcase-wrap">
+        <article class="product-card">
+          <div class="product-left">
+            <div class="product-icon">⌕</div>
+            <div>
+              <div class="badge-row"><span class="pill">記事を作る</span><span class="pill blue">無料あり</span></div>
+              <h2>3キーワード記事メーカー</h2>
+              <p class="summary">3つのキーワードを入れるだけで、最新情報のリサーチ・見出し・FAQ・出典つきの記事下書きまで30秒で完成。AI検索に引用される構造で出力。</p>
+              <ul class="check-list">
+                <li>10〜20件の最新情報を自動収集（Perplexity連携）</li>
+                <li>FAQ・H2/H3・出典・WordPress設定まで一発出力</li>
+                <li>記事1本あたり実質39円（プロプラン）</li>
               </ul>
-            </div>
-            <div class="compare-col">
-              <h4>WordPressテーマが向いている人</h4>
-              <ul>
-                <li>これから自分のWPブログを立ち上げる人</li>
-                <li>SEOプラグインを減らしたい人</li>
-                <li>JSON-LD・llms.txt・FAQをテーマで完結させたい人</li>
-                <li>軽量で速いブログを作りたい人</li>
-              </ul>
+              <div class="price-line"><strong>¥0</strong><span>無料枠で1日1セットまで</span><strong style="font-size:18px;">／¥1,980</strong><span>プロプラン・月50本</span></div>
             </div>
           </div>
-          <p style="margin-top:18px;font-size:13.5px;color:var(--muted);line-height:1.85;">2つを組み合わせて使うと、「人にも検索にも読みやすい記事を作る」→「分かりやすい土台に載せる」が完結する。</p>
+          <div>
+            <div class="mock-card">
+              <div class="mini-form"><div></div><div></div><div></div></div>
+              <div class="done-list"><span>✓ リサーチ完了</span><span>✓ 構成作成完了</span><span>✓ 見出し生成完了</span><span>✓ FAQ生成完了</span></div>
+            </div>
+            <div class="card-cta"><a class="btn btn-primary btn-lg" href="/lp/research-writer/">詳しく見る →</a></div>
+          </div>
+        </article>
+
+        <article class="product-card">
+          <div class="product-left">
+            <div class="product-icon" style="background:linear-gradient(135deg,#0b8f72,#6ee7d8);">▣</div>
+            <div>
+              <div class="badge-row"><span class="pill">見せる・整える</span><span class="pill orange">WordPressテーマ</span></div>
+              <h2>文標（ぶんしるべ）</h2>
+              <p class="summary">JSON-LD全種・llms.txt・FAQショートコード・記事テンプレート7種をテーマに内蔵。プラグインを増やさずAI検索に拾われるブログ土台を作る。CSS 18KBの軽量設計。</p>
+              <ul class="check-list">
+                <li>Article・FAQPage・BreadcrumbListのJSON-LD自動出力</li>
+                <li>llms.txt自動生成・GA4・GSCを管理画面1つで</li>
+                <li>SWELLの1/3価格・買い切り・月額なし</li>
+              </ul>
+              <div class="price-line"><strong>¥5,500</strong><span>買い切り（正式版¥8,800へ予定）</span></div>
+            </div>
+          </div>
+          <div>
+            <div class="mock-card dark">
+              <div class="mini-form"><div></div><div></div><div></div></div>
+              <div class="done-list"><span>✓ FAQブロック</span><span>✓ llms.txt</span><span>✓ 解析設定</span><span>✓ 記事テンプレート</span></div>
+            </div>
+            <div class="card-cta"><a class="btn btn-primary btn-lg" href="/lp/bunsirube/">詳しく見る →</a></div>
+          </div>
+        </article>
+
+        <div class="choice-box">
+          <h3>どっちを選ぶ？</h3>
+          <div class="choice-col">
+            <h4>記事を作りたい人に</h4>
+            <ul><li>記事の下書きを毎日量産したい人</li><li>リサーチに時間をかけすぎている人</li><li>ブログ・noteの記事ネタを増やしたい人</li><li>外注ライター費を月¥30,000以上使っている人</li></ul>
+          </div>
+          <div class="or">or</div>
+          <div class="choice-col">
+            <h4>ブログの土台を整えたい人に</h4>
+            <ul><li>これから自分のWPブログを立ち上げる人</li><li>SEOプラグインを減らしたい人</li><li>JSON-LD・llms.txt・FAQをテーマで完結させたい人</li><li>軽量で速いブログを作りたい人</li></ul>
+          </div>
         </div>
       </div>
     </section>

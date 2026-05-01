@@ -335,6 +335,57 @@
       .service-visual { min-height:220px; }
       .hero-actions .btn { width:100%; justify-content:center; }
     }
+    .service-showcase { background:#f5f8fc; }
+    .service-wrap { width:min(1180px, calc(100% - 32px)); margin:0 auto; }
+    .service-showcase-hero { position:relative; overflow:hidden; padding:52px 0 40px; background:radial-gradient(circle at 82% 24%, rgba(16,184,146,.16), transparent 30%), radial-gradient(circle at 14% 20%, rgba(47,125,246,.12), transparent 30%), linear-gradient(135deg,#fff 0%,#f4fbff 58%,#ecfaf5 100%); border-bottom:1px solid #dcecf8; }
+    .service-showcase-hero::after { content:""; position:absolute; inset:auto 0 0; height:74px; background:linear-gradient(180deg,transparent,rgba(3,25,22,.2)); pointer-events:none; }
+    .service-hero-grid { position:relative; z-index:1; display:grid; grid-template-columns:1fr 420px; gap:54px; align-items:center; }
+    .service-kicker { display:inline-flex; padding:8px 14px; border:1px solid rgba(16,184,146,.22); border-radius:999px; background:#fff; color:#0b8f72; font-size:12px; font-weight:900; letter-spacing:.16em; text-transform:uppercase; margin-bottom:18px; }
+    .service-title { margin:0 0 18px; font-size:clamp(42px,6vw,74px); line-height:1.05; letter-spacing:-.06em; }
+    .service-title .grad { background:linear-gradient(135deg,#0b8f72,#21bdd7); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+    .service-lead { max-width:620px; margin:0; color:#40546d; font-size:16px; line-height:1.9; font-weight:600; }
+    .review-illust { position:relative; min-height:260px; }
+    .clipboard { position:absolute; right:20px; top:8px; width:230px; height:238px; border-radius:24px; background:linear-gradient(180deg,#fff,#eef8ff); border:1px solid #dbe8f6; box-shadow:0 26px 70px rgba(16,184,146,.16); }
+    .clipboard::before { content:""; position:absolute; top:-18px; left:82px; width:70px; height:38px; border-radius:18px 18px 10px 10px; background:#58c8b6; }
+    .clip-line { position:absolute; left:42px; right:36px; height:12px; border-radius:99px; background:#d9e8f2; }
+    .clip-line:nth-child(1){top:66px}.clip-line:nth-child(2){top:106px}.clip-line:nth-child(3){top:146px}
+    .clip-line::before { content:"✓"; position:absolute; left:-24px; top:-6px; color:#16a085; font-weight:900; font-size:21px; }
+    .magnify { position:absolute; left:44px; top:80px; width:136px; height:136px; border:12px solid #5d7585; border-radius:50%; background:rgba(255,255,255,.5); box-shadow:0 18px 36px rgba(28,61,96,.14); }
+    .magnify::before { content:""; position:absolute; width:72px; height:15px; right:-58px; bottom:-24px; border-radius:99px; background:#5d7585; transform:rotate(43deg); }
+    .magnify::after { content:""; position:absolute; inset:35px; border-radius:50%; background:linear-gradient(180deg,#e7fff8,#fff); border:1px solid #cfe6ef; }
+    .talk { position:absolute; left:0; top:76px; width:70px; height:48px; border-radius:20px; background:#fff; border:1px solid #cfe6ef; box-shadow:0 16px 36px rgba(28,61,96,.08); }
+    .talk::after { content:"•••"; position:absolute; inset:9px 0 0; text-align:center; color:#55cdbb; font-size:20px; letter-spacing:4px; }
+    .service-body { padding:42px 0 48px; }
+    .review-card { display:grid; grid-template-columns:1fr 520px; gap:30px; padding:34px; border-radius:24px; background:#fff; border:1px solid #dfeaf5; box-shadow:0 14px 42px rgba(28,61,96,.08); }
+    .review-card h2 { margin:12px 0 14px; font-size:clamp(31px,4vw,46px); line-height:1.12; letter-spacing:-.05em; }
+    .badge-row { display:flex; flex-wrap:wrap; gap:10px; }
+    .pill { display:inline-flex; padding:7px 13px; border-radius:999px; font-size:12px; font-weight:900; color:#e06d00; background:#fff2df; }
+    .pill.green { color:#0b8f72; background:#e1fbf3; }
+    .review-summary { color:#42546a; line-height:1.9; font-weight:600; }
+    .check-list { display:grid; gap:9px; margin:18px 0 0; padding:0; list-style:none; font-weight:700; color:#17243a; }
+    .check-list li::before { content:"✓"; display:inline-grid; place-items:center; width:19px; height:19px; border-radius:50%; margin-right:8px; color:#fff; background:#22b8c8; font-size:12px; }
+    .review-price { display:flex; align-items:baseline; gap:18px; margin-top:32px; padding-top:22px; border-top:1px solid #edf3f8; }
+    .review-price strong { font-size:42px; color:#0b9b81; letter-spacing:-.05em; }
+    .review-price span { color:#60728a; font-weight:700; }
+    .before-after { display:grid; grid-template-columns:1fr auto 1fr; gap:18px; align-items:center; }
+    .ba-card { min-height:210px; padding:18px; border-radius:18px; border:1px solid #f0d8d4; background:#fff7f5; }
+    .ba-card.after { border-color:#caeee4; background:#effff9; }
+    .ba-card strong { display:block; color:#f06f61; margin-bottom:16px; }
+    .ba-card.after strong { color:#0b8f72; }
+    .product-lines { display:grid; gap:10px; }
+    .product-lines span { height:13px; border-radius:99px; background:#efd7d2; }
+    .after .product-lines span { background:#bcebdd; }
+    .arrow-circle { display:grid; place-items:center; width:48px; height:48px; border-radius:50%; background:#102243; color:#fff; font-weight:900; }
+    .flow-panel { margin-top:24px; padding:28px; border:1px solid #dfeaf5; border-radius:22px; background:#fff; }
+    .flow-panel h3 { margin:0 0 20px; font-size:20px; }
+    .flow-grid-lite { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; align-items:start; }
+    .flow-step { display:grid; grid-template-columns:52px 1fr; gap:13px; align-items:start; }
+    .flow-icon { width:52px; height:52px; display:grid; place-items:center; border-radius:50%; background:#dffaf1; color:#0b8f72; font-size:24px; }
+    .flow-step h4 { margin:0 0 4px; font-size:15px; }
+    .flow-step p { margin:0; color:#60728a; font-size:13px; line-height:1.7; font-weight:600; }
+    .service-cta-row { display:flex; align-items:center; gap:26px; margin-top:28px; }
+    .more-services { margin-top:34px; padding:24px; border:1px solid #bfeae5; border-radius:18px; background:linear-gradient(135deg,#f2fffb,#f6fdff); color:#40546d; font-weight:600; line-height:1.9; }
+    @media (max-width:900px){ .service-hero-grid,.review-card,.before-after,.flow-grid-lite{grid-template-columns:1fr}.review-illust{min-height:230px}.arrow-circle{margin:auto}.service-cta-row{flex-direction:column;align-items:stretch}.service-cta-row .btn{justify-content:center} }
   </style>
 </head>
 <body>
@@ -350,98 +401,61 @@
     </div>
   </header>
 
-  <main>
-    <section class="hero-shell">
-      <div class="container hero-grid">
+  <main class="service-showcase">
+    <section class="service-showcase-hero">
+      <div class="service-wrap service-hero-grid">
         <div>
-          <span class="eyebrow">Services</span>
-          <h1><strong>売るページ</strong>を、人の目で直す。</h1>
-          <p>ツールで自動化できないところは、人がひとつずつ見て直す。商品ページの「伝わらなさ」を1枚だけ集中して整える、小さなレビューサービス。</p>
-          <div class="hero-actions">
-            <a class="btn btn-primary btn-lg" href="/products/page-review/">商品ページ改善レビューを見る</a>
-            <a class="btn btn-outline btn-lg" href="/contact/#page-review">申し込む</a>
-          </div>
-          <div class="hero-signals">
-            <span>初回モニター¥980</span>
-            <span>48時間以内</span>
-            <span>1ページ集中</span>
-          </div>
+          <span class="service-kicker">Services</span>
+          <h1 class="service-title"><span class="grad">売るページ</span>を、<br />人の目で整える。</h1>
+          <p class="service-lead">ツールでは自動化できないところは、人がひとつずつ見て直します。商品ページの「伝わらなさ」を1枚だけ集中して改善します。</p>
         </div>
-
-        <div class="service-stage" aria-label="サービスのイメージ">
-          <div class="stage-panel">
-            <div class="stage-top"><span class="stage-dot"></span><span class="stage-dot"></span><span class="stage-dot"></span></div>
-            <div class="stage-grid">
-              <div class="stage-card">
-                <span class="mini-chip">Before</span>
-                <span class="price-chip">伝わりにくい商品ページ</span>
-                <div class="mock-bullets">
-                  <div>長い説明文</div>
-                  <div>FAQがない</div>
-                  <div>購入前の不安が残る</div>
-                </div>
-              </div>
-              <div class="stage-card">
-                <span class="mini-chip">After</span>
-                <span class="price-chip">伝わる商品ページ</span>
-                <div class="mock-bullets">
-                  <div>FAQ追加</div>
-                  <div>見出し再構成</div>
-                  <div>購入導線が見えやすい</div>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div class="review-illust" aria-hidden="true">
+          <div class="talk"></div>
+          <div class="magnify"></div>
+          <div class="clipboard"><span class="clip-line"></span><span class="clip-line"></span><span class="clip-line"></span></div>
         </div>
       </div>
     </section>
 
-    <section class="service-card-grid">
-      <div class="container">
-        <div class="section-spacer" aria-hidden="true"></div>
-
-        <a class="service-card" href="/products/page-review/">
-          <div class="service-info">
-            <div class="badge-row">
-              <span class="badge cyan">人がレビュー</span>
-              <span class="badge amber">初回モニター¥980</span>
-            </div>
+    <section class="service-body">
+      <div class="service-wrap">
+        <article class="review-card">
+          <div>
+            <div class="badge-row"><span class="pill green">人がレビュー</span><span class="pill">初回モニター¥980</span></div>
             <h2>商品ページ改善レビュー</h2>
-            <p class="summary">BASE・STORES・note・自サイトの販売ページを1ページだけ見て、伝わりにくい箇所、購入前に止まりやすいポイント、FAQ案、説明文の書き換え案を返す。AIではなく、人が見る。</p>
-            <ul class="service-list">
+            <p class="review-summary">BASE・STORES・note・自サイトの販売ページを1ページだけ見て、伝わりにくい箇所、購入前に止まりやすいポイント、FAQ案、説明文の書き換え案を返します。AIではなく、人が見る。</p>
+            <ul class="check-list">
               <li>1ページに集中したフィードバック（48時間以内）</li>
               <li>FAQ案・見出し書き換え案を具体的なテキストで提供</li>
               <li>購入前の不安を見える化して質問→回答の形に整理</li>
             </ul>
-            <div class="service-meta">
-              <span class="price">¥980<small> 初回</small></span>
-              <span class="note">モニター価格・通常¥3,980</span>
-            </div>
-            <div class="service-actions">
-              <span class="btn btn-primary btn-lg">詳しく見る →</span>
-              <a class="btn btn-outline btn-lg" href="/contact/#page-review" onclick="event.stopPropagation();">いますぐ申し込む</a>
-            </div>
+            <div class="review-price"><strong>¥980</strong><span>モニター価格・通常¥3,980</span></div>
           </div>
-          <div class="service-visual">
+          <div>
             <div class="before-after">
-              <div class="ba before"><strong>Before｜伝わりにくい商品ページ</strong><span>長い説明文・FAQなし・購入ハードル高</span></div>
-              <div class="ba after"><strong>After｜伝わる商品ページ</strong><span>FAQ追加・見出し再構成・購入導線明確化</span></div>
+              <div class="ba-card"><strong>Before</strong><div class="product-lines"><span></span><span></span><span></span><span></span></div></div>
+              <div class="arrow-circle">→</div>
+              <div class="ba-card after"><strong>After</strong><div class="product-lines"><span></span><span></span><span></span><span></span></div></div>
             </div>
-            <div style="display:flex;justify-content:flex-end;"><span class="badge amber">1ページ集中</span></div>
           </div>
-        </a>
+        </article>
 
-        <div class="flow-box">
-          <h3>申し込みの流れ</h3>
-          <div class="flow-grid">
-            <div class="flow-item"><div class="flow-num">1</div><h4>ページを送る</h4><p>BASE・STORES・note・自サイトのURLを送る。</p></div>
-            <div class="flow-item"><div class="flow-num">2</div><h4>1枚だけ見る</h4><p>伝わりにくい点、止まりやすい点、FAQ案を整理する。</p></div>
-            <div class="flow-item"><div class="flow-num">3</div><h4>返す</h4><p>見出し・説明文・FAQの書き換え案をまとめて返す。</p></div>
+        <div class="flow-panel">
+          <h3>ご利用の流れ</h3>
+          <div class="flow-grid-lite">
+            <div class="flow-step"><div class="flow-icon">□</div><div><h4>ページを提出</h4><p>商品ページのURLをフォームから送信。</p></div></div>
+            <div class="flow-step"><div class="flow-icon">♙</div><div><h4>人がレビュー</h4><p>48時間以内に、改善点と具体的な提案を作成。</p></div></div>
+            <div class="flow-step"><div class="flow-icon">☑</div><div><h4>レポートを受け取る</h4><p>見出し・文章・FAQ案・次の一手をお届け。</p></div></div>
           </div>
-          <div class="future-services">
-            <h3>これから増えるサービス</h3>
-            <p>記事構成のカスタマイズレビュー、WordPressテーマのセットアップ代行、AI検索流入の改善コンサルなどを準備中。要望があれば <a href="/contact/" style="color:#0c9ab4;font-weight:700;">問い合わせ</a> から教えてください。</p>
+          <div class="service-cta-row">
+            <a class="btn btn-primary btn-lg" href="/contact/#page-review">いますぐ申し込む →</a>
+            <a href="/products/page-review/" style="color:#0b8f72;font-weight:800;">初回モニター¥980で試す</a>
           </div>
+        </div>
+
+        <div class="more-services">
+          <strong>これから増えるサービス</strong><br />
+          記事構成のカスタマイズレビュー、WordPressテーマのセットアップ代行、AI検索流入の改善コンサルなどを準備中。詳細は問い合わせからご案内します。
         </div>
       </div>
     </section>
