@@ -282,6 +282,40 @@
       .sample-card ul {
         padding-left: 20px;
       }
+      .review-sheet {
+        margin-top: 18px;
+        border: 1px solid #dbeafe;
+        border-radius: 18px;
+        background: #fff;
+        overflow: hidden;
+        box-shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      }
+      .review-sheet-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 14px;
+        padding: 16px 18px;
+        background: #eff6ff;
+        color: #1e3a8a;
+        font-size: 13px;
+        font-weight: 800;
+      }
+      .review-sheet-row {
+        display: grid;
+        grid-template-columns: 120px 1fr;
+        gap: 14px;
+        padding: 16px 18px;
+        border-top: 1px solid #e5eefb;
+      }
+      .review-sheet-label {
+        color: #0b8f72;
+        font-size: 13px;
+        font-weight: 900;
+      }
+      .review-sheet-row p {
+        margin: 0;
+        color: #334155;
+      }
       .proof-note-grid {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -348,6 +382,7 @@
         .section-grid,
         .example-box,
         .sample-report,
+        .review-sheet-row,
         .proof-note-grid,
         .value-stack {
           grid-template-columns: 1fr;
@@ -470,6 +505,24 @@
               <p><strong>見出し案:</strong> 「ひとりで販売ページを作った人へ。購入前の不安が残る場所を1ページだけ直します。」</p>
               <p><strong>FAQ案:</strong> 納期はどのくらいですか？ 何を送ればよいですか？ 売上保証はありますか？ 修正はどこまで対応しますか？</p>
               <p><strong>要約文:</strong> 商品ページを1ページ確認し、弱点、見出し案、説明文、FAQ案、要約文を返す小さな改善レビューです。</p>
+            </div>
+          </div>
+          <div class="review-sheet" aria-label="返却レポートのサンプル">
+            <div class="review-sheet-head">
+              <span>返却レポート サンプル</span>
+              <span>1ページ / 5点固定</span>
+            </div>
+            <div class="review-sheet-row">
+              <div class="review-sheet-label">弱点</div>
+              <p>冒頭で「誰のどんな不安を減らす商品か」が伝わりにくく、価格を見る前に離脱されやすい状態です。</p>
+            </div>
+            <div class="review-sheet-row">
+              <div class="review-sheet-label">直す文</div>
+              <p>「購入前に迷う説明・料金・納期を、1ページだけ短く整えます。」のように、先に得られる結果を出します。</p>
+            </div>
+            <div class="review-sheet-row">
+              <div class="review-sheet-label">FAQ</div>
+              <p>納期、送るもの、売上保証の有無、修正範囲を購入ボタンの近くに置くと、不安を先に減らせます。</p>
             </div>
           </div>
         </div>
