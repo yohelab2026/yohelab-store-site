@@ -46,6 +46,48 @@ checks.push(["home links tools hub", home.includes('/tools/')]);
 checks.push(["home links services hub", home.includes('/services/')]);
 checks.push(["home avoids overstated claims", !home.includes("AIに引用される") && !home.includes("引用されないブログ") && !home.includes("5,377億") && !home.includes("3.6兆")]);
 
+const footerLinks = [
+  '© よへラボ / yohelab.com',
+  'href="/"',
+  'href="/tools/"',
+  'href="/services/"',
+  'href="/blog/"',
+  'href="/contact/"',
+  'href="/legal/commerce/"',
+  'href="/legal/privacy/"',
+  'href="/legal/terms/"',
+];
+const footerPages = [
+  "index.html",
+  "tools/index.html",
+  "services/index.html",
+  "blog/index.html",
+  "blog/post/index.html",
+  "blog/admin/index.html",
+  "apps/research-writer/index.html",
+  "apps/wordpress-theme/index.html",
+  "lp/research-writer/index.html",
+  "lp/bunsirube/index.html",
+  "lp/wordpress-theme/index.html",
+  "products/research-writer-beta/index.html",
+  "products/wordpress-theme-beta/index.html",
+  "products/article-starter-kit/index.html",
+  "products/page-review/index.html",
+  "products/bunsirube/index.html",
+  "contact/index.html",
+  "contact/bug/index.html",
+  "games/index.html",
+  "games/reaction/index.html",
+  "legal/commerce/index.html",
+  "legal/privacy/index.html",
+  "legal/terms/index.html",
+  "pro/activate-pending/index.html",
+];
+checks.push(["footer is unified across public pages", footerPages.every((page) => {
+  const html = read(dist(page));
+  return footerLinks.every((needle) => html.includes(needle));
+})]);
+
 const lpResearchWriter = read(dist("lp/research-writer/index.html"));
 checks.push(["lp research writer title", lpResearchWriter.includes('記事メーカー') && lpResearchWriter.includes('よへラボ')]);
 checks.push(["lp research writer free", lpResearchWriter.includes('無料で試す') || lpResearchWriter.includes('無料版を試す')]);

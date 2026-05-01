@@ -640,15 +640,16 @@ function renderPage(page) {
         margin-top: 24px;
       }
       .lp-footer {
-        background: #0b1613;
-        color: rgba(255,255,255,.5);
-        font-size: 13px;
-        padding: 28px 0;
-        text-align: center;
+        background: #fff;
+        color: #24364f;
+        font-size: 14px;
+        padding: 36px 0;
+        border-top: 1px solid var(--border);
       }
-      .lp-footer a { color: rgba(255,255,255,.5); }
-      .lp-footer a:hover { color: #fff; }
-      .lp-footer-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 16px; margin-top: 10px; }
+      .lp-footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; width: min(1120px, 100% - 44px); margin: 0 auto; }
+      .lp-footer a { color: #24364f; font-weight: 700; }
+      .lp-footer a:hover { color: var(--text); }
+      .lp-footer-links { display: flex; flex-wrap: wrap; gap: 24px; }
       @media (max-width: 960px) {
         .lp-band,
         .lp-grid-3,
@@ -845,15 +846,18 @@ function renderPage(page) {
     </main>
 
     <footer class="lp-footer">
-      <div>© よへラボ / yohelab.com</div>
-      <div class="lp-footer-links">
-        <a href="/">トップ</a>
-        <a href="${page.freeHref}">${esc(freeLabel)}</a>
-        <a href="${page.productHref}">プラン詳細</a>
-        <a href="/contact/">問い合わせ</a>
-        <a href="/legal/commerce/">特定商取引法</a>
-        <a href="/legal/privacy/">プライバシー</a>
-        <a href="/legal/terms/">利用規約</a>
+      <div class="lp-footer-inner">
+        <div>© よへラボ / yohelab.com</div>
+        <div class="lp-footer-links">
+          <a href="/">トップ</a>
+          <a href="/tools/">ツール</a>
+          <a href="/services/">サービス</a>
+          <a href="/blog/">ブログ</a>
+          <a href="/contact/">問い合わせ</a>
+          <a href="/legal/commerce/">特定商取引法</a>
+          <a href="/legal/privacy/">プライバシー</a>
+          <a href="/legal/terms/">利用規約</a>
+        </div>
       </div>
     </footer>
   </body>

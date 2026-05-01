@@ -88,6 +88,7 @@ export default defineConfig({
         lpResearchWriter: "lp/research-writer/index.html",
         wordpressTheme: "apps/wordpress-theme/index.html",
         wordpressThemeBeta: "products/wordpress-theme-beta/index.html",
+        bunsirubeProduct: "products/bunsirube/index.html",
         lpWordpressTheme: "lp/bunsirube/index.html",
         lpWordpressThemeAlias: "lp/wordpress-theme/index.html",
         ...collectGameInputs(),
