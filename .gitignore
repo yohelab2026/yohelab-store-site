@@ -16,3 +16,5 @@ public/downloads/bunsirube.zip
 
 .aidesigner/*
 !.aidesigner/.gitkeep
+
+functions/generated/
