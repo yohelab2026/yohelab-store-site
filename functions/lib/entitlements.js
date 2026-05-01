@@ -11,6 +11,11 @@ const PRODUCT_CONFIG = {
     nextPath: "/lp/bunsirube/",      // 決済キャンセル時に戻る先
     activatePath: "/products/bunsirube/", // 購入完了後の遷移先
   },
+  "page-review": {
+    label: "商品ページ改善レビュー",
+    nextPath: "/products/page-review/",
+    activatePath: "/products/page-review/",
+  },
 };
 
 function getAccessSecret(env) {

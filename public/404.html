@@ -7,9 +7,17 @@
   <meta name="description" content="お探しのページは見つかりませんでした。よへラボのトップへ戻るか、ツール・サービスページから探してください。" />
   <meta name="robots" content="noindex,follow" />
   <link rel="icon" type="image/png" href="/yohelab-icon.png" />
-  <link rel="stylesheet" href="/shared/site.css" />
   <style>
+    :root {
+      --text: #15201d;
+      --muted: #60706b;
+      --border: rgba(11,143,114,.16);
+      --green-dark: #08745d;
+    }
+    * { box-sizing: border-box; }
     body {
+      margin: 0;
+      font-family: "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
       background:
         radial-gradient(ellipse 80% 60% at 50% 0%, rgba(11,143,114,.12), transparent 60%),
         linear-gradient(180deg, #f8fbff 0%, #eef5ff 100%);
@@ -57,11 +65,26 @@
       flex-wrap: wrap;
       justify-content: center;
     }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 20px;
+      border-radius: 999px;
+      font-weight: 900;
+      text-decoration: none;
+    }
     .e404-actions .btn-primary {
       background: linear-gradient(135deg, #0b8f72, #1fb6cf);
       color: #fff;
       border: none;
       box-shadow: 0 12px 28px rgba(11,143,114,.28);
+    }
+    .btn-outline {
+      color: var(--green-dark);
+      border: 1px solid var(--border);
+      background: #fff;
     }
     .e404-links {
       margin-top: 32px;

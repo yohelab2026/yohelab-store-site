@@ -45,6 +45,7 @@ checks.push(["home no legacy tool links", legacyPaths.every((path) => !home.incl
 checks.push(["home links tools hub", home.includes('/tools/')]);
 checks.push(["home links services hub", home.includes('/services/')]);
 checks.push(["home avoids overstated claims", !home.includes("AIに引用される") && !home.includes("引用されないブログ") && !home.includes("5,377億") && !home.includes("3.6兆")]);
+checks.push(["tools avoids overstated claims", !read(dist("tools/index.html")).includes("AIに引用される") && !read(dist("tools/index.html")).includes("引用される構造")]);
 
 const footerLinks = [
   '© よへラボ / yohelab.com',
@@ -65,13 +66,9 @@ const footerPages = [
   "blog/post/index.html",
   "blog/admin/index.html",
   "apps/research-writer/index.html",
-  "apps/wordpress-theme/index.html",
   "lp/research-writer/index.html",
   "lp/bunsirube/index.html",
-  "lp/wordpress-theme/index.html",
   "products/research-writer-beta/index.html",
-  "products/wordpress-theme-beta/index.html",
-  "products/article-starter-kit/index.html",
   "products/page-review/index.html",
   "products/bunsirube/index.html",
   "contact/index.html",
@@ -103,21 +100,14 @@ const researchProduct = read(dist("products/research-writer-beta/index.html"));
 checks.push(["research product title", researchProduct.includes('3キーワードの記事メーカー プロプラン')]);
 checks.push(["research product price", researchProduct.includes('¥1,980')]);
 
-const wpApp = read(dist("apps/wordpress-theme/index.html"));
-checks.push(["wp app title", wpApp.includes('記事ブログ用WordPressテーマ')]);
-checks.push(["wp app analytics", wpApp.includes('テーマ内解析') && wpApp.includes('外部解析')]);
-checks.push(["wp app plugin reduction", wpApp.includes('プラグインを増やしすぎない') || wpApp.includes('プラグインを増やさず')]);
-checks.push(["wp app starter purchase", wpApp.includes('/api/checkout?product=wordpress-theme') && !wpApp.includes('/downloads/bunsirube.zip') && !existsSync(dist("downloads/bunsirube.zip"))]);
-checks.push(["wp app install guide", wpApp.includes('WordPressに入れる手順') && wpApp.includes('保証しないこと')]);
-
-const wpProduct = read(dist("products/wordpress-theme-beta/index.html"));
-checks.push(["wp product title", wpProduct.includes('記事ブログ用WordPressテーマ')]);
+const wpProduct = read(dist("products/bunsirube/index.html"));
+checks.push(["wp product title", wpProduct.includes('文標（ぶんしるべ）') && wpProduct.includes('WordPressテーマ')]);
 checks.push(["wp product analytics", wpProduct.includes('テーマ内解析') && wpProduct.includes('外部解析')]);
 checks.push(["wp product price", wpProduct.includes('¥5,500')]);
 checks.push(["wp product support policy", wpProduct.includes('サポートと保証の線引き') && wpProduct.includes('購入前に確認してほしいこと')]);
 
 checks.push(["research product sample and purchase flow", researchProduct.includes('プロプランで返すもの') && researchProduct.includes('購入後の流れ')]);
-checks.push(["research product checkout cta", researchProduct.includes('/api/checkout?product=research-writer') && researchProduct.includes('1日1セットまで')]);
+checks.push(["research product checkout cta", researchProduct.includes('https://buy.stripe.com/aFa4gr6jd6Pu4KC7eV73G0d?client_reference_id=research-writer') && researchProduct.includes('1日1セットまで')]);
 
 const contact = read(dist("contact/index.html"));
 checks.push(["contact includes research writer", contact.includes('3キーワードの記事メーカー')]);
@@ -129,6 +119,8 @@ const sitemap = read(dist("sitemap.xml"));
 checks.push(["sitemap includes research writer", sitemap.includes('https://yohelab.com/lp/research-writer/')]);
 checks.push(["sitemap excludes legacy apps", legacyPaths.every((path) => !sitemap.includes(path))]);
 checks.push(["sitemap excludes removed labs", !sitemap.includes('https://yohelab.com/labs/')]);
+checks.push(["sitemap excludes retired product redirects", !sitemap.includes('https://yohelab.com/products/article-starter-kit/') && !sitemap.includes('https://yohelab.com/products/wordpress-theme-beta/')]);
+checks.push(["sitemap includes three sales pages", sitemap.includes('https://yohelab.com/lp/research-writer/') && sitemap.includes('https://yohelab.com/lp/bunsirube/') && sitemap.includes('https://yohelab.com/products/page-review/')]);
 checks.push(["sitemap includes all game pages", ["reaction", "typing", "math-rush", "sequence"].every((slug) => sitemap.includes(`https://yohelab.com/games/${slug}/`))]);
 
 const gameScript = read(dist("shared/arcade-game.js"));
@@ -144,8 +136,9 @@ const matomoLoader = read(dist("shared/matomo-loader.js"));
 checks.push(["theme serial uses bunsirube prefix", ent.includes("BUN-") && !ent.includes("AIO-")]);
 checks.push(["entitlement keeps research writer", ent.includes('"research-writer"')]);
 checks.push(["entitlement adds wordpress theme", ent.includes('"wordpress-theme"')]);
+checks.push(["entitlement adds page review", ent.includes('"page-review"')]);
 checks.push(["entitlement drops legacy tools", !ent.includes(`"${"rad"}${"ar"}"`) && !ent.includes(`"${oldPropToken}-${oldOptimizer}"`) && !ent.includes(`"${"article"}-${"polish"}"` ) && !ent.includes(`"${oldPropToken}"` ) && !ent.includes(`"${"x"}-${"helper"}"` ) && !ent.includes(`"${"ec"}-${"copy"}"` ) && !ent.includes(`"${"aio"}-${"mini"}"` )]);
-checks.push(["checkout function has fallback", checkout.includes('STRIPE_RESEARCH_WRITER_PRICE_ID') && checkout.includes('/contact/#')]);
+checks.push(["checkout function redirects to tracked payment links", checkout.includes('https://buy.stripe.com/aFa4gr6jd6Pu4KC7eV73G0d?client_reference_id=research-writer') && checkout.includes('https://buy.stripe.com/bJeaEPfTN2ze2Cubvb73G0e?client_reference_id=wordpress-theme') && checkout.includes('https://buy.stripe.com/bJedR10YTddS4KC42J73G0f?client_reference_id=page-review')]);
 checks.push(["blog admin page is reachable behind page login", blogAdminGate.includes("context.next()") && blogAdminGate.includes("noindex") && !blogAdminGate.includes("ADMIN_KEY")]);
 checks.push(["blog admin validates pin server side", blogAdmin.includes("/api/blog-auth") && blogAdmin.includes("SESSION_PIN_KEY") && !blogAdmin.includes("localStorage.setItem(PIN_KEY")]);
 checks.push(["blog post sanitizes dangerous html server side", blogPostFunction.includes("sanitizeBodyHtml") && blogPostFunction.includes("iframe|object|embed") && blogPostFunction.includes("javascript:") && blogPostFunction.includes("data:text") && blogPostFunction.includes("vbscript:")]);
@@ -158,3 +151,4 @@ for (const [name, ok] of checks) {
 }
 
 console.log(`\nPassed ${checks.length} checks.`);
+

@@ -18,7 +18,7 @@
 | キー | ツール名 | アプリパス |
 |------|---------|-----------|
 | `research-writer` | 3キーワード記事メーカー | /apps/research-writer/ |
-| `wordpress-theme` | 記事ブログ用WordPressテーマ | /apps/wordpress-theme/ |
+| `wordpress-theme` | 文標（ぶんしるべ） | /lp/bunsirube/ |
 
 ---
 
@@ -76,7 +76,7 @@ apps/
 ```js
 const PRODUCT_CONFIG = {
   "research-writer": { label: "3キーワード記事メーカー", nextPath: "/apps/research-writer/" },
-  "wordpress-theme": { label: "記事ブログ用WordPressテーマ", nextPath: "/apps/wordpress-theme/" },
+  "wordpress-theme": { label: "文標（ぶんしるべ）", nextPath: "/lp/bunsirube/" },
   // ↓ 新しいツールをここに追加
   "new-tool": { label: "新しいツール名", nextPath: "/apps/new-tool/" },
 };

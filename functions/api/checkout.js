@@ -1,8 +1,9 @@
 import { getProductConfig } from "../lib/entitlements.js";
 
-const PRODUCT_PRICE_ENV = {
-  "research-writer": "STRIPE_RESEARCH_WRITER_PRICE_ID",
-  "wordpress-theme": "STRIPE_WORDPRESS_THEME_PRICE_ID",
+const PRODUCT_PAYMENT_LINKS = {
+  "research-writer": "https://buy.stripe.com/aFa4gr6jd6Pu4KC7eV73G0d?client_reference_id=research-writer",
+  "wordpress-theme": "https://buy.stripe.com/bJeaEPfTN2ze2Cubvb73G0e?client_reference_id=wordpress-theme",
+  "page-review": "https://buy.stripe.com/bJedR10YTddS4KC42J73G0f?client_reference_id=page-review",
 };
 
 export async function onRequestGet(context) {
@@ -14,7 +15,13 @@ export async function onRequestGet(context) {
     return redirect("/contact/");
   }
 
-  const priceId = context.env[PRODUCT_PRICE_ENV[product]];
+  const paymentLink = PRODUCT_PAYMENT_LINKS[product];
+  if (paymentLink) {
+    return redirect(paymentLink);
+  }
+
+  const priceEnv = `STRIPE_${product.toUpperCase().replace(/-/g, "_")}_PRICE_ID`;
+  const priceId = context.env[priceEnv];
   const stripeKey = context.env.STRIPE_SECRET_KEY;
   if (!priceId || !stripeKey) {
     return redirect(`/contact/#${product}`);
@@ -55,3 +62,4 @@ function redirect(location) {
     headers: { Location: location },
   });
 }
+

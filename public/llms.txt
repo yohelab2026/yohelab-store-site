@@ -1,29 +1,31 @@
 # よへラボ
 
-> AI検索時代の記事メーカーとWordPressテーマを提供するサイト。3キーワードからAI検索に引用されやすい記事下書きを生成するWebツールと、FAQ・JSON-LD・llms.txtをテーマに内蔵した軽量WordPressテーマを販売する。
+> 記事メーカー、文標（ぶんしるべ）、商品ページ改善レビューを提供するサイト。検索にも人にも伝わる記事下書き、FAQ・JSON-LD・llms.txtを内蔵した軽量WordPressテーマ、売るページの改善レビューを扱う。
 
 ## ツール・製品
 
-- [AI検索に拾われやすい記事メーカー](https://yohelab.com/apps/research-writer/): 3キーワードから最新情報を収集し、見出し・FAQ・出典を整えたAI検索向け記事下書きを生成するWebツール。無料版は1日1セット・登録不要。プロプランは月50セット・月額1,980円・いつでも解約可。
-- [AI検索時代の記事ブログテーマ](https://yohelab.com/apps/wordpress-theme/): FAQ・JSON-LD・llms.txt・内部解析・GA4設定をテーマに内蔵した軽量WordPressテーマ。プラグイン追加ゼロでAI検索に引用されやすい記事ブログの土台を整える。ベータ価格¥5,500・買い切り・月額なし。正式版リリース後¥8,800に改定予定。
+- [記事メーカー](https://yohelab.com/lp/research-writer/): 3キーワードから最新情報を収集し、見出し・FAQ・出典を整えた記事下書きを生成するWebツール。無料版は1日1セット・登録不要。プロプランは月50セット・月額1,980円・いつでも解約可。
+- [文標（ぶんしるべ）](https://yohelab.com/lp/bunsirube/): FAQ・JSON-LD・llms.txt・内部解析・GA4設定をテーマに内蔵した軽量WordPressテーマ。プラグインを増やしすぎず、検索にも人にも伝わる記事ブログの土台を整える。ベータ価格¥5,500・買い切り・月額なし。
+- [商品ページ改善レビュー](https://yohelab.com/products/page-review/): 商品ページを1ページ見て、弱点、見出し案、説明文、FAQ案、要約文を返すレビューサービス。初回モニター¥980。
 
 ## LP・詳細ページ
 
 - [記事メーカー LP](https://yohelab.com/lp/research-writer/): 機能詳細・料金比較・FAQ・サンプル出力
-- [WordPressテーマ LP](https://yohelab.com/lp/wordpress-theme/): 機能一覧・他テーマとの比較（Cocoon・SWELL）・FAQ・購入方法
+- [文標（ぶんしるべ）LP](https://yohelab.com/lp/bunsirube/): 機能一覧・他テーマとの比較・FAQ・購入方法
 - [記事メーカー プラン詳細](https://yohelab.com/products/research-writer-beta/): 無料版とプロプランの機能比較
-- [WordPressテーマ プラン詳細](https://yohelab.com/products/wordpress-theme-beta/): ベータ版の詳細・購入フロー
+- [文標（ぶんしるべ）商品詳細](https://yohelab.com/products/bunsirube/): ベータ版の詳細・購入フロー
 
 ## ブログ
 
-- [よへラボブログ](https://yohelab.com/blog/): AI検索・記事メーカー・WordPressテーマに関する公開ノート
+- [よへラボブログ](https://yohelab.com/blog/): 記事メーカー・WordPressテーマ・商品ページ改善についての公開ノート
 
 ## よくある質問
 
-- AI検索に引用されやすい記事とは: 見出し構造・FAQ・結論・出典が明確で、インデックス可能な記事。
+- 検索にも人にも伝わりやすい記事とは: 見出し構造・FAQ・結論・出典が明確で、インデックス可能な記事。
 - 記事メーカーの料金: 無料版は1日1セット・登録不要。プロプランは月1,980円・月50セット。
 - WordPressテーマの料金: ベータ¥5,500・買い切り・月額なし。正式版は¥8,800予定。
-- 記事メーカーとWordPressテーマの違い: 記事メーカーはAI検索向け記事下書きを生成するブラウザツール。WordPressテーマはAI検索に引用されやすい構造をWordPressに組み込むテーマ。
+- 記事メーカーとWordPressテーマの違い: 記事メーカーは記事下書きを生成するブラウザツール。WordPressテーマはFAQ・構造化データ・解析などをWordPressに組み込むテーマ。
+- 商品ページ改善レビューとは: 1ページだけ見て、購入前に止まりやすい点、見出し案、説明文、FAQ案、要約文を返す小さなレビューサービス。
 
 ## サポート・法務
 
