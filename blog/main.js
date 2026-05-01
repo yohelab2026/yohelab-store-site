@@ -34,7 +34,6 @@ function esc(str) {
 }
 
 async function loadPosts(page = 1) {
-  postsEl.innerHTML = '<div class="empty">読み込み中...</div>';
   try {
     const res = await fetch(`/api/blog-posts?page=${page}`);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -45,10 +44,10 @@ async function loadPosts(page = 1) {
       render(data.posts, true);
       renderPagination();
     } else {
-      render(fallbackPosts, false);
+      if (!postsEl.children.length) render(fallbackPosts, false);
     }
   } catch(e) {
-    render(fallbackPosts, false);
+    if (!postsEl.children.length) render(fallbackPosts, false);
   }
 }
 
@@ -89,7 +88,7 @@ function render(posts, hasLink = true) {
     return;
   }
   postsEl.innerHTML = posts.map(post => {
-    const url = `/blog/post/?slug=${encodeURIComponent(post.slug)}`;
+    const url = `/blog/${encodeURIComponent(post.slug)}/`;
     const tags = (post.tags||[]).slice(0,2).map(t=>`<span class="post-card-tag">${esc(t)}</span>`).join('');
     const img = post.eyecatch
       ? `<img class="post-card-img" src="${esc(post.eyecatch)}" alt="${esc(post.title)}" loading="lazy" />`
@@ -156,7 +155,7 @@ function render(posts, hasLink = true) {
         excerpt?.classList.add('is-open');
         button.textContent = '閉じる';
       } catch (error) {
-        const url = `/blog/post/?slug=${encodeURIComponent(slug)}`;
+        const url = `/blog/${encodeURIComponent(slug)}/`;
         preview.innerHTML = `<div style="color:var(--muted);">本文の読み込みに失敗した。<a href="${url}">記事ページで開く</a></div>`;
         preview.classList.add('is-open');
         button.textContent = '閉じる';

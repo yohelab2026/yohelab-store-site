@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ブログ編集 | よへラボ</title>
+  <meta name="description" content="よへラボのブログ記事を編集するための管理ページです。公開ページではありません。" />
   <meta name="robots" content="noindex,nofollow" />
   <link rel="icon" type="image/png" href="/yohelab-icon.png" />
   <link rel="stylesheet" href="/shared/site.css" />
@@ -357,7 +358,7 @@
     if (!file) return;
     const url = await uploadImage(file);
     if (!url) return;
-    document.execCommand('insertHTML', false, `<img src="${url}" style="max-width:100%;border-radius:10px;margin:12px 0;display:block;" />`);
+    document.execCommand('insertHTML', false, `<img src="${url}" alt="記事内画像" style="max-width:100%;border-radius:10px;margin:12px 0;display:block;" />`);
     insertImgFile.value = '';
     saveDraftLocal();
   });

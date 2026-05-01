@@ -236,7 +236,7 @@ function pageTemplate(game) {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>${game.name} | よへラボゲーム</title>
-  <meta name="description" content="${game.description}" />
+  <meta name="description" content="${game.description} よへラボの無料ミニゲームとして、スマホとPCのブラウザでそのまま遊べます。" />
   <meta property="og:title" content="${game.name} | よへラボゲーム" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://yohelab.com/games/${game.slug}/" />
