@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>問い合わせ | よへラボ</title>
-  <meta name="description" content="使い方の質問、不具合連絡、解約申請、導入相談の窓口。先に見るガイドもここから確認できる。" />
+  <meta name="description" content="よへラボへの問い合わせ窓口。使い方の質問、不具合連絡、購入前の確認、解約申請をここから送れる。" />
   <meta property="og:title" content="問い合わせ | よへラボ" />
-  <meta property="og:description" content="使い方の質問、不具合連絡、解約申請、導入相談を受ける問い合わせページ。" />
+  <meta property="og:description" content="使い方の質問、不具合連絡、購入前の確認、解約申請を送れる問い合わせページ。" />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="ja_JP" />
   <meta property="og:url" content="https://yohelab.com/contact/" />
@@ -16,14 +16,14 @@
   <meta name="theme-color" content="#f5fbff" />
   <link rel="canonical" href="https://yohelab.com/contact/" />
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"ContactPage","name":"問い合わせ | よへラボ","url":"https://yohelab.com/contact/","description":"使い方の質問、不具合連絡、解約申請、導入相談の窓口","mainEntity":{"@type":"Organization","name":"よへラボ","url":"https://yohelab.com/","contactPoint":{"@type":"ContactPoint","contactType":"customer support","availableLanguage":"Japanese","url":"https://yohelab.com/contact/"}}}
+  {"@context":"https://schema.org","@type":"ContactPage","name":"問い合わせ | よへラボ","url":"https://yohelab.com/contact/","description":"使い方の質問、不具合連絡、購入前の確認、解約申請を送れる問い合わせ窓口","mainEntity":{"@type":"Organization","name":"よへラボ","url":"https://yohelab.com/","contactPoint":{"@type":"ContactPoint","contactType":"customer support","availableLanguage":"Japanese","url":"https://yohelab.com/contact/"}}}
   </script>
   <link rel="icon" type="image/png" href="../yohelab-icon.png" />
   <link rel="stylesheet" href="/shared/site.css" />
   <link rel="stylesheet" href="/shared/lp.css" />
   <style>
     .contact-hero {
-      padding: 80px 0 60px;
+      padding: 76px 0 56px;
       background: linear-gradient(180deg, #f8fbff 0%, #eef5ff 100%);
       color: var(--text); text-align: center; position: relative; overflow: hidden;
     }
@@ -37,11 +37,11 @@
       -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 0%, transparent 78%);
     }
     .contact-hero h1 { font-size: clamp(34px,5vw,56px); font-weight:900; letter-spacing:-0.05em; line-height:1.1; margin-bottom:16px; }
-    .contact-hero p  { font-size:16px; color:var(--muted); max-width:520px; margin:0 auto; line-height:1.88; }
+    .contact-hero p  { font-size:16px; color:var(--muted); max-width:640px; margin:0 auto; line-height:1.88; }
     .contact-body { background:#fff; border-radius:28px 28px 0 0; margin-top:-28px; position:relative; z-index:2; }
-    .contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:28px; align-items:start; }
+    .contact-grid { display:block; max-width:760px; margin:0 auto; }
     .contact-form-box {
-      padding:36px 32px; border-radius:24px;
+      padding:40px 38px; border-radius:24px;
       border:1.5px solid var(--green-mid);
       background:linear-gradient(175deg,#fff 0%,#f4fbf8 100%);
       box-shadow: 0 4px 18px rgba(11,143,114,.10);
@@ -51,15 +51,27 @@
     .contact-form-box input,
     .contact-form-box textarea,
     .contact-form-box select { font-size:15px; }
-    .contact-info-box { display:flex; flex-direction:column; gap:16px; }
-    .contact-info-card {
-      padding:24px 22px; border-radius:20px;
-      border:1px solid var(--border); background:#fff; box-shadow:var(--shadow-sm);
+    .contact-help-list {
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:10px;
+      margin:0 0 18px;
     }
-    .contact-info-card h3 { font-size:15px; font-weight:900; margin-bottom:12px; letter-spacing:-0.02em; }
-    .contact-info-card ul { display:grid; gap:8px; }
-    .contact-info-card li { font-size:14px; line-height:1.7; color:var(--muted); padding-left:16px; position:relative; }
-    .contact-info-card li::before { content:"→"; position:absolute; left:0; color:var(--green); font-weight:900; }
+    .contact-help-list a {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background:#fff;
+      color:var(--green-dark);
+      font-size:14px;
+      font-weight:800;
+      text-decoration:none;
+    }
+    .contact-help-list a::after { content:"→"; color:var(--green); }
     .contact-notice {
       padding:14px 18px; border-radius:14px;
       background:#eff6ff; border:1px solid #bfdbfe;
@@ -70,7 +82,7 @@
     .thanks-box.show { display:block; }
     .thanks-box h3 { font-size:18px; font-weight:900; color:var(--green-dark); margin-bottom:8px; }
     .thanks-box p { font-size:14px; color:var(--green-dark); margin:0; line-height:1.75; }
-    @media(max-width:780px){ .contact-grid{grid-template-columns:1fr;} .contact-body{border-radius:20px 20px 0 0;} }
+    @media(max-width:780px){ .contact-body{border-radius:20px 20px 0 0;} .contact-help-list{grid-template-columns:1fr;} }
     @media(max-width:580px){ .contact-form-box{padding:24px 20px;} }
   </style>
 </head>
@@ -95,8 +107,8 @@
       <div class="contact-hero-grid" aria-hidden="true"></div>
       <div class="container" style="position:relative;z-index:1;">
         <p class="lp-eyebrow reveal" style="justify-content:center;display:inline-flex;">💬 問い合わせ</p>
-        <h1 class="reveal reveal-d1">最後の窓口として<br>ここを使う</h1>
-        <p class="reveal reveal-d2">まずはガイドや各ページの説明を見て、それでも詰まるところだけをここで受ける。<br>質問、不具合、解約申請、個別相談の順で整理して返す。</p>
+        <h1 class="reveal reveal-d1">質問や不具合は<br>ここから送る</h1>
+        <p class="reveal reveal-d2">使い方の確認、購入前の相談、不具合、解約申請をまとめて受け付ける。必要な内容だけ送ってもらえれば大丈夫。</p>
       </div>
     </section>
 
@@ -109,8 +121,14 @@
 <div id="page-review"></div>
 <h2 id="starter-kit">問い合わせフォーム</h2>
               <div class="contact-notice">
-                <strong>使い方の順番</strong>
-                まず各ページの説明を見る → ガイドで自己解決できるか確認する → それでも止まるところだけここから送る。
+                <strong>送る前に見たい人だけ</strong>
+                詳細ページを見たい場合は、下のリンクから確認できます。急ぎならそのままフォームで送ってください。
+              </div>
+              <div class="contact-help-list">
+                <a href="/tools/">ツール一覧</a>
+                <a href="/services/">サービス一覧</a>
+                <a href="/lp/bunsirube/">WordPressテーマ</a>
+                <a href="/blog/">ブログ</a>
               </div>
               <div class="thanks-box" id="thanks-box">
                 <h3>ありがとう。内容を受け取った。</h3>
@@ -146,37 +164,6 @@
                 <button class="btn btn-primary" type="submit" style="width:100%;height:52px;font-size:16px;">問い合わせを送る</button>
                 <p style="font-size:12.5px;color:var(--muted);margin-top:4px;">送信内容は問い合わせ対応のためだけに使う。</p>
               </form>
-            </div>
-
-            <!-- 右側情報 -->
-            <div class="contact-info-box reveal reveal-d1">
-              <div class="contact-info-card">
-                <h3>送信前に見るところ</h3>
-                <ul>
-        <li><a href="/blog/#docs" style="color:var(--green);font-weight:700;">ガイド一覧を見る →</a></li>
-        <li>記事メーカー → 検索結果の拾い方と構成の返り方を見てから</li>
-        <li>商品ページ改善レビュー → 見てほしい販売ページを1本決めてから</li>
-        <li>記事ブログ用WordPressテーマ → 標準機能と減らせるプラグインを見てから</li>
-        <li>スターターキット → まず記事作成の型を合わせてから</li>
-                </ul>
-              </div>
-              <div class="contact-info-card">
-                <h3>ブログに集約していくもの</h3>
-                <ul>
-                  <li><a href="/blog/#knowledge" style="color:var(--green);font-weight:700;">Knowledge →</a> 記事作成、公開導線、WordPressの考え方</li>
-                  <li><a href="/blog/#projects" style="color:var(--green);font-weight:700;">Projects →</a> 何を直したか、なぜ変えたかの記録</li>
-                  <li><a href="/blog/#experiments" style="color:var(--green);font-weight:700;">実験メモ →</a> ゲームや試作の公開メモ</li>
-                </ul>
-              </div>
-              <div class="contact-info-card">
-                <h3>各ページへ直接行く</h3>
-                <ul>
-        <li><a href="/lp/research-writer/" style="color:var(--green);font-weight:700;">記事メーカー →</a></li>
-        <li><a href="/products/page-review/" style="color:var(--green);font-weight:700;">商品ページ改善レビュー →</a></li>
-        <li><a href="/lp/bunsirube/" style="color:var(--green);font-weight:700;">記事ブログ用WordPressテーマ →</a></li>
-        <li><a href="/products/article-starter-kit/" style="color:var(--green);font-weight:700;">記事スターターキット →</a></li>
-                </ul>
-              </div>
             </div>
           </div>
         </div>
