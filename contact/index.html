@@ -51,6 +51,7 @@
     .contact-form-box input,
     .contact-form-box textarea,
     .contact-form-box select { font-size:15px; }
+    .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
     .contact-notice {
       padding:14px 18px; border-radius:14px;
       background:#eff6ff; border:1px solid #bfdbfe;
@@ -133,7 +134,8 @@
                 <label>ひとこと
                   <textarea id="message" name="message" placeholder="困っていること、試した無料版があれば書くと早い。"></textarea>
                 </label>
-                <input style="position:absolute;left:-9999px;" type="text" name="website" tabindex="-1" autocomplete="off" />
+                <label class="sr-only" for="website">入力しないでください</label>
+                <input id="website" class="sr-only" type="text" name="website" tabindex="-1" autocomplete="off" />
                 <button class="btn btn-primary" type="submit" style="width:100%;height:52px;font-size:16px;">問い合わせを送る</button>
                 <p style="font-size:12.5px;color:var(--muted);margin-top:4px;">送信内容は問い合わせ対応のためだけに使う。</p>
               </form>
