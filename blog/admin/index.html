@@ -356,9 +356,9 @@
   insertImgFile.addEventListener('change', async () => {
     const file = insertImgFile.files[0];
     if (!file) return;
-    const url = await uploadImage(file);
-    if (!url) return;
-    document.execCommand('insertHTML', false, `<img src="${url}" alt="記事内画像" style="max-width:100%;border-radius:10px;margin:12px 0;display:block;" />`);
+    const image = await uploadImage(file);
+    if (!image?.url) return;
+    document.execCommand('insertHTML', false, `<img src="${image.url}" alt="記事内画像" width="${image.width}" height="${image.height}" loading="lazy" decoding="async" style="max-width:100%;height:auto;border-radius:10px;margin:12px 0;display:block;" />`);
     insertImgFile.value = '';
     saveDraftLocal();
   });
@@ -388,10 +388,10 @@
 
   async function uploadCover(file) {
     coverDrop.textContent = 'WebPに変換してアップロード中...';
-    const url = await uploadImage(file);
-    if (!url) { coverDrop.innerHTML = '❌ アップロード失敗'; return; }
-    eyecatchEl.value = url;
-    coverImg.src = url;
+    const image = await uploadImage(file);
+    if (!image?.url) { coverDrop.innerHTML = '❌ アップロード失敗'; return; }
+    eyecatchEl.value = image.url;
+    coverImg.src = image.url;
     coverDrop.style.display = 'none';
     coverPreview.style.display = '';
     saveDraftLocal();
@@ -410,7 +410,7 @@
         body: fd,
       });
       const data = await res.json().catch(()=>({}));
-      return res.ok ? data.url : null;
+      return res.ok ? { url: data.url, width: webpFile.convertedWidth, height: webpFile.convertedHeight } : null;
     } catch { return null; }
   }
 
@@ -444,7 +444,10 @@
     }
 
     const baseName = (file.name || 'blog-image').replace(/\.[^.]+$/, '').replace(/[^\w-]+/g, '-').replace(/^-+|-+$/g, '') || 'blog-image';
-    return new File([blob], `${baseName}.webp`, { type: 'image/webp' });
+    const converted = new File([blob], `${baseName}.webp`, { type: 'image/webp' });
+    converted.convertedWidth = width;
+    converted.convertedHeight = height;
+    return converted;
   }
 
   // ── スラッグ自動生成 ──────────────────────────────────────

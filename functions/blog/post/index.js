@@ -78,7 +78,7 @@ function escJsonString(value) {
 
 function sanitizeBodyHtml(html) {
   // 管理画面からの投稿でも、公開HTMLに出す前に危険なタグと属性は落とす。
-  return String(html || "")
+  return enhanceArticleImages(String(html || "")
     .replace(/<\s*(script|style|iframe|object|embed|form|input|button|select|textarea|meta|link|base|svg|math)\b[^>]*>[\s\S]*?<\s*\/\s*\1\s*>/gi, "")
     .replace(/<\s*(script|style|iframe|object|embed|form|input|button|select|textarea|meta|link|base|svg|math)\b[^>]*\/?>/gi, "")
     .replace(/\son[a-z]+\s*=\s*"[^"]*"/gi, "")
@@ -88,7 +88,18 @@ function sanitizeBodyHtml(html) {
     .replace(/\s(srcdoc|formaction)\s*=\s*'[^']*'/gi, "")
     .replace(/\s(srcdoc|formaction)\s*=\s*[^\s>]+/gi, "")
     .replace(/(href|src)\s*=\s*(['"]?)\s*(javascript:|data:text\/html|vbscript:)[^'"\s>]*/gi, '$1="#"')
-    .replace(/<\/script/gi, "<\\/script");
+    .replace(/<\/script/gi, "<\\/script"));
+}
+
+function enhanceArticleImages(html) {
+  return html.replace(/<img\b([^>]*)>/gi, (match, attrs) => {
+    let next = attrs;
+    if (!/\salt\s*=/.test(next)) next += ' alt="記事内画像"';
+    if (!/\sloading\s*=/.test(next)) next += ' loading="lazy"';
+    if (!/\sdecoding\s*=/.test(next)) next += ' decoding="async"';
+    if (!/\sstyle\s*=/.test(next)) next += ' style="max-width:100%;height:auto;border-radius:12px;margin:24px 0;display:block;"';
+    return `<img${next}>`;
+  });
 }
 
 function bodyToHtml(post) {
@@ -182,7 +193,7 @@ function renderPostHTML(post, slug, requestUrl) {
   )}&url=${encodeURIComponent(fullUrl)}`;
 
   const coverHtml = post.eyecatch
-    ? `<div id="cover-wrap"><div class="cover-hero"><img src="${escAttr(post.eyecatch)}" alt="${escAttr(title)}" /></div></div>`
+    ? `<div id="cover-wrap"><div class="cover-hero"><img src="${escAttr(post.eyecatch)}" alt="${escAttr(title)}" fetchpriority="high" decoding="async" /></div></div>`
     : `<div id="cover-wrap"></div>`;
 
   return `<!doctype html>
@@ -228,7 +239,7 @@ function renderPostHTML(post, slug, requestUrl) {
     .post-body ul, .post-body ol { padding-left:26px; margin-bottom:20px; }
     .post-body li { margin-bottom:8px; line-height:1.85; }
     .post-body blockquote { border-left:4px solid var(--green); padding:14px 20px; background:#f0f8f4; border-radius:0 12px 12px 0; margin:24px 0; color:var(--muted); font-size:16px; }
-    .post-body img { max-width:100%; border-radius:12px; margin:24px 0; display:block; }
+    .post-body img { max-width:100%; height:auto; border-radius:12px; margin:24px 0; display:block; }
     .post-body a { color:var(--green); text-decoration:underline; }
     .post-footer { margin-top:56px; padding-top:28px; border-top:1px solid var(--border); }
     .post-footer-inner { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px; }

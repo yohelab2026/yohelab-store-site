@@ -134,6 +134,8 @@ const blogAdmin = read(dist("blog/admin/index.html"));
 const blogImageFunction = read(src("functions/api/blog-image.js"));
 const blogPostFunction = read(src("functions/blog/post/index.js"));
 const blogPostPage = read(dist("blog/post/index.html"));
+const blogPostApi = read(src("functions/api/blog-post.js"));
+const bunsirubeLp = read(dist("lp/bunsirube/index.html"));
 const matomoLoader = read(dist("shared/matomo-loader.js"));
 checks.push(["theme serial uses bunsirube prefix", ent.includes("BUN-") && !ent.includes("AIO-")]);
 checks.push(["entitlement keeps research writer", ent.includes('"research-writer"')]);
@@ -145,8 +147,10 @@ checks.push(["middleware redirects retired product pages", middleware.includes('
 checks.push(["blog admin page is reachable behind page login", blogAdminGate.includes("context.next()") && blogAdminGate.includes("noindex") && !blogAdminGate.includes("ADMIN_KEY")]);
 checks.push(["blog admin validates pin server side", blogAdmin.includes("/api/blog-auth") && blogAdmin.includes("SESSION_PIN_KEY") && !blogAdmin.includes("localStorage.setItem(PIN_KEY")]);
 checks.push(["blog image uploads convert to one webp", blogAdmin.includes("convertToSingleWebp") && blogAdmin.includes("canvas.toBlob(resolve, 'image/webp'") && blogImageFunction.includes('const ALLOWED_TYPES = ["image/webp"]') && blogImageFunction.includes(".webp`")]);
+checks.push(["blog images are stable and lazy", blogAdmin.includes('width="${image.width}"') && blogAdmin.includes('height="${image.height}"') && blogPostFunction.includes("enhanceArticleImages") && blogPostFunction.includes('loading="lazy"') && blogPostPage.includes("enhanceArticleImages") && blogPostApi.includes("autoExcerpt")]);
 checks.push(["blog post sanitizes dangerous html server side", blogPostFunction.includes("sanitizeBodyHtml") && blogPostFunction.includes("iframe|object|embed") && blogPostFunction.includes("javascript:") && blogPostFunction.includes("data:text") && blogPostFunction.includes("vbscript:")]);
 checks.push(["blog post sanitizes dangerous html client fallback", blogPostPage.includes("sanitizeBodyHtml") && blogPostPage.includes("iframe|object|embed") && blogPostPage.includes("javascript:") && blogPostPage.includes("data:text") && blogPostPage.includes("vbscript:")]);
+checks.push(["bunsirube lp includes update history", bunsirubeLp.includes("文標の更新履歴") && bunsirubeLp.includes('id="updates"') && bunsirubeLp.includes("自動アップデート用シリアル")]);
 checks.push(["matomo skips local without explicit url", matomoLoader.includes("isLocal && !window.YOHELAB_MATOMO_URL") && !matomoLoader.includes("http://localhost:8080/")]);
 
 for (const [name, ok] of checks) {

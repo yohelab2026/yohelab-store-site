@@ -644,6 +644,45 @@
     .trust-card {
       padding:20px;
     }
+    .update-history {
+      margin-top:18px;
+      padding:22px;
+      border:1px solid #dbe8f5;
+      border-radius:20px;
+      background:#fff;
+    }
+    .update-history h3 {
+      margin:0 0 12px;
+      font-size:18px;
+      font-weight:900;
+      color:var(--lp-ink);
+    }
+    .update-list {
+      display:grid;
+      gap:10px;
+      margin:0;
+      padding:0;
+      list-style:none;
+    }
+    .update-list li {
+      display:grid;
+      gap:4px;
+      padding:12px 0;
+      border-top:1px solid #edf3f8;
+      color:var(--lp-muted);
+      line-height:1.7;
+      font-size:14px;
+    }
+    .update-list li:first-child {
+      border-top:0;
+      padding-top:0;
+    }
+    .update-list time {
+      color:#06624f;
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.08em;
+    }
     .faq-list {
       max-width:880px;
       margin:0 auto;
@@ -1037,6 +1076,13 @@
           <article class="trust-card"><h3>ベータ価格</h3><p>今は¥5,500で購入できます。買い切りで月額はかかりません。</p></article>
           <article class="trust-card"><h3>購入前に確認できます</h3><p>デジタル商品のため、内容と対応環境を確認してから購入できます。</p></article>
           <article class="trust-card"><h3>対応環境</h3><p>WordPress 6.8、PHP 8.0以上の環境で使えます。</p></article>
+          <div class="update-history" id="updates">
+            <h3>文標の更新履歴</h3>
+            <ul class="update-list">
+              <li><time datetime="2026-05-02">2026.05.02</time><span>ベータ版の購入前ページに、対応環境・価格・受け取れる内容を整理しました。</span></li>
+              <li><time datetime="2026-05-01">2026.05.01</time><span>記事テンプレート、FAQ、構造化データ、llms.txt、内部解析、自動アップデート用シリアルを購入内容にまとめました。</span></li>
+            </ul>
+          </div>
         </div>
       </div>
     </section>

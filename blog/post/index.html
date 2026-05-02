@@ -190,7 +190,7 @@
   }
 
   function sanitizeBodyHtml(html) {
-    return String(html || '')
+    return enhanceArticleImages(String(html || '')
       .replace(/<\s*(script|style|iframe|object|embed|form|input|button|select|textarea|meta|link|base|svg|math)\b[^>]*>[\s\S]*?<\s*\/\s*\1\s*>/gi, '')
       .replace(/<\s*(script|style|iframe|object|embed|form|input|button|select|textarea|meta|link|base|svg|math)\b[^>]*\/?>/gi, '')
       .replace(/\son[a-z]+\s*=\s*"[^"]*"/gi, '')
@@ -200,7 +200,19 @@
       .replace(/\s(srcdoc|formaction)\s*=\s*'[^']*'/gi, '')
       .replace(/\s(srcdoc|formaction)\s*=\s*[^\s>]+/gi, '')
       .replace(/(href|src)\s*=\s*(['"]?)\s*(javascript:|data:text\/html|vbscript:)[^'"\s>]*/gi, '$1="#"')
-      .replace(/<\/script/gi, '<\\/script');
+      .replace(/<\/script/gi, '<\\/script'));
+  }
+
+  function enhanceArticleImages(html) {
+    const imageTagPattern = new RegExp('<' + 'img\\b([^>]*)>', 'gi');
+    return html.replace(imageTagPattern, (match, attrs) => {
+      let next = attrs;
+      if (!/\salt\s*=/.test(next)) next += ' alt="記事内画像"';
+      if (!/\sloading\s*=/.test(next)) next += ' loading="lazy"';
+      if (!/\sdecoding\s*=/.test(next)) next += ' decoding="async"';
+      if (!/\sstyle\s*=/.test(next)) next += ' style="max-width:100%;height:auto;border-radius:12px;margin:24px 0;display:block;"';
+      return '<' + `img${next}>`;
+    });
   }
 
   async function loadPost() {

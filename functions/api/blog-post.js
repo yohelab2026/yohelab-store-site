@@ -23,8 +23,10 @@ export async function onRequestPost(context) {
 
     const title = sanitizeText(body?.title);
     const slugRaw = sanitizeSlug(body?.slug || body?.title);
-    const excerpt = sanitizeText(body?.excerpt);
+    const excerptInput = sanitizeText(body?.excerpt);
     const bodyHtml = String(body?.bodyHtml || "").trim();
+    const bodyText = sanitizeText(body?.body);
+    const excerpt = excerptInput || autoExcerpt(bodyHtml || bodyText, title);
     const date = sanitizeDate(body?.date) || new Date().toISOString().slice(0, 10);
     const tags = normalizeTags(body?.tags);
     const eyecatch = sanitizeUrl(body?.eyecatch);
@@ -113,6 +115,16 @@ function extractR2Key(url) {
 
 function sanitizeText(value) {
   return String(value || "").trim().replace(/\s+/g, " ");
+}
+
+function autoExcerpt(htmlOrText, title) {
+  const text = sanitizeText(
+    String(htmlOrText || "")
+      .replace(/<[^>]+>/g, " ")
+      .replace(/&nbsp;/g, " "),
+  );
+  if (text) return text.slice(0, 120);
+  return title ? `${title}について、購入前や利用前に確認しやすいように整理した記事です。` : "";
 }
 
 function sanitizeSlug(value) {
