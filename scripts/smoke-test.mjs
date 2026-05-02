@@ -42,19 +42,13 @@ const legacyLabels = [
 ];
 checks.push(["home links research writer app", home.includes('/apps/research-writer/')]);
 checks.push(["home no legacy tool links", legacyPaths.every((path) => !home.includes(path))]);
-checks.push(["home links tools hub", home.includes('/tools/')]);
-checks.push(["home links services hub", home.includes('/services/')]);
-checks.push(["home focuses primary conversion", home.includes("まずはこの2つから") && home.includes("無料で記事メーカーを試す") && home.includes("980円（税込）で商品ページを見てもらう") && home.includes("WordPressテーマ「文標」もあります") && !home.includes("無料で遊べるミニゲーム")]);
+checks.push(["home focuses primary conversion", home.includes("無料で記事メーカーを試す") && home.includes("980円（税込）で商品ページを見てもらう") && home.includes("WordPressテーマ「文標」もあります") && !home.includes("無料で遊べるミニゲーム")]);
 checks.push(["home surfaces buyer guide and tax-included prices", home.includes("購入前に読める確認メモ") && home.includes("弱点3つ・直す文・FAQ案") && home.includes("¥1,980/月（税込）") && home.includes("¥980（税込）") && home.includes("¥5,500（税込）") && home.includes("表示価格はすべて税込です。")]);
 checks.push(["home avoids overstated claims", !home.includes("AIに引用される") && !home.includes("引用されないブログ") && !home.includes("5,377億") && !home.includes("3.6兆")]);
-const toolsPage = read(dist("tools/index.html"));
-checks.push(["tools avoids overstated claims", !toolsPage.includes("AIに引用される") && !toolsPage.includes("引用される構造") && !toolsPage.includes("AI検索最適化") && !toolsPage.includes("AI検索に拾われる") && !toolsPage.includes("JSON-LD全種") && !toolsPage.includes("SWELLの1/3価格") && !toolsPage.includes("30秒で作成")]);
 
 const footerLinks = [
   '© よへラボ / yohelab.com',
   'href="/"',
-  'href="/tools/"',
-  'href="/services/"',
   'href="/blog/"',
   'href="/contact/"',
   'href="/legal/commerce/"',
@@ -63,8 +57,6 @@ const footerLinks = [
 ];
 const footerPages = [
   "index.html",
-  "tools/index.html",
-  "services/index.html",
   "blog/index.html",
   "blog/post/index.html",
   "blog/admin/index.html",

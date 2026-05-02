@@ -413,8 +413,9 @@
       <div class="nav-inner">
         <a class="brand" href="/"><img src="/yohelab-icon.png" alt="よへラボのアイコン" /><span>よへラボ</span></a>
         <nav class="nav-links">
-        <a href="/tools/">ツール</a>
-        <a href="/services/">サービス</a>
+        <a href="/lp/research-writer/">記事メーカー</a>
+        <a href="/lp/bunsirube/">文標</a>
+        <a href="/products/page-review/">ページレビュー</a>
         <a href="/blog/">ブログ</a>
         <a href="/contact/">問い合わせ</a>
       </nav>
@@ -683,6 +684,35 @@
         </div>
       </section>
 
+      <section class="section page-review-trust" style="padding:32px 0;">
+        <div class="container">
+          <div class="page-review-trust-card" style="max-width:920px;margin:0 auto;background:#fff;border-radius:20px;padding:28px;border:1px solid var(--border);display:grid;grid-template-columns:repeat(3,1fr);gap:20px;">
+            <div>
+              <div style="font-size:11px;color:var(--muted);font-weight:900;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;">納期</div>
+              <div style="font-size:18px;font-weight:900;color:var(--text);line-height:1.4;">最大48時間</div>
+              <p style="font-size:12.5px;color:var(--muted);margin-top:6px;line-height:1.7;">決済完了後の連絡受領から48時間以内に返信。土日祝を挟む場合は最大72時間。</p>
+            </div>
+            <div>
+              <div style="font-size:11px;color:var(--muted);font-weight:900;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;">月間上限</div>
+              <div style="font-size:18px;font-weight:900;color:var(--text);line-height:1.4;">月15件まで</div>
+              <p style="font-size:12.5px;color:var(--muted);margin-top:6px;line-height:1.7;">品質維持のため月15件で受付停止。停止中は購入ボタンを非表示にします。</p>
+            </div>
+            <div>
+              <div style="font-size:11px;color:var(--muted);font-weight:900;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;">連絡経路</div>
+              <div style="font-size:18px;font-weight:900;color:var(--text);line-height:1.4;">メールのみ</div>
+              <p style="font-size:12.5px;color:var(--muted);margin-top:6px;line-height:1.7;">決済完了メールに記載のフォームURLからURLを送信。Slack等の常時連絡は使いません。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <style>
+        @media (max-width: 720px) {
+          .page-review-trust-card {
+            grid-template-columns: 1fr !important;
+          }
+        }
+      </style>
+
       <section class="section" style="padding-top:0;">
         <div class="container">
           <div class="note-box">
@@ -697,8 +727,6 @@
         <div>© よへラボ / yohelab.com</div>
         <div class="footer-links">
           <a href="/">トップ</a>
-          <a href="/tools/">ツール</a>
-          <a href="/services/">サービス</a>
           <a href="/blog/">ブログ</a>
           <a href="/contact/">問い合わせ</a>
           <a href="/legal/commerce/">特定商取引法</a>

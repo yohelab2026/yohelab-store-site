@@ -12,8 +12,6 @@ const SITE_ORIGIN = "https://yohelab.com";
 
 const STATIC_URLS = [
   { loc: "/", changefreq: "weekly", priority: "1.0" },
-  { loc: "/tools/", changefreq: "weekly", priority: "0.9" },
-  { loc: "/services/", changefreq: "weekly", priority: "0.9" },
   { loc: "/lp/research-writer/", changefreq: "weekly", priority: "0.9" },
   { loc: "/lp/bunsirube/", changefreq: "weekly", priority: "0.9" },
   { loc: "/lp/bunsirube/demo/", changefreq: "monthly", priority: "0.6" },

@@ -1341,6 +1341,28 @@
       }
     }
 
+    @media (max-width: 700px) {
+      .trust-about-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr) !important;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .hero-visual {
+        display: none;
+      }
+      .hero-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 460px) {
+      .trust-about-grid {
+        grid-template-columns: 1fr !important;
+      }
+    }
+
     @media (max-width: 400px) {
       .nav-links {
         display: flex;
@@ -1364,8 +1386,9 @@
         <span>よへラボ</span>
       </a>
       <nav class="nav-links">
-        <a href="/tools/">ツール</a>
-        <a href="/services/">サービス</a>
+        <a href="/lp/research-writer/">記事メーカー</a>
+        <a href="/lp/bunsirube/">文標</a>
+        <a href="/products/page-review/">ページレビュー</a>
         <a href="/blog/">ブログ</a>
         <a href="/contact/">問い合わせ</a>
       </nav>
@@ -1381,10 +1404,11 @@
             <span class="hero-pill alt">初回980円（税込）レビュー</span>
           </div>
           <h1 class="hero-title">
-            記事づくりの前半を、<br />
-            <span class="accent">3キーワードで短くする。</span>
+            読まれて、買われる文章を、<br />
+            ひとりで作る。
           </h1>
-          <p class="hero-lead">検索材料・見出し・FAQ・出典をまとめて、記事のたたき台を早く作る。売るページの不安は、1ページだけ980円（税込）で確認できる。</p>
+          <p class="hero-lead" style="margin-bottom:14px;"><span class="accent" style="color:var(--home-blue);font-weight:800;">3キーワード記事メーカー / 商品ページ改善 / 文標テーマ</span></p>
+          <p class="hero-lead">ブログを書くとき、商品ページを直すとき、WordPressを整えるとき。<br />ひとりでも、読み手にもAIにも伝わる文章にできる道具を3つ用意しました。</p>
           <div class="hero-actions">
             <a class="btn btn-xl btn-home-primary" href="/apps/research-writer/">無料で記事メーカーを試す</a>
             <a class="btn btn-xl btn-home-secondary" href="/products/page-review/">980円（税込）で商品ページを見てもらう</a>
@@ -1593,12 +1617,35 @@
       <p style="text-align:center;margin-top:18px;color:#71717a;font-size:12px;">※ 収益や検索順位は、記事内容・ジャンル・運用状況によって変わります。</p>
     </section>
 
-    <section class="section-block">
-      <div class="trust-row">
-        <div class="trust-item"><strong>買う前に中身が分かる</strong><span>使える内容や受け取れる内容を先に確認できます。</span></div>
-        <div class="trust-item"><strong>使える環境が分かる</strong><span>WordPressテーマは対応環境を確認できます。</span></div>
-        <div class="trust-item"><strong>過度な期待を避けられる</strong><span>順位や売上に頼りすぎず、必要な判断ができます。</span></div>
-        <div class="trust-item"><strong>必要なものだけ選べる</strong><span>記事、テーマ、ページ改善を分けて選べます。</span></div>
+    <section class="section-block trust-about" style="background:linear-gradient(180deg,#f6f8fc 0%,#ffffff 100%);padding:48px 36px;">
+      <div class="block-head" style="margin-bottom:28px;">
+        <div>
+          <p style="color:var(--home-blue);font-size:11px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;margin-bottom:12px;">About yohelab</p>
+          <h2 style="font-size:clamp(26px,3.6vw,38px);">個人開発で運営しています。</h2>
+          <p style="color:var(--home-muted);max-width:680px;font-size:15.5px;line-height:1.85;">よへラボは個人で運営する小さなサイトです。記事メーカーの開発、商品ページレビューの執筆、WordPressテーマの開発を、すべて運営者本人が担当しています。だから対応が小回り効きます。</p>
+        </div>
+      </div>
+      <div class="trust-about-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;">
+        <div style="background:#fff;border-radius:14px;padding:18px;border:1px solid var(--home-line);">
+          <div style="font-size:11px;color:var(--home-muted);font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;">運営</div>
+          <div style="font-size:15px;font-weight:900;color:var(--home-text);line-height:1.5;">個人運営／2026年〜</div>
+          <p style="font-size:12px;color:var(--home-muted);margin-top:6px;line-height:1.6;">継続的に改善・更新しています。</p>
+        </div>
+        <div style="background:#fff;border-radius:14px;padding:18px;border:1px solid var(--home-line);">
+          <div style="font-size:11px;color:var(--home-muted);font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;">問い合わせ</div>
+          <div style="font-size:15px;font-weight:900;color:var(--home-text);line-height:1.5;">2営業日以内に返信</div>
+          <p style="font-size:12px;color:var(--home-muted);margin-top:6px;line-height:1.6;">原則48時間以内に1次返信します。</p>
+        </div>
+        <div style="background:#fff;border-radius:14px;padding:18px;border:1px solid var(--home-line);">
+          <div style="font-size:11px;color:var(--home-muted);font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;">価格</div>
+          <div style="font-size:15px;font-weight:900;color:var(--home-text);line-height:1.5;">明朗・買い切り中心</div>
+          <p style="font-size:12px;color:var(--home-muted);margin-top:6px;line-height:1.6;">隠れたサブスクや追加料金はありません。</p>
+        </div>
+        <div style="background:#fff;border-radius:14px;padding:18px;border:1px solid var(--home-line);">
+          <div style="font-size:11px;color:var(--home-muted);font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;">特商法</div>
+          <div style="font-size:15px;font-weight:900;color:var(--home-text);line-height:1.5;">公開済み</div>
+          <p style="font-size:12px;color:var(--home-muted);margin-top:6px;line-height:1.6;"><a href="/legal/commerce/" style="color:var(--home-blue);text-decoration:underline;">特定商取引法に基づく表記 →</a></p>
+        </div>
       </div>
     </section>
 
@@ -1608,8 +1655,6 @@
           <div>© よへラボ / yohelab.com</div>
           <div class="footer-links">
             <a href="/">トップ</a>
-            <a href="/tools/">ツール</a>
-            <a href="/services/">サービス</a>
             <a href="/blog/">ブログ</a>
             <a href="/contact/">問い合わせ</a>
             <a href="/legal/commerce/">特定商取引法</a>

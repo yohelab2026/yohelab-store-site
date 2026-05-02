@@ -13,3 +13,7 @@
 /products/article-starter-kit/* /lp/research-writer/:splat 301
 /products/article-starter-kit/ /lp/research-writer/ 301
 /products/article-starter-kit /lp/research-writer/ 301
+/tools/* /lp/research-writer/ 301
+/tools /lp/research-writer/ 301
+/services/* /products/page-review/ 301
+/services /products/page-review/ 301

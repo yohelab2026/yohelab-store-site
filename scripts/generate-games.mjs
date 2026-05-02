@@ -255,8 +255,9 @@ function pageTemplate(game) {
         <span>よへラボ</span>
       </a>
       <nav class="nav-links">
-        <a href="/tools/">ツール</a>
-        <a href="/services/">サービス</a>
+        <a href="/lp/research-writer/">記事メーカー</a>
+        <a href="/lp/bunsirube/">文標</a>
+        <a href="/products/page-review/">ページレビュー</a>
         <a href="/blog/">ブログ</a>
         <a href="/contact/">問い合わせ</a>
       </nav>
@@ -314,8 +315,6 @@ function pageTemplate(game) {
       <div>© よへラボ / yohelab.com</div>
       <div class="footer-links">
         <a href="/">トップ</a>
-        <a href="/tools/">ツール</a>
-        <a href="/services/">サービス</a>
         <a href="/blog/">ブログ</a>
         <a href="/contact/">問い合わせ</a>
         <a href="/legal/commerce/">特定商取引法</a>
