@@ -45,7 +45,7 @@ checks.push(["home no legacy tool links", legacyPaths.every((path) => !home.incl
 checks.push(["home links tools hub", home.includes('/tools/')]);
 checks.push(["home links services hub", home.includes('/services/')]);
 checks.push(["home focuses primary conversion", home.includes("まずはこの2つから") && home.includes("無料で記事メーカーを試す") && home.includes("980円（税込）で商品ページを見てもらう") && home.includes("WordPressテーマ「文標」もあります") && !home.includes("無料で遊べるミニゲーム")]);
-checks.push(["home surfaces buyer guide and tax-included prices", home.includes("購入前に読める確認メモ") && home.includes("弱点3つ・直す文・FAQ案") && home.includes("¥1,980/月（税込）") && home.includes("¥980（税込）") && home.includes("¥5,500（税込）")]);
+checks.push(["home surfaces buyer guide and tax-included prices", home.includes("購入前に読める確認メモ") && home.includes("弱点3つ・直す文・FAQ案") && home.includes("¥1,980/月（税込）") && home.includes("¥980（税込）") && home.includes("¥5,500（税込）") && home.includes("表示価格はすべて税込です。")]);
 checks.push(["home avoids overstated claims", !home.includes("AIに引用される") && !home.includes("引用されないブログ") && !home.includes("5,377億") && !home.includes("3.6兆")]);
 const toolsPage = read(dist("tools/index.html"));
 checks.push(["tools avoids overstated claims", !toolsPage.includes("AIに引用される") && !toolsPage.includes("引用される構造") && !toolsPage.includes("AI検索最適化") && !toolsPage.includes("AI検索に拾われる") && !toolsPage.includes("JSON-LD全種") && !toolsPage.includes("SWELLの1/3価格") && !toolsPage.includes("30秒で作成")]);
@@ -96,7 +96,7 @@ checks.push(["lp research writer avoids unbuilt auto posting", !lpResearchWriter
 checks.push(["lp research writer avoids stale competitor limits", !lpResearchWriter.includes("3時間40回") && !lpResearchWriter.includes("副業実践者の34") && !lpResearchWriter.includes("¥30,000〜¥50,000") && !lpResearchWriter.includes("記事下書きが完成") && !lpResearchWriter.includes("コピーして使うだけ")]);
 checks.push(["lp research writer avoids hard ROI promises", !lpResearchWriter.includes("圧倒的に安い") && !lpResearchWriter.includes("元が取れる") && !lpResearchWriter.includes("GoogleとAI検索の両方からアクセスが来る") && !lpResearchWriter.includes("30分で1本") && lpResearchWriter.includes("1セットあたり約39円") && lpResearchWriter.includes("2025年3月19日") && lpResearchWriter.includes("https://www.dentsu.co.jp/knowledge/ad_cost/2024/")]);
 checks.push(["lp research writer checkout trust note", lpResearchWriter.includes("次回更新日前日まで") && lpResearchWriter.includes("自動保存はしません") && lpResearchWriter.includes("検索順位・収益・AI検索での表示は保証しません")]);
-checks.push(["lp research writer uses tax-included price labels", lpResearchWriter.includes("¥1,980（税込") && lpResearchWriter.includes("月額1,980円（税込）")]);
+checks.push(["lp research writer uses tax-included price labels", lpResearchWriter.includes("¥1,980（税込") && lpResearchWriter.includes("月額1,980円（税込）") && lpResearchWriter.includes("表示価格はすべて税込です。")]);
 
 const researchApp = read(dist("apps/research-writer/index.html"));
 checks.push(["research app title", researchApp.includes('3キーワードで、記事の材料と下書きを作る')]);
@@ -109,7 +109,7 @@ checks.push(["research product price", researchProduct.includes('¥1,980')]);
 
 const pageReview = read(dist("products/page-review/index.html"));
 checks.push(["page review uses sharper purchase language", pageReview.includes("読まれない理由") && pageReview.includes("980円（税込）で申し込む") && pageReview.includes("売上・検索順位・クリック率の改善は保証せず")]);
-checks.push(["page review uses tax-included price labels", pageReview.includes("初回モニター980円（税込）") && pageReview.includes("通常¥3,980（税込）")]);
+checks.push(["page review uses tax-included price labels", pageReview.includes("初回モニター980円（税込）") && pageReview.includes("通常¥3,980（税込）") && pageReview.includes("表示価格はすべて税込です。")]);
 
 const wpProduct = read(dist("products/bunsirube/index.html"));
 checks.push(["wp product title", wpProduct.includes('文標（ぶんしるべ）') && wpProduct.includes('WordPressテーマ')]);
