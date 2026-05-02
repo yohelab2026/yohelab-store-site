@@ -44,6 +44,7 @@ checks.push(["home links research writer app", home.includes('/apps/research-wri
 checks.push(["home no legacy tool links", legacyPaths.every((path) => !home.includes(path))]);
 checks.push(["home links tools hub", home.includes('/tools/')]);
 checks.push(["home links services hub", home.includes('/services/')]);
+checks.push(["home focuses primary conversion", home.includes("無料で記事メーカーを試す") && home.includes("980円で商品ページを見てもらう") && !home.includes("無料で遊べるミニゲーム")]);
 checks.push(["home avoids overstated claims", !home.includes("AIに引用される") && !home.includes("引用されないブログ") && !home.includes("5,377億") && !home.includes("3.6兆")]);
 checks.push(["tools avoids overstated claims", !read(dist("tools/index.html")).includes("AIに引用される") && !read(dist("tools/index.html")).includes("引用される構造")]);
 
@@ -90,6 +91,7 @@ checks.push(["lp research writer title", lpResearchWriter.includes('記事メー
 checks.push(["lp research writer free", lpResearchWriter.includes('無料で試す') || lpResearchWriter.includes('無料版を試す')]);
 checks.push(["lp research writer safe claims", !lpResearchWriter.includes("AIに引用される") && !lpResearchWriter.includes("唯一の媒体") && !lpResearchWriter.includes("5,377億") && !lpResearchWriter.includes("3.6兆")]);
 checks.push(["lp research writer avoids unbuilt auto posting", !lpResearchWriter.includes("WordPress自動投稿設定") && !lpResearchWriter.includes("優先キュー")]);
+checks.push(["lp research writer avoids stale competitor limits", !lpResearchWriter.includes("3時間40回") && !lpResearchWriter.includes("副業実践者の34") && !lpResearchWriter.includes("¥30,000〜¥50,000")]);
 
 const researchApp = read(dist("apps/research-writer/index.html"));
 checks.push(["research app title", researchApp.includes('3キーワードで、記事の材料と下書きを作る')]);
@@ -114,6 +116,7 @@ checks.push(["contact includes research writer", contact.includes('3キーワー
 checks.push(["contact removes shortcut cards", !contact.includes('ツール一覧') && !contact.includes('サービス一覧') && !contact.includes('各ページへ直接行く')]);
 checks.push(["contact removes cancellation wording", !contact.includes('解約')]);
 checks.push(["contact no legacy tools", legacyLabels.every((label) => !contact.includes(label))]);
+checks.push(["contact invites pre-purchase questions", contact.includes("購入前の確認") && !contact.includes("記事作成スターターキット")]);
 
 const sitemap = read(dist("sitemap.xml"));
 checks.push(["sitemap includes research writer", sitemap.includes('https://yohelab.com/lp/research-writer/')]);
@@ -121,6 +124,7 @@ checks.push(["sitemap excludes legacy apps", legacyPaths.every((path) => !sitema
 checks.push(["sitemap excludes removed labs", !sitemap.includes('https://yohelab.com/labs/')]);
 checks.push(["sitemap excludes retired product redirects", !sitemap.includes('https://yohelab.com/products/article-starter-kit/') && !sitemap.includes('https://yohelab.com/products/wordpress-theme-beta/')]);
 checks.push(["sitemap includes three sales pages", sitemap.includes('https://yohelab.com/lp/research-writer/') && sitemap.includes('https://yohelab.com/lp/bunsirube/') && sitemap.includes('https://yohelab.com/products/page-review/')]);
+checks.push(["sitemap includes bunsirube demo", sitemap.includes('https://yohelab.com/lp/bunsirube/demo/')]);
 checks.push(["sitemap includes all game pages", ["reaction", "typing", "math-rush", "sequence"].every((slug) => sitemap.includes(`https://yohelab.com/games/${slug}/`))]);
 
 const gameScript = read(dist("shared/arcade-game.js"));
@@ -136,6 +140,7 @@ const blogPostFunction = read(src("functions/blog/post/index.js"));
 const blogPostPage = read(dist("blog/post/index.html"));
 const blogPostApi = read(src("functions/api/blog-post.js"));
 const bunsirubeLp = read(dist("lp/bunsirube/index.html"));
+const bunsirubeDemo = read(dist("lp/bunsirube/demo/index.html"));
 const matomoLoader = read(dist("shared/matomo-loader.js"));
 checks.push(["theme serial uses bunsirube prefix", ent.includes("BUN-") && !ent.includes("AIO-")]);
 checks.push(["entitlement keeps research writer", ent.includes('"research-writer"')]);
@@ -151,6 +156,7 @@ checks.push(["blog images are stable and lazy", blogAdmin.includes('width="${ima
 checks.push(["blog post sanitizes dangerous html server side", blogPostFunction.includes("sanitizeBodyHtml") && blogPostFunction.includes("iframe|object|embed") && blogPostFunction.includes("javascript:") && blogPostFunction.includes("data:text") && blogPostFunction.includes("vbscript:")]);
 checks.push(["blog post sanitizes dangerous html client fallback", blogPostPage.includes("sanitizeBodyHtml") && blogPostPage.includes("iframe|object|embed") && blogPostPage.includes("javascript:") && blogPostPage.includes("data:text") && blogPostPage.includes("vbscript:")]);
 checks.push(["bunsirube lp includes update history", bunsirubeLp.includes("文標の更新履歴") && bunsirubeLp.includes('id="updates"') && bunsirubeLp.includes("自動アップデート用シリアル")]);
+checks.push(["bunsirube lp includes demo and support", bunsirubeLp.includes('/lp/bunsirube/demo/') && bunsirubeLp.includes("購入後30日間") && bunsirubeDemo.includes("文標の見た目と使い方")]);
 checks.push(["matomo skips local without explicit url", matomoLoader.includes("isLocal && !window.YOHELAB_MATOMO_URL") && !matomoLoader.includes("http://localhost:8080/")]);
 
 for (const [name, ok] of checks) {

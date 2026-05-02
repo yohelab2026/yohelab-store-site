@@ -90,6 +90,7 @@ export default defineConfig({
         lpResearchWriter: "lp/research-writer/index.html",
         bunsirubeProduct: "products/bunsirube/index.html",
         lpWordpressTheme: "lp/bunsirube/index.html",
+        lpWordpressThemeDemo: "lp/bunsirube/demo/index.html",
         ...collectGameInputs(),
       },
     },

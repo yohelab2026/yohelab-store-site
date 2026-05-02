@@ -16,6 +16,7 @@ const STATIC_URLS = [
   { loc: "/services/", changefreq: "weekly", priority: "0.9" },
   { loc: "/lp/research-writer/", changefreq: "weekly", priority: "0.9" },
   { loc: "/lp/bunsirube/", changefreq: "weekly", priority: "0.9" },
+  { loc: "/lp/bunsirube/demo/", changefreq: "monthly", priority: "0.6" },
   { loc: "/apps/research-writer/", changefreq: "weekly", priority: "0.8" },
   { loc: "/products/page-review/", changefreq: "weekly", priority: "0.8" },
   { loc: "/products/research-writer-beta/", changefreq: "weekly", priority: "0.7" },
