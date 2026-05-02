@@ -44,7 +44,7 @@ checks.push(["home links research writer app", home.includes('/apps/research-wri
 checks.push(["home no legacy tool links", legacyPaths.every((path) => !home.includes(path))]);
 checks.push(["home links tools hub", home.includes('/tools/')]);
 checks.push(["home links services hub", home.includes('/services/')]);
-checks.push(["home focuses primary conversion", home.includes("無料で記事メーカーを試す") && home.includes("980円で商品ページを見てもらう") && !home.includes("無料で遊べるミニゲーム")]);
+checks.push(["home focuses primary conversion", home.includes("まずはこの2つから") && home.includes("無料で記事メーカーを試す") && home.includes("980円で商品ページを見てもらう") && home.includes("WordPressテーマ「文標」もあります") && !home.includes("無料で遊べるミニゲーム")]);
 checks.push(["home avoids overstated claims", !home.includes("AIに引用される") && !home.includes("引用されないブログ") && !home.includes("5,377億") && !home.includes("3.6兆")]);
 checks.push(["tools avoids overstated claims", !read(dist("tools/index.html")).includes("AIに引用される") && !read(dist("tools/index.html")).includes("引用される構造")]);
 
@@ -91,7 +91,8 @@ checks.push(["lp research writer title", lpResearchWriter.includes('記事メー
 checks.push(["lp research writer free", lpResearchWriter.includes('無料で試す') || lpResearchWriter.includes('無料版を試す')]);
 checks.push(["lp research writer safe claims", !lpResearchWriter.includes("AIに引用される") && !lpResearchWriter.includes("唯一の媒体") && !lpResearchWriter.includes("5,377億") && !lpResearchWriter.includes("3.6兆")]);
 checks.push(["lp research writer avoids unbuilt auto posting", !lpResearchWriter.includes("WordPress自動投稿設定") && !lpResearchWriter.includes("優先キュー")]);
-checks.push(["lp research writer avoids stale competitor limits", !lpResearchWriter.includes("3時間40回") && !lpResearchWriter.includes("副業実践者の34") && !lpResearchWriter.includes("¥30,000〜¥50,000")]);
+checks.push(["lp research writer avoids stale competitor limits", !lpResearchWriter.includes("3時間40回") && !lpResearchWriter.includes("副業実践者の34") && !lpResearchWriter.includes("¥30,000〜¥50,000") && !lpResearchWriter.includes("記事下書きが完成") && !lpResearchWriter.includes("コピーして使うだけ")]);
+checks.push(["lp research writer checkout trust note", lpResearchWriter.includes("次回更新日前日まで") && lpResearchWriter.includes("自動保存はしません") && lpResearchWriter.includes("検索順位・収益・AI検索での表示は保証しません")]);
 
 const researchApp = read(dist("apps/research-writer/index.html"));
 checks.push(["research app title", researchApp.includes('3キーワードで、記事の材料と下書きを作る')]);
@@ -101,6 +102,9 @@ checks.push(["research app wp mode", researchApp.includes('WordPress設定も出
 const researchProduct = read(dist("products/research-writer-beta/index.html"));
 checks.push(["research product title", researchProduct.includes('3キーワードの記事メーカー プロプラン')]);
 checks.push(["research product price", researchProduct.includes('¥1,980')]);
+
+const pageReview = read(dist("products/page-review/index.html"));
+checks.push(["page review uses sharper purchase language", pageReview.includes("読まれない理由") && pageReview.includes("980円で申し込む") && pageReview.includes("売上・検索順位・クリック率の改善は保証せず")]);
 
 const wpProduct = read(dist("products/bunsirube/index.html"));
 checks.push(["wp product title", wpProduct.includes('文標（ぶんしるべ）') && wpProduct.includes('WordPressテーマ')]);
@@ -156,7 +160,7 @@ checks.push(["blog images are stable and lazy", blogAdmin.includes('width="${ima
 checks.push(["blog post sanitizes dangerous html server side", blogPostFunction.includes("sanitizeBodyHtml") && blogPostFunction.includes("iframe|object|embed") && blogPostFunction.includes("javascript:") && blogPostFunction.includes("data:text") && blogPostFunction.includes("vbscript:")]);
 checks.push(["blog post sanitizes dangerous html client fallback", blogPostPage.includes("sanitizeBodyHtml") && blogPostPage.includes("iframe|object|embed") && blogPostPage.includes("javascript:") && blogPostPage.includes("data:text") && blogPostPage.includes("vbscript:")]);
 checks.push(["bunsirube lp includes update history", bunsirubeLp.includes("文標の更新履歴") && bunsirubeLp.includes('id="updates"') && bunsirubeLp.includes("自動アップデート用シリアル")]);
-checks.push(["bunsirube lp includes demo and support", bunsirubeLp.includes('/lp/bunsirube/demo/') && bunsirubeLp.includes("購入後30日間") && bunsirubeDemo.includes("文標の見た目と使い方")]);
+checks.push(["bunsirube lp includes demo and support", bunsirubeLp.includes('/lp/bunsirube/demo/') && bunsirubeLp.includes("デモを見る") && bunsirubeLp.includes("テーマ購入前の不安") && bunsirubeLp.includes("決済後の返金はできません") && bunsirubeLp.includes("購入後30日間") && bunsirubeDemo.includes("文標の見た目と使い方")]);
 checks.push(["matomo skips local without explicit url", matomoLoader.includes("isLocal && !window.YOHELAB_MATOMO_URL") && !matomoLoader.includes("http://localhost:8080/")]);
 
 for (const [name, ok] of checks) {

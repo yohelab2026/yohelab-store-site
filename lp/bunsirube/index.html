@@ -683,6 +683,30 @@
       font-weight:900;
       letter-spacing:.08em;
     }
+    .risk-list {
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:14px;
+      margin-top:18px;
+    }
+    .risk-card {
+      border-radius:18px;
+      padding:18px;
+      background:#fff;
+      border:1px solid #dce7f3;
+      box-shadow:0 10px 24px rgba(25,86,120,.06);
+    }
+    .risk-card strong {
+      display:block;
+      color:#087365;
+      margin-bottom:7px;
+      font-size:14px;
+    }
+    .risk-card span {
+      color:#536979;
+      line-height:1.75;
+      font-size:13px;
+    }
     .faq-list {
       max-width:880px;
       margin:0 auto;
@@ -756,6 +780,7 @@
       .hero-layout,
       .before-after,
       .price-wrap,
+      .risk-list,
       .dashboard-grid {
         grid-template-columns:1fr;
       }
@@ -828,7 +853,7 @@
           <p class="hero-lead">文標（ぶんしるべ）は、見た目だけのテーマじゃない。比較記事、レビュー記事、FAQ記事、商品紹介まで、読まれやすい記事の骨組みを最初から入れておくテーマ。</p>
           <div class="hero-actions">
             <a class="btn btn-primary btn-xl" href="https://buy.stripe.com/bJeaEPfTN2ze2Cubvb73G0e?client_reference_id=wordpress-theme">¥5,500で購入する →</a>
-            <a class="btn btn-outline btn-xl" href="#features">中身を見る</a>
+            <a class="btn btn-outline btn-xl" href="/lp/bunsirube/demo/">デモを見る</a>
           </div>
           <div class="hero-mini">
             <span>買い切り</span>
@@ -1073,6 +1098,7 @@
           <p style="font-size:13px;line-height:1.8;color:var(--muted);margin:12px 0 16px;">購入前に、見た目・記事パーツ・設定画面のイメージを確認できます。</p>
           <a class="btn btn-outline btn-lg" href="/lp/bunsirube/demo/" style="margin-bottom:12px;">デモ画面を見る →</a>
           <a class="btn btn-lg" href="https://buy.stripe.com/bJeaEPfTN2ze2Cubvb73G0e?client_reference_id=wordpress-theme">購入してZIPを受け取る →</a>
+          <p style="font-size:12.5px;line-height:1.8;color:rgba(255,255,255,.88);margin-top:14px;">デジタル商品のため、決済後の返金はできません。導入前に対応環境、デモ、FAQ、サポート範囲をご確認ください。</p>
         </div>
         <div class="trust-stack">
           <article class="trust-card"><h3>ベータ価格</h3><p>今は¥5,500で購入できます。買い切りで月額はかかりません。</p></article>
@@ -1086,6 +1112,21 @@
               <li><time datetime="2026-05-01">2026.05.01</time><span>記事テンプレート、FAQ、構造化データ、llms.txt、内部解析、自動アップデート用シリアルを購入内容にまとめました。</span></li>
             </ul>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="lp-section" style="padding-top:0;">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-label">Before buying</span>
+          <h2>テーマ購入前の不安を先に確認できます。</h2>
+          <p>WordPressテーマは「入れたあと」が不安になりやすい商品なので、購入前に大事な点をまとめています。</p>
+        </div>
+        <div class="risk-list">
+          <div class="risk-card"><strong>既存記事</strong><span>テーマ変更で投稿記事そのものは通常消えません。ただし装飾やウィジェット表示は変わることがあります。</span></div>
+          <div class="risk-card"><strong>サポート</strong><span>購入後30日間、導入手順と初期設定の質問に対応します。個別カスタマイズは含みません。</span></div>
+          <div class="risk-card"><strong>更新</strong><span>重大な不具合やWordPress本体の変更に合わせて、必要な更新を行います。更新履歴はこのページに残します。</span></div>
         </div>
       </div>
     </section>
@@ -1113,7 +1154,7 @@
             <summary>購入後はどう使う？</summary>
             <div class="faq-body">決済後にZIPとシリアルをお受け取りいただき、WordPress管理画面の「外観 → テーマ → 新規追加 → テーマのアップロード」からZIPを入れてご利用ください。シリアルは更新確認に使用します。</div>
           </details>
-          <details class="faq-item">
+          <details class="faq-item" open>
             <summary>既存の記事は消える？</summary>
             <div class="faq-body">通常、テーマを変更しても投稿記事そのものは消えません。ただし、テーマ固有の装飾やウィジェット表示は変わることがあります。切り替え前にバックアップを取り、可能ならテスト環境で確認してください。</div>
           </details>

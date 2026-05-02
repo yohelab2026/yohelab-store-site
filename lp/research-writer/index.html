@@ -19,7 +19,7 @@
   <script type="application/ld+json">
   {"@context":"https://schema.org","@graph":[
     {"@type":"WebSite","name":"よへラボ","url":"https://yohelab.com/"},
-    {"@type":"SoftwareApplication","name":"3キーワード記事メーカー","applicationCategory":"BusinessApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"1980","priceCurrency":"JPY","name":"プロプラン","description":"月50セット・月額1,980円・いつでも解約可"},"description":"3つのキーワード入力で最新情報のリサーチから記事下書き生成までを自動化するWebツール。無料版あり。"},
+    {"@type":"SoftwareApplication","name":"3キーワード記事メーカー","applicationCategory":"BusinessApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"1980","priceCurrency":"JPY","name":"プロプラン","description":"月50セット・月額1,980円・いつでも解約可"},"description":"3つのキーワード入力で最新情報のリサーチから記事下書きの材料生成までを短くするWebツール。無料版あり。"},
     {"@type":"FAQPage","mainEntity":[
       {"@type":"Question","name":"無料版で何ができる？","acceptedAnswer":{"@type":"Answer","text":"1日1セット、3キーワードからの最新情報収集・記事下書きの材料生成（見出し・FAQ・出典付き）を試せる。登録不要、ブラウザだけで使える。"}},
       {"@type":"Question","name":"プロプランは何が違う？","acceptedAnswer":{"@type":"Answer","text":"月50セット使える。1記事あたり実質39円。FAQ自動生成・出典整理・WordPress設定の自動化が強化される。"}}
@@ -145,6 +145,8 @@
     .price-card.pro .btn-primary:hover { background: #f4faf7; }
     .price-card .badge-pop { position: absolute; top: -14px; right: 24px; background: #ffd54f; color: #5b3a00; padding: 6px 14px; border-radius: 999px; font-size: 12px; font-weight: 900; box-shadow: 0 6px 16px rgba(0,0,0,.15); }
     .price-card .per-article { background: rgba(255,255,255,.18); padding: 8px 12px; border-radius: 8px; font-weight: 800; font-size: 13px; margin-top: 10px; display: inline-block; }
+    .checkout-note { max-width: 760px; margin: 18px auto 0; padding: 16px 18px; border-radius: 16px; background: #fff; border: 1px solid rgba(11,143,114,.16); color: var(--muted); font-size: 13px; line-height: 1.85; }
+    .checkout-note strong { color: var(--green-dark); }
 
     .faq-list { max-width: 820px; margin: 0 auto; display: grid; gap: 12px; }
     .faq-item { background: #fff; border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
@@ -375,7 +377,7 @@
         <div class="sec-head">
           <p class="sec-label">Inside</p>
           <h2>実際の画面、こんな感じ。</h2>
-          <p>左で3キーワードを入れて、中央で情報源を選び、右で記事下書きを受け取る。</p>
+          <p>左で3キーワードを入れて、中央で情報源を選び、右で記事下書きの材料を受け取る。</p>
         </div>
         <div class="screenshot-wrap">
           <img src="/proof/research-writer-app.svg" alt="3キーワード記事メーカーの画面" loading="lazy" />
@@ -383,7 +385,7 @@
         <div class="annotation-grid">
           <div class="annotation"><div class="num">1</div><div><div class="annotation-title">3キーワード入力</div><p>テーマ・読者層・切り口の3つだけ。</p></div></div>
           <div class="annotation"><div class="num">2</div><div><div class="annotation-title">情報源を選ぶ</div><p>10〜20件の候補から、信頼できるものをチェック。</p></div></div>
-          <div class="annotation"><div class="num">3</div><div><div class="annotation-title">記事下書きが完成</div><p>見出し・FAQ・出典付き。コピーして使うだけ。</p></div></div>
+          <div class="annotation"><div class="num">3</div><div><div class="annotation-title">記事材料を受け取る</div><p>見出し・FAQ・出典付き。内容を確認して、自分の言葉で仕上げる。</p></div></div>
         </div>
       </div>
     </section>
@@ -495,7 +497,10 @@
             <a class="btn btn-primary btn-lg" href="https://buy.stripe.com/aFa4gr6jd6Pu4KC7eV73G0d?client_reference_id=research-writer" target="_blank" rel="noreferrer">月額1,980円で始める →</a>
           </div>
         </div>
-        <p style="text-align:center;font-size:13px;color:var(--muted);margin-top:18px;">プロプランは Stripe の月額課金。いつでも問い合わせフォームから解約申請可能。</p>
+        <div class="checkout-note">
+          <strong>購入前に確認できること:</strong>
+          プロプランは Stripe の月額課金です。解約は問い合わせフォームから申請でき、次回更新日前日までの連絡で翌月以降の課金を停止します。無料版・プロ版とも、入力内容は生成処理のために使い、自動保存はしません。検索順位・収益・AI検索での表示は保証しません。
+        </div>
       </div>
     </section>
 
