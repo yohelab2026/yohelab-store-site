@@ -137,7 +137,7 @@ function sanitizeUrl(value) {
   const url = String(value || "").trim();
   if (!url) return "";
   // 自サイトの画像API（/api/blog-image?key=...）も許可
-  if (/^\/api\/blog-image\?key=[\w-]+$/.test(url)) return url;
+  if (/^\/api\/blog-image\?key=[\w.-]+$/.test(url)) return url;
   try {
     const parsed = new URL(url);
     return parsed.protocol === "https:" ? parsed.href : "";

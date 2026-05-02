@@ -152,7 +152,7 @@
         <div class="cover-drop" id="cover-drop" onclick="document.getElementById('cover-file').click()">
           <span style="font-size:28px;">🖼</span>
           <span>カバー画像を追加（タップ or ドロップ）</span>
-          <span style="font-size:12px;font-weight:400;">JPG / PNG / WebP・25MBまで</span>
+          <span style="font-size:12px;font-weight:400;">JPG / PNG / WebPを自動でWebP 1枚に変換</span>
         </div>
         <div class="cover-preview" id="cover-preview" style="display:none;">
           <img id="cover-img" src="" alt="カバー" />
@@ -161,7 +161,7 @@
             <button class="cover-btn" id="cover-remove" type="button">削除</button>
           </div>
         </div>
-        <input id="cover-file" type="file" accept="image/jpeg,image/png,image/webp,image/gif" style="display:none;" />
+        <input id="cover-file" type="file" accept="image/jpeg,image/png,image/webp" style="display:none;" />
         <input id="eyecatch" type="hidden" />
       </div>
 
@@ -191,7 +191,7 @@
         <input id="bg-color" type="color" value="#fff3bf" title="マーカー色" />
         <button id="clear-style">スタイル解除</button>
         <button id="insert-img-btn" title="画像を挿入">📷 画像</button>
-        <input id="insert-img-file" type="file" accept="image/jpeg,image/png,image/webp,image/gif" style="display:none;" />
+        <input id="insert-img-file" type="file" accept="image/jpeg,image/png,image/webp" style="display:none;" />
       </div>
 
       <!-- 本文 -->
@@ -387,7 +387,7 @@
   });
 
   async function uploadCover(file) {
-    coverDrop.textContent = 'アップロード中...';
+    coverDrop.textContent = 'WebPに変換してアップロード中...';
     const url = await uploadImage(file);
     if (!url) { coverDrop.innerHTML = '❌ アップロード失敗'; return; }
     eyecatchEl.value = url;
@@ -400,7 +400,9 @@
   async function uploadImage(file) {
     const pin = currentPin();
     if (!pin) return null;
-    const fd = new FormData(); fd.append('file', file);
+    const webpFile = await convertToSingleWebp(file);
+    if (!webpFile) return null;
+    const fd = new FormData(); fd.append('file', webpFile);
     try {
       const res = await fetch('/api/blog-image', {
         method: 'POST',
@@ -410,6 +412,39 @@
       const data = await res.json().catch(()=>({}));
       return res.ok ? data.url : null;
     } catch { return null; }
+  }
+
+  async function convertToSingleWebp(file) {
+    if (!/^image\/(jpeg|png|webp)$/.test(file.type)) {
+      statusEl.textContent = 'JPG / PNG / WebP の画像だけ使えます。';
+      return null;
+    }
+
+    const bitmap = await createImageBitmap(file).catch(() => null);
+    if (!bitmap) {
+      statusEl.textContent = '画像を読み込めませんでした。';
+      return null;
+    }
+
+    const maxSide = 1600;
+    const scale = Math.min(1, maxSide / Math.max(bitmap.width, bitmap.height));
+    const width = Math.max(1, Math.round(bitmap.width * scale));
+    const height = Math.max(1, Math.round(bitmap.height * scale));
+    const canvas = document.createElement('canvas');
+    canvas.width = width;
+    canvas.height = height;
+    const ctx = canvas.getContext('2d', { alpha: true });
+    ctx.drawImage(bitmap, 0, 0, width, height);
+    bitmap.close?.();
+
+    const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/webp', 0.82));
+    if (!blob) {
+      statusEl.textContent = 'WebPへの変換に失敗しました。';
+      return null;
+    }
+
+    const baseName = (file.name || 'blog-image').replace(/\.[^.]+$/, '').replace(/[^\w-]+/g, '-').replace(/^-+|-+$/g, '') || 'blog-image';
+    return new File([blob], `${baseName}.webp`, { type: 'image/webp' });
   }
 
   // ── スラッグ自動生成 ──────────────────────────────────────

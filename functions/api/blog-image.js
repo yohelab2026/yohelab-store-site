@@ -5,7 +5,7 @@
 
 import { getBlogPin, isValidPin, timingSafeEqual } from "../lib/blog-auth.js";
 
-const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
+const ALLOWED_TYPES = ["image/webp"];
 const MAX_BYTES = 25 * 1024 * 1024; // 25MB
 const DEFAULT_PUBLIC_IMAGE_BASE = "https://images.yohelab.com";
 
@@ -55,12 +55,12 @@ export async function onRequestPost(context) {
     const file = formData.get("file");
 
     if (!file || typeof file === "string") return json({ error: "no file" }, 400, context.request);
-    if (!ALLOWED_TYPES.includes(file.type)) return json({ error: "unsupported type", type: file.type || "" }, 400, context.request);
+    if (!ALLOWED_TYPES.includes(file.type)) return json({ error: "webp_required", type: file.type || "" }, 400, context.request);
 
     const buffer = await file.arrayBuffer();
     if (buffer.byteLength > MAX_BYTES) return json({ error: "too large (max 25MB)" }, 400, context.request);
 
-    const key = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+    const key = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.webp`;
     await writeImage(storage, key, buffer, file);
 
     const url = publicImageUrl(context.env, key, storage);
