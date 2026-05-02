@@ -23,7 +23,11 @@
     .demo-hero h1 { font-size: clamp(34px, 6vw, 64px); line-height: 1.08; letter-spacing: -.06em; margin-bottom: 16px; }
     .demo-hero p { max-width: 760px; color: var(--muted); font-size: 17px; line-height: 1.9; }
     .demo-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 22px; align-items: start; }
+    .demo-nav { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+    .demo-nav a { border: 1px solid #b9d8d2; background: rgba(255,255,255,.82); color: #075c4c; border-radius: 999px; padding: 10px 14px; font-weight: 900; text-decoration: none; }
     .demo-card { background: #fff; border: 1px solid var(--border); border-radius: 24px; padding: 26px; box-shadow: var(--shadow-xs); }
+    .demo-section-head { max-width: 760px; margin-bottom: 22px; }
+    .demo-section-head p { color: var(--muted); line-height: 1.85; }
     .article-sample h2 { font-size: clamp(26px, 4vw, 40px); line-height: 1.2; letter-spacing: -.04em; margin-bottom: 12px; }
     .article-sample p, .article-sample li { color: var(--muted); line-height: 1.85; }
     .point-box { border-left: 5px solid #0b8f72; background: #f0fbf6; padding: 18px; border-radius: 14px; margin: 18px 0; }
@@ -40,6 +44,10 @@
     .setting-row { display: flex; justify-content: space-between; gap: 12px; padding: 14px 16px; border-radius: 14px; background: #f8fbff; border: 1px solid #dce7fb; }
     .setting-row strong { color: #075c4c; }
     .note { font-size: 13px; color: var(--muted); line-height: 1.8; margin-top: 14px; }
+    .sample-stack { display: grid; gap: 22px; }
+    .sample-meta { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 18px; }
+    .sample-meta span { background: #eef7ff; color: #075c4c; border-radius: 999px; padding: 7px 10px; font-size: 12px; font-weight: 900; }
+    .review-box { border: 1px solid #dce7fb; border-radius: 18px; padding: 18px; background: #f8fbff; margin-top: 14px; }
     @media (max-width: 860px) { .demo-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
@@ -61,15 +69,22 @@
       <div class="container">
         <h1>文標の見た目と使い方を、購入前に確認する。</h1>
         <p>このページは、文標（ぶんしるべ）で作れる記事パーツのイメージです。実際のWordPress画面では、色、FAQ、比較表、CTA、解析設定をテーマ側で扱いやすくする想定です。</p>
+        <div class="demo-nav" aria-label="文標デモの種類">
+          <a href="#compare-demo">比較記事デモ</a>
+          <a href="#review-demo">レビュー記事デモ</a>
+          <a href="#faq-demo">FAQ記事デモ</a>
+          <a href="#settings-demo">管理画面イメージ</a>
+        </div>
         <p><a class="btn btn-primary btn-lg" href="/lp/bunsirube/">文標の購入ページへ戻る</a></p>
       </div>
     </section>
 
     <section class="section">
       <div class="container demo-grid">
-        <article class="demo-card article-sample">
+        <article class="demo-card article-sample" id="compare-demo">
           <p style="color:#075c4c;font-weight:900;letter-spacing:.12em;text-transform:uppercase;">Article sample</p>
           <h2>ブログ初心者が、最初に整えるべき記事の型。</h2>
+          <div class="sample-meta"><span>比較記事デモ</span><span>FAQつき</span><span>CTAつき</span></div>
           <p>文標は、見た目だけのテーマではなく、記事を書く順番を決めやすくするためのWordPressテーマです。結論、理由、比較、FAQ、CTAを同じ流れで置けるようにします。</p>
           <div class="point-box">
             <strong>この記事の結論</strong>
@@ -101,7 +116,7 @@
           </div>
         </article>
 
-        <aside class="demo-card">
+        <aside class="demo-card" id="settings-demo">
           <p style="color:#075c4c;font-weight:900;letter-spacing:.12em;text-transform:uppercase;">Settings sample</p>
           <h2 style="font-size:28px;letter-spacing:-.04em;margin-bottom:16px;">管理画面のイメージ</h2>
           <div class="settings-list">
@@ -115,6 +130,65 @@
           <p class="note">これは購入前に雰囲気を確認するためのデモです。実際の表示はWordPress環境、投稿内容、設定によって変わります。</p>
           <p><a class="btn btn-primary" href="https://buy.stripe.com/bJeaEPfTN2ze2Cubvb73G0e?client_reference_id=wordpress-theme">¥5,500で購入する</a></p>
         </aside>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0;">
+      <div class="container sample-stack">
+        <div class="demo-section-head">
+          <h2 style="font-size:clamp(28px,4vw,44px);letter-spacing:-.05em;">記事タイプ別の見え方</h2>
+          <p>購入前に見たいのは機能名より、実際の記事としてどう読めるか。比較記事、レビュー記事、FAQ記事の3パターンをここで確認できます。</p>
+        </div>
+
+        <article class="demo-card article-sample" id="review-demo">
+          <p style="color:#075c4c;font-weight:900;letter-spacing:.12em;text-transform:uppercase;">Review article demo</p>
+          <h2>小さなネットショップが、最初に見直すべき商品ページ。</h2>
+          <div class="sample-meta"><span>レビュー記事デモ</span><span>要点ボックス</span><span>改善CTA</span></div>
+          <p>商品ページでは、特徴を並べるだけでは購入理由が伝わりにくくなります。読者が知りたいのは「自分に合うか」「買ったあと困らないか」「他と何が違うか」です。</p>
+          <div class="point-box">
+            <strong>先に伝えること</strong>
+            <p>誰向けの商品か、何が届くか、購入前に確認すべきこと。この3つを先に置くと、読み手の迷いを減らしやすくなります。</p>
+          </div>
+          <div class="review-box">
+            <strong>改善前</strong>
+            <p>こだわり素材で作った便利な商品です。毎日の生活におすすめです。</p>
+          </div>
+          <div class="review-box" style="background:#f0fbf6;border-color:#b7e4d4;">
+            <strong>改善後</strong>
+            <p>朝の準備を短くしたい人向けの小物収納です。鍵、イヤホン、腕時計を玄関にまとめられるので、出かける前の探し物を減らせます。</p>
+          </div>
+          <div class="cta-box" style="background-color:#083b35;color:#ffffff;">
+            <strong style="color:#ffffff;">商品ページを読み直す</strong>
+            <p style="color:#ffffff;">見出し、説明文、FAQを直すだけで、買う前の迷いを減らしやすくなります。</p>
+            <a class="btn btn-white" href="/products/page-review/">商品ページ改善レビューを見る</a>
+          </div>
+        </article>
+
+        <article class="demo-card article-sample" id="faq-demo">
+          <p style="color:#075c4c;font-weight:900;letter-spacing:.12em;text-transform:uppercase;">FAQ article demo</p>
+          <h2>WordPressテーマを入れる前によくある質問。</h2>
+          <div class="sample-meta"><span>FAQ記事デモ</span><span>購入前不安</span><span>構造化データ</span></div>
+          <p>テーマ購入前の不安は、価格よりも「壊れないか」「今の記事はどうなるか」「困ったときに聞けるか」に集まりやすいです。FAQ記事では、その不安を先に整理します。</p>
+          <div class="faq-demo">
+            <details open>
+              <summary>今ある記事は消えますか？</summary>
+              <p>テーマ変更だけで投稿本文が消えることは通常ありません。ただし、テーマ固有の装飾やショートコードは見え方が変わる場合があります。変更前にバックアップを取ってください。</p>
+            </details>
+            <details open>
+              <summary>導入前に何を確認すればいいですか？</summary>
+              <p>WordPress本体、PHPバージョン、使っているプラグイン、バックアップの有無を確認します。文標は購入ページに対応環境を載せています。</p>
+            </details>
+            <details>
+              <summary>更新はありますか？</summary>
+              <p>不具合修正や軽微な改善を更新履歴で公開します。更新内容を見てから適用できます。</p>
+            </details>
+          </div>
+          <div class="cta-box" style="background-color:#083b35;color:#ffffff;">
+            <strong style="color:#ffffff;">不安を確認してから導入する</strong>
+            <p style="color:#ffffff;">文標は、購入前に対応環境、サポート範囲、更新履歴を確認できます。</p>
+            <a class="btn btn-white" href="/lp/bunsirube/">文標の詳細へ戻る</a>
+          </div>
+        </article>
       </div>
     </section>
   </main>
