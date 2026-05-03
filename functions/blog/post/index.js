@@ -216,7 +216,7 @@ function renderPostHTML(post, slug, requestUrl) {
   <meta name="twitter:title" content="${escAttr(title)}" />
   <meta name="twitter:description" content="${escAttr(description)}" />
   <meta name="twitter:image" content="${escAttr(eyecatchAbs)}" />
-  <link rel="icon" type="image/png" href="/yohelab-icon.png" />
+  <link rel="icon" type="image/png" href="/yohelab-icon-32.png" />
   <link rel="stylesheet" href="/shared/site.css" />
   <script type="application/ld+json">${articleLd}</script>
   <script type="application/ld+json">${breadcrumbLd}</script>
@@ -260,7 +260,7 @@ function renderPostHTML(post, slug, requestUrl) {
 <body>
   <header class="nav">
     <div class="nav-inner">
-      <a class="brand" href="/"><img src="/yohelab-icon.png" alt="よへラボ" /><span>よへラボ</span></a>
+      <a class="brand" href="/"><img src="/yohelab-icon.webp" alt="よへラボ" /><span>よへラボ</span></a>
       <nav class="nav-links">
         <a href="/tools/">ツール</a>
         <a href="/services/">サービス</a>
