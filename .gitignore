@@ -6,10 +6,8 @@ dist/
 wordpress-themes/bunsirube
 
 
-# Theme source は yohelab2026/aio-starter (private repo) で管理
-# ZIP は GitHub Actions → R2 で自動デプロイ
-downloads/aio-starter.zip
-public/downloads/aio-starter.zip
+# Theme source は wordpress-themes/bunsirube で管理
+# ZIP は手元で生成して R2 へアップロード
 bunsirube.zip
 bunsirube-*.zip
 downloads/bunsirube.zip

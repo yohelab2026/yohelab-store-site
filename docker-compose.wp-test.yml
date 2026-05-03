@@ -30,6 +30,7 @@ services:
     volumes:
       - wp_test_html:/var/www/html
       - ./wordpress-themes/bunsirube:/var/www/html/wp-content/themes/bunsirube
+      - ./wordpress-themes/bunsirube-child:/var/www/html/wp-content/themes/bunsirube-child
 
   cli:
     image: wordpress:cli-php8.3
@@ -46,6 +47,7 @@ services:
     volumes:
       - wp_test_html:/var/www/html
       - ./wordpress-themes/bunsirube:/var/www/html/wp-content/themes/bunsirube
+      - ./wordpress-themes/bunsirube-child:/var/www/html/wp-content/themes/bunsirube-child
 
 volumes:
   wp_test_db:

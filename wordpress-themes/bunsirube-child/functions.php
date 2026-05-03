@@ -16,7 +16,7 @@ function bunsirube_child_assets() {
     wp_enqueue_style(
         'bunsirube-child-style',
         get_stylesheet_uri(),
-        array('aio-starter-style'),
+        array('bunsirube-style'),
         BUNSIRUBE_CHILD_VERSION
     );
 }
