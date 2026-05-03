@@ -7,16 +7,15 @@
  *   wrangler r2 object put theme-assets/bunsirube.zip --file=bunsirube.zip
  */
 
-import { readdirSync, statSync } from "node:fs";
+import { copyFileSync, readdirSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 const ROOT = join(__dirname, "..");
 const THEME_SLUG = "bunsirube";
-const OUT_NAME = "bunsirube.zip";
 const THEME_DIR = join(ROOT, "wordpress-themes", THEME_SLUG);
-const OUT_FILE = join(ROOT, OUT_NAME);
+const STYLE_FILE = join(THEME_DIR, "style.css");
 
 // ---- 除外パターン ----
 const EXCLUDE = [
@@ -157,10 +156,18 @@ console.log(`Packaging ${files.length} files from wordpress-themes/${THEME_SLUG}
 
 const zip = await buildZip(files);
 import { writeFileSync } from "node:fs";
-writeFileSync(OUT_FILE, zip);
+const style = readFileSync(STYLE_FILE, "utf8");
+const version = style.match(/^Version:\s*(.+)$/m)?.[1]?.trim() || "0.0.0";
+const versionedName = `${THEME_SLUG}-${version}.zip`;
+const versionedFile = join(ROOT, versionedName);
+const stableName = `${THEME_SLUG}.zip`;
+const stableFile = join(ROOT, stableName);
+writeFileSync(versionedFile, zip);
+copyFileSync(versionedFile, stableFile);
 
 const kb = (zip.length / 1024).toFixed(1);
-console.log(`✓ ${OUT_NAME} (${kb} KB)`);
+console.log(`✓ ${versionedName} (${kb} KB)`);
+console.log(`✓ ${stableName} (${kb} KB, compatibility copy)`);
 console.log("");
 console.log("To upload to R2:");
-console.log(`  wrangler r2 object put theme-assets/${OUT_NAME} --file=${OUT_NAME}`);
+console.log(`  wrangler r2 object put theme-assets/${stableName} --file=${stableName}`);

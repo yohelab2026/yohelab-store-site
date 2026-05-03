@@ -1,4 +1,5 @@
 import { onRequestGet } from "../functions/api/theme-download.js";
+import { onRequestPost as onThemeLicensePost } from "../functions/api/theme-license.js";
 import { makeSerial } from "../functions/lib/entitlements.js";
 
 const originalFetch = globalThis.fetch;
@@ -20,7 +21,7 @@ function makeEnv({ paid = true, bucket = true } = {}) {
         return {
           body: new Uint8Array([80, 75, 3, 4]),
           httpMetadata: { contentType: "application/zip" },
-          customMetadata: { version: "0.1.4" },
+          customMetadata: { version: "0.1.5" },
         };
       },
     };
@@ -51,8 +52,26 @@ try {
   const ok = await onRequestGet({ request: await requestFor({ serial }), env: makeEnv() });
   assert(ok.status === 200, `expected 200, got ${ok.status}`);
   assert(ok.headers.get("Content-Type") === "application/zip", "expected zip content type");
-  assert(ok.headers.get("Content-Disposition")?.includes("bunsirube.zip"), "expected attachment filename");
+  assert(ok.headers.get("Content-Disposition")?.includes("bunsirube-0.1.5.zip"), "expected attachment filename");
   assert(ok.headers.get("X-Theme-License") === "active", "expected active license header");
+
+  const form = new FormData();
+  form.set("serial", serial);
+  form.set("email", "buyer@example.com");
+  form.set("purchase", "pi_test_paid");
+  const license = await onThemeLicensePost({
+    request: new Request("https://yohelab.com/api/theme-license", { method: "POST", body: form }),
+    env: makeEnv(),
+  });
+  const licenseJson = await license.json();
+  assert(licenseJson.active === true, "expected active license");
+  assert(typeof licenseJson.downloadToken === "string" && licenseJson.downloadToken.length > 20, "expected download token");
+
+  const tokenDownload = await onRequestGet({
+    request: new Request(`https://yohelab.com/api/theme-download?token=${encodeURIComponent(licenseJson.downloadToken)}`),
+    env: makeEnv(),
+  });
+  assert(tokenDownload.status === 200, `expected token download 200, got ${tokenDownload.status}`);
 
   const invalid = await onRequestGet({ request: await requestFor({ serial: "BUN-BAD0-BAD0-BAD0-BAD0" }), env: makeEnv() });
   assert(invalid.status === 403, `expected invalid serial 403, got ${invalid.status}`);
