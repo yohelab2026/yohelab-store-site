@@ -21,7 +21,7 @@ function makeEnv({ paid = true, bucket = true } = {}) {
         return {
           body: new Uint8Array([80, 75, 3, 4]),
           httpMetadata: { contentType: "application/zip" },
-          customMetadata: { version: "0.1.6" },
+          customMetadata: { version: "0.1.7" },
         };
       },
     };
@@ -52,7 +52,7 @@ try {
   const ok = await onRequestGet({ request: await requestFor({ serial }), env: makeEnv() });
   assert(ok.status === 200, `expected 200, got ${ok.status}`);
   assert(ok.headers.get("Content-Type") === "application/zip", "expected zip content type");
-  assert(ok.headers.get("Content-Disposition")?.includes("bunsirube-0.1.6.zip"), "expected attachment filename");
+  assert(ok.headers.get("Content-Disposition")?.includes("bunsirube-0.1.7.zip"), "expected attachment filename");
   assert(ok.headers.get("X-Theme-License") === "active", "expected active license header");
 
   const form = new FormData();
