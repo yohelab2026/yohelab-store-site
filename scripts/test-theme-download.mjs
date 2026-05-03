@@ -17,11 +17,11 @@ function makeEnv({ paid = true, bucket = true } = {}) {
   if (bucket) {
     env.THEME_BUCKET = {
       async get(key) {
-        if (key !== "bunsirube.zip") return null;
+        if (!["bunsirube-0.2.7.zip", "bunsirube-child-0.1.0.zip"].includes(key)) return null;
         return {
           body: new Uint8Array([80, 75, 3, 4]),
           httpMetadata: { contentType: "application/zip" },
-          customMetadata: { version: "0.2.6" },
+          customMetadata: { version: key === "bunsirube-child-0.1.0.zip" ? "0.1.0" : "0.2.7" },
         };
       },
     };
@@ -38,8 +38,9 @@ function makeEnv({ paid = true, bucket = true } = {}) {
   return env;
 }
 
-async function requestFor({ serial, email = "buyer@example.com", purchase = "pi_test_paid" }) {
-  return new Request(`https://yohelab.com/api/theme-download?serial=${encodeURIComponent(serial)}&email=${encodeURIComponent(email)}&purchase=${encodeURIComponent(purchase)}`);
+async function requestFor({ serial, email = "buyer@example.com", purchase = "pi_test_paid", variant = "" }) {
+  const extra = variant ? `&variant=${encodeURIComponent(variant)}` : "";
+  return new Request(`https://yohelab.com/api/theme-download?serial=${encodeURIComponent(serial)}&email=${encodeURIComponent(email)}&purchase=${encodeURIComponent(purchase)}${extra}`);
 }
 
 try {
@@ -52,8 +53,14 @@ try {
   const ok = await onRequestGet({ request: await requestFor({ serial }), env: makeEnv() });
   assert(ok.status === 200, `expected 200, got ${ok.status}`);
   assert(ok.headers.get("Content-Type") === "application/zip", "expected zip content type");
-  assert(ok.headers.get("Content-Disposition")?.includes("bunsirube-0.2.6.zip"), "expected attachment filename");
+  assert(ok.headers.get("Content-Disposition")?.includes("bunsirube-0.2.7.zip"), "expected attachment filename");
   assert(ok.headers.get("X-Theme-License") === "active", "expected active license header");
+  assert(ok.headers.get("X-Theme-Package") === "parent", "expected parent package header");
+
+  const child = await onRequestGet({ request: await requestFor({ serial, variant: "child" }), env: makeEnv() });
+  assert(child.status === 200, `expected child 200, got ${child.status}`);
+  assert(child.headers.get("Content-Disposition")?.includes("bunsirube-child-0.1.0.zip"), "expected child attachment filename");
+  assert(child.headers.get("X-Theme-Package") === "child", "expected child package header");
 
   const form = new FormData();
   form.set("serial", serial);

@@ -1,10 +1,12 @@
 /**
  * scripts/package-theme.mjs
  *
- * wordpress-themes/bunsirube/ を bunsirube.zip にまとめる。
+ * wordpress-themes/<theme-slug>/ を ZIP にまとめる。
  * 生成した ZIP は R2 へアップロードして使う:
  *   npm run package-theme
- *   wrangler r2 object put theme-assets/bunsirube.zip --file=bunsirube.zip
+ *   wrangler r2 object put theme-assets/bunsirube-0.2.7.zip --file=bunsirube-0.2.7.zip
+ *   npm run package-child-theme
+ *   wrangler r2 object put theme-assets/bunsirube-child-0.1.0.zip --file=bunsirube-child-0.1.0.zip
  */
 
 import { copyFileSync, readdirSync, statSync } from "node:fs";
@@ -13,7 +15,7 @@ import { fileURLToPath } from "node:url";
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 const ROOT = join(__dirname, "..");
-const THEME_SLUG = "bunsirube";
+const THEME_SLUG = process.argv[2] || "bunsirube";
 const THEME_DIR = join(ROOT, "wordpress-themes", THEME_SLUG);
 const STYLE_FILE = join(THEME_DIR, "style.css");
 
@@ -174,4 +176,5 @@ console.log(`✓ ${versionedName} (${kb} KB)`);
 console.log(`✓ ${stableName} (${kb} KB, compatibility copy)`);
 console.log("");
 console.log("To upload to R2:");
-console.log(`  wrangler r2 object put theme-assets/${stableName} --file=${stableName}`);
+console.log(`  wrangler r2 object put theme-assets/${versionedName} --file=${versionedName}`);
+console.log(`  wrangler r2 object put theme-assets/${stableName} --file=${stableName}  # optional compatibility copy`);

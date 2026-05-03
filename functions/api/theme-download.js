@@ -1,8 +1,16 @@
 import { makeSerial, verifyPayload } from "../lib/entitlements.js";
 import { fetchStripePurchaseStatus } from "../lib/stripe-purchase.js";
 
-const THEME_ZIP_KEY = "bunsirube.zip";
-const THEME_DOWNLOAD_FILENAME = "bunsirube-0.2.6.zip";
+const THEME_FILES = {
+  parent: {
+    key: "bunsirube-0.2.7.zip",
+    filename: "bunsirube-0.2.7.zip",
+  },
+  child: {
+    key: "bunsirube-child-0.1.0.zip",
+    filename: "bunsirube-child-0.1.0.zip",
+  },
+};
 
 export async function onRequestGet(context) {
   try {
@@ -11,6 +19,8 @@ export async function onRequestGet(context) {
     const serial = (url.searchParams.get("serial") || "").trim().toUpperCase();
     const email = (url.searchParams.get("email") || "").trim().toLowerCase();
     const purchaseId = (url.searchParams.get("purchase") || "").trim();
+    const variant = url.searchParams.get("variant") === "child" ? "child" : "parent";
+    const themeFile = THEME_FILES[variant];
     const product = "wordpress-theme";
 
     let license = { serial, email, purchaseId };
@@ -45,7 +55,7 @@ export async function onRequestGet(context) {
       return text("THEME_BUCKET binding is not configured", 503);
     }
 
-    const obj = await bucket.get(THEME_ZIP_KEY);
+    const obj = await bucket.get(themeFile.key);
     if (!obj) {
       return text("theme zip not found", 404);
     }
@@ -53,9 +63,10 @@ export async function onRequestGet(context) {
     return new Response(obj.body, {
       headers: {
         "Content-Type": obj.httpMetadata?.contentType || "application/zip",
-        "Content-Disposition": `attachment; filename="${THEME_DOWNLOAD_FILENAME}"`,
+        "Content-Disposition": `attachment; filename="${themeFile.filename}"`,
         "Cache-Control": "no-store",
         "X-Theme-License": "active",
+        "X-Theme-Package": variant,
         "X-Theme-Version": obj.customMetadata?.version || "unknown",
       },
     });

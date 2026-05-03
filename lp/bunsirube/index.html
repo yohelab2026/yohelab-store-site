@@ -861,6 +861,7 @@
             <span>買い切り</span>
             <span>ZIPで導入</span>
             <span>記事テンプレ内蔵</span>
+            <span>子テーマ付き</span>
             <span>FAQ・構造化データ対応</span>
           </div>
         </div>
@@ -1117,9 +1118,10 @@
         <div class="price-card">
           <h3>文標（ぶんしるべ）ベータ版</h3>
           <div class="price">¥5,500<small>（税込）</small></div>
-          <p>買い切り。月額なし。購入後、ZIPとシリアルナンバーを受け取ってWordPressにアップロード。</p>
+          <p>買い切り。月額なし。購入後、親テーマZIP・改造用子テーマZIP・シリアルナンバーを受け取ってWordPressにアップロード。</p>
           <ul>
             <li>WordPressテーマZIP</li>
+            <li>改造用子テーマZIP</li>
             <li>記事テンプレート7種類</li>
             <li>FAQ・ブログカード・構造化データ・llms.txt</li>
             <li>内部解析 / 外部解析設定</li>
@@ -1138,6 +1140,7 @@
           <div class="update-history" id="updates">
             <h3>文標の更新履歴</h3>
             <ul class="update-list">
+              <li><time datetime="2026-05-04">2026.05.04 / v0.2.7</time><span>改造用子テーマZIPを追加。子テーマ利用時も親テーマCSSを正しく読み込むよう、親テーマ側の読み込み処理も調整しました。</span></li>
               <li><time datetime="2026-05-04">2026.05.04 / v0.2.6</time><span>URLだけの行を自動でブログカード化する機能を追加。投稿画面のブログカード挿入ボタンと、内部解析でのブログカードクリック確認にも対応しました。</span></li>
               <li><time datetime="2026-05-03">2026.05.03 / v0.2.5</time><span>法務ページとLPのサポート期間表記を揃え、llms.txtは任意機能でGoogle AI Overviews等への表示保証ではない旨を明記。READMEのZIP名とショートコード注意も整理しました。</span></li>
               <li><time datetime="2026-05-03">2026.05.03 / v0.2.4</time><span>mbstringなし環境向けの文字列フォールバックを追加し、投稿前チェックを12項目に変更。トップページを文標主役の導線に寄せ、比較表カードの説明を強化しました。</span></li>
@@ -1192,7 +1195,11 @@
           </details>
           <details class="faq-item">
             <summary>購入後はどう使う？</summary>
-            <div class="faq-body">決済後にZIPとシリアルをお受け取りいただき、WordPress管理画面の「外観 → テーマ → 新規追加 → テーマのアップロード」からZIPを入れてご利用ください。シリアルは更新確認に使用します。</div>
+            <div class="faq-body">決済後に親テーマZIP、改造用子テーマZIP、シリアルをお受け取りいただき、WordPress管理画面の「外観 → テーマ → 新規追加 → テーマのアップロード」からZIPを入れてご利用ください。シリアルは更新確認に使用します。</div>
+          </details>
+          <details class="faq-item">
+            <summary>改造用の子テーマはありますか？</summary>
+            <div class="faq-body">あります。CSSや小さな関数追加は「文標 子テーマ」側に書くと、文標本体を更新しても改造内容が残ります。親テーマを直接編集しないための安全な改造用ZIPです。</div>
           </details>
           <details class="faq-item" open>
             <summary>既存の記事は消える？</summary>

@@ -1,0 +1,30 @@
+/*
+Theme Name: 文標 子テーマ
+Theme URI: https://yohelab.com/lp/bunsirube/
+Author: よへラボ
+Author URI: https://yohelab.com/
+Description: 文標を直接編集せず、CSSや小さな関数追加で改造するための子テーマです。親テーマ「文標」が必要です。
+Version: 0.1.0
+Requires at least: 6.5
+Tested up to: 6.8
+Requires PHP: 8.0
+Template: bunsirube
+License: GNU General Public License v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: bunsirube-child
+*/
+
+/*
+  ここに追加CSSを書いてください。
+  親テーマを直接編集しないので、文標をアップデートしても改造内容が残ります。
+*/
+
+/* 例: CTAボックスを少し強く見せる */
+.aio-cta-box {
+  border-width: 2px;
+}
+
+/* 例: ブログカードの角丸を少し大きくする */
+.aio-blog-card {
+  border-radius: 22px;
+}

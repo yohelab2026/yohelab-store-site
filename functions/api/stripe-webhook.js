@@ -54,10 +54,12 @@ export async function onRequestPost(context) {
     const downloadUrl = serial
       ? `${siteUrl}/api/theme-download?serial=${encodeURIComponent(serial)}&email=${encodeURIComponent(email)}&purchase=${encodeURIComponent(purchaseId)}`
       : "";
+    const childDownloadUrl = downloadUrl ? `${downloadUrl}&variant=child` : "";
     await sendGrantEmail({
       to: email,
       accessUrl,
       downloadUrl,
+      childDownloadUrl,
       serial,
       product,
       label: getGrantLabel(product),
@@ -71,7 +73,7 @@ export async function onRequestPost(context) {
   }
 }
 
-async function sendGrantEmail({ to, accessUrl, downloadUrl, serial, product, label, from, apiKey }) {
+async function sendGrantEmail({ to, accessUrl, downloadUrl, childDownloadUrl, serial, product, label, from, apiKey }) {
   if (!apiKey) throw new Error("RESEND_API_KEY is not configured");
   if (!from) throw new Error("RESEND_FROM_EMAIL is not configured");
 
@@ -87,6 +89,9 @@ async function sendGrantEmail({ to, accessUrl, downloadUrl, serial, product, lab
         "",
         "ZIPダウンロードURL:",
         downloadUrl,
+        "",
+        "改造用子テーマZIP:",
+        childDownloadUrl,
         "",
         "WordPress管理画面の「外観 > 文標」にシリアルナンバーを入力すると、購入済みとして表示される。",
         "購入者ページ:",
@@ -108,6 +113,7 @@ async function sendGrantEmail({ to, accessUrl, downloadUrl, serial, product, lab
       <p>下のシリアルナンバーを WordPress管理画面の <strong>外観 &gt; 文標</strong> に入力してね。</p>
       <p style="padding:12px 16px;border-radius:10px;background:#ecfdf5;border:1px solid #b7ead6;font-size:18px;font-weight:800;letter-spacing:.08em">${escapeHtml(serial)}</p>
       <p><strong>ZIPダウンロードURL</strong><br><a href="${escapeHtml(downloadUrl)}" style="color:#0d6b58;font-weight:700">${escapeHtml(downloadUrl)}</a></p>
+      <p><strong>改造用子テーマZIP</strong><br><a href="${escapeHtml(childDownloadUrl)}" style="color:#0d6b58;font-weight:700">${escapeHtml(childDownloadUrl)}</a></p>
       <p><strong>購入者ページ</strong><br><a href="${escapeHtml(accessUrl)}" style="color:#0d6b58;font-weight:700">${escapeHtml(accessUrl)}</a></p>
       <p style="color:#64748b">テーマ自体はシリアルなしでも動きます。シリアルは購入者確認、更新、サポート用です。</p>
     </div>
