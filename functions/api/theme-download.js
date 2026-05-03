@@ -38,7 +38,7 @@ export async function onRequestGet(context) {
     return new Response(obj.body, {
       headers: {
         "Content-Type": obj.httpMetadata?.contentType || "application/zip",
-        "Content-Disposition": 'attachment; filename="yohe-blog-starter.zip"',
+        "Content-Disposition": 'attachment; filename="bunsirube.zip"',
         "Cache-Control": "no-store",
         "X-Theme-License": "active",
         "X-Theme-Version": obj.customMetadata?.version || "unknown",

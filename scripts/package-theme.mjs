@@ -7,10 +7,9 @@
  *   wrangler r2 object put theme-assets/bunsirube.zip --file=bunsirube.zip
  */
 
-import { createWriteStream, readdirSync, statSync } from "node:fs";
+import { readdirSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
-import { createGzip } from "node:zlib";
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 const ROOT = join(__dirname, "..");
@@ -21,7 +20,7 @@ const OUT_FILE = join(ROOT, OUT_NAME);
 
 // ---- 除外パターン ----
 const EXCLUDE = [
-  /\/(\.git|\.DS_Store|node_modules|__MACOSX)(\/|$)/,
+  /\/(\.git|\.github|\.DS_Store|node_modules|__MACOSX)(\/|$)/,
   /\/\.gitignore$/,
   /\/\.gitkeep$/,
   /\/thumbs\.db$/i,
