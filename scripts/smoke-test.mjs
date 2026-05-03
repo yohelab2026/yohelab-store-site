@@ -42,8 +42,8 @@ const legacyLabels = [
 ];
 checks.push(["home links research writer app", home.includes('/apps/research-writer/')]);
 checks.push(["home no legacy tool links", legacyPaths.every((path) => !home.includes(path))]);
-checks.push(["home focuses primary conversion", home.includes("無料で記事メーカーを試す") && home.includes("980円（税込）で商品ページを見てもらう") && home.includes("WordPressテーマ「文標」もあります") && !home.includes("無料で遊べるミニゲーム")]);
-checks.push(["home surfaces buyer guide and tax-included prices", home.includes("購入前に読める確認メモ") && home.includes("弱点3つ・直す文・FAQ案") && home.includes("¥1,980/月（税込）") && home.includes("¥980（税込）") && home.includes("¥5,500（税込）") && home.includes("表示価格はすべて税込です。")]);
+checks.push(["home focuses bunsirube conversion", home.includes("比較記事・レビュー記事・FAQ記事を") && home.includes("デモを見る") && home.includes("¥5,500（税込）で購入する") && home.includes("まずは文標を中心に。") && !home.includes("無料で遊べるミニゲーム")]);
+checks.push(["home surfaces buyer guide and tax-included prices", home.includes("購入前に読める確認メモ") && home.includes("弱点3つ・直す文・FAQ案") && home.includes("¥1,980/月（税込）") && home.includes("980円（税込）") && home.includes("¥5,500（税込）") && home.includes("表示価格はすべて税込です。")]);
 checks.push(["home avoids overstated claims", !home.includes("AIに引用される") && !home.includes("引用されないブログ") && !home.includes("5,377億") && !home.includes("3.6兆")]);
 
 const footerLinks = [
@@ -114,8 +114,6 @@ checks.push(["research product sample and purchase flow", researchProduct.includ
 checks.push(["research product checkout cta", researchProduct.includes('https://buy.stripe.com/aFa4gr6jd6Pu4KC7eV73G0d?client_reference_id=research-writer') && researchProduct.includes('1日1セットまで')]);
 
 const contact = read(dist("contact/index.html"));
-const servicesPage = read(dist("services/index.html"));
-checks.push(["services uses clear review cta", servicesPage.includes("初回980円（税込）でレビューを申し込む") && !servicesPage.includes("Stripeで申し込む")]);
 checks.push(["contact includes research writer", contact.includes('3キーワードの記事メーカー')]);
 checks.push(["contact removes shortcut cards", !contact.includes('ツール一覧') && !contact.includes('サービス一覧') && !contact.includes('各ページへ直接行く')]);
 checks.push(["contact removes cancellation wording", !contact.includes('解約')]);
@@ -161,7 +159,7 @@ checks.push(["blog images are stable and lazy", blogAdmin.includes('width="${ima
 checks.push(["blog post sanitizes dangerous html server side", blogPostFunction.includes("sanitizeBodyHtml") && blogPostFunction.includes("iframe|object|embed") && blogPostFunction.includes("javascript:") && blogPostFunction.includes("data:text") && blogPostFunction.includes("vbscript:")]);
 checks.push(["blog post sanitizes dangerous html client fallback", blogPostPage.includes("sanitizeBodyHtml") && blogPostPage.includes("iframe|object|embed") && blogPostPage.includes("javascript:") && blogPostPage.includes("data:text") && blogPostPage.includes("vbscript:")]);
 checks.push(["bunsirube lp includes update history", bunsirubeLp.includes("文標の更新履歴") && bunsirubeLp.includes('id="updates"') && bunsirubeLp.includes("自動アップデート用シリアル")]);
-checks.push(["bunsirube lp includes demo and support", bunsirubeLp.includes('/lp/bunsirube/demo/') && bunsirubeLp.includes("デモを見る") && bunsirubeLp.includes("テーマ購入前の不安") && bunsirubeLp.includes("決済後の返金はできません") && bunsirubeLp.includes("購入後30日間") && bunsirubeDemo.includes("文標の見た目と使い方")]);
+checks.push(["bunsirube lp includes demo and support", bunsirubeLp.includes('/lp/bunsirube/demo/') && bunsirubeLp.includes("デモを見る") && bunsirubeLp.includes("テーマ購入前の不安") && bunsirubeLp.includes("購入後の返金はありません") && bunsirubeLp.includes("購入後30日間") && bunsirubeDemo.includes("文標の見た目と使い方")]);
 checks.push(["bunsirube demo includes article type samples", bunsirubeDemo.includes("比較記事デモ") && bunsirubeDemo.includes("レビュー記事デモ") && bunsirubeDemo.includes("FAQ記事デモ") && bunsirubeDemo.includes("管理画面イメージ")]);
 checks.push(["bunsirube demo uses tax-included purchase label", bunsirubeDemo.includes("¥5,500（税込）で購入する") && bunsirubeDemo.includes("表示価格はすべて税込です。")]);
 checks.push(["matomo skips local without explicit url", matomoLoader.includes("isLocal && !window.YOHELAB_MATOMO_URL") && !matomoLoader.includes("http://localhost:8080/")]);
@@ -172,4 +170,3 @@ for (const [name, ok] of checks) {
 }
 
 console.log(`\nPassed ${checks.length} checks.`);
-

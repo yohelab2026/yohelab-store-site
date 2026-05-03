@@ -88,7 +88,7 @@ async function sendGrantEmail({ to, accessUrl, downloadUrl, serial, product, lab
         "ZIPダウンロードURL:",
         downloadUrl,
         "",
-        "WordPress管理画面の「外観 > よへラボ記事テーマ」にシリアルナンバーを入力すると、購入済みとして表示される。",
+        "WordPress管理画面の「外観 > 文標」にシリアルナンバーを入力すると、購入済みとして表示される。",
         "購入者ページ:",
         accessUrl,
       ]
@@ -105,7 +105,7 @@ async function sendGrantEmail({ to, accessUrl, downloadUrl, serial, product, lab
   const html = product === "wordpress-theme" ? `
     <div style="font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.7;color:#1f2937">
       <p>${escapeHtml(label)} の購入ありがとう。</p>
-      <p>下のシリアルナンバーを WordPress管理画面の <strong>外観 &gt; よへラボ記事テーマ</strong> に入力してね。</p>
+      <p>下のシリアルナンバーを WordPress管理画面の <strong>外観 &gt; 文標</strong> に入力してね。</p>
       <p style="padding:12px 16px;border-radius:10px;background:#ecfdf5;border:1px solid #b7ead6;font-size:18px;font-weight:800;letter-spacing:.08em">${escapeHtml(serial)}</p>
       <p><strong>ZIPダウンロードURL</strong><br><a href="${escapeHtml(downloadUrl)}" style="color:#0d6b58;font-weight:700">${escapeHtml(downloadUrl)}</a></p>
       <p><strong>購入者ページ</strong><br><a href="${escapeHtml(accessUrl)}" style="color:#0d6b58;font-weight:700">${escapeHtml(accessUrl)}</a></p>

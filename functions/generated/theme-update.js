@@ -1,1 +1,1 @@
-export const themeUpdateJson = "{\n  \"version\": \"0.2.4\",\n  \"details_url\": \"https://yohelab.com/lp/bunsirube/\",\n  \"package\": \"https://yohelab.com/api/theme-download\"\n}\n";
+export const themeUpdateJson = "{\n  \"version\": \"0.2.5\",\n  \"details_url\": \"https://yohelab.com/lp/bunsirube/\",\n  \"package\": \"https://yohelab.com/api/theme-download\"\n}\n";
