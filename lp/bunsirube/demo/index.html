@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>文標デモ画面 | よへラボ</title>
-  <meta name="description" content="WordPressテーマ「文標（ぶんしるべ）」の購入前デモ。記事パーツ、FAQ、比較表、CTA、設定画面のイメージを確認できます。" />
+  <meta name="description" content="WordPressテーマ「文標（ぶんしるべ）」の購入前デモ。記事パーツ、FAQ、比較表、ブログカード、CTA、設定画面のイメージを確認できます。" />
   <meta property="og:title" content="文標デモ画面 | よへラボ" />
-  <meta property="og:description" content="文標の見た目、記事パーツ、FAQ、比較表、CTA、設定画面のイメージを購入前に確認できます。" />
+  <meta property="og:description" content="文標の見た目、記事パーツ、FAQ、比較表、ブログカード、CTA、設定画面のイメージを購入前に確認できます。" />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="ja_JP" />
   <meta property="og:url" content="https://yohelab.com/lp/bunsirube/demo/" />
@@ -48,7 +48,13 @@
     .sample-meta { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 18px; }
     .sample-meta span { background: #eef7ff; color: #075c4c; border-radius: 999px; padding: 7px 10px; font-size: 12px; font-weight: 900; }
     .review-box { border: 1px solid #dce7fb; border-radius: 18px; padding: 18px; background: #f8fbff; margin-top: 14px; }
+    .blog-card-demo { display:grid; grid-template-columns:120px 1fr; gap:16px; align-items:center; margin:18px 0; padding:14px; border:1px solid #dce7fb; border-radius:18px; background:#fff; text-decoration:none; color:var(--text); box-shadow:var(--shadow-xs); }
+    .blog-card-demo-thumb { display:grid; place-items:center; min-height:86px; border-radius:14px; background:#eaf8f3; color:#075c4c; font-weight:900; font-size:12px; letter-spacing:.08em; }
+    .blog-card-demo-body { display:grid; gap:4px; min-width:0; }
+    .blog-card-demo-body span { color:var(--muted); font-size:13px; }
+    .blog-card-demo-body strong { line-height:1.5; }
     @media (max-width: 860px) { .demo-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 640px) { .blog-card-demo { grid-template-columns:1fr; } }
   </style>
 </head>
 <body>
@@ -90,6 +96,14 @@
             <strong>この記事の結論</strong>
             <p>最初から完璧なデザインを作るより、読者が迷わず読める順番を決めるほうが大切です。</p>
           </div>
+          <a class="blog-card-demo" href="/blog/bunsirube-before-install/">
+            <span class="blog-card-demo-thumb">BLOG CARD</span>
+            <span class="blog-card-demo-body">
+              <span>yohelab.com</span>
+              <strong>文標を入れる前に確認すること</strong>
+              <span>URLだけの行を、内部リンクのブログカードとして表示できます。</span>
+            </span>
+          </a>
           <h3>比較表の例</h3>
           <table class="compare">
             <thead><tr><th>見る点</th><th>自作</th><th>文標</th></tr></thead>
