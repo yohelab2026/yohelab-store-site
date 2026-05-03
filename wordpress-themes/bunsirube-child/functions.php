@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('BUNSIRUBE_CHILD_VERSION', '0.1.0');
+define('BUNSIRUBE_CHILD_VERSION', '0.1.1');
 
 add_action('wp_enqueue_scripts', 'bunsirube_child_assets', 30);
 function bunsirube_child_assets() {

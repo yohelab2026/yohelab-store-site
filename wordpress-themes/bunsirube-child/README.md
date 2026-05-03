@@ -5,7 +5,7 @@
 ## 入れ方
 
 1. 親テーマ `文標` を先にインストール
-2. `bunsirube-child-0.1.0.zip` または `bunsirube-child.zip` をWordPress管理画面からアップロード
+2. `bunsirube-child-0.1.1.zip` または `bunsirube-child.zip` をWordPress管理画面からアップロード
 3. `外観 > テーマ` で `文標 子テーマ` を有効化
 4. CSSは `外観 > テーマファイルエディター > style.css`、小さな関数追加は `functions.php` に書く
 
@@ -27,6 +27,10 @@
 - WordPress本体やサーバー設定の変更
 
 ## Changelog
+
+### 0.1.1
+
+- CSS例のクラス名を文標本体に合わせて `bunsirube_` / `bunsirube-` 系に整理
 
 ### 0.1.0
 

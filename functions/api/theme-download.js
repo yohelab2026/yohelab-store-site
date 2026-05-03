@@ -3,12 +3,12 @@ import { fetchStripePurchaseStatus } from "../lib/stripe-purchase.js";
 
 const THEME_FILES = {
   parent: {
-    key: "bunsirube-0.2.9.zip",
-    filename: "bunsirube-0.2.9.zip",
+    key: "bunsirube-0.3.0.zip",
+    filename: "bunsirube-0.3.0.zip",
   },
   child: {
-    key: "bunsirube-child-0.1.0.zip",
-    filename: "bunsirube-child-0.1.0.zip",
+    key: "bunsirube-child-0.1.1.zip",
+    filename: "bunsirube-child-0.1.1.zip",
   },
 };
 

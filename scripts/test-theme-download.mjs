@@ -17,11 +17,11 @@ function makeEnv({ paid = true, bucket = true } = {}) {
   if (bucket) {
     env.THEME_BUCKET = {
       async get(key) {
-        if (!["bunsirube-0.2.9.zip", "bunsirube-child-0.1.0.zip"].includes(key)) return null;
+        if (!["bunsirube-0.3.0.zip", "bunsirube-child-0.1.1.zip"].includes(key)) return null;
         return {
           body: new Uint8Array([80, 75, 3, 4]),
           httpMetadata: { contentType: "application/zip" },
-          customMetadata: { version: key === "bunsirube-child-0.1.0.zip" ? "0.1.0" : "0.2.9" },
+          customMetadata: { version: key === "bunsirube-child-0.1.1.zip" ? "0.1.1" : "0.3.0" },
         };
       },
     };
@@ -53,13 +53,13 @@ try {
   const ok = await onRequestGet({ request: await requestFor({ serial }), env: makeEnv() });
   assert(ok.status === 200, `expected 200, got ${ok.status}`);
   assert(ok.headers.get("Content-Type") === "application/zip", "expected zip content type");
-  assert(ok.headers.get("Content-Disposition")?.includes("bunsirube-0.2.9.zip"), "expected attachment filename");
+  assert(ok.headers.get("Content-Disposition")?.includes("bunsirube-0.3.0.zip"), "expected attachment filename");
   assert(ok.headers.get("X-Theme-License") === "active", "expected active license header");
   assert(ok.headers.get("X-Theme-Package") === "parent", "expected parent package header");
 
   const child = await onRequestGet({ request: await requestFor({ serial, variant: "child" }), env: makeEnv() });
   assert(child.status === 200, `expected child 200, got ${child.status}`);
-  assert(child.headers.get("Content-Disposition")?.includes("bunsirube-child-0.1.0.zip"), "expected child attachment filename");
+  assert(child.headers.get("Content-Disposition")?.includes("bunsirube-child-0.1.1.zip"), "expected child attachment filename");
   assert(child.headers.get("X-Theme-Package") === "child", "expected child package header");
 
   const form = new FormData();
