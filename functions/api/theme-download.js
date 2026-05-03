@@ -2,7 +2,7 @@ import { makeSerial, verifyPayload } from "../lib/entitlements.js";
 import { fetchStripePurchaseStatus } from "../lib/stripe-purchase.js";
 
 const THEME_ZIP_KEY = "bunsirube.zip";
-const THEME_DOWNLOAD_FILENAME = "bunsirube-0.1.7.zip";
+const THEME_DOWNLOAD_FILENAME = "bunsirube-0.2.0.zip";
 
 export async function onRequestGet(context) {
   try {
