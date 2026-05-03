@@ -79,6 +79,10 @@ function writeUint32LE(buf, offset, val) {
   buf[offset + 3] = (val >> 24) & 0xff;
 }
 
+// Valid fixed ZIP timestamp for reproducible packages: 2026-01-01 00:00:00.
+const FIXED_DOS_TIME = 0;
+const FIXED_DOS_DATE = ((2026 - 1980) << 9) | (1 << 5) | 1;
+
 async function buildZip(files) {
   const parts = [];
   const centralDir = [];
@@ -99,8 +103,8 @@ async function buildZip(files) {
     writeUint16LE(lh, 4, 20);          // version needed
     writeUint16LE(lh, 6, 0);           // flags
     writeUint16LE(lh, 8, 0);           // no compression (store)
-    writeUint16LE(lh, 10, 0);          // mod time
-    writeUint16LE(lh, 12, 0);          // mod date
+    writeUint16LE(lh, 10, FIXED_DOS_TIME);
+    writeUint16LE(lh, 12, FIXED_DOS_DATE);
     writeUint32LE(lh, 14, crc);
     writeUint32LE(lh, 18, size);
     writeUint32LE(lh, 22, size);
@@ -118,8 +122,8 @@ async function buildZip(files) {
     writeUint16LE(cd, 6, 20);          // version needed
     writeUint16LE(cd, 8, 0);
     writeUint16LE(cd, 10, 0);
-    writeUint16LE(cd, 12, 0);
-    writeUint16LE(cd, 14, 0);
+    writeUint16LE(cd, 12, FIXED_DOS_TIME);
+    writeUint16LE(cd, 14, FIXED_DOS_DATE);
     writeUint32LE(cd, 16, crc);
     writeUint32LE(cd, 20, size);
     writeUint32LE(cd, 24, size);
