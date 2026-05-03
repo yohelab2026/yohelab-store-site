@@ -992,6 +992,21 @@
     <section class="lp-section alt">
       <div class="container">
         <div class="section-head">
+          <span class="section-label">Compare Card</span>
+          <h2>比較表カードは、商品紹介まで考えて作る。</h2>
+          <p>商品名、価格、特徴、向いている人、注意点、ボタンをカードで並べられます。広告リンクとして使う場合は、sponsored属性と別タブ表示にも対応しています。</p>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card"><span class="mini-tag">Item</span><h3>商品ごとに整理</h3><p>価格、特徴、向いている人、注意点を同じ型で並べるので、比較記事の見た目が崩れにくい。</p></article>
+          <article class="feature-card"><span class="mini-tag">CTA</span><h3>ボタンまで置ける</h3><p>比較して終わりではなく、公式サイト、詳細ページ、申し込みページへの導線まで入れられる。</p></article>
+          <article class="feature-card"><span class="mini-tag">Ad link</span><h3>広告リンクにも対応</h3><p><code>sponsored="1"</code> と <code>target_blank="1"</code> に対応。広告・外部リンクとして使う時の設定も迷いにくい。</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="lp-section">
+      <div class="container">
+        <div class="section-head">
           <span class="section-label">Editor</span>
           <h2>WordPressの中で、何がどこにあるか分かる。</h2>
           <p>設定を増やすより、迷う場所を減らす。投稿、解析、色変更、構造化データを分けて見せる。</p>
@@ -1122,6 +1137,7 @@
           <div class="update-history" id="updates">
             <h3>文標の更新履歴</h3>
             <ul class="update-list">
+              <li><time datetime="2026-05-03">2026.05.03 / v0.2.4</time><span>mbstringなし環境向けの文字列フォールバックを追加し、投稿前チェックを12項目に変更。トップページを文標主役の導線に寄せ、比較表カードの説明を強化しました。</span></li>
               <li><time datetime="2026-05-03">2026.05.03 / v0.2.3</time><span>購入後返金なしの表記に整理し、対応環境をWordPress 6.5以上 / PHP 8.0以上に統一。比較表カードのtrue指定と内部解析OFF時の説明を調整しました。</span></li>
               <li><time datetime="2026-05-03">2026.05.03 / v0.2.2</time><span>ライセンス未認証時の空パッケージ更新通知を防ぎ、仮文言警告、記事名つき導線クリック表示、比較表カードのsponsored/別タブ設定を追加しました。</span></li>
               <li><time datetime="2026-05-03">2026.05.03 / v0.2.1</time><span>投稿前チェック保存項目をPHP側と同期し、記事別の導線クリック表示、example.com警告、公開投稿チェック、ZIP日付を調整しました。</span></li>
