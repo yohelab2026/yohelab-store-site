@@ -3,7 +3,7 @@ import { resolve } from "node:path";
 
 const root = resolve(process.cwd());
 const gamesRoot = resolve(root, "games");
-const sharedCss = "/shared/arcade.css";
+const sharedCss = "/shared/arcade.min.css";
 const sharedGameJs = "/shared/arcade-game.js";
 
 const games = [
@@ -244,7 +244,7 @@ function pageTemplate(game) {
   <meta name="theme-color" content="#f5fbff" />
   <link rel="canonical" href="https://yohelab.com/games/${game.slug}/" />
   <link rel="icon" type="image/png" href="/yohelab-icon-32.png" />
-  <link rel="stylesheet" href="/shared/site.css" />
+  <link rel="stylesheet" href="/shared/site.min.css" />
   <link rel="stylesheet" href="${sharedCss}" />
 </head>
 <body>
