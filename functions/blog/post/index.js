@@ -217,7 +217,7 @@ function renderPostHTML(post, slug, requestUrl) {
   <meta name="twitter:description" content="${escAttr(description)}" />
   <meta name="twitter:image" content="${escAttr(eyecatchAbs)}" />
   <link rel="icon" type="image/png" href="/yohelab-icon-32.png" />
-  <link rel="preload" href="/shared/site.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" /><noscript><link rel="stylesheet" href="/shared/site.min.css" /></noscript>
+  <link rel="stylesheet" href="/shared/site.min.css" />
   <script type="application/ld+json">${articleLd}</script>
   <script type="application/ld+json">${breadcrumbLd}</script>
   <script async src="/shared/matomo-loader.js"></script>
