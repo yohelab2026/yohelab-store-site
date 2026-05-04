@@ -1,6 +1,6 @@
 import { createRequire } from "node:module";
 import { existsSync } from "node:fs";
-import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
+import { copyFile, mkdir, readFile, readdir, rm, writeFile } from "node:fs/promises";
 import { spawn } from "node:child_process";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -16,6 +16,7 @@ try {
 
 const ROOT = join(fileURLToPath(new URL(".", import.meta.url)), "..");
 const OUT_DIR = join(ROOT, "public", "assets", "bunsirube", "videos");
+const ROOT_ASSET_DIR = join(ROOT, "assets", "bunsirube", "videos");
 const SHOT_DIR = join(OUT_DIR, "_shots");
 const WP_URL = process.env.BUNSIRUBE_WP_URL || "http://localhost:8088";
 const WP_USER = process.env.BUNSIRUBE_WP_USER || "admin";
@@ -402,6 +403,13 @@ async function main() {
   await browser.close();
   await rm(join(OUT_DIR, "_frames"), { recursive: true, force: true });
   await rm(SHOT_DIR, { recursive: true, force: true });
+  await rm(ROOT_ASSET_DIR, { recursive: true, force: true });
+  await mkdir(ROOT_ASSET_DIR, { recursive: true });
+  for (const entry of await readdir(OUT_DIR, { withFileTypes: true })) {
+    if (entry.isFile() && /\.(mp4|png)$/i.test(entry.name)) {
+      await copyFile(join(OUT_DIR, entry.name), join(ROOT_ASSET_DIR, entry.name));
+    }
+  }
   console.log("Generated Bunsirube videos in", OUT_DIR);
 }
 
