@@ -364,6 +364,19 @@ async function main() {
 
   const urls = Object.fromEntries(await Promise.all(Object.entries(shots).map(async ([key, file]) => [key, await dataUrl(file)])));
 
+  await renderVideo(browser, "bunsirube-quick-tour", {
+    title: "30秒で分かる文標",
+    label: "30 SEC",
+    kicker: "QUICK TOUR",
+    duration: 34,
+    slides: [
+      { image: urls.settings, title: "導入後は外観 > 文標へ", caption: "色・SEO出力・解析・ライセンスをまとめて確認。", pointer: [.22, .32] },
+      { image: urls.editor, title: "7種類の記事型から始める", caption: "比較・レビュー・FAQなど、書く目的で型を選べます。", pointer: [.82, .30] },
+      { image: urls.article, title: "FAQ・比較表・CTAを置く", caption: "AI検索も意識して、答えと根拠を本文に残します。", pointer: [.48, .59] },
+      { image: urls.dashboard, title: "押された導線を確認する", caption: "CTA・比較表・広告リンクをWordPress内で小さく確認。", pointer: [.33, .43] },
+    ],
+  });
+
   await renderVideo(browser, "bunsirube-install", {
     title: "文標の導入と初期設定",
     label: "01 / SETUP",
