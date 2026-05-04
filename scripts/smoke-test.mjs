@@ -50,7 +50,7 @@ const legacyLabels = [
 ];
 checks.push(["home does not promote old research writer app", !home.includes('/apps/research-writer/') && !home.includes('/lp/research-writer/')]);
 checks.push(["home no legacy tool links", legacyPaths.every((path) => !home.includes(path))]);
-checks.push(["home focuses bunsirube conversion", home.includes("AI検索時代の記事構造を") && home.includes("デモを見る") && home.includes("¥5,500（税込）で購入する") && home.includes("文標で、記事の型を整える。") && !home.includes("無料で遊べるミニゲーム")]);
+checks.push(["home focuses bunsirube conversion", home.includes("AI検索時代の記事構造を") && home.includes("文標の詳細を見る") && home.includes("¥5,500（税込）で購入する") && home.includes("文標で、記事の型を整える。") && !home.includes("無料で遊べるミニゲーム")]);
 checks.push(["home uses safer AI search wording", home.includes("AI検索時代に読み取りやすい本文構造") && !home.includes("AI検索にも読まれやすい") && !home.includes("AI検索に出るテーマ") && !home.includes("AI検索最適化済み")]);
 checks.push(["home surfaces buyer guide and tax-included prices", home.includes("購入前に読める確認メモ") && home.includes("/blog/bunsirube-before-install/") && home.includes("/lp/bunsirube/updates/") && home.includes("¥5,500（税込）") && home.includes("表示価格はすべて税込です。")]);
 checks.push(["home avoids overstated claims", !home.includes("AIに引用される") && !home.includes("引用されないブログ") && !home.includes("5,377億") && !home.includes("3.6兆")]);
