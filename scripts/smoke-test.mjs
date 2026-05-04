@@ -146,6 +146,7 @@ checks.push(["game share keeps result data", gameScript.includes('searchParams.s
 const ent = read(src("functions/lib/entitlements.js"));
 const checkout = read(src("functions/api/checkout.js"));
 const middleware = read(src("functions/_middleware.js"));
+const sitemapFunction = read(src("functions/sitemap.xml.js"));
 const blogAdminGate = read(src("functions/blog/admin/[[catchall]].js"));
 const blogAdmin = read(dist("blog/admin/index.html"));
 const blogImageFunction = read(src("functions/api/blog-image.js"));
@@ -184,6 +185,7 @@ const blogIndex = read(dist("blog/index.html"));
 checks.push(["blog surfaces pre-purchase bunsirube guides", blogIndex.includes("文標を買う前に読む3本") && blogIndex.includes("/blog/free-theme-vs-bunsirube/") && blogIndex.includes("/blog/comparison-article-template/")]);
 checks.push(["new bunsirube guide posts exist", read(dist("blog/free-theme-vs-bunsirube/index.html")).includes("無料テーマと文標の違い") && read(dist("blog/comparison-article-template/index.html")).includes("比較記事の書き方")]);
 checks.push(["sitemap includes new bunsirube guide posts", sitemap.includes("https://yohelab.com/blog/free-theme-vs-bunsirube/") && sitemap.includes("https://yohelab.com/blog/comparison-article-template/")]);
+checks.push(["dynamic sitemap includes new bunsirube guide posts", sitemapFunction.includes("/blog/free-theme-vs-bunsirube/") && sitemapFunction.includes("/blog/comparison-article-template/")]);
 checks.push(["matomo skips local without explicit url", matomoLoader.includes("isLocal && !window.YOHELAB_MATOMO_URL") && !matomoLoader.includes("http://localhost:8080/")]);
 
 for (const [name, ok] of checks) {

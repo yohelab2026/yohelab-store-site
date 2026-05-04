@@ -23,6 +23,8 @@ const STATIC_URLS = [
   { loc: "/blog/page-review-sample/", changefreq: "monthly", priority: "0.6" },
   { loc: "/blog/research-writer-free-flow/", changefreq: "monthly", priority: "0.6" },
   { loc: "/blog/bunsirube-before-install/", changefreq: "monthly", priority: "0.6" },
+  { loc: "/blog/free-theme-vs-bunsirube/", changefreq: "monthly", priority: "0.6" },
+  { loc: "/blog/comparison-article-template/", changefreq: "monthly", priority: "0.6" },
   { loc: "/blog/faq-source-ai-search/", changefreq: "monthly", priority: "0.6" },
   { loc: "/blog/sales-page-common-mistakes/", changefreq: "monthly", priority: "0.6" },
   { loc: "/blog/yohelab-blog-start/", changefreq: "monthly", priority: "0.5" },
