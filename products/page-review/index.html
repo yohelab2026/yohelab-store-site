@@ -550,25 +550,60 @@
       <section class="section" style="background:var(--bg);">
         <div class="container">
           <p class="section-label">Before / After</p>
-          <h2 class="section-title">どこを直せばいいか、文章で分かる。</h2>
-          <div class="review-sheet" aria-label="Before After の例">
-            <div class="review-sheet-head">
-              <span>改善前と改善後の例</span>
-              <span>見出し / 説明 / FAQ</span>
+          <h2 class="section-title">実際にどう変わるか、1例で見る。</h2>
+          <p style="max-width:700px;margin:-14px auto 32px;color:var(--muted);line-height:1.85;text-align:center;">BASEで販売中のデジタルデータ素材ショップのページを例に、返却内容のイメージを作りました。</p>
+
+          <!-- Scenario bar -->
+          <div style="max-width:860px;margin:0 auto 24px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 22px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+            <span style="font-size:11px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);">対象ページ</span>
+            <span style="font-size:14px;color:var(--text);font-weight:700;">BASEの素材データ販売ページ（¥550）</span>
+            <span style="margin-left:auto;font-size:12px;color:var(--muted);">SNS流入メイン / 購入率が気になる</span>
+          </div>
+
+          <!-- Before / After side by side -->
+          <div style="max-width:860px;margin:0 auto;display:grid;grid-template-columns:1fr 48px 1fr;gap:0;align-items:stretch;" class="ba-visual-grid">
+            <!-- BEFORE -->
+            <div style="background:#fff5f5;border:1.5px solid #fca5a5;border-radius:20px;padding:24px;">
+              <div style="font-size:11px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#dc2626;margin-bottom:14px;">Before — 改善前</div>
+              <div style="font-size:15px;font-weight:800;color:#111;margin-bottom:12px;line-height:1.5;">高品質な素材データをお届けします。</div>
+              <div style="font-size:13px;color:#666;line-height:1.8;margin-bottom:16px;">イラスト素材、テンプレート、アイコンを販売しています。ダウンロード形式です。</div>
+              <div style="display:flex;flex-direction:column;gap:8px;">
+                <div style="display:flex;align-items:center;gap:8px;"><span style="color:#dc2626;font-size:16px;">✗</span><span style="font-size:13px;color:#555;">誰向けか分からない</span></div>
+                <div style="display:flex;align-items:center;gap:8px;"><span style="color:#dc2626;font-size:16px;">✗</span><span style="font-size:13px;color:#555;">商用利用の可否が見えない</span></div>
+                <div style="display:flex;align-items:center;gap=8px;"><span style="color:#dc2626;font-size:16px;">✗</span><span style="font-size:13px;color:#555;">ダウンロード後どうするか不明</span></div>
+                <div style="display:flex;align-items:center;gap:8px;"><span style="color:#dc2626;font-size:16px;">✗</span><span style="font-size:13px;color:#555;">FAQ・返金ポリシーなし</span></div>
+              </div>
             </div>
-            <div class="review-sheet-row">
-              <div class="review-sheet-label">Before</div>
-              <p>「高品質なテンプレートを販売しています。」だけだと、誰に何が便利なのかが伝わりにくい。</p>
-            </div>
-            <div class="review-sheet-row">
-              <div class="review-sheet-label">After</div>
-              <p>「商品説明を書く時間を減らしたいBASE店向け。見出し、説明文、FAQをそのまま整えられるテンプレートです。」のように、対象者と得られる変化を先に出します。</p>
-            </div>
-            <div class="review-sheet-row">
-              <div class="review-sheet-label">近くに置くFAQ</div>
-              <p>商用利用できますか？ どのショップで使えますか？ 返品や修正はできますか？ スマホでも見やすいですか？</p>
+
+            <!-- Arrow -->
+            <div style="display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--green);font-weight:900;">→</div>
+
+            <!-- AFTER -->
+            <div style="background:#f0fdf4;border:1.5px solid #6ee7b7;border-radius:20px;padding:24px;">
+              <div style="font-size:11px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#0d8f72;margin-bottom:14px;">After — 返却した提案内容</div>
+              <div style="font-size:13px;font-weight:900;color:#0d8f72;margin-bottom:6px;">▸ 見出し案</div>
+              <div style="font-size:14px;font-weight:800;color:#111;margin-bottom:14px;line-height:1.5;background:#fff;border-radius:8px;padding:10px 14px;">「ブログ・SNS投稿にすぐ使えるイラスト素材 / 商用利用OK / ZIP即DL」</div>
+              <div style="font-size:13px;font-weight:900;color:#0d8f72;margin-bottom:6px;">▸ FAQ案（購入ボタン近くに置く）</div>
+              <ul style="font-size:13px;color:#444;line-height:1.9;list-style:none;padding:0;margin:0 0 14px;background:#fff;border-radius:8px;padding:10px 14px;">
+                <li>商用利用できますか？ → はい、個人・法人ともに可能です。</li>
+                <li>どんなファイル形式ですか？ → PNG・SVGのZIPで届きます。</li>
+                <li>返品や修正はできますか？ → デジタル商品のため、返品不可です。</li>
+              </ul>
+              <div style="font-size:13px;font-weight:900;color:#0d8f72;margin-bottom:4px;">▸ 要約文（SNS共有・検索用）</div>
+              <p style="font-size:13px;color:#444;line-height:1.75;margin:0;background:#fff;border-radius:8px;padding:10px 14px;">「ブログ記事・SNS用イラスト素材。商用利用OK・即DL。購入前にFAQで確認できます。」</p>
             </div>
           </div>
+
+          <div style="max-width:860px;margin:16px auto 0;background:#fffbe6;border:1px solid #fde68a;border-radius:12px;padding:14px 20px;">
+            <p style="font-size:13px;color:#92400e;line-height:1.8;margin:0;"><strong>この例は架空のページをもとに作成したサンプルです。</strong> 実際の返却内容は送ってもらったページに合わせて変わります。売上・クリック率の改善は保証しません。</p>
+          </div>
+
+          <style>
+            @media (max-width:700px) {
+              .ba-visual-grid { grid-template-columns: 1fr !important; }
+              .ba-visual-grid > div:nth-child(2) { display: none; }
+            }
+          </style>
         </div>
       </section>
 
