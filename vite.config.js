@@ -96,6 +96,7 @@ export default defineConfig({
         bunsirubeProduct: "products/bunsirube/index.html",
         lpWordpressTheme: "lp/bunsirube/index.html",
         lpWordpressThemeDemo: "lp/bunsirube/demo/index.html",
+        lpWordpressThemeUpdates: "lp/bunsirube/updates/index.html",
         ...collectGameInputs(),
       },
     },

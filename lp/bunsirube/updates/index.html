@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>文標 更新履歴 | よへラボ</title>
+  <meta name="description" content="WordPressテーマ「文標（ぶんしるべ）」の更新履歴。v0.3.1から初期ベータ版までの変更内容を確認できます。" />
+  <meta property="og:title" content="文標 更新履歴 | よへラボ" />
+  <meta property="og:description" content="文標のバージョンごとの変更内容、追加機能、事故防止の改善内容をまとめた更新履歴ページです。" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="ja_JP" />
+  <meta property="og:url" content="https://yohelab.com/lp/bunsirube/updates/" />
+  <meta property="og:image" content="https://yohelab.com/yohelab-icon.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1" />
+  <meta name="theme-color" content="#f5fbff" />
+  <link rel="canonical" href="https://yohelab.com/lp/bunsirube/updates/" />
+  <link rel="icon" type="image/png" href="/yohelab-icon-32.png" />
+  <link rel="stylesheet" href="/shared/site.min.css" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebPage","name":"文標 更新履歴","url":"https://yohelab.com/lp/bunsirube/updates/","description":"WordPressテーマ文標の更新履歴ページ。","isPartOf":{"@type":"WebSite","name":"よへラボ","url":"https://yohelab.com/"}}
+  </script>
+  <style>
+    body { background:#f5fbff; color:var(--text); }
+    .updates-hero { padding:72px 0 44px; background:radial-gradient(circle at 20% 0%, rgba(11,143,114,.16), transparent 34%), linear-gradient(180deg,#fff,#eef7ff); }
+    .updates-hero h1 { font-size:clamp(34px,6vw,64px); line-height:1.08; letter-spacing:-.06em; margin-bottom:16px; }
+    .updates-hero p { max-width:760px; color:var(--muted); font-size:17px; line-height:1.9; }
+    .updates-actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:24px; }
+    .updates-shell { padding:42px 0 72px; }
+    .updates-layout { display:grid; grid-template-columns:minmax(0,1fr) 320px; gap:24px; align-items:start; }
+    .timeline { display:grid; gap:14px; }
+    .release-card { background:#fff; border:1px solid var(--border); border-radius:22px; padding:22px; box-shadow:var(--shadow-xs); }
+    .release-card.latest { border-color:#9ad8cc; background:linear-gradient(180deg,#fff,#f2fbf7); }
+    .release-card time { display:inline-flex; color:#075c4c; font-weight:900; font-size:13px; margin-bottom:8px; }
+    .release-card h2 { font-size:22px; line-height:1.35; letter-spacing:-.04em; margin:0 0 8px; }
+    .release-card p { margin:0; color:var(--muted); line-height:1.85; }
+    .side-card { position:sticky; top:86px; background:#fff; border:1px solid var(--border); border-radius:22px; padding:22px; box-shadow:var(--shadow-xs); }
+    .side-card h2 { font-size:20px; margin-bottom:10px; }
+    .side-card p, .side-card li { color:var(--muted); line-height:1.8; font-size:14px; }
+    .side-card ul { padding-left:18px; margin:10px 0 0; }
+    @media (max-width: 900px) { .updates-layout { grid-template-columns:1fr; } .side-card { position:static; } }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="/"><img src="/yohelab-icon.webp" alt="よへラボ" /><span>よへラボ</span></a>
+      <nav class="nav-links">
+        <a href="/lp/bunsirube/">文標</a>
+        <a href="/lp/bunsirube/demo/">デモ</a>
+        <a href="/blog/">ブログ</a>
+        <a href="/contact/">問い合わせ</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="updates-hero">
+      <div class="container">
+        <p class="eyebrow">Bunsirube changelog</p>
+        <h1>文標の更新履歴</h1>
+        <p>文標（ぶんしるべ）の変更内容を、購入前でも確認できるようにまとめています。大きな機能追加だけでなく、事故防止、表記整理、サポート範囲の明確化もここに残します。</p>
+        <div class="updates-actions">
+          <a class="btn btn-primary btn-lg" href="/lp/bunsirube/">文標の購入ページへ戻る</a>
+          <a class="btn btn-outline btn-lg" href="/lp/bunsirube/demo/">デモを見る</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="updates-shell">
+      <div class="container updates-layout">
+        <div class="timeline" aria-label="文標の更新履歴一覧">
+          <article class="release-card latest">
+            <time datetime="2026-05-04">2026.05.04</time>
+            <h2>v0.3.1</h2>
+            <p>文標の.htaccess編集画面に、管理画面へ入れない場合の復元注意とバックアップダウンロードを追加。法務ページの販売形態表記も整理しました。</p>
+          </article>
+          <article class="release-card">
+            <time datetime="2026-05-04">2026.05.04</time>
+            <h2>v0.3.0</h2>
+            <p>管理画面に.htaccess編集画面を追加。保存前の自動バックアップ、復元、編集可否チェックを入れ、サーバー設定変更の事故を減らせるようにしました。</p>
+          </article>
+          <article class="release-card">
+            <time datetime="2026-05-04">2026.05.04</time>
+            <h2>v0.2.9</h2>
+            <p>管理画面に事故防止チェックを追加。SEO出力重複、二重キャッシュ、旧ショートコード残り、自動ブログカード、子テーマ利用状況を公開前に確認できるようにしました。</p>
+          </article>
+          <article class="release-card">
+            <time datetime="2026-05-04">2026.05.04</time>
+            <h2>v0.2.8</h2>
+            <p>旧名称の公開名と互換ショートコードを整理し、文標 / bunsirube の名前に統一しました。</p>
+          </article>
+          <article class="release-card">
+            <time datetime="2026-05-04">2026.05.04</time>
+            <h2>v0.2.7</h2>
+            <p>改造用子テーマZIPを追加。子テーマ利用時も親テーマCSSを正しく読み込むよう、親テーマ側の読み込み処理も調整しました。</p>
+          </article>
+          <article class="release-card">
+            <time datetime="2026-05-04">2026.05.04</time>
+            <h2>v0.2.6</h2>
+            <p>URLだけの行を自動でブログカード化する機能を追加。投稿画面のブログカード挿入ボタンと、内部解析でのブログカードクリック確認にも対応しました。</p>
+          </article>
+          <article class="release-card">
+            <time datetime="2026-05-03">2026.05.03</time>
+            <h2>v0.2.5</h2>
+            <p>法務ページとLPのサポート期間表記を揃え、llms.txtは任意機能でGoogle AI Overviews等への表示保証ではない旨を明記。READMEのZIP名とショートコード注意も整理しました。</p>
+          </article>
+          <article class="release-card">
+            <time datetime="2026-05-03">2026.05.03</time>
+            <h2>v0.2.4</h2>
+            <p>mbstringなし環境向けの文字列フォールバックを追加し、投稿前チェックを12項目に変更。トップページを文標主役の導線に寄せ、比較表カードの説明を強化しました。</p>
+          </article>
+          <article class="release-card">
+            <time datetime="2026-05-03">2026.05.03</time>
+            <h2>v0.2.3</h2>
+            <p>購入後返金なしの表記に整理し、対応環境をWordPress 6.5以上 / PHP 8.0以上に統一。比較表カードのtrue指定と内部解析OFF時の説明を調整しました。</p>
+          </article>
+          <article class="release-card">
+            <time datetime="2026-05-03">2026.05.03</time>
+            <h2>v0.2.2</h2>
+            <p>ライセンス未認証時の空パッケージ更新通知を防ぎ、仮文言警告、記事名つき導線クリック表示、比較表カードのsponsored/別タブ設定を追加しました。</p>
+          </article>
+          <article class="release-card">
+            <time datetime="2026-05-03">2026.05.03</time>
+            <h2>v0.2.1</h2>
+            <p>投稿前チェック保存項目をPHP側と同期し、記事別の導線クリック表示、example.com警告、公開投稿チェック、ZIP日付を調整しました。</p>
+          </article>
+          <article class="release-card">
+            <time datetime="2026-05-03">2026.05.03</time>
+            <h2>v0.2.0</h2>
+            <p>比較表カード、CTA・比較表クリックの導線解析、投稿前チェック強化、Plain / Soft / Sharp プリセット、比較表カード挿入ボタンを追加しました。</p>
+          </article>
+          <article class="release-card">
+            <time datetime="2026-05-03">2026.05.03</time>
+            <h2>v0.1.7</h2>
+            <p>スクリーンショットの表記更新、主要記事型へのCTA例追加、目次IDのシングルクォート対応、SEO出力まとめOFF、更新情報再取得ボタンを追加しました。</p>
+          </article>
+          <article class="release-card">
+            <time datetime="2026-05-03">2026.05.03</time>
+            <h2>v0.1.6</h2>
+            <p>投稿画面にCTA挿入ボタンを追加し、7種類の記事型表記、FAQ JSON-LD抽出、更新トークンキャッシュ、更新確認User-Agentを調整しました。</p>
+          </article>
+          <article class="release-card">
+            <time datetime="2026-05-03">2026.05.03</time>
+            <h2>v0.1.5</h2>
+            <p>CTAボックス、bunsirube_ショートコード、目次ID保護、フッター表記OFF設定、SEOプラグイン検出、バージョン付きZIPを追加しました。</p>
+          </article>
+          <article class="release-card">
+            <time datetime="2026-05-02">2026.05.02</time>
+            <h2>ベータ購入ページ整理</h2>
+            <p>ベータ版の購入前ページに、対応環境・価格・受け取れる内容を整理しました。</p>
+          </article>
+          <article class="release-card">
+            <time datetime="2026-05-01">2026.05.01</time>
+            <h2>初期ベータ構成</h2>
+            <p>記事テンプレート、FAQ、構造化データ、llms.txt、内部解析、自動アップデート用シリアルを購入内容にまとめました。</p>
+          </article>
+        </div>
+
+        <aside class="side-card">
+          <h2>確認してほしいこと</h2>
+          <p>文標はベータ版です。購入前に、対応環境、デモ、サポート範囲、返金なしの条件を確認してください。</p>
+          <ul>
+            <li>最低環境はWordPress 6.5以上 / PHP 8.0以上</li>
+            <li>購入後30日間は導入と初期設定の質問に対応</li>
+            <li>個別デザイン改造や外部プラグイン衝突調査は対象外</li>
+          </ul>
+          <p style="margin-top:16px;"><a class="btn btn-primary" href="/lp/bunsirube/">文標の詳細を見る</a></p>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <span>© よへラボ</span>
+      <div class="footer-links">
+        <a href="/legal/commerce/">特商法</a>
+        <a href="/legal/privacy/">プライバシー</a>
+        <a href="/legal/terms/">利用規約</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
