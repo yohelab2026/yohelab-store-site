@@ -1,4 +1,4 @@
-import { makeSerial, signPayload } from "../lib/entitlements.js";
+import { makeSerial, signPayload, verifyAuthorThemeLicense } from "../lib/entitlements.js";
 import { fetchStripePurchaseStatus } from "../lib/stripe-purchase.js";
 
 export async function onRequestGet(context) {
@@ -23,12 +23,17 @@ async function handleLicenseRequest(context, method) {
       return json({ active: false, reason: "missing_fields" });
     }
 
-    const expected = await makeSerial({ product, email, subscriptionId: purchaseId }, context.env);
-    if (serial !== expected) {
-      return json({ active: false, reason: "invalid_serial" });
+    const isAuthorLicense = await verifyAuthorThemeLicense({ serial, product, email, purchaseId });
+    let status = { active: true, status: "author" };
+
+    if (!isAuthorLicense) {
+      const expected = await makeSerial({ product, email, subscriptionId: purchaseId }, context.env);
+      if (serial !== expected) {
+        return json({ active: false, reason: "invalid_serial" });
+      }
+      status = await fetchStripePurchaseStatus(purchaseId, context.env);
     }
 
-    const status = await fetchStripePurchaseStatus(purchaseId, context.env);
     const active = status.active;
     const downloadToken = active
       ? await signPayload({

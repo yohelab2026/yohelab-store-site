@@ -1,4 +1,4 @@
-import { makeSerial, verifyPayload } from "../lib/entitlements.js";
+import { makeSerial, verifyAuthorThemeLicense, verifyPayload } from "../lib/entitlements.js";
 import { fetchStripePurchaseStatus } from "../lib/stripe-purchase.js";
 
 const THEME_FILES = {
@@ -40,14 +40,23 @@ export async function onRequestGet(context) {
       return text("missing license fields", 400);
     }
 
-    const expected = await makeSerial({ product, email: license.email, subscriptionId: license.purchaseId }, context.env);
-    if (license.serial !== expected) {
-      return text("invalid serial", 403);
-    }
+    const isAuthorLicense = await verifyAuthorThemeLicense({
+      serial: license.serial,
+      product,
+      email: license.email,
+      purchaseId: license.purchaseId,
+    });
 
-    const status = await fetchStripePurchaseStatus(license.purchaseId, context.env);
-    if (!status.active) {
-      return text("inactive purchase", 403);
+    if (!isAuthorLicense) {
+      const expected = await makeSerial({ product, email: license.email, subscriptionId: license.purchaseId }, context.env);
+      if (license.serial !== expected) {
+        return text("invalid serial", 403);
+      }
+
+      const status = await fetchStripePurchaseStatus(license.purchaseId, context.env);
+      if (!status.active) {
+        return text("inactive purchase", 403);
+      }
     }
 
     const bucket = context.env.THEME_BUCKET;

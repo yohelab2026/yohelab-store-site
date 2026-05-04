@@ -1,4 +1,10 @@
 const COOKIE_NAME = "yohelab_access";
+const AUTHOR_THEME_LICENSE = {
+  product: "wordpress-theme",
+  email: "author@yohelab.com",
+  purchaseId: "AUTHOR-YOHELAB-2026",
+  serialSha256: "Jy-o0wfP6SPra6WMoLqyhS4I0kPdZs-Q6UT7qH0-fEo",
+};
 
 const PRODUCT_CONFIG = {
   "research-writer": {
@@ -49,6 +55,14 @@ async function hmacBase64Url(secret, message) {
   );
   const signature = await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(message));
   const bytes = new Uint8Array(signature);
+  let binary = "";
+  for (const byte of bytes) binary += String.fromCharCode(byte);
+  return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
+}
+
+async function sha256Base64Url(message) {
+  const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(message));
+  const bytes = new Uint8Array(digest);
   let binary = "";
   for (const byte of bytes) binary += String.fromCharCode(byte);
   return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
@@ -189,4 +203,22 @@ export async function verifySerial({ serial, product, email, subscriptionId }, e
   if (!serial || !product || !email || !subscriptionId) return false;
   const expected = await makeSerial({ product, email, subscriptionId }, env);
   return serial.trim().toUpperCase() === expected;
+}
+
+export async function verifyAuthorThemeLicense({ serial, product, email, purchaseId }) {
+  const normalizedSerial = String(serial || "").trim().toUpperCase();
+  const normalizedEmail = String(email || "").trim().toLowerCase();
+  const normalizedPurchaseId = String(purchaseId || "").trim();
+
+  if (
+    !normalizedSerial ||
+    product !== AUTHOR_THEME_LICENSE.product ||
+    normalizedEmail !== AUTHOR_THEME_LICENSE.email ||
+    normalizedPurchaseId !== AUTHOR_THEME_LICENSE.purchaseId
+  ) {
+    return false;
+  }
+
+  const actualHash = await sha256Base64Url(normalizedSerial);
+  return timingSafeEqual(actualHash, AUTHOR_THEME_LICENSE.serialSha256);
 }
