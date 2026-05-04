@@ -109,6 +109,7 @@ checks.push(["wp product analytics", wpProduct.includes('テーマ内解析') &&
 checks.push(["wp product price", wpProduct.includes('¥5,500')]);
 checks.push(["wp product uses tax-included price labels", wpProduct.includes("¥5,500（税込）") && wpProduct.includes("¥8,800（税込）")]);
 checks.push(["wp product support policy", wpProduct.includes('サポートと保証の線引き') && wpProduct.includes('購入前に確認してほしいこと')]);
+checks.push(["wp product embeds demo videos", wpProduct.includes('/assets/bunsirube/videos/bunsirube-install.mp4') && wpProduct.includes('/assets/bunsirube/videos/bunsirube-writing.mp4') && wpProduct.includes('/assets/bunsirube/videos/bunsirube-route-check.mp4')]);
 
 checks.push(["research product sample and purchase flow", researchProduct.includes('プロプランで返すもの') && researchProduct.includes('購入後の流れ')]);
 checks.push(["research product checkout cta", researchProduct.includes('https://buy.stripe.com/aFa4gr6jd6Pu4KC7eV73G0d?client_reference_id=research-writer') && researchProduct.includes('1日1セットまで')]);
@@ -144,6 +145,7 @@ const blogPostPage = read(dist("blog/post/index.html"));
 const blogPostApi = read(src("functions/api/blog-post.js"));
 const bunsirubeLp = read(dist("lp/bunsirube/index.html"));
 const bunsirubeDemo = read(dist("lp/bunsirube/demo/index.html"));
+const privacy = read(dist("legal/privacy/index.html"));
 const matomoLoader = read(dist("shared/matomo-loader.js"));
 checks.push(["theme serial uses bunsirube prefix", ent.includes("BUN-") && !ent.includes("AIO-")]);
 checks.push(["entitlement keeps research writer", ent.includes('"research-writer"')]);
@@ -160,8 +162,11 @@ checks.push(["blog post sanitizes dangerous html server side", blogPostFunction.
 checks.push(["blog post sanitizes dangerous html client fallback", blogPostPage.includes("sanitizeBodyHtml") && blogPostPage.includes("iframe|object|embed") && blogPostPage.includes("javascript:") && blogPostPage.includes("data:text") && blogPostPage.includes("vbscript:")]);
 checks.push(["bunsirube lp includes update history", bunsirubeLp.includes("文標の更新履歴") && bunsirubeLp.includes('id="updates"') && bunsirubeLp.includes("自動アップデート用シリアル")]);
 checks.push(["bunsirube lp includes demo and support", bunsirubeLp.includes('/lp/bunsirube/demo/') && bunsirubeLp.includes("デモを見る") && bunsirubeLp.includes("テーマ購入前の不安") && bunsirubeLp.includes("購入後の返金はありません") && bunsirubeLp.includes("購入後30日間") && bunsirubeDemo.includes("文標の見た目と使い方")]);
-checks.push(["bunsirube demo includes article type samples", bunsirubeDemo.includes("比較記事デモ") && bunsirubeDemo.includes("レビュー記事デモ") && bunsirubeDemo.includes("FAQ記事デモ") && bunsirubeDemo.includes("管理画面イメージ")]);
+checks.push(["bunsirube lp embeds demo videos", bunsirubeLp.includes('/assets/bunsirube/videos/bunsirube-install.mp4') && bunsirubeLp.includes('/assets/bunsirube/videos/bunsirube-writing.mp4') && bunsirubeLp.includes('/assets/bunsirube/videos/bunsirube-route-check.mp4') && bunsirubeLp.includes('"@type":"VideoObject"')]);
+checks.push(["bunsirube demo includes article type samples", bunsirubeDemo.includes("比較記事デモ") && bunsirubeDemo.includes("レビュー記事デモ") && bunsirubeDemo.includes("FAQ記事デモ") && bunsirubeDemo.includes("管理画面見本")]);
+checks.push(["bunsirube demo embeds operation videos", bunsirubeDemo.includes("操作の流れを動画で見る") && bunsirubeDemo.includes('/assets/bunsirube/videos/bunsirube-install.mp4') && !bunsirubeDemo.includes("想定") && !bunsirubeDemo.includes("イメージ")]);
 checks.push(["bunsirube demo uses tax-included purchase label", bunsirubeDemo.includes("¥5,500（税込）で購入する") && bunsirubeDemo.includes("表示価格はすべて税込です。")]);
+checks.push(["privacy policy covers current paid products and theme analytics", privacy.includes("有料サービス・ダウンロード商品") && privacy.includes("文標テーマでは") && privacy.includes("CTA・比較表・広告リンク・ブログカード") && !privacy.includes("2026年4月30日") && !privacy.includes("プロプラン")]);
 checks.push(["matomo skips local without explicit url", matomoLoader.includes("isLocal && !window.YOHELAB_MATOMO_URL") && !matomoLoader.includes("http://localhost:8080/")]);
 
 for (const [name, ok] of checks) {

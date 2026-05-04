@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>文標デモ画面 | よへラボ</title>
-  <meta name="description" content="WordPressテーマ「文標（ぶんしるべ）」の購入前デモ。記事パーツ、FAQ、比較表、ブログカード、CTA、設定画面のイメージを確認できます。" />
+  <meta name="description" content="WordPressテーマ「文標（ぶんしるべ）」の購入前デモ。記事パーツ、FAQ、比較表、ブログカード、CTA、設定画面の見本を確認できます。" />
   <meta property="og:title" content="文標デモ画面 | よへラボ" />
-  <meta property="og:description" content="文標の見た目、記事パーツ、FAQ、比較表、ブログカード、CTA、設定画面のイメージを購入前に確認できます。" />
+  <meta property="og:description" content="文標の見た目、記事パーツ、FAQ、比較表、ブログカード、CTA、設定画面の見本を購入前に確認できます。" />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="ja_JP" />
   <meta property="og:url" content="https://yohelab.com/lp/bunsirube/demo/" />
@@ -53,7 +53,13 @@
     .blog-card-demo-body { display:grid; gap:4px; min-width:0; }
     .blog-card-demo-body span { color:var(--muted); font-size:13px; }
     .blog-card-demo-body strong { line-height:1.5; }
+    .video-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; }
+    .video-card { background:#fff; border:1px solid var(--border); border-radius:24px; padding:16px; box-shadow:var(--shadow-xs); }
+    .video-card video { display:block; width:100%; aspect-ratio:16/9; border-radius:18px; background:#101b31; border:1px solid #dce7fb; }
+    .video-card h3 { margin:14px 0 6px; font-size:18px; letter-spacing:-.03em; }
+    .video-card p { margin:0; color:var(--muted); line-height:1.75; font-size:13px; }
     @media (max-width: 860px) { .demo-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 860px) { .video-grid { grid-template-columns: 1fr; } }
     @media (max-width: 640px) { .blog-card-demo { grid-template-columns:1fr; } }
   </style>
 </head>
@@ -74,14 +80,47 @@
     <section class="demo-hero">
       <div class="container">
         <h1>文標の見た目と使い方を、購入前に確認する。</h1>
-        <p>このページは、文標（ぶんしるべ）で作れる記事パーツのイメージです。実際のWordPress画面では、色、FAQ、比較表、CTA、解析設定をテーマ側で扱いやすくする想定です。</p>
+        <p>このページは、文標（ぶんしるべ）で使える記事パーツの見本です。下の動画では、実際のWordPress画面で導入、記事作成、導線確認の流れも見られます。</p>
         <div class="demo-nav" aria-label="文標デモの種類">
+          <a href="#video-demo">操作動画</a>
           <a href="#compare-demo">比較記事デモ</a>
           <a href="#review-demo">レビュー記事デモ</a>
           <a href="#faq-demo">FAQ記事デモ</a>
-          <a href="#settings-demo">管理画面イメージ</a>
+          <a href="#settings-demo">管理画面見本</a>
         </div>
         <p><a class="btn btn-primary btn-lg" href="/lp/bunsirube/">文標の購入ページへ戻る</a></p>
+      </div>
+    </section>
+
+    <section class="section" id="video-demo">
+      <div class="container">
+        <div class="demo-section-head">
+          <h2 style="font-size:clamp(28px,4vw,44px);letter-spacing:-.05em;">操作の流れを動画で見る</h2>
+          <p>文標を入れたあとの画面を、ローカルWordPressの実機画面から短い動画にしました。導入、記事作成、導線確認の3つに分けています。</p>
+        </div>
+        <div class="video-grid" aria-label="文標の操作動画">
+          <article class="video-card">
+            <video controls playsinline preload="metadata" poster="/assets/bunsirube/videos/bunsirube-install-poster.png">
+              <source src="/assets/bunsirube/videos/bunsirube-install.mp4" type="video/mp4" />
+            </video>
+            <h3>導入と初期設定</h3>
+            <p>テーマ有効化、文標設定、.htaccess画面の注意まで。</p>
+          </article>
+          <article class="video-card">
+            <video controls playsinline preload="metadata" poster="/assets/bunsirube/videos/bunsirube-writing-poster.png">
+              <source src="/assets/bunsirube/videos/bunsirube-writing.mp4" type="video/mp4" />
+            </video>
+            <h3>記事型から書き始める</h3>
+            <p>記事型、比較表、FAQ、CTAをどう置くか。</p>
+          </article>
+          <article class="video-card">
+            <video controls playsinline preload="metadata" poster="/assets/bunsirube/videos/bunsirube-route-check-poster.png">
+              <source src="/assets/bunsirube/videos/bunsirube-route-check.mp4" type="video/mp4" />
+            </video>
+            <h3>導線確認と公開前チェック</h3>
+            <p>クリック確認と事故防止チェックの見え方。</p>
+          </article>
+        </div>
       </div>
     </section>
 
@@ -116,7 +155,7 @@
           <div class="faq-demo">
             <details open>
               <summary>初心者でも使える？</summary>
-              <p>WordPress管理画面から親テーマZIPをアップロードして使う想定です。CSSや小さな関数を改造したい場合は、別ZIPの「文標 子テーマ」を使います。購入後30日間は導入手順と初期設定の質問に対応します。購入後の返金はありません。</p>
+              <p>WordPress管理画面から親テーマZIPをアップロードして使います。CSSや小さな関数を改造したい場合は、別ZIPの「文標 子テーマ」を使います。購入後30日間は導入手順と初期設定の質問に対応します。購入後の返金はありません。</p>
             </details>
             <details>
               <summary>検索順位は上がる？</summary>
@@ -132,7 +171,7 @@
 
         <aside class="demo-card" id="settings-demo">
           <p style="color:#075c4c;font-weight:900;letter-spacing:.12em;text-transform:uppercase;">Settings sample</p>
-          <h2 style="font-size:28px;letter-spacing:-.04em;margin-bottom:16px;">管理画面のイメージ</h2>
+          <h2 style="font-size:28px;letter-spacing:-.04em;margin-bottom:16px;">管理画面の見本</h2>
           <div class="settings-list">
             <div class="setting-row"><span>メインカラー</span><strong>変更</strong></div>
             <div class="setting-row"><span>記事テンプレート</span><strong>7種類</strong></div>

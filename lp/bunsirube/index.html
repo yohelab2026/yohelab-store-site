@@ -20,7 +20,10 @@
   <script type="application/ld+json">
   {"@context":"https://schema.org","@graph":[
     {"@type":"WebSite","name":"よへラボ","url":"https://yohelab.com/"},
-    {"@type":"SoftwareApplication","name":"文標（ぶんしるべ）","applicationCategory":"WordPressTheme","operatingSystem":"WordPress","offers":{"@type":"Offer","price":"5500","priceCurrency":"JPY","name":"ベータ版","url":"https://buy.stripe.com/bJeaEPfTN2ze2Cubvb73G0e?client_reference_id=wordpress-theme","description":"ベータ価格¥5,500（税込）・買い切り・月額なし"},"description":"記事型、FAQ、比較表カード、ブログカード、CTA、導線確認、構造化データをまとめた軽量WordPressテーマ。"}
+    {"@type":"SoftwareApplication","name":"文標（ぶんしるべ）","applicationCategory":"WordPressTheme","operatingSystem":"WordPress","offers":{"@type":"Offer","price":"5500","priceCurrency":"JPY","name":"ベータ版","url":"https://buy.stripe.com/bJeaEPfTN2ze2Cubvb73G0e?client_reference_id=wordpress-theme","description":"ベータ価格¥5,500（税込）・買い切り・月額なし"},"description":"記事型、FAQ、比較表カード、ブログカード、CTA、導線確認、構造化データをまとめた軽量WordPressテーマ。"},
+    {"@type":"VideoObject","name":"文標の導入と初期設定","description":"WordPressテーマ文標の有効化、初期設定、.htaccess注意画面を確認できる短い動画。","thumbnailUrl":"https://yohelab.com/assets/bunsirube/videos/bunsirube-install-poster.png","uploadDate":"2026-05-04","duration":"PT13S","contentUrl":"https://yohelab.com/assets/bunsirube/videos/bunsirube-install.mp4","embedUrl":"https://yohelab.com/lp/bunsirube/#video-demo"},
+    {"@type":"VideoObject","name":"文標の記事型から書き始める流れ","description":"記事型、比較表、FAQ、CTAを使って記事を書き始める流れを確認できる短い動画。","thumbnailUrl":"https://yohelab.com/assets/bunsirube/videos/bunsirube-writing-poster.png","uploadDate":"2026-05-04","duration":"PT13S","contentUrl":"https://yohelab.com/assets/bunsirube/videos/bunsirube-writing.mp4","embedUrl":"https://yohelab.com/lp/bunsirube/#video-demo"},
+    {"@type":"VideoObject","name":"文標の導線確認と公開前チェック","description":"CTA、比較表、広告リンクのクリック確認と事故防止チェックを確認できる短い動画。","thumbnailUrl":"https://yohelab.com/assets/bunsirube/videos/bunsirube-route-check-poster.png","uploadDate":"2026-05-04","duration":"PT13S","contentUrl":"https://yohelab.com/assets/bunsirube/videos/bunsirube-route-check.mp4","embedUrl":"https://yohelab.com/lp/bunsirube/#video-demo"}
   ]}
   </script>
   <style>
@@ -644,6 +647,38 @@
     .trust-card {
       padding:20px;
     }
+    .video-grid {
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:18px;
+    }
+    .video-card {
+      background:#fff;
+      border:1px solid #dce8f5;
+      border-radius:24px;
+      padding:16px;
+      box-shadow:0 18px 42px rgba(25,86,120,.08);
+    }
+    .video-card video {
+      display:block;
+      width:100%;
+      aspect-ratio:16/9;
+      border-radius:18px;
+      background:#101b31;
+      border:1px solid rgba(7,96,79,.16);
+    }
+    .video-card h3 {
+      color:var(--lp-ink);
+      font-size:18px;
+      margin:14px 0 6px;
+      letter-spacing:-.03em;
+    }
+    .video-card p {
+      color:var(--lp-muted);
+      font-size:13px;
+      line-height:1.75;
+      margin:0;
+    }
     .update-history {
       margin-top:18px;
       padding:22px;
@@ -781,7 +816,8 @@
       .before-after,
       .price-wrap,
       .risk-list,
-      .dashboard-grid {
+      .dashboard-grid,
+      .video-grid {
         grid-template-columns:1fr;
       }
       .product-stage { min-height:440px; }
@@ -866,7 +902,7 @@
           </div>
         </div>
 
-        <div class="product-stage" aria-label="テーマ画面のイメージ">
+        <div class="product-stage" aria-label="テーマ画面の見本">
           <div class="float-card float-analytics">
             <strong>アクセス解析</strong>
             <span>内部解析 / GA4 を選択</span>
@@ -916,6 +952,39 @@
         <div class="value-item"><strong>¥5,500（税込）</strong><span>ベータ買い切り</span></div>
       </div>
     </div>
+
+    <section class="lp-section alt" id="video-demo">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-label">Video</span>
+          <h2>実際のWordPress画面で、使い方を見る。</h2>
+          <p>スクリーンショットだけでは分かりにくい導入、記事作成、導線確認を短い動画で確認できます。読み込みを重くしないよう、動画は再生するまで本体を読み込みすぎない設定にしています。</p>
+        </div>
+        <div class="video-grid" aria-label="文標の導入動画">
+          <article class="video-card">
+            <video controls playsinline preload="metadata" poster="/assets/bunsirube/videos/bunsirube-install-poster.png">
+              <source src="/assets/bunsirube/videos/bunsirube-install.mp4" type="video/mp4" />
+            </video>
+            <h3>導入と初期設定</h3>
+            <p>テーマ有効化、外観 > 文標、.htaccessの注意画面までを短く確認できます。</p>
+          </article>
+          <article class="video-card">
+            <video controls playsinline preload="metadata" poster="/assets/bunsirube/videos/bunsirube-writing-poster.png">
+              <source src="/assets/bunsirube/videos/bunsirube-writing.mp4" type="video/mp4" />
+            </video>
+            <h3>記事型から書き始める</h3>
+            <p>7種類の記事型、比較表、FAQ、CTAをどう置くかを見られます。</p>
+          </article>
+          <article class="video-card">
+            <video controls playsinline preload="metadata" poster="/assets/bunsirube/videos/bunsirube-route-check-poster.png">
+              <source src="/assets/bunsirube/videos/bunsirube-route-check.mp4" type="video/mp4" />
+            </video>
+            <h3>導線確認と公開前チェック</h3>
+            <p>CTA・比較表・広告リンクのクリック確認と、事故防止チェックの流れです。</p>
+          </article>
+        </div>
+      </div>
+    </section>
 
     <section class="lp-section" id="features">
       <div class="container">
@@ -1129,7 +1198,7 @@
             <li>内部解析 / 外部解析設定</li>
             <li>自動アップデート用シリアル</li>
           </ul>
-          <p style="font-size:13px;line-height:1.8;color:var(--muted);margin:12px 0 16px;">購入前に、見た目・記事パーツ・設定画面のイメージを確認できます。</p>
+          <p style="font-size:13px;line-height:1.8;color:var(--muted);margin:12px 0 16px;">購入前に、見た目・記事パーツ・設定画面の見本を確認できます。</p>
           <a class="btn btn-outline btn-lg" href="/lp/bunsirube/demo/" style="margin-bottom:12px;">デモ画面を見る →</a>
           <a class="btn btn-lg" href="https://buy.stripe.com/bJeaEPfTN2ze2Cubvb73G0e?client_reference_id=wordpress-theme">購入してZIPを受け取る →</a>
           <p style="font-size:12.5px;line-height:1.8;color:rgba(255,255,255,.88);margin-top:14px;">購入前に対応環境、デモ、FAQ、サポート範囲をご確認ください。デジタル商品のため、購入後の返金はありません。</p>
@@ -1142,7 +1211,7 @@
           <div class="update-history" id="updates">
             <h3>文標の更新履歴</h3>
             <ul class="update-list">
-              <li><time datetime="2026-05-04">2026.05.04 / v0.3.1</time><span>.htaccess編集画面に、管理画面へ入れない場合の復元注意とバックアップダウンロードを追加。法務ページの販売形態表記も整理しました。</span></li>
+              <li><time datetime="2026-05-04">2026.05.04 / v0.3.1</time><span>文標の.htaccess編集画面に、管理画面へ入れない場合の復元注意とバックアップダウンロードを追加。法務ページの販売形態表記も整理しました。</span></li>
               <li><time datetime="2026-05-04">2026.05.04 / v0.3.0</time><span>管理画面に.htaccess編集画面を追加。保存前の自動バックアップ、復元、編集可否チェックを入れ、サーバー設定変更の事故を減らせるようにしました。</span></li>
               <li><time datetime="2026-05-04">2026.05.04 / v0.2.9</time><span>管理画面に事故防止チェックを追加。SEO出力重複、二重キャッシュ、旧ショートコード残り、自動ブログカード、子テーマ利用状況を公開前に確認できるようにしました。</span></li>
               <li><time datetime="2026-05-04">2026.05.04 / v0.2.8</time><span>旧名称の公開名と互換ショートコードを整理し、文標 / bunsirube の名前に統一しました。</span></li>
@@ -1197,7 +1266,7 @@
           </details>
           <details class="faq-item">
             <summary>プラグインは本当に不要？</summary>
-            <div class="faq-body">すべて不要というわけではありません。バックアップ、セキュリティ、フォーム、ECなどは必要に応じて入れていただく想定です。FAQ、目次、GA4タグ、llms.txt、簡単な解析はテーマ側で減らしやすくなっています。</div>
+            <div class="faq-body">すべて不要というわけではありません。バックアップ、セキュリティ、フォーム、ECなどは必要に応じて入れてください。FAQ、目次、GA4タグ、llms.txt、簡単な解析はテーマ側で減らしやすくなっています。</div>
           </details>
           <details class="faq-item">
             <summary>購入後はどう使う？</summary>

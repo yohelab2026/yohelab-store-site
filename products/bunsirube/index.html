@@ -263,6 +263,37 @@
         line-height:1.8;
         font-size:14px;
       }
+      .video-grid {
+        display:grid;
+        grid-template-columns:repeat(3,minmax(0,1fr));
+        gap:16px;
+      }
+      .video-card {
+        background:#fff;
+        border:1px solid var(--border);
+        border-radius:18px;
+        padding:14px;
+        box-shadow:var(--shadow-xs);
+      }
+      .video-card video {
+        display:block;
+        width:100%;
+        aspect-ratio:16/9;
+        border-radius:14px;
+        background:#101b31;
+        border:1px solid var(--border);
+      }
+      .video-card h3 {
+        margin:12px 0 6px;
+        font-size:17px;
+        font-weight:900;
+      }
+      .video-card p {
+        color:var(--muted);
+        line-height:1.75;
+        font-size:13px;
+        margin:0;
+      }
       .final-cta {
         padding:100px 0;
         background: radial-gradient(ellipse 80% 70% at 50% -10%,rgba(16,201,154,.3),transparent 55%), linear-gradient(180deg,#0a5b4c 0%,#043d33 100%);
@@ -290,7 +321,8 @@
       @media (max-width:768px) {
         .band .container,
         .section-grid,
-        .settings-grid { grid-template-columns:1fr; }
+        .settings-grid,
+        .video-grid { grid-template-columns:1fr; }
         .check-grid { grid-template-columns:1fr; }
         .btn-lg {
           width:100%;
@@ -353,6 +385,36 @@
           </div>
         </div>
       </div>
+
+      <section class="section" style="background:var(--bg);padding:64px 0;">
+        <div class="container">
+          <p class="section-label">Video demo</p>
+          <h2 class="section-title">導入から導線確認まで、実画面で見る</h2>
+          <div class="video-grid reveal">
+            <article class="video-card">
+              <video controls playsinline preload="metadata" poster="/assets/bunsirube/videos/bunsirube-install-poster.png">
+                <source src="/assets/bunsirube/videos/bunsirube-install.mp4" type="video/mp4" />
+              </video>
+              <h3>導入と初期設定</h3>
+              <p>テーマ有効化、文標設定、.htaccess注意画面の流れ。</p>
+            </article>
+            <article class="video-card">
+              <video controls playsinline preload="metadata" poster="/assets/bunsirube/videos/bunsirube-writing-poster.png">
+                <source src="/assets/bunsirube/videos/bunsirube-writing.mp4" type="video/mp4" />
+              </video>
+              <h3>記事型から書き始める</h3>
+              <p>比較表、FAQ、CTAを記事に置く流れ。</p>
+            </article>
+            <article class="video-card">
+              <video controls playsinline preload="metadata" poster="/assets/bunsirube/videos/bunsirube-route-check-poster.png">
+                <source src="/assets/bunsirube/videos/bunsirube-route-check.mp4" type="video/mp4" />
+              </video>
+              <h3>導線確認</h3>
+              <p>CTA・比較表・広告リンクのクリック確認。</p>
+            </article>
+          </div>
+        </div>
+      </section>
 
       <section class="section">
         <div class="container">
