@@ -22,6 +22,38 @@ const WP_URL = process.env.BUNSIRUBE_WP_URL || "http://localhost:8088";
 const WP_USER = process.env.BUNSIRUBE_WP_USER || "admin";
 const WP_PASS = process.env.BUNSIRUBE_WP_PASS || "adminpass123";
 const POST_ID = process.env.BUNSIRUBE_DEMO_POST_ID || "19";
+const DEMO_TITLE = "初心者向けWordPressテーマ比較：文標で記事構造を整える";
+const DEMO_SLUG = "wordpress-theme-comparison-bunsirube";
+const DEMO_EXCERPT = "AI検索時代に、短い答え・根拠・FAQ・比較表・CTAを本文で整理するためのデモ記事です。";
+const DEMO_CONTENT = `
+[bunsirube_summary]この記事では、WordPressテーマを選ぶときに見るポイントと、文標で記事構造を整える流れをまとめます。[/bunsirube_summary]
+
+<h2>結論：デザインより先に、記事の構造を決める</h2>
+<p>比較記事やレビュー記事では、最初に短い答えを置き、理由、注意点、FAQ、CTAへ進む流れを作ると読みやすくなります。</p>
+
+<h2>テーマ選びで見るポイント</h2>
+[bunsirube_compare]
+[bunsirube_compare_item label="記事向け" name="文標" price="¥5,500（税込）" feature="記事型・FAQ・比較表カード・CTA・導線確認" fit="比較記事やレビュー記事を迷わず書きたい人" caution="デザインを細かく作り込む総合テーマではありません" button="デモを見る" url="https://yohelab.com/lp/bunsirube/"]
+[bunsirube_compare_item label="総合型" name="一般的な有料テーマ" price="テーマにより異なる" feature="装飾・ブロック・デザイン調整が豊富" fit="見た目を細かく作り込みたい人" caution="記事構造は自分で組み立てる場面があります" button="比較する" url="https://yohelab.com/lp/bunsirube/demo/"]
+[/bunsirube_compare]
+
+<h2>よくある確認</h2>
+[bunsirube_faq question="文標はAI検索での表示を保証しますか？"]保証しません。本文、FAQ、出典、構造化データを読み取りやすく整えるためのテーマです。[/bunsirube_faq]
+[bunsirube_faq question="既存記事は消えますか？"]通常は消えません。変更前にバックアップを取ってから導入してください。[/bunsirube_faq]
+
+[bunsirube_cta title="まずはデモで記事の見え方を確認" text="比較表、FAQ、CTAが入った記事の流れを確認できます。" button="文標のデモを見る" url="https://yohelab.com/lp/bunsirube/demo/"]
+`.trim();
+const DEMO_POST_TITLES = [
+  "比較記事の書き方メモ",
+  "FAQを本文に置く理由",
+  "レビュー記事で見るべきポイント",
+  "商品紹介記事の導線チェック",
+  "ブログカードの使いどころ",
+  "記事公開前に確認すること",
+  "テーマ導入の基本メモ",
+  "AI検索時代の記事構造メモ",
+  "WordPressブログの初期設定メモ",
+];
 
 const viewport = { width: 1280, height: 720, deviceScaleFactor: 1 };
 
@@ -71,6 +103,102 @@ async function login(page) {
       page.click("#wp-submit"),
     ]);
   }
+}
+
+async function prepareDemoSite(page) {
+  await page.goto(`${WP_URL}/wp-admin/post.php?post=${POST_ID}&action=edit`, { waitUntil: "networkidle2" });
+  const result = await page.evaluate(async ({ postId, title, slug, excerpt, content, relatedTitles }) => {
+    const nonce = window.wpApiSettings?.nonce;
+    if (!nonce) throw new Error("WordPress REST nonce was not found.");
+
+    async function wpRequest(path, options = {}) {
+      const response = await fetch(path, {
+        ...options,
+        headers: {
+          "Content-Type": "application/json",
+          "X-WP-Nonce": nonce,
+          ...(options.headers || {}),
+        },
+      });
+      const text = await response.text();
+      let body = null;
+      try {
+        body = text ? JSON.parse(text) : null;
+      } catch {
+        body = text;
+      }
+      if (!response.ok) {
+        const message = typeof body === "object" && body?.message ? body.message : text;
+        throw new Error(`${path}: ${response.status} ${message}`);
+      }
+      return body;
+    }
+
+    const output = { updatedPosts: 0, deletedComments: 0, settingsUpdated: false };
+    try {
+      await wpRequest("/wp-json/wp/v2/settings", {
+        method: "POST",
+        body: JSON.stringify({
+          title: "文標ブログデモ",
+          description: "AI検索時代の記事構造を整えるブログ",
+        }),
+      });
+      output.settingsUpdated = true;
+    } catch (error) {
+      output.settingsWarning = error.message;
+    }
+
+    await wpRequest(`/wp-json/wp/v2/posts/${postId}`, {
+      method: "POST",
+      body: JSON.stringify({
+        title,
+        slug,
+        excerpt,
+        content,
+        status: "publish",
+      }),
+    });
+    output.updatedPosts += 1;
+
+    const posts = await wpRequest("/wp-json/wp/v2/posts?per_page=20&status=publish&_fields=id,title,slug");
+    const otherPosts = posts.filter((post) => String(post.id) !== String(postId));
+    for (let i = 0; i < otherPosts.length; i += 1) {
+      const relatedTitle = relatedTitles[i] || `文標ブログ運用メモ ${i + 1}`;
+      await wpRequest(`/wp-json/wp/v2/posts/${otherPosts[i].id}`, {
+        method: "POST",
+        body: JSON.stringify({
+          title: relatedTitle,
+          slug: `bunsirube-blog-demo-${i + 1}`,
+        }),
+      });
+      output.updatedPosts += 1;
+    }
+
+    try {
+      const comments = await wpRequest("/wp-json/wp/v2/comments?per_page=100&status=all&_fields=id");
+      for (const comment of comments) {
+        await wpRequest(`/wp-json/wp/v2/comments/${comment.id}?force=true`, { method: "DELETE" });
+        output.deletedComments += 1;
+      }
+    } catch (error) {
+      output.commentsWarning = error.message;
+    }
+    return output;
+  }, {
+    postId: POST_ID,
+    title: DEMO_TITLE,
+    slug: DEMO_SLUG,
+    excerpt: DEMO_EXCERPT,
+    content: DEMO_CONTENT,
+    relatedTitles: DEMO_POST_TITLES,
+  });
+  if (result.settingsWarning) {
+    console.warn("Demo site settings were not updated:", result.settingsWarning);
+  }
+  if (result.commentsWarning) {
+    console.warn("Demo comments were not removed:", result.commentsWarning);
+  }
+  console.log(`Prepared demo WordPress content (${result.updatedPosts} posts updated, ${result.deletedComments} comments removed).`);
 }
 
 async function shot(page, name, url, selector = "body") {
@@ -351,6 +479,7 @@ async function main() {
   const page = await browser.newPage();
   await page.setViewport(viewport);
   await login(page);
+  await prepareDemoSite(page);
 
   const shots = {
     themes: await shot(page, "themes", `${WP_URL}/wp-admin/themes.php`, "body"),
