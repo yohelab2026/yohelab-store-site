@@ -46,6 +46,13 @@
     }
     /* Defer rendering of below-the-fold sections for faster initial paint */
     .lp-section { content-visibility: auto; contain-intrinsic-size: 1px 800px; }
+    /* Click-to-play video facade — keeps initial load light */
+    .video-facade { position:relative; display:block; width:100%; padding:0; margin:0 0 14px; border:1px solid #dce7fb; border-radius:18px; background:#101b31; overflow:hidden; cursor:pointer; aspect-ratio:16/9; }
+    .video-facade img { display:block; width:100%; height:100%; object-fit:cover; opacity:.96; transition:opacity .2s ease; }
+    .video-facade:hover img { opacity:1; }
+    .video-facade .video-play { position:absolute; inset:50% auto auto 50%; transform:translate(-50%,-50%); display:grid; place-items:center; width:64px; height:64px; border-radius:50%; background:rgba(255,255,255,.94); color:#0b8f72; font-size:24px; box-shadow:0 12px 28px rgba(11,32,68,.32); padding-left:4px; }
+    .video-facade:hover .video-play { background:#fff; }
+    .video-facade:focus-visible { outline:3px solid #2f7df6; outline-offset:2px; }
     .nav {
       background:rgba(255,255,255,.92);
       backdrop-filter:blur(16px);
@@ -1020,9 +1027,10 @@
           <p>まずは30秒ダイジェストで全体を確認できます。詳しく見たい場合は、下の3本で導入、記事作成、導線確認を分けて見られます。</p>
         </div>
         <article class="quick-video-card" aria-label="30秒で分かる文標">
-              <video controls playsinline preload="none" poster="/assets/bunsirube/videos/bunsirube-quick-tour-poster.png?v=blog-demo-20260504">
-                <source src="/assets/bunsirube/videos/bunsirube-quick-tour.mp4?v=blog-demo-20260504" type="video/mp4" />
-          </video>
+          <button type="button" class="video-facade" data-src="/assets/bunsirube/videos/bunsirube-quick-tour.mp4?v=blog-demo-20260504" aria-label="30秒で分かる文標 を再生">
+            <img src="/assets/bunsirube/videos/bunsirube-quick-tour-poster.png?v=blog-demo-20260504" alt="" loading="lazy" decoding="async" width="640" height="360" />
+            <span class="video-play" aria-hidden="true">▶</span>
+          </button>
           <div class="quick-video-copy">
             <span class="section-label">30 seconds</span>
             <h3>30秒で分かる文標</h3>
@@ -1037,23 +1045,26 @@
         </article>
         <div class="video-grid" aria-label="文標の導入動画">
           <article class="video-card">
-                <video controls playsinline preload="none" poster="/assets/bunsirube/videos/bunsirube-install-poster.png?v=blog-demo-20260504">
-                  <source src="/assets/bunsirube/videos/bunsirube-install.mp4?v=blog-demo-20260504" type="video/mp4" />
-            </video>
+            <button type="button" class="video-facade" data-src="/assets/bunsirube/videos/bunsirube-install.mp4?v=blog-demo-20260504" aria-label="導入と初期設定 を再生">
+              <img src="/assets/bunsirube/videos/bunsirube-install-poster.png?v=blog-demo-20260504" alt="" loading="lazy" decoding="async" width="640" height="360" />
+              <span class="video-play" aria-hidden="true">▶</span>
+            </button>
             <h3>導入と初期設定</h3>
             <p>テーマ有効化、外観 > 文標、.htaccessの注意画面までを短く確認できます。</p>
           </article>
           <article class="video-card">
-                <video controls playsinline preload="none" poster="/assets/bunsirube/videos/bunsirube-writing-poster.png?v=blog-demo-20260504">
-                  <source src="/assets/bunsirube/videos/bunsirube-writing.mp4?v=blog-demo-20260504" type="video/mp4" />
-            </video>
+            <button type="button" class="video-facade" data-src="/assets/bunsirube/videos/bunsirube-writing.mp4?v=blog-demo-20260504" aria-label="記事型から書き始める を再生">
+              <img src="/assets/bunsirube/videos/bunsirube-writing-poster.png?v=blog-demo-20260504" alt="" loading="lazy" decoding="async" width="640" height="360" />
+              <span class="video-play" aria-hidden="true">▶</span>
+            </button>
             <h3>記事型から書き始める</h3>
             <p>7種類の記事型、比較表、FAQ、CTAをどう置くかを見られます。</p>
           </article>
           <article class="video-card">
-                <video controls playsinline preload="none" poster="/assets/bunsirube/videos/bunsirube-route-check-poster.png?v=blog-demo-20260504">
-                  <source src="/assets/bunsirube/videos/bunsirube-route-check.mp4?v=blog-demo-20260504" type="video/mp4" />
-            </video>
+            <button type="button" class="video-facade" data-src="/assets/bunsirube/videos/bunsirube-route-check.mp4?v=blog-demo-20260504" aria-label="導線確認と公開前チェック を再生">
+              <img src="/assets/bunsirube/videos/bunsirube-route-check-poster.png?v=blog-demo-20260504" alt="" loading="lazy" decoding="async" width="640" height="360" />
+              <span class="video-play" aria-hidden="true">▶</span>
+            </button>
             <h3>導線確認と公開前チェック</h3>
             <p>CTA・比較表・広告リンクのクリック確認と、事故防止チェックの流れです。</p>
           </article>
@@ -1436,5 +1447,20 @@
       </div>
     </div>
   </footer>
+  <script>
+    // Lazy-load videos: replace facade button with <video> on first click
+    document.addEventListener('click', function(e){
+      var btn = e.target.closest('.video-facade');
+      if(!btn) return;
+      e.preventDefault();
+      var src = btn.getAttribute('data-src');
+      if(!src) return;
+      var v = document.createElement('video');
+      v.controls = true; v.playsInline = true; v.autoplay = true;
+      v.style.width='100%'; v.style.aspectRatio='16/9'; v.style.borderRadius='18px'; v.style.background='#101b31'; v.style.border='1px solid #dce7fb'; v.style.display='block'; v.style.marginBottom='14px';
+      var s = document.createElement('source'); s.src = src; s.type = 'video/mp4'; v.appendChild(s);
+      btn.replaceWith(v);
+    });
+  </script>
 </body>
 </html>
