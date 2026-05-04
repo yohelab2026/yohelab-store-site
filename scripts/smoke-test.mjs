@@ -50,8 +50,8 @@ const legacyLabels = [
 ];
 checks.push(["home links research writer app", home.includes('/apps/research-writer/')]);
 checks.push(["home no legacy tool links", legacyPaths.every((path) => !home.includes(path))]);
-checks.push(["home focuses bunsirube conversion", home.includes("比較記事・レビュー記事・FAQ記事を") && home.includes("デモを見る") && home.includes("¥5,500（税込）で購入する") && home.includes("まずは文標を中心に。") && !home.includes("無料で遊べるミニゲーム")]);
-checks.push(["home uses safer AI search wording", home.includes("AI検索にも読み取られやすい構造を意識") && !home.includes("AI検索にも読まれやすい")]);
+checks.push(["home focuses bunsirube conversion", home.includes("AI検索時代の記事構造を") && home.includes("デモを見る") && home.includes("¥5,500（税込）で購入する") && home.includes("まずは文標を中心に。") && !home.includes("無料で遊べるミニゲーム")]);
+checks.push(["home uses safer AI search wording", home.includes("AI検索時代に読み取りやすい本文構造") && !home.includes("AI検索にも読まれやすい") && !home.includes("AI検索に出るテーマ") && !home.includes("AI検索最適化済み")]);
 checks.push(["home surfaces buyer guide and tax-included prices", home.includes("購入前に読める確認メモ") && home.includes("弱点3つ・直す文・FAQ案") && home.includes("¥1,980/月（税込）") && home.includes("980円（税込）") && home.includes("¥5,500（税込）") && home.includes("表示価格はすべて税込です。")]);
 checks.push(["home avoids overstated claims", !home.includes("AIに引用される") && !home.includes("引用されないブログ") && !home.includes("5,377億") && !home.includes("3.6兆")]);
 
@@ -174,6 +174,7 @@ checks.push(["blog post sanitizes dangerous html server side", blogPostFunction.
 checks.push(["blog post sanitizes dangerous html client fallback", blogPostPage.includes("sanitizeBodyHtml") && blogPostPage.includes("iframe|object|embed") && blogPostPage.includes("javascript:") && blogPostPage.includes("data:text") && blogPostPage.includes("vbscript:")]);
 checks.push(["bunsirube lp includes update history", bunsirubeLp.includes("文標の更新履歴") && bunsirubeLp.includes('id="updates"') && bunsirubeLp.includes("自動アップデート用シリアル")]);
 checks.push(["bunsirube lp includes demo and support", bunsirubeLp.includes('/lp/bunsirube/demo/') && bunsirubeLp.includes("デモを見る") && bunsirubeLp.includes("テーマ購入前の不安") && bunsirubeLp.includes("購入後の返金はありません") && bunsirubeLp.includes("購入後30日間") && bunsirubeDemo.includes("文標の見た目と使い方")]);
+checks.push(["bunsirube lp positions AI-era article structure safely", bunsirubeLp.includes("AI検索時代の記事構造") && bunsirubeLp.includes("本文で読み取りやすい構造") && bunsirubeLp.includes("Google AI Overviews等への表示を保証するものではありません") && !bunsirubeLp.includes("AI検索に出るテーマ") && !bunsirubeLp.includes("AI検索最適化済み") && !bunsirubeLp.includes("AIに拾われる")]);
 checks.push(["bunsirube lp embeds demo videos", bunsirubeLp.includes("30秒で分かる文標") && bunsirubeLp.includes('/assets/bunsirube/videos/bunsirube-quick-tour.mp4') && bunsirubeLp.includes('/assets/bunsirube/videos/bunsirube-install.mp4') && bunsirubeLp.includes('/assets/bunsirube/videos/bunsirube-writing.mp4') && bunsirubeLp.includes('/assets/bunsirube/videos/bunsirube-route-check.mp4') && bunsirubeLp.includes('"@type":"VideoObject"')]);
 checks.push(["bunsirube video structured data parses", bunsirubeVideoObjects.length === 4 && bunsirubeVideoObjects.some((item) => item.contentUrl?.includes("bunsirube-quick-tour.mp4") && item.duration === "PT34S") && bunsirubeVideoObjects.filter((item) => item.duration === "PT13S").length === 3 && bunsirubeVideoObjects.every((item) => item.name && item.thumbnailUrl && item.contentUrl && item.duration)]);
 checks.push(["root video assets exist for direct deploy", existsSync(src("assets/bunsirube/videos/bunsirube-quick-tour.mp4")) && existsSync(src("assets/bunsirube/videos/bunsirube-install.mp4")) && existsSync(src("assets/bunsirube/videos/bunsirube-writing.mp4")) && existsSync(src("assets/bunsirube/videos/bunsirube-route-check.mp4"))]);
