@@ -14,6 +14,14 @@ function assert(condition, message) {
   if (!condition) throw new Error(message);
 }
 
+function jsonLdObjects(html) {
+  return [...html.matchAll(/<script type="application\/ld\+json">\s*([\s\S]*?)\s*<\/script>/g)]
+    .flatMap((match) => {
+      const parsed = JSON.parse(match[1]);
+      return parsed["@graph"] || [parsed];
+    });
+}
+
 const checks = [];
 
 const home = read(dist("index.html"));
@@ -43,6 +51,7 @@ const legacyLabels = [
 checks.push(["home links research writer app", home.includes('/apps/research-writer/')]);
 checks.push(["home no legacy tool links", legacyPaths.every((path) => !home.includes(path))]);
 checks.push(["home focuses bunsirube conversion", home.includes("比較記事・レビュー記事・FAQ記事を") && home.includes("デモを見る") && home.includes("¥5,500（税込）で購入する") && home.includes("まずは文標を中心に。") && !home.includes("無料で遊べるミニゲーム")]);
+checks.push(["home uses safer AI search wording", home.includes("AI検索にも読み取られやすい構造を意識") && !home.includes("AI検索にも読まれやすい")]);
 checks.push(["home surfaces buyer guide and tax-included prices", home.includes("購入前に読める確認メモ") && home.includes("弱点3つ・直す文・FAQ案") && home.includes("¥1,980/月（税込）") && home.includes("980円（税込）") && home.includes("¥5,500（税込）") && home.includes("表示価格はすべて税込です。")]);
 checks.push(["home avoids overstated claims", !home.includes("AIに引用される") && !home.includes("引用されないブログ") && !home.includes("5,377億") && !home.includes("3.6兆")]);
 
@@ -147,6 +156,7 @@ const bunsirubeLp = read(dist("lp/bunsirube/index.html"));
 const bunsirubeDemo = read(dist("lp/bunsirube/demo/index.html"));
 const privacy = read(dist("legal/privacy/index.html"));
 const matomoLoader = read(dist("shared/matomo-loader.js"));
+const bunsirubeVideoObjects = jsonLdObjects(bunsirubeLp).filter((item) => item["@type"] === "VideoObject");
 checks.push(["theme serial uses bunsirube prefix", ent.includes("BUN-") && !ent.includes("AIO-")]);
 checks.push(["entitlement keeps research writer", ent.includes('"research-writer"')]);
 checks.push(["entitlement adds wordpress theme", ent.includes('"wordpress-theme"')]);
@@ -154,6 +164,7 @@ checks.push(["entitlement adds page review", ent.includes('"page-review"')]);
 checks.push(["entitlement drops legacy tools", !ent.includes(`"${"rad"}${"ar"}"`) && !ent.includes(`"${oldPropToken}-${oldOptimizer}"`) && !ent.includes(`"${"article"}-${"polish"}"` ) && !ent.includes(`"${oldPropToken}"` ) && !ent.includes(`"${"x"}-${"helper"}"` ) && !ent.includes(`"${"ec"}-${"copy"}"` ) && !ent.includes(`"${"aio"}-${"mini"}"` )]);
 checks.push(["checkout function redirects to tracked payment links", checkout.includes('https://buy.stripe.com/aFa4gr6jd6Pu4KC7eV73G0d?client_reference_id=research-writer') && checkout.includes('https://buy.stripe.com/bJeaEPfTN2ze2Cubvb73G0e?client_reference_id=wordpress-theme') && checkout.includes('https://buy.stripe.com/bJedR10YTddS4KC42J73G0f?client_reference_id=page-review')]);
 checks.push(["middleware redirects retired product pages", middleware.includes('"/products/article-starter-kit/"') && middleware.includes('"/products/wordpress-theme-beta/"') && middleware.includes('"/lp/wordpress-theme/"')]);
+checks.push(["middleware redirects retired radar beta page", middleware.includes('"/products/radar-beta"') && middleware.includes('"/products/radar-beta/"') && middleware.includes('"/lp/bunsirube/"')]);
 checks.push(["blog admin page is reachable behind page login", blogAdminGate.includes("context.next()") && blogAdminGate.includes("noindex") && !blogAdminGate.includes("ADMIN_KEY")]);
 checks.push(["blog admin validates pin server side", blogAdmin.includes("/api/blog-auth") && blogAdmin.includes("SESSION_PIN_KEY") && !blogAdmin.includes("localStorage.setItem(PIN_KEY")]);
 checks.push(["blog image uploads convert to one webp", blogAdmin.includes("convertToSingleWebp") && blogAdmin.includes("canvas.toBlob(resolve, 'image/webp'") && blogImageFunction.includes('const ALLOWED_TYPES = ["image/webp"]') && blogImageFunction.includes(".webp`")]);
@@ -163,11 +174,16 @@ checks.push(["blog post sanitizes dangerous html client fallback", blogPostPage.
 checks.push(["bunsirube lp includes update history", bunsirubeLp.includes("文標の更新履歴") && bunsirubeLp.includes('id="updates"') && bunsirubeLp.includes("自動アップデート用シリアル")]);
 checks.push(["bunsirube lp includes demo and support", bunsirubeLp.includes('/lp/bunsirube/demo/') && bunsirubeLp.includes("デモを見る") && bunsirubeLp.includes("テーマ購入前の不安") && bunsirubeLp.includes("購入後の返金はありません") && bunsirubeLp.includes("購入後30日間") && bunsirubeDemo.includes("文標の見た目と使い方")]);
 checks.push(["bunsirube lp embeds demo videos", bunsirubeLp.includes('/assets/bunsirube/videos/bunsirube-install.mp4') && bunsirubeLp.includes('/assets/bunsirube/videos/bunsirube-writing.mp4') && bunsirubeLp.includes('/assets/bunsirube/videos/bunsirube-route-check.mp4') && bunsirubeLp.includes('"@type":"VideoObject"')]);
+checks.push(["bunsirube video structured data parses", bunsirubeVideoObjects.length === 3 && bunsirubeVideoObjects.every((item) => item.name && item.thumbnailUrl && item.contentUrl && item.duration === "PT13S")]);
 checks.push(["root video assets exist for direct deploy", existsSync(src("assets/bunsirube/videos/bunsirube-install.mp4")) && existsSync(src("assets/bunsirube/videos/bunsirube-writing.mp4")) && existsSync(src("assets/bunsirube/videos/bunsirube-route-check.mp4"))]);
 checks.push(["bunsirube demo includes article type samples", bunsirubeDemo.includes("比較記事デモ") && bunsirubeDemo.includes("レビュー記事デモ") && bunsirubeDemo.includes("FAQ記事デモ") && bunsirubeDemo.includes("管理画面見本")]);
 checks.push(["bunsirube demo embeds operation videos", bunsirubeDemo.includes("操作の流れを動画で見る") && bunsirubeDemo.includes('/assets/bunsirube/videos/bunsirube-install.mp4') && !bunsirubeDemo.includes("想定") && !bunsirubeDemo.includes("イメージ")]);
 checks.push(["bunsirube demo uses tax-included purchase label", bunsirubeDemo.includes("¥5,500（税込）で購入する") && bunsirubeDemo.includes("表示価格はすべて税込です。")]);
 checks.push(["privacy policy covers current paid products and theme analytics", privacy.includes("有料サービス・ダウンロード商品") && privacy.includes("文標テーマでは") && privacy.includes("CTA・比較表・広告リンク・ブログカード") && !privacy.includes("2026年4月30日") && !privacy.includes("プロプラン")]);
+const blogIndex = read(dist("blog/index.html"));
+checks.push(["blog surfaces pre-purchase bunsirube guides", blogIndex.includes("文標を買う前に読む3本") && blogIndex.includes("/blog/free-theme-vs-bunsirube/") && blogIndex.includes("/blog/comparison-article-template/")]);
+checks.push(["new bunsirube guide posts exist", read(dist("blog/free-theme-vs-bunsirube/index.html")).includes("無料テーマと文標の違い") && read(dist("blog/comparison-article-template/index.html")).includes("比較記事の書き方")]);
+checks.push(["sitemap includes new bunsirube guide posts", sitemap.includes("https://yohelab.com/blog/free-theme-vs-bunsirube/") && sitemap.includes("https://yohelab.com/blog/comparison-article-template/")]);
 checks.push(["matomo skips local without explicit url", matomoLoader.includes("isLocal && !window.YOHELAB_MATOMO_URL") && !matomoLoader.includes("http://localhost:8080/")]);
 
 for (const [name, ok] of checks) {

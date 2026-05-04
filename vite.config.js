@@ -76,6 +76,8 @@ export default defineConfig({
         blogPageReviewSample: "blog/page-review-sample/index.html",
         blogResearchWriterFreeFlow: "blog/research-writer-free-flow/index.html",
         blogBunsirubeBeforeInstall: "blog/bunsirube-before-install/index.html",
+        blogFreeThemeVsBunsirube: "blog/free-theme-vs-bunsirube/index.html",
+        blogComparisonArticleTemplate: "blog/comparison-article-template/index.html",
         blogFaqSourceAiSearch: "blog/faq-source-ai-search/index.html",
         blogSalesPageCommonMistakes: "blog/sales-page-common-mistakes/index.html",
         blogStart: "blog/yohelab-blog-start/index.html",

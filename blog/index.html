@@ -28,6 +28,59 @@
       font-size:15px;
       line-height:1.85;
     }
+    .featured-guides {
+      max-width:960px;
+      margin:26px auto 18px;
+      padding:22px;
+      border:1px solid #dce7fb;
+      border-radius:26px;
+      background:linear-gradient(135deg,#ffffff,#eef8f4);
+      box-shadow:var(--shadow-sm);
+    }
+    .featured-guides h2 {
+      font-size:clamp(24px,3.6vw,36px);
+      letter-spacing:-.05em;
+      margin:0 0 8px;
+    }
+    .featured-guides p {
+      color:var(--muted);
+      line-height:1.8;
+      margin:0 0 18px;
+      font-size:14px;
+    }
+    .featured-guide-grid {
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:14px;
+    }
+    .featured-guide-card {
+      display:grid;
+      gap:8px;
+      padding:18px;
+      border-radius:20px;
+      background:#fff;
+      border:1px solid #dce7fb;
+      color:inherit;
+      text-decoration:none;
+      min-height:150px;
+    }
+    .featured-guide-card span {
+      color:#075c4c;
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+    .featured-guide-card strong {
+      font-size:18px;
+      line-height:1.45;
+      letter-spacing:-.03em;
+    }
+    .featured-guide-card small {
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.75;
+    }
 
     /* グリッド */
     .posts-grid {
@@ -121,6 +174,9 @@
 
     .empty { padding:48px 24px;text-align:center;color:var(--muted);font-size:16px; }
 
+    @media (max-width:860px) {
+      .featured-guide-grid { grid-template-columns:1fr; }
+    }
     @media (max-width:560px) {
       .post-card-title { font-size:21px; }
     }
@@ -148,7 +204,46 @@
         <h1>よへラボブログ</h1>
         <p class="blog-intro">記事メーカー、文標、商品ページ改善レビューを作った理由や、購入前に見ておきたいメモを短く残します。</p>
       </div>
+      <section class="featured-guides" aria-labelledby="bunsirube-guides-title">
+        <h2 id="bunsirube-guides-title">文標を買う前に読む3本</h2>
+        <p>テーマ購入前に迷いやすいところだけ、先に確認できるようにしました。</p>
+        <div class="featured-guide-grid">
+          <a class="featured-guide-card" href="/blog/bunsirube-before-install/">
+            <span>Check</span>
+            <strong>文標を入れる前に確認すること</strong>
+            <small>既存記事、バックアップ、対応環境を先に見ます。</small>
+          </a>
+          <a class="featured-guide-card" href="/blog/free-theme-vs-bunsirube/">
+            <span>Compare</span>
+            <strong>無料テーマと文標の違い</strong>
+            <small>何でもできるより、記事の型で選ぶ理由。</small>
+          </a>
+          <a class="featured-guide-card" href="/blog/comparison-article-template/">
+            <span>Write</span>
+            <strong>比較記事の書き方</strong>
+            <small>結論、比較表、FAQ、CTAの順番を確認します。</small>
+          </a>
+        </div>
+      </section>
       <div id="posts" class="posts-grid">
+        <article class="post-card" data-slug="free-theme-vs-bunsirube">
+          <div class="post-card-img-placeholder">📝</div>
+          <div class="post-card-body">
+            <div class="post-card-meta"><span>2026-05-04</span><span class="post-card-tag">文標</span><span class="post-card-tag">WordPress</span></div>
+            <div class="post-card-title">無料テーマと文標の違い：何でもできるより、記事の型で選ぶ</div>
+            <div class="post-card-excerpt">文標は無料テーマと機能数で正面勝負せず、記事の型・FAQ・比較表・CTA・導線確認に絞ったテーマです。</div>
+            <div class="post-card-footer"><a class="open-link" href="/blog/free-theme-vs-bunsirube/">記事ページへ →</a></div>
+          </div>
+        </article>
+        <article class="post-card" data-slug="comparison-article-template">
+          <div class="post-card-img-placeholder">📝</div>
+          <div class="post-card-body">
+            <div class="post-card-meta"><span>2026-05-04</span><span class="post-card-tag">文標</span><span class="post-card-tag">比較記事</span></div>
+            <div class="post-card-title">比較記事の書き方：結論・比較表・FAQ・CTAの順で迷いを減らす</div>
+            <div class="post-card-excerpt">比較記事を書くときの基本構成を、購入前に確認できるようにしました。</div>
+            <div class="post-card-footer"><a class="open-link" href="/blog/comparison-article-template/">記事ページへ →</a></div>
+          </div>
+        </article>
         <article class="post-card" data-slug="page-review-sample">
           <div class="post-card-img-placeholder">📝</div>
           <div class="post-card-body">

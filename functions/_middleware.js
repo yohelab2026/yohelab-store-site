@@ -7,6 +7,8 @@ const RETIRED_REDIRECTS = new Map([
   ["/lp/wordpress-theme/", "/lp/bunsirube/"],
   ["/products/wordpress-theme-beta", "/products/bunsirube/"],
   ["/products/wordpress-theme-beta/", "/products/bunsirube/"],
+  ["/products/radar-beta", "/lp/bunsirube/"],
+  ["/products/radar-beta/", "/lp/bunsirube/"],
   ["/products/article-starter-kit", "/lp/research-writer/"],
   ["/products/article-starter-kit/", "/lp/research-writer/"],
 ]);
