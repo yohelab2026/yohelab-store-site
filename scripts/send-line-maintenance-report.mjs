@@ -3,6 +3,9 @@ const to = process.env.LINE_TO || process.env.LINE_USER_ID || process.env.LINE_G
 
 const buildStatus = process.env.BUILD_STATUS || "unknown";
 const smokeStatus = process.env.SMOKE_STATUS || "unknown";
+const cleanupStatus = process.env.CLEANUP_STATUS || "unknown";
+const cleanupChecked = process.env.LINE_CLEANUP_CHECKED || "";
+const cleanupClosed = process.env.LINE_CLEANUP_CLOSED || "";
 const repo = process.env.GITHUB_REPOSITORY || "yohelab-store-site";
 const runId = process.env.GITHUB_RUN_ID || "";
 const refName = process.env.GITHUB_REF_NAME || "";
@@ -15,7 +18,13 @@ function label(status) {
 }
 
 function overallStatus() {
-  return buildStatus === "success" && smokeStatus === "success" ? "OK" : "要確認";
+  return buildStatus === "success" && smokeStatus === "success" && cleanupStatus === "success" ? "OK" : "要確認";
+}
+
+function cleanupLabel() {
+  const base = label(cleanupStatus);
+  if (!cleanupChecked && !cleanupClosed) return base;
+  return `${base} (${cleanupClosed || 0}/${cleanupChecked || 0}件クローズ)`;
 }
 
 const message = [
@@ -24,6 +33,7 @@ const message = [
   `状態: ${overallStatus()}`,
   `build: ${label(buildStatus)}`,
   `smoke-test: ${label(smokeStatus)}`,
+  `line-issue-cleanup: ${cleanupLabel()}`,
   `branch: ${refName || "-"}`,
   `commit: ${sha || "-"}`,
   "",

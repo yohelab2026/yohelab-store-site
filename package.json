@@ -12,6 +12,7 @@
     "test:smoke": "node scripts/smoke-test.mjs",
     "test:theme-download": "node scripts/test-theme-download.mjs",
     "notify:line-maintenance": "node scripts/send-line-maintenance-report.mjs",
+    "cleanup:line-issues": "node scripts/cleanup-line-issues.mjs",
     "package-theme": "node scripts/package-theme.mjs",
     "package-child-theme": "node scripts/package-theme.mjs bunsirube-child"
   },

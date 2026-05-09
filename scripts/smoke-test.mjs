@@ -145,6 +145,8 @@ const blogPostPage = read(dist("blog/post/index.html"));
 const blogPostApi = read(src("functions/api/blog-post.js"));
 const lineWebhook = read(src("functions/api/line-webhook.js"));
 const aiPrGuard = read(src(".github/workflows/ai-pr-guard.yml"));
+const lineMaintenanceWorkflow = read(src(".github/workflows/line-maintenance-report.yml"));
+const lineIssueCleanup = read(src("scripts/cleanup-line-issues.mjs"));
 const bunsirubeLp = read(dist("lp/bunsirube/index.html"));
 const bunsirubeDemo = read(dist("lp/bunsirube/demo/index.html"));
 const bunsirubeUpdates = read(dist("lp/bunsirube/updates/index.html"));
@@ -188,6 +190,7 @@ checks.push(["line webhook creates github issues with ai-work-ok label", lineWeb
 checks.push(["line webhook assigns ai work issues to copilot safely", lineWebhook.includes('copilot-swe-agent[bot]') && lineWebhook.includes("agent_assignment") && lineWebhook.includes("copilotInstructions") && lineWebhook.includes("Human review required area") && lineWebhook.includes("Safe automation area")]);
 checks.push(["line webhook supports choice based LINE conversations", lineWebhook.includes("wantsChoices") && lineWebhook.includes("line-choice") && lineWebhook.includes("<!-- line-choice-options:v1 -->") && lineWebhook.includes("AI作業OK 1") && lineWebhook.includes("findLatestChoiceIssue") && lineWebhook.includes("数字だけで選べます") && lineWebhook.includes("ブログ記事を新しく書く") && lineWebhook.includes("既存ブログをリライトする") && lineWebhook.includes("X投稿文を作る") && lineWebhook.includes("その他・自由入力で相談する") && !lineWebhook.includes("ファーストビューの見出しと説明を強くする") && !lineWebhook.includes("文標の購入前記事を追加する")]);
 checks.push(["line webhook asks content questions one by one", lineWebhook.includes("QUESTION_FLOWS") && lineWebhook.includes("質問 1/") && lineWebhook.includes("line-selected-option") && lineWebhook.includes("nextFlowQuestion") && lineWebhook.includes("issueConversationText") && lineWebhook.includes("/comments?per_page=100") && lineWebhook.includes("記事テーマは何にする？") && lineWebhook.includes("キャンセル")]);
+checks.push(["old LINE issues are cleaned up daily without deleting history", lineMaintenanceWorkflow.includes("Cleanup old LINE issues") && lineMaintenanceWorkflow.includes("issues: write") && lineMaintenanceWorkflow.includes("LINE_ISSUE_STALE_DAYS: 30") && lineMaintenanceWorkflow.includes("LINE_CLEANUP_CLOSED") && lineIssueCleanup.includes("GITHUB_OUTPUT") && lineIssueCleanup.includes("line-auto-closed") && lineIssueCleanup.includes("keep-open") && lineIssueCleanup.includes("state: \"closed\"") && lineIssueCleanup.includes("AI作業OKなしのLINEメモ") && lineIssueCleanup.includes("削除ではなくクローズ")]);
 checks.push(["ai pr guard blocks sensitive changes and auto-merges safe ai prs", aiPrGuard.includes("needs-human-review") && aiPrGuard.includes("safe-auto-candidate") && aiPrGuard.includes("buy\\.stripe\\.com") && aiPrGuard.includes("legal\\/") && aiPrGuard.includes("gh pr merge") && aiPrGuard.includes("--auto")]);
 
 for (const [name, ok] of checks) {

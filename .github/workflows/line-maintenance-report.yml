@@ -5,6 +5,10 @@ on:
     - cron: "0 4 * * *"
   workflow_dispatch:
 
+permissions:
+  contents: read
+  issues: write
+
 jobs:
   report:
     runs-on: ubuntu-latest
@@ -31,6 +35,16 @@ jobs:
         continue-on-error: true
         run: npm run test:smoke
 
+      - name: Cleanup old LINE issues
+        id: cleanup
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LINE_ISSUE_STALE_DAYS: 30
+          LINE_ISSUE_CANCELLED_DAYS: 1
+        run: |
+          npm run cleanup:line-issues | tee line-cleanup-result.json
+
       - name: Send LINE report
         if: always()
         env:
@@ -39,6 +53,9 @@ jobs:
           LINE_USER_ID: ${{ secrets.LINE_USER_ID }}
           BUILD_STATUS: ${{ steps.build.outcome }}
           SMOKE_STATUS: ${{ steps.smoke.outcome }}
+          CLEANUP_STATUS: ${{ steps.cleanup.outcome }}
+          LINE_CLEANUP_CHECKED: ${{ steps.cleanup.outputs.checked }}
+          LINE_CLEANUP_CLOSED: ${{ steps.cleanup.outputs.closed }}
         run: npm run notify:line-maintenance
 
       - name: Fail when checks failed
