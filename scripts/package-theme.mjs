@@ -25,6 +25,7 @@ const EXCLUDE = [
   /\/\.gitignore$/,
   /\/\.gitkeep$/,
   /\/thumbs\.db$/i,
+  /\/assets\/screenshot-mock\.(html|png)$/i,
 ];
 
 function shouldExclude(filePath) {

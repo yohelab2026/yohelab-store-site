@@ -87,6 +87,15 @@ checks.push(["footer is unified across public pages", footerPages.every((page) =
   const html = read(dist(page));
   return footerLinks.every((needle) => html.includes(needle));
 })]);
+const legacyNavHtml = [
+  read(dist("404.html")),
+  read(dist("blog/bunsirube-before-install/index.html")),
+  read(dist("blog/starter-kit/index.html")),
+  read(dist("blog/theme-note/index.html")),
+  read(dist("lp/bunsirube/demo/index.html")),
+  read(dist("pro/activate-pending/index.html")),
+].join("\n");
+checks.push(["old tools services navigation is removed", !legacyNavHtml.includes('href="/tools/"') && !legacyNavHtml.includes('href="/services/"') && legacyNavHtml.includes('href="/lp/bunsirube/"') && legacyNavHtml.includes('href="/lp/bunsirube/demo/"')]);
 
 const lpResearchWriter = read(dist("lp/research-writer/index.html"));
 checks.push(["lp research writer preparing page", lpResearchWriter.includes('記事メーカー') && lpResearchWriter.includes('現在準備中') && lpResearchWriter.includes('/lp/bunsirube/') && lpResearchWriter.includes('noindex,follow')]);
@@ -132,10 +141,13 @@ checks.push(["sitemap includes all game pages", ["reaction", "typing", "math-rus
 
 const gameScript = read(dist("shared/arcade-game.js"));
 checks.push(["game share keeps result data", gameScript.includes('searchParams.set("score"') && gameScript.includes('searchParams.set("result"')]);
+const gamesIndex = read(dist("games/index.html"));
+checks.push(["games index points back to bunsirube not retired tool anchor", gamesIndex.includes('href="/lp/bunsirube/"') && !gamesIndex.includes('href="/#tool"') && !gamesIndex.includes("AIツールを見る")]);
 
 const ent = read(src("functions/lib/entitlements.js"));
 const checkout = read(src("functions/api/checkout.js"));
 const middleware = read(src("functions/_middleware.js"));
+const gitignore = read(src(".gitignore"));
 const sitemapFunction = read(src("functions/sitemap.xml.js"));
 const blogAdminGate = read(src("functions/blog/admin/[[catchall]].js"));
 const blogAdmin = read(dist("blog/admin/index.html"));
@@ -164,6 +176,8 @@ checks.push(["entitlement drops legacy tools", !ent.includes(`"${"rad"}${"ar"}"`
 checks.push(["checkout function redirects to tracked payment links", checkout.includes('https://buy.stripe.com/aFa4gr6jd6Pu4KC7eV73G0d?client_reference_id=research-writer') && checkout.includes('https://buy.stripe.com/bJeaEPfTN2ze2Cubvb73G0e?client_reference_id=wordpress-theme') && checkout.includes('https://buy.stripe.com/bJedR10YTddS4KC42J73G0f?client_reference_id=page-review')]);
 checks.push(["middleware redirects retired product pages", middleware.includes('"/products/article-starter-kit/"') && middleware.includes('"/products/wordpress-theme-beta/"') && middleware.includes('"/lp/wordpress-theme/"')]);
 checks.push(["middleware redirects retired radar beta page", middleware.includes('"/products/radar-beta"') && middleware.includes('"/products/radar-beta/"') && middleware.includes('"/lp/bunsirube/"')]);
+checks.push(["middleware redirects old tools services paths", middleware.includes('"/tools/"') && middleware.includes('"/services/"') && middleware.includes('"/lp/bunsirube/demo/"')]);
+checks.push(["middleware blocks direct theme zip downloads", middleware.includes("PROTECTED_THEME_ZIP") && middleware.includes("X-Robots-Tag") && middleware.includes("no-store") && gitignore.includes("*.zip")]);
 checks.push(["blog admin page is reachable behind page login", blogAdminGate.includes("context.next()") && blogAdminGate.includes("noindex") && !blogAdminGate.includes("ADMIN_KEY")]);
 checks.push(["blog admin validates pin server side", blogAdmin.includes("/api/blog-auth") && blogAdmin.includes("SESSION_PIN_KEY") && !blogAdmin.includes("localStorage.setItem(PIN_KEY")]);
 checks.push(["blog image uploads convert to one webp", blogAdmin.includes("convertToSingleWebp") && blogAdmin.includes("canvas.toBlob(resolve, 'image/webp'") && blogImageFunction.includes('const ALLOWED_TYPES = ["image/webp"]') && blogImageFunction.includes(".webp`")]);

@@ -1,5 +1,6 @@
 node_modules/
 dist/
+*.zip
 .netlify/
 
 # Embedded git repo (theme source is in separate private repo)
