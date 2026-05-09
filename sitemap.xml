@@ -6,16 +6,6 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://yohelab.com/tools/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://yohelab.com/services/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
     <loc>https://yohelab.com/games/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
@@ -48,6 +38,11 @@
     <loc>https://yohelab.com/lp/bunsirube/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://yohelab.com/lp/bunsirube/install/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://yohelab.com/lp/bunsirube/demo/</loc>

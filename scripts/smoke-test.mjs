@@ -72,6 +72,7 @@ const footerPages = [
   "apps/research-writer/index.html",
   "lp/research-writer/index.html",
   "lp/bunsirube/index.html",
+  "lp/bunsirube/install/index.html",
   "products/page-review/index.html",
   "products/bunsirube/index.html",
   "contact/index.html",
@@ -136,6 +137,7 @@ checks.push(["sitemap excludes removed labs", !sitemap.includes('https://yohelab
 checks.push(["sitemap excludes retired product redirects", !sitemap.includes('https://yohelab.com/products/article-starter-kit/') && !sitemap.includes('https://yohelab.com/products/wordpress-theme-beta/')]);
 checks.push(["sitemap includes three sales pages", sitemap.includes('https://yohelab.com/lp/research-writer/') && sitemap.includes('https://yohelab.com/lp/bunsirube/') && sitemap.includes('https://yohelab.com/products/page-review/')]);
 checks.push(["sitemap includes bunsirube demo and updates", sitemap.includes('https://yohelab.com/lp/bunsirube/demo/') && sitemap.includes('https://yohelab.com/lp/bunsirube/updates/')]);
+checks.push(["sitemap includes bunsirube install guide", sitemap.includes('https://yohelab.com/lp/bunsirube/install/')]);
 checks.push(["sitemap includes static blog guide posts", ["page-review-sample", "research-writer-free-flow", "bunsirube-before-install", "faq-source-ai-search", "sales-page-common-mistakes"].every((slug) => sitemap.includes(`https://yohelab.com/blog/${slug}/`))]);
 checks.push(["sitemap includes all game pages", ["reaction", "typing", "math-rush", "sequence"].every((slug) => sitemap.includes(`https://yohelab.com/games/${slug}/`))]);
 
@@ -163,6 +165,7 @@ const themeDownload = read(src("functions/api/theme-download.js"));
 const themeUpdate = read(src("functions/generated/theme-update.js"));
 const purchaseFlowTest = read(src("scripts/test-purchase-flow.mjs"));
 const bunsirubeLp = read(dist("lp/bunsirube/index.html"));
+const bunsirubeInstall = read(dist("lp/bunsirube/install/index.html"));
 const bunsirubeDemo = read(dist("lp/bunsirube/demo/index.html"));
 const bunsirubeUpdates = read(dist("lp/bunsirube/updates/index.html"));
 const privacy = read(dist("legal/privacy/index.html"));
@@ -186,7 +189,9 @@ checks.push(["blog post sanitizes dangerous html server side", blogPostFunction.
 checks.push(["blog post sanitizes dangerous html client fallback", blogPostPage.includes("sanitizeBodyHtml") && blogPostPage.includes("iframe|object|embed") && blogPostPage.includes("javascript:") && blogPostPage.includes("data:text") && blogPostPage.includes("vbscript:")]);
 checks.push(["bunsirube lp links to separate update history", bunsirubeLp.includes("最新の更新") && bunsirubeLp.includes("/lp/bunsirube/updates/") && !bunsirubeLp.includes("2026.05.03 / v0.2.0") && bunsirubeLp.includes("自動アップデート用シリアル")]);
 checks.push(["bunsirube updates page includes full history", bunsirubeUpdates.includes("文標の更新履歴") && bunsirubeUpdates.includes("v0.3.1") && bunsirubeUpdates.includes("v0.2.0") && bunsirubeUpdates.includes("初期ベータ構成")]);
-checks.push(["bunsirube lp includes demo and support", bunsirubeLp.includes('/lp/bunsirube/demo/') && bunsirubeLp.includes("デモを見る") && bunsirubeLp.includes("テーマ購入前の不安") && bunsirubeLp.includes("購入後の返金はありません") && bunsirubeLp.includes("購入後30日間") && bunsirubeDemo.includes("文標の見た目と使い方")]);
+checks.push(["bunsirube lp includes demo and support", bunsirubeLp.includes('/lp/bunsirube/demo/') && bunsirubeLp.includes("デモ画面を見る") && bunsirubeLp.includes("テーマ購入前の不安") && bunsirubeLp.includes("購入後の返金はありません") && bunsirubeLp.includes("購入後30日間") && bunsirubeDemo.includes("文標の見た目と使い方")]);
+checks.push(["bunsirube lp links install guide", bunsirubeLp.includes('/lp/bunsirube/install/') && bunsirubeLp.includes("インストール方法を見る") && bunsirubeLp.includes("文標のインストール方法")]);
+checks.push(["bunsirube install guide explains setup and settings", bunsirubeInstall.includes("文標の入れ方と初期設定") && bunsirubeInstall.includes("親テーマZIP") && bunsirubeInstall.includes("子テーマZIP") && bunsirubeInstall.includes("シリアル番号") && bunsirubeInstall.includes("SEOプラグイン") && bunsirubeInstall.includes("FAQ JSON-LD") && bunsirubeInstall.includes("導線確認") && bunsirubeInstall.includes("bunsirube-install-poster.png") && bunsirubeInstall.includes('"@type": "HowTo"') && bunsirubeInstall.includes('"@type": "FAQPage"')]);
 checks.push(["bunsirube lp separates purchase and server tests", bunsirubeLp.includes("購入フローの検証") && bunsirubeLp.includes("不正シリアル拒否") && bunsirubeLp.includes("動作確認とサーバー対応の表記を分けています") && bunsirubeLp.includes("実機で通ったものだけ「確認済み」")]);
 checks.push(["bunsirube lp explains AI and human maintenance", bunsirubeLp.includes("AIと人で常に見ています") && bunsirubeLp.includes("人の確認を通して安全に直せるところから更新") && wpProduct.includes("AIと人で継続確認") && wpProduct.includes("価格・法務・決済・配布ZIPは人の確認を必須")]);
 checks.push(["bunsirube lp positions AI-era article structure safely", bunsirubeLp.includes("AI検索時代の記事構造") && bunsirubeLp.includes("本文で読み取りやすい構造") && bunsirubeLp.includes("Google AI Overviews等への表示を保証するものではありません") && !bunsirubeLp.includes("AI検索に出るテーマ") && !bunsirubeLp.includes("AI検索最適化済み") && !bunsirubeLp.includes("AIに拾われる")]);
@@ -203,6 +208,7 @@ checks.push(["new bunsirube guide posts exist", read(dist("blog/free-theme-vs-bu
 checks.push(["sitemap includes new bunsirube guide posts", sitemap.includes("https://yohelab.com/blog/free-theme-vs-bunsirube/") && sitemap.includes("https://yohelab.com/blog/comparison-article-template/")]);
 checks.push(["dynamic sitemap includes new bunsirube guide posts", sitemapFunction.includes("/blog/free-theme-vs-bunsirube/") && sitemapFunction.includes("/blog/comparison-article-template/")]);
 checks.push(["dynamic sitemap includes bunsirube updates", sitemapFunction.includes("/lp/bunsirube/updates/")]);
+checks.push(["dynamic sitemap includes bunsirube install guide", sitemapFunction.includes("/lp/bunsirube/install/")]);
 checks.push(["matomo skips local without explicit url", matomoLoader.includes("isLocal && !window.YOHELAB_MATOMO_URL") && !matomoLoader.includes("http://localhost:8080/")]);
 checks.push(["line webhook verifies signature and replies with line id", lineWebhook.includes("x-line-signature") && lineWebhook.includes("LINE_CHANNEL_SECRET") && lineWebhook.includes("/v2/bot/message/reply") && lineWebhook.includes("LINE_TO=")]);
 checks.push(["line webhook creates github issues with ai-work-ok label", lineWebhook.includes("GITHUB_ISSUE_TOKEN") && lineWebhook.includes("line-inbox") && lineWebhook.includes("ai-work-ok") && lineWebhook.includes("/repos/${repo}/issues") && lineWebhook.includes("AI作業OK")]);

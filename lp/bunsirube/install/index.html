@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>文標のインストール方法・初期設定ガイド | よへラボ</title>
+  <meta name="description" content="WordPressテーマ「文標（ぶんしるべ）」の入れ方、親テーマ・子テーマZIP、シリアル設定、SEO出力、FAQ、比較表カード、CTA、導線確認までをスクショ付きで解説します。" />
+  <meta property="og:title" content="文標のインストール方法・初期設定ガイド | よへラボ" />
+  <meta property="og:description" content="文標の購入後にやることを、WordPress管理画面の流れに沿って確認できます。" />
+  <meta property="og:type" content="article" />
+  <meta property="og:locale" content="ja_JP" />
+  <meta property="og:url" content="https://yohelab.com/lp/bunsirube/install/" />
+  <meta property="og:image" content="https://yohelab.com/assets/bunsirube/videos/bunsirube-install-poster.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
+  <meta name="theme-color" content="#f5fbff" />
+  <link rel="canonical" href="https://yohelab.com/lp/bunsirube/install/" />
+  <link rel="icon" type="image/png" href="/yohelab-icon-32.png" />
+  <link rel="stylesheet" href="/shared/site.min.css" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {"@type": "ListItem", "position": 1, "name": "よへラボ", "item": "https://yohelab.com/"},
+          {"@type": "ListItem", "position": 2, "name": "文標", "item": "https://yohelab.com/lp/bunsirube/"},
+          {"@type": "ListItem", "position": 3, "name": "インストール方法", "item": "https://yohelab.com/lp/bunsirube/install/"}
+        ]
+      },
+      {
+        "@type": "HowTo",
+        "name": "文標をWordPressにインストールして初期設定する方法",
+        "description": "文標の親テーマZIP、子テーマZIP、シリアル、初期設定、記事作成、導線確認までの流れ。",
+        "totalTime": "PT20M",
+        "step": [
+          {"@type": "HowToStep", "name": "購入メールを確認する", "text": "親テーマZIP、子テーマZIP、シリアル番号、購入者向け案内を確認します。"},
+          {"@type": "HowToStep", "name": "親テーマZIPをアップロードする", "text": "WordPress管理画面の外観、テーマ、新規追加、テーマのアップロードから親テーマZIPを入れます。"},
+          {"@type": "HowToStep", "name": "必要なら子テーマを有効化する", "text": "CSSや小さな関数を追加したい場合は、親テーマを入れたあとに文標 子テーマを入れて有効化します。"},
+          {"@type": "HowToStep", "name": "文標設定を保存する", "text": "外観、文標から色、SEO出力、FAQ JSON-LD、ブログカード、内部解析、シリアルを設定します。"},
+          {"@type": "HowToStep", "name": "記事型から書き始める", "text": "投稿画面の文標 記事設計から記事型を選び、見出し、FAQ、比較表カード、CTAを入れます。"},
+          {"@type": "HowToStep", "name": "公開前チェックを確認する", "text": "サンプル文、SEO重複、キャッシュ二重化、旧ショートコード、導線クリックの確認を見ます。"}
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {"@type": "Question", "name": "文標は親テーマだけで使えますか？", "acceptedAnswer": {"@type": "Answer", "text": "使えます。CSSや小さな関数を追加したい場合だけ、子テーマを追加で使います。"}},
+          {"@type": "Question", "name": "SEOプラグインを使っている場合はどうしますか？", "acceptedAnswer": {"@type": "Answer", "text": "重複を避けるため、SEOプラグイン側を使うか文標側を使うかを選びます。文標の設定画面ではSEO出力、OGP、JSON-LDを個別にOFFにできます。"}},
+          {"@type": "Question", "name": "購入後の返金はありますか？", "acceptedAnswer": {"@type": "Answer", "text": "デジタル商品のため購入後の返金はありません。購入前にデモ、対応環境、サポート範囲を確認してください。"}}
+        ]
+      }
+    ]
+  }
+  </script>
+  <style>
+    body { background:#f5fbff; color:var(--text); }
+    .guide-hero { padding:74px 0 48px; background:radial-gradient(circle at 18% 0%, rgba(47,125,246,.15), transparent 32%), radial-gradient(circle at 82% 18%, rgba(11,143,114,.16), transparent 36%), linear-gradient(180deg,#fff,#eef7ff); }
+    .guide-hero h1 { font-size:clamp(34px,6vw,68px); line-height:1.08; letter-spacing:-.06em; margin:0 0 16px; }
+    .guide-hero p { max-width:820px; color:var(--muted); font-size:17px; line-height:1.9; }
+    .guide-nav { display:flex; flex-wrap:wrap; gap:10px; margin-top:22px; }
+    .guide-nav a { border:1px solid #bdd9e8; background:rgba(255,255,255,.9); color:#075c4c; border-radius:999px; padding:10px 14px; font-weight:900; text-decoration:none; }
+    .guide-layout { display:grid; grid-template-columns:minmax(0,1fr) 320px; gap:26px; align-items:start; }
+    .guide-main { display:grid; gap:22px; }
+    .guide-card, .guide-side { background:#fff; border:1px solid var(--border); border-radius:24px; padding:26px; box-shadow:var(--shadow-xs); }
+    .guide-card h2 { font-size:clamp(26px,4vw,42px); letter-spacing:-.05em; margin:0 0 12px; }
+    .guide-card h3 { font-size:21px; letter-spacing:-.03em; margin:24px 0 8px; }
+    .guide-card p, .guide-card li, .guide-side p, .guide-side li { color:var(--muted); line-height:1.85; }
+    .guide-card ul, .guide-card ol, .guide-side ul { padding-left:1.25em; display:grid; gap:8px; }
+    .step-label { display:inline-flex; align-items:center; gap:8px; border-radius:999px; background:#eaf8f3; color:#075c4c; font-size:12px; font-weight:900; letter-spacing:.08em; text-transform:uppercase; padding:7px 11px; margin-bottom:12px; }
+    .screen { margin:18px 0; border:1px solid #dce7fb; border-radius:22px; overflow:hidden; background:#101b31; box-shadow:0 16px 44px rgba(18,44,80,.12); }
+    .screen img { display:block; width:100%; height:auto; }
+    .screen figcaption { background:#fff; color:var(--muted); font-size:13px; line-height:1.75; padding:12px 14px; }
+    .check-list { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; padding:0; list-style:none; }
+    .check-list li { padding:14px 16px; border-radius:16px; background:#f8fbff; border:1px solid #dce7fb; color:var(--text); }
+    .warning { border-left:5px solid #ff9f43; background:#fff8ed; padding:16px 18px; border-radius:16px; margin:16px 0; color:#61420d; line-height:1.85; }
+    .ok-box { border-left:5px solid #0b8f72; background:#f0fbf6; padding:16px 18px; border-radius:16px; margin:16px 0; color:#075c4c; line-height:1.85; }
+    .guide-side { position:sticky; top:88px; }
+    .guide-side h2 { font-size:20px; margin:0 0 10px; }
+    .guide-side a:not(.btn) { color:#075c4c; font-weight:900; }
+    .mini-flow { display:grid; gap:10px; margin:16px 0; }
+    .mini-flow div { display:flex; gap:10px; align-items:flex-start; padding:12px; border-radius:14px; background:#f8fbff; border:1px solid #dce7fb; }
+    .mini-flow strong { flex:0 0 auto; color:#075c4c; }
+    .table-wrap { overflow:auto; border-radius:18px; border:1px solid #dce7fb; }
+    table { width:100%; border-collapse:collapse; min-width:680px; background:#fff; }
+    th,td { border-bottom:1px solid #dce7fb; padding:13px 14px; text-align:left; vertical-align:top; }
+    th { background:#075c4c; color:#fff; }
+    tr:last-child td { border-bottom:0; }
+    code { background:#eef7ff; border:1px solid #dce7fb; border-radius:8px; color:#0b2a4f; font-weight:900; padding:2px 6px; }
+    @media (max-width: 900px) { .guide-layout { grid-template-columns:1fr; } .guide-side { position:static; } .check-list { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="/"><img src="/yohelab-icon.png" alt="よへラボ" /><span>よへラボ</span></a>
+      <nav class="nav-links">
+        <a href="/lp/bunsirube/">文標</a>
+        <a href="/lp/bunsirube/install/">使い方</a>
+        <a href="/lp/bunsirube/demo/">デモ</a>
+        <a href="/lp/bunsirube/updates/">更新履歴</a>
+        <a href="/contact/">問い合わせ</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="guide-hero">
+      <div class="container">
+        <span class="step-label">Install guide</span>
+        <h1>文標の入れ方と初期設定を、迷わず進める。</h1>
+        <p>購入メールを受け取ったあとにやることを、WordPress管理画面の順番に沿ってまとめました。親テーマZIP、子テーマ、シリアル、SEO出力、FAQ、比較表カード、CTA、導線確認までここで確認できます。</p>
+        <div class="guide-nav" aria-label="文標インストールガイドの目次">
+          <a href="#prepare">準備</a>
+          <a href="#install">インストール</a>
+          <a href="#settings">初期設定</a>
+          <a href="#write">記事作成</a>
+          <a href="#check">公開前チェック</a>
+          <a href="#trouble">困った時</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container guide-layout">
+        <div class="guide-main">
+          <article class="guide-card" id="prepare">
+            <span class="step-label">Step 0</span>
+            <h2>先に用意するもの。</h2>
+            <p>文標は、購入後に届くZIPファイルをWordPress管理画面から入れて使います。作業前に下の4つを確認してください。</p>
+            <ul class="check-list">
+              <li><strong>親テーマZIP</strong><br /><code>bunsirube-0.3.2.zip</code> または <code>bunsirube.zip</code></li>
+              <li><strong>子テーマZIP</strong><br />CSSや小さな関数を足したい人向け。必要な人だけ使います。</li>
+              <li><strong>シリアル番号</strong><br />文標設定画面で入力します。アップデート確認に使います。</li>
+              <li><strong>WordPress環境</strong><br />最低環境は WordPress 6.5以上 / PHP 8.0以上です。</li>
+            </ul>
+            <div class="warning">本番サイトに入れる前に、テーマ変更で見た目が変わる可能性があります。既存サイトでは、バックアップを取ってから進めてください。</div>
+          </article>
+
+          <article class="guide-card" id="install">
+            <span class="step-label">Step 1</span>
+            <h2>親テーマZIPをアップロードする。</h2>
+            <ol>
+              <li>WordPress管理画面にログインします。</li>
+              <li>左メニューの <strong>外観 → テーマ</strong> を開きます。</li>
+              <li><strong>新規追加</strong> を押します。</li>
+              <li><strong>テーマのアップロード</strong> を押します。</li>
+              <li>親テーマZIPを選び、<strong>今すぐインストール</strong> を押します。</li>
+              <li>インストール後、<strong>有効化</strong> を押します。</li>
+            </ol>
+            <figure class="screen">
+              <img src="/assets/bunsirube/videos/bunsirube-install-poster.png?v=guide-20260509" alt="WordPress管理画面で文標をアップロードしている画面" loading="lazy" width="1280" height="720" />
+              <figcaption>親テーマは先に入れます。子テーマを使う場合も、親テーマが入っていないと動きません。</figcaption>
+            </figure>
+            <h3>子テーマを使う場合</h3>
+            <p>CSSや小さな関数を追加したい場合は、親テーマを入れたあとに子テーマZIPを同じ手順でアップロードして、子テーマ側を有効化します。文標本体を直接編集しないので、親テーマ更新時に改造内容を残しやすくなります。</p>
+            <div class="ok-box">見た目だけ少し変えたい、CSSを足したい、将来も安全に更新したい。この場合は子テーマを使うのがおすすめです。</div>
+          </article>
+
+          <article class="guide-card" id="settings">
+            <span class="step-label">Step 2</span>
+            <h2>外観 → 文標で初期設定する。</h2>
+            <p>テーマを有効化したら、左メニューの <strong>外観 → 文標</strong> を開きます。最初に見る場所はこのあたりです。</p>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>設定</th><th>何をする場所か</th><th>おすすめ</th></tr></thead>
+                <tbody>
+                  <tr><td>色</td><td>サイト全体のメインカラーを決めます。</td><td>最初は初期値のままでOK。</td></tr>
+                  <tr><td>SEO出力</td><td>meta description、OGP、JSON-LDをテーマ側で出します。</td><td>SEOプラグインを使っているなら重複を避けてOFFも検討。</td></tr>
+                  <tr><td>FAQ JSON-LD</td><td>FAQショートコードの内容を構造化データとして出します。</td><td>ページ上に見えているFAQと一致させる。</td></tr>
+                  <tr><td>自動ブログカード</td><td>URLだけの行をブログカード風に表示します。</td><td>必要ならON。重く感じる場合はOFF。</td></tr>
+                  <tr><td>内部アクセス解析</td><td>PV、流入元、CTA・比較表・広告リンククリックをWordPress内に保存します。</td><td>初期OFF。使いたい時だけON。</td></tr>
+                  <tr><td>簡易キャッシュ</td><td>未ログイン閲覧者向けにHTMLを軽く保存します。</td><td>キャッシュ系プラグインと二重にしない。</td></tr>
+                  <tr><td>シリアル</td><td>購入後に届くシリアル番号を入力します。</td><td>アップデート確認のため入力。</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <figure class="screen">
+              <img src="/assets/bunsirube/videos/bunsirube-route-check-poster.png?v=guide-20260509" alt="文標の管理画面で導線確認と公開前チェックを見ている画面" loading="lazy" width="1280" height="720" />
+              <figcaption>文標は「全部ONにすればいい」ではありません。既存プラグインと重複しないように選んで使います。</figcaption>
+            </figure>
+            <div class="warning">SEOプラグイン、キャッシュプラグイン、セキュリティプラグインを入れている場合は、文標側の同系統機能と二重にならないようにしてください。</div>
+          </article>
+
+          <article class="guide-card" id="write">
+            <span class="step-label">Step 3</span>
+            <h2>記事型から書き始める。</h2>
+            <p>投稿画面を開くと、文標の記事設計パネルを使えます。最初から全部を自由に書くより、記事タイプを選んで骨組みを入れるほうが迷いにくいです。</p>
+            <figure class="screen">
+              <img src="/assets/bunsirube/videos/bunsirube-writing-poster.png?v=guide-20260509" alt="投稿画面で文標の記事型を選んでブログ記事を書いている画面" loading="lazy" width="1280" height="720" />
+              <figcaption>比較記事、レビュー記事、FAQ記事、ランキング、商品紹介、案件紹介、基本記事の7種類から選べます。</figcaption>
+            </figure>
+            <h3>おすすめの使い方</h3>
+            <div class="mini-flow">
+              <div><strong>1</strong><span>記事タイプを選んで、見出しを入れる。</span></div>
+              <div><strong>2</strong><span>最初の見出しに短い答えを書く。</span></div>
+              <div><strong>3</strong><span>理由、根拠、注意点、出典を分けて書く。</span></div>
+              <div><strong>4</strong><span>FAQを3つ以上入れて、読者の不安を先に消す。</span></div>
+              <div><strong>5</strong><span>比較表カードやCTAで、読んだ後の行動を置く。</span></div>
+            </div>
+            <p>文標は「AI検索に出ること」を保証するテーマではありません。短い答え、根拠、FAQ、出典を本文に見える形で置き、読者にも検索にも読み取りやすい構造を作りやすくするテーマです。</p>
+          </article>
+
+          <article class="guide-card" id="check">
+            <span class="step-label">Step 4</span>
+            <h2>公開前チェックを見る。</h2>
+            <p>記事を公開する前に、文標のチェック欄を確認します。特に下の項目は、公開後の事故を減らすために見てください。</p>
+            <ul class="check-list">
+              <li>タイトルが具体的か</li>
+              <li>最初に短い答えがあるか</li>
+              <li>根拠・出典・参考リンクがあるか</li>
+              <li>FAQが入っているか</li>
+              <li>CTAが残っているか</li>
+              <li>サンプルURLや仮文言が残っていないか</li>
+              <li>SEO出力が重複していないか</li>
+              <li>キャッシュ機能が二重になっていないか</li>
+            </ul>
+            <h3>導線確認について</h3>
+            <p>内部アクセス解析をONにすると、CTA、比較表、広告リンク、ブログカードのクリックをWordPress内で確認できます。数字は厳密なアクセス解析ではなく、記事改善の参考値として使います。</p>
+            <div class="ok-box">「どの記事のどのボタンが押されたか」を小さく確認できるので、記事を書いて終わりにせず、あとから導線を見直せます。</div>
+          </article>
+
+          <article class="guide-card" id="trouble">
+            <span class="step-label">Trouble</span>
+            <h2>困った時に見るところ。</h2>
+            <h3>ZIPをアップロードできない</h3>
+            <p>WordPress管理画面から入れるZIPは、解凍せずそのまま選びます。親テーマZIPと子テーマZIPを間違えていないかも確認してください。</p>
+            <h3>シリアルが通らない</h3>
+            <p>購入メールのシリアルをそのままコピーしてください。前後に空白が入ると認証できないことがあります。</p>
+            <h3>SEOプラグインの警告が出る</h3>
+            <p>Yoast、Rank Math、All in One SEO、SEOPressなどを使っている場合、metaタグやJSON-LDが重複することがあります。文標側かプラグイン側のどちらかに寄せてください。</p>
+            <h3>.htaccessを編集したい</h3>
+            <p>.htaccessはサイト全体の表示に影響します。文標の画面にはバックアップ機能がありますが、管理画面に入れない状態になると復元画面も使えません。変更前の内容は手元にも保存してください。</p>
+            <h3>サポート範囲</h3>
+            <p>購入後30日間、ZIP導入、シリアル設定、初期設定、文標ショートコードの通常利用について質問できます。個別デザイン改造、外部プラグイン衝突調査、既存サイト移行、記事制作代行は対象外です。</p>
+          </article>
+        </div>
+
+        <aside class="guide-side">
+          <h2>この順番で進める</h2>
+          <ul>
+            <li>親テーマZIPを入れる</li>
+            <li>必要なら子テーマを入れる</li>
+            <li>外観 → 文標を開く</li>
+            <li>シリアルを入力する</li>
+            <li>SEO出力の重複を確認する</li>
+            <li>記事型から1本書く</li>
+            <li>公開前チェックを見る</li>
+          </ul>
+          <p><a class="btn btn-primary" href="https://buy.stripe.com/bJeaEPfTN2ze2Cubvb73G0e?client_reference_id=wordpress-theme">¥5,500（税込）で購入する</a></p>
+          <p><a href="/lp/bunsirube/demo/">デモを見る</a> / <a href="/lp/bunsirube/updates/">更新履歴を見る</a></p>
+          <p>表示価格はすべて税込です。購入後の返金はありません。</p>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>© よへラボ / yohelab.com</div>
+      <div class="footer-links">
+        <a href="/">トップ</a><a href="/lp/bunsirube/">文標</a><a href="/lp/bunsirube/demo/">デモ</a><a href="/lp/bunsirube/updates/">更新履歴</a><a href="/blog/">ブログ</a><a href="/contact/">問い合わせ</a>
+        <a href="/legal/commerce/">特定商取引法</a><a href="/legal/privacy/">プライバシー</a><a href="/legal/terms/">利用規約</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
