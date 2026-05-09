@@ -143,6 +143,7 @@ const blogImageFunction = read(src("functions/api/blog-image.js"));
 const blogPostFunction = read(src("functions/blog/post/index.js"));
 const blogPostPage = read(dist("blog/post/index.html"));
 const blogPostApi = read(src("functions/api/blog-post.js"));
+const lineWebhook = read(src("functions/api/line-webhook.js"));
 const bunsirubeLp = read(dist("lp/bunsirube/index.html"));
 const bunsirubeDemo = read(dist("lp/bunsirube/demo/index.html"));
 const bunsirubeUpdates = read(dist("lp/bunsirube/updates/index.html"));
@@ -181,6 +182,7 @@ checks.push(["sitemap includes new bunsirube guide posts", sitemap.includes("htt
 checks.push(["dynamic sitemap includes new bunsirube guide posts", sitemapFunction.includes("/blog/free-theme-vs-bunsirube/") && sitemapFunction.includes("/blog/comparison-article-template/")]);
 checks.push(["dynamic sitemap includes bunsirube updates", sitemapFunction.includes("/lp/bunsirube/updates/")]);
 checks.push(["matomo skips local without explicit url", matomoLoader.includes("isLocal && !window.YOHELAB_MATOMO_URL") && !matomoLoader.includes("http://localhost:8080/")]);
+checks.push(["line webhook verifies signature and replies with line id", lineWebhook.includes("x-line-signature") && lineWebhook.includes("LINE_CHANNEL_SECRET") && lineWebhook.includes("/v2/bot/message/reply") && lineWebhook.includes("LINE_TO=")]);
 
 for (const [name, ok] of checks) {
   assert(ok, `Check failed: ${name}`);
