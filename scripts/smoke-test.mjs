@@ -183,6 +183,7 @@ checks.push(["dynamic sitemap includes new bunsirube guide posts", sitemapFuncti
 checks.push(["dynamic sitemap includes bunsirube updates", sitemapFunction.includes("/lp/bunsirube/updates/")]);
 checks.push(["matomo skips local without explicit url", matomoLoader.includes("isLocal && !window.YOHELAB_MATOMO_URL") && !matomoLoader.includes("http://localhost:8080/")]);
 checks.push(["line webhook verifies signature and replies with line id", lineWebhook.includes("x-line-signature") && lineWebhook.includes("LINE_CHANNEL_SECRET") && lineWebhook.includes("/v2/bot/message/reply") && lineWebhook.includes("LINE_TO=")]);
+checks.push(["line webhook creates github issues with ai-work-ok label", lineWebhook.includes("GITHUB_ISSUE_TOKEN") && lineWebhook.includes("line-inbox") && lineWebhook.includes("ai-work-ok") && lineWebhook.includes("/repos/${repo}/issues") && lineWebhook.includes("AI作業OK")]);
 
 for (const [name, ok] of checks) {
   assert(ok, `Check failed: ${name}`);
