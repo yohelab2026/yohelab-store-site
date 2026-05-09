@@ -1,0 +1,149 @@
+name: AI PR guard
+
+on:
+  pull_request_target:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
+      - labeled
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+  checks: read
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Classify PR safety
+        id: classify
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+
+            const protectedPathPatterns = [
+              /^legal\//,
+              /^functions\/api\/(checkout|stripe-webhook|theme-download|theme-license|license)\.js$/,
+              /^functions\/api\/theme-update\//,
+              /^functions\/lib\/(entitlements|stripe-purchase)\.js$/,
+              /^\.github\//,
+              /^wordpress-themes\//,
+              /^bunsirube.*\.zip$/,
+              /^scripts\/package-theme\.mjs$/,
+              /^AGENTS\.md$/,
+              /^AI-HANDOVER\.md$/,
+            ];
+
+            const sensitiveTextPatterns = [
+              /buy\.stripe\.com/i,
+              /STRIPE_/i,
+              /LINE_CHANNEL|GITHUB_ISSUE_TOKEN|SECRET/i,
+              /返金|特商法|利用規約|プライバシーポリシー|法務/,
+              /¥|税込|価格|決済|支払|checkout/i,
+              /シリアル|ライセンス|認証|license|serial/i,
+            ];
+
+            const files = await github.paginate(github.rest.pulls.listFiles, {
+              owner,
+              repo,
+              pull_number: pr.number,
+              per_page: 100,
+            });
+
+            const protectedFiles = files
+              .map((file) => file.filename)
+              .filter((filename) => protectedPathPatterns.some((pattern) => pattern.test(filename)));
+
+            const sensitiveFiles = files
+              .filter((file) => sensitiveTextPatterns.some((pattern) => pattern.test(file.patch || "")))
+              .map((file) => file.filename);
+
+            const reasons = [];
+            if (protectedFiles.length) {
+              reasons.push(`確認必須ファイル: ${protectedFiles.join(", ")}`);
+            }
+            if (sensitiveFiles.length) {
+              reasons.push(`確認必須ワードを含む差分: ${[...new Set(sensitiveFiles)].join(", ")}`);
+            }
+
+            const labels = (pr.labels || []).map((label) => label.name);
+            const isAiPr =
+              pr.user?.login === "Copilot" ||
+              pr.head?.ref?.startsWith("copilot/") ||
+              labels.includes("ai-work-ok");
+
+            async function ensureLabel(name, color, description) {
+              try {
+                await github.rest.issues.getLabel({ owner, repo, name });
+              } catch {
+                await github.rest.issues.createLabel({ owner, repo, name, color, description });
+              }
+            }
+
+            await ensureLabel("needs-human-review", "d73a4a", "価格・法務・決済・配布物・認証など確認必須の変更");
+            await ensureLabel("safe-auto-candidate", "0e8a16", "安全領域だけのAI変更候補");
+
+            if (reasons.length) {
+              await github.rest.issues.addLabels({
+                owner,
+                repo,
+                issue_number: pr.number,
+                labels: ["needs-human-review"],
+              });
+              try {
+                await github.rest.issues.removeLabel({
+                  owner,
+                  repo,
+                  issue_number: pr.number,
+                  name: "safe-auto-candidate",
+                });
+              } catch {}
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: pr.number,
+                body: [
+                  "このPRは自動マージしません。",
+                  "",
+                  ...reasons.map((reason) => `- ${reason}`),
+                  "",
+                  "価格、Stripe、法務、配布物、認証、GitHub Actions、Secrets、デプロイ設定まわりは人間確認が必要です。",
+                ].join("\n"),
+              });
+              core.setOutput("safe", "false");
+              core.setFailed("Human review required.");
+              return;
+            }
+
+            if (isAiPr) {
+              await github.rest.issues.addLabels({
+                owner,
+                repo,
+                issue_number: pr.number,
+                labels: ["safe-auto-candidate"],
+              });
+              try {
+                await github.rest.issues.removeLabel({
+                  owner,
+                  repo,
+                  issue_number: pr.number,
+                  name: "needs-human-review",
+                });
+              } catch {}
+            }
+
+            core.setOutput("safe", isAiPr ? "true" : "manual");
+
+      - name: Enable auto-merge for safe AI PR
+        if: steps.classify.outputs.safe == 'true' && !github.event.pull_request.draft
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+        run: gh pr merge "$PR_URL" --squash --auto --delete-branch

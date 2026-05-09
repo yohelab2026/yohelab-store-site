@@ -65,7 +65,9 @@ function copilotInstructions() {
     "Create a draft pull request for this issue.",
     "Follow AGENTS.md strictly.",
     "Keep 文標 as the main product.",
-    "Do not change prices, Stripe links, legal pages, or product strategy unless the issue explicitly asks and the change is clearly safe.",
+    "Safe automation area: copy, design, LP, blog, light UI fixes, broken links, image optimization, typo fixes, accessibility, speed improvements.",
+    "Human review required area: prices, Stripe links, payments, legal pages, refunds, privacy policy, terms, commerce disclosure, theme ZIP files, child theme ZIP files, serial/license/authentication, Cloudflare Functions for auth/payment, GitHub Actions, secrets, deploy settings.",
+    "Do not edit human review required areas. If the issue requires them, explain the risk in the PR and keep the PR draft.",
     "Do not use unsafe claims such as AI検索に出る, AI検索最適化済み, AIに拾われる, 必ず売れる, or 順位が上がる.",
     "Prefer safe wording such as AI検索時代の記事構造 and 読み取りやすい本文構造.",
     "Run npm run build and npm run test:smoke before finishing.",
@@ -144,7 +146,7 @@ async function createLineIssue(text, toId, env) {
         `LINE source: ${toId}`,
         "",
         aiOk
-          ? "次の作業: Codexで差分を作り、PR化する。価格・Stripe・法務は勝手に変更しない。"
+          ? "次の作業: Copilotが差分を作り、PR化する。文章・デザイン・LP・ブログ・軽い修正は自動。価格・Stripe・法務・配布物・認証まわりは確認必須。"
           : "次の作業: 必要なら `ai-work-ok` ラベルを付けてから作業する。",
       ].join("\n"),
     }),
