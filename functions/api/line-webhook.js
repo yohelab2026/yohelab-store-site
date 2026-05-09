@@ -108,6 +108,12 @@ function choiceOptions(extra = false) {
     "速度・アクセシビリティ・画像まわりを軽く直す",
     "誇大広告に見える文言を安全にする",
     "今回は変更せず、Issueにメモだけ残す",
+    "ブログ記事を新しく書く",
+    "既存ブログをリライトする",
+    "文標の購入前記事を追加する",
+    "SEO/AIO向けの記事案を出す",
+    "X投稿文を作る",
+    "その他・自由入力で相談する",
   ];
   if (!extra) return base;
   return [
@@ -120,17 +126,93 @@ function choiceOptions(extra = false) {
 }
 
 function formatChoiceOptions(extra = false) {
-  const offset = extra ? 10 : 0;
+  const offset = extra ? 16 : 0;
   return choiceOptions(extra)
     .map((option, index) => `${offset + index + 1}. ${option}`)
     .join("\n");
 }
 
 function optionText(number) {
-  if (!Number.isInteger(number) || number < 1 || number > 15) return "";
-  const extra = number > 10;
+  if (!Number.isInteger(number) || number < 1 || number > 21) return "";
+  const extra = number > 16;
   const options = choiceOptions(extra);
-  return options[number - (extra ? 11 : 1)] || "";
+  return options[number - (extra ? 17 : 1)] || "";
+}
+
+function followUpQuestions(number) {
+  if (number === 11) {
+    return [
+      "ブログ新規作成で進める前に、これだけ教えて。",
+      "",
+      "A. 記事テーマ",
+      "B. 読む人",
+      "C. 画像数 0 / 1 / 3 / 5",
+      "D. 文字量 短め / 標準 / 長め",
+      "E. CTA 文標購入 / デモを見る / 問い合わせ / なし",
+      "",
+      "例: テーマは無料テーマとの違い。読む人はWordPress初心者。画像3枚。標準。CTAはデモを見る。",
+    ].join("\n");
+  }
+  if (number === 12) {
+    return [
+      "既存ブログのリライトで進める前に、これだけ教えて。",
+      "",
+      "A. 対象URLまたは記事名",
+      "B. 目的 読みやすく / 売れる導線 / SEO/AIO / 古い情報修正",
+      "C. 画像を増やすか なし / 1枚 / 3枚",
+      "D. 残したい表現",
+      "E. 消したい表現",
+    ].join("\n");
+  }
+  if (number === 13) {
+    return [
+      "文標の購入前記事を追加するなら、どの不安を消す記事にする？",
+      "",
+      "1. 無料テーマとの違い",
+      "2. 導入前チェック",
+      "3. 比較記事の書き方",
+      "4. FAQと構造化データの意味",
+      "5. 導線確認の使い方",
+      "",
+      "画像数も 0 / 1 / 3 で指定して。",
+    ].join("\n");
+  }
+  if (number === 14) {
+    return [
+      "SEO/AIO向けの記事案を出すなら、これだけ教えて。",
+      "",
+      "A. 狙いたいテーマ",
+      "B. 読者の悩み",
+      "C. 文標に自然につなげるか はい / いいえ",
+      "D. 何本出すか 3 / 5 / 10",
+      "",
+      "注意: AI検索に出る保証の表現は使わず、記事構造・FAQ・出典寄りで作る。",
+    ].join("\n");
+  }
+  if (number === 15) {
+    return [
+      "X投稿文を作るなら、これだけ教えて。",
+      "",
+      "A. 宣伝したいもの 文標 / ブログ / 記事メーカー / 980円レビュー",
+      "B. 投稿数 1 / 3 / 5 / 10",
+      "C. トーン やわらかめ / 強め / 実務寄り / 開発ログ風",
+      "D. 画像あり？ なし / 1枚 / カルーセル案",
+      "E. リンク先 トップ / 文標LP / デモ / ブログ",
+    ].join("\n");
+  }
+  if (number === 16) {
+    return [
+      "その他で進めるなら、やりたいことをそのまま送って。",
+      "",
+      "例:",
+      "文標の料金表をもう少し見やすくしたい",
+      "ブログカードの説明を足したい",
+      "X用の画像案も一緒にほしい",
+      "",
+      "送ってくれた内容は同じIssueに追記する。",
+    ].join("\n");
+  }
+  return "";
 }
 
 async function githubRequest(env, path, init = {}) {
@@ -312,7 +394,7 @@ async function handleChoiceConversation(text, toId, env) {
       "",
       formatChoiceOptions(true),
       "",
-      "数字だけで選べます。PRまで進めるなら「AI作業OK 11」のように送ってください。",
+      "数字だけで選べます。PRまで進めるなら「AI作業OK 17」のように送ってください。",
     ].join("\n");
     await commentOnIssue(env, latestIssue.number, body);
     return {
@@ -325,10 +407,12 @@ async function handleChoiceConversation(text, toId, env) {
   if (number) {
     const selected = optionText(number);
     if (!selected) return null;
+    const followUp = followUpQuestions(number);
     await commentOnIssue(env, latestIssue.number, [
       `LINEで ${number} 番が選ばれました。`,
       "",
       `選択案: ${selected}`,
+      followUp ? ["", "追加確認:", followUp].join("\n") : "",
     ].join("\n"));
 
     if (!wantsAiWork(text)) {
@@ -340,7 +424,7 @@ async function handleChoiceConversation(text, toId, env) {
           `#${latestIssue.number} ${latestIssue.title}`,
           latestIssue.html_url,
           "",
-          "PRまで進めるなら「AI作業OK」と送ってください。",
+          followUp || "PRまで進めるなら「AI作業OK」と送ってください。",
         ].join("\n"),
       };
     }
@@ -376,6 +460,26 @@ async function handleChoiceConversation(text, toId, env) {
         ].join("\n"),
       };
     }
+  }
+
+  if (!wantsChoices(text)) {
+    await commentOnIssue(env, latestIssue.number, [
+      "LINEから追記されました。",
+      "",
+      "```text",
+      text.trim(),
+      "```",
+    ].join("\n"));
+    return {
+      issue: latestIssue,
+      mode: "追記",
+      message: [
+        `Issue #${latestIssue.number} に追記しました。`,
+        latestIssue.html_url,
+        "",
+        "PRまで進めるなら「AI作業OK」と送ってください。",
+      ].join("\n"),
+    };
   }
 
   return null;
