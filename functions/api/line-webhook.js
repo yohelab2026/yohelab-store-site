@@ -59,6 +59,19 @@ function cleanInstruction(text) {
     .trim();
 }
 
+function copilotInstructions() {
+  return [
+    "You are working on the yohelab-store-site repository.",
+    "Create a draft pull request for this issue.",
+    "Follow AGENTS.md strictly.",
+    "Keep 文標 as the main product.",
+    "Do not change prices, Stripe links, legal pages, or product strategy unless the issue explicitly asks and the change is clearly safe.",
+    "Do not use unsafe claims such as AI検索に出る, AI検索最適化済み, AIに拾われる, 必ず売れる, or 順位が上がる.",
+    "Prefer safe wording such as AI検索時代の記事構造 and 読み取りやすい本文構造.",
+    "Run npm run build and npm run test:smoke before finishing.",
+  ].join("\n");
+}
+
 function issueTitle(text) {
   const firstLine = cleanInstruction(text).split(/\r?\n/).find(Boolean) || "LINEからの改善指示";
   const clipped = firstLine.replace(/\s+/g, " ").slice(0, 70);
@@ -137,7 +150,37 @@ async function createLineIssue(text, toId, env) {
     }),
   });
 
-  return issue;
+  if (!aiOk) return { issue, copilotAssigned: false, copilotError: "" };
+
+  try {
+    await githubRequest(env, `/repos/${repo}/issues/${issue.number}/assignees`, {
+      method: "POST",
+      body: JSON.stringify({
+        assignees: ["copilot-swe-agent[bot]"],
+        agent_assignment: {
+          target_repo: repo,
+          base_branch: "main",
+          custom_instructions: copilotInstructions(),
+        },
+      }),
+    });
+    return { issue, copilotAssigned: true, copilotError: "" };
+  } catch (error) {
+    console.error(error);
+    await githubRequest(env, `/repos/${repo}/issues/${issue.number}/comments`, {
+      method: "POST",
+      body: JSON.stringify({
+        body: [
+          "Copilot coding agentへの自動割り当てに失敗しました。",
+          "",
+          "GitHub token permissions または Copilot coding agent の有効化状態を確認してください。",
+          "",
+          "必要なtoken権限: Metadata Read-only, Issues Read and write, Contents Read and write, Pull requests Read and write, Actions Read and write。",
+        ].join("\n"),
+      }),
+    });
+    return { issue, copilotAssigned: false, copilotError: error.message };
+  }
 }
 
 async function replyLine(replyToken, message, env) {
@@ -194,7 +237,8 @@ async function handleTextMessage(event, toId, env) {
   }
 
   try {
-    const issue = await createLineIssue(text, toId, env);
+    const result = await createLineIssue(text, toId, env);
+    const issue = result.issue;
     const mode = wantsAiWork(text) ? "AI作業OK" : "メモのみ";
     await replyLine(
       event.replyToken,
@@ -206,7 +250,9 @@ async function handleTextMessage(event, toId, env) {
         issue.html_url,
         "",
         wantsAiWork(text)
-          ? "ai-work-ok ラベル付き。PR作成対象です。"
+          ? result.copilotAssigned
+            ? "Copilot coding agentに割り当てました。PR作成対象です。"
+            : "ai-work-ok ラベル付き。ただしCopilot割り当ては失敗しました。GitHub token権限を確認してください。"
           : "PRまで進めたい時は、文頭に「AI作業OK」を付けて送ってください。",
       ].join("\n"),
       env,
