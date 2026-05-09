@@ -141,78 +141,106 @@ function optionText(number) {
 
 function followUpQuestions(number) {
   if (number === 11) {
-    return [
-      "ブログ新規作成で進める前に、これだけ教えて。",
-      "",
-      "A. 記事テーマ",
-      "B. 読む人",
-      "C. 画像数 0 / 1 / 3 / 5",
-      "D. 文字量 短め / 標準 / 長め",
-      "E. CTA 文標購入 / デモを見る / 問い合わせ / なし",
-      "",
-      "例: テーマは無料テーマとの違い。読む人はWordPress初心者。画像3枚。標準。CTAはデモを見る。",
-    ].join("\n");
+    return firstStepQuestion(number);
   }
   if (number === 12) {
-    return [
-      "既存ブログのリライトで進める前に、これだけ教えて。",
-      "",
-      "A. 対象URLまたは記事名",
-      "B. 目的 読みやすく / 売れる導線 / SEO/AIO / 古い情報修正",
-      "C. 画像を増やすか なし / 1枚 / 3枚",
-      "D. 残したい表現",
-      "E. 消したい表現",
-    ].join("\n");
+    return firstStepQuestion(number);
   }
   if (number === 13) {
-    return [
-      "文標の購入前記事を追加するなら、どの不安を消す記事にする？",
-      "",
-      "1. 無料テーマとの違い",
-      "2. 導入前チェック",
-      "3. 比較記事の書き方",
-      "4. FAQと構造化データの意味",
-      "5. 導線確認の使い方",
-      "",
-      "画像数も 0 / 1 / 3 で指定して。",
-    ].join("\n");
+    return firstStepQuestion(number);
   }
   if (number === 14) {
-    return [
-      "SEO/AIO向けの記事案を出すなら、これだけ教えて。",
-      "",
-      "A. 狙いたいテーマ",
-      "B. 読者の悩み",
-      "C. 文標に自然につなげるか はい / いいえ",
-      "D. 何本出すか 3 / 5 / 10",
-      "",
-      "注意: AI検索に出る保証の表現は使わず、記事構造・FAQ・出典寄りで作る。",
-    ].join("\n");
+    return firstStepQuestion(number);
   }
   if (number === 15) {
-    return [
-      "X投稿文を作るなら、これだけ教えて。",
-      "",
-      "A. 宣伝したいもの 文標 / ブログ / 記事メーカー / 980円レビュー",
-      "B. 投稿数 1 / 3 / 5 / 10",
-      "C. トーン やわらかめ / 強め / 実務寄り / 開発ログ風",
-      "D. 画像あり？ なし / 1枚 / カルーセル案",
-      "E. リンク先 トップ / 文標LP / デモ / ブログ",
-    ].join("\n");
+    return firstStepQuestion(number);
   }
   if (number === 16) {
-    return [
-      "その他で進めるなら、やりたいことをそのまま送って。",
-      "",
-      "例:",
-      "文標の料金表をもう少し見やすくしたい",
-      "ブログカードの説明を足したい",
-      "X用の画像案も一緒にほしい",
-      "",
-      "送ってくれた内容は同じIssueに追記する。",
-    ].join("\n");
+    return firstStepQuestion(number);
   }
   return "";
+}
+
+const QUESTION_FLOWS = {
+  11: [
+    ["記事テーマ", "記事テーマは何にする？"],
+    ["読む人", "読む人は誰にする？ 例: WordPress初心者、個人事業主、ブログ初心者"],
+    ["画像数", "画像は何個入れる？ 0 / 1 / 3 / 5 から選んで。"],
+    ["文字量", "文字量はどうする？ 短め / 標準 / 長め"],
+    ["CTA", "最後の誘導はどれにする？ 文標購入 / デモを見る / 問い合わせ / なし"],
+  ],
+  12: [
+    ["対象URLまたは記事名", "リライトする記事のURLか記事名を送って。"],
+    ["目的", "目的はどれ？ 読みやすく / 売れる導線 / SEO/AIO / 古い情報修正"],
+    ["画像追加", "画像は増やす？ なし / 1枚 / 3枚"],
+    ["残したい表現", "残したい表現はある？ なければ「なし」でOK。"],
+    ["消したい表現", "消したい表現はある？ なければ「なし」でOK。"],
+  ],
+  13: [
+    ["消したい不安", "どの不安を消す記事にする？ 無料テーマとの違い / 導入前チェック / 比較記事の書き方 / FAQと構造化データ / 導線確認"],
+    ["読む人", "読む人は誰にする？"],
+    ["画像数", "画像は何個入れる？ 0 / 1 / 3 から選んで。"],
+    ["CTA", "最後の誘導はどれにする？ 文標購入 / デモを見る / 問い合わせ / なし"],
+  ],
+  14: [
+    ["狙いたいテーマ", "狙いたいテーマは何？"],
+    ["読者の悩み", "読者の悩みは何にする？"],
+    ["文標導線", "文標に自然につなげる？ はい / いいえ"],
+    ["本数", "記事案は何本出す？ 3 / 5 / 10"],
+  ],
+  15: [
+    ["宣伝したいもの", "宣伝したいものはどれ？ 文標 / ブログ / 記事メーカー / 980円レビュー"],
+    ["投稿数", "投稿数は？ 1 / 3 / 5 / 10"],
+    ["トーン", "トーンは？ やわらかめ / 強め / 実務寄り / 開発ログ風"],
+    ["画像", "画像は入れる？ なし / 1枚 / カルーセル案"],
+    ["リンク先", "リンク先は？ トップ / 文標LP / デモ / ブログ"],
+  ],
+  16: [
+    ["やりたいこと", "やりたいことをそのまま送って。"],
+    ["目的", "目的は何？ 売上 / 分かりやすさ / SEO/AIO / デザイン / その他"],
+    ["画像", "画像は必要？ なし / 1枚 / 複数"],
+  ],
+};
+
+function firstStepQuestion(number) {
+  const flow = QUESTION_FLOWS[number];
+  if (!flow) return "";
+  return [
+    `質問 1/${flow.length}`,
+    flow[0][1],
+    "",
+    "途中でやめるなら「キャンセル」と送って。",
+  ].join("\n");
+}
+
+function selectedFlowNumber(body = "") {
+  const match = body.match(/<!-- line-selected-option:(\d{1,2}) -->/);
+  return match ? Number(match[1]) : null;
+}
+
+function answeredFields(body = "") {
+  const fields = new Set();
+  for (const match of body.matchAll(/\*\*([^*]+)\*\*:\s/g)) {
+    fields.add(match[1]);
+  }
+  return fields;
+}
+
+function nextFlowQuestion(body = "") {
+  const number = selectedFlowNumber(body);
+  const flow = QUESTION_FLOWS[number];
+  if (!flow) return null;
+  const answered = answeredFields(body);
+  const index = flow.findIndex(([field]) => !answered.has(field));
+  if (index === -1) return { done: true, number, flow };
+  return {
+    done: false,
+    number,
+    field: flow[index][0],
+    question: flow[index][1],
+    step: index + 1,
+    total: flow.length,
+  };
 }
 
 async function githubRequest(env, path, init = {}) {
@@ -295,6 +323,15 @@ async function findLatestChoiceIssue(env, toId) {
     const body = issue.body || "";
     return body.includes("<!-- line-choice-options:v1 -->") && body.includes(`LINE source: ${toId}`);
   });
+}
+
+async function issueConversationText(env, issue) {
+  const repo = githubRepo(env);
+  const comments = await githubRequest(env, `/repos/${repo}/issues/${issue.number}/comments?per_page=100`);
+  return [
+    issue.body || "",
+    ...(comments || []).map((comment) => comment.body || ""),
+  ].join("\n\n");
 }
 
 async function createChoiceIssue(text, toId, env) {
@@ -412,6 +449,7 @@ async function handleChoiceConversation(text, toId, env) {
       `LINEで ${number} 番が選ばれました。`,
       "",
       `選択案: ${selected}`,
+      QUESTION_FLOWS[number] ? `<!-- line-selected-option:${number} -->` : "",
       followUp ? ["", "追加確認:", followUp].join("\n") : "",
     ].join("\n"));
 
@@ -463,6 +501,46 @@ async function handleChoiceConversation(text, toId, env) {
   }
 
   if (!wantsChoices(text)) {
+    if (text.trim() === "キャンセル") {
+      await commentOnIssue(env, latestIssue.number, "LINEでキャンセルされました。");
+      return {
+        issue: latestIssue,
+        mode: "キャンセル",
+        message: "キャンセルしました。もう一度始める時は「相談」と送って。",
+      };
+    }
+
+    const conversationText = await issueConversationText(env, latestIssue);
+    const flowQuestion = nextFlowQuestion(conversationText);
+    if (flowQuestion && !flowQuestion.done) {
+      await commentOnIssue(env, latestIssue.number, [
+        `**${flowQuestion.field}**: ${text.trim()}`,
+      ].join("\n"));
+      const nextQuestion = nextFlowQuestion(`${conversationText}\n\n**${flowQuestion.field}**: ${text.trim()}`);
+      if (nextQuestion?.done) {
+        return {
+          issue: latestIssue,
+          mode: "質問完了",
+          message: [
+            "必要な内容がそろいました。",
+            latestIssue.html_url,
+            "",
+            "PRまで進めるなら「AI作業OK」と送ってください。",
+          ].join("\n"),
+        };
+      }
+      return {
+        issue: latestIssue,
+        mode: "質問中",
+        message: [
+          `質問 ${nextQuestion.step}/${nextQuestion.total}`,
+          nextQuestion.question,
+          "",
+          "途中でやめるなら「キャンセル」と送って。",
+        ].join("\n"),
+      };
+    }
+
     await commentOnIssue(env, latestIssue.number, [
       "LINEから追記されました。",
       "",
