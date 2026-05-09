@@ -174,6 +174,14 @@ checks.push(["root video assets exist for direct deploy", existsSync(src("assets
 checks.push(["bunsirube demo includes article type samples", bunsirubeDemo.includes("比較記事デモ") && bunsirubeDemo.includes("レビュー記事デモ") && bunsirubeDemo.includes("FAQ記事デモ") && bunsirubeDemo.includes("管理画面見本")]);
 checks.push(["bunsirube demo embeds blog creation videos", bunsirubeDemo.includes("ブログ作成の流れを動画で見る") && bunsirubeDemo.includes('/assets/bunsirube/videos/bunsirube-install.mp4?v=blog-demo-20260505') && bunsirubeDemo.includes('/assets/bunsirube/videos/bunsirube-writing.mp4?v=blog-demo-20260505') && bunsirubeDemo.includes('/assets/bunsirube/videos/bunsirube-route-check.mp4?v=blog-demo-20260505') && !bunsirubeDemo.includes("実機") && !bunsirubeDemo.includes("想定") && !bunsirubeDemo.includes("イメージ")]);
 checks.push(["bunsirube demo uses tax-included purchase label", bunsirubeDemo.includes("¥5,500（税込）で購入する") && bunsirubeDemo.includes("表示価格はすべて税込です。")]);
+
+// CTA text checks — verify that key purchase and navigation CTA labels are intact across pages
+checks.push(["home hero cta text", home.includes("文標の詳細を見る") && home.includes("¥5,500（税込）で購入する") && home.includes('href="/lp/bunsirube/"') && home.includes('href="https://buy.stripe.com/bJeaEPfTN2ze2Cubvb73G0e?client_reference_id=wordpress-theme"')]);
+checks.push(["bunsirube lp hero cta has price and arrow", bunsirubeLp.includes("¥5,500（税込）で購入する →") && bunsirubeLp.includes("デモを見る")]);
+checks.push(["bunsirube lp mid cta uses zip delivery text", bunsirubeLp.includes("購入してZIPを受け取る →")]);
+checks.push(["bunsirube product page purchase and nav cta text", wpProduct.includes("購入してZIPを受け取る →") && wpProduct.includes("機能とプランを詳しく見る")]);
+checks.push(["bunsirube demo page links back to lp with cta", bunsirubeDemo.includes("文標の詳細を見る") && bunsirubeDemo.includes('href="/lp/bunsirube/"')]);
+
 checks.push(["privacy policy covers current paid products and theme analytics", privacy.includes("有料サービス・ダウンロード商品") && privacy.includes("文標テーマでは") && privacy.includes("CTA・比較表・広告リンク・ブログカード") && !privacy.includes("2026年4月30日") && !privacy.includes("プロプラン")]);
 const blogIndex = read(dist("blog/index.html"));
 checks.push(["blog surfaces pre-purchase bunsirube guides", blogIndex.includes("文標を買う前に読む3本") && blogIndex.includes("/blog/free-theme-vs-bunsirube/") && blogIndex.includes("/blog/comparison-article-template/")]);
