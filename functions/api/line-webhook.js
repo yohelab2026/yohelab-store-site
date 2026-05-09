@@ -96,106 +96,56 @@ function issueTitle(text) {
   return `LINE指示: ${clipped}`;
 }
 
-function choiceOptions(extra = false) {
-  const base = [
-    "ファーストビューの見出しと説明を強くする",
-    "CTAの文言・位置・導線を整える",
-    "FAQや購入前の不安解消を増やす",
-    "デモ動画・実例・証拠を前に出す",
-    "AI検索時代の記事構造として安全な表現に整える",
-    "ブログ・内部リンク・購入前記事への導線を強める",
-    "スマホの読みやすさと余白を整える",
-    "速度・アクセシビリティ・画像まわりを軽く直す",
-    "誇大広告に見える文言を安全にする",
-    "今回は変更せず、Issueにメモだけ残す",
+function choiceOptions() {
+  return [
     "ブログ記事を新しく書く",
     "既存ブログをリライトする",
-    "文標の購入前記事を追加する",
-    "SEO/AIO向けの記事案を出す",
     "X投稿文を作る",
     "その他・自由入力で相談する",
   ];
-  if (!extra) return base;
-  return [
-    "比較表カードの見せ方を強くする",
-    "更新履歴・サポート範囲を分かりやすくする",
-    "導入動画の順番や説明を整える",
-    "問い合わせページの文標導線を整える",
-    "旧URL・重複ページ・リンク切れを整理する",
-  ];
 }
 
-function formatChoiceOptions(extra = false) {
-  const offset = extra ? 16 : 0;
-  return choiceOptions(extra)
-    .map((option, index) => `${offset + index + 1}. ${option}`)
+function formatChoiceOptions() {
+  return choiceOptions()
+    .map((option, index) => `${index + 1}. ${option}`)
     .join("\n");
 }
 
 function optionText(number) {
-  if (!Number.isInteger(number) || number < 1 || number > 21) return "";
-  const extra = number > 16;
-  const options = choiceOptions(extra);
-  return options[number - (extra ? 17 : 1)] || "";
+  if (!Number.isInteger(number) || number < 1 || number > 4) return "";
+  return choiceOptions()[number - 1] || "";
 }
 
 function followUpQuestions(number) {
-  if (number === 11) {
-    return firstStepQuestion(number);
-  }
-  if (number === 12) {
-    return firstStepQuestion(number);
-  }
-  if (number === 13) {
-    return firstStepQuestion(number);
-  }
-  if (number === 14) {
-    return firstStepQuestion(number);
-  }
-  if (number === 15) {
-    return firstStepQuestion(number);
-  }
-  if (number === 16) {
+  if (QUESTION_FLOWS[number]) {
     return firstStepQuestion(number);
   }
   return "";
 }
 
 const QUESTION_FLOWS = {
-  11: [
+  1: [
     ["記事テーマ", "記事テーマは何にする？"],
     ["読む人", "読む人は誰にする？ 例: WordPress初心者、個人事業主、ブログ初心者"],
     ["画像数", "画像は何個入れる？ 0 / 1 / 3 / 5 から選んで。"],
     ["文字量", "文字量はどうする？ 短め / 標準 / 長め"],
     ["CTA", "最後の誘導はどれにする？ 文標購入 / デモを見る / 問い合わせ / なし"],
   ],
-  12: [
+  2: [
     ["対象URLまたは記事名", "リライトする記事のURLか記事名を送って。"],
     ["目的", "目的はどれ？ 読みやすく / 売れる導線 / SEO/AIO / 古い情報修正"],
     ["画像追加", "画像は増やす？ なし / 1枚 / 3枚"],
     ["残したい表現", "残したい表現はある？ なければ「なし」でOK。"],
     ["消したい表現", "消したい表現はある？ なければ「なし」でOK。"],
   ],
-  13: [
-    ["消したい不安", "どの不安を消す記事にする？ 無料テーマとの違い / 導入前チェック / 比較記事の書き方 / FAQと構造化データ / 導線確認"],
-    ["読む人", "読む人は誰にする？"],
-    ["画像数", "画像は何個入れる？ 0 / 1 / 3 から選んで。"],
-    ["CTA", "最後の誘導はどれにする？ 文標購入 / デモを見る / 問い合わせ / なし"],
-  ],
-  14: [
-    ["狙いたいテーマ", "狙いたいテーマは何？"],
-    ["読者の悩み", "読者の悩みは何にする？"],
-    ["文標導線", "文標に自然につなげる？ はい / いいえ"],
-    ["本数", "記事案は何本出す？ 3 / 5 / 10"],
-  ],
-  15: [
+  3: [
     ["宣伝したいもの", "宣伝したいものはどれ？ 文標 / ブログ / 記事メーカー / 980円レビュー"],
     ["投稿数", "投稿数は？ 1 / 3 / 5 / 10"],
     ["トーン", "トーンは？ やわらかめ / 強め / 実務寄り / 開発ログ風"],
     ["画像", "画像は入れる？ なし / 1枚 / カルーセル案"],
     ["リンク先", "リンク先は？ トップ / 文標LP / デモ / ブログ"],
   ],
-  16: [
+  4: [
     ["やりたいこと", "やりたいことをそのまま送って。"],
     ["目的", "目的は何？ 売上 / 分かりやすさ / SEO/AIO / デザイン / その他"],
     ["画像", "画像は必要？ なし / 1枚 / 複数"],
@@ -359,8 +309,8 @@ async function createChoiceIssue(text, toId, env) {
         "",
         "返信方法:",
         "- 数字だけ: その案をこのIssueに追記する",
-        "- 追加: 追加案を出す",
-        "- AI作業OK 3: 3番案でPR作成対象にする",
+        "- 追加: 4つの選択肢をもう一度出す",
+        "- AI作業OK 1: 1番案でPR作成対象にする",
         "",
         `LINE source: ${toId}`,
       ].join("\n"),
@@ -427,17 +377,17 @@ async function handleChoiceConversation(text, toId, env) {
 
   if (wantsMoreChoices(text) && !wantsAiWork(text)) {
     const body = [
-      "追加案です。",
+      "LINEでできることはこの4つです。",
       "",
-      formatChoiceOptions(true),
+      formatChoiceOptions(),
       "",
-      "数字だけで選べます。PRまで進めるなら「AI作業OK 17」のように送ってください。",
+      "数字だけで選べます。PRまで進めるなら「AI作業OK 1」のように送ってください。",
     ].join("\n");
     await commentOnIssue(env, latestIssue.number, body);
     return {
       issue: latestIssue,
-      mode: "追加案",
-      message: `追加案をIssue #${latestIssue.number} に入れました。\n\n${formatChoiceOptions(true)}`,
+      mode: "選択肢",
+      message: `LINEでできることはこの4つです。\n\n${formatChoiceOptions()}`,
     };
   }
 
@@ -635,7 +585,7 @@ async function handleTextMessage(event, toId, env) {
           `#${issue.number} ${issue.title}`,
           issue.html_url,
           "",
-          "数字だけで選べます。PRまで進めるなら「AI作業OK 3」のように送ってください。",
+          "数字だけで選べます。PRまで進めるなら「AI作業OK 1」のように送ってください。",
         ].join("\n"),
         env,
       );
