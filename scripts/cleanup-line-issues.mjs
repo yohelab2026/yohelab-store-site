@@ -2,7 +2,7 @@ import { appendFileSync } from "node:fs";
 
 const token = process.env.GITHUB_TOKEN || process.env.GITHUB_ISSUE_TOKEN || "";
 const repo = process.env.GITHUB_REPOSITORY || "yohelab2026/yohelab-store-site";
-const staleDays = Number(process.env.LINE_ISSUE_STALE_DAYS || 30);
+const staleDays = Number(process.env.LINE_ISSUE_STALE_DAYS || 10);
 const cancelledDays = Number(process.env.LINE_ISSUE_CANCELLED_DAYS || 1);
 const dryRun = process.env.DRY_RUN === "1";
 
@@ -85,7 +85,6 @@ async function closeIssue(issueNumber) {
 }
 
 function shouldCloseStale(issue) {
-  if (hasLabel(issue, "ai-work-ok")) return false;
   if (hasLabel(issue, "keep-open")) return false;
   return new Date(issue.updated_at) < cutoffDate(staleDays);
 }
@@ -113,7 +112,7 @@ for (const issue of issues) {
 
   const reason = closeCancelled
     ? `LINEでキャンセル済みのため、${cancelledDays}日後に自動クローズしました。`
-    : `AI作業OKなしのLINEメモが${staleDays}日以上更新されていないため、自動クローズしました。`;
+    : `LINE由来のIssueが${staleDays}日以上更新されていないため、自動クローズしました。`;
 
   if (!dryRun) {
     await comment(issue.number, [

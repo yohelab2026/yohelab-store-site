@@ -40,7 +40,7 @@ jobs:
         continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          LINE_ISSUE_STALE_DAYS: 30
+          LINE_ISSUE_STALE_DAYS: 10
           LINE_ISSUE_CANCELLED_DAYS: 1
         run: |
           npm run cleanup:line-issues | tee line-cleanup-result.json
