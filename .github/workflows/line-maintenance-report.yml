@@ -1,0 +1,46 @@
+name: LINE maintenance report
+
+on:
+  schedule:
+    - cron: "0 4 * * *"
+  workflow_dispatch:
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Build
+        id: build
+        continue-on-error: true
+        run: npm run build
+
+      - name: Smoke test
+        id: smoke
+        continue-on-error: true
+        run: npm run test:smoke
+
+      - name: Send LINE report
+        if: always()
+        env:
+          LINE_CHANNEL_ACCESS_TOKEN: ${{ secrets.LINE_CHANNEL_ACCESS_TOKEN }}
+          LINE_TO: ${{ secrets.LINE_TO }}
+          LINE_USER_ID: ${{ secrets.LINE_USER_ID }}
+          BUILD_STATUS: ${{ steps.build.outcome }}
+          SMOKE_STATUS: ${{ steps.smoke.outcome }}
+        run: npm run notify:line-maintenance
+
+      - name: Fail when checks failed
+        if: steps.build.outcome != 'success' || steps.smoke.outcome != 'success'
+        run: exit 1
