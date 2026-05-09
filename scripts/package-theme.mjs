@@ -4,7 +4,7 @@
  * wordpress-themes/<theme-slug>/ を ZIP にまとめる。
  * 生成した ZIP は R2 へアップロードして使う:
  *   npm run package-theme
- *   wrangler r2 object put theme-assets/bunsirube-0.3.1.zip --file=bunsirube-0.3.1.zip
+ *   wrangler r2 object put theme-assets/bunsirube-0.3.2.zip --file=bunsirube-0.3.2.zip
  *   npm run package-child-theme
  *   wrangler r2 object put theme-assets/bunsirube-child-0.1.1.zip --file=bunsirube-child-0.1.1.zip
  */

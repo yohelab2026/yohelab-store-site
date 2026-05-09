@@ -147,6 +147,9 @@ const lineWebhook = read(src("functions/api/line-webhook.js"));
 const aiPrGuard = read(src(".github/workflows/ai-pr-guard.yml"));
 const lineMaintenanceWorkflow = read(src(".github/workflows/line-maintenance-report.yml"));
 const lineIssueCleanup = read(src("scripts/cleanup-line-issues.mjs"));
+const themeDownload = read(src("functions/api/theme-download.js"));
+const themeUpdate = read(src("functions/generated/theme-update.js"));
+const purchaseFlowTest = read(src("scripts/test-purchase-flow.mjs"));
 const bunsirubeLp = read(dist("lp/bunsirube/index.html"));
 const bunsirubeDemo = read(dist("lp/bunsirube/demo/index.html"));
 const bunsirubeUpdates = read(dist("lp/bunsirube/updates/index.html"));
@@ -170,6 +173,7 @@ checks.push(["blog post sanitizes dangerous html client fallback", blogPostPage.
 checks.push(["bunsirube lp links to separate update history", bunsirubeLp.includes("最新の更新") && bunsirubeLp.includes("/lp/bunsirube/updates/") && !bunsirubeLp.includes("2026.05.03 / v0.2.0") && bunsirubeLp.includes("自動アップデート用シリアル")]);
 checks.push(["bunsirube updates page includes full history", bunsirubeUpdates.includes("文標の更新履歴") && bunsirubeUpdates.includes("v0.3.1") && bunsirubeUpdates.includes("v0.2.0") && bunsirubeUpdates.includes("初期ベータ構成")]);
 checks.push(["bunsirube lp includes demo and support", bunsirubeLp.includes('/lp/bunsirube/demo/') && bunsirubeLp.includes("デモを見る") && bunsirubeLp.includes("テーマ購入前の不安") && bunsirubeLp.includes("購入後の返金はありません") && bunsirubeLp.includes("購入後30日間") && bunsirubeDemo.includes("文標の見た目と使い方")]);
+checks.push(["bunsirube lp separates purchase and server tests", bunsirubeLp.includes("購入フローの検証") && bunsirubeLp.includes("不正シリアル拒否") && bunsirubeLp.includes("動作確認とサーバー対応の表記を分けています") && bunsirubeLp.includes("実機で通ったものだけ「確認済み」")]);
 checks.push(["bunsirube lp positions AI-era article structure safely", bunsirubeLp.includes("AI検索時代の記事構造") && bunsirubeLp.includes("本文で読み取りやすい構造") && bunsirubeLp.includes("Google AI Overviews等への表示を保証するものではありません") && !bunsirubeLp.includes("AI検索に出るテーマ") && !bunsirubeLp.includes("AI検索最適化済み") && !bunsirubeLp.includes("AIに拾われる")]);
 checks.push(["bunsirube lp embeds demo videos", bunsirubeLp.includes("30秒で分かる文標") && bunsirubeLp.includes('/assets/bunsirube/videos/bunsirube-quick-tour.mp4') && bunsirubeLp.includes('/assets/bunsirube/videos/bunsirube-install.mp4') && bunsirubeLp.includes('/assets/bunsirube/videos/bunsirube-writing.mp4') && bunsirubeLp.includes('/assets/bunsirube/videos/bunsirube-route-check.mp4') && bunsirubeLp.includes('"@type":"VideoObject"')]);
 checks.push(["bunsirube video structured data parses", bunsirubeVideoObjects.length === 4 && bunsirubeVideoObjects.some((item) => item.contentUrl?.includes("bunsirube-quick-tour.mp4") && item.duration === "PT34S") && bunsirubeVideoObjects.filter((item) => item.duration === "PT13S").length === 3 && bunsirubeVideoObjects.every((item) => item.name && item.thumbnailUrl && item.contentUrl && item.duration)]);
@@ -192,6 +196,8 @@ checks.push(["line webhook supports choice based LINE conversations", lineWebhoo
 checks.push(["line webhook asks content questions one by one", lineWebhook.includes("QUESTION_FLOWS") && lineWebhook.includes("質問 1/") && lineWebhook.includes("line-selected-option") && lineWebhook.includes("nextFlowQuestion") && lineWebhook.includes("issueConversationText") && lineWebhook.includes("/comments?per_page=100") && lineWebhook.includes("記事テーマは何にする？") && lineWebhook.includes("キャンセル")]);
 checks.push(["old LINE issues are cleaned up daily without deleting history", lineMaintenanceWorkflow.includes("Cleanup old LINE issues") && lineMaintenanceWorkflow.includes("issues: write") && lineMaintenanceWorkflow.includes("LINE_ISSUE_STALE_DAYS: 10") && lineMaintenanceWorkflow.includes("LINE_CLEANUP_CLOSED") && lineIssueCleanup.includes("GITHUB_OUTPUT") && lineIssueCleanup.includes("line-auto-closed") && lineIssueCleanup.includes("keep-open") && lineIssueCleanup.includes("state: \"closed\"") && lineIssueCleanup.includes("LINE由来のIssue") && lineIssueCleanup.includes("削除ではなくクローズ")]);
 checks.push(["ai pr guard blocks sensitive changes and auto-merges safe ai prs", aiPrGuard.includes("needs-human-review") && aiPrGuard.includes("safe-auto-candidate") && aiPrGuard.includes("buy\\.stripe\\.com") && aiPrGuard.includes("legal\\/") && aiPrGuard.includes("gh pr merge") && aiPrGuard.includes("--auto")]);
+checks.push(["theme delivery points to latest package and manifest", themeDownload.includes('key: "bunsirube-0.3.2.zip"') && themeUpdate.includes('\\"version\\": \\"0.3.2\\"') && themeUpdate.includes("/lp/bunsirube/updates/")]);
+checks.push(["purchase flow test covers email serial license and invalid cases", purchaseFlowTest.includes("checkout.session.completed") && purchaseFlowTest.includes("api.resend.com/emails") && purchaseFlowTest.includes("serial missing from email") && purchaseFlowTest.includes("expected generated serial to activate") && purchaseFlowTest.includes("expected invalid serial rejection") && purchaseFlowTest.includes("expected bad signature 400")]);
 
 for (const [name, ok] of checks) {
   assert(ok, `Check failed: ${name}`);

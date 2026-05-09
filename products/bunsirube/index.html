@@ -565,7 +565,28 @@
             </div>
             <div class="light-box">
               <h3>確認済み環境</h3>
-              <p>最低環境はWordPress 6.5以上 / PHP 8.0以上。動作確認はWordPress 6.8で行っています。</p>
+              <p>最低環境はWordPress 6.5以上 / PHP 8.0以上。WordPress 6.8 / PHP 8.3の検証環境で動作確認しています。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <p class="section-label">Purchase test</p>
+          <h2 class="section-title">購入からシリアル認証まで確認しています</h2>
+          <div class="section-grid reveal">
+            <div class="light-box">
+              <h3>購入メール</h3>
+              <p>Stripe決済Webhookから、購入メール本文に親テーマZIP、子テーマZIP、購入ID、シリアルナンバーが入ることを自動テストしています。</p>
+            </div>
+            <div class="light-box">
+              <h3>シリアル認証</h3>
+              <p>購入メールのシリアルでライセンス認証が有効になり、不正なシリアルは拒否されることを確認しています。</p>
+            </div>
+            <div class="light-box">
+              <h3>サーバー確認</h3>
+              <p>主要サーバーは、実機確認できたものだけ「確認済み」と表記します。未確認のものは要件確認中として扱います。</p>
             </div>
           </div>
         </div>
@@ -586,7 +607,7 @@
             </div>
             <div class="light-box">
               <h3>動作環境</h3>
-              <p>WordPress 6.5以上・PHP 8.0以上を推奨。WordPress 6.8・PHP 8.0以上のDocker環境で動作確認済み。古い環境は購入前に確認を。</p>
+              <p>WordPress 6.5以上・PHP 8.0以上を推奨。WordPress 6.8・PHP 8.3の検証環境で動作確認済み。古い環境は購入前に確認を。</p>
             </div>
           </div>
         </div>
