@@ -7,12 +7,10 @@ const imagePath = resolve(process.env.LINE_RICH_MENU_IMAGE || "assets/line/rich-
 const richMenuName = process.env.LINE_RICH_MENU_NAME || "文標メニュー";
 
 const areas = [
-  area(0, 0, 833, 843, message("ブログ作成", "ブログ")),
-  area(833, 0, 834, 843, message("リライト", "リライト")),
-  area(1667, 0, 833, 843, message("X投稿", "X投稿")),
-  area(0, 843, 833, 843, message("営業下書き", "営業下書き")),
-  area(833, 843, 834, 843, uri("文標LP", "https://yohelab.com/lp/bunsirube/")),
-  area(1667, 843, 833, 843, message("相談", "相談")),
+  area(0, 0, 1250, 843, message("1 ブログ", "1")),
+  area(1250, 0, 1250, 843, message("2 リライト", "2")),
+  area(0, 843, 1250, 843, message("3 X投稿", "3")),
+  area(1250, 843, 1250, 843, message("4 その他", "4")),
 ];
 
 const richMenuPayload = {
