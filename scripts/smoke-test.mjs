@@ -129,6 +129,7 @@ checks.push(["contact removes shortcut cards", !contact.includes('ツール一�
 checks.push(["contact removes cancellation wording", !contact.includes('解約')]);
 checks.push(["contact no legacy tools", legacyLabels.every((label) => !contact.includes(label))]);
 checks.push(["contact invites pre-purchase questions", contact.includes("購入前の確認") && !contact.includes("記事作成スターターキット")]);
+checks.push(["contact avoids broad post-purchase support", contact.includes("使い方相談や個別設定代行は対象外") && contact.includes("返金希望") && !contact.includes("導入、使い方、不具合の相談") && !contact.includes("使い方を確認したい")]);
 
 const sitemap = read(dist("sitemap.xml"));
 checks.push(["sitemap includes research writer", sitemap.includes('https://yohelab.com/lp/research-writer/')]);
@@ -166,6 +167,11 @@ const lineMaintenanceWorkflow = read(src(".github/workflows/line-maintenance-rep
 const lineIssueCleanup = read(src("scripts/cleanup-line-issues.mjs"));
 const themeDownload = read(src("functions/api/theme-download.js"));
 const themeUpdate = read(src("functions/generated/theme-update.js"));
+const themeFunctions = read(src("wordpress-themes/bunsirube/functions.php"));
+const themeStyle = read(src("wordpress-themes/bunsirube/style.css"));
+const themeSettings = read(src("wordpress-themes/bunsirube/inc/settings.php"));
+const publicLlms = read(src("public/llms.txt"));
+const rootLlms = read(src("llms.txt"));
 const purchaseFlowTest = read(src("scripts/test-purchase-flow.mjs"));
 const bunsirubeLp = read(dist("lp/bunsirube/index.html"));
 const bunsirubeInstall = read(dist("lp/bunsirube/install/index.html"));
@@ -229,6 +235,9 @@ checks.push(["line copilot instructions require safe original blog images", line
 checks.push(["old LINE issues are cleaned up daily without deleting history", lineMaintenanceWorkflow.includes("Cleanup old LINE issues") && lineMaintenanceWorkflow.includes("issues: write") && lineMaintenanceWorkflow.includes("LINE_ISSUE_STALE_DAYS: 10") && lineMaintenanceWorkflow.includes("LINE_CLEANUP_CLOSED") && lineIssueCleanup.includes("GITHUB_OUTPUT") && lineIssueCleanup.includes("line-auto-closed") && lineIssueCleanup.includes("keep-open") && lineIssueCleanup.includes("state: \"closed\"") && lineIssueCleanup.includes("LINE由来のIssue") && lineIssueCleanup.includes("削除ではなくクローズ")]);
 checks.push(["ai pr guard blocks sensitive changes and auto-merges safe ai prs", aiPrGuard.includes("needs-human-review") && aiPrGuard.includes("safe-auto-candidate") && aiPrGuard.includes("buy\\.stripe\\.com") && aiPrGuard.includes("legal\\/") && aiPrGuard.includes("gh pr merge") && aiPrGuard.includes("--auto")]);
 checks.push(["theme delivery points to latest package and manifest", themeDownload.includes('key: "bunsirube-0.3.3.zip"') && themeUpdate.includes('\\"version\\": \\"0.3.3\\"') && themeUpdate.includes("/lp/bunsirube/updates/")]);
+checks.push(["theme internal version matches latest package", themeStyle.includes("Version: 0.3.3") && themeFunctions.includes("BUNSIRUBE_VERSION', '0.3.3'") && themeSettings.includes("不具合対応の範囲") && !themeSettings.includes("ZIP導入、基本設定、記事型、文標ショートコードの使い方を対象")]);
+checks.push(["public llms focuses current bunsirube offer", publicLlms.includes("WordPressテーマ「文標") && publicLlms.includes("サポート範囲") && publicLlms.includes("Google AI Overviews等への表示を保証するものではありません") && !publicLlms.includes("初回モニター¥980") && !publicLlms.includes("月額1,980円")]);
+checks.push(["root llms fallback matches public llms", rootLlms === publicLlms]);
 checks.push(["purchase flow test covers email serial license and invalid cases", purchaseFlowTest.includes("checkout.session.completed") && purchaseFlowTest.includes("api.resend.com/emails") && purchaseFlowTest.includes("serial missing from email") && purchaseFlowTest.includes("expected generated serial to activate") && purchaseFlowTest.includes("expected invalid serial rejection") && purchaseFlowTest.includes("expected bad signature 400")]);
 
 // Affiliate program checks
@@ -249,6 +258,7 @@ checks.push(["30-day refund guarantee documented in legal/terms", read(dist("leg
 checks.push(["30-day refund prominent on LP", bunsirubeLp.includes("30日返金保証") && bunsirubeLp.includes("理由を問わず") && bunsirubeLp.includes("Stripe経由")]);
 checks.push(["30-day refund in welcome email", stripeWebhookSrc.includes("30日返金保証") && stripeWebhookSrc.includes("文標 返金希望")]);
 checks.push(["affiliate signup page has form with required fields", affiliateLp.includes('文標 アフィリエイト') && affiliateLp.includes('1件 ¥2,750') && affiliateLp.includes('id="aff-form"') && affiliateLp.includes('name="email"') && affiliateLp.includes('name="site_url"') && affiliateLp.includes('/legal/affiliate-terms/') && affiliateLp.includes('/api/affiliate-signup')]);
+checks.push(["affiliate page uses safe AI positioning", affiliateLp.includes("AI検索時代の記事構造") && affiliateLp.includes("AI表示を保証するものではありません") && !affiliateLp.includes("AI検索特化") && !affiliateLp.includes("AI Overviews対応テーマ") && !affiliateLp.includes("AI検索に出る")]);
 checks.push(["affiliate dashboard page has login + stats", affiliateDashboard.includes('ダッシュボード') && affiliateDashboard.includes('id="login-form"') && affiliateDashboard.includes('/api/affiliate-status') && affiliateDashboard.includes('総クリック数') && affiliateDashboard.includes('支払予定') && affiliateDashboard.includes('AFF-XXXX-XXXX')]);
 checks.push(["affiliate ToS lists 50% commission and 30-day attribution", affiliateTerms.includes('50%') && affiliateTerms.includes('2,750') && affiliateTerms.includes('30日') && affiliateTerms.includes('ラストクリック') && affiliateTerms.includes('禁止事項') && affiliateTerms.includes('ステルスマーケティング') && affiliateTerms.includes('自己購入')]);
 checks.push(["affiliate api endpoints are wired", affiliateSignupApi.includes('makeAffiliateCode') && affiliateSignupApi.includes('setAffiliateMeta') && affiliateStatusApi.includes('listSales') && affiliateStatusApi.includes('computeAffiliateStats') && affiliateClickApi.includes('recordClick')]);
