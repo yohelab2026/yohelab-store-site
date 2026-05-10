@@ -191,6 +191,11 @@ checks.push(["middleware redirects retired product pages", middleware.includes('
 checks.push(["middleware redirects retired radar beta page", middleware.includes('"/products/radar-beta"') && middleware.includes('"/products/radar-beta/"') && middleware.includes('"/lp/bunsirube/"')]);
 checks.push(["middleware redirects old tools services paths", middleware.includes('"/tools/"') && middleware.includes('"/services/"') && middleware.includes('"/lp/bunsirube/demo/"')]);
 checks.push(["middleware blocks direct theme zip downloads", middleware.includes("PROTECTED_THEME_ZIP") && middleware.includes("X-Robots-Tag") && middleware.includes("no-store") && gitignore.includes("*.zip")]);
+const themesCatchAll = read(src("functions/themes/[[path]].js"));
+const wpContentCatchAll = read(src("functions/wp-content/[[path]].js"));
+checks.push(["themes path returns 404 via Pages Function", themesCatchAll.includes("status: 404") && themesCatchAll.includes("X-Robots-Tag")]);
+checks.push(["wp-content probing returns 404 via Pages Function", wpContentCatchAll.includes("status: 404") && wpContentCatchAll.includes("X-Robots-Tag")]);
+checks.push(["dist has no exposed themes or wp-content directories", !existsSync(dist("themes")) && !existsSync(dist("wp-content"))]);
 checks.push(["blog admin page is reachable behind page login", blogAdminGate.includes("context.next()") && blogAdminGate.includes("noindex") && !blogAdminGate.includes("ADMIN_KEY")]);
 checks.push(["blog admin validates pin server side", blogAdmin.includes("/api/blog-auth") && blogAdmin.includes("SESSION_PIN_KEY") && !blogAdmin.includes("localStorage.setItem(PIN_KEY")]);
 checks.push(["blog admin has no hardcoded fallback password", !blogAdmin.includes(oldBlogPin) && !blogAuthLib.includes(`"${oldBlogPin}"`) && !blogAuthLib.includes(oldPasswordHeader) && blogAuthApi.includes("blog_pin_not_configured") && blogAdminGate.includes("no-store") && blogAdminGate.includes("X-Frame-Options")]);
