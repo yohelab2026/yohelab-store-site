@@ -8,7 +8,7 @@ function assert(condition, message) {
   if (!condition) throw new Error(message);
 }
 
-function makeEnv({ paid = true, bucket = true } = {}) {
+function makeEnv({ paid = true, refunded = false, bucket = true } = {}) {
   const env = {
     ACCESS_SECRET: "test-secret",
     STRIPE_SECRET_KEY: "sk_test_dummy",
@@ -29,7 +29,14 @@ function makeEnv({ paid = true, bucket = true } = {}) {
 
   globalThis.fetch = async (url) => {
     assert(String(url).includes("payment_intents/pi_test_paid"), "Stripe lookup must use payment intent");
-    return new Response(JSON.stringify({ status: paid ? "succeeded" : "requires_payment_method" }), {
+    return new Response(JSON.stringify({
+      status: paid ? "succeeded" : "requires_payment_method",
+      amount_received: 5500,
+      latest_charge: {
+        refunded,
+        amount_refunded: refunded ? 5500 : 0,
+      },
+    }), {
       status: 200,
       headers: { "Content-Type": "application/json" },
     });
@@ -88,6 +95,9 @@ try {
 
   const unpaid = await onRequestGet({ request: await requestFor({ serial }), env: makeEnv({ paid: false }) });
   assert(unpaid.status === 403, `expected unpaid 403, got ${unpaid.status}`);
+
+  const refunded = await onRequestGet({ request: await requestFor({ serial }), env: makeEnv({ refunded: true }) });
+  assert(refunded.status === 403, `expected refunded purchase 403, got ${refunded.status}`);
 
   console.log("theme-download tests passed");
 } finally {

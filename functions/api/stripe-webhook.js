@@ -8,11 +8,17 @@ import {
 } from "../lib/entitlements.js";
 import {
   getAffiliateMeta,
+  markSaleRefundedByPurchaseId,
   recordSale,
   AFFILIATE_PRODUCT_AMOUNT,
 } from "../lib/affiliate.js";
 
-const SUPPORTED_EVENTS = new Set(["checkout.session.completed", "checkout.session.async_payment_succeeded"]);
+const SUPPORTED_EVENTS = new Set([
+  "checkout.session.completed",
+  "checkout.session.async_payment_succeeded",
+  "charge.refunded",
+  "refund.updated",
+]);
 const AFFILIATE_REF_RE = /^AFF-[A-Z0-9]{4}-[A-Z0-9]{4}$/;
 
 export async function onRequestPost(context) {
@@ -29,6 +35,10 @@ export async function onRequestPost(context) {
     const event = JSON.parse(rawBody);
     if (!SUPPORTED_EVENTS.has(event.type)) {
       return json({ received: true, ignored: event.type });
+    }
+
+    if (event.type === "charge.refunded" || event.type === "refund.updated") {
+      return handleRefundEvent(event, context.env);
     }
 
     const session = event.data?.object;
@@ -119,6 +129,21 @@ export async function onRequestPost(context) {
   } catch (error) {
     return json({ error: error.message }, 500);
   }
+}
+
+async function handleRefundEvent(event, env) {
+  const obj = event.data?.object || {};
+  const purchaseId = String(obj.payment_intent || obj.paymentIntent || obj.charge || "").trim();
+  const fullyRefunded = event.type === "refund.updated"
+    ? obj.status === "succeeded"
+    : (obj.refunded === true || (Number(obj.amount || 0) > 0 && Number(obj.amount_refunded || 0) >= Number(obj.amount || 0)));
+
+  if (!purchaseId || !fullyRefunded) {
+    return json({ received: true, ignored: "partial_or_missing_refund_purchase" });
+  }
+
+  const affiliateRefunded = await markSaleRefundedByPurchaseId(purchaseId, env);
+  return json({ received: true, refundRecorded: true, affiliateRefunded, purchaseId });
 }
 
 async function sendGrantEmail({ to, accessUrl, downloadUrl, childDownloadUrl, serial, product, label, from, apiKey }) {

@@ -37,6 +37,10 @@ function saleKey(code, purchaseId) {
   return `${AFFILIATE_KV_PREFIX}:sale:${code}:${purchaseId}`;
 }
 
+function purchaseKey(purchaseId) {
+  return `${AFFILIATE_KV_PREFIX}:purchase:${purchaseId}`;
+}
+
 function clickKey(code) {
   return `${AFFILIATE_KV_PREFIX}:clicks:${code}`;
 }
@@ -85,7 +89,43 @@ export async function recordSale({ code, purchaseId, amount, email, createdAt },
     status: "pending", // pending → confirmed (after refund window) → refunded
   };
   await kv.put(saleKey(code, purchaseId), JSON.stringify(sale));
+  await kv.put(purchaseKey(purchaseId), code);
   return sale;
+}
+
+export async function markSaleRefundedByPurchaseId(purchaseId, env) {
+  const kv = getKv(env);
+  if (!kv || !purchaseId) return false;
+
+  const indexedCode = await kv.get(purchaseKey(purchaseId));
+  if (indexedCode) {
+    return markSaleRefunded(indexedCode, purchaseId, kv);
+  }
+
+  const list = await kv.list({ prefix: `${AFFILIATE_KV_PREFIX}:sale:` });
+  for (const k of list.keys || []) {
+    if (k.name.endsWith(`:${purchaseId}`)) {
+      const parts = k.name.split(":");
+      const code = parts[2];
+      return markSaleRefunded(code, purchaseId, kv);
+    }
+  }
+  return false;
+}
+
+async function markSaleRefunded(code, purchaseId, kv) {
+  const key = saleKey(code, purchaseId);
+  const raw = await kv.get(key);
+  if (!raw) return false;
+  try {
+    const sale = JSON.parse(raw);
+    sale.status = "refunded";
+    sale.refundedAt = Date.now();
+    await kv.put(key, JSON.stringify(sale));
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 export async function listSales(code, env) {

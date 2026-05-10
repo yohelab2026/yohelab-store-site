@@ -1,6 +1,7 @@
 import { onRequestPost as onStripeWebhookPost } from "../functions/api/stripe-webhook.js";
 import { onRequestPost as onThemeLicensePost } from "../functions/api/theme-license.js";
 import { onRequestGet as onThemeDownloadGet } from "../functions/api/theme-download.js";
+import { listSales, recordSale } from "../functions/lib/affiliate.js";
 
 const originalFetch = globalThis.fetch;
 
@@ -25,6 +26,25 @@ function env() {
           customMetadata: { version: key === "bunsirube-child-0.1.1.zip" ? "0.1.1" : "0.3.3" },
         };
       },
+    },
+  };
+}
+
+function makeKv() {
+  const store = new Map();
+  return {
+    async get(key) {
+      return store.has(key) ? store.get(key) : null;
+    },
+    async put(key, value) {
+      store.set(key, String(value));
+    },
+    async list({ prefix = "" } = {}) {
+      return {
+        keys: Array.from(store.keys())
+          .filter((name) => name.startsWith(prefix))
+          .map((name) => ({ name })),
+      };
     },
   };
 }
@@ -62,6 +82,7 @@ function extract(text, pattern, message) {
 
 try {
   let sentEmail = null;
+  let stripeRefunded = false;
   globalThis.fetch = async (url, options = {}) => {
     const href = String(url);
     if (href === "https://api.resend.com/emails") {
@@ -72,7 +93,14 @@ try {
       });
     }
     if (href.includes("https://api.stripe.com/v1/payment_intents/pi_test_paid")) {
-      return new Response(JSON.stringify({ status: "succeeded" }), {
+      return new Response(JSON.stringify({
+        status: "succeeded",
+        amount_received: 5500,
+        latest_charge: {
+          refunded: stripeRefunded,
+          amount_refunded: stripeRefunded ? 5500 : 0,
+        },
+      }), {
         status: 200,
         headers: { "Content-Type": "application/json" },
       });
@@ -129,6 +157,21 @@ try {
   assert(tokenDownload.status === 200, `expected token download 200, got ${tokenDownload.status}`);
   assert(tokenDownload.headers.get("Content-Disposition")?.includes("bunsirube-0.3.3.zip"), "expected latest parent zip");
 
+  stripeRefunded = true;
+  const refundedLicense = await onThemeLicensePost({
+    request: new Request("https://yohelab.com/api/theme-license", { method: "POST", body: form }),
+    env: env(),
+  });
+  const refundedLicenseJson = await refundedLicense.json();
+  assert(refundedLicenseJson.active === false, "expected refunded purchase to deactivate license");
+
+  const refundedTokenDownload = await onThemeDownloadGet({
+    request: new Request(`https://yohelab.com/api/theme-download?token=${encodeURIComponent(licenseJson.downloadToken)}`),
+    env: env(),
+  });
+  assert(refundedTokenDownload.status === 403, `expected refunded token download 403, got ${refundedTokenDownload.status}`);
+  stripeRefunded = false;
+
   const badForm = new FormData();
   badForm.set("serial", "BUN-BAD0-BAD0-BAD0-BAD0");
   badForm.set("email", "buyer@example.com");
@@ -149,6 +192,36 @@ try {
     env: env(),
   });
   assert(badSignature.status === 400, `expected bad signature 400, got ${badSignature.status}`);
+
+  const affiliateEnv = { ...env(), BLOG_KV: makeKv() };
+  await recordSale({
+    code: "AFF-TEST-0001",
+    purchaseId: "pi_test_paid",
+    amount: 5500,
+    email: "buyer@example.com",
+    createdAt: Date.now(),
+  }, affiliateEnv);
+  const refundEvent = {
+    id: "evt_test_refund",
+    type: "charge.refunded",
+    data: {
+      object: {
+        id: "ch_test_paid",
+        payment_intent: "pi_test_paid",
+        amount: 5500,
+        amount_refunded: 5500,
+        refunded: true,
+      },
+    },
+  };
+  const refundWebhook = await onStripeWebhookPost({
+    request: await signedStripeRequest(refundEvent, affiliateEnv.STRIPE_WEBHOOK_SECRET),
+    env: affiliateEnv,
+  });
+  const refundJson = await refundWebhook.json();
+  assert(refundJson.affiliateRefunded === true, "expected refund webhook to mark affiliate sale refunded");
+  const sales = await listSales("AFF-TEST-0001", affiliateEnv);
+  assert(sales[0]?.status === "refunded", "expected affiliate sale status refunded");
 
   console.log("purchase-flow tests passed");
 } finally {
