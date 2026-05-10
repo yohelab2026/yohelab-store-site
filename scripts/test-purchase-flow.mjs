@@ -18,11 +18,11 @@ function env() {
     SITE_URL: "https://yohelab.com",
     THEME_BUCKET: {
       async get(key) {
-        if (!["bunsirube-0.3.2.zip", "bunsirube-child-0.1.1.zip"].includes(key)) return null;
+        if (!["bunsirube-0.3.3.zip", "bunsirube-child-0.1.1.zip"].includes(key)) return null;
         return {
           body: new Uint8Array([80, 75, 3, 4]),
           httpMetadata: { contentType: "application/zip" },
-          customMetadata: { version: key === "bunsirube-child-0.1.1.zip" ? "0.1.1" : "0.3.2" },
+          customMetadata: { version: key === "bunsirube-child-0.1.1.zip" ? "0.1.1" : "0.3.3" },
         };
       },
     },
@@ -127,7 +127,7 @@ try {
     env: env(),
   });
   assert(tokenDownload.status === 200, `expected token download 200, got ${tokenDownload.status}`);
-  assert(tokenDownload.headers.get("Content-Disposition")?.includes("bunsirube-0.3.2.zip"), "expected latest parent zip");
+  assert(tokenDownload.headers.get("Content-Disposition")?.includes("bunsirube-0.3.3.zip"), "expected latest parent zip");
 
   const badForm = new FormData();
   badForm.set("serial", "BUN-BAD0-BAD0-BAD0-BAD0");

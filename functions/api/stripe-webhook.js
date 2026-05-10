@@ -115,7 +115,7 @@ async function sendGrantEmail({ to, accessUrl, downloadUrl, childDownloadUrl, se
       <p><strong>ZIPダウンロードURL</strong><br><a href="${escapeHtml(downloadUrl)}" style="color:#0d6b58;font-weight:700">${escapeHtml(downloadUrl)}</a></p>
       <p><strong>改造用子テーマZIP</strong><br><a href="${escapeHtml(childDownloadUrl)}" style="color:#0d6b58;font-weight:700">${escapeHtml(childDownloadUrl)}</a></p>
       <p><strong>購入者ページ</strong><br><a href="${escapeHtml(accessUrl)}" style="color:#0d6b58;font-weight:700">${escapeHtml(accessUrl)}</a></p>
-      <p style="color:#64748b">テーマ自体はシリアルなしでも動きます。シリアルは購入者確認、更新、サポート用です。</p>
+      <p style="color:#64748b">テーマ自体はシリアルなしでも動きます。シリアルは購入者確認と自動更新のために使います。不具合連絡時に確認する場合があります。</p>
     </div>
   ` : `
     <div style="font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.7;color:#1f2937">

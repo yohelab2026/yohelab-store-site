@@ -17,11 +17,11 @@ function makeEnv({ paid = true, bucket = true } = {}) {
   if (bucket) {
     env.THEME_BUCKET = {
       async get(key) {
-        if (!["bunsirube-0.3.2.zip", "bunsirube-child-0.1.1.zip"].includes(key)) return null;
+        if (!["bunsirube-0.3.3.zip", "bunsirube-child-0.1.1.zip"].includes(key)) return null;
         return {
           body: new Uint8Array([80, 75, 3, 4]),
           httpMetadata: { contentType: "application/zip" },
-          customMetadata: { version: key === "bunsirube-child-0.1.1.zip" ? "0.1.1" : "0.3.2" },
+          customMetadata: { version: key === "bunsirube-child-0.1.1.zip" ? "0.1.1" : "0.3.3" },
         };
       },
     };
@@ -53,7 +53,7 @@ try {
   const ok = await onRequestGet({ request: await requestFor({ serial }), env: makeEnv() });
   assert(ok.status === 200, `expected 200, got ${ok.status}`);
   assert(ok.headers.get("Content-Type") === "application/zip", "expected zip content type");
-  assert(ok.headers.get("Content-Disposition")?.includes("bunsirube-0.3.2.zip"), "expected attachment filename");
+  assert(ok.headers.get("Content-Disposition")?.includes("bunsirube-0.3.3.zip"), "expected attachment filename");
   assert(ok.headers.get("X-Theme-License") === "active", "expected active license header");
   assert(ok.headers.get("X-Theme-Package") === "parent", "expected parent package header");
 
