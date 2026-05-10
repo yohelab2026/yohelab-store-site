@@ -47,12 +47,25 @@ function shouldReplyWithLineTo(text) {
   return ["id", "line_to", "line to", "設定id", "通知先id"].includes(normalized);
 }
 
-function wantsAiWork(text) {
-  return /AI作業OK|AI作業可|PR作成OK|PRまで|ai-work-ok/i.test(text);
+function compactText(text) {
+  return text.trim().replace(/[ 　\t\r\n。、,.!！?？:：]/g, "").toLowerCase();
+}
+
+function wantsAiWork(text, relaxed = false) {
+  if (/AI作業OK|AI作業可|作業OK|PR作成OK|PRまで|ai-work-ok|作業して|実行して/i.test(text)) {
+    return true;
+  }
+  if (!relaxed) return false;
+  const compact = compactText(text);
+  return /^(ok|はい|うん|お願い|おねがい|進めて|すすめて|やって|これで|それで|go|pr)$/.test(compact);
 }
 
 function wantsChoices(text) {
-  return /案を出して|選択肢|候補|どう直す|どう変える|改善したい|相談/i.test(text);
+  return /メニュー|案を出して|選択肢|候補|どう直す|どう変える|改善したい|相談|ブログ|記事|リライト|X投稿|エックス|ツイート|note|下書き|投稿したい|書きたい/i.test(text);
+}
+
+function wantsChoiceMenu(text) {
+  return /メニュー|案を出して|選択肢|候補|どう直す|どう変える|改善したい|相談/i.test(text);
 }
 
 function wantsMoreChoices(text) {
@@ -62,7 +75,13 @@ function wantsMoreChoices(text) {
 function choiceNumber(text) {
   const aiOkMatch = text.match(/(?:AI作業OK|AI作業可|PR作成OK|PRまで|ai-work-ok)\s*(\d{1,2})?/i);
   if (aiOkMatch) return aiOkMatch[1] ? Number(aiOkMatch[1]) : null;
-  const match = text.trim().match(/^(\d{1,2})$/);
+  const match = text.trim().match(/^(\d{1,2})(?:\s*(?:番|で|にする|お願い|おねがい|進めて|すすめて|やって|ok|OK|でOK))?$/);
+  if (match) return Number(match[1]);
+  const compact = compactText(text);
+  if (/^(1|ブログ|記事|新規記事|ブログ記事|記事作成|新しく書く|ブログを書く|ブログ新規)$/.test(compact)) return 1;
+  if (/^(2|リライト|既存ブログ|書き直し|記事修正|ブログリライト)$/.test(compact)) return 2;
+  if (/^(3|x|twitter|ツイート|x投稿|投稿文|x投稿文)$/.test(compact)) return 3;
+  if (/^(4|その他|相談|自由|自由入力)$/.test(compact)) return 4;
   return match ? Number(match[1]) : null;
 }
 
@@ -70,7 +89,10 @@ function cleanInstruction(text) {
   return text
     .replace(/AI作業OK[:：]?/gi, "")
     .replace(/AI作業可[:：]?/gi, "")
+    .replace(/作業OK[:：]?/gi, "")
     .replace(/PR作成OK[:：]?/gi, "")
+    .replace(/作業して[:：]?/gi, "")
+    .replace(/実行して[:：]?/gi, "")
     .trim();
 }
 
@@ -118,6 +140,44 @@ function formatChoiceOptions() {
 function optionText(number) {
   if (!Number.isInteger(number) || number < 1 || number > 4) return "";
   return choiceOptions()[number - 1] || "";
+}
+
+function quickReply(items) {
+  return {
+    items: items.slice(0, 13).map(({ label, text }) => ({
+      type: "action",
+      action: {
+        type: "message",
+        label: label.slice(0, 20),
+        text,
+      },
+    })),
+  };
+}
+
+function menuQuickReply() {
+  return quickReply([
+    { label: "1 ブログ新規", text: "1" },
+    { label: "2 リライト", text: "2" },
+    { label: "3 X投稿", text: "3" },
+    { label: "4 その他", text: "4" },
+  ]);
+}
+
+function proceedQuickReply() {
+  return quickReply([
+    { label: "作業OK", text: "OK" },
+    { label: "追加案", text: "追加" },
+    { label: "キャンセル", text: "キャンセル" },
+  ]);
+}
+
+function questionQuickReply() {
+  return quickReply([
+    { label: "おまかせ", text: "おまかせ" },
+    { label: "なし", text: "なし" },
+    { label: "キャンセル", text: "キャンセル" },
+  ]);
 }
 
 function followUpQuestions(number) {
@@ -287,6 +347,15 @@ async function findLatestChoiceIssue(env, toId) {
   });
 }
 
+async function findLatestLineIssue(env, toId) {
+  const repo = githubRepo(env);
+  const issues = await githubRequest(
+    env,
+    `/repos/${repo}/issues?labels=line-inbox&state=open&sort=updated&direction=desc&per_page=30`,
+  );
+  return (issues || []).find((issue) => (issue.body || "").includes(`LINE source: ${toId}`));
+}
+
 async function issueConversationText(env, issue) {
   const repo = githubRepo(env);
   const comments = await githubRequest(env, `/repos/${repo}/issues/${issue.number}/comments?per_page=100`);
@@ -320,14 +389,29 @@ async function createChoiceIssue(text, toId, env) {
         formatChoiceOptions(false),
         "",
         "返信方法:",
-        "- 数字だけ: その案をこのIssueに追記する",
+        "- ボタン / 数字だけ: その案をこのIssueに追記する",
         "- 追加: 4つの選択肢をもう一度出す",
-        "- AI作業OK 1: 1番案でPR作成対象にする",
+        "- OK / 進めて / お願い: PR作成対象にする",
+        "- AI作業OK 1: 1番案でPR作成対象にすることもできます",
         "",
         `LINE source: ${toId}`,
       ].join("\n"),
     }),
   });
+}
+
+async function startChoiceIssueWithSelection(text, toId, env, number) {
+  const issue = await createChoiceIssue(text || "LINEメニュー", toId, env);
+  const selected = optionText(number);
+  const followUp = followUpQuestions(number);
+  await commentOnIssue(env, issue.number, [
+    `LINEで ${number} 番が選ばれました。`,
+    "",
+    `選択案: ${selected}`,
+    QUESTION_FLOWS[number] ? `<!-- line-selected-option:${number} -->` : "",
+    followUp ? ["", "追加確認:", followUp].join("\n") : "",
+  ].join("\n"));
+  return { issue, selected, followUp };
 }
 
 async function createLineIssue(text, toId, env) {
@@ -384,22 +468,24 @@ async function createLineIssue(text, toId, env) {
 async function handleChoiceConversation(text, toId, env) {
   const latestIssue = await findLatestChoiceIssue(env, toId);
   const number = choiceNumber(text);
+  const aiWork = wantsAiWork(text, true);
 
   if (!latestIssue) return null;
 
-  if (wantsMoreChoices(text) && !wantsAiWork(text)) {
+  if (wantsMoreChoices(text) && !aiWork) {
     const body = [
       "LINEでできることはこの4つです。",
       "",
       formatChoiceOptions(),
       "",
-      "数字だけで選べます。PRまで進めるなら「AI作業OK 1」のように送ってください。",
+      "ボタンか数字だけで選べます。PRまで進めるなら「OK」「進めて」「お願い」でも通ります。",
     ].join("\n");
     await commentOnIssue(env, latestIssue.number, body);
     return {
       issue: latestIssue,
       mode: "選択肢",
       message: `LINEでできることはこの4つです。\n\n${formatChoiceOptions()}`,
+      quickReply: menuQuickReply(),
     };
   }
 
@@ -415,7 +501,7 @@ async function handleChoiceConversation(text, toId, env) {
       followUp ? ["", "追加確認:", followUp].join("\n") : "",
     ].join("\n"));
 
-    if (!wantsAiWork(text)) {
+    if (!aiWork) {
       return {
         issue: latestIssue,
         mode: "選択済み",
@@ -424,13 +510,14 @@ async function handleChoiceConversation(text, toId, env) {
           `#${latestIssue.number} ${latestIssue.title}`,
           latestIssue.html_url,
           "",
-          followUp || "PRまで進めるなら「AI作業OK」と送ってください。",
+          followUp || "PRまで進めるなら「OK」「進めて」「お願い」のどれかで大丈夫です。",
         ].join("\n"),
+        quickReply: followUp ? questionQuickReply() : proceedQuickReply(),
       };
     }
   }
 
-  if (wantsAiWork(text)) {
+  if (aiWork) {
     await ensureGithubLabel(env, "ai-work-ok", "1d76db", "AI作業PR作成まで進めてよい指示");
     await addLabelsToIssue(env, latestIssue.number, ["ai-work-ok"]);
     try {
@@ -462,13 +549,14 @@ async function handleChoiceConversation(text, toId, env) {
     }
   }
 
-  if (!wantsChoices(text)) {
+  if (!wantsChoiceMenu(text)) {
     if (text.trim() === "キャンセル") {
       await commentOnIssue(env, latestIssue.number, "LINEでキャンセルされました。");
       return {
         issue: latestIssue,
         mode: "キャンセル",
-        message: "キャンセルしました。もう一度始める時は「相談」と送って。",
+        message: "キャンセルしました。もう一度始める時は「相談」か「メニュー」と送って。",
+        quickReply: menuQuickReply(),
       };
     }
 
@@ -487,8 +575,9 @@ async function handleChoiceConversation(text, toId, env) {
             "必要な内容がそろいました。",
             latestIssue.html_url,
             "",
-            "PRまで進めるなら「AI作業OK」と送ってください。",
+            "PRまで進めるなら「OK」「進めて」「お願い」のどれかで大丈夫です。",
           ].join("\n"),
+          quickReply: proceedQuickReply(),
         };
       }
       return {
@@ -500,6 +589,7 @@ async function handleChoiceConversation(text, toId, env) {
           "",
           "途中でやめるなら「キャンセル」と送って。",
         ].join("\n"),
+        quickReply: questionQuickReply(),
       };
     }
 
@@ -517,17 +607,23 @@ async function handleChoiceConversation(text, toId, env) {
         `Issue #${latestIssue.number} に追記しました。`,
         latestIssue.html_url,
         "",
-        "PRまで進めるなら「AI作業OK」と送ってください。",
+        "PRまで進めるなら「OK」「進めて」「お願い」のどれかで大丈夫です。",
       ].join("\n"),
+      quickReply: proceedQuickReply(),
     };
   }
 
   return null;
 }
 
-async function replyLine(replyToken, message, env) {
+async function replyLine(replyToken, message, env, quickReplyPayload = null) {
   const token = lineToken(env);
   if (!replyToken || !token) return;
+
+  const lineMessage = { type: "text", text: message.slice(0, 5000) };
+  if (quickReplyPayload) {
+    lineMessage.quickReply = quickReplyPayload;
+  }
 
   await fetch("https://api.line.me/v2/bot/message/reply", {
     method: "POST",
@@ -537,7 +633,7 @@ async function replyLine(replyToken, message, env) {
     },
     body: JSON.stringify({
       replyToken,
-      messages: [{ type: "text", text: message.slice(0, 5000) }],
+      messages: [lineMessage],
     }),
   });
 }
@@ -581,7 +677,57 @@ async function handleTextMessage(event, toId, env) {
   try {
     const conversation = await handleChoiceConversation(text, toId, env);
     if (conversation) {
-      await replyLine(event.replyToken, conversation.message, env);
+      await replyLine(event.replyToken, conversation.message, env, conversation.quickReply || null);
+      return;
+    }
+
+    if (wantsAiWork(text, true)) {
+      const latestIssue = await findLatestLineIssue(env, toId);
+      if (latestIssue) {
+        await ensureGithubLabel(env, "ai-work-ok", "1d76db", "AI作業PR作成まで進めてよい指示");
+        await addLabelsToIssue(env, latestIssue.number, ["ai-work-ok"]);
+        try {
+          await assignCopilotToIssue(env, latestIssue);
+          await replyLine(
+            event.replyToken,
+            [
+              "このIssueをCopilot coding agentに割り当てました。",
+              `#${latestIssue.number} ${latestIssue.title}`,
+              latestIssue.html_url,
+            ].join("\n"),
+            env,
+          );
+        } catch (error) {
+          console.error(error);
+          await replyLine(
+            event.replyToken,
+            [
+              "ai-work-ok ラベルは付けました。",
+              "ただしCopilot割り当ては失敗しました。GitHub token権限を確認してください。",
+              latestIssue.html_url,
+            ].join("\n"),
+            env,
+          );
+        }
+        return;
+      }
+    }
+
+    const directNumber = choiceNumber(text);
+    if (directNumber && optionText(directNumber)) {
+      const { issue, followUp } = await startChoiceIssueWithSelection(text, toId, env, directNumber);
+      await replyLine(
+        event.replyToken,
+        [
+          `${directNumber}番で始めます。`,
+          `#${issue.number} ${issue.title}`,
+          issue.html_url,
+          "",
+          followUp || "PRまで進めるなら「OK」「進めて」「お願い」のどれかで大丈夫です。",
+        ].join("\n"),
+        env,
+        followUp ? questionQuickReply() : proceedQuickReply(),
+      );
       return;
     }
 
@@ -597,9 +743,10 @@ async function handleTextMessage(event, toId, env) {
           `#${issue.number} ${issue.title}`,
           issue.html_url,
           "",
-          "数字だけで選べます。PRまで進めるなら「AI作業OK 1」のように送ってください。",
+          "ボタンか数字だけで選べます。PRまで進めるなら「OK」「進めて」「お願い」でも大丈夫です。",
         ].join("\n"),
         env,
+        menuQuickReply(),
       );
       return;
     }
@@ -620,9 +767,10 @@ async function handleTextMessage(event, toId, env) {
           ? result.copilotAssigned
             ? "Copilot coding agentに割り当てました。PR作成対象です。"
             : "ai-work-ok ラベル付き。ただしCopilot割り当ては失敗しました。GitHub token権限を確認してください。"
-          : "PRまで進めたい時は、文頭に「AI作業OK」を付けて送ってください。",
+          : "PRまで進めたい時は、次の返信で「OK」「進めて」「お願い」のどれかを送ってください。",
       ].join("\n"),
       env,
+      proceedQuickReply(),
     );
   } catch (error) {
     console.error(error);
