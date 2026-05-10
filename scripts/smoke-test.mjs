@@ -118,7 +118,7 @@ checks.push(["wp product title", wpProduct.includes('文標（ぶんしるべ）
 checks.push(["wp product analytics", wpProduct.includes('テーマ内解析') && wpProduct.includes('外部解析')]);
 checks.push(["wp product price", wpProduct.includes('¥5,500')]);
 checks.push(["wp product uses tax-included price labels", wpProduct.includes("¥5,500（税込）") && wpProduct.includes("¥8,800（税込）")]);
-checks.push(["wp product support policy", wpProduct.includes('不具合対応と保証の線引き') && wpProduct.includes('広い個別サポートを付けない分') && wpProduct.includes('購入前に確認してほしいこと')]);
+checks.push(["wp product support policy", wpProduct.includes('不具合対応と保証の線引き') && wpProduct.includes('広い個別サポートを付けない分') && wpProduct.includes('30日返金保証')]);
 checks.push(["wp product embeds demo videos", wpProduct.includes('/assets/bunsirube/videos/bunsirube-install.mp4') && wpProduct.includes('/assets/bunsirube/videos/bunsirube-writing.mp4') && wpProduct.includes('/assets/bunsirube/videos/bunsirube-route-check.mp4')]);
 
 checks.push(["research product has no checkout cta while paused", !researchProduct.includes('buy.stripe.com') && !researchProduct.includes('1日1セットまで')]);
@@ -169,6 +169,7 @@ const bunsirubeInstall = read(dist("lp/bunsirube/install/index.html"));
 const bunsirubeDemo = read(dist("lp/bunsirube/demo/index.html"));
 const bunsirubeUpdates = read(dist("lp/bunsirube/updates/index.html"));
 const privacy = read(dist("legal/privacy/index.html"));
+const commerce = read(dist("legal/commerce/index.html"));
 const matomoLoader = read(dist("shared/matomo-loader.js"));
 const bunsirubeVideoObjects = jsonLdObjects(bunsirubeLp).filter((item) => item["@type"] === "VideoObject");
 checks.push(["theme serial uses bunsirube prefix", ent.includes("BUN-") && !ent.includes("AIO-")]);
@@ -189,7 +190,7 @@ checks.push(["blog post sanitizes dangerous html server side", blogPostFunction.
 checks.push(["blog post sanitizes dangerous html client fallback", blogPostPage.includes("sanitizeBodyHtml") && blogPostPage.includes("iframe|object|embed") && blogPostPage.includes("javascript:") && blogPostPage.includes("data:text") && blogPostPage.includes("vbscript:")]);
 checks.push(["bunsirube lp links to separate update history", bunsirubeLp.includes("最新の更新") && bunsirubeLp.includes("/lp/bunsirube/updates/") && !bunsirubeLp.includes("2026.05.03 / v0.2.0") && bunsirubeLp.includes("自動アップデート用シリアル")]);
 checks.push(["bunsirube updates page includes full history", bunsirubeUpdates.includes("文標の更新履歴") && bunsirubeUpdates.includes("v0.3.1") && bunsirubeUpdates.includes("v0.2.0") && bunsirubeUpdates.includes("初期ベータ構成")]);
-checks.push(["bunsirube lp includes demo and support", bunsirubeLp.includes('/lp/bunsirube/demo/') && bunsirubeLp.includes("デモ画面を見る") && bunsirubeLp.includes("テーマ購入前の不安") && bunsirubeLp.includes("購入後の返金はありません") && bunsirubeLp.includes("低価格の理由") && bunsirubeLp.includes("不具合対応の範囲") && bunsirubeDemo.includes("文標の見た目と使い方")]);
+checks.push(["bunsirube lp includes demo and support", bunsirubeLp.includes('/lp/bunsirube/demo/') && bunsirubeLp.includes("デモ画面を見る") && bunsirubeLp.includes("テーマ購入前の不安") && bunsirubeLp.includes("30日返金保証") && bunsirubeLp.includes("低価格の理由") && bunsirubeLp.includes("不具合対応の範囲") && bunsirubeDemo.includes("文標の見た目と使い方")]);
 checks.push(["bunsirube lp links install guide", bunsirubeLp.includes('/lp/bunsirube/install/') && bunsirubeLp.includes("インストール方法を見る") && bunsirubeLp.includes("文標のインストール方法")]);
 checks.push(["bunsirube install guide explains setup and settings", bunsirubeInstall.includes("文標の入れ方と初期設定") && bunsirubeInstall.includes("親テーマZIP") && bunsirubeInstall.includes("子テーマZIP") && bunsirubeInstall.includes("シリアル番号") && bunsirubeInstall.includes("SEOプラグイン") && bunsirubeInstall.includes("FAQ JSON-LD") && bunsirubeInstall.includes("導線確認") && bunsirubeInstall.includes("bunsirube-install-poster.png") && bunsirubeInstall.includes('"@type": "HowTo"') && bunsirubeInstall.includes('"@type": "FAQPage"')]);
 checks.push(["bunsirube lp separates purchase and server tests", bunsirubeLp.includes("購入フローの検証") && bunsirubeLp.includes("不正シリアル拒否") && bunsirubeLp.includes("動作確認とサーバー対応の表記を分けています") && bunsirubeLp.includes("実機で通ったものだけ「確認済み」")]);
@@ -219,6 +220,31 @@ checks.push(["old LINE issues are cleaned up daily without deleting history", li
 checks.push(["ai pr guard blocks sensitive changes and auto-merges safe ai prs", aiPrGuard.includes("needs-human-review") && aiPrGuard.includes("safe-auto-candidate") && aiPrGuard.includes("buy\\.stripe\\.com") && aiPrGuard.includes("legal\\/") && aiPrGuard.includes("gh pr merge") && aiPrGuard.includes("--auto")]);
 checks.push(["theme delivery points to latest package and manifest", themeDownload.includes('key: "bunsirube-0.3.3.zip"') && themeUpdate.includes('\\"version\\": \\"0.3.3\\"') && themeUpdate.includes("/lp/bunsirube/updates/")]);
 checks.push(["purchase flow test covers email serial license and invalid cases", purchaseFlowTest.includes("checkout.session.completed") && purchaseFlowTest.includes("api.resend.com/emails") && purchaseFlowTest.includes("serial missing from email") && purchaseFlowTest.includes("expected generated serial to activate") && purchaseFlowTest.includes("expected invalid serial rejection") && purchaseFlowTest.includes("expected bad signature 400")]);
+
+// Affiliate program checks
+const affiliateLp = read(dist("lp/bunsirube/affiliate/index.html"));
+const affiliateDashboard = read(dist("affiliate/dashboard/index.html"));
+const affiliateTerms = read(dist("legal/affiliate-terms/index.html"));
+const affiliateSignupApi = read(src("functions/api/affiliate-signup.js"));
+const affiliateStatusApi = read(src("functions/api/affiliate-status.js"));
+const affiliateClickApi = read(src("functions/api/affiliate-click.js"));
+const affiliateLib = read(src("functions/lib/affiliate.js"));
+const affiliateTrackJs = read(src("public/affiliate-track.js"));
+const stripeWebhookSrc = read(src("functions/api/stripe-webhook.js"));
+
+checks.push(["30-day refund guarantee documented in legal/commerce", commerce.includes("30日") && commerce.includes("理由を問わず") && commerce.includes("全額返金") && !commerce.includes("購入後の返金には応じられません")]);
+checks.push(["30-day refund guarantee documented in legal/terms", read(dist("legal/terms/index.html")).includes("30日返金保証") && read(dist("legal/terms/index.html")).includes("シリアルが無効化") && read(dist("legal/terms/index.html")).includes("アフィリエイト")]);
+checks.push(["30-day refund prominent on LP", bunsirubeLp.includes("30日返金保証") && bunsirubeLp.includes("理由を問わず") && bunsirubeLp.includes("Stripe経由")]);
+checks.push(["30-day refund in welcome email", stripeWebhookSrc.includes("30日返金保証") && stripeWebhookSrc.includes("文標 返金希望")]);
+checks.push(["affiliate signup page has form with required fields", affiliateLp.includes('文標 アフィリエイト') && affiliateLp.includes('1件 ¥2,750') && affiliateLp.includes('id="aff-form"') && affiliateLp.includes('name="email"') && affiliateLp.includes('name="site_url"') && affiliateLp.includes('/legal/affiliate-terms/') && affiliateLp.includes('/api/affiliate-signup')]);
+checks.push(["affiliate dashboard page has login + stats", affiliateDashboard.includes('ダッシュボード') && affiliateDashboard.includes('id="login-form"') && affiliateDashboard.includes('/api/affiliate-status') && affiliateDashboard.includes('総クリック数') && affiliateDashboard.includes('支払予定') && affiliateDashboard.includes('AFF-XXXX-XXXX')]);
+checks.push(["affiliate ToS lists 50% commission and 30-day attribution", affiliateTerms.includes('50%') && affiliateTerms.includes('2,750') && affiliateTerms.includes('30日') && affiliateTerms.includes('ラストクリック') && affiliateTerms.includes('禁止事項') && affiliateTerms.includes('ステルスマーケティング') && affiliateTerms.includes('自己購入')]);
+checks.push(["affiliate api endpoints are wired", affiliateSignupApi.includes('makeAffiliateCode') && affiliateSignupApi.includes('setAffiliateMeta') && affiliateStatusApi.includes('listSales') && affiliateStatusApi.includes('computeAffiliateStats') && affiliateClickApi.includes('recordClick')]);
+checks.push(["affiliate lib has stable code generation and stats", affiliateLib.includes('AFFILIATE_COMMISSION_RATE = 0.5') && affiliateLib.includes('AFFILIATE_COMMISSION_AMOUNT = 2750') && affiliateLib.includes('makeAffiliateCode') && affiliateLib.includes('hmacBase64Url') && affiliateLib.includes('AFF-')]);
+checks.push(["affiliate-track.js handles ?ref and decorates Stripe links", affiliateTrackJs.includes('AFF-') && affiliateTrackJs.includes('yohelab_aff') && affiliateTrackJs.includes('30') && affiliateTrackJs.includes('buy.stripe.com') && affiliateTrackJs.includes('client_reference_id') && affiliateTrackJs.includes('/api/affiliate-click')]);
+checks.push(["pages with Stripe link include affiliate-track.js", bunsirubeLp.includes('/affiliate-track.js') && read(dist("index.html")).includes('/affiliate-track.js') && read(dist("lp/bunsirube/install/index.html")).includes('/affiliate-track.js') && read(dist("lp/bunsirube/demo/index.html")).includes('/affiliate-track.js') && read(dist("products/bunsirube/index.html")).includes('/affiliate-track.js')]);
+checks.push(["stripe webhook parses affiliate code and prevents self-referral", stripeWebhookSrc.includes('AFFILIATE_REF_RE') && stripeWebhookSrc.includes('rawRef.split(":")') && stripeWebhookSrc.includes('meta.email === String(email).toLowerCase()') && stripeWebhookSrc.includes('recordSale')]);
+checks.push(["affiliate footer links present on LP and home", bunsirubeLp.includes('/lp/bunsirube/affiliate/') && bunsirubeLp.includes('/legal/affiliate-terms/') && read(dist("index.html")).includes('/lp/bunsirube/affiliate/') && read(dist("index.html")).includes('/legal/affiliate-terms/')]);
 
 for (const [name, ok] of checks) {
   assert(ok, `Check failed: ${name}`);

@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>文標 アフィリエイトプログラム | 1件¥2,750（税込）紹介報酬</title>
+  <meta name="description" content="WordPressテーマ「文標」を紹介して購入につなげると、1件あたり¥2,750（税込・購入金額の50%）の紹介報酬を受け取れます。月締め翌月末払い。30日アトリビューション。" />
+  <meta property="og:title" content="文標 アフィリエイトプログラム | 報酬50%・¥2,750/件" />
+  <meta property="og:description" content="購入金額の50%を紹介報酬として支払うアフィリエイトプログラム。比較ブロガー、レビューブロガーに最適。" />
+  <meta property="og:url" content="https://yohelab.com/lp/bunsirube/affiliate/" />
+  <meta property="og:image" content="https://yohelab.com/yohelab-icon.png" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="robots" content="index,follow" />
+  <link rel="canonical" href="https://yohelab.com/lp/bunsirube/affiliate/" />
+  <link rel="icon" type="image/png" href="/yohelab-icon-32.png" />
+  <link rel="preload" as="image" href="/yohelab-icon.webp" type="image/webp" fetchpriority="high" />
+  <link rel="stylesheet" href="/shared/site.min.css" />
+  <style>
+    body { background:#fbfdff; color:#101b31; }
+    .nav { background:rgba(255,255,255,.92); border-bottom:1px solid #dfeaf5; padding:18px 24px; }
+    .nav-inner { max-width:1100px; margin:0 auto; display:flex; align-items:center; gap:18px; }
+    .brand { display:flex; align-items:center; gap:10px; color:#0b1f1a; font-weight:900; text-decoration:none; }
+    .brand img { width:30px; height:30px; border-radius:8px; }
+    .nav-links { margin-left:auto; display:flex; gap:18px; font-size:14px; }
+    .nav-links a { color:#445; text-decoration:none; }
+
+    .aff-hero {
+      padding:72px 0 48px;
+      background:
+        radial-gradient(circle at 18% 12%, rgba(11,143,114,.16), transparent 32%),
+        radial-gradient(circle at 88% 30%, rgba(255,213,79,.18), transparent 30%),
+        linear-gradient(180deg,#fff 0%, #f3f8ff 100%);
+      text-align:center;
+    }
+    .aff-hero .container { max-width:860px; margin:0 auto; padding:0 24px; }
+    .aff-eyebrow { display:inline-block; padding:7px 14px; border-radius:999px; background:#fff; color:#075c4c; font-size:12px; font-weight:900; letter-spacing:.14em; text-transform:uppercase; border:1px solid rgba(11,143,114,.20); margin-bottom:16px; }
+    .aff-hero h1 { font-size:clamp(30px,5.2vw,52px); line-height:1.18; letter-spacing:-.045em; margin:0 0 18px; }
+    .aff-hero h1 strong { background:linear-gradient(135deg,#0b8f72,#1fb6cf); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+    .aff-hero .lead { color:#536174; font-size:17px; line-height:1.85; margin:0 0 18px; }
+
+    .reward-card { display:inline-grid; grid-template-columns:1fr auto 1fr; gap:24px; align-items:center; padding:28px 32px; border-radius:24px; background:#fff; box-shadow:0 24px 60px rgba(11,143,114,.10); border:1px solid #d9ece3; margin:18px 0; }
+    .reward-card .num { font-size:44px; font-weight:900; line-height:1; letter-spacing:-.03em; color:#0b8f72; }
+    .reward-card .label { font-size:13px; font-weight:900; color:#536174; margin-top:6px; }
+    .reward-card .arrow { font-size:24px; color:#9ca7b8; }
+
+    .container { max-width:1100px; margin:0 auto; padding:48px 24px; }
+    .section h2 { font-size:clamp(22px,3.6vw,34px); margin:0 0 16px; letter-spacing:-.02em; }
+    .section p { color:#536174; font-size:15px; line-height:1.85; }
+
+    .grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:22px; }
+    .feature-card { background:#fff; border:1px solid #dfeaf5; border-radius:18px; padding:22px; }
+    .feature-card .icon { font-size:28px; margin-bottom:8px; }
+    .feature-card h3 { font-size:15px; font-weight:900; margin:0 0 8px; }
+    .feature-card p { font-size:13.5px; color:#536174; line-height:1.75; margin:0; }
+
+    .form-card { max-width:620px; margin:0 auto; padding:32px; border-radius:24px; background:#fff; border:1px solid #dfeaf5; box-shadow:0 24px 60px rgba(38,78,118,.08); }
+    .form-card label { display:block; font-size:13px; font-weight:900; margin:14px 0 6px; color:#0b1f1a; }
+    .form-card input[type=text], .form-card input[type=email], .form-card input[type=url], .form-card textarea {
+      width:100%; padding:11px 14px; border-radius:10px; border:1px solid #c9d7e8; font:inherit; box-sizing:border-box;
+    }
+    .form-card textarea { min-height:90px; resize:vertical; }
+    .form-card button { display:inline-flex; align-items:center; justify-content:center; gap:8px; width:100%; margin-top:22px; padding:14px 22px; font-weight:900; border-radius:14px; font-size:15px; border:none; cursor:pointer; background:linear-gradient(135deg,#2f7df6,#7a4dff); color:#fff; box-shadow:0 14px 28px rgba(47,125,246,.28); transition:transform .15s ease; }
+    .form-card button:hover { transform:translateY(-1px); }
+    .form-card button:disabled { opacity:.6; cursor:not-allowed; transform:none; }
+    .form-card .checkbox-row { display:flex; align-items:flex-start; gap:8px; margin-top:18px; font-size:13.5px; color:#536174; line-height:1.7; }
+    .form-card .checkbox-row input { margin-top:4px; }
+    .form-status { padding:14px; border-radius:10px; margin-top:14px; font-size:14px; line-height:1.7; display:none; }
+    .form-status.success { display:block; background:#ecfdf5; color:#065f46; border:1px solid #b7ead6; }
+    .form-status.error { display:block; background:#fef2f2; color:#991b1b; border:1px solid #fecaca; }
+    .code-display { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:18px; font-weight:900; padding:12px 16px; background:#fff7ed; border:1px solid #fcd9b6; border-radius:10px; margin-top:10px; word-break:break-all; }
+
+    .faq-item { padding:18px; border:1px solid #dfeaf5; border-radius:14px; margin-bottom:10px; background:#fff; }
+    .faq-item summary { font-weight:900; cursor:pointer; font-size:15px; }
+    .faq-body { color:#536174; font-size:14px; line-height:1.85; margin-top:12px; }
+
+    footer.site-footer { background:#0a1f1a; color:#8a9ab5; padding:32px 24px; text-align:center; font-size:13px; margin-top:48px; }
+    footer.site-footer a { color:#cfdfff; text-decoration:none; margin:0 8px; }
+
+    @media (max-width:780px) {
+      .grid-3 { grid-template-columns:1fr; }
+      .reward-card { grid-template-columns:1fr; gap:8px; padding:22px; }
+      .reward-card .arrow { display:none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="/"><img src="/yohelab-icon.webp" alt="" /><span>よへラボ</span></a>
+      <nav class="nav-links">
+        <a href="/lp/bunsirube/">文標</a>
+        <a href="/lp/bunsirube/demo/">デモ</a>
+        <a href="/blog/">ブログ</a>
+        <a href="/contact/">問い合わせ</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="aff-hero">
+    <div class="container">
+      <span class="aff-eyebrow">Affiliate Program</span>
+      <h1>文標を紹介すると、<br /><strong>1件 ¥2,750</strong>の報酬を受け取れます。</h1>
+      <p class="lead">WordPressテーマ「文標」¥5,500（税込）の<strong>50%</strong>を紹介報酬として支払います。月締め翌月末払い・銀行振込。比較ブロガー・レビュアー・SEO発信者向けです。</p>
+      <div class="reward-card">
+        <div><div class="num">¥2,750</div><div class="label">1件あたりの報酬</div></div>
+        <div class="arrow">×</div>
+        <div><div class="num">50%</div><div class="label">紹介者の取り分</div></div>
+      </div>
+      <p style="font-size:13px;color:#536174;margin-top:6px;">紹介リンクのアトリビューション期間は<strong>30日</strong>。返金された場合は成果が取り消されます。</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 style="text-align:center;">参加するメリット</h2>
+      <div class="grid-3">
+        <div class="feature-card">
+          <div class="icon">💰</div>
+          <h3>1件あたり ¥2,750</h3>
+          <p>WordPress有料テーマの中でも高還元率。月10件で¥27,500、月50件で¥137,500の副収入になります。</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">🛡</div>
+          <h3>30日返金保証つき</h3>
+          <p>紹介する側が安心して勧められます。「合わなければ返金」がCVRを押し上げます。</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">📈</div>
+          <h3>AI検索特化のニッチ</h3>
+          <p>SWELL/Cocoonと正面で戦わない「AI Overviews対応テーマ」のポジション。差別化記事が書きやすい。</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">🧩</div>
+          <h3>紹介素材を提供</h3>
+          <p>バナー画像、紹介テキスト、比較表テンプレ、レビュー記事のサンプルを無料配布します（登録後）。</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">📊</div>
+          <h3>ダッシュボードで進捗確認</h3>
+          <p>専用コードと登録メールでログインすると、クリック数、確定成果、入金予定をいつでも確認できます。</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">⚡</div>
+          <h3>即時コード発行</h3>
+          <p>下のフォームに登録すると、その場でアフィリエイトコードと紹介リンクが発行されます。承認待ちなし。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background:linear-gradient(180deg,#f0f7ff,#fff);">
+    <div class="container">
+      <h2 style="text-align:center;">登録（即時発行）</h2>
+      <p style="text-align:center;margin-bottom:28px;">登録ボタンを押すと、専用コードと紹介リンクをすぐ発行します。送信前に <a href="/legal/affiliate-terms/" style="color:#0b8f72;font-weight:700;">アフィリエイトプログラム規約</a> をご確認ください。</p>
+      <form id="aff-form" class="form-card" autocomplete="off">
+        <label>お名前 <span style="color:#dc2626">*</span>
+          <input type="text" name="name" required autocomplete="name" />
+        </label>
+        <label>メールアドレス（紹介者本人）<span style="color:#dc2626">*</span>
+          <input type="email" name="email" required autocomplete="email" />
+        </label>
+        <label>紹介元のサイト・SNS URL <span style="color:#dc2626">*</span>
+          <input type="url" name="site_url" required placeholder="https://example.com or https://x.com/yourname" />
+        </label>
+        <label>紹介の方法・想定される媒体（簡単に）
+          <textarea name="memo" placeholder="例: WordPress比較ブログを運営しています。文標とSWELLの比較記事を書きます。"></textarea>
+        </label>
+        <div class="checkbox-row">
+          <input type="checkbox" id="agree" required />
+          <label for="agree" style="margin:0;font-weight:400;"><a href="/legal/affiliate-terms/" target="_blank" rel="noopener" style="color:#0b8f72;font-weight:700;">アフィリエイトプログラム規約</a> および <a href="/legal/privacy/" target="_blank" rel="noopener" style="color:#0b8f72;font-weight:700;">プライバシーポリシー</a> に同意します。</label>
+        </div>
+        <button type="submit" id="aff-submit">アフィリエイトコードを発行する</button>
+        <div id="form-status" class="form-status"></div>
+      </form>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container" style="max-width:780px;">
+      <h2 style="text-align:center;">よくある質問</h2>
+      <details class="faq-item">
+        <summary>誰でも登録できますか？</summary>
+        <div class="faq-body">運営しているブログ・SNSアカウント・YouTubeチャンネル等、紹介できる媒体があれば登録できます。違法・公序良俗に反するサイト、ブランド名での有料広告、虚偽誇大表現での紹介は禁止しています（規約参照）。</div>
+      </details>
+      <details class="faq-item">
+        <summary>報酬の支払時期は？</summary>
+        <div class="faq-body">月末締め・翌月末払いです。累積¥3,000以上に達した時点で支払対象となります。支払方法は国内銀行振込で、振込手数料は当方負担です。</div>
+      </details>
+      <details class="faq-item">
+        <summary>アトリビューション期間（cookie有効期間）は？</summary>
+        <div class="faq-body">紹介リンク（<code>?ref=AFF-XXXX</code>）クリックから<strong>30日間</strong>です。30日以内に文標を購入すると、紹介者の成果として記録されます。複数の紹介者リンクを経由した場合はラストクリックを採用します。</div>
+      </details>
+      <details class="faq-item">
+        <summary>購入者が返金した場合はどうなりますか？</summary>
+        <div class="faq-body">文標の30日返金保証で返金された場合、当該成果は無効となります。すでに支払い済みの場合は、次回支払いから相殺します。</div>
+      </details>
+      <details class="faq-item">
+        <summary>自分で文標を買って報酬を受け取れますか？</summary>
+        <div class="faq-body">いいえ。自己購入は禁止しています。発覚した場合は参加資格を取り消し、報酬は無効になります。</div>
+      </details>
+      <details class="faq-item">
+        <summary>ステマ規制への対応は？</summary>
+        <div class="faq-body">紹介者は紹介リンクを掲載するページに「アフィリエイトリンクを含む」「PR」等の表示を行ってください。景品表示法・ステルスマーケティング規制に違反した紹介は禁止しています。</div>
+      </details>
+      <details class="faq-item">
+        <summary>解約・退会したい</summary>
+        <div class="faq-body">問い合わせフォームから「アフィリエイト解約希望」と登録メールアドレスを送信してください。発生済みの未払報酬は規定通り支払います（最低支払額未満の場合は失効する場合があります）。</div>
+      </details>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div>© よへラボ / yohelab.com</div>
+    <div style="margin-top:6px;">
+      <a href="/">トップ</a>
+      <a href="/lp/bunsirube/">文標</a>
+      <a href="/blog/">ブログ</a>
+      <a href="/contact/">問い合わせ</a>
+      <a href="/legal/commerce/">特定商取引法</a>
+      <a href="/legal/affiliate-terms/">アフィリエイト規約</a>
+    </div>
+  </footer>
+
+  <script>
+    (function(){
+      var form = document.getElementById('aff-form');
+      var btn = document.getElementById('aff-submit');
+      var status = document.getElementById('form-status');
+      form.addEventListener('submit', async function(e){
+        e.preventDefault();
+        status.className = 'form-status';
+        status.textContent = '';
+        btn.disabled = true;
+        btn.textContent = '発行中…';
+        var data = {
+          name: form.name.value.trim(),
+          email: form.email.value.trim(),
+          site_url: form.site_url.value.trim(),
+          memo: form.memo.value.trim()
+        };
+        try {
+          var res = await fetch('/api/affiliate-signup', {
+            method: 'POST',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify(data)
+          });
+          var json = await res.json();
+          if (!res.ok || !json.ok) {
+            throw new Error(json.error || '登録に失敗しました。時間を空けて再度お試しください。');
+          }
+          status.className = 'form-status success';
+          status.innerHTML = '<strong>✓ 登録完了。確認メールを送信しました。</strong><br/>あなたのアフィリエイトコード:<div class="code-display">' + escapeHtml(json.code) + '</div>紹介リンク:<div class="code-display">' + escapeHtml(json.refLink) + '</div>このコードと紹介リンクは登録メールアドレスにも送信しました。<a href="/affiliate/dashboard/?code=' + encodeURIComponent(json.code) + '" style="color:#0b8f72;font-weight:700;">ダッシュボードを開く →</a>';
+          btn.textContent = '登録完了';
+        } catch (err) {
+          status.className = 'form-status error';
+          status.textContent = err.message || '登録に失敗しました。';
+          btn.disabled = false;
+          btn.textContent = 'アフィリエイトコードを発行する';
+        }
+      });
+      function escapeHtml(s) {
+        return String(s).replace(/[&<>"']/g, function(c){
+          return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

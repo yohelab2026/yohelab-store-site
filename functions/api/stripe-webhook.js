@@ -6,8 +6,14 @@ import {
   makeSerial,
   getAllProducts,
 } from "../lib/entitlements.js";
+import {
+  getAffiliateMeta,
+  recordSale,
+  AFFILIATE_PRODUCT_AMOUNT,
+} from "../lib/affiliate.js";
 
 const SUPPORTED_EVENTS = new Set(["checkout.session.completed", "checkout.session.async_payment_succeeded"]);
+const AFFILIATE_REF_RE = /^AFF-[A-Z0-9]{4}-[A-Z0-9]{4}$/;
 
 export async function onRequestPost(context) {
   try {
@@ -26,10 +32,15 @@ export async function onRequestPost(context) {
     }
 
     const session = event.data?.object;
-    const product = session?.client_reference_id;
+    const rawRef = String(session?.client_reference_id || "");
+    // Format: "PRODUCT" or "PRODUCT:AFF-XXXX-XXXX"
+    const [product, affRefRaw] = rawRef.split(":");
     if (!product || !getAllProducts()[product]) {
       return json({ received: true, ignored: "unknown_product" });
     }
+    const affiliateCode = affRefRaw && AFFILIATE_REF_RE.test(affRefRaw.toUpperCase())
+      ? affRefRaw.toUpperCase()
+      : null;
 
     const email = session?.customer_details?.email || session?.customer_email;
     const purchaseId = product === "wordpress-theme"
@@ -67,7 +78,44 @@ export async function onRequestPost(context) {
       apiKey: context.env.RESEND_API_KEY,
     });
 
-    return json({ received: true, emailed: true, product });
+    // Record affiliate sale (best-effort — don't block grant on this)
+    let affiliateRecorded = false;
+    if (affiliateCode && product === "wordpress-theme") {
+      try {
+        const meta = await getAffiliateMeta(affiliateCode, context.env);
+        if (meta && meta.status !== "suspended") {
+          // Avoid self-referral: affiliate's own purchase is not eligible
+          if (meta.email && meta.email === String(email).toLowerCase()) {
+            affiliateRecorded = false;
+          } else {
+            const amount = Number(session?.amount_total) || AFFILIATE_PRODUCT_AMOUNT;
+            await recordSale({
+              code: affiliateCode,
+              purchaseId,
+              amount,
+              email,
+              createdAt: Date.now(),
+            }, context.env);
+            affiliateRecorded = true;
+            // Notify affiliate
+            try {
+              await sendAffiliateNotification({
+                to: meta.email,
+                code: affiliateCode,
+                name: meta.name || "",
+                commission: Math.floor(amount * 0.5),
+                from: context.env.RESEND_FROM_EMAIL,
+                apiKey: context.env.RESEND_API_KEY,
+              });
+            } catch {}
+          }
+        }
+      } catch (e) {
+        // Swallow — affiliate failure should not block customer email
+      }
+    }
+
+    return json({ received: true, emailed: true, product, affiliateRecorded });
   } catch (error) {
     return json({ error: error.message }, 500);
   }
@@ -96,6 +144,11 @@ async function sendGrantEmail({ to, accessUrl, downloadUrl, childDownloadUrl, se
         "WordPress管理画面の「外観 > 文標」にシリアルナンバーを入力すると、購入済みとして表示される。",
         "購入者ページ:",
         accessUrl,
+        "",
+        "■ 30日返金保証",
+        "購入から30日以内であれば、理由を問わず全額返金できる。",
+        "問い合わせフォームから「文標 返金希望」と購入時メールアドレスを送信すると手続きする。",
+        "https://yohelab.com/contact/",
       ]
     : [
         `${label} の有料版を有効にしたよ。`,
@@ -115,6 +168,7 @@ async function sendGrantEmail({ to, accessUrl, downloadUrl, childDownloadUrl, se
       <p><strong>ZIPダウンロードURL</strong><br><a href="${escapeHtml(downloadUrl)}" style="color:#0d6b58;font-weight:700">${escapeHtml(downloadUrl)}</a></p>
       <p><strong>改造用子テーマZIP</strong><br><a href="${escapeHtml(childDownloadUrl)}" style="color:#0d6b58;font-weight:700">${escapeHtml(childDownloadUrl)}</a></p>
       <p><strong>購入者ページ</strong><br><a href="${escapeHtml(accessUrl)}" style="color:#0d6b58;font-weight:700">${escapeHtml(accessUrl)}</a></p>
+      <p style="margin-top:18px;padding:14px 16px;border-radius:10px;background:#fff7ed;border:1px solid #fcd9b6;color:#7c2d12"><strong>🛡 30日返金保証</strong><br>購入から30日以内であれば、理由を問わず全額返金します。<a href="https://yohelab.com/contact/" style="color:#7c2d12;font-weight:700;text-decoration:underline">問い合わせフォーム</a> から「文標 返金希望」と購入時メールアドレスを送信してください。Stripe経由で決済元に返金されます（着金まで5〜10営業日）。返金後はシリアルが無効化されます。</p>
       <p style="color:#64748b">テーマ自体はシリアルなしでも動きます。シリアルは購入者確認と自動更新のために使います。不具合連絡時に確認する場合があります。</p>
     </div>
   ` : `
@@ -145,6 +199,54 @@ async function sendGrantEmail({ to, accessUrl, downloadUrl, childDownloadUrl, se
     const body = await response.text();
     throw new Error(`Resend error ${response.status}: ${body}`);
   }
+}
+
+async function sendAffiliateNotification({ to, code, name, commission, from, apiKey }) {
+  if (!apiKey || !from || !to) return;
+  const subject = "【よへラボ】文標の紹介が成立しました";
+  const text = [
+    `${name || "アフィリエイトパートナー"} 様`,
+    "",
+    "文標の購入が、あなたの紹介リンクから発生しました。",
+    "",
+    `紹介報酬: ¥${(commission || 0).toLocaleString()}（保留中）`,
+    `アフィリエイトコード: ${code}`,
+    "",
+    "■ 確定タイミング",
+    "購入から30日経過後（返金可能期間が終了したのち）に確定します。",
+    "返金された場合は、当該成果は無効となります。",
+    "",
+    "■ ダッシュボード",
+    `https://yohelab.com/affiliate/dashboard/?code=${code}`,
+    "",
+    "■ 支払い",
+    "月末締め・翌月末払い・累積¥3,000以上で振込対象。",
+    "口座情報がまだの場合は問い合わせフォームから送信してください:",
+    "https://yohelab.com/contact/",
+    "",
+    "ご紹介ありがとうございます。",
+    "よへラボ",
+  ].join("\n");
+  const html = `
+    <div style="font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.7;color:#1f2937;max-width:600px;">
+      <p>${escapeHtml(name || "アフィリエイトパートナー")} 様</p>
+      <p>文標の購入が、あなたの紹介リンクから発生しました。</p>
+      <p style="padding:14px 18px;border-radius:10px;background:#fff7ed;border:1px solid #fcd9b6;color:#7c2d12;">
+        <strong>紹介報酬: ¥${escapeHtml((commission || 0).toLocaleString())}</strong><span style="margin-left:10px;font-size:12px;background:#fff;padding:2px 8px;border-radius:6px;color:#9a3412">保留中</span>
+      </p>
+      <p style="font-size:13px;color:#536174;">購入から30日経過後（返金可能期間が終了したのち）に確定します。返金された場合は当該成果は無効となります。</p>
+      <p><a href="https://yohelab.com/affiliate/dashboard/?code=${escapeHtml(code)}" style="display:inline-block;padding:10px 18px;border-radius:10px;background:#0b8f72;color:#fff;font-weight:900;text-decoration:none;">ダッシュボードを開く</a></p>
+      <p style="font-size:13px;color:#64748b;">口座情報がまだの場合は <a href="https://yohelab.com/contact/" style="color:#0b8f72">問い合わせフォーム</a> から送信してください（月末締め・翌月末払い）。</p>
+    </div>
+  `;
+  await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ from, to, subject, text, html }),
+  });
 }
 
 async function verifyStripeSignature(rawBody, signatureHeader, secret) {

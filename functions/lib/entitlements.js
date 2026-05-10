@@ -45,7 +45,7 @@ function base64UrlToText(input) {
   return new TextDecoder().decode(bytes);
 }
 
-async function hmacBase64Url(secret, message) {
+export async function hmacBase64Url(secret, message) {
   const key = await crypto.subtle.importKey(
     "raw",
     new TextEncoder().encode(secret),

@@ -48,7 +48,7 @@
         "mainEntity": [
           {"@type": "Question", "name": "文標は親テーマだけで使えますか？", "acceptedAnswer": {"@type": "Answer", "text": "使えます。CSSや小さな関数を追加したい場合だけ、子テーマを追加で使います。"}},
           {"@type": "Question", "name": "SEOプラグインを使っている場合はどうしますか？", "acceptedAnswer": {"@type": "Answer", "text": "重複を避けるため、SEOプラグイン側を使うか文標側を使うかを選びます。文標の設定画面ではSEO出力、OGP、JSON-LDを個別にOFFにできます。"}},
-          {"@type": "Question", "name": "購入後の返金はありますか？", "acceptedAnswer": {"@type": "Answer", "text": "デジタル商品のため購入後の返金はありません。購入前にデモ、対応環境、不具合対応の範囲を確認してください。"}}
+          {"@type": "Question", "name": "購入後の返金はできますか？", "acceptedAnswer": {"@type": "Answer", "text": "はい。購入から30日以内であれば理由を問わず全額返金します。問い合わせフォームから返金希望と購入時メールアドレスを送信すれば、Stripe経由で決済元に返金されます。返金後はシリアルが無効化されます。"}}
         ]
       }
     ]
@@ -234,6 +234,8 @@
             <p>.htaccessはサイト全体の表示に影響します。文標の画面にはバックアップ機能がありますが、管理画面に入れない状態になると復元画面も使えません。変更前の内容は手元にも保存してください。</p>
             <h3>不具合対応の範囲</h3>
             <p>文標本体で再現できる不具合、配布ZIPの破損、シリアル認証、自動更新の不備を確認します。導入代行、初期設定代行、使い方相談、個別デザイン改造、外部プラグイン衝突調査、既存サイト移行、記事制作代行は対象外です。その分、買い切り価格を抑えています。</p>
+            <h3>30日返金保証</h3>
+            <p>購入から30日以内であれば、理由を問わず全額返金します。問い合わせフォームから「文標 返金希望」と購入時メールアドレスを送信してください。Stripe経由で決済元に返金されます（着金まで5〜10営業日）。返金完了後はシリアルが無効化され、自動更新と新バージョンZIPの取得は停止します。</p>
           </article>
         </div>
 
@@ -250,7 +252,7 @@
           </ul>
           <p><a class="btn btn-primary" href="https://buy.stripe.com/bJeaEPfTN2ze2Cubvb73G0e?client_reference_id=wordpress-theme">¥5,500（税込）で購入する</a></p>
           <p><a href="/lp/bunsirube/demo/">デモを見る</a> / <a href="/lp/bunsirube/updates/">更新履歴を見る</a></p>
-          <p>表示価格はすべて税込です。購入後の返金はありません。</p>
+          <p>表示価格はすべて税込です。<strong style="color:#0d8f72;">30日返金保証つき</strong> — 30日以内なら理由を問わず全額返金。</p>
         </aside>
       </div>
     </section>
@@ -265,5 +267,6 @@
       </div>
     </div>
   </footer>
+  <script src="/affiliate-track.js" defer></script>
 </body>
 </html>

@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>アフィリエイト ダッシュボード | よへラボ</title>
+  <meta name="description" content="文標アフィリエイトプログラムのダッシュボード。クリック数、確定成果、支払予定を確認できます。" />
+  <meta name="robots" content="noindex,nofollow" />
+  <link rel="canonical" href="https://yohelab.com/affiliate/dashboard/" />
+  <link rel="icon" type="image/png" href="/yohelab-icon-32.png" />
+  <link rel="stylesheet" href="/shared/site.min.css" />
+  <style>
+    body { background:#fbfdff; color:#101b31; }
+    .nav { background:rgba(255,255,255,.92); border-bottom:1px solid #dfeaf5; padding:18px 24px; }
+    .nav-inner { max-width:1100px; margin:0 auto; display:flex; align-items:center; gap:18px; }
+    .brand { display:flex; align-items:center; gap:10px; color:#0b1f1a; font-weight:900; text-decoration:none; }
+    .brand img { width:30px; height:30px; border-radius:8px; }
+    .nav-links { margin-left:auto; display:flex; gap:18px; font-size:14px; }
+    .nav-links a { color:#445; text-decoration:none; }
+    .container { max-width:980px; margin:0 auto; padding:48px 24px; }
+    h1 { font-size:clamp(26px,4.4vw,40px); margin:0 0 12px; letter-spacing:-.03em; }
+    .lead { color:#536174; margin:0 0 24px; line-height:1.85; font-size:15px; }
+    .login-card { max-width:520px; margin:0 auto; padding:32px; border-radius:24px; background:#fff; border:1px solid #dfeaf5; box-shadow:0 24px 60px rgba(38,78,118,.08); }
+    .login-card label { display:block; font-size:13px; font-weight:900; margin:14px 0 6px; }
+    .login-card input { width:100%; padding:11px 14px; border-radius:10px; border:1px solid #c9d7e8; font:inherit; box-sizing:border-box; }
+    .login-card button { width:100%; margin-top:18px; padding:13px 22px; font-weight:900; border-radius:14px; font-size:15px; border:none; cursor:pointer; background:linear-gradient(135deg,#2f7df6,#7a4dff); color:#fff; box-shadow:0 14px 28px rgba(47,125,246,.28); }
+    .login-card button:disabled { opacity:.6; cursor:not-allowed; }
+    .stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-top:22px; }
+    .stat-card { background:#fff; border:1px solid #dfeaf5; border-radius:18px; padding:20px; text-align:center; }
+    .stat-card .num { font-size:32px; font-weight:900; line-height:1; letter-spacing:-.03em; color:#0b8f72; }
+    .stat-card .label { font-size:12px; font-weight:900; color:#536174; margin-top:8px; }
+    .panel { background:#fff; border:1px solid #dfeaf5; border-radius:18px; padding:24px; margin-top:22px; }
+    .panel h2 { font-size:18px; margin:0 0 14px; }
+    .ref-link { display:flex; gap:8px; align-items:center; padding:12px 14px; border-radius:10px; background:#f3f8ff; border:1px solid #dfeaf5; word-break:break-all; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:13px; }
+    .copy-btn { margin-left:auto; padding:6px 12px; border-radius:8px; border:1px solid #2f7df6; background:#fff; color:#2f7df6; font-weight:900; font-size:12px; cursor:pointer; flex-shrink:0; }
+    .copy-btn:hover { background:#2f7df6; color:#fff; }
+    table.referrals { width:100%; border-collapse:collapse; font-size:14px; }
+    table.referrals th, table.referrals td { padding:10px; text-align:left; border-bottom:1px solid #dfeaf5; }
+    table.referrals th { font-weight:900; color:#536174; font-size:12px; letter-spacing:.06em; text-transform:uppercase; background:#f7faff; }
+    .empty { color:#9ca7b8; padding:18px; text-align:center; }
+    .badge { display:inline-block; padding:3px 8px; border-radius:999px; font-size:11px; font-weight:900; }
+    .badge.confirmed { background:#ecfdf5; color:#065f46; }
+    .badge.pending { background:#fff7ed; color:#9a3412; }
+    .badge.refunded { background:#fef2f2; color:#991b1b; }
+    .form-status { padding:14px; border-radius:10px; margin-top:14px; font-size:14px; line-height:1.7; display:none; }
+    .form-status.error { display:block; background:#fef2f2; color:#991b1b; border:1px solid #fecaca; }
+    footer.site-footer { background:#0a1f1a; color:#8a9ab5; padding:32px 24px; text-align:center; font-size:13px; margin-top:48px; }
+    footer.site-footer a { color:#cfdfff; text-decoration:none; margin:0 8px; }
+    @media (max-width:640px) { .stats-grid { grid-template-columns:repeat(2,1fr); } }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="/"><img src="/yohelab-icon.webp" alt="" /><span>よへラボ</span></a>
+      <nav class="nav-links">
+        <a href="/lp/bunsirube/">文標</a>
+        <a href="/lp/bunsirube/affiliate/">アフィリエイト</a>
+        <a href="/contact/">問い合わせ</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <h1>アフィリエイト ダッシュボード</h1>
+    <p class="lead">アフィリエイトコードと登録メールアドレスを入力すると、クリック数、確定成果、支払予定を確認できます。</p>
+
+    <div id="login-section">
+      <form id="login-form" class="login-card" autocomplete="off">
+        <label>アフィリエイトコード
+          <input type="text" name="code" required placeholder="AFF-XXXX-XXXX" />
+        </label>
+        <label>登録メールアドレス
+          <input type="email" name="email" required placeholder="you@example.com" />
+        </label>
+        <button type="submit" id="login-btn">確認する</button>
+        <div id="login-status" class="form-status"></div>
+      </form>
+      <p style="text-align:center;margin-top:18px;font-size:13px;color:#536174;">未登録の場合は <a href="/lp/bunsirube/affiliate/" style="color:#0b8f72;font-weight:700;">アフィリエイト登録ページ</a> から発行できます。</p>
+    </div>
+
+    <div id="dashboard-section" style="display:none;">
+      <div class="panel">
+        <h2>あなたの紹介リンク</h2>
+        <div class="ref-link">
+          <span id="ref-link-text"></span>
+          <button class="copy-btn" id="copy-btn">コピー</button>
+        </div>
+        <p style="font-size:13px;color:#536174;line-height:1.7;margin-top:10px;">このリンクからアクセスして30日以内に購入されると、あなたの成果として記録されます。SNS、ブログ、note、YouTube説明欄などに掲載してください。<strong>「PR」「アフィリエイトリンクを含む」表示</strong>を忘れずに。</p>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card"><div class="num" id="stat-clicks">—</div><div class="label">総クリック数</div></div>
+        <div class="stat-card"><div class="num" id="stat-confirmed">—</div><div class="label">確定成果</div></div>
+        <div class="stat-card"><div class="num" id="stat-pending">—</div><div class="label">保留中（30日以内）</div></div>
+        <div class="stat-card"><div class="num" id="stat-payout">—</div><div class="label">支払予定（円）</div></div>
+      </div>
+
+      <div class="panel">
+        <h2>成果一覧</h2>
+        <div id="referrals-table-wrap">
+          <div class="empty">まだ成果がありません。紹介リンクをシェアしてみてください。</div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>素材ダウンロード</h2>
+        <p style="font-size:13.5px;color:#536174;line-height:1.85;margin:0 0 12px;">紹介に使える素材は <a href="/contact/" style="color:#0b8f72;font-weight:700;">問い合わせフォーム</a> から「アフィリエイト素材希望」と送信してください。バナー、紹介テキスト、比較表テンプレ、レビュー記事サンプルを配布します。</p>
+      </div>
+
+      <div class="panel">
+        <h2>支払いについて</h2>
+        <p style="font-size:13.5px;color:#536174;line-height:1.85;margin:0 0 12px;">月末締め・翌月末払い。累積¥3,000以上で支払対象。<a href="/contact/" style="color:#0b8f72;font-weight:700;">銀行振込先の登録</a> はまだの方はお問い合わせフォームから送ってください（口座番号は問い合わせ後に暗号化して受け付けます）。</p>
+        <p style="font-size:13px;color:#9ca7b8;margin:0;">詳しくは <a href="/legal/affiliate-terms/" style="color:#0b8f72;">アフィリエイトプログラム規約</a> をご確認ください。</p>
+      </div>
+
+      <p style="text-align:center;margin-top:18px;"><button id="logout-btn" style="background:none;border:1px solid #c9d7e8;color:#536174;padding:8px 16px;border-radius:8px;cursor:pointer;">別のコードで確認</button></p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div>© よへラボ / yohelab.com</div>
+    <div style="margin-top:6px;">
+      <a href="/">トップ</a>
+      <a href="/lp/bunsirube/">文標</a>
+      <a href="/legal/affiliate-terms/">アフィリエイト規約</a>
+    </div>
+  </footer>
+
+  <script>
+    (function(){
+      var loginForm = document.getElementById('login-form');
+      var loginBtn = document.getElementById('login-btn');
+      var loginStatus = document.getElementById('login-status');
+      var loginSection = document.getElementById('login-section');
+      var dashSection = document.getElementById('dashboard-section');
+
+      // Auto-fill code from URL
+      var urlCode = new URLSearchParams(location.search).get('code');
+      if (urlCode) loginForm.code.value = urlCode;
+
+      loginForm.addEventListener('submit', async function(e){
+        e.preventDefault();
+        loginStatus.className = 'form-status';
+        loginStatus.textContent = '';
+        loginBtn.disabled = true;
+        loginBtn.textContent = '確認中…';
+        try {
+          var code = loginForm.code.value.trim().toUpperCase();
+          var email = loginForm.email.value.trim().toLowerCase();
+          var res = await fetch('/api/affiliate-status?code=' + encodeURIComponent(code) + '&email=' + encodeURIComponent(email));
+          var data = await res.json();
+          if (!res.ok || !data.ok) {
+            throw new Error(data.error || 'コードまたはメールアドレスが一致しません。');
+          }
+          loginSection.style.display = 'none';
+          dashSection.style.display = 'block';
+          render(data);
+        } catch (err) {
+          loginStatus.className = 'form-status error';
+          loginStatus.textContent = err.message || '確認に失敗しました。';
+          loginBtn.disabled = false;
+          loginBtn.textContent = '確認する';
+        }
+      });
+
+      function render(data) {
+        var refLink = location.origin + '/lp/bunsirube/?ref=' + data.code;
+        document.getElementById('ref-link-text').textContent = refLink;
+        document.getElementById('stat-clicks').textContent = (data.stats.clicks || 0).toLocaleString();
+        document.getElementById('stat-confirmed').textContent = (data.stats.confirmed || 0).toLocaleString();
+        document.getElementById('stat-pending').textContent = (data.stats.pending || 0).toLocaleString();
+        document.getElementById('stat-payout').textContent = '¥' + (data.stats.payoutDue || 0).toLocaleString();
+
+        var referrals = data.referrals || [];
+        var wrap = document.getElementById('referrals-table-wrap');
+        if (referrals.length === 0) {
+          wrap.innerHTML = '<div class="empty">まだ成果がありません。紹介リンクをシェアしてみてください。</div>';
+          return;
+        }
+        var rows = referrals.map(function(r){
+          var badge = '<span class="badge ' + r.status + '">' + (r.status === 'confirmed' ? '確定' : (r.status === 'pending' ? '保留' : '返金済')) + '</span>';
+          return '<tr><td>' + escapeHtml(r.date) + '</td><td>¥' + (r.commission || 0).toLocaleString() + '</td><td>' + badge + '</td></tr>';
+        }).join('');
+        wrap.innerHTML = '<table class="referrals"><thead><tr><th>日付</th><th>報酬</th><th>状態</th></tr></thead><tbody>' + rows + '</tbody></table>';
+      }
+
+      document.getElementById('copy-btn').addEventListener('click', function(){
+        var text = document.getElementById('ref-link-text').textContent;
+        navigator.clipboard.writeText(text).then(function(){
+          var btn = document.getElementById('copy-btn');
+          var t = btn.textContent;
+          btn.textContent = 'コピー済';
+          setTimeout(function(){ btn.textContent = t; }, 1200);
+        }).catch(function(){});
+      });
+
+      document.getElementById('logout-btn').addEventListener('click', function(){
+        loginSection.style.display = 'block';
+        dashSection.style.display = 'none';
+        loginForm.code.value = '';
+        loginForm.email.value = '';
+        loginBtn.disabled = false;
+        loginBtn.textContent = '確認する';
+      });
+
+      function escapeHtml(s) {
+        return String(s).replace(/[&<>"']/g, function(c){
+          return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
