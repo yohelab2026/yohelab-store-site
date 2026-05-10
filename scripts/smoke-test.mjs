@@ -171,9 +171,13 @@ const salesDraftScript = read(src("scripts/create-sales-draft.mjs"));
 const lineIssueCleanup = read(src("scripts/cleanup-line-issues.mjs"));
 const themeDownload = read(src("functions/api/theme-download.js"));
 const themeUpdate = read(src("functions/generated/theme-update.js"));
-const themeFunctions = read(src("wordpress-themes/bunsirube/functions.php"));
-const themeStyle = read(src("wordpress-themes/bunsirube/style.css"));
-const themeSettings = read(src("wordpress-themes/bunsirube/inc/settings.php"));
+const hasThemeSource =
+  existsSync(src("wordpress-themes/bunsirube/functions.php")) &&
+  existsSync(src("wordpress-themes/bunsirube/style.css")) &&
+  existsSync(src("wordpress-themes/bunsirube/inc/settings.php"));
+const themeFunctions = hasThemeSource ? read(src("wordpress-themes/bunsirube/functions.php")) : "";
+const themeStyle = hasThemeSource ? read(src("wordpress-themes/bunsirube/style.css")) : "";
+const themeSettings = hasThemeSource ? read(src("wordpress-themes/bunsirube/inc/settings.php")) : "";
 const publicLlms = read(src("public/llms.txt"));
 const rootLlms = read(src("llms.txt"));
 const purchaseFlowTest = read(src("scripts/test-purchase-flow.mjs"));
@@ -252,7 +256,8 @@ checks.push(["sales draft agent uses safe AI-search wording", salesDraftScript.i
 checks.push(["sales draft issues are included in cleanup", lineIssueCleanup.includes("listIssuesByLabel(\"sales-draft\")") && lineIssueCleanup.includes("営業下書きIssue")]);
 checks.push(["ai pr guard blocks sensitive changes and auto-merges safe ai prs", aiPrGuard.includes("needs-human-review") && aiPrGuard.includes("safe-auto-candidate") && aiPrGuard.includes("buy\\.stripe\\.com") && aiPrGuard.includes("legal\\/") && aiPrGuard.includes("gh pr merge") && aiPrGuard.includes("--auto")]);
 checks.push(["theme delivery points to latest package and manifest", themeDownload.includes('key: "bunsirube-0.3.3.zip"') && themeUpdate.includes('\\"version\\": \\"0.3.3\\"') && themeUpdate.includes("/lp/bunsirube/updates/")]);
-checks.push(["theme internal version matches latest package", themeStyle.includes("Version: 0.3.3") && themeFunctions.includes("BUNSIRUBE_VERSION', '0.3.3'") && themeSettings.includes("不具合対応の範囲") && !themeSettings.includes("ZIP導入、基本設定、記事型、文標ショートコードの使い方を対象")]);
+checks.push(["theme source is checked locally or intentionally absent in CI", hasThemeSource || process.env.GITHUB_ACTIONS === "true"]);
+checks.push(["theme internal version matches latest package", !hasThemeSource || (themeStyle.includes("Version: 0.3.3") && themeFunctions.includes("BUNSIRUBE_VERSION', '0.3.3'") && themeSettings.includes("不具合対応の範囲") && !themeSettings.includes("ZIP導入、基本設定、記事型、文標ショートコードの使い方を対象"))]);
 checks.push(["public llms focuses current bunsirube offer", publicLlms.includes("WordPressテーマ「文標") && publicLlms.includes("サポート範囲") && publicLlms.includes("Google AI Overviews等への表示を保証するものではありません") && !publicLlms.includes("初回モニター¥980") && !publicLlms.includes("月額1,980円")]);
 checks.push(["root llms fallback matches public llms", rootLlms === publicLlms]);
 checks.push(["purchase flow test covers email serial license and invalid cases", purchaseFlowTest.includes("checkout.session.completed") && purchaseFlowTest.includes("api.resend.com/emails") && purchaseFlowTest.includes("serial missing from email") && purchaseFlowTest.includes("expected generated serial to activate") && purchaseFlowTest.includes("expected invalid serial rejection") && purchaseFlowTest.includes("expected bad signature 400")]);
