@@ -35,16 +35,27 @@ async function github(path, init = {}) {
   return response.status === 204 ? null : response.json();
 }
 
-async function listLineIssues() {
+async function listIssuesByLabel(label) {
   const issues = [];
   for (let page = 1; page <= 5; page += 1) {
     const batch = await github(
-      `/repos/${repo}/issues?labels=line-inbox&state=open&sort=updated&direction=asc&per_page=100&page=${page}`,
+      `/repos/${repo}/issues?labels=${encodeURIComponent(label)}&state=open&sort=updated&direction=asc&per_page=100&page=${page}`,
     );
     issues.push(...(batch || []).filter((issue) => !issue.pull_request));
     if (!batch || batch.length < 100) break;
   }
   return issues;
+}
+
+async function listLineIssues() {
+  const byNumber = new Map();
+  for (const issue of await listIssuesByLabel("line-inbox")) {
+    byNumber.set(issue.number, issue);
+  }
+  for (const issue of await listIssuesByLabel("sales-draft")) {
+    byNumber.set(issue.number, issue);
+  }
+  return [...byNumber.values()].sort((a, b) => new Date(a.updated_at) - new Date(b.updated_at));
 }
 
 async function issueComments(issueNumber) {
@@ -112,7 +123,9 @@ for (const issue of issues) {
 
   const reason = closeCancelled
     ? `LINEでキャンセル済みのため、${cancelledDays}日後に自動クローズしました。`
-    : `LINE由来のIssueが${staleDays}日以上更新されていないため、自動クローズしました。`;
+    : hasLabel(issue, "sales-draft")
+      ? `営業下書きIssueが${staleDays}日以上更新されていないため、自動クローズしました。`
+      : `LINE由来のIssueが${staleDays}日以上更新されていないため、自動クローズしました。`;
 
   if (!dryRun) {
     await comment(issue.number, [

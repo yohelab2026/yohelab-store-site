@@ -1,0 +1,49 @@
+name: Sales draft agent
+
+on:
+  schedule:
+    # 08:30 JST: blog/note angle
+    - cron: "30 23 * * *"
+    # 12:30 JST: X post angle
+    - cron: "30 3 * * *"
+    # 18:30 JST: reuse and next draft angle
+    - cron: "30 9 * * *"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "Draft mode"
+        type: choice
+        default: daily
+        options:
+          - daily
+          - morning
+          - noon
+          - evening
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  draft:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Create sales draft and notify LINE
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LINE_CHANNEL_ACCESS_TOKEN: ${{ secrets.LINE_CHANNEL_ACCESS_TOKEN }}
+          LINE_TO: ${{ secrets.LINE_TO }}
+          SALES_DRAFT_MODE: ${{ github.event.inputs.mode || 'auto' }}
+        run: npm run sales:draft
