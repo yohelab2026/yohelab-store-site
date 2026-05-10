@@ -97,6 +97,7 @@
     </div>
   </header>
 
+  <main>
   <section class="aff-hero">
     <div class="container">
       <span class="aff-eyebrow">Affiliate Program</span>
@@ -152,7 +153,7 @@
   <section class="section" style="background:linear-gradient(180deg,#f0f7ff,#fff);">
     <div class="container">
       <h2 style="text-align:center;">登録（即時発行）</h2>
-      <p style="text-align:center;margin-bottom:28px;">登録ボタンを押すと、専用コードと紹介リンクをすぐ発行します。送信前に <a href="/legal/affiliate-terms/" style="color:#0b8f72;font-weight:700;">アフィリエイトプログラム規約</a> をご確認ください。</p>
+      <p style="text-align:center;margin-bottom:28px;">登録ボタンを押すと、専用コードと紹介リンクをすぐ発行します。送信前に <a href="/legal/affiliate-terms/" style="color:#075c4c;font-weight:700;">アフィリエイトプログラム規約</a> をご確認ください。</p>
       <form id="aff-form" class="form-card" autocomplete="off">
         <label>お名前 <span style="color:#dc2626">*</span>
           <input type="text" name="name" required autocomplete="name" />
@@ -168,7 +169,7 @@
         </label>
         <div class="checkbox-row">
           <input type="checkbox" id="agree" required />
-          <label for="agree" style="margin:0;font-weight:400;"><a href="/legal/affiliate-terms/" target="_blank" rel="noopener" style="color:#0b8f72;font-weight:700;">アフィリエイトプログラム規約</a> および <a href="/legal/privacy/" target="_blank" rel="noopener" style="color:#0b8f72;font-weight:700;">プライバシーポリシー</a> に同意します。</label>
+          <label for="agree" style="margin:0;font-weight:400;"><a href="/legal/affiliate-terms/" target="_blank" rel="noopener" style="color:#075c4c;font-weight:700;">アフィリエイトプログラム規約</a> および <a href="/legal/privacy/" target="_blank" rel="noopener" style="color:#075c4c;font-weight:700;">プライバシーポリシー</a> に同意します。</label>
         </div>
         <button type="submit" id="aff-submit">アフィリエイトコードを発行する</button>
         <div id="form-status" class="form-status"></div>
@@ -210,6 +211,8 @@
     </div>
   </section>
 
+  </main>
+
   <footer class="site-footer">
     <div>© よへラボ / yohelab.com</div>
     <div style="margin-top:6px;">
@@ -250,7 +253,7 @@
             throw new Error(json.error || '登録に失敗しました。時間を空けて再度お試しください。');
           }
           status.className = 'form-status success';
-          status.innerHTML = '<strong>✓ 登録完了。確認メールを送信しました。</strong><br/>あなたのアフィリエイトコード:<div class="code-display">' + escapeHtml(json.code) + '</div>紹介リンク:<div class="code-display">' + escapeHtml(json.refLink) + '</div>このコードと紹介リンクは登録メールアドレスにも送信しました。<a href="/affiliate/dashboard/?code=' + encodeURIComponent(json.code) + '" style="color:#0b8f72;font-weight:700;">ダッシュボードを開く →</a>';
+          status.innerHTML = '<strong>✓ 登録完了。確認メールを送信しました。</strong><br/>あなたのアフィリエイトコード:<div class="code-display">' + escapeHtml(json.code) + '</div>紹介リンク:<div class="code-display">' + escapeHtml(json.refLink) + '</div>このコードと紹介リンクは登録メールアドレスにも送信しました。<a href="/affiliate/dashboard/?code=' + encodeURIComponent(json.code) + '" style="color:#075c4c;font-weight:700;">ダッシュボードを開く →</a>';
           btn.textContent = '登録完了';
         } catch (err) {
           status.className = 'form-status error';
