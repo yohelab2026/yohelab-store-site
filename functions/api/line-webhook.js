@@ -395,6 +395,91 @@ function selectedFlowAnswer(text, flowQuestion, conversationText) {
   return options.find((option) => compactText(option.value) === compact || compactText(option.short || "") === compact) || null;
 }
 
+function answeredFieldMap(body = "") {
+  const map = {};
+  for (const match of body.matchAll(/\*\*([^*]+)\*\*:\s*(.+)/g)) {
+    map[match[1]] = match[2].trim();
+  }
+  return map;
+}
+
+function parsePostCount(value = "") {
+  const match = String(value).match(/(\d+)/);
+  if (match) return Math.min(Number(match[1]) || 1, 10);
+  if (String(value).includes("スレッド")) return 5;
+  return 1;
+}
+
+function resolvePromoLink(selection = "") {
+  const links = {
+    トップ: "https://yohelab.com/",
+    文標LP: "https://yohelab.com/lp/bunsirube/",
+    デモ: "https://yohelab.com/lp/bunsirube/demo/",
+    インストール方法: "https://yohelab.com/lp/bunsirube/install/",
+    ブログ: "https://yohelab.com/blog/",
+    問い合わせ: "https://yohelab.com/contact/",
+  };
+  return links[selection] || links.トップ;
+}
+
+function promoTargetLine(target = "文標") {
+  if (target === "文標" || target === "おまかせ") {
+    return "文標は、比較記事・レビュー・FAQの流れを崩さずに書き始めやすいWordPressテーマです。";
+  }
+  if (target === "ブログ") return "よへラボのブログでは、購入前に確認しておきたい導線や記事構成を公開しています。";
+  if (target === "記事メーカー") return "3キーワード記事メーカーは、記事の下書き作業を短くするためのツールです。";
+  if (target === "980円レビュー") return "980円レビューは、購入前に確認したいポイントを短く整理するためのレビューです。";
+  if (target === "アフィリエイト") return "文標アフィリエイトは、記事で紹介しやすい導線づくりを重視しています。";
+  if (target === "今日の更新") return "今日の更新内容は、購入前の安心材料として要点だけを残しています。";
+  return "読み手が次に進みやすい導線を、短く分かりやすく整えています。";
+}
+
+function toneLeadLine(tone = "おまかせ", index = 0) {
+  const leads = {
+    やわらかめ: ["WordPressで記事を書くなら、まず本文の流れを整えると読みやすくなります。"],
+    強め: ["記事が読まれて終わるのを防ぐなら、先に本文の流れとCTAを整えるのが近道です。"],
+    実務寄り: ["記事公開前に、結論・根拠・FAQ・CTAの順で本文を見直すと改善点が見つけやすくなります。"],
+    "開発ログ風": ["今日の改善メモ。本文の構造を先に整えると、公開後の修正が短くなります。"],
+    短く: ["本文の型を先に整えるだけで、記事は読みやすくなります。"],
+    共感寄り: ["書いたのに反応が少ないときほど、本文の順番とCTAを見直すのが効きます。"],
+    おまかせ: [
+      "WordPressの記事づくりで迷ったら、デザインより先に本文の型を整えると進めやすくなります。",
+      "読み取りやすい本文構造に寄せると、比較記事やFAQ記事の更新がラクになります。",
+      "売り込みすぎずに伝えるなら、結論→根拠→FAQ→CTAの順で本文を置くのが安全です。",
+    ],
+  };
+  const options = leads[tone] || leads.おまかせ;
+  return options[index % options.length];
+}
+
+function buildXDraftFromConversation(conversationText = "") {
+  const answers = answeredFieldMap(conversationText);
+  const target = answers["宣伝したいもの"] || "文標";
+  const tone = answers["トーン"] || "おまかせ";
+  const postCount = parsePostCount(answers["投稿数"] || "1投稿");
+  const link = resolvePromoLink(answers["リンク先"] || "トップ");
+
+  const posts = Array.from({ length: Math.max(1, postCount) }, (_, index) => [
+    toneLeadLine(tone, index),
+    "",
+    promoTargetLine(target),
+    "AI表示や検索順位を保証するものではありません。",
+    link,
+  ].join("\n"));
+
+  return [
+    "### X投稿案（下書き）",
+    `- 宣伝したいもの: ${target}`,
+    `- 投稿数: ${postCount}投稿`,
+    `- トーン: ${tone}`,
+    `- 画像: ${answers.画像 || "なし"}`,
+    `- リンク先: ${answers.リンク先 || "トップ"}`,
+    "",
+    ...posts.flatMap((post, index) => [`#### 投稿${index + 1}`, post, ""]),
+    "必要なら語尾や改行だけ整えて使ってください。",
+  ].join("\n");
+}
+
 async function answerFlowQuestion(env, issue, flowQuestion, text, conversationText) {
   const selected = selectedFlowAnswer(text, flowQuestion, conversationText);
   if (!selected) {
@@ -447,15 +532,19 @@ async function answerFlowQuestion(env, issue, flowQuestion, text, conversationTe
   const nextConversationText = `${conversationText}\n\n**${flowQuestion.field}**: ${selected.value}`;
   const nextQuestion = nextFlowQuestion(nextConversationText);
   if (nextQuestion?.done) {
+    if (nextQuestion.number === 3) {
+      await commentOnIssue(env, issue.number, buildXDraftFromConversation(nextConversationText));
+    }
     return {
       issue,
       mode: "質問完了",
       message: [
         "必要な内容がそろいました。",
+        nextQuestion.number === 3 ? "X投稿案をIssueに追記しました。" : "",
         issue.html_url,
         "",
         "PRまで進めるなら「OK」「進めて」「お願い」のどれかで大丈夫です。",
-      ].join("\n"),
+      ].filter(Boolean).join("\n"),
       quickReply: proceedQuickReply(),
     };
   }
