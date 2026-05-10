@@ -147,6 +147,33 @@ export async function listSales(code, env) {
   return sales;
 }
 
+// Lightweight IP-based rate limiter backed by BLOG_KV.
+// Returns true when the request is within budget. Fails-open on KV errors
+// (rate limiting must never block legitimate users when storage is down).
+export async function rateLimitOk(env, bucket, ip, { limit = 30, windowSec = 3600 } = {}) {
+  const kv = getKv(env);
+  if (!kv) return true;
+  const safeIp = String(ip || "unknown").slice(0, 64).replace(/[^0-9a-f.:%-]/gi, "_");
+  const slot = Math.floor(Date.now() / 1000 / windowSec);
+  const key = `${AFFILIATE_KV_PREFIX}:rl:${bucket}:${safeIp}:${slot}`;
+  try {
+    const current = parseInt((await kv.get(key)) || "0", 10);
+    if (current >= limit) return false;
+    await kv.put(key, String(current + 1), { expirationTtl: windowSec + 60 });
+    return true;
+  } catch {
+    return true;
+  }
+}
+
+export function getClientIp(request) {
+  return (
+    request.headers.get("CF-Connecting-IP") ||
+    request.headers.get("X-Forwarded-For") ||
+    "unknown"
+  );
+}
+
 export function computeAffiliateStats(sales, now = Date.now()) {
   const refundWindowMs = AFFILIATE_REFUND_WINDOW_DAYS * 24 * 60 * 60 * 1000;
   let confirmed = 0;

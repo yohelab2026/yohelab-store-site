@@ -1,4 +1,4 @@
-import { getAffiliateMeta, recordClick } from "../lib/affiliate.js";
+import { getAffiliateMeta, recordClick, rateLimitOk, getClientIp } from "../lib/affiliate.js";
 
 // Lightweight click tracking. Called from LP via fetch(beacon).
 // Idempotent: callers can fire-and-forget.
@@ -17,6 +17,11 @@ async function handle(context) {
     if (!code || !/^AFF-[A-Z0-9]{4}-[A-Z0-9]{4}$/.test(code)) {
       return json({ ok: false }, 200);
     }
+    // Per-IP click cap (prevents bots from inflating dashboards / KV writes).
+    const ip = getClientIp(context.request);
+    const within = await rateLimitOk(context.env, "click", ip, { limit: 60, windowSec: 3600 });
+    if (!within) return json({ ok: false }, 200);
+
     const meta = await getAffiliateMeta(code, context.env);
     if (!meta || meta.status === "suspended") {
       return json({ ok: false }, 200);

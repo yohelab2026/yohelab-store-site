@@ -1,11 +1,17 @@
-import { makeAffiliateCode, getAffiliateMeta, setAffiliateMeta, getKv } from "../lib/affiliate.js";
+import { makeAffiliateCode, getAffiliateMeta, setAffiliateMeta, getKv, rateLimitOk, getClientIp } from "../lib/affiliate.js";
 
 export async function onRequestPost(context) {
   try {
+    const ip = getClientIp(context.request);
+    const within = await rateLimitOk(context.env, "signup", ip, { limit: 5, windowSec: 3600 });
+    if (!within) {
+      return json({ ok: false, error: "登録試行が多すぎます。1時間ほど時間をおいて再度お試しください。" }, 429);
+    }
+
     const body = await readBody(context.request);
-    const name = String(body.name || "").trim();
-    const email = String(body.email || "").trim().toLowerCase();
-    const siteUrl = String(body.site_url || "").trim();
+    const name = String(body.name || "").trim().slice(0, 120);
+    const email = String(body.email || "").trim().toLowerCase().slice(0, 254);
+    const siteUrl = String(body.site_url || "").trim().slice(0, 500);
     const memo = String(body.memo || "").trim().slice(0, 500);
 
     if (!name) return json({ ok: false, error: "お名前を入力してください。" }, 400);

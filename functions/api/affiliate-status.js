@@ -1,7 +1,15 @@
-import { getAffiliateMeta, listSales, computeAffiliateStats, getClickCount } from "../lib/affiliate.js";
+import { getAffiliateMeta, listSales, computeAffiliateStats, getClickCount, rateLimitOk, getClientIp } from "../lib/affiliate.js";
+
+const MISMATCH_RESPONSE = { ok: false, error: "コードまたはメールアドレスが一致しません。" };
 
 export async function onRequestGet(context) {
   try {
+    const ip = getClientIp(context.request);
+    const within = await rateLimitOk(context.env, "status", ip, { limit: 30, windowSec: 600 });
+    if (!within) {
+      return json({ ok: false, error: "確認試行が多すぎます。少し時間をおいて再度お試しください。" }, 429);
+    }
+
     const url = new URL(context.request.url);
     const code = (url.searchParams.get("code") || "").trim().toUpperCase();
     const email = (url.searchParams.get("email") || "").trim().toLowerCase();
@@ -9,12 +17,10 @@ export async function onRequestGet(context) {
       return json({ ok: false, error: "コードとメールアドレスが必要です。" }, 400);
     }
     const meta = await getAffiliateMeta(code, context.env);
-    if (!meta) {
-      return json({ ok: false, error: "コードが見つかりません。" }, 404);
-    }
-    if (meta.email !== email) {
-      // Avoid leaking which one is wrong
-      return json({ ok: false, error: "コードまたはメールアドレスが一致しません。" }, 403);
+    // Always return the same generic mismatch error (and same 403 status) so an
+    // attacker cannot enumerate which codes exist by comparing 404 vs 403.
+    if (!meta || meta.email !== email) {
+      return json(MISMATCH_RESPONSE, 403);
     }
     if (meta.status === "suspended") {
       return json({ ok: false, error: "このコードは現在停止中です。" }, 403);

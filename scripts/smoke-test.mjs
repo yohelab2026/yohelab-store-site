@@ -1,4 +1,4 @@
-import { readFileSync, existsSync } from "node:fs";
+import { readFileSync, existsSync, readdirSync as _readdirSync } from "node:fs";
 import { resolve } from "node:path";
 
 const root = resolve(process.cwd());
@@ -272,6 +272,26 @@ checks.push(["affiliate-track.js handles ?ref and decorates Stripe links", affil
 checks.push(["pages with Stripe link include affiliate tracking script", lpHasInlineAffiliate && homeHasInlineAffiliate && read(dist("lp/bunsirube/install/index.html")).includes('yohelab_aff') && read(dist("lp/bunsirube/demo/index.html")).includes('yohelab_aff') && read(dist("products/bunsirube/index.html")).includes('yohelab_aff')]);
 checks.push(["stripe webhook parses affiliate code and prevents self-referral", stripeWebhookSrc.includes('AFFILIATE_REF_RE') && stripeWebhookSrc.includes('rawRef.split(":")') && stripeWebhookSrc.includes('meta.email === String(email).toLowerCase()') && stripeWebhookSrc.includes('recordSale')]);
 checks.push(["affiliate footer links present on LP and home", bunsirubeLp.includes('/lp/bunsirube/affiliate/') && bunsirubeLp.includes('/legal/affiliate-terms/') && read(dist("index.html")).includes('/lp/bunsirube/affiliate/') && read(dist("index.html")).includes('/legal/affiliate-terms/')]);
+checks.push(["affiliate signup rate-limits and caps input lengths", affiliateSignupApi.includes('rateLimitOk') && affiliateSignupApi.includes('"signup"') && affiliateSignupApi.includes('status: 429') === false && affiliateSignupApi.includes(', 429)') && affiliateSignupApi.includes('.slice(0, 120)') && affiliateSignupApi.includes('.slice(0, 254)') && affiliateSignupApi.includes('.slice(0, 500)')]);
+checks.push(["affiliate status hides existence and rate-limits", affiliateStatusApi.includes('rateLimitOk') && affiliateStatusApi.includes('"status"') && affiliateStatusApi.includes('MISMATCH_RESPONSE') && !/コードが見つかりません/.test(affiliateStatusApi)]);
+checks.push(["affiliate click endpoint rate-limits per IP", affiliateClickApi.includes('rateLimitOk') && affiliateClickApi.includes('"click"') && affiliateClickApi.includes('getClientIp')]);
+checks.push(["affiliate lib exposes rate limiter using BLOG_KV", affiliateLib.includes('export async function rateLimitOk') && affiliateLib.includes('CF-Connecting-IP') && affiliateLib.includes('expirationTtl')]);
+const robotsTxt = read(dist("robots.txt"));
+checks.push(["robots.txt blocks admin api pro and affiliate dashboard", robotsTxt.includes('Disallow: /blog/admin/') && robotsTxt.includes('Disallow: /api/') && robotsTxt.includes('Disallow: /pro/') && robotsTxt.includes('Disallow: /affiliate/dashboard/') && robotsTxt.includes('Sitemap: https://yohelab.com/sitemap.xml')]);
+checks.push(["affiliate dashboard is noindex", read(dist("affiliate/dashboard/index.html")).includes('noindex,nofollow') || read(dist("affiliate/dashboard/index.html")).includes('noindex, nofollow')]);
+function walkDist(dirAbs, acc = []) {
+  for (const entry of _readdirSync(dirAbs, { withFileTypes: true })) {
+    const p = `${dirAbs}/${entry.name}`;
+    if (entry.isDirectory()) walkDist(p, acc);
+    else acc.push(p);
+  }
+  return acc;
+}
+const distFiles = walkDist(dist(""));
+const leakSuffixes = [".map", ".env", ".bak", ".swp", ".orig", ".DS_Store"];
+const leaked = distFiles.filter((p) => leakSuffixes.some((s) => p.endsWith(s)));
+checks.push(["dist has no leaked source maps env or backup files", leaked.length === 0]);
+checks.push(["dist has no exposed wp-content or themes directories", !distFiles.some((p) => p.includes("/wp-content/")) && !distFiles.some((p) => /\/dist\/themes\//.test(p))]);
 
 for (const [name, ok] of checks) {
   assert(ok, `Check failed: ${name}`);
