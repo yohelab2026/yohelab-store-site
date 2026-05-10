@@ -1631,6 +1631,20 @@
       </footer>
     </div>
   </main>
-  <script src="/shared/affiliate-track.js" defer></script>
+  <script>
+/* Affiliate referral tracking */
+(function(){
+  var REF_RE=/^AFF-[A-Z0-9]{4}-[A-Z0-9]{4}$/,COOKIE_NAME='yohelab_aff',DAYS=30;
+  function getCookie(n){var m=document.cookie.match(new RegExp('(?:^|;\\s*)'+n+'=([^;]+)'));return m?decodeURIComponent(m[1]):null;}
+  function setCookie(n,v,d){document.cookie=n+'='+encodeURIComponent(v)+'; expires='+new Date(Date.now()+d*864e5).toUTCString()+'; path=/; SameSite=Lax';}
+  var url;try{url=new URL(location.href);}catch(e){return;}
+  var ref=(url.searchParams.get('ref')||'').toUpperCase(),ex=(getCookie(COOKIE_NAME)||'').toUpperCase(),active='';
+  if(ref&&REF_RE.test(ref)){setCookie(COOKIE_NAME,ref,DAYS);active=ref;try{fetch('/api/affiliate-click?code='+encodeURIComponent(ref),{method:'POST',keepalive:true});}catch(e){}}
+  else if(REF_RE.test(ex)){active=ex;}
+  if(!active)return;
+  function decorate(){document.querySelectorAll('a[href*="buy.stripe.com"]').forEach(function(a){try{var u=new URL(a.href);if(u.host!=='buy.stripe.com')return;var c=u.searchParams.get('client_reference_id')||'';if(c.indexOf(':'+active)!==-1)return;c=c.replace(/:AFF-[A-Z0-9-]+$/,'');u.searchParams.set('client_reference_id',c+':'+active);a.href=u.toString();}catch(e){}});}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',decorate);else decorate();
+})();
+</script>
 </body>
 </html>

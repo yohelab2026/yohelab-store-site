@@ -230,6 +230,8 @@ const affiliateStatusApi = read(src("functions/api/affiliate-status.js"));
 const affiliateClickApi = read(src("functions/api/affiliate-click.js"));
 const affiliateLib = read(src("functions/lib/affiliate.js"));
 const affiliateTrackJs = read(src("public/shared/affiliate-track.js"));
+const lpHasInlineAffiliate = bunsirubeLp.includes("Affiliate referral tracking") && bunsirubeLp.includes("yohelab_aff");
+const homeHasInlineAffiliate = read(dist("index.html")).includes("yohelab_aff") && read(dist("index.html")).includes("buy.stripe.com");
 const stripeWebhookSrc = read(src("functions/api/stripe-webhook.js"));
 
 checks.push(["30-day refund guarantee documented in legal/commerce", commerce.includes("30日") && commerce.includes("理由を問わず") && commerce.includes("全額返金") && !commerce.includes("購入後の返金には応じられません")]);
@@ -242,7 +244,7 @@ checks.push(["affiliate ToS lists 50% commission and 30-day attribution", affili
 checks.push(["affiliate api endpoints are wired", affiliateSignupApi.includes('makeAffiliateCode') && affiliateSignupApi.includes('setAffiliateMeta') && affiliateStatusApi.includes('listSales') && affiliateStatusApi.includes('computeAffiliateStats') && affiliateClickApi.includes('recordClick')]);
 checks.push(["affiliate lib has stable code generation and stats", affiliateLib.includes('AFFILIATE_COMMISSION_RATE = 0.5') && affiliateLib.includes('AFFILIATE_COMMISSION_AMOUNT = 2750') && affiliateLib.includes('makeAffiliateCode') && affiliateLib.includes('hmacBase64Url') && affiliateLib.includes('AFF-')]);
 checks.push(["affiliate-track.js handles ?ref and decorates Stripe links", affiliateTrackJs.includes('AFF-') && affiliateTrackJs.includes('yohelab_aff') && affiliateTrackJs.includes('30') && affiliateTrackJs.includes('buy.stripe.com') && affiliateTrackJs.includes('client_reference_id') && affiliateTrackJs.includes('/api/affiliate-click')]);
-checks.push(["pages with Stripe link include affiliate-track.js", bunsirubeLp.includes('/shared/affiliate-track.js') && read(dist("index.html")).includes('/shared/affiliate-track.js') && read(dist("lp/bunsirube/install/index.html")).includes('/shared/affiliate-track.js') && read(dist("lp/bunsirube/demo/index.html")).includes('/shared/affiliate-track.js') && read(dist("products/bunsirube/index.html")).includes('/shared/affiliate-track.js')]);
+checks.push(["pages with Stripe link include affiliate tracking script", lpHasInlineAffiliate && homeHasInlineAffiliate && read(dist("lp/bunsirube/install/index.html")).includes('yohelab_aff') && read(dist("lp/bunsirube/demo/index.html")).includes('yohelab_aff') && read(dist("products/bunsirube/index.html")).includes('yohelab_aff')]);
 checks.push(["stripe webhook parses affiliate code and prevents self-referral", stripeWebhookSrc.includes('AFFILIATE_REF_RE') && stripeWebhookSrc.includes('rawRef.split(":")') && stripeWebhookSrc.includes('meta.email === String(email).toLowerCase()') && stripeWebhookSrc.includes('recordSale')]);
 checks.push(["affiliate footer links present on LP and home", bunsirubeLp.includes('/lp/bunsirube/affiliate/') && bunsirubeLp.includes('/legal/affiliate-terms/') && read(dist("index.html")).includes('/lp/bunsirube/affiliate/') && read(dist("index.html")).includes('/legal/affiliate-terms/')]);
 
