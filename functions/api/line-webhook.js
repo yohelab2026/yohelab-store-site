@@ -61,7 +61,7 @@ function wantsAiWork(text, relaxed = false) {
 }
 
 function wantsChoices(text) {
-  return /メニュー|案を出して|選択肢|候補|どう直す|どう変える|改善したい|相談|ブログ|記事|リライト|X投稿|エックス|ツイート|note|下書き|投稿したい|書きたい/i.test(text);
+  return /メニュー|案を出して|選択肢|候補|どう直す|どう変える|改善したい|相談|ブログ|記事|リライト|X投稿|エックス|ツイート|note|下書き|営業下書き|営業案|投稿案|投稿したい|書きたい/i.test(text);
 }
 
 function wantsChoiceMenu(text) {

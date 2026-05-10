@@ -14,6 +14,8 @@
     "test:purchase-flow": "node scripts/test-purchase-flow.mjs",
     "notify:line-maintenance": "node scripts/send-line-maintenance-report.mjs",
     "cleanup:line-issues": "node scripts/cleanup-line-issues.mjs",
+    "line:rich-menu": "node scripts/setup-line-rich-menu.mjs",
+    "line:rich-menu:dry": "node scripts/setup-line-rich-menu.mjs --dry-run",
     "sales:draft": "node scripts/create-sales-draft.mjs",
     "sales:draft:dry": "node scripts/create-sales-draft.mjs --dry-run",
     "package-theme": "node scripts/package-theme.mjs",
