@@ -5,6 +5,7 @@ export async function onRequestPost(context) {
   const requestPin = String(body?.pin || "").trim();
   const pin = getBlogPin(context.env);
 
+  if (!isValidPin(pin)) return json({ error: "blog_pin_not_configured" }, 503);
   if (!isValidPin(requestPin)) return json({ error: "invalid_pin_format" }, 400);
   if (!timingSafeEqual(requestPin, pin)) return json({ error: "unauthorized" }, 401);
 

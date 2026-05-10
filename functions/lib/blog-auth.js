@@ -1,11 +1,10 @@
 export function getBlogPin(env) {
-  return String(env.BLOG_PIN || "1030").trim();
+  return String(env.BLOG_PIN || "").trim();
 }
 
 export function getRequestPin(request) {
   return String(
     request.headers.get("x-yohelab-pin") ||
-    request.headers.get("x-yohelab-password") ||
     "",
   ).trim();
 }

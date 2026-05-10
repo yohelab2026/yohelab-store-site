@@ -42,7 +42,7 @@ export async function onRequestPost(context) {
       context.request.headers.get("x-yohelab-pin") || "",
     ).trim();
     const storedPin = getBlogPin(context.env);
-    if (!isValidPin(requestPin) || !timingSafeEqual(requestPin, storedPin)) {
+    if (!isValidPin(storedPin) || !isValidPin(requestPin) || !timingSafeEqual(requestPin, storedPin)) {
       return json({ error: "unauthorized" }, 401, context.request);
     }
 

@@ -27,6 +27,8 @@ const checks = [];
 const home = read(dist("index.html"));
 const oldPropToken = `${"pro"}${"posal"}`;
 const oldOptimizer = `${"opti"}${"mizer"}`;
+const oldBlogPin = `${"10"}${"30"}`;
+const oldPasswordHeader = `x-yohelab-${"password"}`;
 const legacyPaths = [
   `/lp/${"rad"}${"ar"}/`,
   `/lp/${oldPropToken}-${oldOptimizer}/`,
@@ -156,6 +158,8 @@ const blogPostFunction = read(src("functions/blog/post/index.js"));
 const blogPostPage = read(dist("blog/post/index.html"));
 const blogPostApi = read(src("functions/api/blog-post.js"));
 const blogDraftApi = read(src("functions/api/blog-draft.js"));
+const blogAuthLib = read(src("functions/lib/blog-auth.js"));
+const blogAuthApi = read(src("functions/api/blog-auth.js"));
 const lineWebhook = read(src("functions/api/line-webhook.js"));
 const aiPrGuard = read(src(".github/workflows/ai-pr-guard.yml"));
 const lineMaintenanceWorkflow = read(src(".github/workflows/line-maintenance-report.yml"));
@@ -183,6 +187,7 @@ checks.push(["middleware redirects old tools services paths", middleware.include
 checks.push(["middleware blocks direct theme zip downloads", middleware.includes("PROTECTED_THEME_ZIP") && middleware.includes("X-Robots-Tag") && middleware.includes("no-store") && gitignore.includes("*.zip")]);
 checks.push(["blog admin page is reachable behind page login", blogAdminGate.includes("context.next()") && blogAdminGate.includes("noindex") && !blogAdminGate.includes("ADMIN_KEY")]);
 checks.push(["blog admin validates pin server side", blogAdmin.includes("/api/blog-auth") && blogAdmin.includes("SESSION_PIN_KEY") && !blogAdmin.includes("localStorage.setItem(PIN_KEY")]);
+checks.push(["blog admin has no hardcoded fallback password", !blogAdmin.includes(oldBlogPin) && !blogAuthLib.includes(`"${oldBlogPin}"`) && !blogAuthLib.includes(oldPasswordHeader) && blogAuthApi.includes("blog_pin_not_configured") && blogAdminGate.includes("no-store") && blogAdminGate.includes("X-Frame-Options")]);
 checks.push(["blog image uploads convert to one webp", blogAdmin.includes("convertToSingleWebp") && blogAdmin.includes("canvas.toBlob(resolve, 'image/webp'") && blogImageFunction.includes('const ALLOWED_TYPES = ["image/webp"]') && blogImageFunction.includes(".webp`")]);
 checks.push(["blog images are stable and lazy", blogAdmin.includes('width="${image.width}"') && blogAdmin.includes('height="${image.height}"') && blogPostFunction.includes("enhanceArticleImages") && blogPostFunction.includes('loading="lazy"') && blogPostPage.includes("enhanceArticleImages") && blogPostApi.includes("autoExcerpt")]);
 checks.push(["blog drafts are stored server side and removed on publish", blogDraftApi.includes("draft:") && blogDraftApi.includes("DRAFT_TTL_SECONDS") && blogDraftApi.includes("imageUrls") && blogDraftApi.includes("X-Robots-Tag") && blogPostApi.includes("draftId") && blogPostApi.includes("kv.delete(`draft:${draftId}`)")]);

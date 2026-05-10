@@ -9,13 +9,11 @@ export async function onRequestPost(context) {
     if (!kv) return json({ error: "BLOG_KV is not configured" }, 500, context.request);
 
     const requestPin = String(
-      context.request.headers.get("x-yohelab-pin") ||
-      context.request.headers.get("x-yohelab-password") ||
-      "",
+      context.request.headers.get("x-yohelab-pin") || "",
     ).trim();
 
     const storedPin = getBlogPin(context.env);
-    if (!isValidPin(requestPin) || !timingSafeEqual(requestPin, storedPin)) {
+    if (!isValidPin(storedPin) || !isValidPin(requestPin) || !timingSafeEqual(requestPin, storedPin)) {
       return json({ error: "unauthorized" }, 401, context.request);
     }
 
@@ -72,7 +70,7 @@ export async function onRequestDelete(context) {
       context.request.headers.get("x-yohelab-pin") || "",
     ).trim();
     const storedPin = getBlogPin(context.env);
-    if (!isValidPin(requestPin) || !timingSafeEqual(requestPin, storedPin)) {
+    if (!isValidPin(storedPin) || !isValidPin(requestPin) || !timingSafeEqual(requestPin, storedPin)) {
       return json({ error: "unauthorized" }, 401, context.request);
     }
 
@@ -198,7 +196,7 @@ function corsHeaders(request) {
   return {
     "Access-Control-Allow-Origin": allowedOrigin(origin),
     "Access-Control-Allow-Methods": "POST, DELETE, OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type, x-yohelab-pin, x-yohelab-password",
+    "Access-Control-Allow-Headers": "Content-Type, x-yohelab-pin",
     Vary: "Origin",
   };
 }

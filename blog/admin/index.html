@@ -325,10 +325,9 @@
       });
       const type = res.headers.get('content-type') || '';
       if (res.ok && type.includes('application/json')) return true;
-      if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') return pin === '1030';
       return false;
     } catch {
-      return (location.hostname === 'localhost' || location.hostname === '127.0.0.1') && pin === '1030';
+      return false;
     }
   }
 
