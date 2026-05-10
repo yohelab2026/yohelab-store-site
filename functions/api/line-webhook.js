@@ -85,6 +85,10 @@ function copilotInstructions() {
     "Do not edit human review required areas. If the issue requires them, explain the risk in the PR and keep the PR draft.",
     "Do not use unsafe claims such as AI検索に出る, AI検索最適化済み, AIに拾われる, 必ず売れる, or 順位が上がる.",
     "Prefer safe wording such as AI検索時代の記事構造 and 読み取りやすい本文構造.",
+    "For blog creation or rewrite issues, if images are requested, create suitable original blog images or diagrams as part of the PR.",
+    "Do not use copyrighted stock images. Prefer lightweight original SVG/WebP/HTML-rendered diagrams that match よへラボ and 文標.",
+    "For each image, include alt text, intended insertion position, image purpose, and keep it optimized with width/height plus lazy loading where it is embedded.",
+    "If image generation is not available, create a simple original SVG diagram or blog card style visual in the repository and explain it in the PR.",
     "When the issue contains a selected LINE option, implement that selected option only.",
     "Run npm run build and npm run test:smoke before finishing.",
   ].join("\n");
@@ -127,14 +131,19 @@ const QUESTION_FLOWS = {
   1: [
     ["記事テーマ", "記事テーマは何にする？"],
     ["読む人", "読む人は誰にする？ 例: WordPress初心者、個人事業主、ブログ初心者"],
-    ["画像数", "画像は何個入れる？ 0 / 1 / 3 / 5 から選んで。"],
+    ["画像数", "画像は何個入れる？ 0 / 1 / 3 / 5 / おまかせ"],
+    ["画像タイプ", "画像タイプは？ アイキャッチ / 図解 / 操作イメージ / 比較表風 / おまかせ / なし"],
+    ["画像の雰囲気", "画像の雰囲気は？ 文標っぽく / やわらかい / 実務寄り / シンプル / おまかせ / なし"],
+    ["画像の入れ方", "画像はどこに入れる？ 冒頭だけ / セクションごと / 本文内に自然に / おまかせ / なし"],
     ["文字量", "文字量はどうする？ 短め / 標準 / 長め"],
     ["CTA", "最後の誘導はどれにする？ 文標購入 / デモを見る / 問い合わせ / なし"],
   ],
   2: [
     ["対象URLまたは記事名", "リライトする記事のURLか記事名を送って。"],
     ["目的", "目的はどれ？ 読みやすく / 売れる導線 / SEO/AIO / 古い情報修正"],
-    ["画像追加", "画像は増やす？ なし / 1枚 / 3枚"],
+    ["画像追加", "画像は増やす？ なし / 1枚 / 3枚 / おまかせ"],
+    ["画像タイプ", "画像タイプは？ アイキャッチ / 図解 / 操作イメージ / 比較表風 / おまかせ / なし"],
+    ["画像の雰囲気", "画像の雰囲気は？ 文標っぽく / やわらかい / 実務寄り / シンプル / おまかせ / なし"],
     ["残したい表現", "残したい表現はある？ なければ「なし」でOK。"],
     ["消したい表現", "消したい表現はある？ なければ「なし」でOK。"],
   ],
@@ -143,12 +152,15 @@ const QUESTION_FLOWS = {
     ["投稿数", "投稿数は？ 1 / 3 / 5 / 10"],
     ["トーン", "トーンは？ やわらかめ / 強め / 実務寄り / 開発ログ風"],
     ["画像", "画像は入れる？ なし / 1枚 / カルーセル案"],
+    ["画像タイプ", "画像タイプは？ アイキャッチ風 / 図解 / 操作イメージ / カルーセル構成 / おまかせ / なし"],
+    ["画像の雰囲気", "画像の雰囲気は？ 文標っぽく / やわらかい / 実務寄り / シンプル / おまかせ / なし"],
     ["リンク先", "リンク先は？ トップ / 文標LP / デモ / ブログ"],
   ],
   4: [
     ["やりたいこと", "やりたいことをそのまま送って。"],
     ["目的", "目的は何？ 売上 / 分かりやすさ / SEO/AIO / デザイン / その他"],
     ["画像", "画像は必要？ なし / 1枚 / 複数"],
+    ["画像の雰囲気", "画像の雰囲気は？ 文標っぽく / やわらかい / 実務寄り / シンプル / おまかせ / なし"],
   ],
 };
 
