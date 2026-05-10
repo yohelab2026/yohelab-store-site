@@ -14,6 +14,10 @@ export async function onRequestGet(context) {
 function json(body, status = 200) {
   return new Response(JSON.stringify(body), {
     status,
-    headers: { "Content-Type": "application/json; charset=utf-8" },
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+      "Cache-Control": "public, max-age=60, s-maxage=300",
+      "X-Robots-Tag": "noindex, follow",
+    },
   });
 }

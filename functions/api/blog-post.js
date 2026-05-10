@@ -49,6 +49,11 @@ export async function onRequestPost(context) {
       metadata: { title: effectiveTitle, date, excerpt, slug: effectiveSlugRaw, eyecatch: eyecatch || "" },
     });
 
+    const draftId = sanitizeDraftId(body?.draftId);
+    if (draftId) {
+      await kv.delete(`draft:${draftId}`);
+    }
+
     return json({ ok: true, slug, post }, 200, context.request);
   } catch (error) {
     return json({ error: error?.message || "unexpected_error" }, 500, context.request);
@@ -138,6 +143,11 @@ function sanitizeSlug(value) {
       .replace(/^-+|-+$/g, "")
       .slice(0, 80) || fallback
   );
+}
+
+function sanitizeDraftId(value) {
+  const text = String(value || "").trim();
+  return /^[a-z0-9._-]{6,80}$/i.test(text) ? text : "";
 }
 
 function sanitizeDate(value) {

@@ -105,6 +105,13 @@
     .btn-del { font-size:12px;padding:5px 10px;color:#ef4444;border-color:#ef4444;border-radius:8px;border:1px solid;background:none;cursor:pointer; }
     .btn-del:hover { background:#fef2f2; }
     .btn-view { font-size:12px;padding:5px 10px;color:var(--green);font-weight:700;text-decoration:none; }
+    .draft-list-item { display:flex;align-items:center;gap:12px;padding:12px 14px;background:#fff;border-radius:12px;border:1px solid var(--border); }
+    .draft-list-item .info { flex:1;min-width:0; }
+    .draft-list-item .info strong { display:block;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+    .draft-list-item .info span { font-size:12px;color:var(--muted); }
+    .draft-list-item .actions { display:flex;gap:8px;flex-shrink:0; }
+    .btn-open-draft { font-size:12px;padding:5px 10px;color:var(--green);border:1px solid var(--green);border-radius:8px;background:#fff;font-weight:700;cursor:pointer; }
+    .btn-open-draft:hover { background:#f0f8f4; }
 
     @media (max-width: 600px) {
       .toolbar { top:53px; }
@@ -212,6 +219,20 @@
       </div>
     </div>
 
+    <!-- サーバー下書き一覧 -->
+    <div style="width:min(760px,100% - 32px);margin:0 auto 40px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+        <div>
+          <h2 style="font-size:20px;font-weight:900;">サーバー下書き</h2>
+          <p style="font-size:13px;color:var(--muted);margin-top:4px;">画像URLも本文と一緒に保存。公開すると元の下書きは消えます。</p>
+        </div>
+        <button class="btn btn-outline" id="refresh-drafts" type="button">更新</button>
+      </div>
+      <div id="draft-list" style="display:grid;gap:10px;">
+        <p style="color:var(--muted);font-size:14px;">読み込み中...</p>
+      </div>
+    </div>
+
     <!-- 投稿済み記事一覧 -->
     <div style="width:min(760px,100% - 32px);margin:0 auto 80px;">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
@@ -250,7 +271,9 @@
   const slugEl     = document.getElementById('slug');
   const eyecatchEl = document.getElementById('eyecatch');
   const statusEl   = document.getElementById('status');
+  const draftListEl = document.getElementById('draft-list');
   const postListEl = document.getElementById('post-list');
+  let activeDraftId = '';
 
   // ── 認証 ────────────────────────────────────────────────────
   const loginView  = document.getElementById('login-view');
@@ -264,6 +287,7 @@
 
   if (sessionStorage.getItem(SESSION_KEY)) {
     document.body.classList.add('is-unlocked');
+    loadDraftList();
     loadPostList();
   } else {
     showLock();
@@ -278,7 +302,7 @@
     sessionStorage.setItem(SESSION_KEY, '1');
     sessionStorage.setItem(SESSION_PIN_KEY, input);
     document.body.classList.add('is-unlocked');
-    setTimeout(loadPostList, 200);
+    setTimeout(() => { loadDraftList(); loadPostList(); }, 200);
   }
   document.getElementById('unlock-admin').addEventListener('click', handleLogin);
   adminPinEl.addEventListener('keydown', e => { if(e.key==='Enter') handleLogin(); });
@@ -468,6 +492,7 @@
   // ── 下書き（localStorage） ───────────────────────────────
   function saveDraftLocal() {
     localStorage.setItem('yohelab.blog.draft', JSON.stringify({
+      draftId: activeDraftId,
       title: titleEl.value,
       bodyHtml: bodyEl.innerHTML,
       excerpt: excerptEl.value,
@@ -486,6 +511,7 @@
   try {
     const d = JSON.parse(localStorage.getItem('yohelab.blog.draft') || 'null');
     if (d) {
+      activeDraftId = d.draftId || '';
       titleEl.value = d.title || '';
       bodyEl.innerHTML = d.bodyHtml || '';
       excerptEl.value = d.excerpt || '';
@@ -501,10 +527,42 @@
     }
   } catch {}
 
-  document.getElementById('save-draft').addEventListener('click', () => {
-    saveDraftLocal(); statusEl.textContent = '下書きを保存した ✓';
+  function editorPayload() {
+    return {
+      draftId: activeDraftId || undefined,
+      title: titleEl.value.trim(),
+      slug: slugEl.value.trim(),
+      excerpt: excerptEl.value.trim(),
+      bodyHtml: bodyEl.innerHTML,
+      body: bodyEl.innerText.trim(),
+      tags: tagsEl.value.split(',').map(v=>v.trim()).filter(Boolean),
+      eyecatch: eyecatchEl.value.trim() || undefined,
+    };
+  }
+
+  async function saveDraftServer() {
+    saveDraftLocal();
+    const pin = currentPin();
+    if (!pin) { statusEl.textContent = 'ログインし直してください。'; return; }
+    statusEl.textContent = '下書きをサーバーに保存中...';
+    const res = await fetch('/api/blog-draft', {
+      method: 'POST',
+      headers: { 'Content-Type':'application/json','X-Yohelab-Pin': pin },
+      body: JSON.stringify(editorPayload()),
+    });
+    const data = await res.json().catch(()=>({}));
+    if (!res.ok) {
+      statusEl.textContent = data.error || '下書き保存に失敗した。';
+      return;
+    }
+    activeDraftId = data.draftId || '';
+    saveDraftLocal();
+    statusEl.textContent = 'サーバー下書きを保存した ✓';
+    loadDraftList();
     setTimeout(() => statusEl.textContent='下書き中', 2000);
-  });
+  }
+
+  document.getElementById('save-draft').addEventListener('click', saveDraftServer);
 
   // ── 公開 ──────────────────────────────────────────────────
   function makeSlug(text) {
@@ -522,6 +580,7 @@
     if (!title && !eyecatch) { statusEl.textContent='タイトルか画像のどちらかを入れてください。'; return; }
     statusEl.textContent = '公開中...';
     const post = {
+      draftId: activeDraftId || undefined,
       title,
       slug: slugEl.value.trim() || makeSlug(title),
       date: new Date().toISOString().slice(0,10),
@@ -546,13 +605,105 @@
     titleEl.value=''; bodyEl.innerHTML=''; excerptEl.value=''; tagsEl.value=''; slugEl.value='';
     eyecatchEl.value=''; coverImg.src=''; coverPreview.style.display='none'; coverDrop.style.display=''; coverFile.value='';
     titleEl.style.height='auto';
+    activeDraftId = '';
     localStorage.removeItem('yohelab.blog.draft');
     statusEl.textContent='公開した ✓';
     setTimeout(()=>statusEl.textContent='下書き中', 3000);
+    loadDraftList();
     loadPostList();
   }
 
   document.getElementById('post-btn').addEventListener('click', publish);
+
+  // ── サーバー下書き一覧 ───────────────────────────────────
+  async function loadDraftList() {
+    if (!draftListEl) return;
+    const pin = currentPin();
+    if (!pin) return;
+    draftListEl.innerHTML='<p style="color:var(--muted);font-size:14px;">読み込み中...</p>';
+    try {
+      const res = await fetch('/api/blog-draft', { headers: { 'X-Yohelab-Pin': pin } });
+      const data = await res.json().catch(()=>({}));
+      const drafts = data.drafts || [];
+      if (!drafts.length) {
+        draftListEl.innerHTML='<p style="color:var(--muted);font-size:14px;">サーバー下書きはありません。</p>';
+        return;
+      }
+      draftListEl.innerHTML = drafts.map(d=>`
+        <div class="draft-list-item">
+          <div class="info">
+            <strong>${escHtml(d.title||'無題の下書き')}</strong>
+            <span>${d.updatedAt ? new Date(d.updatedAt).toLocaleString('ja-JP') : ''}</span>
+          </div>
+          <div class="actions">
+            <button class="btn-open-draft" type="button" onclick="openDraft('${escHtml(d.draftId)}')">開く</button>
+            <button class="btn-del" type="button" onclick="deleteDraft('${escHtml(d.draftId)}',this)">削除</button>
+          </div>
+        </div>
+      `).join('');
+    } catch {
+      draftListEl.innerHTML='<p style="color:#ef4444;font-size:14px;">下書きの読み込みに失敗。</p>';
+    }
+  }
+
+  async function openDraft(draftId) {
+    const pin = currentPin();
+    if (!pin || !draftId) return;
+    statusEl.textContent = '下書きを開いています...';
+    const res = await fetch(`/api/blog-draft?id=${encodeURIComponent(draftId)}`, { headers: { 'X-Yohelab-Pin': pin } });
+    const data = await res.json().catch(()=>({}));
+    if (!res.ok || !data.draft) {
+      statusEl.textContent = data.error || '下書きを開けませんでした。';
+      return;
+    }
+    fillEditor(data.draft);
+    statusEl.textContent = '下書きを開いた ✓';
+    setTimeout(() => statusEl.textContent='下書き中', 2000);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  async function deleteDraft(draftId, btn) {
+    if (!confirm('この下書きを削除しますか？')) return;
+    const pin = currentPin();
+    if (!pin || !draftId) return;
+    btn.textContent='削除中...'; btn.disabled=true;
+    const res = await fetch('/api/blog-draft', {
+      method:'DELETE',
+      headers:{'Content-Type':'application/json','X-Yohelab-Pin':pin},
+      body: JSON.stringify({draftId}),
+    });
+    if (res.ok) {
+      if (activeDraftId === draftId) {
+        activeDraftId = '';
+        saveDraftLocal();
+      }
+      loadDraftList();
+    } else {
+      btn.textContent='失敗'; btn.disabled=false;
+    }
+  }
+
+  function fillEditor(post) {
+    activeDraftId = post.draftId || '';
+    titleEl.value = post.title || '';
+    bodyEl.innerHTML = post.bodyHtml || '';
+    excerptEl.value = post.excerpt || '';
+    tagsEl.value = Array.isArray(post.tags) ? post.tags.join(', ') : '';
+    slugEl.value = post.slug || '';
+    eyecatchEl.value = post.eyecatch || '';
+    if (post.eyecatch) {
+      coverImg.src = post.eyecatch;
+      coverDrop.style.display = 'none';
+      coverPreview.style.display = '';
+    } else {
+      coverImg.src = '';
+      coverDrop.style.display = '';
+      coverPreview.style.display = 'none';
+    }
+    titleEl.style.height = 'auto';
+    titleEl.style.height = titleEl.scrollHeight + 'px';
+    saveDraftLocal();
+  }
 
   // ── 投稿一覧 & 削除 ───────────────────────────────────────
   async function loadPostList() {
@@ -571,7 +722,7 @@
           </div>
           <div class="actions">
             <a class="btn-view" href="/blog/post/?slug=${encodeURIComponent(p.slug)}" target="_blank">表示</a>
-            <button class="btn-del" type="button" onclick="deletePost('${escHtml(p.kvKey)}',this)">削除</button>
+            <button class="btn-del" type="button" onclick="deletePost('${escHtml(p.slug)}',this)">削除</button>
           </div>
         </div>
       `).join('');
@@ -593,6 +744,7 @@
   }
 
   document.getElementById('refresh-posts').addEventListener('click', loadPostList);
+  document.getElementById('refresh-drafts').addEventListener('click', loadDraftList);
 
   function escHtml(str) {
     return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');

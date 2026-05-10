@@ -15,6 +15,12 @@ const RETIRED_REDIRECTS = new Map([
   ["/tools/", "/lp/bunsirube/"],
   ["/services", "/lp/bunsirube/demo/"],
   ["/services/", "/lp/bunsirube/demo/"],
+  ["/blog/yohelab-blog-start", "/blog/"],
+  ["/blog/yohelab-blog-start/", "/blog/"],
+  ["/blog/starter-kit", "/blog/"],
+  ["/blog/starter-kit/", "/blog/"],
+  ["/blog/theme-note", "/blog/"],
+  ["/blog/theme-note/", "/blog/"],
 ]);
 
 const PROTECTED_THEME_ZIP = /^\/bunsirube(?:-child)?(?:-[0-9][0-9.]+)?\.zip$/i;

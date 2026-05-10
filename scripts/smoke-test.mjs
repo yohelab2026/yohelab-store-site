@@ -91,8 +91,6 @@ checks.push(["footer is unified across public pages", footerPages.every((page) =
 const legacyNavHtml = [
   read(dist("404.html")),
   read(dist("blog/bunsirube-before-install/index.html")),
-  read(dist("blog/starter-kit/index.html")),
-  read(dist("blog/theme-note/index.html")),
   read(dist("lp/bunsirube/demo/index.html")),
   read(dist("pro/activate-pending/index.html")),
 ].join("\n");
@@ -157,6 +155,7 @@ const blogImageFunction = read(src("functions/api/blog-image.js"));
 const blogPostFunction = read(src("functions/blog/post/index.js"));
 const blogPostPage = read(dist("blog/post/index.html"));
 const blogPostApi = read(src("functions/api/blog-post.js"));
+const blogDraftApi = read(src("functions/api/blog-draft.js"));
 const lineWebhook = read(src("functions/api/line-webhook.js"));
 const aiPrGuard = read(src(".github/workflows/ai-pr-guard.yml"));
 const lineMaintenanceWorkflow = read(src(".github/workflows/line-maintenance-report.yml"));
@@ -186,6 +185,10 @@ checks.push(["blog admin page is reachable behind page login", blogAdminGate.inc
 checks.push(["blog admin validates pin server side", blogAdmin.includes("/api/blog-auth") && blogAdmin.includes("SESSION_PIN_KEY") && !blogAdmin.includes("localStorage.setItem(PIN_KEY")]);
 checks.push(["blog image uploads convert to one webp", blogAdmin.includes("convertToSingleWebp") && blogAdmin.includes("canvas.toBlob(resolve, 'image/webp'") && blogImageFunction.includes('const ALLOWED_TYPES = ["image/webp"]') && blogImageFunction.includes(".webp`")]);
 checks.push(["blog images are stable and lazy", blogAdmin.includes('width="${image.width}"') && blogAdmin.includes('height="${image.height}"') && blogPostFunction.includes("enhanceArticleImages") && blogPostFunction.includes('loading="lazy"') && blogPostPage.includes("enhanceArticleImages") && blogPostApi.includes("autoExcerpt")]);
+checks.push(["blog drafts are stored server side and removed on publish", blogDraftApi.includes("draft:") && blogDraftApi.includes("DRAFT_TTL_SECONDS") && blogDraftApi.includes("imageUrls") && blogDraftApi.includes("X-Robots-Tag") && blogPostApi.includes("draftId") && blogPostApi.includes("kv.delete(`draft:${draftId}`)")]);
+checks.push(["blog admin saves server drafts", blogAdmin.includes("/api/blog-draft") && blogAdmin.includes("サーバー下書き") && blogAdmin.includes("loadDraftList") && blogAdmin.includes("openDraft") && blogAdmin.includes("deleteDraft")]);
+checks.push(["test blog posts are removed from public index and sitemap", !read(dist("blog/index.html")).includes("yohelab-blog-start") && !read(dist("blog/index.html")).includes("starter-kit") && !read(dist("blog/index.html")).includes("theme-note") && !sitemap.includes("/blog/yohelab-blog-start/") && !sitemap.includes("/blog/starter-kit/") && !sitemap.includes("/blog/theme-note/")]);
+checks.push(["middleware redirects removed test blog pages", middleware.includes('"/blog/yohelab-blog-start/"') && middleware.includes('"/blog/starter-kit/"') && middleware.includes('"/blog/theme-note/"')]);
 checks.push(["blog post sanitizes dangerous html server side", blogPostFunction.includes("sanitizeBodyHtml") && blogPostFunction.includes("iframe|object|embed") && blogPostFunction.includes("javascript:") && blogPostFunction.includes("data:text") && blogPostFunction.includes("vbscript:")]);
 checks.push(["blog post sanitizes dangerous html client fallback", blogPostPage.includes("sanitizeBodyHtml") && blogPostPage.includes("iframe|object|embed") && blogPostPage.includes("javascript:") && blogPostPage.includes("data:text") && blogPostPage.includes("vbscript:")]);
 checks.push(["bunsirube lp links to separate update history", bunsirubeLp.includes("最新の更新") && bunsirubeLp.includes("/lp/bunsirube/updates/") && !bunsirubeLp.includes("2026.05.03 / v0.2.0") && bunsirubeLp.includes("自動アップデート用シリアル")]);
