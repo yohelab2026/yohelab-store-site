@@ -122,7 +122,7 @@ function render(posts, hasLink = true) {
           <div class="post-card-preview"></div>
           <div class="post-card-footer">
             <button class="read-more" type="button" data-action="toggle">続きを読む</button>
-            ${hasLink ? `<a class="open-link" href="${url}">記事ページへ →</a>` : ''}
+            ${hasLink ? `<a class="open-link" href="${url}">${esc(post.title)}を読む →</a>` : ''}
           </div>
         </div>
       </article>
