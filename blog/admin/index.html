@@ -263,6 +263,7 @@
   // ── 定数・要素 ──────────────────────────────────────────────
   const SESSION_KEY = 'yohelab.blog.sess';
   const SESSION_PIN_KEY = 'yohelab.blog.pin.session';
+  const SAVED_PIN_KEY = 'yohelab.blog.pin.saved';
 
   const titleEl    = document.getElementById('title');
   const bodyEl     = document.getElementById('body');
@@ -285,6 +286,12 @@
     adminPinEl.focus();
   }
 
+  const savedPin = readSavedPin();
+  if (savedPin) {
+    sessionStorage.setItem(SESSION_KEY, '1');
+    sessionStorage.setItem(SESSION_PIN_KEY, savedPin);
+  }
+
   if (sessionStorage.getItem(SESSION_KEY)) {
     document.body.classList.add('is-unlocked');
     loadDraftList();
@@ -301,6 +308,7 @@
     if (!ok) { lockStatusEl.textContent='パスワードが違う。'; adminPinEl.value=''; adminPinEl.focus(); return; }
     sessionStorage.setItem(SESSION_KEY, '1');
     sessionStorage.setItem(SESSION_PIN_KEY, input);
+    savePinForThisBrowser(input);
     document.body.classList.add('is-unlocked');
     setTimeout(() => { loadDraftList(); loadPostList(); }, 200);
   }
@@ -310,6 +318,7 @@
   document.getElementById('logout-admin').addEventListener('click', () => {
     sessionStorage.removeItem(SESSION_KEY);
     sessionStorage.removeItem(SESSION_PIN_KEY);
+    localStorage.removeItem(SAVED_PIN_KEY);
     document.body.classList.remove('is-unlocked');
     adminPinEl.value='';
     lockStatusEl.textContent='ログアウトした。';
@@ -333,6 +342,23 @@
 
   function currentPin() {
     return (sessionStorage.getItem(SESSION_PIN_KEY) || '').trim();
+  }
+
+  function savePinForThisBrowser(pin) {
+    try {
+      localStorage.setItem(SAVED_PIN_KEY, btoa(`pin:${pin}`));
+    } catch (_) {}
+  }
+
+  function readSavedPin() {
+    try {
+      const raw = localStorage.getItem(SAVED_PIN_KEY) || '';
+      const decoded = raw ? atob(raw) : '';
+      const pin = decoded.startsWith('pin:') ? decoded.slice(4) : '';
+      return /^\d{4}$/.test(pin) ? pin : '';
+    } catch (_) {
+      return '';
+    }
   }
 
   // ── タイトル auto-resize ────────────────────────────────────

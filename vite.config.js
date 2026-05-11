@@ -77,6 +77,7 @@ export default defineConfig({
         blogResearchWriterFreeFlow: "blog/research-writer-free-flow/index.html",
         blogBunsirubeBeforeInstall: "blog/bunsirube-before-install/index.html",
         blogFreeThemeVsBunsirube: "blog/free-theme-vs-bunsirube/index.html",
+        blogBunsirubeVersionHistory: "blog/bunsirube-version-history/index.html",
         blogComparisonArticleTemplate: "blog/comparison-article-template/index.html",
         blogFaqSourceAiSearch: "blog/faq-source-ai-search/index.html",
         blogSalesPageCommonMistakes: "blog/sales-page-common-mistakes/index.html",

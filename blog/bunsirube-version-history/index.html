@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>文標のバージョンアップ履歴：最初のベータから今までに良くしたこと | よへラボブログ</title>
+  <meta name="description" content="WordPressテーマ「文標」の最初のベータからv0.3.3までの更新履歴。何を追加し、何を良くし、どんな不安を減らしてきたかを読みやすくまとめました。" />
+  <meta property="og:title" content="文標のバージョンアップ履歴：最初のベータから今までに良くしたこと | よへラボブログ" />
+  <meta property="og:description" content="文標の更新内容を、機能追加・事故防止・サポート表記の整理に分けてまとめました。" />
+  <meta property="og:type" content="article" />
+  <meta property="og:locale" content="ja_JP" />
+  <meta property="og:url" content="https://yohelab.com/blog/bunsirube-version-history/" />
+  <meta property="og:image" content="https://yohelab.com/assets/blog/bunsirube-version-history/bunsirube-history-cover.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1" />
+  <link rel="canonical" href="https://yohelab.com/blog/bunsirube-version-history/" />
+  <link rel="icon" type="image/png" href="/yohelab-icon-32.png" />
+  <link rel="stylesheet" href="/shared/site.min.css" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BlogPosting","headline":"文標のバージョンアップ履歴：最初のベータから今までに良くしたこと","datePublished":"2026-05-12","dateModified":"2026-05-12","url":"https://yohelab.com/blog/bunsirube-version-history/","image":"https://yohelab.com/assets/blog/bunsirube-version-history/bunsirube-history-cover.png","author":{"@type":"Organization","name":"よへラボ"},"publisher":{"@type":"Organization","name":"よへラボ","logo":{"@type":"ImageObject","url":"https://yohelab.com/yohelab-icon.png"}},"description":"WordPressテーマ文標の更新履歴を、機能追加・事故防止・サポート範囲の整理に分けてまとめた記事。","inLanguage":"ja-JP"}
+  </script>
+  <style>
+    body { background:#fff;color:var(--text); }
+    .post-outer { max-width:860px;margin:0 auto;padding:48px 24px 100px; }
+    .post-meta { display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-bottom:18px; }
+    .post-tag { background:#f0f8f4;color:var(--green-dark,#075c4c);border-radius:999px;padding:3px 12px;font-size:12px;font-weight:700; }
+    .post-title { font-size:clamp(30px,5.4vw,58px);font-weight:900;line-height:1.12;margin-bottom:20px;color:var(--text);letter-spacing:-.05em; }
+    .post-excerpt { font-size:18px;color:var(--muted);line-height:1.9;margin-bottom:28px; }
+    .hero-img, .body-img { width:100%;height:auto;border-radius:18px;border:1px solid var(--border);display:block;background:#f8fbf9; }
+    .hero-img { margin:18px 0 36px; }
+    .body-img { margin:24px 0 28px; }
+    .post-body { font-size:17px;line-height:2;color:var(--text); }
+    .post-body h2 { font-size:30px;line-height:1.35;margin:42px 0 16px;letter-spacing:-.04em; }
+    .post-body p, .post-body li { margin-bottom:16px; }
+    .version-grid { display:grid;gap:12px;margin:18px 0 28px; }
+    .version-card { background:#fff;border:1px solid var(--border);border-radius:18px;padding:16px 18px;box-shadow:var(--shadow-xs); }
+    .version-card strong { display:block;font-size:18px;margin-bottom:6px; }
+    .version-card span { color:var(--muted);line-height:1.85; }
+    .check { background:#f8fbff;border:1px solid #dce7fb;border-radius:18px;padding:18px;margin:18px 0; }
+    .back-link { display:inline-flex;align-items:center;gap:6px;color:var(--muted);font-size:14px;font-weight:700;text-decoration:none;margin-top:40px; }
+  </style>
+</head>
+<body>
+  <header class="nav"><div class="nav-inner"><a class="brand" href="/"><img src="/yohelab-icon.webp" alt="よへラボ" /><span>よへラボ</span></a><nav class="nav-links"><a href="/lp/bunsirube/">文標</a><a href="/lp/bunsirube/demo/">デモ</a><a href="/blog/">ブログ</a><a href="/contact/">問い合わせ</a></nav></div></header>
+  <main class="post-outer">
+    <div class="post-meta"><span>2026-05-12</span><span class="post-tag">文標</span><span class="post-tag">更新履歴</span><span class="post-tag">WordPress</span></div>
+    <h1 class="post-title">文標のバージョンアップ履歴：最初のベータから今までに良くしたこと</h1>
+    <p class="post-excerpt">文標は、いきなり完成品として置いたテーマではありません。最初のベータから、記事を書く前の迷い、公開前の不安、購入後の分かりにくさを一つずつ減らしてきました。</p>
+    <img class="hero-img" src="/assets/blog/bunsirube-version-history/bunsirube-history-cover.png" alt="文標は少しずつ事故を減らしてきたという図解" width="1600" height="900" />
+
+    <div class="post-body">
+      <p>文標の更新履歴は、ただの数字の一覧だけだと分かりにくいです。</p>
+      <p>なのでこの記事では、「何を追加したか」「どう良くなったか」「何の不安を減らしたか」が分かるように、最初のベータから順にまとめます。</p>
+      <p>大きく分けると、文標はこの流れで育てています。</p>
+
+      <div class="check"><strong>文標が目指している方向</strong><br />派手な機能を増やすより、比較記事・レビュー記事・FAQ記事を迷わず書き始められて、公開前に事故を減らせるWordPressテーマにすること。</div>
+
+      <h2>初期ベータ：記事を書くための土台を作った</h2>
+      <img class="body-img" src="/assets/blog/bunsirube-version-history/bunsirube-history-early.png" alt="文標の初期ベータは記事の型を作るところから始めたという図解" width="1600" height="900" loading="lazy" decoding="async" />
+      <p>一番最初の文標は、記事テンプレート、FAQ、構造化データ、llms.txt、内部解析、自動アップデート用シリアルを購入内容にまとめたところから始まりました。</p>
+      <p>v0.1系では、CTAボックス、bunsirube_ショートコード、目次ID保護、SEOプラグイン検出、投稿画面のCTA挿入ボタン、FAQ JSON-LD抽出などを追加しました。</p>
+      <p>この頃に良くなったのは、「記事の最後に何を置くか」「FAQをどう本文に入れるか」「テーマの更新をどう受け取るか」が見えやすくなったことです。</p>
+
+      <div class="version-grid">
+        <div class="version-card"><strong>v0.1.5</strong><span>CTAボックス、ショートコード、目次ID保護、SEOプラグイン検出、バージョン付きZIPを追加。</span></div>
+        <div class="version-card"><strong>v0.1.6</strong><span>投稿画面からCTAを入れやすくし、FAQ JSON-LD抽出と更新確認まわりを調整。</span></div>
+        <div class="version-card"><strong>v0.1.7</strong><span>スクリーンショット表記、CTA例、SEO出力まとめOFF、更新情報再取得ボタンを追加。</span></div>
+      </div>
+
+      <h2>v0.2系：比較表と導線確認を強くした</h2>
+      <img class="body-img" src="/assets/blog/bunsirube-version-history/bunsirube-history-middle.png" alt="文標のv0.2系は比較表と導線確認を強くしたという図解" width="1600" height="900" loading="lazy" decoding="async" />
+      <p>v0.2.0では、比較表カード、CTA・比較表クリックの導線解析、投稿前チェック強化、比較表カード挿入ボタンを追加しました。</p>
+      <p>この更新で、読まれて終わりではなく、CTAや比較表が押されているかを小さく確認しやすくなりました。</p>
+      <p>その後のv0.2系では、ライセンス未認証時の空更新通知を防いだり、仮文言警告、記事名つき導線クリック表示、比較表カードのsponsored/別タブ設定、URLだけの行をブログカード化する機能を足しました。</p>
+
+      <div class="version-grid">
+        <div class="version-card"><strong>v0.2.0</strong><span>比較表カード、導線解析、投稿前チェック、比較表挿入ボタンを追加。</span></div>
+        <div class="version-card"><strong>v0.2.1 - v0.2.3</strong><span>投稿前チェック、記事別クリック表示、例文警告、ライセンス未認証時の更新通知を改善。</span></div>
+        <div class="version-card"><strong>v0.2.4 - v0.2.6</strong><span>mbstringなし環境対応、ブログカード化、LPと法務表記の整理を追加。</span></div>
+        <div class="version-card"><strong>v0.2.7 - v0.2.9</strong><span>子テーマ、名前の統一、SEO重複・二重キャッシュ・旧ショートコード確認を追加。</span></div>
+      </div>
+
+      <h2>v0.3系：サーバー設定とサポート範囲を整理した</h2>
+      <img class="body-img" src="/assets/blog/bunsirube-version-history/bunsirube-history-latest.png" alt="文標のv0.3系は復元や子テーマやサポート範囲を整えたという図解" width="1600" height="900" loading="lazy" decoding="async" />
+      <p>v0.3.0では、管理画面に.htaccess編集画面を追加しました。保存前の自動バックアップ、復元、編集可否チェックを入れて、サーバー設定変更の事故を減らせるようにしています。</p>
+      <p>v0.3.1では、管理画面へ入れない場合の復元注意とバックアップダウンロードを追加しました。v0.3.2では、theme.jsonのカラーパレット、グラデーション、フォントサイズを拡張しました。</p>
+      <p>v0.3.3では、サポート表記を整理しました。導入代行、初期設定代行、使い方相談、個別カスタマイズは含めない代わりに、買い切り価格を抑えていることを明記しています。</p>
+
+      <div class="version-grid">
+        <div class="version-card"><strong>v0.3.0</strong><span>.htaccess編集、保存前バックアップ、復元、編集可否チェックを追加。</span></div>
+        <div class="version-card"><strong>v0.3.1</strong><span>管理画面に入れないときの復元注意とバックアップダウンロードを追加。</span></div>
+        <div class="version-card"><strong>v0.3.2</strong><span>色、グラデーション、フォントサイズを増やして、ブロックエディタで整えやすく改善。</span></div>
+        <div class="version-card"><strong>v0.3.3</strong><span>低価格の理由と不具合対応の範囲を明記。購入前に分かることを増やしました。</span></div>
+      </div>
+
+      <h2>まとめ：文標は「書く前」と「公開前」を軽くするテーマ</h2>
+      <p>文標の更新は、派手な見た目だけを増やす方向ではありません。</p>
+      <p>比較記事をどう始めるか。FAQをどこに置くか。CTAが押されているか。更新やシリアルで詰まらないか。サーバー設定で事故らないか。</p>
+      <p>そういう小さな不安を、順番に減らしています。</p>
+      <p>細かい日付ごとの履歴は、更新履歴ページにもまとめています。</p>
+      <p><a class="btn btn-primary" href="/lp/bunsirube/updates/">文標の更新履歴を見る</a> <a class="btn btn-outline" href="/lp/bunsirube/demo/">デモを見る</a></p>
+    </div>
+    <a class="back-link" href="/blog/">← ブログ一覧へ戻る</a>
+  </main>
+</body>
+</html>

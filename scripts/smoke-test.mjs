@@ -139,7 +139,7 @@ checks.push(["sitemap excludes retired product redirects", !sitemap.includes('ht
 checks.push(["sitemap includes three sales pages", sitemap.includes('https://yohelab.com/lp/research-writer/') && sitemap.includes('https://yohelab.com/lp/bunsirube/') && sitemap.includes('https://yohelab.com/products/page-review/')]);
 checks.push(["sitemap includes bunsirube demo and updates", sitemap.includes('https://yohelab.com/lp/bunsirube/demo/') && sitemap.includes('https://yohelab.com/lp/bunsirube/updates/')]);
 checks.push(["sitemap includes bunsirube install guide", sitemap.includes('https://yohelab.com/lp/bunsirube/install/')]);
-checks.push(["sitemap includes static blog guide posts", ["page-review-sample", "research-writer-free-flow", "bunsirube-before-install", "faq-source-ai-search", "sales-page-common-mistakes"].every((slug) => sitemap.includes(`https://yohelab.com/blog/${slug}/`))]);
+checks.push(["sitemap includes static blog guide posts", ["page-review-sample", "research-writer-free-flow", "bunsirube-before-install", "bunsirube-version-history", "faq-source-ai-search", "sales-page-common-mistakes"].every((slug) => sitemap.includes(`https://yohelab.com/blog/${slug}/`))]);
 checks.push(["sitemap includes all game pages", ["reaction", "typing", "math-rush", "sequence"].every((slug) => sitemap.includes(`https://yohelab.com/games/${slug}/`))]);
 
 const gameScript = read(dist("shared/arcade-game.js"));
@@ -212,6 +212,7 @@ checks.push(["blog image uploads convert to one webp", blogAdmin.includes("conve
 checks.push(["blog images are stable and lazy", blogAdmin.includes('width="${image.width}"') && blogAdmin.includes('height="${image.height}"') && blogPostFunction.includes("enhanceArticleImages") && blogPostFunction.includes('loading="lazy"') && blogPostPage.includes("enhanceArticleImages") && blogPostApi.includes("autoExcerpt")]);
 checks.push(["blog drafts are stored server side and removed on publish", blogDraftApi.includes("draft:") && blogDraftApi.includes("DRAFT_TTL_SECONDS") && blogDraftApi.includes("imageUrls") && blogDraftApi.includes("X-Robots-Tag") && blogPostApi.includes("draftId") && blogPostApi.includes("kv.delete(`draft:${draftId}`)")]);
 checks.push(["blog admin saves server drafts", blogAdmin.includes("/api/blog-draft") && blogAdmin.includes("サーバー下書き") && blogAdmin.includes("loadDraftList") && blogAdmin.includes("openDraft") && blogAdmin.includes("deleteDraft")]);
+checks.push(["blog admin remembers pin in browser", blogAdmin.includes("SAVED_PIN_KEY") && blogAdmin.includes("savePinForThisBrowser") && blogAdmin.includes("readSavedPin")]);
 checks.push(["test blog posts are removed from public index and sitemap", !read(dist("blog/index.html")).includes("yohelab-blog-start") && !read(dist("blog/index.html")).includes("starter-kit") && !read(dist("blog/index.html")).includes("theme-note") && !sitemap.includes("/blog/yohelab-blog-start/") && !sitemap.includes("/blog/starter-kit/") && !sitemap.includes("/blog/theme-note/")]);
 checks.push(["middleware redirects removed test blog pages", middleware.includes('"/blog/yohelab-blog-start/"') && middleware.includes('"/blog/starter-kit/"') && middleware.includes('"/blog/theme-note/"')]);
 checks.push(["blog post sanitizes dangerous html server side", blogPostFunction.includes("sanitizeBodyHtml") && blogPostFunction.includes("iframe|object|embed") && blogPostFunction.includes("javascript:") && blogPostFunction.includes("data:text") && blogPostFunction.includes("vbscript:")]);
@@ -233,9 +234,9 @@ checks.push(["bunsirube demo uses tax-included purchase label", bunsirubeDemo.in
 checks.push(["privacy policy covers current paid products and theme analytics", privacy.includes("有料サービス・ダウンロード商品") && privacy.includes("文標テーマでは") && privacy.includes("CTA・比較表・広告リンク・ブログカード") && !privacy.includes("2026年4月30日") && !privacy.includes("プロプラン")]);
 const blogIndex = read(dist("blog/index.html"));
 checks.push(["blog surfaces pre-purchase bunsirube guides", blogIndex.includes("文標を買う前に読む3本") && blogIndex.includes("/blog/free-theme-vs-bunsirube/") && blogIndex.includes("/blog/comparison-article-template/")]);
-checks.push(["new bunsirube guide posts exist", read(dist("blog/free-theme-vs-bunsirube/index.html")).includes("無料テーマと文標の違い") && read(dist("blog/comparison-article-template/index.html")).includes("比較記事の書き方")]);
-checks.push(["sitemap includes new bunsirube guide posts", sitemap.includes("https://yohelab.com/blog/free-theme-vs-bunsirube/") && sitemap.includes("https://yohelab.com/blog/comparison-article-template/")]);
-checks.push(["dynamic sitemap includes new bunsirube guide posts", sitemapFunction.includes("/blog/free-theme-vs-bunsirube/") && sitemapFunction.includes("/blog/comparison-article-template/")]);
+checks.push(["new bunsirube guide posts exist", read(dist("blog/free-theme-vs-bunsirube/index.html")).includes("無料テーマと文標の違い") && read(dist("blog/comparison-article-template/index.html")).includes("比較記事の書き方") && read(dist("blog/bunsirube-version-history/index.html")).includes("文標のバージョンアップ履歴")]);
+checks.push(["sitemap includes new bunsirube guide posts", sitemap.includes("https://yohelab.com/blog/free-theme-vs-bunsirube/") && sitemap.includes("https://yohelab.com/blog/comparison-article-template/") && sitemap.includes("https://yohelab.com/blog/bunsirube-version-history/")]);
+checks.push(["dynamic sitemap includes new bunsirube guide posts", sitemapFunction.includes("/blog/free-theme-vs-bunsirube/") && sitemapFunction.includes("/blog/comparison-article-template/") && sitemapFunction.includes("/blog/bunsirube-version-history/")]);
 checks.push(["dynamic sitemap includes bunsirube updates", sitemapFunction.includes("/lp/bunsirube/updates/")]);
 checks.push(["dynamic sitemap includes bunsirube install guide", sitemapFunction.includes("/lp/bunsirube/install/")]);
 checks.push(["matomo skips local without explicit url", matomoLoader.includes("isLocal && !window.YOHELAB_MATOMO_URL") && !matomoLoader.includes("http://localhost:8080/")]);

@@ -120,6 +120,11 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://yohelab.com/blog/bunsirube-version-history/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://yohelab.com/blog/comparison-article-template/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
