@@ -198,6 +198,7 @@ checks.push(["checkout function redirects to tracked payment links", checkout.in
 checks.push(["middleware redirects retired product pages", middleware.includes('"/products/article-starter-kit/"') && middleware.includes('"/products/wordpress-theme-beta/"') && middleware.includes('"/lp/wordpress-theme/"')]);
 checks.push(["middleware redirects retired radar beta page", middleware.includes('"/products/radar-beta"') && middleware.includes('"/products/radar-beta/"') && middleware.includes('"/lp/bunsirube/"')]);
 checks.push(["middleware redirects old tools services paths", middleware.includes('"/tools/"') && middleware.includes('"/services/"') && middleware.includes('"/lp/bunsirube/demo/"')]);
+checks.push(["middleware canonicalizes /index.html to root", middleware.includes('["/index.html", "/"]')]);
 checks.push(["middleware blocks direct theme zip downloads", middleware.includes("PROTECTED_THEME_ZIP") && middleware.includes("X-Robots-Tag") && middleware.includes("no-store") && gitignore.includes("*.zip")]);
 const themesCatchAll = read(src("functions/themes/[[path]].js"));
 const wpContentCatchAll = read(src("functions/wp-content/[[path]].js"));
@@ -309,6 +310,10 @@ const leakSuffixes = [".map", ".env", ".bak", ".swp", ".orig", ".DS_Store"];
 const leaked = distFiles.filter((p) => leakSuffixes.some((s) => p.endsWith(s)));
 checks.push(["dist has no leaked source maps env or backup files", leaked.length === 0]);
 checks.push(["dist has no exposed wp-content or themes directories", !distFiles.some((p) => p.includes("/wp-content/")) && !distFiles.some((p) => /\/dist\/themes\//.test(p))]);
+const htmlFilesWithIndexLinks = distFiles.filter((p) => p.endsWith(".html") && readFileSync(p, "utf8").includes("/index.html"));
+checks.push(["public html does not link to /index.html", htmlFilesWithIndexLinks.length === 0]);
+checks.push(["sitemap does not include /index.html", !sitemap.includes("/index.html")]);
+checks.push(["redirect rules canonicalize /index.html", read(dist("_redirects")).includes("/index.html / 301")]);
 
 for (const [name, ok] of checks) {
   assert(ok, `Check failed: ${name}`);

@@ -1,4 +1,5 @@
 const RETIRED_REDIRECTS = new Map([
+  ["/index.html", "/"],
   ["/apps/wordpress-theme", "/lp/bunsirube/"],
   ["/apps/wordpress-theme/", "/lp/bunsirube/"],
   ["/apps/bunsirube", "/lp/bunsirube/"],
