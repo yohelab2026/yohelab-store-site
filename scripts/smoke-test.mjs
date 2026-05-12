@@ -233,8 +233,11 @@ checks.push(["bunsirube demo embeds blog creation videos", bunsirubeDemo.include
 checks.push(["bunsirube demo uses tax-included purchase label", bunsirubeDemo.includes("¥5,500（税込）で購入する") && bunsirubeDemo.includes("表示価格はすべて税込です。")]);
 checks.push(["privacy policy covers current paid products and theme analytics", privacy.includes("有料サービス・ダウンロード商品") && privacy.includes("文標テーマでは") && privacy.includes("CTA・比較表・広告リンク・ブログカード") && !privacy.includes("2026年4月30日") && !privacy.includes("プロプラン")]);
 const blogIndex = read(dist("blog/index.html"));
+const blogIndexSource = read(src("blog/index.html"));
 checks.push(["blog surfaces pre-purchase bunsirube guides", blogIndex.includes("文標を買う前に読む3本") && blogIndex.includes("/blog/free-theme-vs-bunsirube/") && blogIndex.includes("/blog/comparison-article-template/")]);
 checks.push(["new bunsirube guide posts exist", read(dist("blog/free-theme-vs-bunsirube/index.html")).includes("無料テーマと文標の違い") && read(dist("blog/comparison-article-template/index.html")).includes("比較記事の書き方") && read(dist("blog/bunsirube-version-history/index.html")).includes("文標のバージョンアップ履歴")]);
+checks.push(["static blog cards use eyecatch images", !blogIndexSource.includes('<div class="post-card-img-placeholder"') && ["free-theme-vs-bunsirube", "comparison-article-template", "page-review-sample", "research-writer-free-flow", "bunsirube-before-install", "faq-source-ai-search", "sales-page-common-mistakes", "bunsirube-version-history"].every((slug) => blogIndexSource.includes(`/assets/blog/${slug}/eyecatch.png`))]);
+checks.push(["blog publish requires eyecatch", blogAdmin.includes("アイキャッチ画像を設定してください。") && blogAdmin.includes("coverDrop.scrollIntoView")]);
 checks.push(["sitemap includes new bunsirube guide posts", sitemap.includes("https://yohelab.com/blog/free-theme-vs-bunsirube/") && sitemap.includes("https://yohelab.com/blog/comparison-article-template/") && sitemap.includes("https://yohelab.com/blog/bunsirube-version-history/")]);
 checks.push(["dynamic sitemap includes new bunsirube guide posts", sitemapFunction.includes("/blog/free-theme-vs-bunsirube/") && sitemapFunction.includes("/blog/comparison-article-template/") && sitemapFunction.includes("/blog/bunsirube-version-history/")]);
 checks.push(["dynamic sitemap includes bunsirube updates", sitemapFunction.includes("/lp/bunsirube/updates/")]);

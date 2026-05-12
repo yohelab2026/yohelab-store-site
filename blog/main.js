@@ -7,7 +7,7 @@ const fallbackPosts = [
     excerpt: '文標を最初のベータからどう育ててきたか。追加したもの、良くしたところ、不安を減らしたところをまとめました。',
     body: '文標は、いきなり完成品として置いたテーマではありません。最初のベータから、記事を書く前の迷い、公開前の不安、購入後の分かりにくさを一つずつ減らしてきました。\n\nv0.1系ではCTA、FAQ、SEO出力、更新確認の土台を作りました。v0.2系では比較表、導線解析、投稿前チェックを強くしました。v0.3系では.htaccess、子テーマ、サポート範囲、配色を整理しました。\n\n派手な機能より、書く人と買う人の不安を減らす方向で更新しています。',
     tags: ['文標', '更新履歴'],
-    eyecatch: '/assets/blog/bunsirube-version-history/bunsirube-history-cover.png',
+    eyecatch: '/assets/blog/bunsirube-version-history/eyecatch.png',
   },
   {
     title: '商品ページ改善レビューで実際に返す内容のサンプル',
@@ -16,6 +16,7 @@ const fallbackPosts = [
     excerpt: '980円レビューで何が返ってくるのかを、購入前に見られる形でまとめました。',
     body: '商品ページ改善レビューでは、1ページだけを見て「読まれない理由」と「直す文」を短く返します。\n\n返す内容は、弱点3つ、最初に置く見出し案、説明文の書き換え案、FAQ案、SNSや検索で使える短い要約文です。\n\nBASE、note、自社サイト、LP、商品紹介記事に向いています。',
     tags: ['商品ページ改善', 'サンプル'],
+    eyecatch: '/assets/blog/page-review-sample/eyecatch.png',
   },
   {
     title: '3キーワード記事メーカーの使い方：無料版で1本作る流れ',
@@ -24,6 +25,7 @@ const fallbackPosts = [
     excerpt: '無料版で記事材料を1セット作るときの、入力から仕上げまでの流れです。',
     body: '3キーワード記事メーカーは、記事を自動で完成させる道具ではありません。リサーチ候補、見出し、FAQ、出典メモをまとめて受け取り、自分の言葉で仕上げるための道具です。\n\nテーマ、読者、切り口を入れて、情報源を選び、記事材料を確認してから仕上げます。\n\n数字、制度、料金、規約は公開前に公式情報で確認してください。',
     tags: ['記事メーカー', '使い方'],
+    eyecatch: '/assets/blog/research-writer-free-flow/eyecatch.png',
   },
   {
     title: '文標を入れる前に確認すること：既存記事・バックアップ・環境',
@@ -32,6 +34,7 @@ const fallbackPosts = [
     excerpt: 'WordPressテーマを変える前に、最低限ここだけは見ておきたいという確認リストです。',
     body: 'テーマ変更で投稿本文そのものが消えることは通常ありません。ただし、見た目、ショートコード、ウィジェット、テーマ固有の装飾は変わることがあります。\n\n変更前にバックアップを取り、対応環境を確認し、役割が重なるプラグインを見直してください。\n\n文標は比較記事、レビュー記事、FAQ記事の見え方をデモページで確認できます。',
     tags: ['文標', 'WordPress'],
+    eyecatch: '/assets/blog/bunsirube-before-install/eyecatch.png',
   },
   {
     title: 'AI検索向けにFAQと出典を置く理由',
@@ -40,6 +43,7 @@ const fallbackPosts = [
     excerpt: 'Google AI Overviews等での表示保証はありません。だからこそ、読者にも検索にも読み取りやすい構造を作ります。',
     body: 'AI検索向けに大事なのは、特別な裏技ではありません。結論、理由、根拠、FAQ、出典を分かりやすく置くことです。\n\nFAQは購入前や問い合わせ前の不安を減らす場所です。出典は数字や制度の確認場所になります。\n\n「表示を約束する」のではなく、「AIにも読み取られやすい構造にする」と考えるほうが安全です。',
     tags: ['AI検索', 'FAQ'],
+    eyecatch: '/assets/blog/faq-source-ai-search/eyecatch.png',
   },
   {
     title: 'BASE・note・自サイトの商品ページでよくある失敗',
@@ -48,6 +52,7 @@ const fallbackPosts = [
     excerpt: '商品は悪くないのに、ページの順番で損していることがあります。',
     body: '商品ページで大事なのは、かっこいい文章より「買う前の迷いが減る順番」です。\n\nよくある失敗は、誰向けかが遅い、届くものが見えない、不安への答えがない、CTAが弱い、の4つです。\n\n1ページだけでも、見出し、説明文、FAQ、購入ボタン周りを直すと印象は変わります。',
     tags: ['販売ページ', '改善'],
+    eyecatch: '/assets/blog/sales-page-common-mistakes/eyecatch.png',
   },
 ];
 

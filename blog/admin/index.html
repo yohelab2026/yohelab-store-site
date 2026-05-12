@@ -602,7 +602,8 @@
     if (!pin) { sessionStorage.removeItem(SESSION_KEY); showLock(); return; }
     const title = titleEl.value.trim();
     const eyecatch = eyecatchEl.value.trim();
-    if (!title && !eyecatch) { statusEl.textContent='タイトルか画像のどちらかを入れてください。'; return; }
+    if (!title) { statusEl.textContent='タイトルを入れてください。'; titleEl.focus(); return; }
+    if (!eyecatch) { statusEl.textContent='アイキャッチ画像を設定してください。'; coverDrop.scrollIntoView({ behavior:'smooth', block:'center' }); return; }
     statusEl.textContent = '公開中...';
     const post = {
       draftId: activeDraftId || undefined,
