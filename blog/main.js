@@ -1,4 +1,14 @@
 const postsEl = document.getElementById('posts');
+const staticBlogSlugs = new Set([
+  'bunsirube-version-history',
+  'free-theme-vs-bunsirube',
+  'comparison-article-template',
+  'page-review-sample',
+  'research-writer-free-flow',
+  'bunsirube-before-install',
+  'faq-source-ai-search',
+  'sales-page-common-mistakes',
+]);
 const fallbackPosts = [
   {
     title: '文標のバージョンアップ履歴：最初のベータから今までに良くしたこと',
@@ -63,6 +73,12 @@ function esc(str) {
   return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
+function postUrl(slug) {
+  return staticBlogSlugs.has(slug)
+    ? `/blog/${encodeURIComponent(slug)}/`
+    : `/blog/post/?slug=${encodeURIComponent(slug)}`;
+}
+
 async function loadPosts(page = 1) {
   try {
     const res = await fetch(`/api/blog-posts?page=${page}`);
@@ -74,10 +90,10 @@ async function loadPosts(page = 1) {
       render(data.posts, true);
       renderPagination();
     } else {
-      if (!postsEl.children.length) render(fallbackPosts, false);
+      if (!postsEl.children.length) render(fallbackPosts, true);
     }
   } catch(e) {
-    if (!postsEl.children.length) render(fallbackPosts, false);
+    if (!postsEl.children.length) render(fallbackPosts, true);
   }
 }
 
@@ -118,7 +134,7 @@ function render(posts, hasLink = true) {
     return;
   }
   postsEl.innerHTML = posts.map(post => {
-    const url = `/blog/${encodeURIComponent(post.slug)}/`;
+    const url = postUrl(post.slug);
     const tags = (post.tags||[]).slice(0,2).map(t=>`<span class="post-card-tag">${esc(t)}</span>`).join('');
     const img = post.eyecatch
       ? `<img class="post-card-img" src="${esc(post.eyecatch)}" alt="${esc(post.title)}" loading="lazy" />`
@@ -135,7 +151,7 @@ function render(posts, hasLink = true) {
           ${post.excerpt ? `<div class="post-card-excerpt">${esc(post.excerpt)}</div>` : '<div class="post-card-excerpt">記事本文の先頭を読み込みます。</div>'}
           <div class="post-card-preview"></div>
           <div class="post-card-footer">
-            <button class="read-more" type="button" data-action="toggle">続きを読む</button>
+            <a class="read-more" href="${url}">続きを読む</a>
             ${hasLink ? `<a class="open-link" href="${url}">${esc(post.title)}を読む →</a>` : ''}
           </div>
         </div>
@@ -143,57 +159,35 @@ function render(posts, hasLink = true) {
     `;
   }).join('');
 
-  postsEl.querySelectorAll('[data-action="toggle"]').forEach((button) => {
-    button.addEventListener('click', async (event) => {
-      event.preventDefault();
-      const card = button.closest('.post-card');
-      if (!card) return;
-      const excerpt = card.querySelector('.post-card-excerpt');
-      const preview = card.querySelector('.post-card-preview');
-      const slug = card.getAttribute('data-slug');
-      const open = preview.classList.contains('is-open');
+  prepareCardLinks();
+}
 
-      if (open) {
-        preview.classList.remove('is-open');
-        excerpt?.classList.remove('is-open');
-        preview.innerHTML = '';
-        button.textContent = '続きを読む';
-        return;
-      }
-
-      button.disabled = true;
-      button.textContent = '読み込み中...';
-
-      try {
-        if (!preview.dataset.loaded) {
-          let post = fallbackPosts.find((item) => item.slug === slug) || {};
-          try {
-            const res = await fetch(`/api/blog-post-get?slug=${encodeURIComponent(slug)}`);
-            if (res.ok) {
-              const data = await res.json();
-              post = data.post || post;
-            }
-          } catch (_) {}
-          const body = post.bodyHtml || '';
-          const text = body
-            ? body.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()
-            : (post.body || '').replace(/\s+/g, ' ').trim();
-          preview.innerHTML = `<div style="font-weight:800;margin-bottom:8px;">本文プレビュー</div><div>${esc(text || '本文がありません。')}</div>`;
-          preview.dataset.loaded = '1';
-        }
-        preview.classList.add('is-open');
-        excerpt?.classList.add('is-open');
-        button.textContent = '閉じる';
-      } catch (error) {
-        const url = `/blog/${encodeURIComponent(slug)}/`;
-        preview.innerHTML = `<div style="color:var(--muted);">本文の読み込みに失敗した。<a href="${url}">記事ページで開く</a></div>`;
-        preview.classList.add('is-open');
-        button.textContent = '閉じる';
-      } finally {
-        button.disabled = false;
-      }
-    });
+function prepareCardLinks() {
+  postsEl.querySelectorAll('.post-card').forEach((card) => {
+    const link = card.querySelector('.read-more, .open-link');
+    if (!link) return;
+    card.tabIndex = 0;
+    card.setAttribute('role', 'link');
+    card.setAttribute('aria-label', link.textContent.trim());
   });
 }
 
+postsEl.addEventListener('click', (event) => {
+  const card = event.target.closest('.post-card');
+  if (!card) return;
+  if (event.target.closest('a')) return;
+  const link = card.querySelector('.read-more, .open-link');
+  if (link) window.location.href = link.href;
+});
+
+postsEl.addEventListener('keydown', (event) => {
+  if (event.key !== 'Enter' && event.key !== ' ') return;
+  const card = event.target.closest('.post-card');
+  if (!card) return;
+  event.preventDefault();
+  const link = card.querySelector('.read-more, .open-link');
+  if (link) window.location.href = link.href;
+});
+
+prepareCardLinks();
 loadPosts();
