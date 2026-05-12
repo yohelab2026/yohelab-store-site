@@ -17,7 +17,7 @@
   <link rel="icon" type="image/png" href="/yohelab-icon-32.png" />
   <link rel="stylesheet" href="/shared/site.min.css" />
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"BlogPosting","headline":"文標を入れる前に確認すること：既存記事・バックアップ・環境","datePublished":"2026-05-02","dateModified":"2026-05-02","url":"https://yohelab.com/blog/bunsirube-before-install/","image":"https://yohelab.com/assets/blog/bunsirube-before-install/eyecatch.png","author":{"@type":"Organization","name":"よへラボ"},"publisher":{"@type":"Organization","name":"よへラボ","logo":{"@type":"ImageObject","url":"https://yohelab.com/yohelab-icon.png"}},"description":"テーマ購入前の不安を減らすために、導入前チェックをまとめました。","inLanguage":"ja-JP"}
+  {"@context":"https://schema.org","@type":"BlogPosting","headline":"文標を入れる前に確認すること：既存記事・バックアップ・環境","datePublished":"2026-05-02","dateModified":"2026-05-12","url":"https://yohelab.com/blog/bunsirube-before-install/","image":"https://yohelab.com/assets/blog/bunsirube-before-install/eyecatch.png","author":{"@type":"Organization","name":"よへラボ"},"publisher":{"@type":"Organization","name":"よへラボ","logo":{"@type":"ImageObject","url":"https://yohelab.com/yohelab-icon.png"}},"description":"テーマ購入前の不安を減らすために、導入前チェックをまとめました。","inLanguage":"ja-JP"}
   </script>
   <style>
     body { background:#fff;color:var(--text); }
@@ -31,13 +31,17 @@
     .post-body h2 { font-size:28px;line-height:1.35;margin:36px 0 14px;letter-spacing:-.04em; }
     .post-body p, .post-body li { margin-bottom:16px; }
     .check { background:#f8fbff;border:1px solid #dce7fb;border-radius:18px;padding:18px;margin:16px 0; }
+    .post-table { width:100%;border-collapse:separate;border-spacing:0;margin:18px 0;border:1px solid var(--border);border-radius:18px;overflow:hidden;font-size:15px; }
+    .post-table th,.post-table td { padding:12px 14px;border-bottom:1px solid var(--border);vertical-align:top;text-align:left; }
+    .post-table th { background:#f0fbf6;color:#075c4c;font-weight:900; }
+    .post-table tr:last-child td { border-bottom:0; }
     .back-link { display:inline-flex;align-items:center;gap:6px;color:var(--muted);font-size:14px;font-weight:700;text-decoration:none;margin-top:40px; }
   </style>
 </head>
 <body>
   <header class="nav"><div class="nav-inner"><a class="brand" href="/"><img src="/yohelab-icon.webp" alt="よへラボ" /><span>よへラボ</span></a><nav class="nav-links"><a href="/lp/bunsirube/">文標</a><a href="/lp/bunsirube/demo/">デモ</a><a href="/blog/">ブログ</a><a href="/contact/">問い合わせ</a></nav></div></header>
   <main class="post-outer">
-    <img class="post-cover" src="/assets/blog/bunsirube-before-install/eyecatch.webp" alt="文標を入れる前に確認すること" loading="eager" decoding="async" width="1600" height="900" />
+    <img class="post-cover" src="/assets/blog/bunsirube-before-install/eyecatch.webp" alt="文標を入れる前のWordPressテーマ変更チェック、バックアップと対応環境" loading="eager" decoding="async" width="1600" height="900" />
     <div class="post-meta"><span>2026-05-02</span><span class="post-tag">文標</span><span class="post-tag">WordPress</span></div>
     <h1 class="post-title">文標を入れる前に確認すること：既存記事・バックアップ・環境</h1>
     <p class="post-excerpt">WordPressテーマを変える前に、最低限ここだけは見ておきたいという確認リストです。</p>
@@ -46,9 +50,30 @@
       <div class="check"><strong>1. バックアップ</strong><br />テーマ変更前に、ファイルとデータベースのバックアップを取ってください。戻せる状態にしてから触るのが安全です。</div>
       <div class="check"><strong>2. 対応環境</strong><br />文標の購入ページにあるWordPressとPHPの対応環境を確認してください。古い環境では先に更新が必要な場合があります。</div>
       <div class="check"><strong>3. プラグイン</strong><br />SEO、FAQ、構造化データ、解析系のプラグインは役割が重なることがあります。全部を同時に使うより、必要なものだけ残すほうが管理しやすいです。</div>
+      <h2>テーマ変更で変わるもの、変わらないもの</h2>
+      <p>テーマを変えると、記事本文そのものは基本的に残ります。ただし、見た目、余白、見出しデザイン、ウィジェット、メニュー位置、ショートコード、テーマ固有のブロックは変わることがあります。</p>
+      <table class="post-table">
+        <thead><tr><th>項目</th><th>よく起きること</th><th>先にやること</th></tr></thead>
+        <tbody>
+          <tr><td>投稿本文</td><td>通常は消えない</td><td>念のためデータベースをバックアップ</td></tr>
+          <tr><td>見た目</td><td>見出し、余白、カード、装飾が変わる</td><td>主要記事を3本ほどスクショ保存</td></tr>
+          <tr><td>ウィジェット</td><td>テーマの場所が変わると表示が崩れる場合がある</td><td>サイドバーとフッターを確認</td></tr>
+          <tr><td>ショートコード</td><td>前テーマ専用のものは残る場合がある</td><td>公開記事で角括弧の残りを検索</td></tr>
+          <tr><td>SEO出力</td><td>テーマとSEOプラグインで重複する場合がある</td><td>title、description、構造化データの重複を確認</td></tr>
+        </tbody>
+      </table>
+      <h2>本番サイトでいきなり変えない</h2>
+      <p>できれば、テスト環境やステージング環境で先に確認します。レンタルサーバーにステージング機能がない場合でも、少なくとも夜間やアクセスが少ない時間に切り替え、すぐ戻せる状態にしておくほうが安全です。</p>
+      <p>文標は軽量に作っていますが、既存テーマやプラグインの組み合わせまではサイトごとに違います。キャッシュ系、SEO系、目次系、FAQ系、ブログカード系は役割が重なりやすいので、同時に有効化しすぎないほうが確認しやすくなります。</p>
+      <h2>最低限見るページ</h2>
+      <p>テーマを切り替えたら、トップページだけではなく、収益に近い記事を優先して見ます。比較記事、レビュー記事、ランキング記事、問い合わせページ、購入ボタンがあるページです。</p>
+      <div class="check"><strong>切り替え後の確認</strong><br />スマホ表示、見出し、CTA、比較表、FAQ、広告リンク、内部リンク、問い合わせフォーム、404ページを確認します。</div>
+      <h2>返金保証の使い方</h2>
+      <p>文標は30日返金保証を付けています。合わなかった場合は問い合わせフォームから返金希望を送れます。返金後はシリアルが無効化され、自動更新は停止します。</p>
+      <p>返金保証は、何も確認せずに入れてよいという意味ではありません。デモ、対応環境、サポート範囲、購入後に届くものを見てから試すほうが、失敗は減ります。</p>
       <h2>不安なら先にデモを見る</h2>
       <p>文標は、比較記事、レビュー記事、FAQ記事の見え方をデモページで確認できます。先に雰囲気を見てから判断してください。</p>
-      <p><a class="btn btn-primary" href="/lp/bunsirube/demo/">文標デモを見る</a></p>
+      <p><a class="btn btn-primary" href="/lp/bunsirube/demo/">文標デモを見る</a> <a class="btn btn-outline" href="/lp/bunsirube/install/">インストール方法を見る</a></p>
     </div>
     <a class="back-link" href="/blog/">← ブログ一覧へ戻る</a>
   </main>

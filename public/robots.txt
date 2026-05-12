@@ -4,6 +4,7 @@ Disallow: /blog/admin/
 Disallow: /api/
 Disallow: /pro/
 Disallow: /affiliate/dashboard/
+Disallow: /games/
 
 # AI crawlers (explicitly allowed for AI search visibility)
 User-agent: GPTBot

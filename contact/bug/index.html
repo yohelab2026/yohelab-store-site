@@ -10,10 +10,11 @@
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="ja_JP" />
   <meta property="og:url" content="https://yohelab.com/contact/bug/" />
-  <meta property="og:image" content="https://yohelab.com/yohelab-icon.png" />
-  <meta name="twitter:card" content="summary" />
+  <meta property="og:image" content="https://yohelab.com/assets/og/bunsirube-og.png" />
+  <meta name="twitter:card" content="summary_large_image" />
   <meta name="robots" content="noindex,follow" />
   <meta name="theme-color" content="#f5fbff" />
+  <meta name="turnstile-site-key" content="" />
   <link rel="canonical" href="https://yohelab.com/contact/bug/" />
   <link rel="icon" type="image/png" href="/yohelab-icon-32.png" />
   <link rel="stylesheet" href="/shared/site.min.css" />
@@ -60,6 +61,7 @@
     .thanks-box h3 { font-size:18px; font-weight:900; color:var(--green-dark); margin-bottom:8px; }
     .thanks-box p { font-size:14px; color:var(--green-dark); margin:0; line-height:1.75; }
     .version-hint { font-size:12px; color:var(--muted); font-weight:400; margin-top:2px; }
+    .turnstile-slot { min-height:0; margin:4px 0 8px; }
     @media(max-width:580px){ .contact-form-box{padding:24px 20px;} .field-row{grid-template-columns:1fr;} .contact-body{border-radius:20px 20px 0 0;} }
   </style>
 </head>
@@ -102,7 +104,7 @@
               <h3>ありがとう。内容を受け取った。</h3>
               <p>内容を確認して、修正できたらバージョンアップで反映する。メールアドレスを書いてもらった場合は、対応結果を返す。</p>
             </div>
-            <form id="bug-form" class="stack">
+            <form id="bug-form" class="stack" action="/api/contact" method="post">
               <div class="field-row">
                 <label>
                   テーマバージョン
@@ -135,9 +137,11 @@
                 その他・補足
                 <textarea id="note" name="note" rows="2" placeholder="使っているプラグイン、サーバー環境、広告リンク・CTAのURLなど"></textarea>
               </label>
-              <input style="position:absolute;left:-9999px;" type="text" name="website" tabindex="-1" autocomplete="off" />
+              <input style="position:absolute;left:-9999px;" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
+              <input id="turnstile-token" type="hidden" name="turnstile_token" />
+              <div id="turnstile-widget" class="turnstile-slot" aria-label="スパム対策"></div>
               <button class="btn btn-primary" type="submit" style="width:100%;height:52px;font-size:16px;">バグ報告を送る</button>
-              <p style="font-size:12.5px;color:var(--muted);margin-top:4px;">送信内容は不具合対応のためだけに使う。</p>
+              <p style="font-size:12.5px;color:var(--muted);margin-top:4px;">送信内容は不具合対応のためだけに使う。送信はよへラボのAPIで受け付けます。</p>
             </form>
           </div>
         </div>
@@ -149,8 +153,8 @@
     <div class="lp-footer-inner">
       <div>© よへラボ / yohelab.com</div>
       <div class="lp-footer-links">
-        <a href="/">トップ</a><a href="/blog/">ブログ</a><a href="/contact/">問い合わせ</a>
-        <a href="/legal/commerce/">特定商取引法</a><a href="/legal/privacy/">プライバシー</a><a href="/legal/terms/">利用規約</a>
+        <a href="/">トップ</a><a href="/lp/bunsirube/">文標</a><a href="/lp/bunsirube/demo/">デモ</a><a href="/blog/">ブログ</a><a href="/contact/">問い合わせ</a>
+        <a href="/legal/commerce/">特定商取引法</a><a href="/legal/privacy/">プライバシー</a><a href="/legal/terms/">利用規約</a><a href="/lp/bunsirube/affiliate/">アフィリエイト</a><a href="/legal/affiliate-terms/">アフィリエイト規約</a>
       </div>
     </div>
   </footer>
@@ -163,7 +167,22 @@
     const form = document.getElementById('bug-form');
     const thanksBox = document.getElementById('thanks-box');
     const hiddenField = form.querySelector('input[name="website"]');
-    const endpoint = ['yohelab2026','gmail.com'];
+    const turnstileSiteKey = (document.querySelector('meta[name="turnstile-site-key"]')?.content || '').trim();
+    if (turnstileSiteKey) {
+      const script = document.createElement('script');
+      script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+      script.async = true;
+      script.defer = true;
+      script.onload = () => {
+        if (!window.turnstile) return;
+        window.turnstile.render('#turnstile-widget', {
+          sitekey: turnstileSiteKey,
+          callback: token => { document.getElementById('turnstile-token').value = token; },
+          'expired-callback': () => { document.getElementById('turnstile-token').value = ''; }
+        });
+      };
+      document.head.appendChild(script);
+    }
 
     form.addEventListener('submit', async e => {
       e.preventDefault();
@@ -171,18 +190,31 @@
       const btn = form.querySelector('button[type="submit"]');
       btn.disabled = true; btn.textContent = '送信中...';
       const payload = {
+        purpose: 'バグ報告',
+        name: 'バグ報告フォーム',
         theme_version: document.getElementById('theme-version').value.trim(),
         wp_version: document.getElementById('wp-version').value.trim(),
-        email: document.getElementById('email').value.trim() || '（未記入）',
-        description: document.getElementById('description').value.trim(),
-        steps: document.getElementById('steps').value.trim(),
-        error: document.getElementById('error').value.trim() || 'なし',
-        note: document.getElementById('note').value.trim() || 'なし',
-        _subject: `【バグ報告】文標（ぶんしるべ） v${document.getElementById('theme-version').value.trim()}`,
-        _template: 'table', _captcha: 'false'
+        email: document.getElementById('email').value.trim(),
+        message: document.getElementById('description').value.trim(),
+        detail: [
+          `テーマバージョン: ${document.getElementById('theme-version').value.trim()}`,
+          `WordPressバージョン: ${document.getElementById('wp-version').value.trim()}`,
+          '',
+          '再現手順:',
+          document.getElementById('steps').value.trim(),
+          '',
+          'エラーメッセージ:',
+          document.getElementById('error').value.trim() || 'なし',
+          '',
+          '補足:',
+          document.getElementById('note').value.trim() || 'なし'
+        ].join('\n'),
+        website: hiddenField.value.trim(),
+        page_url: location.href,
+        turnstile_token: document.getElementById('turnstile-token').value
       };
       try {
-        const res = await fetch(`https://formsubmit.co/ajax/${endpoint.join('@')}`, {
+        const res = await fetch('/api/contact', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
           body: JSON.stringify(payload)

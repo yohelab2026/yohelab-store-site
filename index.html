@@ -3,25 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>よへラボ | 文標（ぶんしるべ）WordPressテーマ</title>
-  <meta name="description" content="AI検索時代の記事構造を整えるWordPressテーマ「文標」。短い答え、根拠、出典、FAQ、比較表カード、CTA、導線確認まで入った買い切りテーマです。" />
+  <title>よへラボ | 比較記事・レビュー記事を7種類のテンプレから書き始めるWordPressテーマ</title>
+  <meta name="description" content="文標（ぶんしるべ）は、比較記事・レビュー記事・FAQ記事を7種類のテンプレから書き始められる軽量WordPressテーマ。短い答え、根拠、出典、FAQ、比較表カード、CTA、導線確認まで入った買い切りテーマです。" />
   <meta property="og:title" content="よへラボ｜文標（ぶんしるべ）WordPressテーマ" />
-  <meta property="og:description" content="短い答え・根拠・出典・FAQ・比較表カード・CTAまで整えやすい、AI検索時代の記事構造を意識した軽量WordPressテーマ。" />
+  <meta property="og:description" content="比較記事・レビュー記事・FAQ記事を7種類のテンプレから書き始められる、買い切りの軽量WordPressテーマ。" />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="ja_JP" />
   <meta property="og:url" content="https://yohelab.com/" />
-  <meta property="og:image" content="https://yohelab.com/yohelab-icon.png" />
-  <meta name="twitter:card" content="summary" />
+  <meta property="og:image" content="https://yohelab.com/assets/og/bunsirube-og.png" />
+  <meta name="twitter:card" content="summary_large_image" />
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
   <meta name="theme-color" content="#f5fbff" />
   <link rel="canonical" href="https://yohelab.com/" />
   <script type="application/ld+json">
   {"@context":"https://schema.org","@graph":[
     {"@type":"Organization","@id":"https://yohelab.com/#org","name":"よへラボ","url":"https://yohelab.com/","logo":{"@type":"ImageObject","url":"https://yohelab.com/yohelab-icon.png"},"contactPoint":{"@type":"ContactPoint","url":"https://yohelab.com/contact/","contactType":"customer support","availableLanguage":"Japanese"}},
-    {"@type":"WebSite","@id":"https://yohelab.com/#site","name":"よへラボ","url":"https://yohelab.com/","description":"AI検索時代の記事構造を整える軽量WordPressテーマ「文標（ぶんしるべ）」を提供。FAQ、比較表カード、CTA、構造化データを内蔵。","publisher":{"@id":"https://yohelab.com/#org"}},
-    {"@type":"WebPage","@id":"https://yohelab.com/#page","url":"https://yohelab.com/","name":"よへラボ | 文標（ぶんしるべ）WordPressテーマ","description":"AI検索時代の記事構造を整えるWordPressテーマを案内するページ。","isPartOf":{"@id":"https://yohelab.com/#site"}},
+    {"@type":"WebSite","@id":"https://yohelab.com/#site","name":"よへラボ","url":"https://yohelab.com/","description":"比較記事・レビュー記事・FAQ記事を7種類のテンプレから書き始められる軽量WordPressテーマ「文標（ぶんしるべ）」を提供。FAQ、比較表カード、CTA、構造化データを内蔵。","publisher":{"@id":"https://yohelab.com/#org"}},
+    {"@type":"WebPage","@id":"https://yohelab.com/#page","url":"https://yohelab.com/","name":"よへラボ | 文標（ぶんしるべ）WordPressテーマ","description":"比較記事・レビュー記事・FAQ記事を7種類のテンプレから書き始められるWordPressテーマを案内するページ。","isPartOf":{"@id":"https://yohelab.com/#site"}},
     {"@type":"ItemList","name":"よへラボのツール一覧","itemListElement":[
-      {"@type":"ListItem","position":1,"name":"文標（ぶんしるべ）","url":"https://yohelab.com/lp/bunsirube/","description":"AI検索時代の記事構造、FAQ、比較表カード、CTA、導線確認、構造化データを内蔵した軽量WordPressテーマ。ベータ¥5,500（税込）・買い切り。"}
+      {"@type":"ListItem","position":1,"name":"文標（ぶんしるべ）","url":"https://yohelab.com/lp/bunsirube/","description":"比較記事・レビュー記事・FAQ記事の構造、FAQ、比較表カード、CTA、導線確認、構造化データを内蔵した軽量WordPressテーマ。先行提供¥5,500（税込）・買い切り。"}
     ]}
   ]}
   </script>
@@ -209,7 +209,7 @@
       max-width: 440px;
     }
 
-    .hero-avatar {
+    .hero-checkmark {
       width: 52px;
       height: 52px;
       border-radius: 50%;
@@ -220,6 +220,32 @@
       border: 1px solid rgba(203, 217, 244, 0.95);
       box-shadow: 0 12px 22px rgba(66, 101, 189, 0.08);
       flex-shrink: 0;
+    }
+
+    .hero-price-box {
+      margin: 16px 0 18px;
+      max-width: 520px;
+      border: 1px solid rgba(11, 143, 114, 0.24);
+      background: linear-gradient(135deg, rgba(11, 143, 114, 0.09), rgba(31, 182, 207, 0.08));
+      border-radius: 22px;
+      padding: 16px 18px;
+      display: grid;
+      gap: 5px;
+      box-shadow: 0 16px 34px rgba(11, 143, 114, 0.10);
+    }
+
+    .hero-price-box strong {
+      color: #075c4c;
+      font-size: 20px;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-price-box span {
+      color: var(--home-muted);
+      font-size: 13.5px;
+      line-height: 1.65;
+      font-weight: 700;
     }
 
     .hero-visual {
@@ -1406,27 +1432,30 @@
         <div class="hero-copy">
           <div class="hero-kicker-row">
             <span class="hero-pill">文標 WordPressテーマ</span>
-            <span class="hero-pill alt">ベータ ¥5,500（税込）</span>
+            <span class="hero-pill alt">先行提供 ¥5,500（税込）</span>
           </div>
           <h1 class="hero-title">
-            AI検索時代の記事構造を、<br />
-            WordPressで迷わず作る。
+            比較記事もレビューも、<br />
+            7種類のテンプレから書き始める。
           </h1>
           <p class="hero-lead" style="margin-bottom:14px;"><span class="accent" style="color:var(--home-blue);font-weight:800;">短い答え / 根拠 / 出典 / FAQ / CTA / 導線確認</span></p>
-          <p class="hero-lead">文標は、AI検索時代に読み取りやすい本文構造を意識した軽量WordPressテーマです。比較記事・レビュー記事・FAQ記事を、短い答え・根拠・出典・行動導線まで整えながら書き始められます。</p>
+          <p class="hero-lead">文標は、記事を書く前に止まる時間を減らすための軽量WordPressテーマです。比較記事・レビュー記事・FAQ記事を、短い答え・根拠・出典・行動導線まで整えながら書き始められます。</p>
           <div class="hero-actions">
             <a class="btn btn-xl btn-home-primary" href="/lp/bunsirube/">文標の詳細を見る</a>
-            <a class="btn btn-xl btn-home-secondary" href="https://buy.stripe.com/bJeaEPfTN2ze2Cubvb73G0e?client_reference_id=wordpress-theme">¥5,500（税込）で購入する</a>
+            <a class="btn btn-xl btn-home-secondary" href="https://buy.stripe.com/bJeaEPfTN2ze2Cubvb73G0e?client_reference_id=wordpress-theme">今すぐ文標を試す</a>
+          </div>
+          <div class="hero-price-box" aria-label="文標の先行提供価格">
+            <strong>先行提供 ¥5,500（税込）</strong>
+            <span>正式版は¥8,800（税込）へ改定予定。今は¥3,300 OFF、30日返金保証つき。</span>
           </div>
           <div class="hero-note">
-            <div class="hero-avatar">✓</div>
+            <div class="hero-checkmark">✓</div>
             <p>無料テーマと正面勝負しない。文標は、デザインより先に「記事の構造」を整えるためのテーマです。</p>
           </div>
           <p style="margin-top:10px;color:var(--home-muted);font-size:12.5px;line-height:1.7;">表示価格はすべて税込です。</p>
         </div>
 
         <div class="hero-visual" aria-hidden="true">
-          <div class="hero-orbit"></div>
           <div class="device-stack">
             <div class="floating-tag tag-tools">記事型</div>
             <div class="floating-tag tag-service">比較表カード</div>
@@ -1441,8 +1470,6 @@
                 <div class="metric-box"><strong>¥5,500</strong><span>税込・買い切り</span></div>
               </div>
             </div>
-
-            <div class="icon-float icon-settings">⚙️</div>
 
             <div class="panel phone">
               <div class="phone-line"></div>
@@ -1473,9 +1500,6 @@
               </div>
               <div class="laptop-base"></div>
             </div>
-
-            <div class="robot-badge">AI</div>
-            <div class="icon-float icon-note">📝</div>
           </div>
         </div>
       </div>
@@ -1501,7 +1525,7 @@
           <div class="feature-icon">📋</div>
           <div class="badge-row"><span class="badge badge-orange">更新履歴</span></div>
           <h3>文標の更新内容を確認</h3>
-          <p>v0.1のベータ版から最新版まで、追加機能・改善・事故防止対応をまとめています。</p>
+          <p>初期版から最新版まで、追加機能・改善・事故防止対応をまとめています。</p>
           <span class="category-link" style="margin-top:auto;">更新履歴を見る →</span>
         </a>
         <a class="feature-card solution-card" href="/lp/bunsirube/demo/">
@@ -1626,12 +1650,14 @@
           <div>© よへラボ / yohelab.com</div>
           <div class="footer-links">
             <a href="/">トップ</a>
+            <a href="/lp/bunsirube/">文標</a>
+            <a href="/lp/bunsirube/demo/">デモ</a>
             <a href="/blog/">ブログ</a>
             <a href="/contact/">問い合わせ</a>
-            <a href="/lp/bunsirube/affiliate/">アフィリエイト</a>
             <a href="/legal/commerce/">特定商取引法</a>
             <a href="/legal/privacy/">プライバシー</a>
             <a href="/legal/terms/">利用規約</a>
+            <a href="/lp/bunsirube/affiliate/">アフィリエイト</a>
             <a href="/legal/affiliate-terms/">アフィリエイト規約</a>
           </div>
         </div>

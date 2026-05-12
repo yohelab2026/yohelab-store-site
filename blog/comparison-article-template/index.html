@@ -17,7 +17,7 @@
   <link rel="icon" type="image/png" href="/yohelab-icon-32.png" />
   <link rel="stylesheet" href="/shared/site.min.css" />
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"BlogPosting","headline":"比較記事の書き方：結論・比較表・FAQ・CTAの順で迷いを減らす","datePublished":"2026-05-04","dateModified":"2026-05-04","url":"https://yohelab.com/blog/comparison-article-template/","image":"https://yohelab.com/assets/blog/comparison-article-template/eyecatch.png","author":{"@type":"Organization","name":"よへラボ"},"publisher":{"@type":"Organization","name":"よへラボ","logo":{"@type":"ImageObject","url":"https://yohelab.com/yohelab-icon.png"}},"description":"文標で比較記事を書くときの基本構成。結論、比較表、FAQ、CTAまでの流れをまとめました。","inLanguage":"ja-JP"}
+  {"@context":"https://schema.org","@type":"BlogPosting","headline":"比較記事の書き方：結論・比較表・FAQ・CTAの順で迷いを減らす","datePublished":"2026-05-04","dateModified":"2026-05-12","url":"https://yohelab.com/blog/comparison-article-template/","image":"https://yohelab.com/assets/blog/comparison-article-template/eyecatch.png","author":{"@type":"Organization","name":"よへラボ"},"publisher":{"@type":"Organization","name":"よへラボ","logo":{"@type":"ImageObject","url":"https://yohelab.com/yohelab-icon.png"}},"description":"文標で比較記事を書くときの基本構成。結論、比較表、FAQ、CTAまでの流れをまとめました。","inLanguage":"ja-JP"}
   </script>
   <style>
     body { background:#fff;color:var(--text); }
@@ -31,13 +31,17 @@
     .post-body h2 { font-size:28px;line-height:1.35;margin:36px 0 14px;letter-spacing:-.04em; }
     .post-body p, .post-body li { margin-bottom:16px; }
     .check { background:#f8fbff;border:1px solid #dce7fb;border-radius:18px;padding:18px;margin:16px 0; }
+    .post-table { width:100%;border-collapse:separate;border-spacing:0;margin:18px 0;border:1px solid var(--border);border-radius:18px;overflow:hidden;font-size:15px; }
+    .post-table th,.post-table td { padding:12px 14px;border-bottom:1px solid var(--border);vertical-align:top;text-align:left; }
+    .post-table th { background:#f0fbf6;color:#075c4c;font-weight:900; }
+    .post-table tr:last-child td { border-bottom:0; }
     .back-link { display:inline-flex;align-items:center;gap:6px;color:var(--muted);font-size:14px;font-weight:700;text-decoration:none;margin-top:40px; }
   </style>
 </head>
 <body>
   <header class="nav"><div class="nav-inner"><a class="brand" href="/"><img src="/yohelab-icon.webp" alt="よへラボ" /><span>よへラボ</span></a><nav class="nav-links"><a href="/lp/bunsirube/">文標</a><a href="/lp/bunsirube/demo/">デモ</a><a href="/blog/">ブログ</a><a href="/contact/">問い合わせ</a></nav></div></header>
   <main class="post-outer">
-    <img class="post-cover" src="/assets/blog/comparison-article-template/eyecatch.webp" alt="比較記事の書き方" loading="eager" decoding="async" width="1600" height="900" />
+    <img class="post-cover" src="/assets/blog/comparison-article-template/eyecatch.webp" alt="WordPressで比較記事を書くときの構成テンプレート、比較表とFAQとCTAの置き方" loading="eager" decoding="async" width="1600" height="900" />
     <div class="post-meta"><span>2026-05-04</span><span class="post-tag">文標</span><span class="post-tag">比較記事</span></div>
     <h1 class="post-title">比較記事の書き方：結論・比較表・FAQ・CTAの順で迷いを減らす</h1>
     <p class="post-excerpt">比較記事は、情報をたくさん並べるより、読み手が選びやすい順番を作るほうが大切です。</p>
@@ -47,9 +51,32 @@
       <div class="check"><strong>2. 比較表</strong><br />価格、特徴、向いている人、注意点を同じ行で比べます。</div>
       <div class="check"><strong>3. FAQ</strong><br />購入前に止まりやすい質問を先に置きます。返品、対応環境、使い方、注意点などです。</div>
       <div class="check"><strong>4. CTA</strong><br />最後に「次に何を見ればいいか」を置きます。売り込みではなく、読み手の次の行動を迷わせないためです。</div>
+      <h2>比較記事は、商品数より「選び方」が先</h2>
+      <p>比較記事でよくある失敗は、商品をたくさん並べることから始めてしまうことです。10個並べても、読者がどれを選べばいいか分からないなら、比較としては弱くなります。</p>
+      <p>最初に決めるのは「誰が、何を基準に選ぶ記事なのか」です。初心者向けなのか、安さ重視なのか、機能重視なのか、サポート重視なのか。ここが決まると、比較表に入れる項目も自然に決まります。</p>
+      <table class="post-table">
+        <thead><tr><th>順番</th><th>置く内容</th><th>目的</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>この記事の結論</td><td>読む前に方向性を示す</td></tr>
+          <tr><td>2</td><td>選び方の基準</td><td>比較表の見方をそろえる</td></tr>
+          <tr><td>3</td><td>比較表</td><td>価格、特徴、注意点を同じ軸で比べる</td></tr>
+          <tr><td>4</td><td>向いている人 / 向いていない人</td><td>自分ごとにしやすくする</td></tr>
+          <tr><td>5</td><td>FAQ</td><td>購入前に止まる理由を減らす</td></tr>
+          <tr><td>6</td><td>CTA</td><td>次に見るページを迷わせない</td></tr>
+        </tbody>
+      </table>
+      <h2>比較表に入れる項目</h2>
+      <p>比較表は、商品名と価格だけでは足りません。読者が迷うポイントを同じ軸で並べる必要があります。たとえばWordPressテーマなら、価格、買い切りか月額か、記事テンプレートの有無、FAQ機能、サポート範囲、複数サイト利用、表示速度の考え方などです。</p>
+      <p>ここで大事なのは、全部を盛り込まないことです。項目が多すぎると、表は便利ではなくなります。読者が購入前に本当に見る項目だけに絞ります。</p>
+      <h2>「おすすめ順」だけで終わらせない</h2>
+      <p>ランキング形式の記事では、1位を大きく見せるだけで終わりがちです。でも読者は「なぜ1位なのか」「自分にも合うのか」「2位や3位を選ぶ理由はないのか」を見ています。</p>
+      <p>なので、各商品ごとに「向いている人」と「注意点」を短く書きます。たとえば「安く始めたい人向け」「機能を細かく作り込みたい人向け」「記事の型から始めたい人向け」のように、選ぶ理由を分けると判断しやすくなります。</p>
+      <h2>CTAは売り込みではなく案内</h2>
+      <p>比較記事のCTAは、押し売りの場所ではありません。読者が「次に公式を見る」「詳しいレビューを見る」「購入前チェックを見る」ための出口です。</p>
+      <p>CTA文言は「詳しくはこちら」だけだと弱くなります。「30日返金保証つきで文標を試す」「公式サイトで料金を確認する」のように、クリック後に何が起きるかを書いたほうが安全です。</p>
       <h2>文標で用意しているもの</h2>
       <p>文標には、比較記事の型、比較表カード、FAQ、CTA、導線確認があります。書いた後に、CTAや比較表のクリック数もWordPress内で小さく確認できます。</p>
-      <p><a class="btn btn-primary" href="/lp/bunsirube/">文標を見る</a></p>
+      <p><a class="btn btn-primary" href="/lp/bunsirube/">文標を見る</a> <a class="btn btn-outline" href="/lp/bunsirube/demo/">比較表カードのデモを見る</a></p>
     </div>
     <a class="back-link" href="/blog/">← ブログ一覧へ戻る</a>
   </main>

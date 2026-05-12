@@ -4,16 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>問い合わせ | よへラボ</title>
-  <meta name="description" content="よへラボへの問い合わせ窓口。文標本体の不具合、広告リンク・CTAの表示不具合、購入後のダウンロード・シリアル・自動更新、30日返金希望を受け付けます。" />
+  <meta name="description" content="よへラボへの問い合わせ窓口。文標本体の不具合、広告リンク・CTAの表示不具合、購入後のダウンロード・シリアル・自動更新、30日返金希望、販売者情報請求を受け付けます。" />
   <meta property="og:title" content="問い合わせ | よへラボ" />
-  <meta property="og:description" content="文標本体の不具合、広告リンク・CTAの表示不具合、購入後のダウンロード・シリアル・自動更新、30日返金希望の問い合わせページ。" />
+  <meta property="og:description" content="文標本体の不具合、広告リンク・CTAの表示不具合、購入後のダウンロード・シリアル・自動更新、30日返金希望、販売者情報請求の問い合わせページ。" />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="ja_JP" />
   <meta property="og:url" content="https://yohelab.com/contact/" />
-  <meta property="og:image" content="https://yohelab.com/yohelab-icon.png" />
-  <meta name="twitter:card" content="summary" />
+  <meta property="og:image" content="https://yohelab.com/assets/og/bunsirube-og.png" />
+  <meta name="twitter:card" content="summary_large_image" />
   <meta name="robots" content="index,follow" />
   <meta name="theme-color" content="#f5fbff" />
+  <meta name="turnstile-site-key" content="" />
   <link rel="canonical" href="https://yohelab.com/contact/" />
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"ContactPage","name":"問い合わせ | よへラボ","url":"https://yohelab.com/contact/","description":"文標本体の不具合、広告リンク・CTAの表示不具合、購入後のダウンロード・シリアル・自動更新、30日返金希望を受け付ける問い合わせ窓口","mainEntity":{"@type":"Organization","name":"よへラボ","url":"https://yohelab.com/","contactPoint":{"@type":"ContactPoint","contactType":"customer support","availableLanguage":"Japanese","url":"https://yohelab.com/contact/"}}}
@@ -62,6 +63,7 @@
     .thanks-box.show { display:block; }
     .thanks-box h3 { font-size:18px; font-weight:900; color:var(--green-dark); margin-bottom:8px; }
     .thanks-box p { font-size:14px; color:var(--green-dark); margin:0; line-height:1.75; }
+    .turnstile-slot { min-height:0; margin:4px 0 8px; }
     @media(max-width:780px){ .contact-body{border-radius:20px 20px 0 0;} }
     @media(max-width:580px){ .contact-form-box{padding:24px 20px;} }
   </style>
@@ -88,7 +90,7 @@
       <div class="container" style="position:relative;z-index:1;">
         <p class="lp-eyebrow reveal" style="justify-content:center;display:inline-flex;">💬 問い合わせ</p>
         <h1 class="reveal reveal-d1">文標の不具合と<br>購入後の連絡窓口</h1>
-        <p class="reveal reveal-d2">低価格を保つため、受け付ける内容を絞っています。使い方相談、設定代行、個別カスタマイズ、SEO相談、広告運用相談は対象外です。</p>
+        <p class="reveal reveal-d2">WordPressテーマ「文標（ぶんしるべ）」の低価格を保つため、受け付ける内容を絞っています。使い方相談、設定代行、個別カスタマイズ、SEO相談、広告運用相談は対象外です。</p>
       </div>
     </section>
 
@@ -102,7 +104,7 @@
 <h2 id="starter-kit">問い合わせフォーム</h2>
               <div class="contact-notice">
                 <strong>受け付ける内容</strong>
-                文標本体の不具合、広告リンク・CTAの明らかな表示不具合、購入後のダウンロード・シリアル・自動更新の不備、30日返金希望、決済・個人情報に関する事務連絡だけ受け付けます。
+                文標本体の不具合、広告リンク・CTAの明らかな表示不具合、購入後のダウンロード・シリアル・自動更新の不備、30日返金希望、決済・個人情報に関する事務連絡、販売者情報請求だけ受け付けます。
               </div>
               <div class="contact-notice">
                 <strong>書くと確認が早い例</strong>
@@ -112,13 +114,7 @@
                 <h3>ありがとう。内容を受け取った。</h3>
                 <p>対象範囲の内容は48時間以内に1次返信します。対象外の相談は個別返信できない場合があります。</p>
               </div>
-              <form id="contact-form" class="stack">
-                <label>対象
-                  <select id="tool" name="tool" required>
-    <option value="文標（ぶんしるべ）">文標（ぶんしるべ）</option>
-                    <option value="決済・返金・個人情報">決済・返金・個人情報</option>
-                  </select>
-                </label>
+              <form id="contact-form" class="stack" action="/api/contact" method="post">
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
                   <label>名前<input id="name" name="name" autocomplete="name" required /></label>
                   <label>返信先メール<input id="email" name="email" type="email" autocomplete="email" required /></label>
@@ -130,15 +126,18 @@
                     <option value="ダウンロード・シリアル・自動更新の不備">ダウンロード・シリアル・自動更新の不備</option>
                     <option value="30日返金希望">30日返金希望</option>
                     <option value="決済・個人情報に関する連絡">決済・個人情報に関する連絡</option>
+                    <option value="販売者情報請求">販売者情報請求</option>
                   </select>
                 </label>
                 <label>ひとこと
                   <textarea id="message" name="message" placeholder="発生した手順、URL、エラーメッセージ、文標のバージョン、購入時メールアドレスなど。"></textarea>
                 </label>
                 <label class="sr-only" for="website">入力しないでください</label>
-                <input id="website" class="sr-only" type="text" name="website" tabindex="-1" autocomplete="off" />
+                <input id="website" class="sr-only" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
+                <input id="turnstile-token" type="hidden" name="turnstile_token" />
+                <div id="turnstile-widget" class="turnstile-slot" aria-label="スパム対策"></div>
                 <button class="btn btn-primary" type="submit" style="width:100%;height:52px;font-size:16px;">問い合わせを送る</button>
-                <p style="font-size:12.5px;color:var(--muted);margin-top:4px;">送信内容は問い合わせ対応のためだけに使う。</p>
+                <p style="font-size:12.5px;color:var(--muted);margin-top:4px;">送信内容は問い合わせ対応のためだけに使う。送信はよへラボのAPIで受け付けます。</p>
               </form>
             </div>
           </div>
@@ -151,8 +150,8 @@
     <div class="lp-footer-inner">
       <div>© よへラボ / yohelab.com</div>
       <div class="lp-footer-links">
-        <a href="/">トップ</a><a href="/blog/">ブログ</a><a href="/contact/">問い合わせ</a>
-        <a href="/legal/commerce/">特定商取引法</a><a href="/legal/privacy/">プライバシー</a><a href="/legal/terms/">利用規約</a>
+        <a href="/">トップ</a><a href="/lp/bunsirube/">文標</a><a href="/lp/bunsirube/demo/">デモ</a><a href="/blog/">ブログ</a><a href="/contact/">問い合わせ</a>
+        <a href="/legal/commerce/">特定商取引法</a><a href="/legal/privacy/">プライバシー</a><a href="/legal/terms/">利用規約</a><a href="/lp/bunsirube/affiliate/">アフィリエイト</a><a href="/legal/affiliate-terms/">アフィリエイト規約</a>
       </div>
     </div>
   </footer>
@@ -163,11 +162,25 @@
     setTimeout(()=>document.querySelectorAll('.reveal:not(.visible)').forEach(el=>el.classList.add('visible')),800);
 
     const form = document.getElementById('contact-form');
-    const toolSel = document.getElementById('tool');
     const purposeSel = document.getElementById('purpose');
     const thanksBox = document.getElementById('thanks-box');
     const hiddenField = form.querySelector('input[name="website"]');
-    const endpoint = ['yohelab2026','gmail.com'];
+    const turnstileSiteKey = (document.querySelector('meta[name="turnstile-site-key"]')?.content || '').trim();
+    if (turnstileSiteKey) {
+      const script = document.createElement('script');
+      script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+      script.async = true;
+      script.defer = true;
+      script.onload = () => {
+        if (!window.turnstile) return;
+        window.turnstile.render('#turnstile-widget', {
+          sitekey: turnstileSiteKey,
+          callback: token => { document.getElementById('turnstile-token').value = token; },
+          'expired-callback': () => { document.getElementById('turnstile-token').value = ''; }
+        });
+      };
+      document.head.appendChild(script);
+    }
 
     form.addEventListener('submit', async e => {
       e.preventDefault();
@@ -175,16 +188,16 @@
       const btn = form.querySelector('button[type="submit"]');
       btn.disabled = true; btn.textContent = '送信中...';
       const payload = {
-        tool: toolSel.value,
         name: document.getElementById('name').value.trim(),
         email: document.getElementById('email').value.trim(),
         purpose: purposeSel.value,
         message: document.getElementById('message').value.trim() || 'なし',
-        _subject: `よへラボ ${toolSel.value} ${purposeSel.value}`,
-        _template: 'table', _captcha: 'false'
+        website: hiddenField.value.trim(),
+        page_url: location.href,
+        turnstile_token: document.getElementById('turnstile-token').value
       };
       try {
-        const res = await fetch(`https://formsubmit.co/ajax/${endpoint.join('@')}`, {
+        const res = await fetch('/api/contact', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
           body: JSON.stringify(payload)

@@ -3,6 +3,8 @@ Allow: /
 Disallow: /blog/admin/
 Disallow: /api/
 Disallow: /pro/
+Disallow: /affiliate/dashboard/
+Disallow: /games/
 
 User-agent: GPTBot
 Allow: /

@@ -25,6 +25,7 @@ function jsonLdObjects(html) {
 const checks = [];
 
 const home = read(dist("index.html"));
+checks.push(["large og image and app icons are injected", home.includes('/assets/og/bunsirube-og.png') && home.includes('summary_large_image') && home.includes('og:image:width') && home.includes('1200') && home.includes('apple-touch-icon') && home.includes('/site.webmanifest')]);
 const oldPropToken = `${"pro"}${"posal"}`;
 const oldOptimizer = `${"opti"}${"mizer"}`;
 const oldBlogPin = `${"10"}${"30"}`;
@@ -52,8 +53,8 @@ const legacyLabels = [
 ];
 checks.push(["home does not promote old research writer app", !home.includes('/apps/research-writer/') && !home.includes('/lp/research-writer/')]);
 checks.push(["home no legacy tool links", legacyPaths.every((path) => !home.includes(path))]);
-checks.push(["home focuses bunsirube conversion", home.includes("AI検索時代の記事構造を") && home.includes("文標の詳細を見る") && home.includes("¥5,500（税込）で購入する") && home.includes("購入前に読める確認メモ") && !home.includes("文標で、記事の型を整える。") && !home.includes("無料で遊べるミニゲーム")]);
-checks.push(["home uses safer AI search wording", home.includes("AI検索時代に読み取りやすい本文構造") && !home.includes("AI検索にも読まれやすい") && !home.includes("AI検索に出るテーマ") && !home.includes("AI検索最適化済み")]);
+checks.push(["home focuses bunsirube conversion", home.includes("比較記事もレビューも") && home.includes("7種類のテンプレ") && home.includes("文標の詳細を見る") && home.includes("今すぐ文標を試す") && home.includes("購入前に読める確認メモ") && !home.includes("文標で、記事の型を整える。") && !home.includes("無料で遊べるミニゲーム")]);
+checks.push(["home uses safer AI search wording", home.includes("記事を書く前に止まる時間") && !home.includes("AI検索にも読まれやすい") && !home.includes("AI検索に出るテーマ") && !home.includes("AI検索最適化済み")]);
 checks.push(["home surfaces buyer guide and tax-included prices", home.includes("購入前に読める確認メモ") && home.includes("/blog/bunsirube-before-install/") && home.includes("/lp/bunsirube/updates/") && home.includes("/lp/bunsirube/#fit-check") && home.includes("¥5,500（税込）") && home.includes("表示価格はすべて税込です。")]);
 checks.push(["home uses current market proof without guarantee", home.includes("42.2") && home.includes("CMS市場シェアは59.6") && home.includes("200") && home.includes("+国・地域") && home.includes("検索順位やAI表示を保証する数字ではありません")]);
 checks.push(["home avoids overstated claims", !home.includes("AIに引用される") && !home.includes("引用されないブログ") && !home.includes("5,377億") && !home.includes("3.6兆")]);
@@ -100,18 +101,18 @@ const legacyNavHtml = [
 checks.push(["old tools services navigation is removed", !legacyNavHtml.includes('href="/tools/"') && !legacyNavHtml.includes('href="/services/"') && legacyNavHtml.includes('href="/lp/bunsirube/"') && legacyNavHtml.includes('href="/lp/bunsirube/demo/"')]);
 
 const lpResearchWriter = read(dist("lp/research-writer/index.html"));
-checks.push(["lp research writer preparing page", lpResearchWriter.includes('記事メーカー') && lpResearchWriter.includes('現在準備中') && lpResearchWriter.includes('/lp/bunsirube/') && lpResearchWriter.includes('noindex,follow')]);
+checks.push(["lp research writer preparing page", lpResearchWriter.includes('記事メーカー') && lpResearchWriter.includes('現在準備中') && lpResearchWriter.includes('/lp/bunsirube/') && lpResearchWriter.includes('noindex,nofollow')]);
 checks.push(["lp research writer safe claims", !lpResearchWriter.includes("AIに引用される") && !lpResearchWriter.includes("唯一の媒体") && !lpResearchWriter.includes("5,377億") && !lpResearchWriter.includes("3.6兆")]);
 checks.push(["lp research writer avoids retired sales copy", !lpResearchWriter.includes("WordPress自動投稿設定") && !lpResearchWriter.includes("優先キュー") && !lpResearchWriter.includes("3時間40回") && !lpResearchWriter.includes("副業実践者の34") && !lpResearchWriter.includes("圧倒的に安い") && !lpResearchWriter.includes("元が取れる") && !lpResearchWriter.includes("GoogleとAI検索の両方からアクセスが来る") && !lpResearchWriter.includes("30分で1本")]);
 
 const researchApp = read(dist("apps/research-writer/index.html"));
-checks.push(["research app preparing page", researchApp.includes('記事メーカーは') && researchApp.includes('現在準備中') && researchApp.includes('/lp/bunsirube/') && researchApp.includes('noindex,follow')]);
+checks.push(["research app preparing page", researchApp.includes('記事メーカーは') && researchApp.includes('現在準備中') && researchApp.includes('/lp/bunsirube/') && researchApp.includes('noindex,nofollow')]);
 
 const researchProduct = read(dist("products/research-writer-beta/index.html"));
-checks.push(["research product redirects to preparing page", researchProduct.includes('現在準備中') && researchProduct.includes('url=/lp/research-writer/') && researchProduct.includes('noindex,follow')]);
+checks.push(["research product redirects to preparing page", researchProduct.includes('現在準備中') && researchProduct.includes('url=/lp/research-writer/') && researchProduct.includes('noindex,nofollow')]);
 
 const pageReview = read(dist("products/page-review/index.html"));
-checks.push(["page review preparing page", pageReview.includes("商品ページ改善レビューは") && pageReview.includes("現在準備中") && pageReview.includes('/lp/bunsirube/') && pageReview.includes('noindex,follow')]);
+checks.push(["page review preparing page", pageReview.includes("商品ページ改善レビューは") && pageReview.includes("現在準備中") && pageReview.includes('/lp/bunsirube/') && pageReview.includes('noindex,nofollow')]);
 checks.push(["page review has no checkout cta while paused", !pageReview.includes("buy.stripe.com") && !pageReview.includes("980円（税込）で申し込む")]);
 
 const wpProduct = read(dist("products/bunsirube/index.html"));
@@ -131,17 +132,18 @@ checks.push(["contact removes cancellation wording", !contact.includes('解約')
 checks.push(["contact no legacy tools", legacyLabels.every((label) => !contact.includes(label))]);
 checks.push(["contact limits accepted inquiry types", contact.includes("受け付ける内容") && contact.includes("30日返金希望") && contact.includes("決済・個人情報に関する連絡") && !contact.includes("記事作成スターターキット")]);
 checks.push(["contact avoids broad post-purchase support", contact.includes("SEO相談、広告運用相談は対象外") && contact.includes("対象外の相談は個別返信できない場合があります") && !contact.includes("導入、使い方、不具合の相談") && !contact.includes("使い方を確認したい") && !contact.includes("購入前に確認したい")]);
+checks.push(["contact uses first-party api and optional turnstile", contact.includes('/api/contact') && contact.includes('turnstile-site-key') && contact.includes('turnstile-token') && !contact.includes('formsubmit.co') && !contact.includes('yohelab2026@gmail.com')]);
 
 const sitemap = read(dist("sitemap.xml"));
-checks.push(["sitemap includes research writer", sitemap.includes('https://yohelab.com/lp/research-writer/')]);
+checks.push(["sitemap excludes preparing research writer", !sitemap.includes('https://yohelab.com/lp/research-writer/') && !sitemap.includes('https://yohelab.com/apps/research-writer/')]);
 checks.push(["sitemap excludes legacy apps", legacyPaths.every((path) => !sitemap.includes(path))]);
 checks.push(["sitemap excludes removed labs", !sitemap.includes('https://yohelab.com/labs/')]);
 checks.push(["sitemap excludes retired product redirects", !sitemap.includes('https://yohelab.com/products/article-starter-kit/') && !sitemap.includes('https://yohelab.com/products/wordpress-theme-beta/')]);
-checks.push(["sitemap includes three sales pages", sitemap.includes('https://yohelab.com/lp/research-writer/') && sitemap.includes('https://yohelab.com/lp/bunsirube/') && sitemap.includes('https://yohelab.com/products/page-review/')]);
+checks.push(["sitemap focuses live bunsirube pages", sitemap.includes('https://yohelab.com/lp/bunsirube/') && !sitemap.includes('https://yohelab.com/products/page-review/') && !sitemap.includes('https://yohelab.com/products/bunsirube/')]);
 checks.push(["sitemap includes bunsirube demo and updates", sitemap.includes('https://yohelab.com/lp/bunsirube/demo/') && sitemap.includes('https://yohelab.com/lp/bunsirube/updates/')]);
 checks.push(["sitemap includes bunsirube install guide", sitemap.includes('https://yohelab.com/lp/bunsirube/install/')]);
-checks.push(["sitemap includes static blog guide posts", ["page-review-sample", "research-writer-free-flow", "bunsirube-before-install", "bunsirube-version-history", "faq-source-ai-search", "sales-page-common-mistakes"].every((slug) => sitemap.includes(`https://yohelab.com/blog/${slug}/`))]);
-checks.push(["sitemap includes all game pages", ["reaction", "typing", "math-rush", "sequence"].every((slug) => sitemap.includes(`https://yohelab.com/games/${slug}/`))]);
+checks.push(["sitemap includes static blog guide posts", ["bunsirube-before-install", "bunsirube-version-history", "faq-source-ai-search", "sales-page-common-mistakes"].every((slug) => sitemap.includes(`https://yohelab.com/blog/${slug}/`)) && !sitemap.includes("https://yohelab.com/blog/page-review-sample/") && !sitemap.includes("https://yohelab.com/blog/research-writer-free-flow/")]);
+checks.push(["sitemap excludes games pages", !sitemap.includes("https://yohelab.com/games/")]);
 
 const gameScript = read(dist("shared/arcade-game.js"));
 checks.push(["game share keeps result data", gameScript.includes('searchParams.set("score"') && gameScript.includes('searchParams.set("result"')]);
@@ -219,13 +221,13 @@ checks.push(["middleware redirects removed test blog pages", middleware.includes
 checks.push(["blog post sanitizes dangerous html server side", blogPostFunction.includes("sanitizeBodyHtml") && blogPostFunction.includes("iframe|object|embed") && blogPostFunction.includes("javascript:") && blogPostFunction.includes("data:text") && blogPostFunction.includes("vbscript:")]);
 checks.push(["blog post sanitizes dangerous html client fallback", blogPostPage.includes("sanitizeBodyHtml") && blogPostPage.includes("iframe|object|embed") && blogPostPage.includes("javascript:") && blogPostPage.includes("data:text") && blogPostPage.includes("vbscript:")]);
 checks.push(["bunsirube lp links to separate update history", bunsirubeLp.includes("最新の更新") && bunsirubeLp.includes("/lp/bunsirube/updates/") && !bunsirubeLp.includes("2026.05.03 / v0.2.0") && bunsirubeLp.includes("自動アップデート用シリアル")]);
-checks.push(["bunsirube updates page includes full history", bunsirubeUpdates.includes("文標の更新履歴") && bunsirubeUpdates.includes("v0.3.1") && bunsirubeUpdates.includes("v0.2.0") && bunsirubeUpdates.includes("初期ベータ構成") && bunsirubeUpdates.includes("正式版までに見ること")]);
-checks.push(["bunsirube lp includes demo and support", bunsirubeLp.includes('/lp/bunsirube/demo/') && bunsirubeLp.includes("デモ画面を見る") && bunsirubeLp.includes("テーマ購入前の不安") && bunsirubeLp.includes("30日返金保証") && bunsirubeLp.includes("低価格の理由") && bunsirubeLp.includes("不具合対応の範囲") && bunsirubeLp.includes("公開事例は準備中") && bunsirubeLp.includes("GNU GPL v2 or later") && bunsirubeDemo.includes("文標の見た目と使い方")]);
-checks.push(["bunsirube lp clarifies sales decision points", bunsirubeLp.includes("文標で何が変わるか、先に見る") && bunsirubeLp.includes("購入後に届くもの") && bunsirubeLp.includes("スマホで読まれる順番も、LP上で先に確認") && bunsirubeLp.includes("正式版では¥8,800（税込）へ改定予定") && bunsirubeLp.includes("決済の安心材料") && bunsirubeLp.includes("保護された決済画面") && bunsirubeLp.includes("/legal/privacy/")]);
+checks.push(["bunsirube updates page includes full history", bunsirubeUpdates.includes("文標の更新履歴") && bunsirubeUpdates.includes("v0.3.1") && bunsirubeUpdates.includes("v0.2.0") && bunsirubeUpdates.includes("初期版構成") && bunsirubeUpdates.includes("正式版までに見ること")]);
+checks.push(["bunsirube lp includes demo and support", bunsirubeLp.includes('/lp/bunsirube/demo/') && bunsirubeLp.includes("デモ画面を見る") && bunsirubeLp.includes("テーマ購入前の不安") && bunsirubeLp.includes("30日返金保証") && bunsirubeLp.includes("価格・提供範囲") && bunsirubeLp.includes("不具合対応の範囲") && bunsirubeLp.includes("公開事例は準備中") && bunsirubeLp.includes("GNU GPL v2 or later") && bunsirubeDemo.includes("文標の見た目と使い方")]);
+checks.push(["bunsirube lp clarifies sales decision points", bunsirubeLp.includes("文標で何が変わるか、先に見る") && bunsirubeLp.includes("購入後に届くもの") && bunsirubeLp.includes("スマホで読まれる順番も、LP上で先に確認") && bunsirubeLp.includes("正式版では¥8,800（税込）へ改定予定") && bunsirubeLp.includes("決済・返金") && bunsirubeLp.includes("保護された決済画面") && bunsirubeLp.includes("Cocoon") && bunsirubeLp.includes("AFFINGER6") && bunsirubeLp.includes("/legal/privacy/")]);
 checks.push(["bunsirube lp links install guide", bunsirubeLp.includes('/lp/bunsirube/install/') && bunsirubeLp.includes("インストール方法を見る") && bunsirubeLp.includes("文標のインストール方法")]);
 checks.push(["bunsirube install guide explains setup and settings", bunsirubeInstall.includes("文標の入れ方と初期設定") && bunsirubeInstall.includes("親テーマZIP") && bunsirubeInstall.includes("子テーマZIP") && bunsirubeInstall.includes("シリアル番号") && bunsirubeInstall.includes("SEOプラグイン") && bunsirubeInstall.includes("FAQ JSON-LD") && bunsirubeInstall.includes("導線確認") && bunsirubeInstall.includes("bunsirube-install-poster.png") && bunsirubeInstall.includes('"@type": "HowTo"') && bunsirubeInstall.includes('"@type": "FAQPage"')]);
-checks.push(["bunsirube lp separates purchase and server checks", bunsirubeLp.includes("購入フローの検証") && bunsirubeLp.includes("不正シリアル拒否") && bunsirubeLp.includes("動作確認とサーバー対応の表記を分けています") && bunsirubeLp.includes("実際の環境で通ったものだけ「確認済み」")]);
-checks.push(["bunsirube lp explains AI and human maintenance", bunsirubeLp.includes("AIと人で常に見ています") && bunsirubeLp.includes("人の確認を通して安全に直せるところから更新") && wpProduct.includes("AIと人で継続確認") && wpProduct.includes("価格・法務・決済・配布ZIPは人の確認を必須")]);
+checks.push(["bunsirube lp separates purchase and server checks", bunsirubeLp.includes("購入フロー自動テスト済み") && bunsirubeLp.includes("不正シリアル拒否") && bunsirubeLp.includes("動作確認とサーバー対応の表記を分けています") && bunsirubeLp.includes("実際の環境で通ったものだけ「確認済み」")]);
+checks.push(["bunsirube lp explains AI and human maintenance", bunsirubeLp.includes("AIと人で確認") && bunsirubeLp.includes("必要なところから更新") && wpProduct.includes("AIと人で継続確認") && wpProduct.includes("価格・法務・決済・配布ZIPは人の確認を必須")]);
 checks.push(["bunsirube lp positions AI-era article structure safely", bunsirubeLp.includes("AI検索時代の記事構造") && bunsirubeLp.includes("本文で読み取りやすい構造") && bunsirubeLp.includes("Google AI Overviews等への表示を保証するものではありません") && !bunsirubeLp.includes("AI検索に出るテーマ") && !bunsirubeLp.includes("AI検索最適化済み") && !bunsirubeLp.includes("AIに拾われる")]);
 checks.push(["bunsirube lp embeds demo videos", bunsirubeLp.includes("30秒で分かる文標") && bunsirubeLp.includes('/assets/bunsirube/videos/bunsirube-quick-tour.mp4') && bunsirubeLp.includes('/assets/bunsirube/videos/bunsirube-install.mp4') && bunsirubeLp.includes('/assets/bunsirube/videos/bunsirube-writing.mp4') && bunsirubeLp.includes('/assets/bunsirube/videos/bunsirube-route-check.mp4') && bunsirubeLp.includes('"@type":"VideoObject"')]);
 checks.push(["bunsirube video structured data parses", bunsirubeVideoObjects.length === 4 && bunsirubeVideoObjects.some((item) => item.contentUrl?.includes("bunsirube-quick-tour.mp4") && item.duration === "PT34S") && bunsirubeVideoObjects.filter((item) => item.duration === "PT13S").length === 3 && bunsirubeVideoObjects.every((item) => item.name && item.thumbnailUrl && item.contentUrl && item.duration && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+09:00$/.test(item.uploadDate || ""))]);
@@ -305,7 +307,7 @@ checks.push(["affiliate status hides existence and rate-limits", affiliateStatus
 checks.push(["affiliate click endpoint rate-limits per IP", affiliateClickApi.includes('rateLimitOk') && affiliateClickApi.includes('"click"') && affiliateClickApi.includes('getClientIp')]);
 checks.push(["affiliate lib exposes rate limiter using BLOG_KV", affiliateLib.includes('export async function rateLimitOk') && affiliateLib.includes('CF-Connecting-IP') && affiliateLib.includes('expirationTtl')]);
 const robotsTxt = read(dist("robots.txt"));
-checks.push(["robots.txt blocks admin api pro and affiliate dashboard", robotsTxt.includes('Disallow: /blog/admin/') && robotsTxt.includes('Disallow: /api/') && robotsTxt.includes('Disallow: /pro/') && robotsTxt.includes('Disallow: /affiliate/dashboard/') && robotsTxt.includes('Sitemap: https://yohelab.com/sitemap.xml')]);
+checks.push(["robots.txt blocks admin api pro games and affiliate dashboard", robotsTxt.includes('Disallow: /blog/admin/') && robotsTxt.includes('Disallow: /api/') && robotsTxt.includes('Disallow: /pro/') && robotsTxt.includes('Disallow: /games/') && robotsTxt.includes('Disallow: /affiliate/dashboard/') && robotsTxt.includes('Sitemap: https://yohelab.com/sitemap.xml')]);
 checks.push(["affiliate dashboard is noindex", read(dist("affiliate/dashboard/index.html")).includes('noindex,nofollow') || read(dist("affiliate/dashboard/index.html")).includes('noindex, nofollow')]);
 function walkDist(dirAbs, acc = []) {
   for (const entry of _readdirSync(dirAbs, { withFileTypes: true })) {

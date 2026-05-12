@@ -63,8 +63,68 @@ function hreflangPlugin() {
   };
 }
 
+function headHardeningPlugin() {
+  const ogImage = "https://yohelab.com/assets/og/bunsirube-og.png";
+  const turnstileSiteKey = process.env.VITE_TURNSTILE_SITE_KEY || process.env.TURNSTILE_SITE_KEY || "";
+  const clarityId = process.env.VITE_CLARITY_ID || process.env.CLARITY_ID || "";
+  const iconLinks = [
+    '<link rel="apple-touch-icon" sizes="180x180" href="/yohelab-icon-180.png" />',
+    '<link rel="icon" type="image/png" sizes="192x192" href="/yohelab-icon-192.png" />',
+    '<link rel="icon" type="image/png" sizes="512x512" href="/yohelab-icon-512.png" />',
+    '<link rel="manifest" href="/site.webmanifest" />',
+  ].join("\n    ");
+
+  return {
+    name: "head-hardening",
+    transformIndexHtml(html, ctx) {
+      if (!ctx?.path || ctx.path === "/google0009e82266fc5714.html") return html;
+
+      let out = html
+        .replace(/<meta property="og:image" content="https:\/\/yohelab\.com\/yohelab-icon\.png" \/>/g, `<meta property="og:image" content="${ogImage}" />`)
+        .replace(/<meta name="twitter:card" content="summary" \/>/g, '<meta name="twitter:card" content="summary_large_image" />')
+        .replace(/<meta name="theme-color" content="(?:#f5fbff|#ffffff)" \/>/g, '<meta name="theme-color" content="#0b8f72" />');
+
+      if (out.includes(`content="${ogImage}"`) && !out.includes('property="og:image:width"')) {
+        out = out.replace(
+          `<meta property="og:image" content="${ogImage}" />`,
+          `<meta property="og:image" content="${ogImage}" />\n  <meta property="og:image:width" content="1200" />\n  <meta property="og:image:height" content="630" />`,
+        );
+      }
+
+      if (!out.includes('rel="apple-touch-icon"')) {
+        out = out.replace(/<link rel="icon"[^>]+\/>/, (match) => `${match}\n    ${iconLinks}`);
+      }
+
+      if (turnstileSiteKey) {
+        out = out.replace(/<meta name="turnstile-site-key" content="" \/>/g, `<meta name="turnstile-site-key" content="${turnstileSiteKey}" />`);
+      }
+
+      if (clarityId && !out.includes("clarity.ms/tag")) {
+        const claritySnippet = `<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","${clarityId}");</script>`;
+        out = out.replace("</head>", `  ${claritySnippet}\n</head>`);
+      }
+
+      const canonical = out.match(/<link\s+rel="canonical"\s+href="([^"]+)"\s*\/?>/i)?.[1];
+      const title = out.match(/<title>([^<]+)<\/title>/i)?.[1]?.replace(/\s*\|\s*よへラボ.*$/, "").trim();
+      if (canonical && canonical !== "https://yohelab.com/" && title && !out.includes('"@type":"BreadcrumbList"')) {
+        const breadcrumb = {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "トップ", item: "https://yohelab.com/" },
+            { "@type": "ListItem", position: 2, name: title, item: canonical },
+          ],
+        };
+        out = out.replace("</head>", `  <script type="application/ld+json">${JSON.stringify(breadcrumb)}</script>\n</head>`);
+      }
+
+      return out;
+    },
+  };
+}
+
 export default defineConfig({
-  plugins: [matomoSnippetPlugin(), backToTopPlugin(), hreflangPlugin()],
+  plugins: [matomoSnippetPlugin(), backToTopPlugin(), hreflangPlugin(), headHardeningPlugin()],
   build: {
     rollupOptions: {
       input: {
