@@ -225,7 +225,7 @@ function renderPostHTML(post, slug, requestUrl) {
   <style>
     body { background:#fff; color: var(--text); }
     .cover-hero { width:100%; overflow:hidden; background:#0b1613; }
-    .cover-hero img { width:100%; aspect-ratio:16/9; max-height:560px; object-fit:cover; display:block; }
+    .cover-hero img { width:100%; height:auto; object-fit:contain; display:block; }
     .nav { background: rgba(5,15,12,.88) !important; }
     .post-outer { max-width:720px; margin:0 auto; padding:48px 24px 100px; }
     .post-meta { display:flex; align-items:center; gap:10px; flex-wrap:wrap; font-size:13px; color:var(--muted); margin-bottom:20px; }
@@ -253,7 +253,6 @@ function renderPostHTML(post, slug, requestUrl) {
     .related-links a:hover { border-color:var(--green); color:var(--green); }
     @media (max-width:600px) {
       .post-outer { padding:32px 18px 80px; }
-      .cover-hero img { max-height:300px; }
     }
   </style>
 </head>
