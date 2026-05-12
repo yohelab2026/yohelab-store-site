@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>問い合わせ | よへラボ</title>
-  <meta name="description" content="よへラボへの問い合わせ窓口。文標本体の不具合、広告リンク・CTAの表示不具合、購入後のダウンロード・シリアル・自動更新、30日返金希望、販売者情報請求を受け付けます。" />
+  <meta name="description" content="よへラボへの問い合わせ窓口。文標本体の不具合、広告リンク・CTAの表示不具合、購入後のダウンロード・シリアル・自動更新、30日返金希望、販売者情報請求、公開モニター相談を受け付けます。" />
   <meta property="og:title" content="問い合わせ | よへラボ" />
-  <meta property="og:description" content="文標本体の不具合、広告リンク・CTAの表示不具合、購入後のダウンロード・シリアル・自動更新、30日返金希望、販売者情報請求の問い合わせページ。" />
+  <meta property="og:description" content="文標本体の不具合、広告リンク・CTAの表示不具合、購入後のダウンロード・シリアル・自動更新、30日返金希望、販売者情報請求、公開モニター相談の問い合わせページ。" />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="ja_JP" />
   <meta property="og:url" content="https://yohelab.com/contact/" />
@@ -104,7 +104,7 @@
 <h2 id="starter-kit">問い合わせフォーム</h2>
               <div class="contact-notice">
                 <strong>受け付ける内容</strong>
-                文標本体の不具合、広告リンク・CTAの明らかな表示不具合、購入後のダウンロード・シリアル・自動更新の不備、30日返金希望、決済・個人情報に関する事務連絡、販売者情報請求だけ受け付けます。
+                文標本体の不具合、広告リンク・CTAの明らかな表示不具合、購入後のダウンロード・シリアル・自動更新の不備、30日返金希望、決済・個人情報に関する事務連絡、販売者情報請求、公開モニター相談だけ受け付けます。
               </div>
               <div class="contact-notice">
                 <strong>書くと確認が早い例</strong>
@@ -127,6 +127,7 @@
                     <option value="30日返金希望">30日返金希望</option>
                     <option value="決済・個人情報に関する連絡">決済・個人情報に関する連絡</option>
                     <option value="販売者情報請求">販売者情報請求</option>
+                    <option value="公開モニター相談">公開モニター相談</option>
                   </select>
                 </label>
                 <label>ひとこと
@@ -165,6 +166,8 @@
     const purposeSel = document.getElementById('purpose');
     const thanksBox = document.getElementById('thanks-box');
     const hiddenField = form.querySelector('input[name="website"]');
+    const query = new URLSearchParams(location.search);
+    if (query.get('purpose') === 'monitor') purposeSel.value = '公開モニター相談';
     const turnstileSiteKey = (document.querySelector('meta[name="turnstile-site-key"]')?.content || '').trim();
     if (turnstileSiteKey) {
       const script = document.createElement('script');

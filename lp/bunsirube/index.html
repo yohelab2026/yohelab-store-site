@@ -48,6 +48,7 @@
     body {
       background:#fbfdff;
       color:var(--lp-ink);
+      padding-bottom:82px;
     }
     /* Defer rendering of below-the-fold sections for faster initial paint */
     .lp-section { content-visibility: auto; contain-intrinsic-size: 1px 800px; }
@@ -1151,6 +1152,108 @@
       margin:0 auto 28px;
       max-width:720px;
     }
+    .monitor-panel {
+      border-radius:30px;
+      padding:34px;
+      background:
+        radial-gradient(circle at 88% 8%, rgba(34,197,94,.16), transparent 28%),
+        linear-gradient(135deg,#f0fdf4,#ecfeff);
+      border:1px solid rgba(13,143,114,.20);
+      box-shadow:0 18px 44px rgba(11,143,114,.10);
+      display:grid;
+      grid-template-columns:minmax(0,1fr) minmax(280px,.62fr);
+      gap:24px;
+      align-items:center;
+    }
+    .monitor-panel h2 {
+      font-size:clamp(28px,4vw,44px);
+      line-height:1.18;
+      letter-spacing:-.045em;
+      margin:0 0 12px;
+      color:#0d2948;
+    }
+    .monitor-panel p {
+      margin:0;
+      color:#486474;
+      line-height:1.9;
+    }
+    .monitor-list {
+      display:grid;
+      gap:10px;
+      margin-top:18px;
+    }
+    .monitor-list span {
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      color:#12384f;
+      font-weight:800;
+      line-height:1.65;
+    }
+    .monitor-list span::before {
+      content:"✓";
+      width:24px;
+      height:24px;
+      display:grid;
+      place-items:center;
+      border-radius:50%;
+      color:#fff;
+      background:#0b8f72;
+      flex-shrink:0;
+      margin-top:1px;
+    }
+    .monitor-card {
+      background:#fff;
+      border:1px solid rgba(13,143,114,.18);
+      border-radius:22px;
+      padding:22px;
+      box-shadow:0 14px 32px rgba(11,143,114,.08);
+    }
+    .monitor-card strong {
+      display:block;
+      color:#075c4c;
+      font-size:18px;
+      margin-bottom:8px;
+    }
+    .monitor-card small {
+      display:block;
+      color:#6b7f8d;
+      line-height:1.7;
+      margin:12px 0 0;
+    }
+    .sticky-cta-bar {
+      position:fixed;
+      left:0;
+      right:0;
+      bottom:0;
+      z-index:80;
+      background:rgba(255,255,255,.94);
+      border-top:1px solid rgba(13,143,114,.18);
+      box-shadow:0 -14px 34px rgba(15,43,72,.12);
+      backdrop-filter:blur(16px);
+    }
+    .sticky-cta-inner {
+      width:min(1120px,calc(100% - 28px));
+      min-height:70px;
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+    .sticky-cta-copy {
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+      color:#12384f;
+      font-weight:900;
+      line-height:1.35;
+    }
+    .sticky-cta-copy small {
+      color:#627786;
+      font-size:12px;
+      font-weight:800;
+    }
     .footer-dark {
       background:#fff;
       border-top:1px solid var(--lp-line);
@@ -1174,6 +1277,7 @@
       .quick-video-card,
       .quick-judge,
       .mobile-proof-grid,
+      .monitor-panel,
       .fit-flow {
         grid-template-columns:1fr;
       }
@@ -1230,6 +1334,18 @@
       }
       .hero-actions .btn { width:100%; justify-content:center; }
       .nav-links { display:flex; gap:14px; overflow:auto; white-space:nowrap; }
+      body { padding-bottom:104px; }
+      .sticky-cta-inner {
+        min-height:92px;
+        align-items:stretch;
+        justify-content:center;
+        flex-direction:column;
+        padding:10px 0;
+      }
+      .sticky-cta-inner .btn {
+        width:100%;
+        justify-content:center;
+      }
     }
   </style>
 </head>
@@ -1678,6 +1794,29 @@
       </div>
     </section>
 
+    <section class="lp-section alt" id="monitor">
+      <div class="container">
+        <div class="monitor-panel">
+          <div>
+            <span class="section-label">Public monitor</span>
+            <h2>公開事例を作るためのモニター相談を受け付けます。</h2>
+            <p>口コミを捏造して載せるより、実際に文標で記事を書いた人の画面と感想だけを集めます。掲載OKのサイトが出てきたら、このLPにスクショ付きで追加します。</p>
+            <div class="monitor-list">
+              <span>比較記事・レビュー記事・FAQ記事を書いているWordPressサイトが対象</span>
+              <span>掲載可のスクショ、短い感想、改善前後のメモをもらえる人を優先</span>
+              <span>成果数値は出せる場合だけ。PVや収益を盛った表現は載せません</span>
+            </div>
+          </div>
+          <div class="monitor-card">
+            <strong>まずは3〜5件の実例掲載を目標にします。</strong>
+            <p>「他の人が使っている証拠」がまだ弱いので、ここを正面から埋めます。応募や相談は問い合わせフォームで受け付けます。</p>
+            <a class="btn btn-primary" href="/contact/?purpose=monitor" style="width:100%;justify-content:center;margin-top:16px;">公開モニターについて相談する</a>
+            <small>対象外の相談や個別カスタマイズ依頼は返信できない場合があります。</small>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="lp-section alt">
       <div class="container">
         <div class="section-head">
@@ -1934,6 +2073,16 @@
       </div>
     </section>
   </main>
+
+  <aside class="sticky-cta-bar" aria-label="文標の固定購入案内">
+    <div class="sticky-cta-inner">
+      <div class="sticky-cta-copy">
+        <span>先行提供 ¥5,500（税込） / 正式版 ¥8,800予定</span>
+        <small>30日返金保証つき。合わなければ全額返金。</small>
+      </div>
+      <a class="btn btn-primary" href="https://buy.stripe.com/bJeaEPfTN2ze2Cubvb73G0e?client_reference_id=wordpress-theme">文標を試す →</a>
+    </div>
+  </aside>
 
   <footer class="footer">
     <div class="footer-inner">
