@@ -68,8 +68,19 @@
     .video-card video { display:block; width:100%; aspect-ratio:16/9; border-radius:18px; background:#101b31; border:1px solid #dce7fb; }
     .video-card h3 { margin:14px 0 6px; font-size:18px; letter-spacing:-.03em; }
     .video-card p { margin:0; color:var(--muted); line-height:1.75; font-size:13px; }
+    .mobile-demo-wrap { display:grid; grid-template-columns:360px minmax(0,1fr); gap:24px; align-items:center; }
+    .mobile-phone { max-width:360px; border:12px solid #0b1220; border-radius:38px; background:#fff; box-shadow:0 28px 70px rgba(11,32,68,.22); overflow:hidden; }
+    .mobile-status { height:32px; background:#0b1220; color:#d8fff4; display:flex; align-items:center; justify-content:space-between; padding:0 18px; font-size:11px; font-weight:900; }
+    .mobile-page { padding:22px 18px 24px; }
+    .mobile-page h3 { font-size:22px; line-height:1.25; letter-spacing:-.05em; margin-bottom:10px; }
+    .mobile-page p { color:var(--muted); font-size:13px; line-height:1.75; margin:0 0 12px; }
+    .mobile-chip-row { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:14px; }
+    .mobile-chip-row span { border-radius:999px; background:#eef7ff; color:#075c4c; padding:6px 8px; font-size:10px; font-weight:900; }
+    .mobile-answer { border-left:4px solid #0b8f72; background:#f0fbf6; border-radius:12px; padding:12px; margin-bottom:12px; }
+    .mobile-cta { display:block; text-align:center; border-radius:999px; background:#0b8f72; color:#fff; padding:12px 14px; text-decoration:none; font-size:13px; font-weight:900; }
     @media (max-width: 860px) { .demo-grid { grid-template-columns: 1fr; } }
     @media (max-width: 860px) { .video-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 860px) { .mobile-demo-wrap { grid-template-columns: 1fr; } .mobile-phone { margin:0 auto; width:100%; } }
     @media (max-width: 640px) { .blog-card-demo { grid-template-columns:1fr; } }
   </style>
 </head>
@@ -95,6 +106,7 @@
         <div class="demo-nav" aria-label="文標デモの種類">
           <a href="/lp/bunsirube/install/">インストール方法</a>
           <a href="#video-demo">ブログ作成動画</a>
+          <a href="#mobile-demo">スマホ幅の見本</a>
           <a href="#compare-demo">比較記事デモ</a>
           <a href="#review-demo">レビュー記事デモ</a>
           <a href="#faq-demo">FAQ記事デモ</a>
@@ -136,6 +148,34 @@
             <p>クリック確認と事故防止チェックの見え方。</p>
           </article>
         </div>
+      </div>
+    </section>
+
+    <section class="section" id="mobile-demo">
+      <div class="container mobile-demo-wrap">
+        <div class="mobile-phone" aria-label="文標のスマホ幅表示見本">
+          <div class="mobile-status"><span>9:41</span><span>文標</span></div>
+          <div class="mobile-page">
+            <div class="mobile-chip-row"><span>比較記事</span><span>FAQ</span><span>CTA</span></div>
+            <h3>最初に読むべき結論を、先に置く。</h3>
+            <p>本文が細い画面でも、答え、理由、比較、FAQ、CTAの順番が崩れにくいように作っています。</p>
+            <div class="mobile-answer">
+              <p><strong>この記事の答え</strong><br />迷ったら、先に結論と選び方を読む。</p>
+            </div>
+            <p><strong>よくある質問</strong><br />今ある記事は消えますか？ テーマ変更だけで投稿本文が消えることは通常ありません。</p>
+            <a class="mobile-cta" href="/lp/bunsirube/">文標の詳細を見る</a>
+          </div>
+        </div>
+        <article class="demo-card">
+          <p style="color:#075c4c;font-weight:900;letter-spacing:.12em;text-transform:uppercase;">Mobile width</p>
+          <h2 style="font-size:clamp(28px,4vw,44px);letter-spacing:-.05em;margin-bottom:12px;">スマホでも、読む順番が見える。</h2>
+          <p style="color:var(--muted);line-height:1.85;">PCだけきれいでも、スマホで結論やCTAが埋もれると読まれにくくなります。文標は、答え、比較、FAQ、CTAを細い画面でも追いやすい順番で置くためのテーマです。</p>
+          <div class="settings-list" style="margin-top:16px;">
+            <div class="setting-row"><span>短い答え</span><strong>先頭</strong></div>
+            <div class="setting-row"><span>FAQ</span><strong>折りたたみ</strong></div>
+            <div class="setting-row"><span>CTA</span><strong>本文末</strong></div>
+          </div>
+        </article>
       </div>
     </section>
 
