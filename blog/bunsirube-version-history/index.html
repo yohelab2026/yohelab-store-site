@@ -34,6 +34,7 @@
     .post-body p, .post-body li { margin-bottom:16px; }
     .version-grid { display:grid;gap:12px;margin:18px 0 28px; }
     .version-card { background:#fff;border:1px solid var(--border);border-radius:18px;padding:16px 18px;box-shadow:var(--shadow-xs); }
+    .version-card time { display:inline-flex;font-size:12px;font-weight:900;color:#075c4c;margin-bottom:6px; }
     .version-card strong { display:block;font-size:18px;margin-bottom:6px; }
     .version-card span { color:var(--muted);line-height:1.85; }
     .check { background:#f8fbff;border:1px solid #dce7fb;border-radius:18px;padding:18px;margin:18px 0; }
@@ -51,6 +52,7 @@
     <div class="post-body">
       <p>文標の更新履歴は、ただの数字の一覧だけだと分かりにくいです。</p>
       <p>なのでこの記事では、「何を追加したか」「どう良くなったか」「何の不安を減らしたか」が分かるように、最初のベータから順にまとめます。</p>
+      <p>日付はこの記事としてまとめた日、2026年5月12日でそろえています。</p>
       <p>大きく分けると、文標はこの流れで育てています。</p>
 
       <div class="check"><strong>文標が目指している方向</strong><br />派手な機能を増やすより、比較記事・レビュー記事・FAQ記事を迷わず書き始められて、公開前に事故を減らせるWordPressテーマにすること。</div>
@@ -62,9 +64,11 @@
       <p>この頃に良くなったのは、「記事の最後に何を置くか」「FAQをどう本文に入れるか」「テーマの更新をどう受け取るか」が見えやすくなったことです。</p>
 
       <div class="version-grid">
-        <div class="version-card"><strong>v0.1.5</strong><span>CTAボックス、ショートコード、目次ID保護、SEOプラグイン検出、バージョン付きZIPを追加。</span></div>
-        <div class="version-card"><strong>v0.1.6</strong><span>投稿画面からCTAを入れやすくし、FAQ JSON-LD抽出と更新確認まわりを調整。</span></div>
-        <div class="version-card"><strong>v0.1.7</strong><span>スクリーンショット表記、CTA例、SEO出力まとめOFF、更新情報再取得ボタンを追加。</span></div>
+        <div class="version-card"><time datetime="2026-05-12">2026.05.12</time><strong>初期ベータ構成</strong><span>記事テンプレート、FAQ、構造化データ、llms.txt、内部解析、自動アップデート用シリアルを購入内容にまとめました。最初に「何が入っているか」が分かる状態になりました。</span></div>
+        <div class="version-card"><time datetime="2026-05-12">2026.05.12</time><strong>ベータ購入ページ整理</strong><span>購入前ページに、対応環境・価格・受け取れる内容を整理しました。買う前に確認する場所がはっきりしました。</span></div>
+        <div class="version-card"><time datetime="2026-05-12">2026.05.12</time><strong>v0.1.5</strong><span>CTAボックス、bunsirube_ショートコード、目次ID保護、SEOプラグイン検出、バージョン付きZIPを追加しました。記事の最後に次の行動を置きやすくなりました。</span></div>
+        <div class="version-card"><time datetime="2026-05-12">2026.05.12</time><strong>v0.1.6</strong><span>投稿画面からCTAを入れやすくし、FAQ JSON-LD抽出と更新確認まわりを調整しました。FAQ記事と購入導線を作る手間が少し減りました。</span></div>
+        <div class="version-card"><time datetime="2026-05-12">2026.05.12</time><strong>v0.1.7</strong><span>スクリーンショット表記、主要記事型へのCTA例、SEO出力まとめOFF、更新情報再取得ボタンを追加しました。使う前に迷いやすい表示を整理しました。</span></div>
       </div>
 
       <h2>v0.2系：比較表と導線確認を強くした</h2>
@@ -74,10 +78,16 @@
       <p>その後のv0.2系では、ライセンス未認証時の空更新通知を防いだり、仮文言警告、記事名つき導線クリック表示、比較表カードのsponsored/別タブ設定、URLだけの行をブログカード化する機能を足しました。</p>
 
       <div class="version-grid">
-        <div class="version-card"><strong>v0.2.0</strong><span>比較表カード、導線解析、投稿前チェック、比較表挿入ボタンを追加。</span></div>
-        <div class="version-card"><strong>v0.2.1 - v0.2.3</strong><span>投稿前チェック、記事別クリック表示、例文警告、ライセンス未認証時の更新通知を改善。</span></div>
-        <div class="version-card"><strong>v0.2.4 - v0.2.6</strong><span>mbstringなし環境対応、ブログカード化、LPと法務表記の整理を追加。</span></div>
-        <div class="version-card"><strong>v0.2.7 - v0.2.9</strong><span>子テーマ、名前の統一、SEO重複・二重キャッシュ・旧ショートコード確認を追加。</span></div>
+        <div class="version-card"><time datetime="2026-05-12">2026.05.12</time><strong>v0.2.0</strong><span>比較表カード、CTA・比較表クリックの導線解析、投稿前チェック強化、Plain / Soft / Sharp プリセット、比較表カード挿入ボタンを追加しました。比較記事を書いたあと、押されている場所を見やすくなりました。</span></div>
+        <div class="version-card"><time datetime="2026-05-12">2026.05.12</time><strong>v0.2.1</strong><span>投稿前チェック保存項目をPHP側と同期し、記事別の導線クリック表示、example.com警告、公開投稿チェック、ZIP日付を調整しました。公開前の見落としを減らしやすくなりました。</span></div>
+        <div class="version-card"><time datetime="2026-05-12">2026.05.12</time><strong>v0.2.2</strong><span>ライセンス未認証時の空パッケージ更新通知を防ぎ、仮文言警告、記事名つき導線クリック表示、比較表カードのsponsored/別タブ設定を追加しました。更新通知と広告リンクまわりが分かりやすくなりました。</span></div>
+        <div class="version-card"><time datetime="2026-05-12">2026.05.12</time><strong>v0.2.3</strong><span>購入後返金なしの表記に整理し、対応環境をWordPress 6.5以上 / PHP 8.0以上に統一しました。買う前に見るべき条件がそろいました。</span></div>
+        <div class="version-card"><time datetime="2026-05-12">2026.05.12</time><strong>v0.2.4</strong><span>mbstringなし環境向けの文字列フォールバックを追加し、投稿前チェックを12項目に変更しました。サーバー環境差でつまずきにくくなりました。</span></div>
+        <div class="version-card"><time datetime="2026-05-12">2026.05.12</time><strong>v0.2.5</strong><span>法務ページとLPのサポート表記をそろえ、llms.txtは任意機能でGoogle AI Overviews等への表示保証ではないことを明記しました。誤解されやすい表現を減らしました。</span></div>
+        <div class="version-card"><time datetime="2026-05-12">2026.05.12</time><strong>v0.2.6</strong><span>URLだけの行を自動でブログカード化する機能を追加しました。本文からデモ、関連記事、購入前確認ページへ自然に誘導しやすくなりました。</span></div>
+        <div class="version-card"><time datetime="2026-05-12">2026.05.12</time><strong>v0.2.7</strong><span>改造用子テーマZIPを追加し、子テーマ利用時も親テーマCSSを正しく読み込むよう調整しました。自分で少し直したい人が親テーマを壊しにくくなりました。</span></div>
+        <div class="version-card"><time datetime="2026-05-12">2026.05.12</time><strong>v0.2.8</strong><span>旧名称の公開名と互換ショートコードを整理し、文標 / bunsirube の名前に統一しました。購入ページ、テーマ名、コード名のズレを減らしました。</span></div>
+        <div class="version-card"><time datetime="2026-05-12">2026.05.12</time><strong>v0.2.9</strong><span>SEO出力重複、二重キャッシュ、旧ショートコード残り、自動ブログカード、子テーマ利用状況を確認できる事故防止チェックを追加しました。公開前の不安を見つけやすくなりました。</span></div>
       </div>
 
       <h2>v0.3系：サーバー設定とサポート範囲を整理した</h2>
@@ -87,10 +97,10 @@
       <p>v0.3.3では、サポート表記を整理しました。導入代行、初期設定代行、使い方相談、個別カスタマイズは含めない代わりに、買い切り価格を抑えていることを明記しています。</p>
 
       <div class="version-grid">
-        <div class="version-card"><strong>v0.3.0</strong><span>.htaccess編集、保存前バックアップ、復元、編集可否チェックを追加。</span></div>
-        <div class="version-card"><strong>v0.3.1</strong><span>管理画面に入れないときの復元注意とバックアップダウンロードを追加。</span></div>
-        <div class="version-card"><strong>v0.3.2</strong><span>色、グラデーション、フォントサイズを増やして、ブロックエディタで整えやすく改善。</span></div>
-        <div class="version-card"><strong>v0.3.3</strong><span>低価格の理由と不具合対応の範囲を明記。購入前に分かることを増やしました。</span></div>
+        <div class="version-card"><time datetime="2026-05-12">2026.05.12</time><strong>v0.3.0</strong><span>管理画面に.htaccess編集画面を追加しました。保存前の自動バックアップ、復元、編集可否チェックを入れ、サーバー設定変更の事故を減らせるようにしました。</span></div>
+        <div class="version-card"><time datetime="2026-05-12">2026.05.12</time><strong>v0.3.1</strong><span>文標の.htaccess編集画面に、管理画面へ入れない場合の復元注意とバックアップダウンロードを追加しました。失敗したときに戻る手がかりが増えました。</span></div>
+        <div class="version-card"><time datetime="2026-05-12">2026.05.12</time><strong>v0.3.2</strong><span>theme.jsonのカラーパレットを12色に拡張し、グラデーションプリセット2種、フォントサイズ xs・xx-large を追加しました。ブロックエディタで記事の見た目を整えやすくなりました。</span></div>
+        <div class="version-card"><time datetime="2026-05-12">2026.05.12</time><strong>v0.3.3</strong><span>サポート表記を整理しました。導入代行、初期設定代行、使い方相談、個別カスタマイズを含めない代わりに、買い切り価格を抑えていることを明記しました。不具合対応の範囲も購入前に確認しやすくなりました。</span></div>
       </div>
 
       <h2>まとめ：文標は「書く前」と「公開前」を軽くするテーマ</h2>
