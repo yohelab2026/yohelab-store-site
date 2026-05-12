@@ -306,6 +306,182 @@
       font-size:12px;
       font-weight:700;
     }
+    .quick-judge {
+      display:grid;
+      grid-template-columns:minmax(0,1.05fr) minmax(320px,.95fr);
+      gap:22px;
+      align-items:stretch;
+    }
+    .judge-board,
+    .deliver-board,
+    .mobile-proof-board,
+    .payment-board {
+      border-radius:28px;
+      border:1px solid #d9e9f5;
+      background:#fff;
+      box-shadow:0 22px 58px rgba(25,86,120,.09);
+      padding:26px;
+    }
+    .judge-board h2,
+    .deliver-board h2,
+    .mobile-proof-board h2,
+    .payment-board h2 {
+      font-size:clamp(26px,4vw,42px);
+      line-height:1.18;
+      letter-spacing:-.055em;
+      margin:0 0 12px;
+      color:var(--lp-ink);
+    }
+    .judge-board p,
+    .deliver-board p,
+    .mobile-proof-board p,
+    .payment-board p {
+      color:var(--lp-muted);
+      line-height:1.85;
+      margin:0;
+    }
+    .judge-points {
+      display:grid;
+      gap:10px;
+      margin-top:18px;
+    }
+    .judge-point {
+      display:grid;
+      grid-template-columns:32px 1fr;
+      gap:10px;
+      align-items:start;
+      padding:12px;
+      border-radius:16px;
+      background:#f6fbff;
+      border:1px solid #e0edf8;
+    }
+    .judge-point strong {
+      display:grid;
+      place-items:center;
+      width:32px;
+      height:32px;
+      border-radius:50%;
+      background:#0b8f72;
+      color:#fff;
+      font-size:13px;
+    }
+    .judge-point span {
+      color:#345166;
+      font-size:14px;
+      line-height:1.65;
+      font-weight:700;
+    }
+    .flow-strip {
+      display:grid;
+      grid-template-columns:repeat(5,minmax(0,1fr));
+      gap:8px;
+      margin-top:18px;
+    }
+    .flow-strip span {
+      border-radius:999px;
+      background:#eaf8f3;
+      color:#075c4c;
+      text-align:center;
+      font-size:12px;
+      font-weight:900;
+      padding:9px 8px;
+      border:1px solid #bee5d9;
+    }
+    .deliver-table {
+      width:100%;
+      border-collapse:collapse;
+      overflow:hidden;
+      border-radius:18px;
+      margin-top:18px;
+    }
+    .deliver-table th,
+    .deliver-table td {
+      border:1px solid #dce8f5;
+      padding:13px 14px;
+      text-align:left;
+      font-size:13px;
+      line-height:1.65;
+      vertical-align:top;
+    }
+    .deliver-table th {
+      width:34%;
+      background:#f2fbf7;
+      color:#075c4c;
+      font-weight:900;
+    }
+    .mobile-proof-grid {
+      display:grid;
+      grid-template-columns:300px 1fr;
+      gap:22px;
+      align-items:center;
+    }
+    .mini-phone {
+      border:10px solid #0b1220;
+      border-radius:34px;
+      background:#fff;
+      overflow:hidden;
+      box-shadow:0 20px 50px rgba(11,32,68,.20);
+    }
+    .mini-phone-head {
+      background:#0b1220;
+      color:#c9fff1;
+      font-size:11px;
+      font-weight:900;
+      padding:9px 14px;
+      display:flex;
+      justify-content:space-between;
+    }
+    .mini-phone-body {
+      padding:18px 16px 20px;
+    }
+    .mini-phone-body h3 {
+      margin:0 0 8px;
+      color:#0b1220;
+      font-size:21px;
+      letter-spacing:-.05em;
+      line-height:1.24;
+    }
+    .mini-phone-body p {
+      font-size:12.5px;
+      line-height:1.65;
+      margin:0 0 10px;
+    }
+    .mini-answer {
+      padding:11px;
+      border-left:4px solid #0b8f72;
+      border-radius:12px;
+      background:#f0fbf6;
+      color:#345166;
+      font-size:12px;
+      line-height:1.6;
+      margin-bottom:10px;
+    }
+    .mini-phone-btn {
+      display:block;
+      border-radius:999px;
+      background:#0b8f72;
+      color:#fff;
+      text-align:center;
+      padding:10px;
+      font-size:12px;
+      font-weight:900;
+      text-decoration:none;
+    }
+    .payment-pills {
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:16px;
+    }
+    .payment-pills span {
+      border:1px solid #cfe3f3;
+      border-radius:999px;
+      background:#fff;
+      color:#075c4c;
+      font-size:12px;
+      font-weight:900;
+      padding:8px 11px;
+    }
     .lp-section {
       padding:78px 0;
     }
@@ -883,7 +1059,9 @@
       .risk-list,
       .dashboard-grid,
       .video-grid,
-      .quick-video-card {
+      .quick-video-card,
+      .quick-judge,
+      .mobile-proof-grid {
         grid-template-columns:1fr;
       }
       .product-stage { min-height:440px; }
@@ -925,6 +1103,18 @@
         line-height:1.65;
         word-break:break-word;
       }
+      .flow-strip {
+        grid-template-columns:1fr;
+      }
+      .deliver-table th,
+      .deliver-table td {
+        display:block;
+        width:100%;
+      }
+      .mini-phone {
+        max-width:320px;
+        margin:0 auto;
+      }
       .hero-actions .btn { width:100%; justify-content:center; }
       .nav-links { display:flex; gap:14px; overflow:auto; white-space:nowrap; }
     }
@@ -959,10 +1149,12 @@
             <a class="btn btn-primary btn-xl" href="https://buy.stripe.com/bJeaEPfTN2ze2Cubvb73G0e?client_reference_id=wordpress-theme">¥5,500（税込）で購入する →</a>
             <a class="btn btn-outline btn-xl" href="/lp/bunsirube/install/">インストール方法を見る</a>
           </div>
-          <p style="margin-top:12px;color:var(--muted);font-size:12.5px;line-height:1.7;">表示価格はすべて税込です。<strong style="color:#0d8f72;">🛡 30日返金保証つき</strong> — 購入から30日以内、理由を問わず全額返金。</p>
+          <p style="margin-top:12px;color:var(--muted);font-size:12.5px;line-height:1.7;">表示価格はすべて税込です。30日返金保証つき。購入から30日以内、理由を問わず全額返金。<strong style="color:#0d8f72;">正式版では¥8,800（税込）へ改定予定です。</strong></p>
           <div class="hero-mini">
-            <span style="background:rgba(13,143,114,.10);color:#075c4c;border:1px solid rgba(13,143,114,.28);font-weight:900;">🛡 30日返金保証</span>
+            <span style="background:rgba(13,143,114,.10);color:#075c4c;border:1px solid rgba(13,143,114,.28);font-weight:900;">30日返金保証</span>
             <span>買い切り</span>
+            <span>ベータ価格</span>
+            <span>Stripe決済</span>
             <span>ZIPで導入</span>
             <span>記事テンプレ内蔵</span>
             <span>子テーマ付き</span>
@@ -1020,6 +1212,68 @@
         <div class="value-item"><strong>¥5,500（税込）</strong><span>ベータ買い切り</span></div>
       </div>
     </div>
+
+    <section class="lp-section" id="quick-judge">
+      <div class="container">
+        <div class="quick-judge">
+          <article class="judge-board">
+            <span class="section-label">60 seconds</span>
+            <h2>文標で何が変わるか、先に見る。</h2>
+            <p>長い説明を読む前に、買う理由だけを短くまとめます。文標は、記事を書く前の迷いを減らすためのテーマです。</p>
+            <div class="judge-points">
+              <div class="judge-point"><strong>1</strong><span>比較・レビュー・FAQなど7種類の型から書き始められる。</span></div>
+              <div class="judge-point"><strong>2</strong><span>結論、根拠、比較、FAQ、CTAを本文に置く順番を作りやすい。</span></div>
+              <div class="judge-point"><strong>3</strong><span>CTA、比較表、広告リンクのクリックをWordPress内で小さく確認できる。</span></div>
+              <div class="judge-point"><strong>4</strong><span>今はベータ価格¥5,500（税込）。正式版では¥8,800（税込）へ改定予定。</span></div>
+            </div>
+            <div class="flow-strip" aria-label="文標で作りやすい記事構造">
+              <span>答え</span><span>根拠</span><span>比較</span><span>FAQ</span><span>CTA</span>
+            </div>
+          </article>
+          <article class="deliver-board">
+            <span class="section-label">What you get</span>
+            <h2>購入後に届くもの。</h2>
+            <p>決済後、ZIPとシリアルを受け取ってWordPressに入れます。月額ではなく買い切りです。</p>
+            <table class="deliver-table">
+              <tbody>
+                <tr><th>親テーマZIP</th><td>文標本体。WordPressの「外観 → テーマ」からアップロードして使います。</td></tr>
+                <tr><th>子テーマZIP</th><td>CSSや小さな関数追加を安全に残すための改造用テーマです。</td></tr>
+                <tr><th>シリアル</th><td>購入者確認と自動更新に使います。返金後は無効化されます。</td></tr>
+                <tr><th>案内ページ</th><td>インストール方法、デモ、更新履歴、対応範囲を購入前後に確認できます。</td></tr>
+              </tbody>
+            </table>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="lp-section alt" id="mobile-proof">
+      <div class="container">
+        <div class="mobile-proof-grid">
+          <div class="mini-phone" aria-label="文標のスマホ表示見本">
+            <div class="mini-phone-head"><span>9:41</span><span>文標</span></div>
+            <div class="mini-phone-body">
+              <h3>最初に答えを置く。</h3>
+              <p>細い画面でも、結論から読める流れを作ります。</p>
+              <div class="mini-answer">答え → 理由 → 比較 → FAQ → CTA</div>
+              <p>FAQやCTAが本文の流れから外れにくいように、記事の型から始めます。</p>
+              <a class="mini-phone-btn" href="/lp/bunsirube/demo/">スマホ幅デモを見る</a>
+            </div>
+          </div>
+          <article class="mobile-proof-board">
+            <span class="section-label">Mobile first check</span>
+            <h2>スマホで読まれる順番も、LP上で先に確認。</h2>
+            <p>PCで整っていても、スマホで結論やCTAが埋もれると読まれにくい。文標は、答え、理由、比較、FAQ、CTAを細い画面でも追いやすい順番で置くためのテーマです。</p>
+            <div class="payment-pills" style="margin-top:18px;">
+              <span>答えを先に出す</span>
+              <span>FAQを折りたたむ</span>
+              <span>CTAを本文の流れに置く</span>
+              <span>比較表から行動につなげる</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
 
     <section class="lp-section alt" id="video-demo">
       <div class="container">
@@ -1282,7 +1536,7 @@
         <div class="feature-grid">
           <article class="feature-card"><span class="mini-tag">Good fit</span><h3>向いている人</h3><p>比較記事、レビュー記事、FAQ記事、商品紹介記事を、短い答え・根拠・出典・CTAまで迷わず組みたい人。WordPressで記事を積み上げたい人。</p></article>
           <article class="feature-card"><span class="mini-tag">Not fit</span><h3>向いていない人</h3><p>細かいデザイン制作、導入代行、使い方相談、個別SEO運用、広告運用相談まで込みで任せたい人。ここは低価格にするため対象外です。</p></article>
-          <article class="feature-card"><span class="mini-tag">Proof</span><h3>口コミはまだ載せない</h3><p>このページには、購入者の声をまだ載せていません。作っていない声を置くより、デモ、操作動画、更新履歴、返金保証で判断できる形にしています。</p></article>
+          <article class="feature-card"><span class="mini-tag">Proof</span><h3>公開事例は準備中</h3><p>作っていない声は載せません。公開できる利用例が出たら実際の内容だけを追加します。現時点では、デモ、操作動画、更新履歴、30日返金保証で判断できる形にしています。</p></article>
           <article class="feature-card"><span class="mini-tag">Check</span><h3>スマホ幅も確認できます</h3><p>デモページにスマホ幅の見本を追加しています。PCの見た目だけでなく、本文、FAQ、CTAが細い画面でどう並ぶかも確認できます。</p></article>
         </div>
       </div>
@@ -1343,7 +1597,7 @@
           <div style="width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,.18);display:grid;place-items:center;font-size:36px;">🛡</div>
           <div>
             <h3 style="color:#fff;font-size:20px;font-weight:900;margin-bottom:6px;">購入前に確認できる買い切りテーマ</h3>
-            <p style="color:rgba(255,255,255,.92);font-size:14px;line-height:1.75;margin:0;"><strong style="color:#ffd54f;">30日間の返金保証つき。</strong>購入から30日以内なら理由を問わず全額返金（Stripe経由で決済元に戻ります）。デモ、対応環境、FAQ、不具合対応の範囲を確認したうえで安心して試せます。<br />詳しくは <a href="/legal/commerce/" style="color:#fff;text-decoration:underline;font-weight:700;">特定商取引法表記</a> をご確認ください。</p>
+            <p style="color:rgba(255,255,255,.92);font-size:14px;line-height:1.75;margin:0;"><strong style="color:#ffd54f;">30日間の返金保証つき。</strong>購入から30日以内なら理由を問わず全額返金（Stripe経由で決済元に戻ります）。デモ、対応環境、FAQ、不具合対応の範囲を確認したうえで安心して試せます。<br />詳しくは <a href="/legal/commerce/" style="color:#fff;text-decoration:underline;font-weight:700;">特定商取引法表記</a> と <a href="/legal/privacy/" style="color:#fff;text-decoration:underline;font-weight:700;">プライバシーポリシー</a> をご確認ください。</p>
           </div>
         </div>
       </div>
@@ -1367,11 +1621,12 @@
           <a class="btn btn-outline btn-lg" href="/lp/bunsirube/demo/" style="margin-bottom:12px;">デモ画面を見る →</a>
           <a class="btn btn-outline btn-lg" href="/lp/bunsirube/install/" style="margin-bottom:12px;">インストール方法を見る →</a>
           <a class="btn btn-lg" href="https://buy.stripe.com/bJeaEPfTN2ze2Cubvb73G0e?client_reference_id=wordpress-theme">購入してZIPを受け取る →</a>
-          <p style="font-size:12.5px;line-height:1.8;color:rgba(255,255,255,.88);margin-top:14px;"><strong style="color:#ffd54f;">30日返金保証</strong>つき。購入から30日以内なら理由を問わず全額返金します。対応環境、デモ、FAQ、不具合対応の範囲も購入前に確認できます。</p>
+          <p style="font-size:12.5px;line-height:1.8;color:rgba(255,255,255,.88);margin-top:14px;"><strong style="color:#ffd54f;">30日返金保証</strong>つき。購入から30日以内なら理由を問わず全額返金します。決済はStripeの保護された決済画面で行います。</p>
         </div>
         <div class="trust-stack">
-          <article class="trust-card" style="border:2px solid #0d8f72;background:linear-gradient(180deg,rgba(13,143,114,.04),rgba(13,143,114,.10));"><h3 style="color:#075c4c;">🛡 30日返金保証</h3><p>購入から30日以内なら、理由を問わず全額返金します。Stripe経由で決済元に返金（5〜10営業日で着金）。試して合わなければ戻せるので、迷ったら試しやすい。</p></article>
-          <article class="trust-card"><h3>ベータ価格</h3><p>今は¥5,500（税込）で購入できます。買い切りで月額はかかりません。</p></article>
+          <article class="trust-card" style="border:2px solid #0d8f72;background:linear-gradient(180deg,rgba(13,143,114,.04),rgba(13,143,114,.10));"><h3 style="color:#075c4c;">30日返金保証</h3><p>購入から30日以内なら、理由を問わず全額返金します。Stripe経由で決済元に返金（5〜10営業日が目安）。試して合わなければ戻せるので、迷ったら試しやすい。</p></article>
+          <article class="trust-card"><h3>ベータ価格</h3><p>今は¥5,500（税込）で購入できます。正式版では¥8,800（税込）へ改定予定です。ベータ期間中に購入した人は、追加料金なしで更新版を受け取れます。</p></article>
+          <article class="trust-card"><h3>決済の安心材料</h3><p>決済はStripeの保護された決済画面で行います。利用できるカードブランドはStripe決済画面の表示に従います。購入前に <a href="/legal/commerce/" style="color:var(--green);font-weight:800;">特定商取引法表記</a> と <a href="/legal/privacy/" style="color:var(--green);font-weight:800;">プライバシーポリシー</a> を確認できます。</p><div class="payment-pills" style="margin-top:12px;"><span>Stripe決済</span><span>保護された決済画面</span><span>30日返金保証</span></div></article>
           <article class="trust-card"><h3>購入前に確認できます</h3><p>デジタル商品ですが、30日返金保証つき。内容、対応環境、デモを確認して購入し、合わなければ戻せます。</p></article>
           <article class="trust-card"><h3>対応環境</h3><p>最低環境はWordPress 6.5以上 / PHP 8.0以上。WordPress 6.8 / PHP 8.3の検証環境で動作確認しています。</p></article>
           <article class="trust-card"><h3>購入フローの検証</h3><p>Stripe決済Webhook、購入メール本文、シリアル発行、親テーマZIP、子テーマZIP、ライセンス認証、不正シリアル拒否を自動テストしています。</p></article>
@@ -1488,7 +1743,7 @@
           </details>
           <details class="faq-item">
             <summary>購入者の口コミや事例はある？</summary>
-            <div class="faq-body">このページには、購入者の声をまだ載せていません。作っていない声を載せるより、デモ、操作動画、更新履歴、対応範囲、30日返金保証を先に公開しています。公開できる事例が出たら、実際の内容だけを追加します。</div>
+            <div class="faq-body">公開事例は準備中です。作っていない声を載せるより、デモ、操作動画、更新履歴、対応範囲、30日返金保証を先に公開しています。公開できる利用例が出たら、実際の内容だけを追加します。</div>
           </details>
           <details class="faq-item">
             <summary>テーマのライセンスは？</summary>
