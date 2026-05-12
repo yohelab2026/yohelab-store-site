@@ -17,7 +17,7 @@
   <link rel="icon" type="image/png" href="/yohelab-icon-32.png" />
   <link rel="stylesheet" href="/shared/site.min.css" />
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"BlogPosting","headline":"文標を入れる前に確認すること：既存記事・バックアップ・環境","datePublished":"2026-05-02","dateModified":"2026-05-12","url":"https://yohelab.com/blog/bunsirube-before-install/","image":"https://yohelab.com/assets/blog/bunsirube-before-install/eyecatch.png","author":{"@type":"Organization","name":"よへラボ"},"publisher":{"@type":"Organization","name":"よへラボ","logo":{"@type":"ImageObject","url":"https://yohelab.com/yohelab-icon.png"}},"description":"テーマ購入前の不安を減らすために、導入前チェックをまとめました。","inLanguage":"ja-JP"}
+  {"@context":"https://schema.org","@type":"BlogPosting","headline":"文標を入れる前に確認すること：既存記事・バックアップ・環境","datePublished":"2026-05-02","dateModified":"2026-05-13","url":"https://yohelab.com/blog/bunsirube-before-install/","image":"https://yohelab.com/assets/blog/bunsirube-before-install/eyecatch.png","author":{"@type":"Organization","name":"よへラボ"},"publisher":{"@type":"Organization","name":"よへラボ","logo":{"@type":"ImageObject","url":"https://yohelab.com/yohelab-icon.png"}},"description":"テーマ購入前の不安を減らすために、導入前チェックをまとめました。","inLanguage":"ja-JP"}
   </script>
   <style>
     body { background:#fff;color:var(--text); }
@@ -68,6 +68,29 @@
       <h2>最低限見るページ</h2>
       <p>テーマを切り替えたら、トップページだけではなく、収益に近い記事を優先して見ます。比較記事、レビュー記事、ランキング記事、問い合わせページ、購入ボタンがあるページです。</p>
       <div class="check"><strong>切り替え後の確認</strong><br />スマホ表示、見出し、CTA、比較表、FAQ、広告リンク、内部リンク、問い合わせフォーム、404ページを確認します。</div>
+      <h2>切り替え前にスクショを残す</h2>
+      <p>バックアップは大事ですが、バックアップだけでは見た目の違いを比べにくいです。テーマ変更前に、主要ページのスクリーンショットを残しておくと、切り替え後の確認がかなり楽になります。</p>
+      <p>特に見ておきたいのは、トップページ、よく読まれている記事、収益に近い比較記事、問い合わせページ、スマホ表示です。PCでは問題がなくても、スマホでCTAが下に流れすぎたり、比較表が読みにくくなったりすることがあります。</p>
+      <table class="post-table">
+        <thead><tr><th>残すもの</th><th>理由</th><th>確認タイミング</th></tr></thead>
+        <tbody>
+          <tr><td>トップページ</td><td>メニュー、ロゴ、フッターの崩れを見る</td><td>有効化直後</td></tr>
+          <tr><td>人気記事</td><td>見出し、画像、本文幅の違いを見る</td><td>有効化直後</td></tr>
+          <tr><td>収益記事</td><td>CTA、比較表、広告リンクが押せるか見る</td><td>有効化直後と翌日</td></tr>
+          <tr><td>スマホ表示</td><td>横スクロールやボタンの潰れを探す</td><td>有効化直後</td></tr>
+          <tr><td>問い合わせページ</td><td>フォーム、リンク、法務ページ導線を見る</td><td>公開前</td></tr>
+        </tbody>
+      </table>
+      <h2>プラグインの役割を整理する</h2>
+      <p>テーマを変えるときは、プラグインも一緒に見直します。文標にはFAQ、構造化データ、llms.txt、簡単な解析、CTAまわりの機能があります。すでに同じ役割のプラグインを使っている場合、二重出力にならないか確認してください。</p>
+      <p>SEOプラグイン、キャッシュプラグイン、目次プラグイン、FAQプラグイン、ブログカード系プラグインは、役割が重なりやすいです。いきなり全部を止める必要はありませんが、同じ機能が2か所から出ていないかを見るだけで、トラブルは減ります。</p>
+      <h2>戻す手順を先に決めておく</h2>
+      <p>テーマ変更で一番焦るのは、崩れたあとに戻し方を探すことです。切り替える前に、元のテーマ名、バックアップの場所、使っているキャッシュプラグイン、サーバーの復元手順をメモしておきます。</p>
+      <p>特にキャッシュは見落としやすいです。テーマを戻しても、ブラウザやサーバーのキャッシュで古いCSSが残ることがあります。確認時は、キャッシュ削除、シークレットウィンドウ、スマホ実機の3つを使うと原因を分けやすくなります。</p>
+      <div class="check"><strong>先に決めること</strong><br />いつ切り替えるか、誰が確認するか、問題があったら何分で戻すか。個人運営でも、この3つを決めておくと落ち着いて作業できます。</div>
+      <h2>購入前にサポート範囲を見る</h2>
+      <p>テーマ導入で不安な人ほど、購入前にサポート範囲を読んでください。文標は買い切り価格を抑えるため、導入代行、初期設定代行、個別カスタマイズ、記事作成相談、広告運用相談は対象外です。</p>
+      <p>対応するのは、文標本体で再現できる不具合、広告リンク・CTAの明らかな表示不具合、配布ZIP、シリアル認証、自動更新の不備などです。ここが合わない場合は、代行つきのサービスや制作会社に頼むほうが安全です。安さと手厚い個別対応は両立しにくいので、買う前に線引きを見るのがいちばん確実です。</p>
       <h2>返金保証の使い方</h2>
       <p>文標は30日返金保証を付けています。合わなかった場合は問い合わせフォームから返金希望を送れます。返金後はシリアルが無効化され、自動更新は停止します。</p>
       <p>返金保証は、何も確認せずに入れてよいという意味ではありません。デモ、対応環境、サポート範囲、購入後に届くものを見てから試すほうが、失敗は減ります。</p>
