@@ -118,18 +118,18 @@ checks.push(["wp product title", wpProduct.includes('文標（ぶんしるべ）
 checks.push(["wp product analytics", wpProduct.includes('テーマ内解析') && wpProduct.includes('外部解析')]);
 checks.push(["wp product price", wpProduct.includes('¥5,500')]);
 checks.push(["wp product uses tax-included price labels", wpProduct.includes("¥5,500（税込）") && wpProduct.includes("¥8,800（税込）")]);
-checks.push(["wp product support policy", wpProduct.includes('不具合対応と保証の線引き') && wpProduct.includes('広い個別サポートを付けない分') && wpProduct.includes('30日返金保証')]);
+checks.push(["wp product support policy", wpProduct.includes('不具合対応と保証の線引き') && wpProduct.includes('広告リンク・CTAの明らかな表示不具合') && wpProduct.includes('30日返金保証')]);
 checks.push(["wp product embeds demo videos", wpProduct.includes('/assets/bunsirube/videos/bunsirube-install.mp4') && wpProduct.includes('/assets/bunsirube/videos/bunsirube-writing.mp4') && wpProduct.includes('/assets/bunsirube/videos/bunsirube-route-check.mp4')]);
 
 checks.push(["research product has no checkout cta while paused", !researchProduct.includes('buy.stripe.com') && !researchProduct.includes('1日1セットまで')]);
 
 const contact = read(dist("contact/index.html"));
-checks.push(["contact prioritizes bunsirube", contact.includes('文標の購入前確認') && contact.includes('文標（ぶんしるべ）')]);
+checks.push(["contact prioritizes bunsirube support scope", contact.includes('文標本体の不具合') && contact.includes('広告リンク・CTAの表示不具合') && contact.includes('文標（ぶんしるべ）')]);
 checks.push(["contact removes shortcut cards", !contact.includes('ツール一覧') && !contact.includes('サービス一覧') && !contact.includes('各ページへ直接行く')]);
 checks.push(["contact removes cancellation wording", !contact.includes('解約')]);
 checks.push(["contact no legacy tools", legacyLabels.every((label) => !contact.includes(label))]);
-checks.push(["contact invites pre-purchase questions", contact.includes("購入前の確認") && !contact.includes("記事作成スターターキット")]);
-checks.push(["contact avoids broad post-purchase support", contact.includes("使い方相談や個別設定代行は対象外") && contact.includes("返金希望") && !contact.includes("導入、使い方、不具合の相談") && !contact.includes("使い方を確認したい")]);
+checks.push(["contact limits accepted inquiry types", contact.includes("受け付ける内容") && contact.includes("30日返金希望") && contact.includes("決済・個人情報に関する連絡") && !contact.includes("記事作成スターターキット")]);
+checks.push(["contact avoids broad post-purchase support", contact.includes("SEO相談、広告運用相談は対象外") && contact.includes("対象外の相談は個別返信できない場合があります") && !contact.includes("導入、使い方、不具合の相談") && !contact.includes("使い方を確認したい") && !contact.includes("購入前に確認したい")]);
 
 const sitemap = read(dist("sitemap.xml"));
 checks.push(["sitemap includes research writer", sitemap.includes('https://yohelab.com/lp/research-writer/')]);

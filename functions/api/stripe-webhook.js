@@ -174,6 +174,10 @@ async function sendGrantEmail({ to, accessUrl, downloadUrl, childDownloadUrl, se
         "購入から30日以内であれば、理由を問わず全額返金できる。",
         "問い合わせフォームから「文標 返金希望」と購入時メールアドレスを送信すると手続きする。",
         "https://yohelab.com/contact/",
+        "",
+        "■ 対応範囲",
+        "対応するのは、文標本体の不具合、広告リンク・CTAの明らかな表示不具合、配布ZIPの破損、ダウンロード不備、シリアル認証、自動更新の不備に限る。",
+        "導入代行、初期設定代行、使い方相談、個別カスタマイズ、外部プラグイン衝突調査、記事制作、SEO相談、広告運用相談は対象外。",
       ]
     : [
         `${label} の有料版を有効にしたよ。`,
@@ -195,6 +199,7 @@ async function sendGrantEmail({ to, accessUrl, downloadUrl, childDownloadUrl, se
       <p><strong>購入者ページ</strong><br><a href="${escapeHtml(accessUrl)}" style="color:#0d6b58;font-weight:700">${escapeHtml(accessUrl)}</a></p>
       <p style="margin-top:18px;padding:14px 16px;border-radius:10px;background:#fff7ed;border:1px solid #fcd9b6;color:#7c2d12"><strong>🛡 30日返金保証</strong><br>購入から30日以内であれば、理由を問わず全額返金します。<a href="https://yohelab.com/contact/" style="color:#7c2d12;font-weight:700;text-decoration:underline">問い合わせフォーム</a> から「文標 返金希望」と購入時メールアドレスを送信してください。Stripe経由で決済元に返金されます（着金まで5〜10営業日）。返金後はシリアルが無効化されます。</p>
       <p style="color:#64748b">テーマ自体はシリアルなしでも動きます。シリアルは購入者確認と自動更新のために使います。不具合連絡時に確認する場合があります。</p>
+      <p style="color:#64748b">対応するのは、文標本体の不具合、広告リンク・CTAの明らかな表示不具合、配布ZIPの破損、ダウンロード不備、シリアル認証、自動更新の不備です。導入代行、初期設定代行、使い方相談、個別カスタマイズ、外部プラグイン衝突調査、記事制作、SEO相談、広告運用相談は対象外です。</p>
     </div>
   ` : `
     <div style="font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.7;color:#1f2937">
