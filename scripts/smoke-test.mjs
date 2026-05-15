@@ -6,7 +6,9 @@ const dist = (p) => resolve(root, "dist", p);
 const src = (p) => resolve(root, p);
 
 function read(path) {
-  if (!existsSync(path)) throw new Error(`Missing file: ${path}`);
+  if (!existsSync(path)) {
+    throw new Error(`Missing file: ${path}\nRun "npm run build" before "npm run test:smoke".`);
+  }
   return readFileSync(path, "utf8");
 }
 
