@@ -68,9 +68,9 @@ function headHardeningPlugin() {
   const turnstileSiteKey = process.env.VITE_TURNSTILE_SITE_KEY || process.env.TURNSTILE_SITE_KEY || "";
   const clarityId = process.env.VITE_CLARITY_ID || process.env.CLARITY_ID || "";
   const iconLinks = [
-    '<link rel="apple-touch-icon" sizes="180x180" href="/yohelab-icon-180.png" />',
-    '<link rel="icon" type="image/png" sizes="192x192" href="/yohelab-icon-192.png" />',
-    '<link rel="icon" type="image/png" sizes="512x512" href="/yohelab-icon-512.png" />',
+    '<link rel="apple-touch-icon" sizes="180x180" href="/yohelab-cat-icon-180.png" />',
+    '<link rel="icon" type="image/png" sizes="192x192" href="/yohelab-cat-icon-192.png" />',
+    '<link rel="icon" type="image/png" sizes="512x512" href="/yohelab-cat-icon-512.png" />',
     '<link rel="manifest" href="/site.webmanifest" />',
   ].join("\n    ");
 
@@ -80,7 +80,7 @@ function headHardeningPlugin() {
       if (!ctx?.path || ctx.path === "/google0009e82266fc5714.html") return html;
 
       let out = html
-        .replace(/<meta property="og:image" content="https:\/\/yohelab\.com\/yohelab-icon\.png" \/>/g, `<meta property="og:image" content="${ogImage}" />`)
+        .replace(/<meta property="og:image" content="https:\/\/yohelab\.com\/yohelab-(?:cat-)?icon\.png" \/>/g, `<meta property="og:image" content="${ogImage}" />`)
         .replace(/<meta name="twitter:card" content="summary" \/>/g, '<meta name="twitter:card" content="summary_large_image" />')
         .replace(/<meta name="theme-color" content="(?:#f5fbff|#ffffff)" \/>/g, '<meta name="theme-color" content="#0b8f72" />');
 

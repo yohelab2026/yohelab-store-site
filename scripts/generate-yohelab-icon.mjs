@@ -7,7 +7,7 @@ async function writeModule(outputPath, exportName, value) {
   await writeFile(outputPath, output, "utf8");
 }
 
-const iconBytes = await readFile(resolve("public/yohelab-icon.png"));
+const iconBytes = await readFile(resolve("public/yohelab-cat-icon.png"));
 await writeModule(
   resolve("functions/generated/yohelab-icon.js"),
   "yohelabIconBase64",

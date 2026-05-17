@@ -244,7 +244,7 @@ function pageTemplate(game) {
   <meta name="robots" content="noindex,nofollow" />
   <meta name="theme-color" content="#f5fbff" />
   <link rel="canonical" href="https://yohelab.com/games/${game.slug}/" />
-  <link rel="icon" type="image/png" href="/yohelab-icon-32.png" />
+  <link rel="icon" type="image/png" href="/yohelab-cat-icon-32.png" />
   <link rel="stylesheet" href="/shared/site.min.css" />
   <link rel="stylesheet" href="${sharedCss}" />
 </head>
@@ -252,7 +252,7 @@ function pageTemplate(game) {
   <header class="nav lp-nav">
     <div class="nav-inner">
       <a class="brand brand-light" href="/">
-        <img src="/yohelab-icon.webp" alt="よへラボ" />
+        <img src="/yohelab-cat-icon.webp" alt="よへラボ" />
         <span>よへラボ</span>
       </a>
       <nav class="nav-links">
