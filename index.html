@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>よへラボ | 比較記事・レビュー記事を7種類のテンプレから書き始めるWordPressテーマ</title>
-  <meta name="description" content="文標（ぶんしるべ）は、比較記事・レビュー記事・FAQ記事を7種類のテンプレから書き始められる軽量WordPressテーマ。短い答え、根拠、出典、FAQ、比較表カード、CTA、導線確認まで入った買い切りテーマです。" />
-  <meta property="og:title" content="よへラボ｜文標（ぶんしるべ）WordPressテーマ" />
-  <meta property="og:description" content="比較記事・レビュー記事・FAQ記事を7種類のテンプレから書き始められる、買い切りの軽量WordPressテーマ。" />
+  <title>よへラボ | AIニュースを、個人でも売れるネタに変える場所</title>
+  <meta name="description" content="よへラボは、AIニュースを個人でも売れるネタに変えるための実験場です。note・X・ブログ・テンプレ販売・小さなツール化の使い道を考え、WordPressテーマ「文標」もその道具のひとつとして提供します。" />
+  <meta property="og:title" content="よへラボ｜AIニュースを、個人でも売れるネタに変える" />
+  <meta property="og:description" content="AIニュースを見て終わりにせず、note・X・ブログ・テンプレ・小さな商品に変えるための実験場。" />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="ja_JP" />
   <meta property="og:url" content="https://yohelab.com/" />
@@ -23,10 +23,12 @@
   <script type="application/ld+json">
   {"@context":"https://schema.org","@graph":[
     {"@type":"Organization","@id":"https://yohelab.com/#org","name":"よへラボ","url":"https://yohelab.com/","logo":{"@type":"ImageObject","url":"https://yohelab.com/yohelab-icon.png"},"contactPoint":{"@type":"ContactPoint","url":"https://yohelab.com/contact/","contactType":"customer support","availableLanguage":"Japanese"}},
-    {"@type":"WebSite","@id":"https://yohelab.com/#site","name":"よへラボ","url":"https://yohelab.com/","description":"比較記事・レビュー記事・FAQ記事を7種類のテンプレから書き始められる軽量WordPressテーマ「文標（ぶんしるべ）」を提供。FAQ、比較表カード、CTA、構造化データを内蔵。","publisher":{"@id":"https://yohelab.com/#org"}},
-    {"@type":"WebPage","@id":"https://yohelab.com/#page","url":"https://yohelab.com/","name":"よへラボ | 文標（ぶんしるべ）WordPressテーマ","description":"比較記事・レビュー記事・FAQ記事を7種類のテンプレから書き始められるWordPressテーマを案内するページ。","isPartOf":{"@id":"https://yohelab.com/#site"}},
-    {"@type":"ItemList","name":"よへラボのツール一覧","itemListElement":[
-      {"@type":"ListItem","position":1,"name":"文標（ぶんしるべ）","url":"https://yohelab.com/lp/bunsirube/","description":"比較記事・レビュー記事・FAQ記事の構造、FAQ、比較表カード、CTA、導線確認、構造化データを内蔵した軽量WordPressテーマ。先行提供¥5,500（税込）・買い切り。"}
+    {"@type":"WebSite","@id":"https://yohelab.com/#site","name":"よへラボ","url":"https://yohelab.com/","description":"AIニュースを、個人でも売れるネタに変えるための実験場。note、X、ブログ、テンプレ、小さなツール化の使い道を考え、WordPressテーマ「文標」も提供。","publisher":{"@id":"https://yohelab.com/#org"}},
+    {"@type":"WebPage","@id":"https://yohelab.com/#page","url":"https://yohelab.com/","name":"よへラボ | AIニュースを、個人でも売れるネタに変える場所","description":"AIニュースをnote、X、ブログ、テンプレ、小さな商品に変えるための実験と道具をまとめるページ。","isPartOf":{"@id":"https://yohelab.com/#site"}},
+    {"@type":"ItemList","name":"よへラボの主な入口","itemListElement":[
+      {"@type":"ListItem","position":1,"name":"よへラボブログ","url":"https://yohelab.com/blog/","description":"AIニュース、記事構成、WordPress、noteやXでの発信に関する実験メモ。"},
+      {"@type":"ListItem","position":2,"name":"文標（ぶんしるべ）","url":"https://yohelab.com/lp/bunsirube/","description":"AIニュースから作ったネタを、比較記事・レビュー記事・FAQ記事として整理しやすくする軽量WordPressテーマ。先行提供¥5,500（税込）・買い切り。"},
+      {"@type":"ListItem","position":3,"name":"文標デモ","url":"https://yohelab.com/lp/bunsirube/demo/","description":"記事型、比較表カード、FAQ、CTA、導線確認の見本。"}
     ]}
   ]}
   </script>
@@ -1423,9 +1425,10 @@
         <span>よへラボ</span>
       </a>
       <nav class="nav-links">
+        <a href="/blog/">実験メモ</a>
         <a href="/lp/bunsirube/">文標</a>
         <a href="/lp/bunsirube/demo/">デモ</a>
-        <a href="/blog/">ブログ</a>
+        <a href="https://x.com/yohe_lab" target="_blank" rel="me noopener">X</a>
         <a href="/contact/">問い合わせ</a>
       </nav>
     </div>
@@ -1436,43 +1439,44 @@
       <div class="hero-layout">
         <div class="hero-copy">
           <div class="hero-kicker-row">
-            <span class="hero-pill">文標 WordPressテーマ</span>
-            <span class="hero-pill alt">先行提供 ¥5,500（税込）</span>
+            <span class="hero-pill">AIニュース活用ラボ</span>
+            <span class="hero-pill alt">note / X / ブログ / テンプレ</span>
           </div>
           <h1 class="hero-title">
-            比較記事もレビューも、<br />
-            7種類のテンプレから書き始める。
+            AIニュースを、<br />
+            個人でも売れる<br />
+            <span class="accent">ネタに変える。</span>
           </h1>
-          <p class="hero-lead" style="margin-bottom:14px;"><span class="accent" style="color:var(--home-blue);font-weight:800;">短い答え / 根拠 / 出典 / FAQ / CTA / 導線確認</span></p>
-          <p class="hero-lead">文標は、記事を書く前に止まる時間を減らすための軽量WordPressテーマです。比較記事・レビュー記事・FAQ記事を、短い答え・根拠・出典・行動導線まで整えながら書き始められます。</p>
+          <p class="hero-lead" style="margin-bottom:14px;"><span class="accent" style="color:var(--home-blue);font-weight:800;">新機能 / 使い道 / 記事ネタ / テンプレ / 小さな商品化</span></p>
+          <p class="hero-lead">よへラボは、AIニュースを見て終わりにしない場所です。ChatGPT、Perplexity、画像生成、AI検索の変化を、note・X・ブログ・テンプレ販売・小さなツールのネタに変えていきます。</p>
           <div class="hero-actions">
-            <a class="btn btn-xl btn-home-primary" href="/lp/bunsirube/">文標の詳細を見る</a>
-            <a class="btn btn-xl btn-home-secondary" href="https://buy.stripe.com/bJeaEPfTN2ze2Cubvb73G0e?client_reference_id=wordpress-theme">今すぐ文標を試す</a>
+            <a class="btn btn-xl btn-home-primary" href="/blog/">実験メモを見る</a>
+            <a class="btn btn-xl btn-home-secondary" href="/lp/bunsirube/">文標を見る</a>
           </div>
-          <div class="hero-price-box" aria-label="文標の先行提供価格">
-            <strong>先行提供 ¥5,500（税込）</strong>
-            <span>正式版は¥8,800（税込）へ改定予定。今は¥3,300 OFF、30日返金保証つき。</span>
+          <div class="hero-price-box" aria-label="よへラボで扱うこと">
+            <strong>文標は、よへラボの道具のひとつ。</strong>
+            <span>AIニュースから見つけたネタを、記事・比較・FAQ・CTAに整理するためのWordPressテーマとして置いています。</span>
           </div>
           <div class="hero-note">
-            <div class="hero-checkmark">✓</div>
-            <p>無料テーマと正面勝負しない。文標は、デザインより先に「記事の構造」を整えるためのテーマです。</p>
+            <div class="hero-checkmark" aria-hidden="true">✓</div>
+            <p>情報だけで終わらせず、記事、テンプレ、無料ツール、有料商品まで持っていける形を作ります。</p>
           </div>
-          <p style="margin-top:10px;color:var(--home-muted);font-size:12.5px;line-height:1.7;">表示価格はすべて税込です。</p>
+          <p style="margin-top:10px;color:var(--home-muted);font-size:12.5px;line-height:1.7;">文標の表示価格はすべて税込です。</p>
         </div>
 
         <div class="hero-visual" aria-hidden="true">
           <div class="device-stack">
             <div class="floating-tag tag-tools">記事型</div>
-            <div class="floating-tag tag-service">比較表カード</div>
-            <div class="floating-tag tag-game">導線確認</div>
+            <div class="floating-tag tag-service">商品ネタ</div>
+            <div class="floating-tag tag-game">小さな商品化</div>
 
             <div class="panel window">
               <div class="line short"></div>
               <div class="line"></div>
               <div class="metric-grid">
-                <div class="metric-box"><strong>7</strong><span>記事型から選べる</span></div>
-                <div class="metric-box"><strong>12</strong><span>投稿前チェック</span></div>
-                <div class="metric-box"><strong>¥5,500</strong><span>税込・買い切り</span></div>
+                <div class="metric-box"><strong>AI</strong><span>ニュースを読む</span></div>
+                <div class="metric-box"><strong>ネタ</strong><span>使い道に変える</span></div>
+                <div class="metric-box"><strong>商品</strong><span>小さく試す</span></div>
               </div>
             </div>
 
@@ -1480,10 +1484,10 @@
               <div class="phone-line"></div>
               <div class="phone-chat"></div>
               <div class="phone-check">
-                <span>記事型を選ぶ</span>
-                <span>短い答えを置く</span>
-                <span>FAQを作る</span>
-                <span>CTAを置く</span>
+                <span>AIニュースを拾う</span>
+                <span>個人の使い道を考える</span>
+                <span>note・Xに分解する</span>
+                <span>テンプレ化して試す</span>
               </div>
             </div>
 
@@ -1513,39 +1517,39 @@
     <section class="section-block">
       <div class="block-head">
         <div>
-          <h2>購入前に読める確認メモ。</h2>
-          <p>申し込む前に、中身・使い方・注意点を短く確認できます。</p>
+          <h2>よへラボで扱うもの。</h2>
+          <p>AIニュースを、読むだけで終わらせず、発信・記事・テンプレ・ツール・商品に変えるための棚です。</p>
         </div>
-        <a class="text-link" href="/blog/">すべて読む →</a>
+        <a class="text-link" href="/blog/">実験メモを見る →</a>
       </div>
       <div class="feature-grid solution-grid">
-        <a class="feature-card solution-card" href="/blog/bunsirube-before-install/">
+        <a class="feature-card solution-card" href="/blog/">
+          <div class="feature-icon">📰</div>
+          <div class="badge-row"><span class="badge badge-cyan">AIニュース</span></div>
+          <h3>AIニュースを小さな商品ネタに変える</h3>
+          <p>新機能や市場の変化を、note記事、X投稿、ブログ企画、テンプレ販売の切り口に変えます。</p>
+          <span class="category-link" style="margin-top:auto;">読む →</span>
+        </a>
+        <a class="feature-card solution-card" href="/blog/comparison-article-template/">
+          <div class="feature-icon">✍️</div>
+          <div class="badge-row"><span class="badge badge-orange">記事化</span></div>
+          <h3>note・X・ブログに分解する</h3>
+          <p>AIニュースから見つけたネタを、無料記事、有料部分、短い投稿、比較記事に切り分けます。</p>
+          <span class="category-link" style="margin-top:auto;">型を見る →</span>
+        </a>
+        <a class="feature-card solution-card" href="/blog/">
+          <div class="feature-icon">🧰</div>
+          <div class="badge-row"><span class="badge badge-cyan">テンプレ・ツール</span></div>
+          <h3>持ち帰れる形にする</h3>
+          <p>プロンプト、記事構成、タイトル案、見出し画像、無料ツールなど、実際に使える形へ整理します。</p>
+          <span class="category-link" style="margin-top:auto;">実験を見る →</span>
+        </a>
+        <a class="feature-card solution-card" href="/lp/bunsirube/">
           <div class="feature-icon">🧩</div>
           <div class="badge-row"><span class="badge badge-orange">文標</span></div>
-          <h3>テーマ導入前の確認</h3>
-          <p>既存記事、バックアップ、WordPress環境、プラグインの見直しを購入前に確認できます。</p>
-          <span class="category-link" style="margin-top:auto;">確認する →</span>
-        </a>
-        <a class="feature-card solution-card" href="/lp/bunsirube/updates/">
-          <div class="feature-icon">📋</div>
-          <div class="badge-row"><span class="badge badge-orange">更新履歴</span></div>
-          <h3>文標の更新内容を確認</h3>
-          <p>初期版から最新版まで、追加機能・改善・事故防止対応をまとめています。</p>
-          <span class="category-link" style="margin-top:auto;">更新履歴を見る →</span>
-        </a>
-        <a class="feature-card solution-card" href="/lp/bunsirube/demo/">
-          <div class="feature-icon">🎬</div>
-          <div class="badge-row"><span class="badge badge-cyan">デモ</span></div>
-          <h3>ブログ作成の操作動画</h3>
-          <p>記事型、CTA、比較表カード、導線確認の流れを動画で確認できます。</p>
-          <span class="category-link" style="margin-top:auto;">デモを見る →</span>
-        </a>
-        <a class="feature-card solution-card" href="/lp/bunsirube/#fit-check">
-          <div class="feature-icon">🧭</div>
-          <div class="badge-row"><span class="badge badge-cyan">判断表</span></div>
-          <h3>向いている人・向かない人</h3>
-          <p>有名テーマと比べる前に、文標を選ぶ理由と選ばなくていい場合を確認できます。</p>
-          <span class="category-link" style="margin-top:auto;">判断する →</span>
+          <h3>文標は、記事化するための道具</h3>
+          <p>反応があったネタを、比較・レビュー・FAQ・CTAのあるWordPress記事に整えるテーマです。</p>
+          <span class="category-link" style="margin-top:auto;">文標を見る →</span>
         </a>
       </div>
     </section>
@@ -1554,8 +1558,8 @@
       <div class="block-head" style="margin-bottom:28px;">
         <div>
           <p style="color:#6be5c9;font-size:11px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;margin-bottom:12px;">Why AI now</p>
-          <h2 style="color:#fff;font-size:clamp(28px,4vw,42px);">検索の入口は<span style="color:#6be5c9;">AIにも広がった</span>。</h2>
-          <p style="color:rgba(255,255,255,.78);max-width:720px;">Google検索、ChatGPT、Claude、Perplexity。入口が増えた今は、見出し・FAQ・出典が整理された「人が読んでも分かりやすい記事」が土台になる。</p>
+          <h2 style="color:#fff;font-size:clamp(28px,4vw,42px);">AIニュースは、<span style="color:#6be5c9;">そのままだと流れて終わる</span>。</h2>
+          <p style="color:rgba(255,255,255,.78);max-width:720px;">ChatGPT、Claude、Perplexity、Google検索。新機能は毎週のように出ます。でも大事なのは「何が出たか」より、自分なら何を作れるか。よへラボでは、ニュースをnote・X・ブログ・テンプレ・小さな商品に変える視点で見ます。</p>
         </div>
       </div>
       <div class="stats-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;">
@@ -1575,15 +1579,15 @@
           <p style="color:rgba(255,255,255,.6);font-size:13px;line-height:1.7;margin:0;">AI要約が出た検索で、要約内のリンクがクリックされた割合。Pew Research Center（2025年7月）。</p>
         </div>
       </div>
-      <p style="text-align:center;margin-top:24px;color:rgba(255,255,255,.6);font-size:13px;">出典: Pew Research Center（2025年7月）。検索順位やAI表示を保証する数字ではありません。</p>
+      <p style="text-align:center;margin-top:24px;color:rgba(255,255,255,.6);font-size:13px;">出典: Pew Research Center（2025年7月）。検索順位やAI表示を保証する数字ではありません。よへラボでは、AI検索時代でも読者が判断しやすい情報整理を重視します。</p>
     </section>
 
     <section class="section-block" style="background:linear-gradient(180deg,#fff8eb 0%,#fef3c7 100%);border:1px solid rgba(245,158,11,.18);padding:48px 36px;">
       <div class="block-head" style="margin-bottom:24px;">
         <div>
           <p style="color:#b45309;font-size:11px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;margin-bottom:12px;">Why blog now</p>
-          <h2 style="font-size:clamp(28px,4vw,42px);color:#1f2937;">「今さらブログ？」って、<span style="background:linear-gradient(135deg,#d97706,#dc2626);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;">むしろ今が始め時</span>。</h2>
-          <p style="color:#52525b;max-width:760px;font-size:16px;line-height:1.85;">SNSは流れて消える。動画は撮影と編集が大変。<strong style="color:#1f2937;">ブログとnoteは、あとから検索される記事として残しやすい媒体</strong>。AI検索時代は、短い答え・根拠・FAQ・出典が本文で読み取りやすいことが大事になる。</p>
+          <h2 style="font-size:clamp(28px,4vw,42px);color:#1f2937;">伸びたネタは、<span style="background:linear-gradient(135deg,#d97706,#dc2626);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;">残る形にしておく</span>。</h2>
+          <p style="color:#52525b;max-width:760px;font-size:16px;line-height:1.85;">Xは発見される場所。noteは試しに売る場所。ブログとよへラボは、あとから見つかる資産にしやすい場所。AIニュースから作ったネタは、短い投稿だけで終わらせず、記事・テンプレ・ツールに変えて残します。</p>
         </div>
       </div>
       <div class="stats-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;">
@@ -1606,9 +1610,9 @@
       <div style="margin-top:24px;background:rgba(255,255,255,.72);border-radius:14px;padding:18px 22px;border:1px dashed rgba(245,158,11,.32);">
         <p style="font-size:14px;color:#1f2937;line-height:1.85;margin:0;">
           <strong style="color:#b45309;">3つの事実:</strong>
-          ①ブログを動かす土台（WordPress）は<strong>世界中のWebサイトの42.2%</strong>で使われている。
+          ①ブログや商品棚を動かす土台（WordPress）は<strong>世界中のWebサイトの42.2%</strong>で使われている。
           ②記事から稼ぐ仕組み（アフィリエイト市場）は<strong>2024年度見込み4,382億円</strong>。
-          ③Pew Research Centerの2025年7月の米国Google検索調査では、AI要約ありの検索結果で通常結果クリック率が<strong>8%</strong>、なしでは<strong>15%</strong>。だからこそ<strong>役立つ内容を分かりやすく整理すること</strong>が土台になる。
+          ③Pew Research Centerの2025年7月の米国Google検索調査では、AI要約ありの検索結果で通常結果クリック率が<strong>8%</strong>、なしでは<strong>15%</strong>。だからこそ<strong>ニュースをそのまま流さず、役立つ形に整理すること</strong>が土台になる。
         </p>
       </div>
       <p style="text-align:center;margin-top:18px;color:#71717a;font-size:12px;">※ 収益や検索順位は、記事内容・ジャンル・運用状況によって変わります。</p>
@@ -1620,26 +1624,26 @@
           <div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#0b8f72,#3f8cff);display:grid;place-items:center;font-size:32px;flex-shrink:0;box-shadow:0 12px 28px rgba(11,143,114,.22);">🧑‍💻</div>
           <div>
             <p style="color:var(--home-blue);font-size:11px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px;">About yohelab</p>
-            <h2 style="font-size:clamp(22px,3.2vw,34px);margin-bottom:10px;">個人開発・個人対応。<br />よへラボはひとりで動いています。</h2>
-            <p style="color:var(--home-muted);max-width:640px;font-size:15px;line-height:1.85;">WordPressテーマ「文標」の開発、更新、不具合対応、ブログ運営をすべて運営者本人が担当しています。問い合わせ範囲を文標本体の不具合、広告リンク・CTAの表示不具合、購入後のダウンロード・シリアル・自動更新、返金に絞ることで、買い切り価格を抑えています。</p>
+            <h2 style="font-size:clamp(22px,3.2vw,34px);margin-bottom:10px;">AIニュースを、個人でも売れるネタに変える。<br />よへラボはその実験場です。</h2>
+            <p style="color:var(--home-muted);max-width:640px;font-size:15px;line-height:1.85;">AIの新機能や検索の変化を見て、note・X・ブログ・テンプレ販売・小さなツールにどう使えるかを考えます。文標は、その中で「ネタを記事構造に整える」ために作っているWordPressテーマです。</p>
           </div>
         </div>
       </div>
       <div class="trust-about-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;">
         <div style="background:#fff;border-radius:14px;padding:18px;border:1px solid var(--home-line);">
           <div style="font-size:11px;color:var(--home-muted);font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;">運営</div>
-          <div style="font-size:15px;font-weight:900;color:var(--home-text);line-height:1.5;">個人運営 / 2026年〜</div>
-          <p style="font-size:12px;color:var(--home-muted);margin-top:6px;line-height:1.6;">WordPressテーマ・ツール開発・レビューサービスを自分で全部動かしています。</p>
+          <div style="font-size:15px;font-weight:900;color:var(--home-text);line-height:1.5;">AIニュース活用 / 個人運営</div>
+          <p style="font-size:12px;color:var(--home-muted);margin-top:6px;line-height:1.6;">ニュースを読んで、記事ネタ・投稿案・テンプレ・ツールに変える実験を続けます。</p>
         </div>
         <div style="background:#fff;border-radius:14px;padding:18px;border:1px solid var(--home-line);">
-          <div style="font-size:11px;color:var(--home-muted);font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;">返信速度</div>
-          <div style="font-size:15px;font-weight:900;color:var(--home-text);line-height:1.5;">対象範囲は原則48時間以内</div>
-          <p style="font-size:12px;color:var(--home-muted);margin-top:6px;line-height:1.6;">不具合・購入後の不備・返金希望は48時間以内に1次返信します。使い方相談や個別設定代行は対象外です。</p>
+          <div style="font-size:11px;color:var(--home-muted);font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;">入口</div>
+          <div style="font-size:15px;font-weight:900;color:var(--home-text);line-height:1.5;">Xとnoteで実験</div>
+          <p style="font-size:12px;color:var(--home-muted);margin-top:6px;line-height:1.6;">反応の良いテーマを見て、よへラボ側の無料記事・テンプレ・商品に整理します。</p>
         </div>
         <div style="background:#fff;border-radius:14px;padding:18px;border:1px solid var(--home-line);">
-          <div style="font-size:11px;color:var(--home-muted);font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;">価格方針</div>
-          <div style="font-size:15px;font-weight:900;color:var(--home-text);line-height:1.5;">明朗 / 買い切り中心</div>
-          <p style="font-size:12px;color:var(--home-muted);margin-top:6px;line-height:1.6;">隠れたサブスクや追加料金はありません。価格は表示価格がすべてです。</p>
+          <div style="font-size:11px;color:var(--home-muted);font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;">商品</div>
+          <div style="font-size:15px;font-weight:900;color:var(--home-text);line-height:1.5;">文標は道具のひとつ</div>
+          <p style="font-size:12px;color:var(--home-muted);margin-top:6px;line-height:1.6;">記事構造を整えるWordPressテーマとして提供。今後はテンプレや小さなツールも増やします。</p>
         </div>
         <div style="background:#fff;border-radius:14px;padding:18px;border:1px solid var(--home-line);">
           <div style="font-size:11px;color:var(--home-muted);font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;">特商法</div>
@@ -1658,6 +1662,7 @@
             <a href="/lp/bunsirube/">文標</a>
             <a href="/lp/bunsirube/demo/">デモ</a>
             <a href="/blog/">ブログ</a>
+            <a href="https://x.com/yohe_lab" target="_blank" rel="me noopener">X</a>
             <a href="/contact/">問い合わせ</a>
             <a href="/legal/commerce/">特定商取引法</a>
             <a href="/legal/privacy/">プライバシー</a>
