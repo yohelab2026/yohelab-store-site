@@ -84,6 +84,53 @@
       color: rgba(15, 34, 71, 0.48);
     }
 
+    .nav .brand {
+      gap: 12px;
+      min-width: 210px;
+    }
+
+    .nav .brand img {
+      width: 56px;
+      height: 56px;
+      border-radius: 18px;
+      object-fit: cover;
+      box-shadow: 0 10px 22px rgba(11, 143, 114, 0.12);
+    }
+
+    .brand-copy {
+      display: grid;
+      gap: 3px;
+      line-height: 1.08;
+    }
+
+    .brand-copy strong {
+      color: #08735d;
+      font-size: 24px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+    }
+
+    .brand-copy small {
+      color: var(--home-muted);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .02em;
+    }
+
+    .nav-search {
+      width: 44px;
+      height: 44px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #e8fbf7, #dff4ff);
+      border: 1px solid rgba(11, 143, 114, 0.16);
+      color: #0f243f;
+      font-size: 18px;
+      text-decoration: none;
+      box-shadow: 0 10px 22px rgba(11, 143, 114, 0.08);
+    }
+
     .mobile-menu {
       display: none;
       margin-left: auto;
@@ -1433,7 +1480,7 @@
       position: relative;
       z-index: 1;
       display: grid;
-      grid-template-columns: minmax(0, 0.9fr) minmax(380px, 1.1fr);
+      grid-template-columns: minmax(0, 0.95fr) minmax(430px, 1.25fr);
       gap: 26px;
       align-items: stretch;
     }
@@ -1442,7 +1489,7 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      min-height: 480px;
+      min-height: 500px;
     }
 
     .portal-eyebrow {
@@ -1463,10 +1510,10 @@
     }
 
     .portal-title {
-      max-width: 650px;
+      max-width: 720px;
       margin: 0 0 18px;
       color: #0e1f47;
-      font-size: clamp(34px, 5.4vw, 66px);
+      font-size: clamp(36px, 5.2vw, 68px);
       line-height: 1.05;
       letter-spacing: -0.055em;
       font-weight: 900;
@@ -1727,6 +1774,8 @@
 
     .latest-item {
       display: grid;
+      grid-template-columns: 58px 1fr;
+      align-items: center;
       gap: 5px;
       padding: 14px;
       border-radius: 18px;
@@ -1740,6 +1789,35 @@
       border-color: rgba(11, 143, 114, 0.28);
     }
 
+    .latest-thumb {
+      width: 52px;
+      height: 52px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      background:
+        radial-gradient(circle at 24% 20%, rgba(255, 255, 255, 0.8), transparent 24%),
+        linear-gradient(135deg, rgba(11,143,114,.13), rgba(63,140,255,.14));
+      border: 1px solid rgba(11, 143, 114, 0.13);
+      color: #08735d;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .04em;
+    }
+
+    .latest-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: inherit;
+    }
+
+    .latest-copy {
+      display: grid;
+      gap: 4px;
+      min-width: 0;
+    }
+
     .latest-item strong {
       color: var(--home-text);
       font-size: 15px;
@@ -1748,6 +1826,18 @@
     }
 
     .latest-item span {
+      color: var(--home-muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .latest-item .latest-thumb {
+      color: #08735d;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .latest-item .latest-copy span {
       color: var(--home-muted);
       font-size: 12px;
       font-weight: 700;
@@ -1805,9 +1895,69 @@
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
+    .flow-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .flow-card {
+      position: relative;
+      padding: 20px;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, .94);
+      border: 1px solid rgba(220, 231, 249, 0.96);
+      box-shadow: 0 14px 32px rgba(57, 98, 188, 0.07);
+      overflow: hidden;
+    }
+
+    .flow-card::after {
+      content: "→";
+      position: absolute;
+      top: 22px;
+      right: 16px;
+      color: rgba(11, 143, 114, 0.28);
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    .flow-card:last-child::after {
+      content: "";
+    }
+
+    .flow-card .flow-num {
+      display: inline-grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      margin-bottom: 12px;
+      border-radius: 14px;
+      background: rgba(11, 143, 114, .1);
+      color: #08735d;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .flow-card strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--home-text);
+      font-size: 17px;
+      line-height: 1.38;
+      letter-spacing: -0.03em;
+    }
+
+    .flow-card span {
+      display: block;
+      color: var(--home-muted);
+      font-size: 13px;
+      line-height: 1.72;
+    }
+
     .article-card,
     .tool-card,
     .template-card {
+      position: relative;
       display: flex;
       flex-direction: column;
       min-height: 100%;
@@ -1816,6 +1966,7 @@
       color: inherit;
       text-decoration: none;
       transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+      overflow: hidden;
     }
 
     .article-card h3,
@@ -1842,6 +1993,41 @@
       color: #08705e;
       font-size: 13px;
       font-weight: 900;
+    }
+
+    .card-illustration {
+      display: grid;
+      place-items: center;
+      min-height: 116px;
+      margin-top: 2px;
+      margin-bottom: 14px;
+      border-radius: 18px;
+      background:
+        radial-gradient(circle at 78% 24%, rgba(31, 182, 207, 0.12), transparent 26%),
+        linear-gradient(135deg, #f6fcff, #eefbf8);
+      border: 1px solid rgba(220, 231, 249, 0.84);
+    }
+
+    .card-illustration img {
+      width: 112px;
+      height: 112px;
+      object-fit: cover;
+      border-radius: 28px;
+      filter: drop-shadow(0 12px 18px rgba(11, 143, 114, 0.14));
+    }
+
+    .card-illustration .sketch {
+      width: 82px;
+      height: 82px;
+      display: grid;
+      place-items: center;
+      border-radius: 24px;
+      background: #fff;
+      border: 1px solid rgba(11, 143, 114, 0.16);
+      color: #08735d;
+      font-size: 34px;
+      font-weight: 900;
+      box-shadow: 0 14px 24px rgba(57, 98, 188, 0.08);
     }
 
     .category-tiles {
@@ -2277,13 +2463,99 @@
       margin-top: 3px;
     }
 
+    .portal-pair {
+      display: grid;
+      grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr);
+      gap: 18px;
+      margin-top: 26px;
+      align-items: stretch;
+    }
+
+    .portal-pair > .section-block {
+      margin-top: 0;
+      min-height: 100%;
+    }
+
+    .portal-pair-main .template-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .portal-pair-main .why-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .portal-pair-main .why-stat-list {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .portal-pair-main .why-stat {
+      grid-template-columns: 1fr;
+      align-content: start;
+    }
+
+    .portal-pair-bottom {
+      grid-template-columns: minmax(0, 1.02fr) minmax(0, .98fr);
+    }
+
+    .cta-card {
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      align-content: center;
+      min-height: 260px;
+      background:
+        radial-gradient(circle at 90% 90%, rgba(11, 143, 114, .18), transparent 28%),
+        linear-gradient(135deg, #ffffff, #f4fbff);
+    }
+
+    .cta-card::after {
+      content: "";
+      position: absolute;
+      right: -10px;
+      bottom: -36px;
+      width: 190px;
+      height: 190px;
+      background: url("/yohelab-mascot-v2-20260518.webp") center / cover no-repeat;
+      opacity: .9;
+      pointer-events: none;
+    }
+
+    .cta-card h2 {
+      max-width: 520px;
+      margin: 0 0 12px;
+      color: var(--home-text);
+      font-size: clamp(24px, 3.2vw, 38px);
+      line-height: 1.2;
+      letter-spacing: -0.05em;
+    }
+
+    .cta-card p {
+      max-width: 500px;
+      color: var(--home-muted);
+      font-size: 15px;
+      line-height: 1.8;
+    }
+
+    .cta-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 22px;
+      padding-right: 150px;
+    }
+
+    .cta-actions .btn {
+      min-width: 190px;
+    }
+
     @media (max-width: 1180px) {
       .hero-layout,
       .bottom-grid,
       .portal-hero-grid,
       .hero-news-board,
       .about-grid,
-      .why-grid {
+      .why-grid,
+      .portal-pair {
         grid-template-columns: 1fr;
       }
 
@@ -2307,8 +2579,11 @@
 
       .feature-grid,
       .article-grid,
+      .flow-grid,
       .tool-grid,
       .template-grid,
+      .portal-pair-main .template-grid,
+      .portal-pair-main .why-stat-list,
       .home-map-grid,
       .fit-grid,
       .rhythm-grid,
@@ -2343,6 +2618,10 @@
 
     @media (max-width: 720px) {
       .nav-links {
+        display: none;
+      }
+
+      .nav-search {
         display: none;
       }
 
@@ -2462,6 +2741,10 @@
       .audience-grid,
       .bottom-stats,
       .stats-grid,
+      .flow-grid,
+      .template-grid,
+      .portal-pair-main .template-grid,
+      .portal-pair-main .why-stat-list,
       .home-map-grid,
       .fit-grid,
       .rhythm-grid,
@@ -2522,16 +2805,25 @@
         grid-template-columns: 1fr 1fr;
       }
 
+      .brand-copy small {
+        display: none;
+      }
+
+      .nav .brand {
+        min-width: auto;
+      }
+
+      .cta-actions {
+        padding-right: 0;
+      }
+
+      .cta-card::after {
+        opacity: .22;
+      }
+
       .footer-topline,
       .footer-bottomline {
         display: grid;
-      }
-    }
-
-    @media (max-width: 700px) {
-      .trust-about-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr) !important;
       }
     }
 
@@ -2550,10 +2842,6 @@
     }
 
     @media (max-width: 460px) {
-      .trust-about-grid {
-        grid-template-columns: 1fr !important;
-      }
-
       .footer-grid {
         grid-template-columns: 1fr;
       }
@@ -2588,7 +2876,10 @@
     <div class="nav-inner">
       <a class="brand" href="/">
         <img src="/yohelab-mascot-v2-20260518.webp" alt="よへラボ" />
-        <span>よへラボ</span>
+        <span class="brand-copy">
+          <strong>よへラボ</strong>
+          <small>AIニュース活用の情報サイト</small>
+        </span>
       </a>
       <nav class="nav-links">
         <a href="#latest">最新記事</a>
@@ -2598,6 +2889,7 @@
         <a href="/lp/bunsirube/">文標</a>
         <a href="/blog/">ブログ</a>
       </nav>
+      <a class="nav-search" href="/blog/" aria-label="記事を探す">⌕</a>
       <details class="mobile-menu">
         <summary>メニュー</summary>
         <div class="mobile-menu-panel">
@@ -2626,13 +2918,14 @@
           <p class="portal-eyebrow">YOHE LAB / AI NEWS TO CONTENT</p>
           <h1 class="portal-title">
             <span class="title-line">AIニュースを、</span>
-            <span class="title-line"><em>実用ネタに変える。</em></span>
+            <span class="title-line">記事・テンプレ・</span>
+            <span class="title-line">小さな商品に<em>変える。</em></span>
           </h1>
-          <p class="portal-lead">よへラボは、副業・ブログ初心者がAIニュースを見て終わらせず、ブログ記事、note・X投稿、無料テンプレ、WordPressの道具に変えるための情報サイトです。</p>
+          <p class="portal-lead">よへラボは、副業・ブログ初心者がAIニュースを見て終わらせず、ブログ記事、note・X投稿、無料テンプレ、WordPressの道具に変えるための入口です。</p>
           <ul class="hero-value-list" aria-label="よへラボでできること">
-            <li>AIニュースから記事ネタを作る</li>
-            <li>比較記事・FAQ・売り場の型を使う</li>
-            <li>反応があるテーマを小さな商品にする</li>
+            <li>① AIニュースから記事ネタを作る</li>
+            <li>② 比較記事・FAQ・売り場の型を使う</li>
+            <li>③ 反応があるテーマを小さな商品にする</li>
           </ul>
           <div class="portal-actions">
             <a class="btn btn-home-primary" href="#start-here">最新記事を見る</a>
@@ -2675,28 +2968,28 @@
           <aside class="latest-board">
             <h2>最新記事</h2>
             <a class="latest-item" href="/blog/ai-news-selling-ideas/">
-              <span>2026-05-18 / AIニュース</span>
-              <strong>AIニュースを記事ネタに変える方法</strong>
+              <span class="latest-thumb">AI</span>
+              <span class="latest-copy"><span>2026-05-18 / AIニュース</span><strong>AIニュースを記事ネタに変える方法</strong></span>
             </a>
             <a class="latest-item" href="/blog/home-work-rhythm/">
-              <span>2026-05-18 / 在宅メモ</span>
-              <strong>在宅作業の運動不足対策</strong>
+              <span class="latest-thumb">家</span>
+              <span class="latest-copy"><span>2026-05-18 / 在宅メモ</span><strong>在宅作業の運動不足対策</strong></span>
             </a>
             <a class="latest-item" href="/blog/bunsirube-version-history/">
-              <span>2026-05-12 / 文標</span>
-              <strong>文標のバージョンアップ履歴</strong>
+              <span class="latest-thumb">文</span>
+              <span class="latest-copy"><span>2026-05-12 / 文標</span><strong>文標のバージョンアップ履歴</strong></span>
             </a>
             <a class="latest-item" href="/blog/comparison-article-template/">
-              <span>2026-05-04 / 記事構成</span>
-              <strong>比較記事の書き方：結論・比較表・FAQ・CTA</strong>
+              <span class="latest-thumb">比</span>
+              <span class="latest-copy"><span>2026-05-04 / 記事構成</span><strong>比較記事の書き方：結論・比較表・FAQ・CTA</strong></span>
             </a>
             <a class="latest-item" href="/blog/free-theme-vs-bunsirube/">
-              <span>2026-05-04 / WordPress</span>
-              <strong>無料テーマと文標の違い</strong>
+              <span class="latest-thumb">WP</span>
+              <span class="latest-copy"><span>2026-05-04 / WordPress</span><strong>無料テーマと文標の違い</strong></span>
             </a>
             <a class="latest-item" href="/blog/faq-source-ai-search/">
-              <span>2026-05-02 / AI検索</span>
-              <strong>AI検索向けにFAQと出典を置く理由</strong>
+              <span class="latest-thumb">FAQ</span>
+              <span class="latest-copy"><span>2026-05-02 / AI検索</span><strong>AI検索向けにFAQと出典を置く理由</strong></span>
             </a>
           </aside>
         </div>
@@ -2715,6 +3008,37 @@
       </div>
     </section>
 
+    <section class="section-block portal-section" id="flow">
+      <div class="section-title-row">
+        <div>
+          <h2>よへラボでできる流れ</h2>
+          <p>ニュースを読むだけで終わらせず、家で試せる記事・型・小さな商品に分けて残します。</p>
+        </div>
+      </div>
+      <div class="flow-grid" aria-label="AIニュースを形にする流れ">
+        <article class="flow-card">
+          <span class="flow-num">01</span>
+          <strong>AIニュースを見る</strong>
+          <span>ChatGPT、AI検索、画像生成、WordPressまわりの変化から、使えそうな話だけ拾う。</span>
+        </article>
+        <article class="flow-card">
+          <span class="flow-num">02</span>
+          <strong>記事ネタにする</strong>
+          <span>ブログ、note、X投稿にできるように、結論・理由・使い道へ分解する。</span>
+        </article>
+        <article class="flow-card">
+          <span class="flow-num">03</span>
+          <strong>型に落とす</strong>
+          <span>比較表、FAQ、チェックリスト、テンプレにして、次も使える形にする。</span>
+        </article>
+        <article class="flow-card">
+          <span class="flow-num">04</span>
+          <strong>商品や道具にする</strong>
+          <span>反応があるものをテンプレ、WordPressテーマ、販売ページへ育てる。</span>
+        </article>
+      </div>
+    </section>
+
     <section class="section-block portal-section" id="start-here">
       <div class="section-title-row">
         <div>
@@ -2726,18 +3050,27 @@
       <div class="article-grid">
         <a class="article-card" href="/blog/ai-news-selling-ideas/">
           <div class="card-tags"><span class="tag">AIニュース</span><span class="tag">方向性</span><span class="date-chip">3分</span></div>
-          <h3>AIニュースを記事ネタに変える方法</h3>
+          <div class="card-illustration">
+            <img src="/yohelab-mascot-v2-20260518.webp" alt="" loading="lazy" />
+          </div>
+          <h3>AIニュースを見て、家でできるネタに変える</h3>
           <p>ニュースを記事ネタ、X投稿、テンプレ、小さな商品案に分けて考える基本方針。</p>
           <div class="card-foot"><span class="muted-line">無料記事</span><span class="card-action">読む →</span></div>
         </a>
         <a class="article-card" href="/blog/comparison-article-template/">
           <div class="card-tags"><span class="tag">記事構成</span><span class="tag">テンプレ</span><span class="date-chip">無料</span></div>
+          <div class="card-illustration">
+            <span class="sketch">表</span>
+          </div>
           <h3>比較記事の書き方：結論・比較表・FAQ・CTA</h3>
           <p>AIニュースから見つけたネタを、あとから読まれる記事として残すための基本構造。</p>
           <div class="card-foot"><span class="muted-line">記事型</span><span class="card-action">型を見る →</span></div>
         </a>
         <a class="article-card" href="/lp/bunsirube/">
           <div class="card-tags"><span class="tag">WordPress</span><span class="tag">文標</span><span class="date-chip">販売中</span></div>
+          <div class="card-illustration">
+            <span class="sketch">WP</span>
+          </div>
           <h3>文標で比較・レビュー・FAQ記事を作る</h3>
           <p>AIニュースから見つけたネタを、WordPressの記事構造として残すためのテーマ。</p>
           <div class="card-foot"><span class="muted-line">WordPressテーマ</span><span class="card-action">見る →</span></div>
@@ -2760,11 +3093,11 @@
         </a>
         <a class="home-map-card" href="/blog/?tag=article">
           <span class="map-icon">書</span>
-          <strong>ブログ記事化</strong>
+          <strong>記事を作る</strong>
           <span>比較記事、レビュー記事、FAQ、出典つき記事など、あとから読まれる形に整える。</span>
         </a>
         <a class="home-map-card" href="#free-tools">
-          <span class="map-icon">□</span>
+          <span class="map-icon">型</span>
           <strong>無料テンプレ・ツール</strong>
           <span>比較記事、FAQ、売り場チェックなど、買う前に使える型から試す。</span>
         </a>
@@ -2782,28 +3115,33 @@
           <h2>無料テンプレ・チェックリスト</h2>
           <p>まず試せるものを置いています。AIニュースを記事にする前、商品ページを作る前、WordPressテーマを見る前の確認用です。</p>
         </div>
+        <a class="text-link" href="/blog/">すべて見る →</a>
       </div>
       <div class="tool-grid">
         <a class="tool-card" href="/blog/comparison-article-template/">
           <div class="card-tags"><span class="tag">無料</span><span class="tag">記事テンプレ</span></div>
+          <div class="card-illustration"><span class="sketch">比</span></div>
           <h3>比較記事テンプレ</h3>
           <p>結論、選び方、比較表、FAQ、CTAの順番を確認できます。</p>
           <div class="card-foot"><span class="muted-line">用途: 記事構成</span><span class="card-action">使う →</span></div>
         </a>
         <a class="tool-card" href="/blog/faq-source-ai-search/">
           <div class="card-tags"><span class="tag">無料</span><span class="tag">FAQ型</span></div>
+          <div class="card-illustration"><span class="sketch">?</span></div>
           <h3>FAQ型</h3>
           <p>AI検索時代に、読者が判断しやすい形で根拠を置く考え方。</p>
           <div class="card-foot"><span class="muted-line">用途: AI検索</span><span class="card-action">読む →</span></div>
         </a>
         <a class="tool-card" href="/blog/sales-page-common-mistakes/">
           <div class="card-tags"><span class="tag">無料</span><span class="tag">チェックリスト</span></div>
+          <div class="card-illustration"><span class="sketch">✓</span></div>
           <h3>売り場チェック</h3>
           <p>BASE、note、自サイトの商品ページで抜けやすい場所を確認できます。</p>
           <div class="card-foot"><span class="muted-line">用途: 販売導線</span><span class="card-action">確認する →</span></div>
         </a>
         <a class="tool-card" href="/lp/bunsirube/demo/">
           <div class="card-tags"><span class="tag">無料</span><span class="tag">デモ</span></div>
+          <div class="card-illustration"><span class="sketch">文</span></div>
           <h3>文標デモ</h3>
           <p>比較、レビュー、FAQ、CTAを実際にどう並べるか確認できます。</p>
           <div class="card-foot"><span class="muted-line">用途: WordPress</span><span class="card-action">見る →</span></div>
@@ -2811,136 +3149,117 @@
       </div>
     </section>
 
-    <section class="section-block portal-section" id="templates">
-      <div class="section-title-row">
-        <div>
-          <h2>テンプレ・商品棚</h2>
-          <p>有料のものは、何が届くかを先に書きます。文標は、AIニュースや比較ネタをWordPress記事として残すための道具です。</p>
-        </div>
-      </div>
-      <div class="template-grid">
-        <a class="template-card" href="/lp/bunsirube/">
-          <div class="card-tags"><span class="tag">販売中</span><span class="tag">WordPressテーマ</span></div>
-          <h3>文標</h3>
-          <p>比較・レビュー・FAQ・CTAのある記事を作りやすくするWordPressテーマ。</p>
-          <ul class="mini-bullets">
-            <li>テーマZIPと子テーマZIP</li>
-            <li>記事テンプレ7種・FAQ・比較表</li>
-            <li>30日返金保証とアップデート</li>
-          </ul>
-          <div class="card-foot"><span class="price-line">5,500円（税込）</span><span class="card-action">文標を見る →</span></div>
-        </a>
-        <a class="template-card" href="/blog/comparison-article-template/">
-          <div class="card-tags"><span class="tag">無料</span><span class="tag">記事型</span></div>
-          <h3>比較記事テンプレ</h3>
-          <p>商品比較やレビュー記事を書くときの基本の並べ方。</p>
-          <ul class="mini-bullets">
-            <li>結論・比較表・FAQの順番</li>
-            <li>記事を書く前の迷いを減らす</li>
-          </ul>
-          <div class="card-foot"><span class="price-line">無料 / 記事形式</span><span class="card-action">型を見る →</span></div>
-        </a>
-        <a class="template-card" href="/blog/ai-news-selling-ideas/">
-          <div class="card-tags"><span class="tag">準備中</span><span class="tag">AIニュース</span></div>
-          <h3>AIニュース活用テンプレ</h3>
-          <p>ニュースをnote、X、ブログ、商品案に分解する型。まずは記事で方向性を公開中。</p>
-          <ul class="mini-bullets">
-            <li>公開時期は未定。先に記事で型を公開</li>
-            <li>通知希望は上のフォームから送信可能</li>
-          </ul>
-          <div class="card-foot"><span class="price-line">準備中 / 無料記事あり</span><span class="card-action">方向性を見る →</span></div>
-        </a>
-      </div>
-    </section>
-
-    <section class="section-block portal-section" id="rhythm">
-      <div class="section-title-row">
-        <div>
-          <h2>補足: 家で作業を続けるための習慣</h2>
-          <p>ここは健康メインではなく、ブログやAI調査を家で続ける人向けの補足です。トップでは短く置き、詳しくは記事で扱います。</p>
-        </div>
-        <a class="text-link" href="/blog/home-work-rhythm/">在宅作業メモを読む →</a>
-      </div>
-      <div class="rhythm-grid">
-        <article class="rhythm-card">
-          <span class="rhythm-icon">25</span>
-          <strong>25分作業したら立つ</strong>
-          <span>長時間座り続けない。記事を書く日も、AIニュースを見る日も、短い休憩を前提にする。</span>
-        </article>
-        <article class="rhythm-card">
-          <span class="rhythm-icon">歩</span>
-          <strong>家の中で動く用事を作る</strong>
-          <span>水を取りに行く、階段を使う、洗濯を挟む。家にいる日ほど、意識して動く用事を入れる。</span>
-        </article>
-        <article class="rhythm-card">
-          <span class="rhythm-icon">目</span>
-          <strong>目・肩・腰を守る</strong>
-          <span>画面を見続ける作業が多いので、姿勢、明るさ、ストレッチも在宅ワークの道具として考える。</span>
-        </article>
-      </div>
-    </section>
-
-    <section class="section-block portal-section why-compact">
-      <div class="why-grid">
-        <div class="why-copy">
-          <p class="portal-eyebrow">WHY YOHE LAB</p>
-          <h2>ニュースは、読んだだけだと流れる。</h2>
-          <p>AIニュースは毎日増えます。でも、そのまま眺めるだけだと、自分のブログや商品には残りません。</p>
-          <p>よへラボでは、ニュースを「記事ネタ」「X投稿」「無料テンプレ」「WordPressの記事構造」に変える視点で整理します。文標は、その中のWordPress向けの道具です。</p>
-          <a class="text-link" href="/about/">よへラボについて読む →</a>
-        </div>
-        <div class="why-stat-list" aria-label="背景データ">
-          <a class="why-stat" href="https://www.pewresearch.org/short-reads/2025/07/22/google-users-are-less-likely-to-click-on-links-when-an-ai-summary-appears-in-the-results/" target="_blank" rel="noreferrer">
-            <strong>8%</strong>
-            <span>AI要約ありのGoogle検索で通常結果がクリックされた割合<small>AI検索時代は、記事の残し方も大事になる</small></span>
-          </a>
-          <a class="why-stat" href="https://w3techs.com/technologies/comparison/cm-wordpress" target="_blank" rel="noreferrer">
-            <strong>42.2%</strong>
-            <span>WordPressで動くWebサイトの割合<small>家でブログや商品棚を作る土台になる</small></span>
-          </a>
-          <a class="why-stat" href="https://www.yano.co.jp/press-release/show/press_id/3746" target="_blank" rel="noreferrer">
-            <strong>4,382億</strong>
-            <span>国内アフィリエイト市場の2024年度見込み<small>記事から収益につなげる選択肢のひとつ</small></span>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <section class="section-block trust-about" style="background:linear-gradient(180deg,#f6f8fc 0%,#ffffff 100%);padding:48px 36px;">
-      <div class="block-head" style="margin-bottom:28px;">
-        <div style="display:flex;align-items:flex-start;gap:22px;flex-wrap:wrap;">
-          <div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#0b8f72,#3f8cff);display:grid;place-items:center;font-size:32px;flex-shrink:0;box-shadow:0 12px 28px rgba(11,143,114,.22);">🧑‍💻</div>
+    <div class="portal-pair portal-pair-main">
+      <section class="section-block portal-section" id="templates">
+        <div class="section-title-row">
           <div>
-            <p style="color:var(--home-blue);font-size:11px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px;">About yohelab</p>
-            <h2 style="font-size:clamp(22px,3.2vw,34px);margin-bottom:10px;">AIニュースを、記事・テンプレ・小さな商品に変える。<br />よへラボはその実験場です。</h2>
-            <p style="color:var(--home-muted);max-width:640px;font-size:15px;line-height:1.85;">AIニュース、WordPress、ブログ、note、X、テンプレ販売を扱います。在宅作業の習慣は、家で作業を続けるための補足カテゴリとして置いています。</p>
-            <p style="margin-top:12px;"><a class="text-link" href="/about/">運営方針を見る →</a></p>
+            <h2>テンプレ・商品棚</h2>
+            <p>有料のものは、何が届くかを先に書きます。文標は、AIニュースや比較ネタをWordPress記事として残すための道具です。</p>
           </div>
         </div>
-      </div>
-      <div class="trust-about-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;">
-        <div style="background:#fff;border-radius:14px;padding:18px;border:1px solid var(--home-line);">
-          <div style="font-size:11px;color:var(--home-muted);font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;">運営</div>
-          <div style="font-size:15px;font-weight:900;color:var(--home-text);line-height:1.5;">AIニュース活用 / 個人運営</div>
-          <p style="font-size:12px;color:var(--home-muted);margin-top:6px;line-height:1.6;">ニュースを記事・テンプレ・商品案に変える入口を整理します。</p>
+        <div class="template-grid">
+          <a class="template-card" href="/lp/bunsirube/">
+            <div class="card-tags"><span class="tag">販売中</span><span class="tag">WordPressテーマ</span></div>
+            <div class="card-illustration"><span class="sketch">文</span></div>
+            <h3>文標</h3>
+            <p>比較・レビュー・FAQ・CTAのある記事を作りやすくするWordPressテーマ。</p>
+            <ul class="mini-bullets">
+              <li>テーマZIPと子テーマZIP</li>
+              <li>記事テンプレ7種・FAQ・比較表</li>
+              <li>30日返金保証とアップデート</li>
+            </ul>
+            <div class="card-foot"><span class="price-line">5,500円（税込）</span><span class="card-action">見る →</span></div>
+          </a>
+          <a class="template-card" href="/blog/comparison-article-template/">
+            <div class="card-tags"><span class="tag">無料</span><span class="tag">記事型</span></div>
+            <div class="card-illustration"><span class="sketch">表</span></div>
+            <h3>比較記事テンプレ</h3>
+            <p>商品比較やレビュー記事を書くときの基本の並べ方。</p>
+            <ul class="mini-bullets">
+              <li>結論・比較表・FAQの順番</li>
+              <li>記事を書く前の迷いを減らす</li>
+            </ul>
+            <div class="card-foot"><span class="price-line">無料 / 記事形式</span><span class="card-action">型を見る →</span></div>
+          </a>
+          <a class="template-card" href="/blog/ai-news-selling-ideas/">
+            <div class="card-tags"><span class="tag">準備中</span><span class="tag">AIニュース</span></div>
+            <div class="card-illustration"><span class="sketch">AI</span></div>
+            <h3>AIニュース活用テンプレ</h3>
+            <p>ニュースをnote、X、ブログ、商品案に分解する型。まずは記事で方向性を公開中。</p>
+            <ul class="mini-bullets">
+              <li>公開時期は未定。先に記事で型を公開</li>
+              <li>通知希望は上のフォームから送信可能</li>
+            </ul>
+            <div class="card-foot"><span class="price-line">準備中 / 無料記事あり</span><span class="card-action">方向性を見る →</span></div>
+          </a>
         </div>
-        <div style="background:#fff;border-radius:14px;padding:18px;border:1px solid var(--home-line);">
-          <div style="font-size:11px;color:var(--home-muted);font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;">入口</div>
-          <div style="font-size:15px;font-weight:900;color:var(--home-text);line-height:1.5;">Xとブログで実験</div>
-          <p style="font-size:12px;color:var(--home-muted);margin-top:6px;line-height:1.6;">反応の良いテーマを見て、無料記事・テンプレ・商品に整理します。</p>
+      </section>
+
+      <section class="section-block portal-section why-compact">
+        <div class="why-grid">
+          <div class="why-copy">
+            <p class="portal-eyebrow">WHY YOHE LAB</p>
+            <h2>数字で見る、よへラボ</h2>
+            <p>AIニュースは毎日増えます。でも、そのまま眺めるだけだと、自分のブログや商品には残りません。</p>
+            <p>よへラボでは、ニュースを「記事ネタ」「X投稿」「無料テンプレ」「WordPressの記事構造」に変える視点で整理します。文標は、その中のWordPress向けの道具です。</p>
+            <a class="text-link" href="/about/">よへラボについて読む →</a>
+          </div>
+          <div class="why-stat-list" aria-label="背景データ">
+            <a class="why-stat" href="https://www.pewresearch.org/short-reads/2025/07/22/google-users-are-less-likely-to-click-on-links-when-an-ai-summary-appears-in-the-results/" target="_blank" rel="noreferrer">
+              <strong>8%</strong>
+              <span>AI要約ありのGoogle検索で通常結果がクリックされた割合<small>AI検索時代は、記事の残し方も大事になる</small></span>
+            </a>
+            <a class="why-stat" href="https://w3techs.com/technologies/comparison/cm-wordpress" target="_blank" rel="noreferrer">
+              <strong>42.2%</strong>
+              <span>WordPressで動くWebサイトの割合<small>家でブログや商品棚を作る土台になる</small></span>
+            </a>
+            <a class="why-stat" href="https://www.yano.co.jp/press-release/show/press_id/3746" target="_blank" rel="noreferrer">
+              <strong>4,382億</strong>
+              <span>国内アフィリエイト市場の2024年度見込み<small>記事から収益につなげる選択肢のひとつ</small></span>
+            </a>
+          </div>
         </div>
-        <div style="background:#fff;border-radius:14px;padding:18px;border:1px solid var(--home-line);">
-          <div style="font-size:11px;color:var(--home-muted);font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;">商品</div>
-          <div style="font-size:15px;font-weight:900;color:var(--home-text);line-height:1.5;">文標は道具のひとつ</div>
-          <p style="font-size:12px;color:var(--home-muted);margin-top:6px;line-height:1.6;">AIニュースから生まれたネタを、WordPress記事として残すためのテーマです。</p>
+      </section>
+    </div>
+
+    <div class="portal-pair portal-pair-bottom">
+      <section class="section-block portal-section" id="rhythm">
+        <div class="section-title-row">
+          <div>
+            <h2>補足: 家で作業を続けるための習慣</h2>
+            <p>健康メインではなく、ブログやAI調査を家で続ける人向けの補足です。詳しくは記事で扱います。</p>
+          </div>
+          <a class="text-link" href="/blog/home-work-rhythm/">在宅作業メモを読む →</a>
         </div>
-        <div style="background:#fff;border-radius:14px;padding:18px;border:1px solid var(--home-line);">
-          <div style="font-size:11px;color:var(--home-muted);font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;">特商法</div>
-          <div style="font-size:15px;font-weight:900;color:var(--home-text);line-height:1.5;">公開済み</div>
-          <p style="font-size:13px;color:var(--home-muted);margin-top:8px;line-height:1.6;display:flex;flex-direction:column;gap:8px;"><a href="/legal/commerce/" style="color:var(--home-blue);text-decoration:underline;display:inline-block;padding:8px 0;min-height:24px;">特定商取引法に基づく表記 →</a><a href="/contact/" style="color:var(--home-blue);text-decoration:underline;display:inline-block;padding:8px 0;min-height:24px;">問い合わせフォーム →</a></p>
+        <div class="rhythm-grid">
+          <article class="rhythm-card">
+            <span class="rhythm-icon">25</span>
+            <strong>25分作業したら立つ</strong>
+            <span>長時間座り続けない。記事を書く日も、AIニュースを見る日も、短い休憩を前提にする。</span>
+          </article>
+          <article class="rhythm-card">
+            <span class="rhythm-icon">歩</span>
+            <strong>家の中で動く用事を作る</strong>
+            <span>水を取りに行く、階段を使う、洗濯を挟む。家にいる日ほど、意識して動く用事を入れる。</span>
+          </article>
+          <article class="rhythm-card">
+            <span class="rhythm-icon">目</span>
+            <strong>目・肩・腰を守る</strong>
+            <span>画面を見続ける作業が多いので、姿勢、明るさ、ストレッチも在宅ワークの道具として考える。</span>
+          </article>
         </div>
-      </div>
-    </section>
+      </section>
+
+      <section class="section-block portal-section cta-card" aria-labelledby="home-final-cta">
+        <p class="portal-eyebrow">NEXT ACTION</p>
+        <h2 id="home-final-cta">まずは、読んで使えるものから。</h2>
+        <p>AIニュースを見て終わらせないために、まずは最新記事か無料テンプレから試してください。文標は、WordPressで記事構造まで整えたい人向けです。</p>
+        <div class="cta-actions">
+          <a class="btn btn-home-primary" href="/blog/">最新記事を見る</a>
+          <a class="btn btn-home-secondary" href="#free-tools">無料テンプレを見る</a>
+        </div>
+      </section>
+    </div>
 
     <div class="home-footer">
       <footer class="footer">
