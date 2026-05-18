@@ -179,6 +179,62 @@
     .tab-panel { display: none; }
     .tab-panel.active { display: block; }
 
+    .inline-page-panel {
+      display: none;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+    .inline-page-panel.active { display: block; }
+    .inline-page-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      background: #fafffe;
+    }
+    .inline-page-title {
+      font-size: 14px;
+      font-weight: 900;
+      color: var(--text);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .inline-page-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .inline-page-btn {
+      border: 1px solid var(--border);
+      background: var(--white);
+      color: var(--brand);
+      border-radius: 999px;
+      padding: 7px 12px;
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .inline-page-btn:hover {
+      border-color: var(--brand);
+      background: var(--brand-light);
+    }
+    .inline-page-frame {
+      width: 100%;
+      min-height: 760px;
+      border: 0;
+      display: block;
+      background: #fff;
+    }
+
     /* ── セクション共通 ── */
     .section-card {
       background: var(--white);
@@ -515,6 +571,17 @@
 
   <!-- ===== 左カラム（タブパネル） ===== -->
   <div class="main-col">
+
+    <div class="inline-page-panel" id="inlinePagePanel" aria-live="polite">
+      <div class="inline-page-head">
+        <div class="inline-page-title" id="inlinePageTitle">ページを表示中</div>
+        <div class="inline-page-actions">
+          <button class="inline-page-btn" type="button" id="inlineBackBtn">一覧に戻る</button>
+          <a class="inline-page-btn" id="inlineOpenBtn" href="/">別ページで開く</a>
+        </div>
+      </div>
+      <iframe class="inline-page-frame" id="inlinePageFrame" title="よへラボ内ページ"></iframe>
+    </div>
 
     <!-- [タブ1] AIニュース -->
     <div class="tab-panel active" id="panel-ai-news" role="tabpanel">
@@ -860,6 +927,11 @@
   const tabBtns = document.querySelectorAll('.tab-btn');
   const mainCol = document.querySelector('.main-col');
   const tabPanels = mainCol ? mainCol.querySelectorAll('.tab-panel') : document.querySelectorAll('.tab-panel');
+  const inlinePagePanel = document.getElementById('inlinePagePanel');
+  const inlinePageFrame = document.getElementById('inlinePageFrame');
+  const inlinePageTitle = document.getElementById('inlinePageTitle');
+  const inlineOpenBtn = document.getElementById('inlineOpenBtn');
+  const inlineBackBtn = document.getElementById('inlineBackBtn');
 
   tabBtns.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -876,9 +948,52 @@
       btn.setAttribute('aria-selected', 'true');
 
       // メインカラム内のパネルだけを切り替える。サイドバー・ヘッダー・フッターは触らない。
+      hideInlinePage();
       tabPanels.forEach(p => p.classList.remove('active'));
       targetPanel.classList.add('active');
     });
+  });
+
+  function isInlineInternalLink(link) {
+    if (!link || !link.href) return false;
+    if (link.target === '_blank') return false;
+    const url = new URL(link.href, location.href);
+    if (url.origin !== location.origin) return false;
+    return url.pathname.startsWith('/blog/')
+      || url.pathname.startsWith('/lp/')
+      || url.pathname.startsWith('/apps/')
+      || url.pathname.startsWith('/about/')
+      || url.pathname.startsWith('/contact/');
+  }
+
+  function showInlinePage(link) {
+    const url = new URL(link.href, location.href);
+    tabPanels.forEach(p => p.classList.remove('active'));
+    inlinePagePanel.classList.add('active');
+    inlinePageTitle.textContent = link.textContent.trim().replace(/\s+/g, ' ') || 'よへラボ内ページ';
+    inlineOpenBtn.href = url.pathname + url.search + url.hash;
+    inlinePageFrame.src = url.pathname + url.search + url.hash;
+    mainCol.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function hideInlinePage() {
+    if (!inlinePagePanel) return;
+    inlinePagePanel.classList.remove('active');
+    if (inlinePageFrame) inlinePageFrame.removeAttribute('src');
+  }
+
+  inlineBackBtn?.addEventListener('click', () => {
+    hideInlinePage();
+    const currentBtn = document.querySelector('.tab-btn.active') || document.querySelector('.tab-btn[data-tab="ai-news"]');
+    const targetPanel = currentBtn ? document.getElementById('panel-' + currentBtn.dataset.tab) : document.getElementById('panel-ai-news');
+    if (targetPanel) targetPanel.classList.add('active');
+  });
+
+  document.querySelector('.site-main')?.addEventListener('click', (event) => {
+    const link = event.target.closest('a');
+    if (!isInlineInternalLink(link)) return;
+    event.preventDefault();
+    showInlinePage(link);
   });
 
   // ── AIニュース自動取得（RSSプロキシ） ──
