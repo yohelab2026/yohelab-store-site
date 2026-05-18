@@ -190,7 +190,7 @@ function normalizeFilter(value) {
   const v = String(value || '').trim().toLowerCase();
   if (!v) return 'all';
   if (['ai', 'aiニュース', 'ai-news'].includes(v)) return 'ai-news';
-  if (['稼ぎ方', 'earn', 'money'].includes(v)) return 'earn';
+  if (['稼ぎ方', '商品案', 'earn', 'money'].includes(v)) return 'earn';
   if (['wp', 'wordpress', 'wordPress'.toLowerCase()].includes(v)) return 'wordpress';
   if (['記事', 'article', 'writing'].includes(v)) return 'article';
   if (['在宅', 'home', 'home-work'].includes(v)) return 'home-work';

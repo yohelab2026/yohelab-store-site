@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>よへラボ | 家でできることを見つけて形にする</title>
-  <meta name="description" content="よへラボは、家で作業する人がAIニュース、WordPress、ブログ、note、X、テンプレ、在宅習慣から自分に合うやり方を見つけるための入口です。" />
-  <meta property="og:title" content="よへラボ｜家でできることを見つけて形にする" />
-  <meta property="og:description" content="AIニュース、WordPress、ブログ、テンプレ、在宅作業の続け方をまとめる総合入口。" />
+  <title>よへラボ | AIニュースを記事・テンプレ・小さな商品に変える</title>
+  <meta name="description" content="よへラボは、副業・ブログ初心者がAIニュースをブログ記事、note・X投稿、無料テンプレ、WordPressテーマ文標に活かすための情報サイトです。" />
+  <meta property="og:title" content="よへラボ｜AIニュースを記事・テンプレ・小さな商品に変える" />
+  <meta property="og:description" content="AIニュースを見て終わらせず、ブログ記事、無料テンプレ、商品案、WordPress記事構造に変える入口。" />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="ja_JP" />
   <meta property="og:url" content="https://yohelab.com/" />
@@ -23,12 +23,12 @@
   <script type="application/ld+json">
   {"@context":"https://schema.org","@graph":[
     {"@type":"Organization","@id":"https://yohelab.com/#org","name":"よへラボ","url":"https://yohelab.com/","logo":{"@type":"ImageObject","url":"https://yohelab.com/yohelab-cat-icon.png"},"contactPoint":{"@type":"ContactPoint","url":"https://yohelab.com/contact/","contactType":"customer support","availableLanguage":"Japanese"}},
-    {"@type":"WebSite","@id":"https://yohelab.com/#site","name":"よへラボ","url":"https://yohelab.com/","description":"家で作業する人がAIニュース、WordPress、ブログ、note、X、テンプレ、在宅習慣から自分に合うやり方を見つけるための入口。","publisher":{"@id":"https://yohelab.com/#org"}},
-    {"@type":"WebPage","@id":"https://yohelab.com/#page","url":"https://yohelab.com/","name":"よへラボ | 家でできることを見つけて形にする","description":"AIニュース、WordPress、ブログ、テンプレ、在宅作業の続け方をまとめる総合入口。","isPartOf":{"@id":"https://yohelab.com/#site"}},
+    {"@type":"WebSite","@id":"https://yohelab.com/#site","name":"よへラボ","url":"https://yohelab.com/","description":"副業・ブログ初心者がAIニュースをブログ記事、note・X投稿、無料テンプレ、WordPressテーマ文標に活かすための情報サイト。","publisher":{"@id":"https://yohelab.com/#org"}},
+    {"@type":"WebPage","@id":"https://yohelab.com/#page","url":"https://yohelab.com/","name":"よへラボ | AIニュースを記事・テンプレ・小さな商品に変える","description":"AIニュースを見て終わらせず、ブログ記事、無料テンプレ、商品案、WordPress記事構造に変える入口。","isPartOf":{"@id":"https://yohelab.com/#site"}},
     {"@type":"ItemList","name":"よへラボの主な入口","itemListElement":[
-      {"@type":"ListItem","position":1,"name":"よへラボブログ","url":"https://yohelab.com/blog/","description":"AIニュース、WordPress、記事構成、在宅作業の続け方を扱う記事一覧。"},
+      {"@type":"ListItem","position":1,"name":"よへラボブログ","url":"https://yohelab.com/blog/","description":"AIニュース活用、WordPress、記事構成、テンプレ販売を扱う記事一覧。"},
       {"@type":"ListItem","position":2,"name":"よへラボについて","url":"https://yohelab.com/about/","description":"よへラボで扱うテーマ、制作方針、運営方針。"},
-      {"@type":"ListItem","position":3,"name":"文標（ぶんしるべ）","url":"https://yohelab.com/lp/bunsirube/","description":"家でブログや比較記事を作る人向けの軽量WordPressテーマ。先行提供¥5,500（税込）・買い切り。"},
+      {"@type":"ListItem","position":3,"name":"文標（ぶんしるべ）","url":"https://yohelab.com/lp/bunsirube/","description":"AIニュースや比較ネタをWordPress記事として整理する軽量テーマ。先行提供¥5,500（税込）・買い切り。"},
       {"@type":"ListItem","position":4,"name":"文標デモ","url":"https://yohelab.com/lp/bunsirube/demo/","description":"記事型、比較表カード、FAQ、CTA、導線確認の見本。"}
     ]}
   ]}
@@ -1496,7 +1496,41 @@
       color: var(--home-muted);
       font-size: 17px;
       line-height: 1.9;
-      margin-bottom: 22px;
+      margin-bottom: 16px;
+    }
+
+    .hero-value-list {
+      display: grid;
+      gap: 8px;
+      max-width: 620px;
+      margin: 0 0 22px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .hero-value-list li {
+      position: relative;
+      padding: 10px 14px 10px 36px;
+      border: 1px solid rgba(201, 232, 225, 0.96);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.72);
+      color: var(--home-text);
+      font-size: 14px;
+      font-weight: 900;
+      line-height: 1.45;
+      box-shadow: 0 10px 22px rgba(11, 143, 114, 0.05);
+    }
+
+    .hero-value-list li::before {
+      content: "";
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #0b8f72, #3f8cff);
+      transform: translateY(-50%);
     }
 
     .portal-actions {
@@ -2052,7 +2086,7 @@
     }
 
     .home-map-grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
     }
 
     .home-map-card,
@@ -2339,7 +2373,16 @@
       .portal-lead {
         font-size: 15.5px;
         line-height: 1.82;
+        margin-bottom: 14px;
+      }
+
+      .hero-value-list {
         margin-bottom: 16px;
+      }
+
+      .hero-value-list li {
+        font-size: 13px;
+        padding: 9px 12px 9px 32px;
       }
 
       .portal-actions {
@@ -2549,7 +2592,7 @@
       </a>
       <nav class="nav-links">
         <a href="#latest">最新記事</a>
-        <a href="#home-map">探す</a>
+        <a href="#home-map">目的別</a>
         <a href="#free-tools">無料</a>
         <a href="#templates">テンプレ・商品</a>
         <a href="/lp/bunsirube/">文標</a>
@@ -2559,8 +2602,7 @@
         <summary>メニュー</summary>
         <div class="mobile-menu-panel">
           <a href="#latest">最新記事</a>
-          <a href="#home-map">家でできることマップ</a>
-          <a href="#fit-finder">自分に合う入口</a>
+          <a href="#home-map">目的別の入口</a>
           <a href="#free-tools">無料コンテンツ</a>
           <a href="#templates">テンプレ・商品</a>
           <a href="/lp/bunsirube/">文標</a>
@@ -2575,35 +2617,40 @@
   <main class="home-shell">
     <div class="news-ticker" aria-label="新着">
       <strong>NEW</strong>
-      <a href="/blog/">AIニュース、WordPress、ブログ、テンプレ、家で続ける作業習慣まで探せる入口に更新しました。</a>
+      <a href="/blog/">AIニュースをブログ記事・テンプレ・小さな商品案に変える入口として整理し直しました。</a>
     </div>
 
     <section class="portal-hero" id="latest">
       <div class="portal-hero-grid">
         <div class="portal-copy">
-          <p class="portal-eyebrow">YOHE LAB / home work portal</p>
+          <p class="portal-eyebrow">YOHE LAB / AI NEWS TO CONTENT</p>
           <h1 class="portal-title">
-            <span class="title-line">家でできることを、</span>
-            <span class="title-line"><em>見つけて形にする。</em></span>
+            <span class="title-line">AIニュースを、</span>
+            <span class="title-line"><em>実用ネタに変える。</em></span>
           </h1>
-          <p class="portal-lead">AIニュース、WordPress、ブログ、note、X、テンプレ販売、在宅作業の続け方。家でできる選択肢を見つけて、記事・道具・小さな商品に変える場所です。</p>
+          <p class="portal-lead">よへラボは、副業・ブログ初心者がAIニュースを見て終わらせず、ブログ記事、note・X投稿、無料テンプレ、WordPressの道具に変えるための情報サイトです。</p>
+          <ul class="hero-value-list" aria-label="よへラボでできること">
+            <li>AIニュースから記事ネタを作る</li>
+            <li>比較記事・FAQ・売り場の型を使う</li>
+            <li>反応があるテーマを小さな商品にする</li>
+          </ul>
           <div class="portal-actions">
             <a class="btn btn-home-primary" href="#start-here">最新記事を見る</a>
-            <a class="btn btn-home-secondary" href="#free-tools">無料で使う</a>
-            <a class="btn btn-home-secondary" href="#templates">テンプレを見る</a>
+            <a class="btn btn-home-secondary" href="#free-tools">無料テンプレを見る</a>
+            <a class="btn btn-home-secondary" href="/lp/bunsirube/">文標を見る</a>
           </div>
           <div class="quick-tags" aria-label="主なカテゴリ">
             <a href="/blog/?tag=ai-news">AIニュース</a>
-            <a href="/blog/?tag=earn">稼ぎ方</a>
+            <a href="/blog/?tag=article">ブログ記事化</a>
             <a href="/blog/?tag=wordpress">WordPress</a>
-            <a href="#rhythm">在宅習慣</a>
             <a href="#free-tools">無料</a>
+            <a href="#templates">テンプレ商品</a>
             <a href="/lp/bunsirube/">文標</a>
           </div>
         </div>
 
         <div class="hero-news-board" aria-label="注目記事と最新記事">
-          <a class="today-card" href="/blog/home-work-rhythm/">
+          <a class="today-card" href="/blog/ai-news-selling-ideas/">
             <div class="today-thumb">
               <span>今日の注目</span>
               <img src="/yohelab-cat-icon.webp" alt="" loading="eager" />
@@ -2613,23 +2660,27 @@
               <span class="read-time">2026-05-18</span>
             </div>
             <div class="article-meta">
-              <span class="tag">家でできること</span>
-              <span class="tag">AI / WordPress / 習慣</span>
+              <span class="tag">AIニュース活用</span>
+              <span class="tag">ブログ / note / X</span>
             </div>
             <h2>
-              <span class="title-line">まずは、家で</span>
-              <span class="title-line">何をするかを</span>
-              <span class="title-line">探す</span>
+              <span class="title-line">AIニュースを</span>
+              <span class="title-line">記事ネタに</span>
+              <span class="title-line">変える方法</span>
             </h2>
-            <p>ニュースを読む、ブログを作る、テンプレを使う、在宅作業を続ける。よへラボで扱う入口をまとめました。</p>
-            <div class="can-do">読めばできること: 自分に合う作業、記事化の型、WordPressの道具を順番に探せる。</div>
+            <p>AIニュースを、ブログ記事、note、X投稿、テンプレ、商品案に分けて使う考え方をまとめました。</p>
+            <div class="can-do">読めばできること: ニュースを見て終わらせず、何に使うかを決めやすくなる。</div>
           </a>
 
           <aside class="latest-board">
             <h2>最新記事</h2>
+            <a class="latest-item" href="/blog/ai-news-selling-ideas/">
+              <span>2026-05-18 / AIニュース</span>
+              <strong>AIニュースを記事ネタに変える方法</strong>
+            </a>
             <a class="latest-item" href="/blog/home-work-rhythm/">
-              <span>2026-05-18 / 在宅作業</span>
-              <strong>家で作業すると運動不足になるので、先に動く仕組みを作る</strong>
+              <span>2026-05-18 / 在宅メモ</span>
+              <strong>在宅作業の運動不足対策</strong>
             </a>
             <a class="latest-item" href="/blog/bunsirube-version-history/">
               <span>2026-05-12 / 文標</span>
@@ -2647,17 +2698,13 @@
               <span>2026-05-02 / AI検索</span>
               <strong>AI検索向けにFAQと出典を置く理由</strong>
             </a>
-            <a class="latest-item" href="/blog/sales-page-common-mistakes/">
-              <span>2026-05-02 / 商品ページ</span>
-              <strong>商品ページでよくある失敗</strong>
-            </a>
           </aside>
         </div>
 
         <div class="update-box">
           <div>
             <strong>更新通知を受け取る</strong>
-            <span>新着記事、無料テンプレ、家でできる作業メモをメールで受け取る希望を送れます。</span>
+            <span>AIニュース活用記事、無料テンプレ、文標の更新メモをメールで受け取る希望を送れます。</span>
           </div>
           <form class="notify-form" id="notify-form">
             <input type="email" name="email" autocomplete="email" placeholder="メールアドレス" required />
@@ -2672,14 +2719,14 @@
       <div class="section-title-row">
         <div>
           <h2>まず読むならこの3本</h2>
-          <p>家でできることを探す人向けに、よへラボの方向性、ブログ化の型、WordPressテーマの位置づけが分かる記事を上に出しました。</p>
+          <p>初めて来た人向けに、AIニュースの使い方、記事化の型、文標の位置づけが分かる記事を上に出しました。</p>
         </div>
         <a class="text-link" href="/blog/">記事一覧を見る →</a>
       </div>
       <div class="article-grid">
         <a class="article-card" href="/blog/ai-news-selling-ideas/">
           <div class="card-tags"><span class="tag">AIニュース</span><span class="tag">方向性</span><span class="date-chip">3分</span></div>
-          <h3>AIニュースを、家でできるネタに変える</h3>
+          <h3>AIニュースを記事ネタに変える方法</h3>
           <p>ニュースを記事ネタ、X投稿、テンプレ、小さな商品案に分けて考える基本方針。</p>
           <div class="card-foot"><span class="muted-line">無料記事</span><span class="card-action">読む →</span></div>
         </a>
@@ -2689,11 +2736,11 @@
           <p>AIニュースから見つけたネタを、あとから読まれる記事として残すための基本構造。</p>
           <div class="card-foot"><span class="muted-line">記事型</span><span class="card-action">型を見る →</span></div>
         </a>
-        <a class="article-card" href="/blog/home-work-rhythm/">
-          <div class="card-tags"><span class="tag">在宅作業</span><span class="tag">続け方</span><span class="date-chip">無料</span></div>
-          <h3>家で作業すると運動不足になるので、先に動く仕組みを作る</h3>
-          <p>家でブログやAI調査を続ける人向けに、座りっぱなしを避ける小さい習慣をまとめました。</p>
-          <div class="card-foot"><span class="muted-line">在宅習慣</span><span class="card-action">読む →</span></div>
+        <a class="article-card" href="/lp/bunsirube/">
+          <div class="card-tags"><span class="tag">WordPress</span><span class="tag">文標</span><span class="date-chip">販売中</span></div>
+          <h3>文標で比較・レビュー・FAQ記事を作る</h3>
+          <p>AIニュースから見つけたネタを、WordPressの記事構造として残すためのテーマ。</p>
+          <div class="card-foot"><span class="muted-line">WordPressテーマ</span><span class="card-action">見る →</span></div>
         </a>
       </div>
     </section>
@@ -2701,66 +2748,30 @@
     <section class="section-block portal-section" id="home-map">
       <div class="section-title-row">
         <div>
-          <h2>家でできることマップ</h2>
-          <p>よへラボは、家で作業する人が「何をするか」を探す場所にします。AIだけ、WordPressだけに閉じず、作る・売る・続けるまで置きます。</p>
+          <h2>目的別の入口</h2>
+          <p>トップでは入口を4つに絞りました。AIニュースをどう使うか、無料で試すか、有料テンプレを見るか、WordPressで残すかを選べます。</p>
         </div>
       </div>
       <div class="home-map-grid">
         <a class="home-map-card" href="/blog/?tag=ai-news">
           <span class="map-icon">AI</span>
-          <strong>AIニュースを見る</strong>
-          <span>ChatGPT、Perplexity、AI検索、画像生成の変化を「自分なら何に使えるか」で見る。</span>
+          <strong>AIニュース活用</strong>
+          <span>ChatGPT、Perplexity、AI検索、画像生成の変化を、記事ネタや投稿ネタに変える。</span>
         </a>
-        <a class="home-map-card" href="/blog/?tag=earn">
-          <span class="map-icon">¥</span>
-          <strong>家でできる稼ぎ方を知る</strong>
-          <span>note、X、ブログ、テンプレ販売、アフィリエイトなど、小さく試せる選択肢を整理する。</span>
-        </a>
-        <a class="home-map-card" href="/blog/?tag=wordpress">
-          <span class="map-icon">WP</span>
-          <strong>WordPress・ブログを作る</strong>
-          <span>記事構成、比較記事、FAQ、文標など、家で作れるサイトの土台を見る。</span>
-        </a>
-        <a class="home-map-card" href="#fit-finder">
-          <span class="map-icon">?</span>
-          <strong>自分に合うものを探す</strong>
-          <span>文章、調査、画像、販売ページ、健康習慣。向き不向きから入口を選ぶ。</span>
+        <a class="home-map-card" href="/blog/?tag=article">
+          <span class="map-icon">書</span>
+          <strong>ブログ記事化</strong>
+          <span>比較記事、レビュー記事、FAQ、出典つき記事など、あとから読まれる形に整える。</span>
         </a>
         <a class="home-map-card" href="#free-tools">
           <span class="map-icon">□</span>
-          <strong>無料の型を使う</strong>
-          <span>比較記事、FAQ、売り場チェックなど、すぐ使える型から始める。</span>
+          <strong>無料テンプレ・ツール</strong>
+          <span>比較記事、FAQ、売り場チェックなど、買う前に使える型から試す。</span>
         </a>
-        <a class="home-map-card" href="#rhythm">
-          <span class="map-icon">↻</span>
-          <strong>体を壊さず続ける</strong>
-          <span>家で作業すると座りっぱなしになりやすいので、運動不足にならない工夫も扱う。</span>
-        </a>
-      </div>
-    </section>
-
-    <section class="section-block portal-section" id="fit-finder">
-      <div class="section-title-row">
-        <div>
-          <h2>自分に合う入口を選ぶ</h2>
-          <p>最初から全部やらなくていい。家でできることを、得意な作業から選べるように分けました。</p>
-        </div>
-      </div>
-      <div class="fit-grid">
-        <a class="fit-card" href="/blog/?tag=article">
-          <span class="fit-step">1</span>
-          <strong>文章を書くのが苦じゃない</strong>
-          <span>ブログ、note、比較記事、FAQ記事から始める。文標はここに向いています。</span>
-        </a>
-        <a class="fit-card" href="/blog/?tag=research">
-          <span class="fit-step">2</span>
-          <strong>調べるのが好き</strong>
-          <span>AIニュース、市場調査、Perplexity、商品比較のメモを記事やテンプレに変える。</span>
-        </a>
-        <a class="fit-card" href="/blog/?tag=home-work">
-          <span class="fit-step">3</span>
-          <strong>まず生活リズムを整えたい</strong>
-          <span>家で作業する時間、体を動かすタイミング、目・肩・腰を守る習慣から作る。</span>
+        <a class="home-map-card" href="/lp/bunsirube/">
+          <span class="map-icon">WP</span>
+          <strong>文標・商品棚</strong>
+          <span>WordPressで記事構造を整えるテーマや、今後のテンプレ商品を見る。</span>
         </a>
       </div>
     </section>
@@ -2768,8 +2779,8 @@
     <section class="section-block portal-section" id="free-tools">
       <div class="section-title-row">
         <div>
-          <h2>無料で使える型</h2>
-          <p>無料のものは無料と分かるようにしました。まずは記事として使える型を置き、ツール化できるものから増やします。</p>
+          <h2>無料テンプレ・チェックリスト</h2>
+          <p>まず試せるものを置いています。AIニュースを記事にする前、商品ページを作る前、WordPressテーマを見る前の確認用です。</p>
         </div>
       </div>
       <div class="tool-grid">
@@ -2804,7 +2815,7 @@
       <div class="section-title-row">
         <div>
           <h2>テンプレ・商品棚</h2>
-          <p>無料か有料か、何が手に入るかを見分けやすくしました。文標は、よへラボに置く道具のひとつです。</p>
+          <p>有料のものは、何が届くかを先に書きます。文標は、AIニュースや比較ネタをWordPress記事として残すための道具です。</p>
         </div>
       </div>
       <div class="template-grid">
@@ -2845,9 +2856,10 @@
     <section class="section-block portal-section" id="rhythm">
       <div class="section-title-row">
         <div>
-          <h2>家で作業を続けるための習慣</h2>
-          <p>家でブログやテンプレ作りをすると、座りっぱなしになりやすい。よへラボでは、作業内容だけでなく続けるための体の整え方も扱います。</p>
+          <h2>補足: 家で作業を続けるための習慣</h2>
+          <p>ここは健康メインではなく、ブログやAI調査を家で続ける人向けの補足です。トップでは短く置き、詳しくは記事で扱います。</p>
         </div>
+        <a class="text-link" href="/blog/home-work-rhythm/">在宅作業メモを読む →</a>
       </div>
       <div class="rhythm-grid">
         <article class="rhythm-card">
@@ -2872,9 +2884,9 @@
       <div class="why-grid">
         <div class="why-copy">
           <p class="portal-eyebrow">WHY YOHE LAB</p>
-          <h2>家でできることは、ひとつじゃない。</h2>
-          <p>AIニュースを読む、ブログを書く、WordPressで記事を残す、テンプレを作る、Xで反応を見る。全部を一度にやる必要はありません。</p>
-          <p>よへラボでは、家でできる選択肢を並べて、自分に合うものを見つけやすくします。続けるための習慣や体の整え方も、同じくらい大事にします。</p>
+          <h2>ニュースは、読んだだけだと流れる。</h2>
+          <p>AIニュースは毎日増えます。でも、そのまま眺めるだけだと、自分のブログや商品には残りません。</p>
+          <p>よへラボでは、ニュースを「記事ネタ」「X投稿」「無料テンプレ」「WordPressの記事構造」に変える視点で整理します。文標は、その中のWordPress向けの道具です。</p>
           <a class="text-link" href="/about/">よへラボについて読む →</a>
         </div>
         <div class="why-stat-list" aria-label="背景データ">
@@ -2900,8 +2912,8 @@
           <div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#0b8f72,#3f8cff);display:grid;place-items:center;font-size:32px;flex-shrink:0;box-shadow:0 12px 28px rgba(11,143,114,.22);">🧑‍💻</div>
           <div>
             <p style="color:var(--home-blue);font-size:11px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px;">About yohelab</p>
-            <h2 style="font-size:clamp(22px,3.2vw,34px);margin-bottom:10px;">家でできることを、探して、作って、続ける。<br />よへラボはその入口です。</h2>
-            <p style="color:var(--home-muted);max-width:640px;font-size:15px;line-height:1.85;">AIニュース、WordPress、ブログ、note、X、テンプレ販売、在宅作業の習慣を扱います。文標は、その中で「ネタを記事構造に整える」ために作っているWordPressテーマです。</p>
+            <h2 style="font-size:clamp(22px,3.2vw,34px);margin-bottom:10px;">AIニュースを、記事・テンプレ・小さな商品に変える。<br />よへラボはその実験場です。</h2>
+            <p style="color:var(--home-muted);max-width:640px;font-size:15px;line-height:1.85;">AIニュース、WordPress、ブログ、note、X、テンプレ販売を扱います。在宅作業の習慣は、家で作業を続けるための補足カテゴリとして置いています。</p>
             <p style="margin-top:12px;"><a class="text-link" href="/about/">運営方針を見る →</a></p>
           </div>
         </div>
@@ -2909,8 +2921,8 @@
       <div class="trust-about-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;">
         <div style="background:#fff;border-radius:14px;padding:18px;border:1px solid var(--home-line);">
           <div style="font-size:11px;color:var(--home-muted);font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;">運営</div>
-          <div style="font-size:15px;font-weight:900;color:var(--home-text);line-height:1.5;">家でできること / 個人運営</div>
-          <p style="font-size:12px;color:var(--home-muted);margin-top:6px;line-height:1.6;">家で作業する人向けに、作る・売る・続ける入口を整理します。</p>
+          <div style="font-size:15px;font-weight:900;color:var(--home-text);line-height:1.5;">AIニュース活用 / 個人運営</div>
+          <p style="font-size:12px;color:var(--home-muted);margin-top:6px;line-height:1.6;">ニュースを記事・テンプレ・商品案に変える入口を整理します。</p>
         </div>
         <div style="background:#fff;border-radius:14px;padding:18px;border:1px solid var(--home-line);">
           <div style="font-size:11px;color:var(--home-muted);font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;">入口</div>
@@ -2920,7 +2932,7 @@
         <div style="background:#fff;border-radius:14px;padding:18px;border:1px solid var(--home-line);">
           <div style="font-size:11px;color:var(--home-muted);font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;">商品</div>
           <div style="font-size:15px;font-weight:900;color:var(--home-text);line-height:1.5;">文標は道具のひとつ</div>
-          <p style="font-size:12px;color:var(--home-muted);margin-top:6px;line-height:1.6;">家でブログを作る人向けに、記事構造を整えるWordPressテーマとして提供しています。</p>
+          <p style="font-size:12px;color:var(--home-muted);margin-top:6px;line-height:1.6;">AIニュースから生まれたネタを、WordPress記事として残すためのテーマです。</p>
         </div>
         <div style="background:#fff;border-radius:14px;padding:18px;border:1px solid var(--home-line);">
           <div style="font-size:11px;color:var(--home-muted);font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;">特商法</div>
@@ -2939,7 +2951,7 @@
                 <img src="/yohelab-cat-icon.webp" alt="" loading="lazy" />
                 <span>よへラボ</span>
               </div>
-              <p class="footer-note">家でできることを、探して、作って、続けるための入口。AIニュース、WordPress、ブログ、テンプレ、在宅作業の習慣を扱います。</p>
+              <p class="footer-note">AIニュースを、記事・テンプレ・小さな商品に変えるための入口。WordPress、ブログ、note、X、文標を扱います。</p>
             </div>
             <a class="btn btn-home-secondary" href="https://x.com/yohe_lab" target="_blank" rel="me noopener">Xで更新を見る</a>
           </div>
@@ -2953,7 +2965,7 @@
             </div>
             <div class="footer-col">
               <strong>使う</strong>
-              <a href="#home-map">家でできることマップ</a>
+              <a href="#home-map">目的別の入口</a>
               <a href="#free-tools">無料ツール</a>
               <a href="#templates">テンプレ・商品</a>
               <a href="/lp/bunsirube/demo/">文標デモ</a>
