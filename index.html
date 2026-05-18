@@ -883,10 +883,10 @@
 
   // ── AIニュース自動取得（RSSプロキシ） ──
   const RSS_FEEDS = [
-    { name: 'ChatGPT', tag: 'tag-chatgpt', url: 'https://openai.com/news/rss.xml' },
-    { name: 'Claude',  tag: 'tag-claude',  url: 'https://www.anthropic.com/news/rss.xml' },
-    { name: 'Gemini',  tag: 'tag-gemini',  url: 'https://blog.google/technology/ai/rss/' },
-    { name: 'AI全般',  tag: 'tag-ai',      url: 'https://feeds.feedburner.com/mittr/artificial-intelligence' }
+    { name: 'ChatGPT', key: 'chatgpt', tag: 'tag-chatgpt', url: 'https://openai.com/news/rss.xml' },
+    { name: 'Claude',  key: 'claude',  tag: 'tag-claude',  url: 'https://www.anthropic.com/news/rss.xml' },
+    { name: 'Gemini',  key: 'gemini',  tag: 'tag-gemini',  url: 'https://blog.google/technology/ai/rss/' },
+    { name: 'AI全般',  key: 'ai-news', tag: 'tag-ai',      url: 'https://feeds.feedburner.com/mittr/artificial-intelligence' }
   ];
 
   const PROXY = 'https://api.allorigins.win/get?url=';
@@ -915,6 +915,10 @@
     return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 
+  function categoryUrl(feed) {
+    return `/blog/?tag=${encodeURIComponent(feed.key || 'ai-news')}`;
+  }
+
   async function fetchFeed(feed) {
     const res = await fetch(PROXY + encodeURIComponent(feed.url), { signal: AbortSignal.timeout(8000) });
     if (!res.ok) throw new Error('failed');
@@ -940,9 +944,7 @@
     all.slice(0, MAX_TOTAL).forEach(({ item, feed }) => {
       const el = document.createElement('a');
       el.className = 'news-item';
-      el.href = item.link;
-      el.target = '_blank';
-      el.rel = 'noopener noreferrer';
+      el.href = categoryUrl(feed);
       el.innerHTML = `
         <span class="news-tag ${feed.tag}">${feed.name}</span>
         <div class="news-body">
@@ -955,12 +957,12 @@
 
   function fallbackNews() {
     return [
-      ['tag-chatgpt', 'ChatGPT', 'OpenAI最新情報はOpenAIブログで確認', 'https://openai.com/news/'],
-      ['tag-claude',  'Claude',  'Anthropic最新情報はAnthropicブログで確認', 'https://www.anthropic.com/news'],
-      ['tag-gemini',  'Gemini',  'Google AI最新情報はGoogle Blogで確認', 'https://blog.google/technology/ai/'],
-      ['tag-ai',      'AI全般',  'よへラボのAIニュース活用記事を読む', '/blog/ai-news-selling-ideas/'],
+      ['tag-chatgpt', 'ChatGPT', 'ChatGPTニュースの記事一覧を見る', '/blog/?tag=chatgpt'],
+      ['tag-claude',  'Claude',  'Claudeニュースの記事一覧を見る', '/blog/?tag=claude'],
+      ['tag-gemini',  'Gemini',  'Geminiニュースの記事一覧を見る', '/blog/?tag=gemini'],
+      ['tag-ai',      'AI全般',  'AIニュース活用の記事一覧を見る', '/blog/?tag=ai-news'],
     ].map(([tag, name, title, link]) => `
-      <a class="news-item" href="${link}" target="_blank" rel="noopener noreferrer">
+      <a class="news-item" href="${link}">
         <span class="news-tag ${tag}">${name}</span>
         <div class="news-body">
           <div class="news-title">${esc(title)}</div>

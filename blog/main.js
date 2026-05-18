@@ -4,6 +4,7 @@ const filterStatusEl = document.getElementById('filter-status');
 const filterChipEls = Array.from(document.querySelectorAll('.filter-chip'));
 let activeFilter = 'all';
 const staticBlogSlugs = new Set([
+  'ai-news-selling-ideas',
   'home-work-rhythm',
   'bunsirube-version-history',
   'free-theme-vs-bunsirube',
@@ -20,6 +21,14 @@ const fallbackPosts = [
     excerpt: 'AIニュースを調べる、WordPressを触る、ブログを書く。家で続ける人向けに、座りっぱなしを避ける小さい仕組みをまとめました。',
     body: '家で作業できることは増えています。ただ、移動がない日は体を動かすきっかけも減ります。25分作業したら立つ、飲み物を少し遠くに置く、昼に短く外へ出る。まずはそのくらい小さく作業の流れに混ぜるのが現実的です。',
     tags: ['在宅作業', '続け方', 'home-work', 'article'],
+  },
+  {
+    title: 'AIニュースを記事ネタに変える方法。よへラボでこれからやること',
+    slug: 'ai-news-selling-ideas',
+    date: '2026-05-17',
+    excerpt: 'ChatGPT、Claude、GeminiなどのAIニュースを、ブログ記事、note、X投稿、テンプレ、商品案に分けて使う考え方です。',
+    body: 'AIニュースは、読んで終わりにすると流れていきます。よへラボでは、ChatGPT、Claude、Geminiなどのニュースを、記事ネタ、投稿ネタ、テンプレ、小さな商品案に変える前提で整理します。',
+    tags: ['AIニュース', 'ChatGPT', 'Claude', 'Gemini', 'ai-news', 'chatgpt', 'claude', 'gemini', 'earn', 'article', 'template'],
   },
   {
     title: '文標のバージョンアップ履歴：初期版から今までに良くしたこと',
@@ -190,6 +199,9 @@ function normalizeFilter(value) {
   const v = String(value || '').trim().toLowerCase();
   if (!v) return 'all';
   if (['ai', 'aiニュース', 'ai-news'].includes(v)) return 'ai-news';
+  if (['chatgpt', 'openai', 'gpt', 'chatgptニュース'].includes(v)) return 'chatgpt';
+  if (['claude', 'anthropic', 'claudeニュース'].includes(v)) return 'claude';
+  if (['gemini', 'google-ai', 'googleai', 'geminiニュース'].includes(v)) return 'gemini';
   if (['稼ぎ方', '商品案', 'earn', 'money'].includes(v)) return 'earn';
   if (['wp', 'wordpress', 'wordPress'.toLowerCase()].includes(v)) return 'wordpress';
   if (['記事', 'article', 'writing'].includes(v)) return 'article';
@@ -202,6 +214,7 @@ function applyFilters() {
   const q = (blogSearchEl?.value || '').trim().toLowerCase();
   let visible = 0;
   const cards = Array.from(postsEl.querySelectorAll('.post-card'));
+  const filterLabel = getFilterLabel(activeFilter);
   cards.forEach(card => {
     const tags = (card.dataset.tags || card.innerText || '').toLowerCase();
     const text = ((card.dataset.search || '') + ' ' + card.innerText).toLowerCase();
@@ -213,9 +226,25 @@ function applyFilters() {
   });
   if (filterStatusEl) {
     filterStatusEl.textContent = cards.length
-      ? `${visible}件の記事を表示中`
+      ? `${filterLabel}の記事を${visible}件表示中`
       : '記事を読み込んでいます。';
   }
+}
+
+function getFilterLabel(value) {
+  const labels = {
+    all: '全部',
+    'ai-news': 'AIニュース',
+    chatgpt: 'ChatGPT',
+    claude: 'Claude',
+    gemini: 'Gemini',
+    earn: '商品案',
+    wordpress: 'WordPress',
+    article: '記事の型',
+    'home-work': '在宅作業',
+    template: 'テンプレ',
+  };
+  return labels[value] || value;
 }
 
 function setActiveFilter(value) {
