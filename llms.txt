@@ -1,11 +1,13 @@
 # よへラボ
 
-> よへラボは、AIニュースを個人でも売れるネタに変えるための実験場です。ChatGPT、Perplexity、画像生成、AI検索などの変化を、note、X、ブログ、テンプレ販売、小さなツール、WordPress記事にどう使えるかへ変換します。文標（ぶんしるべ）は、その中のひとつで、ネタを比較記事・レビュー記事・FAQ記事として整理するための軽量WordPressテーマです。Google AI Overviews等への表示を保証するものではありません。
+> よへラボは、家で作業する人がAIニュース、WordPress、ブログ、note、X、テンプレ、在宅作業の習慣から自分に合うやり方を見つけるための入口です。AIニュースは記事ネタ・投稿案・テンプレ・小さな商品案に変換し、文標（ぶんしるべ）はその中のひとつとして、ネタを比較記事・レビュー記事・FAQ記事として整理するために提供しています。Google AI Overviews等への表示、収益、健康状態の改善を保証するものではありません。
 
 ## 主な入口
 
-- [よへラボ実験メモ](https://yohelab.com/blog/): AIニュースを、個人でも売れるネタに変えるための実験メモ。note、X、ブログ、テンプレ、小さな商品化の視点で扱う。
-- [AIニュースを、個人でも売れるネタに変える](https://yohelab.com/blog/ai-news-selling-ideas/): よへラボを文標だけのサイトにせず、総合的な道具箱にする方針。
+- [よへラボ記事一覧](https://yohelab.com/blog/): 家でできることを探すための記事一覧。AIニュース、WordPress、ブログ、note、X、テンプレ、在宅作業の続け方を扱う。
+- [よへラボについて](https://yohelab.com/about/): よへラボで扱うテーマ、制作方針、保証しないこと、問い合わせ先。
+- [AIニュースを、家でできるネタに変える](https://yohelab.com/blog/ai-news-selling-ideas/): よへラボを文標だけのサイトにせず、総合的な入口にする方針。
+- [家で作業すると運動不足になるので、先に動く仕組みを作る](https://yohelab.com/blog/home-work-rhythm/): 在宅作業を続けるための小さい習慣。
 - [文標（ぶんしるべ）](https://yohelab.com/lp/bunsirube/): AIニュースから見つけたネタを、比較記事・レビュー記事・FAQ記事として整理しやすくする軽量WordPressテーマ。FAQ、JSON-LD、ブログカード、比較表カード、CTA、導線確認、事故防止チェック、任意のllms.txt出力を内蔵。先行提供価格¥5,500（税込）・買い切り・月額なし。正式版では¥8,800（税込）へ改定予定。
 
 ## 購入前に見るページ
@@ -18,8 +20,9 @@
 
 ## ブログ
 
-- [よへラボ実験メモ](https://yohelab.com/blog/): AIニュース、note/X、WordPressテーマ、AI検索時代の記事構造、比較記事の作り方に関する公開メモ。
-- [AIニュースを個人でも売れるネタに変える方針](https://yohelab.com/blog/ai-news-selling-ideas/)
+- [よへラボ記事一覧](https://yohelab.com/blog/): AIニュース、note/X、WordPressテーマ、AI検索時代の記事構造、比較記事の作り方、在宅作業の続け方に関する公開メモ。
+- [AIニュースを家でできるネタに変える方針](https://yohelab.com/blog/ai-news-selling-ideas/)
+- [家で作業すると運動不足になるので、先に動く仕組みを作る](https://yohelab.com/blog/home-work-rhythm/)
 - [無料テーマと文標の違い](https://yohelab.com/blog/free-theme-vs-bunsirube/)
 - [比較記事の書き方](https://yohelab.com/blog/comparison-article-template/)
 - [文標を入れる前に確認すること](https://yohelab.com/blog/bunsirube-before-install/)

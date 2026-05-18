@@ -129,6 +129,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: "index.html",
+        about: "about/index.html",
         games: "games/index.html",
         contact: "contact/index.html",
         contactBug: "contact/bug/index.html",
@@ -139,6 +140,7 @@ export default defineConfig({
         blogFreeThemeVsBunsirube: "blog/free-theme-vs-bunsirube/index.html",
         blogBunsirubeVersionHistory: "blog/bunsirube-version-history/index.html",
         blogAiNewsSellingIdeas: "blog/ai-news-selling-ideas/index.html",
+        blogHomeWorkRhythm: "blog/home-work-rhythm/index.html",
         blogComparisonArticleTemplate: "blog/comparison-article-template/index.html",
         blogFaqSourceAiSearch: "blog/faq-source-ai-search/index.html",
         blogSalesPageCommonMistakes: "blog/sales-page-common-mistakes/index.html",

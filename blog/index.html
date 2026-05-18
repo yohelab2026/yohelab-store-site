@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>よへラボ実験メモ | AIニュースを、個人でも売れるネタに変える</title>
-  <meta name="description" content="AIニュースをnote・X・ブログ・テンプレ・小さな商品に変えるための実験メモ。文標 WordPressテーマの制作背景や記事構造の話もまとめます。" />
-  <meta property="og:title" content="よへラボ実験メモ | AIニュースを、個人でも売れるネタに変える" />
-  <meta property="og:description" content="AIニュースを見て終わりにせず、個人でも売れるネタに変えるための実験メモ。" />
+  <title>よへラボ記事一覧 | 家でできることを見つけるメモ</title>
+  <meta name="description" content="家でできることを探すための記事一覧。AIニュース、WordPress、ブログ、note、X、テンプレ、在宅作業の続け方をまとめます。" />
+  <meta property="og:title" content="よへラボ記事一覧 | 家でできることを見つけるメモ" />
+  <meta property="og:description" content="AIニュース、WordPress、ブログ、テンプレ、在宅作業の続け方を探せる記事一覧。" />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="ja_JP" />
   <meta property="og:url" content="https://yohelab.com/blog/" />
@@ -14,7 +14,7 @@
   <link rel="canonical" href="https://yohelab.com/blog/" />
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1" />
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"Blog","name":"よへラボ実験メモ","url":"https://yohelab.com/blog/","description":"AIニュースをnote、X、ブログ、テンプレ、小さな商品に変えるための実験メモ。文標 WordPressテーマの制作背景や記事構造の話も扱います。","publisher":{"@type":"Organization","name":"よへラボ","url":"https://yohelab.com/","logo":{"@type":"ImageObject","url":"https://yohelab.com/yohelab-cat-icon.png"}},"inLanguage":"ja-JP"}
+  {"@context":"https://schema.org","@type":"Blog","name":"よへラボ記事一覧","url":"https://yohelab.com/blog/","description":"家でできることを探すための記事一覧。AIニュース、WordPress、ブログ、note、X、テンプレ、在宅作業の続け方を扱います。","publisher":{"@type":"Organization","name":"よへラボ","url":"https://yohelab.com/","logo":{"@type":"ImageObject","url":"https://yohelab.com/yohelab-cat-icon.png"}},"inLanguage":"ja-JP"}
   </script>
   <link rel="icon" type="image/png" href="/yohelab-cat-icon-32.png" />
   <link rel="stylesheet" href="/shared/site.min.css" />
@@ -80,6 +80,74 @@
       color:var(--muted);
       font-size:13px;
       line-height:1.75;
+    }
+
+    .blog-tools {
+      max-width:960px;
+      margin:22px auto 20px;
+      padding:20px;
+      border:1px solid #dce7fb;
+      border-radius:24px;
+      background:#fff;
+      box-shadow:var(--shadow-sm);
+    }
+    .blog-search-row {
+      display:grid;
+      grid-template-columns:minmax(0,1fr) auto;
+      gap:10px;
+      margin-bottom:14px;
+    }
+    .blog-search-row input {
+      min-height:46px;
+      padding:0 16px;
+      border-radius:14px;
+      border:1px solid #dce7fb;
+      font-size:15px;
+      font-weight:700;
+      color:var(--text);
+      min-width:0;
+    }
+    .blog-search-row a {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:46px;
+      padding:0 16px;
+      border-radius:14px;
+      background:#0b8f72;
+      color:#fff;
+      font-size:13px;
+      font-weight:900;
+      text-decoration:none;
+      white-space:nowrap;
+    }
+    .filter-chips {
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+    .filter-chip {
+      border:1px solid #dce7fb;
+      background:#f8fbff;
+      color:#21324c;
+      border-radius:999px;
+      min-height:34px;
+      padding:0 12px;
+      font-size:12.5px;
+      font-weight:900;
+      cursor:pointer;
+    }
+    .filter-chip.is-active {
+      background:#0b8f72;
+      border-color:#0b8f72;
+      color:#fff;
+    }
+    .filter-status {
+      max-width:760px;
+      margin:10px auto 0;
+      color:var(--muted);
+      font-size:13px;
+      font-weight:700;
     }
 
     /* グリッド */
@@ -184,6 +252,7 @@
     }
     @media (max-width:560px) {
       .post-card-title { font-size:21px; }
+      .blog-search-row { grid-template-columns:1fr; }
     }
   </style>
 </head>
@@ -206,8 +275,8 @@
     <div class="container">
       <div class="sec-head" style="text-align:center;margin-bottom:22px;">
         <p class="sec-label">Blog</p>
-        <h1>よへラボ実験メモ</h1>
-        <p class="blog-intro">AIニュースを、note・X・ブログ・テンプレ・小さな商品にどう変えるかを考えるメモです。文標は、そのネタを記事構造に整えるための道具として扱います。</p>
+        <h1>よへラボ記事一覧</h1>
+        <p class="blog-intro">家でできることを探すためのメモです。AIニュース、WordPress、ブログ、note、X、テンプレ、在宅作業の続け方をまとめます。</p>
       </div>
       <section class="featured-guides" aria-labelledby="bunsirube-guides-title">
         <h2 id="bunsirube-guides-title">まず読む3本</h2>
@@ -215,8 +284,8 @@
         <div class="featured-guide-grid">
           <a class="featured-guide-card" href="/blog/ai-news-selling-ideas/">
             <span>Direction</span>
-            <strong>AIニュースを個人でも売れるネタに変えるとは</strong>
-            <small>よへラボを文標だけで終わらせないための考え方。</small>
+            <strong>AIニュースを家でできるネタに変えるとは</strong>
+            <small>ニュースを読んで終わりにしないための考え方。</small>
           </a>
           <a class="featured-guide-card" href="/blog/comparison-article-template/">
             <span>Article</span>
@@ -230,17 +299,42 @@
           </a>
         </div>
       </section>
+      <section class="blog-tools" aria-label="記事検索とタグ">
+        <div class="blog-search-row">
+          <input id="blog-search" type="search" placeholder="キーワードで探す。例: WordPress / AI検索 / 比較記事" autocomplete="off" />
+          <a href="/about/">よへラボについて</a>
+        </div>
+        <div class="filter-chips" aria-label="タグで絞り込む">
+          <button class="filter-chip is-active" type="button" data-filter="all">全部</button>
+          <button class="filter-chip" type="button" data-filter="ai-news">AIニュース</button>
+          <button class="filter-chip" type="button" data-filter="earn">稼ぎ方</button>
+          <button class="filter-chip" type="button" data-filter="wordpress">WordPress</button>
+          <button class="filter-chip" type="button" data-filter="article">記事の型</button>
+          <button class="filter-chip" type="button" data-filter="home-work">在宅作業</button>
+          <button class="filter-chip" type="button" data-filter="template">テンプレ</button>
+        </div>
+      </section>
+      <div class="filter-status" id="filter-status">記事をキーワードやタグで絞り込めます。</div>
       <div id="posts" class="posts-grid">
-        <article class="post-card" data-slug="ai-news-selling-ideas">
+        <article class="post-card" data-slug="home-work-rhythm" data-tags="home-work article" data-search="家で作業 運動不足 在宅作業 習慣 ブログ AIニュース WordPress">
+          <div class="post-card-img-placeholder">家</div>
+          <div class="post-card-body">
+            <div class="post-card-meta"><span>2026-05-18</span><span class="post-card-tag">在宅作業</span><span class="post-card-tag">続け方</span></div>
+            <div class="post-card-title">家で作業すると運動不足になるので、先に動く仕組みを作る</div>
+            <div class="post-card-excerpt">AIニュースを調べる、WordPressを触る、ブログを書く。家で続ける人向けに、座りっぱなしを避ける小さい仕組みをまとめました。</div>
+            <div class="post-card-footer"><a class="open-link" href="/blog/home-work-rhythm/">在宅作業の続け方を読む →</a></div>
+          </div>
+        </article>
+        <article class="post-card" data-slug="ai-news-selling-ideas" data-tags="ai-news earn article template" data-search="AIニュース 家でできる ネタ note X ブログ テンプレ">
           <div class="post-card-img-placeholder">AI</div>
           <div class="post-card-body">
             <div class="post-card-meta"><span>2026-05-17</span><span class="post-card-tag">よへラボ</span><span class="post-card-tag">AIニュース</span></div>
-            <div class="post-card-title">AIニュースを、個人でも売れるネタに変える。よへラボでこれからやること</div>
+            <div class="post-card-title">AIニュースを、家でできるネタに変える。よへラボでこれからやること</div>
             <div class="post-card-excerpt">よへラボを文標だけのサイトにせず、AIニュースから記事・テンプレ・ツール・商品を作る場所に変えていくための方針です。</div>
             <div class="post-card-footer"><a class="open-link" href="/blog/ai-news-selling-ideas/">新しい方針を読む →</a></div>
           </div>
         </article>
-        <article class="post-card" data-slug="bunsirube-version-history">
+        <article class="post-card" data-slug="bunsirube-version-history" data-tags="wordpress article template" data-search="文標 WordPress 更新履歴 テーマ">
           <img class="post-card-img" src="/assets/blog/bunsirube-version-history/eyecatch.webp" alt="文標のバージョンアップ履歴" loading="lazy" />
           <div class="post-card-body">
             <div class="post-card-meta"><span>2026-05-12</span><span class="post-card-tag">文標</span><span class="post-card-tag">更新履歴</span></div>
@@ -249,7 +343,7 @@
             <div class="post-card-footer"><a class="open-link" href="/blog/bunsirube-version-history/">文標の更新履歴を読む →</a></div>
           </div>
         </article>
-        <article class="post-card" data-slug="free-theme-vs-bunsirube">
+        <article class="post-card" data-slug="free-theme-vs-bunsirube" data-tags="wordpress article template" data-search="無料テーマ 文標 WordPress 比較">
           <img class="post-card-img" src="/assets/blog/free-theme-vs-bunsirube/eyecatch.webp" alt="無料テーマと文標の違い" loading="lazy" />
           <div class="post-card-body">
             <div class="post-card-meta"><span>2026-05-04</span><span class="post-card-tag">文標</span><span class="post-card-tag">WordPress</span></div>
@@ -258,7 +352,7 @@
             <div class="post-card-footer"><a class="open-link" href="/blog/free-theme-vs-bunsirube/">無料テーマと文標の違いを読む →</a></div>
           </div>
         </article>
-        <article class="post-card" data-slug="comparison-article-template">
+        <article class="post-card" data-slug="comparison-article-template" data-tags="article template earn wordpress" data-search="比較記事 書き方 テンプレ FAQ CTA">
           <img class="post-card-img" src="/assets/blog/comparison-article-template/eyecatch.webp" alt="比較記事の書き方" loading="lazy" />
           <div class="post-card-body">
             <div class="post-card-meta"><span>2026-05-04</span><span class="post-card-tag">文標</span><span class="post-card-tag">比較記事</span></div>
@@ -267,7 +361,7 @@
             <div class="post-card-footer"><a class="open-link" href="/blog/comparison-article-template/">比較記事の書き方を読む →</a></div>
           </div>
         </article>
-        <article class="post-card" data-slug="bunsirube-before-install">
+        <article class="post-card" data-slug="bunsirube-before-install" data-tags="wordpress article" data-search="文標 導入前 バックアップ WordPress">
           <img class="post-card-img" src="/assets/blog/bunsirube-before-install/eyecatch.webp" alt="文標を入れる前に確認すること" loading="lazy" />
           <div class="post-card-body">
             <div class="post-card-meta"><span>2026-05-02</span><span class="post-card-tag">文標</span><span class="post-card-tag">WordPress</span></div>
@@ -276,7 +370,7 @@
             <div class="post-card-footer"><a class="open-link" href="/blog/bunsirube-before-install/">文標の導入前チェックを読む →</a></div>
           </div>
         </article>
-        <article class="post-card" data-slug="faq-source-ai-search">
+        <article class="post-card" data-slug="faq-source-ai-search" data-tags="ai-news article wordpress" data-search="AI検索 FAQ 出典 Google AI Overviews">
           <img class="post-card-img" src="/assets/blog/faq-source-ai-search/eyecatch.webp" alt="AI検索向けにFAQと出典を置く理由" loading="lazy" />
           <div class="post-card-body">
             <div class="post-card-meta"><span>2026-05-02</span><span class="post-card-tag">AI検索</span><span class="post-card-tag">FAQ</span></div>
@@ -285,7 +379,7 @@
             <div class="post-card-footer"><a class="open-link" href="/blog/faq-source-ai-search/">FAQと出典の置き方を読む →</a></div>
           </div>
         </article>
-        <article class="post-card" data-slug="sales-page-common-mistakes">
+        <article class="post-card" data-slug="sales-page-common-mistakes" data-tags="earn article template" data-search="商品ページ note BASE 販売ページ 改善">
           <img class="post-card-img" src="/assets/blog/sales-page-common-mistakes/eyecatch.webp" alt="商品ページでよくある失敗" loading="lazy" />
           <div class="post-card-body">
             <div class="post-card-meta"><span>2026-05-02</span><span class="post-card-tag">販売ページ</span><span class="post-card-tag">改善</span></div>
