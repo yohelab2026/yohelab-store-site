@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>よへラボ | 家で働く人のためのAI・副業情報サイト</title>
-  <meta name="description" content="よへラボは、家で働く人・副業をする人のための情報サイト。AIニュース、ブログ・note収益化、WordPressテーマ、在宅ワーク習慣など、家でできる仕事に関するすべてを発信。" />
+  <meta name="description" content="よへラボは、家で働く人・副業をする人のための情報サイト。AIニュース、ブログ・note収益化、WordPressテーマ（文標）、在宅ワーク習慣など、家でできる仕事に関するすべてを発信。" />
   <meta property="og:title" content="よへラボ | 家で働く人のためのAI・副業情報サイト" />
   <meta property="og:description" content="AIニュース、副業ブログ、WordPressテーマ（文標）、在宅ワーク習慣。家で稼ぐための道しるべ。" />
   <meta property="og:type" content="website" />
@@ -21,29 +21,18 @@
   <link rel="stylesheet" href="/shared/site.min.css" />
 
   <style>
-    /* ============================================
-       よへラボ トップページ – シンプルリデザイン
-       Yahoo!スタイルのポータル型レイアウト
-    ============================================ */
-
     :root {
       --brand: #0b8f72;
       --brand-dark: #086b56;
       --brand-light: #e8f7f3;
       --accent: #ff6b2b;
-      --accent-light: #fff3ee;
       --text: #1a1a2e;
       --text-sub: #444;
       --muted: #777;
       --border: #e8e8e8;
       --bg: #f7f7f7;
       --white: #fff;
-      --news-tag-ai: #0b8f72;
-      --news-tag-wp: #3a7fd5;
-      --news-tag-tool: #9b59b6;
-      --news-tag-hustle: #e67e22;
       --radius: 8px;
-      --radius-lg: 14px;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -60,7 +49,7 @@
     /* ── ヘッダー ── */
     .site-header {
       background: var(--white);
-      border-bottom: 2px solid var(--brand);
+      border-bottom: 3px solid var(--brand);
       position: sticky;
       top: 0;
       z-index: 100;
@@ -84,17 +73,8 @@
       letter-spacing: -0.03em;
       flex-shrink: 0;
     }
-    .site-logo img {
-      width: 36px;
-      height: 36px;
-      border-radius: 8px;
-    }
-    .header-nav {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      flex-wrap: wrap;
-    }
+    .site-logo img { width: 36px; height: 36px; border-radius: 8px; }
+    .header-nav { display: flex; align-items: center; gap: 4px; }
     .header-nav a {
       padding: 5px 11px;
       border-radius: 4px;
@@ -104,13 +84,7 @@
       transition: background .15s, color .15s;
     }
     .header-nav a:hover { background: var(--brand-light); color: var(--brand); }
-    .header-nav a.active { color: var(--brand); }
-    .header-right {
-      margin-left: auto;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+    .header-right { margin-left: auto; }
     .btn-primary-sm {
       background: var(--brand);
       color: #fff;
@@ -118,11 +92,11 @@
       border-radius: 4px;
       font-size: 13px;
       font-weight: 700;
+      display: inline-block;
       transition: background .15s;
     }
     .btn-primary-sm:hover { background: var(--brand-dark); }
 
-    /* モバイルメニュー */
     .mobile-hamburger {
       display: none;
       background: none;
@@ -152,6 +126,44 @@
     }
     .mobile-nav-panel a:hover { background: var(--brand-light); color: var(--brand); }
 
+    /* ── カテゴリタブバー ── */
+    .tab-bar {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 56px;
+      z-index: 90;
+    }
+    .tab-bar-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+    }
+    .tab-btn {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      padding: 10px 8px;
+      border: none;
+      border-bottom: 3px solid transparent;
+      background: none;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-sub);
+      transition: background .15s, color .15s, border-color .15s;
+    }
+    .tab-btn:hover { background: var(--brand-light); color: var(--brand); }
+    .tab-btn.active {
+      color: var(--brand);
+      border-bottom-color: var(--brand);
+      background: var(--brand-light);
+    }
+    .tab-icon { font-size: 22px; line-height: 1; }
+
     /* ── メインレイアウト ── */
     .site-main {
       max-width: 1100px;
@@ -162,6 +174,10 @@
       gap: 16px;
       align-items: start;
     }
+
+    /* ── タブパネル ── */
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
 
     /* ── セクション共通 ── */
     .section-card {
@@ -177,7 +193,6 @@
       justify-content: space-between;
       padding: 10px 14px;
       border-bottom: 1px solid var(--border);
-      background: var(--white);
     }
     .section-head h2 {
       font-size: 15px;
@@ -187,18 +202,10 @@
       align-items: center;
       gap: 8px;
     }
-    .section-head h2 .icon {
-      font-size: 16px;
-    }
-    .section-head a.more {
-      font-size: 12px;
-      color: var(--brand);
-      font-weight: 700;
-    }
+    .section-head a.more { font-size: 12px; color: var(--brand); font-weight: 700; }
     .section-head a.more:hover { text-decoration: underline; }
 
-    /* ── AIニュースセクション ── */
-    .news-list { padding: 4px 0; }
+    /* ── AIニュース ── */
     .news-item {
       display: flex;
       align-items: flex-start;
@@ -206,7 +213,6 @@
       padding: 10px 14px;
       border-bottom: 1px solid #f0f0f0;
       transition: background .12s;
-      cursor: pointer;
     }
     .news-item:last-child { border-bottom: none; }
     .news-item:hover { background: #fafffe; }
@@ -219,17 +225,16 @@
       color: #fff;
       margin-top: 2px;
     }
-    .tag-chatgpt { background: #10a37f; }
-    .tag-claude  { background: #cc785c; }
-    .tag-gemini  { background: #4285f4; }
-    .tag-perplexity { background: #1fb6cf; }
+    .tag-chatgpt   { background: #10a37f; }
+    .tag-claude    { background: #cc785c; }
+    .tag-gemini    { background: #4285f4; }
+    .tag-perplexity{ background: #1fb6cf; }
     .tag-genspark  { background: #7c3aed; }
-    .tag-ai      { background: #555; }
+    .tag-ai        { background: #666; }
     .news-body { flex: 1; min-width: 0; }
     .news-title {
       font-size: 13.5px;
       font-weight: 700;
-      color: var(--text);
       line-height: 1.5;
       overflow: hidden;
       display: -webkit-box;
@@ -237,24 +242,16 @@
       -webkit-box-orient: vertical;
     }
     .news-item:hover .news-title { color: var(--brand); }
-    .news-meta {
-      margin-top: 2px;
-      font-size: 11px;
-      color: var(--muted);
-    }
-    .news-source {
-      font-weight: 700;
-    }
+    .news-meta { margin-top: 2px; font-size: 11px; color: var(--muted); }
     .news-loading {
       padding: 28px 14px;
       text-align: center;
       color: var(--muted);
       font-size: 13px;
     }
-    .news-loading .spinner {
+    .spinner {
       display: inline-block;
-      width: 20px;
-      height: 20px;
+      width: 20px; height: 20px;
       border: 2px solid var(--border);
       border-top-color: var(--brand);
       border-radius: 50%;
@@ -262,15 +259,8 @@
       margin-bottom: 8px;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
-    .news-error {
-      padding: 16px 14px;
-      color: var(--muted);
-      font-size: 13px;
-      text-align: center;
-    }
 
-    /* ── ブログ記事一覧 ── */
-    .article-list { padding: 4px 0; }
+    /* ── ブログ記事 ── */
     .article-item {
       display: flex;
       gap: 10px;
@@ -282,28 +272,21 @@
     .article-item:hover { background: #fafffe; }
     .article-thumb {
       flex-shrink: 0;
-      width: 54px;
-      height: 54px;
+      width: 54px; height: 54px;
       border-radius: 6px;
       background: var(--brand-light);
       display: grid;
       place-items: center;
-      font-size: 22px;
+      font-size: 18px;
       font-weight: 900;
       color: var(--brand);
       border: 1px solid rgba(11,143,114,.15);
     }
     .article-body { flex: 1; min-width: 0; }
-    .article-cat {
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--brand);
-      margin-bottom: 2px;
-    }
+    .article-cat { font-size: 11px; font-weight: 700; color: var(--brand); margin-bottom: 2px; }
     .article-title {
       font-size: 13.5px;
       font-weight: 700;
-      color: var(--text);
       line-height: 1.45;
       overflow: hidden;
       display: -webkit-box;
@@ -311,51 +294,64 @@
       -webkit-box-orient: vertical;
     }
     .article-item:hover .article-title { color: var(--brand); }
-    .article-date {
-      font-size: 11px;
-      color: var(--muted);
-      margin-top: 2px;
-    }
+    .article-date { font-size: 11px; color: var(--muted); margin-top: 2px; }
 
-    /* ── カテゴリ入口 ── */
-    .category-grid {
+    /* ── ツール・商品パネル ── */
+    .product-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1px;
-      background: var(--border);
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      padding: 14px;
     }
-    .category-item {
-      background: var(--white);
-      padding: 14px 10px;
+    .product-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      gap: 6px;
-      text-align: center;
-      transition: background .12s;
+      gap: 8px;
+      transition: border-color .15s, background .15s;
     }
-    .category-item:hover { background: var(--brand-light); }
-    .category-icon {
-      font-size: 28px;
-      line-height: 1;
+    .product-card:hover { border-color: var(--brand); background: var(--brand-light); }
+    .product-card-icon {
+      width: 48px; height: 48px;
+      border-radius: 10px;
+      background: var(--brand-light);
+      display: grid;
+      place-items: center;
+      font-size: 24px;
+      font-weight: 900;
+      color: var(--brand);
+      border: 1px solid rgba(11,143,114,.2);
     }
-    .category-label {
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--text-sub);
+    .product-card-name { font-size: 14px; font-weight: 900; color: var(--text); }
+    .product-card-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+    .product-card-price {
+      font-size: 13px;
+      font-weight: 900;
+      color: var(--brand);
+      margin-top: auto;
     }
-    .category-item:hover .category-label { color: var(--brand); }
-    .category-desc {
-      font-size: 11px;
-      color: var(--muted);
-      line-height: 1.4;
-    }
+    .product-card-price.paid { color: var(--accent); }
 
-    /* ── サイドバー ── */
-    .sidebar { }
+    /* ── 在宅ヒント ── */
+    .tip-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      padding: 14px;
+    }
+    .tip-item {
+      padding: 12px;
+      background: var(--bg);
+      border-radius: 6px;
+      border: 1px solid var(--border);
+    }
+    .tip-icon { font-size: 22px; margin-bottom: 4px; }
+    .tip-label { font-size: 13px; font-weight: 700; color: var(--text); }
+    .tip-text { font-size: 11px; color: var(--muted); line-height: 1.5; margin-top: 3px; }
 
-    /* おすすめピックアップ */
-    .pickup-list { padding: 4px 0; }
+    /* ── サイドバー共通 ── */
     .pickup-item {
       padding: 10px 14px;
       border-bottom: 1px solid #f0f0f0;
@@ -368,8 +364,7 @@
     .pickup-item:hover { background: #fafffe; }
     .pickup-num {
       flex-shrink: 0;
-      width: 20px;
-      height: 20px;
+      width: 20px; height: 20px;
       border-radius: 50%;
       background: var(--brand);
       color: #fff;
@@ -380,62 +375,15 @@
       margin-top: 1px;
     }
     .pickup-num.top3 { background: var(--accent); }
-    .pickup-title {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--text);
-      line-height: 1.45;
-    }
+    .pickup-title { font-size: 13px; font-weight: 700; line-height: 1.45; }
     .pickup-item:hover .pickup-title { color: var(--brand); }
 
-    /* ツール・商品 */
-    .product-list { padding: 8px 14px; display: grid; gap: 8px; }
-    .product-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      transition: border-color .12s, background .12s;
-    }
-    .product-item:hover { border-color: var(--brand); background: var(--brand-light); }
-    .product-icon {
-      flex-shrink: 0;
-      width: 44px;
-      height: 44px;
-      border-radius: 8px;
-      background: var(--brand-light);
-      display: grid;
-      place-items: center;
-      font-size: 22px;
-      border: 1px solid rgba(11,143,114,.2);
-    }
-    .product-body { flex: 1; min-width: 0; }
-    .product-name {
-      font-size: 13px;
-      font-weight: 900;
-      color: var(--text);
-    }
-    .product-desc {
-      font-size: 11px;
-      color: var(--muted);
-      line-height: 1.4;
-    }
-    .product-price {
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--brand);
-      flex-shrink: 0;
-    }
-
-    /* X・SNS */
     .sns-list { padding: 8px 14px; display: grid; gap: 6px; }
     .sns-item {
       display: flex;
       align-items: center;
       gap: 8px;
-      padding: 8px 10px;
+      padding: 9px 10px;
       border: 1px solid var(--border);
       border-radius: 6px;
       font-size: 13px;
@@ -446,47 +394,20 @@
     .sns-item:hover { background: var(--brand-light); color: var(--brand); border-color: var(--brand); }
     .sns-icon { font-size: 18px; }
 
-    /* 在宅ヒント */
-    .tip-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      padding: 8px 14px;
-    }
-    .tip-item {
-      padding: 10px;
-      background: var(--bg);
-      border-radius: 6px;
-      border: 1px solid var(--border);
-    }
-    .tip-icon { font-size: 20px; margin-bottom: 4px; }
-    .tip-label {
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--text);
-    }
-    .tip-text {
-      font-size: 11px;
-      color: var(--muted);
-      line-height: 1.4;
-      margin-top: 2px;
-    }
-
     /* ── フッター ── */
     .site-footer {
       background: var(--white);
       border-top: 1px solid var(--border);
       margin-top: 24px;
-      padding: 24px 16px;
+      padding: 28px 16px 16px;
     }
     .footer-inner {
       max-width: 1100px;
       margin: 0 auto;
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr 1fr;
+      grid-template-columns: 1.4fr 1fr 1fr 1fr;
       gap: 24px;
     }
-    .footer-brand { }
     .footer-logo {
       display: flex;
       align-items: center;
@@ -497,11 +418,7 @@
       margin-bottom: 8px;
     }
     .footer-logo img { width: 28px; height: 28px; border-radius: 6px; }
-    .footer-tagline {
-      font-size: 12px;
-      color: var(--muted);
-      line-height: 1.6;
-    }
+    .footer-tagline { font-size: 12px; color: var(--muted); line-height: 1.7; }
     .footer-col h3 {
       font-size: 12px;
       font-weight: 900;
@@ -510,12 +427,8 @@
       padding-bottom: 6px;
       border-bottom: 1px solid var(--border);
     }
-    .footer-col ul { list-style: none; display: grid; gap: 4px; }
-    .footer-col ul li a {
-      font-size: 12px;
-      color: var(--muted);
-      transition: color .12s;
-    }
+    .footer-col ul { list-style: none; display: grid; gap: 5px; }
+    .footer-col ul li a { font-size: 12px; color: var(--muted); transition: color .12s; }
     .footer-col ul li a:hover { color: var(--brand); }
     .footer-bottom {
       max-width: 1100px;
@@ -527,8 +440,8 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 12px;
       flex-wrap: wrap;
+      gap: 8px;
     }
     .footer-bottom-links { display: flex; gap: 12px; }
     .footer-bottom-links a { color: var(--muted); font-size: 11px; }
@@ -537,20 +450,15 @@
     /* ── レスポンシブ ── */
     @media (max-width: 768px) {
       .header-nav { display: none; }
-      .header-right .btn-primary-sm { display: none; }
+      .header-right { display: none; }
       .mobile-hamburger { display: block; }
-      .site-main {
-        grid-template-columns: 1fr;
-        padding: 10px;
-        gap: 10px;
-      }
-      .category-grid { grid-template-columns: repeat(4, 1fr); }
-      .category-item { padding: 10px 6px; }
-      .category-icon { font-size: 22px; }
+      .tab-bar { top: 56px; }
+      .site-main { grid-template-columns: 1fr; padding: 10px; }
+      .product-grid { grid-template-columns: 1fr; }
+      .tip-grid { grid-template-columns: 1fr 1fr; }
       .footer-inner { grid-template-columns: 1fr 1fr; gap: 16px; }
     }
     @media (max-width: 480px) {
-      .category-grid { grid-template-columns: repeat(4, 1fr); }
       .footer-inner { grid-template-columns: 1fr; }
     }
   </style>
@@ -565,179 +473,251 @@
       よへラボ
     </a>
     <nav class="header-nav">
-      <a href="#ai-news">AIニュース</a>
       <a href="/blog/">ブログ</a>
-      <a href="#tools">ツール・商品</a>
-      <a href="#workout">在宅ヒント</a>
+      <a href="/lp/bunsirube/">文標</a>
       <a href="/about/">サイトについて</a>
     </nav>
     <div class="header-right">
-      <a class="btn-primary-sm" href="/lp/bunsirube/">文標を見る</a>
+      <a class="btn-primary-sm" href="/lp/bunsirube/">文標を見る →</a>
     </div>
     <button class="mobile-hamburger" id="menuBtn" aria-label="メニューを開く">☰</button>
   </div>
   <nav class="mobile-nav-panel" id="mobileNav">
-    <a href="#ai-news">AIニュース</a>
-    <a href="/blog/">ブログ</a>
-    <a href="#tools">ツール・商品</a>
-    <a href="#workout">在宅ヒント</a>
-    <a href="/lp/bunsirube/">文標を見る</a>
+    <a href="/blog/">ブログ記事一覧</a>
+    <a href="/lp/bunsirube/">文標（WordPressテーマ）</a>
     <a href="/about/">サイトについて</a>
     <a href="https://x.com/yohe_lab" target="_blank" rel="noopener">X（旧Twitter）</a>
+    <a href="https://note.com/yohelab" target="_blank" rel="noopener">note</a>
+    <a href="/contact/">お問い合わせ</a>
   </nav>
 </header>
 
-<!-- ====== カテゴリ入口（Yahoo!上部タブ風） ====== -->
-<div style="background:var(--white);border-bottom:1px solid var(--border);">
-  <nav class="category-grid" style="max-width:1100px;margin:0 auto;border:none;gap:0;" aria-label="カテゴリ">
-    <a class="category-item" href="#ai-news">
-      <span class="category-icon">🤖</span>
-      <span class="category-label">AIニュース</span>
-    </a>
-    <a class="category-item" href="/blog/">
-      <span class="category-icon">✍️</span>
-      <span class="category-label">副業ブログ</span>
-    </a>
-    <a class="category-item" href="/lp/bunsirube/">
-      <span class="category-icon">📦</span>
-      <span class="category-label">ツール・商品</span>
-    </a>
-    <a class="category-item" href="#workout">
-      <span class="category-icon">💪</span>
-      <span class="category-label">在宅ヒント</span>
-    </a>
-  </nav>
+<!-- ====== カテゴリタブバー ====== -->
+<div class="tab-bar">
+  <div class="tab-bar-inner">
+    <button class="tab-btn active" data-tab="ai-news">
+      <span class="tab-icon">🤖</span>AIニュース
+    </button>
+    <button class="tab-btn" data-tab="blog">
+      <span class="tab-icon">✍️</span>副業ブログ
+    </button>
+    <button class="tab-btn" data-tab="tools">
+      <span class="tab-icon">📦</span>ツール・商品
+    </button>
+    <button class="tab-btn" data-tab="workout">
+      <span class="tab-icon">💪</span>在宅ヒント
+    </button>
+  </div>
 </div>
 
 <!-- ====== メインコンテンツ ====== -->
 <main class="site-main">
 
-  <!-- ===== 左カラム ===== -->
+  <!-- ===== 左カラム（タブパネル） ===== -->
   <div class="main-col">
 
-    <!-- AIニュース -->
-    <section class="section-card" id="ai-news">
-      <div class="section-head">
-        <h2><span class="icon">🤖</span>AIツール最新ニュース</h2>
-        <a class="more" href="/blog/?tag=ai-news">もっと見る →</a>
-      </div>
-      <div class="news-list" id="newsContainer">
-        <div class="news-loading">
-          <div class="spinner"></div>
-          <div>最新ニュースを読み込み中…</div>
+    <!-- [タブ1] AIニュース -->
+    <div class="tab-panel active" id="panel-ai-news">
+      <section class="section-card">
+        <div class="section-head">
+          <h2><span>🤖</span>AIツール最新ニュース</h2>
+          <a class="more" href="/blog/?tag=ai-news">もっと見る →</a>
         </div>
-      </div>
-    </section>
+        <div id="newsContainer">
+          <div class="news-loading">
+            <div class="spinner"></div>
+            <div>最新ニュースを読み込み中…</div>
+          </div>
+        </div>
+      </section>
+    </div>
 
-    <!-- 最新ブログ記事 -->
-    <section class="section-card" id="latest-posts">
-      <div class="section-head">
-        <h2><span class="icon">✍️</span>最新ブログ記事</h2>
-        <a class="more" href="/blog/">一覧を見る →</a>
-      </div>
-      <div class="article-list">
-        <a class="article-item" href="/blog/ai-news-selling-ideas/">
-          <div class="article-thumb">AI</div>
-          <div class="article-body">
-            <div class="article-cat">AIニュース活用</div>
-            <div class="article-title">AIニュースを記事ネタに変える方法</div>
-            <div class="article-date">2026-05-18</div>
-          </div>
-        </a>
-        <a class="article-item" href="/blog/home-work-rhythm/">
-          <div class="article-thumb">🏠</div>
-          <div class="article-body">
-            <div class="article-cat">在宅メモ</div>
-            <div class="article-title">在宅作業の運動不足対策｜25分サイクル・家トレ習慣</div>
-            <div class="article-date">2026-05-18</div>
-          </div>
-        </a>
-        <a class="article-item" href="/blog/comparison-article-template/">
-          <div class="article-thumb">比</div>
-          <div class="article-body">
-            <div class="article-cat">記事構成・テンプレ</div>
-            <div class="article-title">比較記事の書き方：結論・比較表・FAQ・CTAの型</div>
-            <div class="article-date">2026-05-04</div>
-          </div>
-        </a>
-        <a class="article-item" href="/blog/free-theme-vs-bunsirube/">
-          <div class="article-thumb">WP</div>
-          <div class="article-body">
-            <div class="article-cat">WordPress</div>
-            <div class="article-title">無料テーマと文標の違い｜どちらを選ぶべきか</div>
-            <div class="article-date">2026-05-04</div>
-          </div>
-        </a>
-        <a class="article-item" href="/blog/faq-source-ai-search/">
-          <div class="article-thumb">FAQ</div>
-          <div class="article-body">
-            <div class="article-cat">AI検索対策</div>
-            <div class="article-title">AI検索向けにFAQと出典を置く理由</div>
-            <div class="article-date">2026-05-02</div>
-          </div>
-        </a>
-        <a class="article-item" href="/blog/sales-page-common-mistakes/">
-          <div class="article-thumb">💡</div>
-          <div class="article-body">
-            <div class="article-cat">販売導線</div>
-            <div class="article-title">売り場ページのよくある失敗とチェックリスト</div>
-            <div class="article-date">2026-04-28</div>
-          </div>
-        </a>
-      </div>
-    </section>
+    <!-- [タブ2] 副業ブログ -->
+    <div class="tab-panel" id="panel-blog">
+      <section class="section-card">
+        <div class="section-head">
+          <h2><span>✍️</span>最新ブログ記事</h2>
+          <a class="more" href="/blog/">一覧を見る →</a>
+        </div>
+        <div>
+          <a class="article-item" href="/blog/ai-news-selling-ideas/">
+            <div class="article-thumb">AI</div>
+            <div class="article-body">
+              <div class="article-cat">AIニュース活用</div>
+              <div class="article-title">AIニュースを記事ネタに変える方法</div>
+              <div class="article-date">2026-05-18</div>
+            </div>
+          </a>
+          <a class="article-item" href="/blog/home-work-rhythm/">
+            <div class="article-thumb">🏠</div>
+            <div class="article-body">
+              <div class="article-cat">在宅メモ</div>
+              <div class="article-title">在宅作業の運動不足対策｜25分サイクル・家トレ習慣</div>
+              <div class="article-date">2026-05-18</div>
+            </div>
+          </a>
+          <a class="article-item" href="/blog/comparison-article-template/">
+            <div class="article-thumb">比</div>
+            <div class="article-body">
+              <div class="article-cat">記事構成・テンプレ</div>
+              <div class="article-title">比較記事の書き方：結論・比較表・FAQ・CTAの型</div>
+              <div class="article-date">2026-05-04</div>
+            </div>
+          </a>
+          <a class="article-item" href="/blog/free-theme-vs-bunsirube/">
+            <div class="article-thumb">WP</div>
+            <div class="article-body">
+              <div class="article-cat">WordPress</div>
+              <div class="article-title">無料テーマと文標の違い｜どちらを選ぶべきか</div>
+              <div class="article-date">2026-05-04</div>
+            </div>
+          </a>
+          <a class="article-item" href="/blog/faq-source-ai-search/">
+            <div class="article-thumb">FAQ</div>
+            <div class="article-body">
+              <div class="article-cat">AI検索対策</div>
+              <div class="article-title">AI検索向けにFAQと出典を置く理由</div>
+              <div class="article-date">2026-05-02</div>
+            </div>
+          </a>
+          <a class="article-item" href="/blog/sales-page-common-mistakes/">
+            <div class="article-thumb">💡</div>
+            <div class="article-body">
+              <div class="article-cat">販売導線</div>
+              <div class="article-title">売り場ページのよくある失敗とチェックリスト</div>
+              <div class="article-date">2026-04-28</div>
+            </div>
+          </a>
+          <a class="article-item" href="/blog/bunsirube-version-history/">
+            <div class="article-thumb">文</div>
+            <div class="article-body">
+              <div class="article-cat">文標・WordPress</div>
+              <div class="article-title">文標のバージョンアップ履歴</div>
+              <div class="article-date">2026-05-12</div>
+            </div>
+          </a>
+        </div>
+      </section>
+    </div>
 
-    <!-- 在宅ヒント -->
-    <section class="section-card" id="workout">
-      <div class="section-head">
-        <h2><span class="icon">💪</span>在宅ワーカーのためのヒント</h2>
-        <a class="more" href="/blog/home-work-rhythm/">詳しく読む →</a>
-      </div>
-      <div class="tip-grid" style="grid-template-columns:repeat(3,1fr);padding:12px 14px;gap:10px;">
-        <div class="tip-item">
-          <div class="tip-icon">⏱️</div>
-          <div class="tip-label">25分サイクル</div>
-          <div class="tip-text">25分作業→5分休憩。集中力と腰痛を同時に対策。</div>
+    <!-- [タブ3] ツール・商品 -->
+    <div class="tab-panel" id="panel-tools">
+      <section class="section-card">
+        <div class="section-head">
+          <h2><span>📦</span>ツール・商品一覧</h2>
         </div>
-        <div class="tip-item">
-          <div class="tip-icon">🤸</div>
-          <div class="tip-label">家トレ習慣</div>
-          <div class="tip-text">スクワット・腕立て・腹筋。道具なしで始められる。</div>
+        <div class="product-grid">
+          <a class="product-card" href="/lp/bunsirube/">
+            <div class="product-card-icon">文</div>
+            <div class="product-card-name">文標（ぶんしるべ）</div>
+            <div class="product-card-desc">WordPress用軽量テーマ。比較・FAQ・レビュー記事向け。買い切りで更新無料。</div>
+            <div class="product-card-price paid">¥5,500（税込）</div>
+          </a>
+          <a class="product-card" href="/blog/comparison-article-template/">
+            <div class="product-card-icon">比</div>
+            <div class="product-card-name">比較記事テンプレ</div>
+            <div class="product-card-desc">結論・比較表・FAQ・CTAの型をそのまま使える無料テンプレ。</div>
+            <div class="product-card-price">無料</div>
+          </a>
+          <a class="product-card" href="/blog/faq-source-ai-search/">
+            <div class="product-card-icon">❓</div>
+            <div class="product-card-name">FAQ型テンプレ</div>
+            <div class="product-card-desc">AI検索時代に刺さるFAQ記事の書き方と構成例。</div>
+            <div class="product-card-price">無料</div>
+          </a>
+          <a class="product-card" href="/apps/research-writer/">
+            <div class="product-card-icon">🔬</div>
+            <div class="product-card-name">Research Writer</div>
+            <div class="product-card-desc">AIを使った記事リサーチ・執筆補助アプリ。</div>
+            <div class="product-card-price">無料（ベータ）</div>
+          </a>
+          <a class="product-card" href="/lp/bunsirube/demo/">
+            <div class="product-card-icon">🖥️</div>
+            <div class="product-card-name">文標デモ</div>
+            <div class="product-card-desc">文標の実際のレイアウト・記事型・比較表を確認できるデモページ。</div>
+            <div class="product-card-price">無料（閲覧のみ）</div>
+          </a>
+          <a class="product-card" href="/blog/sales-page-common-mistakes/">
+            <div class="product-card-icon">✅</div>
+            <div class="product-card-name">売り場チェックリスト</div>
+            <div class="product-card-desc">販売ページに必要な要素をチェックできる無料リスト。</div>
+            <div class="product-card-price">無料</div>
+          </a>
         </div>
-        <div class="tip-item">
-          <div class="tip-icon">☀️</div>
-          <div class="tip-label">朝のルーティン</div>
-          <div class="tip-text">起床→水→軽いストレッチ→作業。リズムが大事。</div>
+      </section>
+    </div>
+
+    <!-- [タブ4] 在宅ヒント -->
+    <div class="tab-panel" id="panel-workout">
+      <section class="section-card">
+        <div class="section-head">
+          <h2><span>💪</span>在宅ワーカーのためのヒント</h2>
+          <a class="more" href="/blog/home-work-rhythm/">詳しく読む →</a>
         </div>
-        <div class="tip-item">
-          <div class="tip-icon">📵</div>
-          <div class="tip-label">SNS断ち</div>
-          <div class="tip-text">集中タイム中はスマホを別の部屋に。生産性2倍。</div>
+        <div class="tip-grid">
+          <div class="tip-item">
+            <div class="tip-icon">⏱️</div>
+            <div class="tip-label">25分サイクル</div>
+            <div class="tip-text">25分作業→5分休憩。集中力と腰痛を同時に対策できる。</div>
+          </div>
+          <div class="tip-item">
+            <div class="tip-icon">🤸</div>
+            <div class="tip-label">家トレ習慣</div>
+            <div class="tip-text">スクワット・腕立て・腹筋。道具なしで今日から始められる。</div>
+          </div>
+          <div class="tip-item">
+            <div class="tip-icon">☀️</div>
+            <div class="tip-label">朝のルーティン</div>
+            <div class="tip-text">起床→水→軽いストレッチ→作業。リズムが生産性を作る。</div>
+          </div>
+          <div class="tip-item">
+            <div class="tip-icon">📵</div>
+            <div class="tip-label">SNS断ち</div>
+            <div class="tip-text">集中タイム中はスマホを別の部屋に置く。生産性が変わる。</div>
+          </div>
+          <div class="tip-item">
+            <div class="tip-icon">🪟</div>
+            <div class="tip-label">自然光を使う</div>
+            <div class="tip-text">窓際に机を移すだけで気分と目の疲れが大きく変わる。</div>
+          </div>
+          <div class="tip-item">
+            <div class="tip-icon">📋</div>
+            <div class="tip-label">今日の3タスク</div>
+            <div class="tip-text">毎朝「今日やる3つ」だけ決める。それで十分な日がほとんど。</div>
+          </div>
+          <div class="tip-item">
+            <div class="tip-icon">🚶</div>
+            <div class="tip-label">外出タイム</div>
+            <div class="tip-text">1日1回は外に出る。コンビニでもOK。気分転換に効果大。</div>
+          </div>
+          <div class="tip-item">
+            <div class="tip-icon">💧</div>
+            <div class="tip-label">水を手元に</div>
+            <div class="tip-text">机の上に水を置くだけで集中が続く。コーヒーより水が先。</div>
+          </div>
+          <div class="tip-item">
+            <div class="tip-icon">🎵</div>
+            <div class="tip-label">BGM活用</div>
+            <div class="tip-text">歌詞なし音楽やホワイトノイズが集中力を高める。</div>
+          </div>
         </div>
-        <div class="tip-item">
-          <div class="tip-icon">🪟</div>
-          <div class="tip-label">自然光を使う</div>
-          <div class="tip-text">窓際に机を置くだけで気分・目の疲れが変わる。</div>
+        <div style="padding:0 14px 14px;">
+          <a href="/blog/home-work-rhythm/" style="display:inline-block;padding:10px 20px;background:var(--brand);color:#fff;border-radius:6px;font-size:13px;font-weight:700;">在宅ワーク習慣の記事を読む →</a>
         </div>
-        <div class="tip-item">
-          <div class="tip-icon">📋</div>
-          <div class="tip-label">今日の3タスク</div>
-          <div class="tip-text">毎朝「今日やる3つ」だけ決める。それで十分。</div>
-        </div>
-      </div>
-    </section>
+      </section>
+    </div>
 
   </div><!-- /main-col -->
 
-  <!-- ===== サイドバー ===== -->
+  <!-- ===== サイドバー（常時表示） ===== -->
   <aside class="sidebar">
 
-    <!-- ピックアップ記事 -->
+    <!-- 人気記事 -->
     <section class="section-card">
       <div class="section-head">
-        <h2><span class="icon">🔥</span>人気記事</h2>
+        <h2><span>🔥</span>人気記事</h2>
       </div>
-      <div class="pickup-list">
+      <div>
         <a class="pickup-item" href="/blog/comparison-article-template/">
           <span class="pickup-num top3">1</span>
           <span class="pickup-title">比較記事の書き方：結論・比較表・FAQ・CTA</span>
@@ -761,70 +741,55 @@
       </div>
     </section>
 
-    <!-- ツール・商品 -->
-    <section class="section-card" id="tools">
+    <!-- ツール・商品（サイドバー） -->
+    <section class="section-card">
       <div class="section-head">
-        <h2><span class="icon">📦</span>ツール・商品</h2>
+        <h2><span>📦</span>注目ツール</h2>
         <a class="more" href="/lp/bunsirube/">詳細 →</a>
       </div>
-      <div class="product-list">
-        <a class="product-item" href="/lp/bunsirube/">
-          <div class="product-icon">文</div>
-          <div class="product-body">
-            <div class="product-name">文標（ぶんしるべ）</div>
-            <div class="product-desc">WordPress用軽量テーマ。比較・FAQ・レビュー記事向け。</div>
+      <div style="padding:10px 14px;display:grid;gap:8px;">
+        <a href="/lp/bunsirube/" style="display:flex;align-items:center;gap:10px;padding:10px;border:1px solid var(--border);border-radius:var(--radius);transition:border-color .15s,background .15s;" onmouseover="this.style.borderColor='var(--brand)';this.style.background='var(--brand-light)'" onmouseout="this.style.borderColor='var(--border)';this.style.background=''">
+          <div style="flex-shrink:0;width:40px;height:40px;border-radius:8px;background:var(--brand-light);display:grid;place-items:center;font-size:20px;font-weight:900;color:var(--brand);border:1px solid rgba(11,143,114,.2);">文</div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:13px;font-weight:900;">文標（ぶんしるべ）</div>
+            <div style="font-size:11px;color:var(--muted);">WordPressテーマ ¥5,500</div>
           </div>
-          <div class="product-price">¥5,500</div>
         </a>
-        <a class="product-item" href="/blog/comparison-article-template/">
-          <div class="product-icon">比</div>
-          <div class="product-body">
-            <div class="product-name">比較記事テンプレ</div>
-            <div class="product-desc">すぐ使える記事構成の型。無料で公開中。</div>
+        <a href="/blog/comparison-article-template/" style="display:flex;align-items:center;gap:10px;padding:10px;border:1px solid var(--border);border-radius:var(--radius);transition:border-color .15s,background .15s;" onmouseover="this.style.borderColor='var(--brand)';this.style.background='var(--brand-light)'" onmouseout="this.style.borderColor='var(--border)';this.style.background=''">
+          <div style="flex-shrink:0;width:40px;height:40px;border-radius:8px;background:var(--brand-light);display:grid;place-items:center;font-size:20px;font-weight:900;color:var(--brand);border:1px solid rgba(11,143,114,.2);">比</div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:13px;font-weight:900;">比較記事テンプレ</div>
+            <div style="font-size:11px;color:var(--muted);">無料テンプレ</div>
           </div>
-          <div class="product-price" style="color:var(--brand);">無料</div>
-        </a>
-        <a class="product-item" href="/blog/faq-source-ai-search/">
-          <div class="product-icon">?</div>
-          <div class="product-body">
-            <div class="product-name">FAQ型テンプレ</div>
-            <div class="product-desc">AI検索時代に刺さるFAQ記事の書き方。</div>
-          </div>
-          <div class="product-price" style="color:var(--brand);">無料</div>
         </a>
       </div>
     </section>
 
-    <!-- SNS・外部リンク -->
+    <!-- 更新チェック -->
     <section class="section-card">
       <div class="section-head">
-        <h2><span class="icon">📣</span>更新をチェック</h2>
+        <h2><span>📣</span>更新をチェック</h2>
       </div>
       <div class="sns-list">
         <a class="sns-item" href="https://x.com/yohe_lab" target="_blank" rel="noopener me">
-          <span class="sns-icon">𝕏</span>
-          X（旧Twitter）で最新情報を見る
+          <span class="sns-icon">𝕏</span>X（旧Twitter）で更新を見る
         </a>
         <a class="sns-item" href="https://note.com/yohelab" target="_blank" rel="noopener">
-          <span class="sns-icon">📝</span>
-          noteで記事・有料コンテンツを見る
+          <span class="sns-icon">📝</span>noteで記事・有料コンテンツ
         </a>
         <a class="sns-item" href="/contact/">
-          <span class="sns-icon">✉️</span>
-          お問い合わせ・更新通知登録
+          <span class="sns-icon">✉️</span>お問い合わせ・通知登録
         </a>
       </div>
     </section>
 
-    <!-- サイト紹介 -->
+    <!-- サイトについて -->
     <section class="section-card">
       <div class="section-head">
-        <h2><span class="icon">ℹ️</span>よへラボとは</h2>
+        <h2><span>ℹ️</span>よへラボとは</h2>
       </div>
       <div style="padding:12px 14px;">
-        <p style="font-size:13px;line-height:1.7;color:var(--text-sub);">
-          家で働く人・副業をしたい人のための情報サイトです。AIニュース、ブログ収益化の方法、WordPressテーマ（文標）、在宅ワーク習慣など、家でできる仕事に関するすべてをまとめています。
-        </p>
+        <p style="font-size:13px;line-height:1.7;color:var(--text-sub);">家で働く人・副業をしたい人のための情報サイトです。AIニュース、ブログ収益化、WordPressテーマ（文標）、在宅ワーク習慣など、家でできる仕事に関する情報をまとめています。</p>
         <a href="/about/" style="display:inline-block;margin-top:10px;font-size:13px;font-weight:700;color:var(--brand);">詳しくはこちら →</a>
       </div>
     </section>
@@ -836,10 +801,9 @@
 <!-- ====== フッター ====== -->
 <footer class="site-footer">
   <div class="footer-inner">
-    <div class="footer-brand">
+    <div>
       <div class="footer-logo">
-        <img src="/yohelab-mascot-v2-20260518.webp" alt="よへラボ" />
-        よへラボ
+        <img src="/yohelab-mascot-v2-20260518.webp" alt="よへラボ" />よへラボ
       </div>
       <p class="footer-tagline">家で働く人のための<br>AI・副業情報サイト</p>
     </div>
@@ -869,6 +833,7 @@
         <li><a href="https://x.com/yohe_lab" target="_blank" rel="noopener me">X（旧Twitter）</a></li>
         <li><a href="https://note.com/yohelab" target="_blank" rel="noopener">note</a></li>
         <li><a href="/legal/privacy/">プライバシーポリシー</a></li>
+        <li><a href="/legal/terms/">利用規約</a></li>
       </ul>
     </div>
   </div>
@@ -884,160 +849,121 @@
 
 <!-- ====== JavaScript ====== -->
 <script>
-  // モバイルメニュー
+  // ── モバイルメニュー ──
   const menuBtn = document.getElementById('menuBtn');
   const mobileNav = document.getElementById('mobileNav');
   menuBtn.addEventListener('click', () => {
-    const isOpen = mobileNav.style.display === 'flex';
-    mobileNav.style.display = isOpen ? 'none' : 'flex';
+    mobileNav.style.display = mobileNav.style.display === 'flex' ? 'none' : 'flex';
   });
 
-  // ============================================================
-  // AIニュース自動取得（RSS via allorigins proxy）
-  // ChatGPT, Claude, Gemini, Perplexity, Genspark の最新ニュース
-  // ============================================================
+  // ── タブ切り替え ──
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const tabPanels = document.querySelectorAll('.tab-panel');
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.tab;
+
+      // ボタンのactive切り替え
+      tabBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      // パネルのactive切り替え
+      tabPanels.forEach(p => p.classList.remove('active'));
+      document.getElementById('panel-' + target).classList.add('active');
+    });
+  });
+
+  // ── AIニュース自動取得（RSSプロキシ） ──
   const RSS_FEEDS = [
-    {
-      name: 'ChatGPT',
-      tag: 'tag-chatgpt',
-      // OpenAI公式ブログのRSS
-      url: 'https://openai.com/news/rss.xml'
-    },
-    {
-      name: 'Claude',
-      tag: 'tag-claude',
-      // Anthropicニュース
-      url: 'https://www.anthropic.com/news/rss.xml'
-    },
-    {
-      name: 'Gemini',
-      tag: 'tag-gemini',
-      // Google Developers Blog
-      url: 'https://developers.googleblog.com/feeds/posts/default?alt=rss'
-    },
-    {
-      name: 'AI全般',
-      tag: 'tag-ai',
-      // MIT Tech Review AI
-      url: 'https://feeds.feedburner.com/mittr/artificial-intelligence'
-    }
+    { name: 'ChatGPT', tag: 'tag-chatgpt', url: 'https://openai.com/news/rss.xml' },
+    { name: 'Claude',  tag: 'tag-claude',  url: 'https://www.anthropic.com/news/rss.xml' },
+    { name: 'Gemini',  tag: 'tag-gemini',  url: 'https://blog.google/technology/ai/rss/' },
+    { name: 'AI全般',  tag: 'tag-ai',      url: 'https://feeds.feedburner.com/mittr/artificial-intelligence' }
   ];
 
   const PROXY = 'https://api.allorigins.win/get?url=';
-  const MAX_PER_FEED = 3; // 各フィードから最大3件
-  const MAX_TOTAL = 12;    // 合計最大12件
+  const MAX_PER_FEED = 3;
+  const MAX_TOTAL = 12;
 
   function parseRSS(xmlText) {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(xmlText, 'text/xml');
+    const doc = new DOMParser().parseFromString(xmlText, 'text/xml');
     const items = doc.querySelectorAll('item, entry');
     return Array.from(items).slice(0, MAX_PER_FEED).map(item => {
       const title = (item.querySelector('title')?.textContent || '').trim();
       const link = item.querySelector('link')?.textContent?.trim()
-        || item.querySelector('link')?.getAttribute('href')
-        || '';
-      const pubDate = item.querySelector('pubDate, published, updated')?.textContent || '';
-      const dateStr = pubDate ? formatDate(new Date(pubDate)) : '';
-      return { title, link, date: dateStr };
+        || item.querySelector('link')?.getAttribute('href') || '';
+      const rawDate = item.querySelector('pubDate, published, updated')?.textContent || '';
+      const date = rawDate ? formatDate(new Date(rawDate)) : '';
+      return { title, link, date };
     }).filter(i => i.title && i.link);
   }
 
   function formatDate(d) {
     if (isNaN(d.getTime())) return '';
-    const y = d.getFullYear();
-    const m = String(d.getMonth() + 1).padStart(2, '0');
-    const day = String(d.getDate()).padStart(2, '0');
-    return `${y}/${m}/${day}`;
+    return `${d.getFullYear()}/${String(d.getMonth()+1).padStart(2,'0')}/${String(d.getDate()).padStart(2,'0')}`;
   }
 
-  function makeNewsItem(item, feed) {
-    const el = document.createElement('a');
-    el.className = 'news-item';
-    el.href = item.link;
-    el.target = '_blank';
-    el.rel = 'noopener noreferrer';
-    el.innerHTML = `
-      <span class="news-tag ${feed.tag}">${feed.name}</span>
-      <div class="news-body">
-        <div class="news-title">${escapeHtml(item.title)}</div>
-        <div class="news-meta">
-          <span class="news-source">${feed.name}</span>
-          ${item.date ? ` · <span>${item.date}</span>` : ''}
-        </div>
-      </div>
-    `;
-    return el;
-  }
-
-  function escapeHtml(str) {
-    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  function esc(s) {
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 
   async function fetchFeed(feed) {
-    const proxyUrl = PROXY + encodeURIComponent(feed.url);
-    const res = await fetch(proxyUrl, { signal: AbortSignal.timeout(8000) });
-    if (!res.ok) throw new Error('fetch failed');
+    const res = await fetch(PROXY + encodeURIComponent(feed.url), { signal: AbortSignal.timeout(8000) });
+    if (!res.ok) throw new Error('failed');
     const data = await res.json();
-    return parseRSS(data.contents || '');
+    return { feed, items: parseRSS(data.contents || '') };
   }
 
   async function loadNews() {
     const container = document.getElementById('newsContainer');
-
-    // 全フィードを並列取得
-    const results = await Promise.allSettled(RSS_FEEDS.map(f => fetchFeed(f).then(items => ({ feed: f, items }))));
-
-    // 成功したものだけ集める
-    const allItems = [];
-    results.forEach(r => {
-      if (r.status === 'fulfilled') {
-        r.value.items.forEach(item => allItems.push({ item, feed: r.value.feed }));
-      }
-    });
+    const results = await Promise.allSettled(RSS_FEEDS.map(fetchFeed));
+    const all = [];
+    results.forEach(r => r.status === 'fulfilled' && r.value.items.forEach(item => all.push({ item, feed: r.value.feed })));
 
     container.innerHTML = '';
+    if (!all.length) { container.innerHTML = fallbackNews(); return; }
 
-    if (allItems.length === 0) {
-      // 全部失敗した場合は固定記事を表示
-      container.innerHTML = showFallbackNews();
-      return;
-    }
-
-    // 日付順にソート（新しい順）
-    allItems.sort((a, b) => {
+    all.sort((a, b) => {
       const da = a.item.date ? new Date(a.item.date.replace(/\//g,'-')) : new Date(0);
       const db = b.item.date ? new Date(b.item.date.replace(/\//g,'-')) : new Date(0);
       return db - da;
     });
 
-    // 最大MAX_TOTAL件表示
-    allItems.slice(0, MAX_TOTAL).forEach(({ item, feed }) => {
-      container.appendChild(makeNewsItem(item, feed));
+    all.slice(0, MAX_TOTAL).forEach(({ item, feed }) => {
+      const el = document.createElement('a');
+      el.className = 'news-item';
+      el.href = item.link;
+      el.target = '_blank';
+      el.rel = 'noopener noreferrer';
+      el.innerHTML = `
+        <span class="news-tag ${feed.tag}">${feed.name}</span>
+        <div class="news-body">
+          <div class="news-title">${esc(item.title)}</div>
+          <div class="news-meta">${feed.name}${item.date ? ' · ' + item.date : ''}</div>
+        </div>`;
+      container.appendChild(el);
     });
   }
 
-  function showFallbackNews() {
-    // RSSが取れなかった場合の固定フォールバック（手動更新）
-    const fallback = [
-      { tag: 'tag-chatgpt', name: 'ChatGPT', title: 'OpenAI最新情報はOpenAIブログをチェック', link: 'https://openai.com/news/', date: '' },
-      { tag: 'tag-claude', name: 'Claude', title: 'Anthropic最新情報はAnthropicブログをチェック', link: 'https://www.anthropic.com/news', date: '' },
-      { tag: 'tag-gemini', name: 'Gemini', title: 'Google AI最新情報はGoogle Blogをチェック', link: 'https://blog.google/technology/ai/', date: '' },
-      { tag: 'tag-ai', name: 'AI全般', title: 'よへラボのAIニュース活用記事を読む', link: '/blog/ai-news-selling-ideas/', date: '' },
-    ];
-    return fallback.map(f => `
-      <a class="news-item" href="${f.link}" target="_blank" rel="noopener noreferrer">
-        <span class="news-tag ${f.tag}">${f.name}</span>
+  function fallbackNews() {
+    return [
+      ['tag-chatgpt', 'ChatGPT', 'OpenAI最新情報はOpenAIブログで確認', 'https://openai.com/news/'],
+      ['tag-claude',  'Claude',  'Anthropic最新情報はAnthropicブログで確認', 'https://www.anthropic.com/news'],
+      ['tag-gemini',  'Gemini',  'Google AI最新情報はGoogle Blogで確認', 'https://blog.google/technology/ai/'],
+      ['tag-ai',      'AI全般',  'よへラボのAIニュース活用記事を読む', '/blog/ai-news-selling-ideas/'],
+    ].map(([tag, name, title, link]) => `
+      <a class="news-item" href="${link}" target="_blank" rel="noopener noreferrer">
+        <span class="news-tag ${tag}">${name}</span>
         <div class="news-body">
-          <div class="news-title">${escapeHtml(f.title)}</div>
-          <div class="news-meta"><span class="news-source">${f.name}</span></div>
+          <div class="news-title">${esc(title)}</div>
+          <div class="news-meta">${name}</div>
         </div>
-      </a>
-    `).join('');
+      </a>`).join('');
   }
 
-  // ページ読み込み時に実行
   loadNews().catch(() => {
-    document.getElementById('newsContainer').innerHTML = showFallbackNews();
+    document.getElementById('newsContainer').innerHTML = fallbackNews();
   });
 </script>
 
