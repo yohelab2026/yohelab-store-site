@@ -494,17 +494,17 @@
 
 <!-- ====== カテゴリタブバー ====== -->
 <div class="tab-bar">
-  <div class="tab-bar-inner">
-    <button class="tab-btn active" data-tab="ai-news">
+  <div class="tab-bar-inner" role="tablist" aria-label="表示カテゴリ">
+    <button class="tab-btn active" type="button" role="tab" aria-selected="true" aria-controls="panel-ai-news" data-tab="ai-news">
       <span class="tab-icon">🤖</span>AIニュース
     </button>
-    <button class="tab-btn" data-tab="blog">
+    <button class="tab-btn" type="button" role="tab" aria-selected="false" aria-controls="panel-blog" data-tab="blog">
       <span class="tab-icon">✍️</span>副業ブログ
     </button>
-    <button class="tab-btn" data-tab="tools">
+    <button class="tab-btn" type="button" role="tab" aria-selected="false" aria-controls="panel-tools" data-tab="tools">
       <span class="tab-icon">📦</span>ツール・商品
     </button>
-    <button class="tab-btn" data-tab="workout">
+    <button class="tab-btn" type="button" role="tab" aria-selected="false" aria-controls="panel-workout" data-tab="workout">
       <span class="tab-icon">💪</span>在宅ヒント
     </button>
   </div>
@@ -517,7 +517,7 @@
   <div class="main-col">
 
     <!-- [タブ1] AIニュース -->
-    <div class="tab-panel active" id="panel-ai-news">
+    <div class="tab-panel active" id="panel-ai-news" role="tabpanel">
       <section class="section-card">
         <div class="section-head">
           <h2><span>🤖</span>AIツール最新ニュース</h2>
@@ -533,7 +533,7 @@
     </div>
 
     <!-- [タブ2] 副業ブログ -->
-    <div class="tab-panel" id="panel-blog">
+    <div class="tab-panel" id="panel-blog" role="tabpanel">
       <section class="section-card">
         <div class="section-head">
           <h2><span>✍️</span>最新ブログ記事</h2>
@@ -601,7 +601,7 @@
     </div>
 
     <!-- [タブ3] ツール・商品 -->
-    <div class="tab-panel" id="panel-tools">
+    <div class="tab-panel" id="panel-tools" role="tabpanel">
       <section class="section-card">
         <div class="section-head">
           <h2><span>📦</span>ツール・商品一覧</h2>
@@ -648,7 +648,7 @@
     </div>
 
     <!-- [タブ4] 在宅ヒント -->
-    <div class="tab-panel" id="panel-workout">
+    <div class="tab-panel" id="panel-workout" role="tabpanel">
       <section class="section-card">
         <div class="section-head">
           <h2><span>💪</span>在宅ワーカーのためのヒント</h2>
@@ -858,19 +858,26 @@
 
   // ── タブ切り替え ──
   const tabBtns = document.querySelectorAll('.tab-btn');
-  const tabPanels = document.querySelectorAll('.tab-panel');
+  const mainCol = document.querySelector('.main-col');
+  const tabPanels = mainCol ? mainCol.querySelectorAll('.tab-panel') : document.querySelectorAll('.tab-panel');
 
   tabBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       const target = btn.dataset.tab;
+      const targetPanel = document.getElementById('panel-' + target);
+      if (!targetPanel) return;
 
-      // ボタンのactive切り替え
-      tabBtns.forEach(b => b.classList.remove('active'));
+      // タブバーは固定したまま、active状態だけ切り替える
+      tabBtns.forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-selected', 'false');
+      });
       btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
 
-      // パネルのactive切り替え
+      // メインカラム内のパネルだけを切り替える。サイドバー・ヘッダー・フッターは触らない。
       tabPanels.forEach(p => p.classList.remove('active'));
-      document.getElementById('panel-' + target).classList.add('active');
+      targetPanel.classList.add('active');
     });
   });
 
