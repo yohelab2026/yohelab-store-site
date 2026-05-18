@@ -68,10 +68,10 @@ function headHardeningPlugin() {
   const turnstileSiteKey = process.env.VITE_TURNSTILE_SITE_KEY || process.env.TURNSTILE_SITE_KEY || "";
   const clarityId = process.env.VITE_CLARITY_ID || process.env.CLARITY_ID || "";
   const iconLinks = [
-    '<link rel="apple-touch-icon" sizes="180x180" href="/yohelab-cat-icon-180.png?v=mascot-20260518" />',
-    '<link rel="icon" type="image/png" sizes="192x192" href="/yohelab-cat-icon-192.png?v=mascot-20260518" />',
-    '<link rel="icon" type="image/png" sizes="512x512" href="/yohelab-cat-icon-512.png?v=mascot-20260518" />',
-    '<link rel="manifest" href="/site.webmanifest" />',
+    '<link rel="apple-touch-icon" sizes="180x180" href="/yohelab-mascot-v2-20260518-180.png" />',
+    '<link rel="icon" type="image/png" sizes="192x192" href="/yohelab-mascot-v2-20260518-192.png" />',
+    '<link rel="icon" type="image/png" sizes="512x512" href="/yohelab-mascot-v2-20260518-512.png" />',
+    '<link rel="manifest" href="/site.webmanifest?v=mascot-v2-20260518" />',
   ].join("\n    ");
 
   return {

@@ -11,7 +11,7 @@
 const SITE_ORIGIN = "https://yohelab.com";
 const SITE_NAME = "よへラボ";
 const BLOG_NAME = "よへラボブログ";
-const FALLBACK_IMAGE = `${SITE_ORIGIN}/yohelab-cat-icon.png?v=mascot-20260518`;
+const FALLBACK_IMAGE = `${SITE_ORIGIN}/yohelab-mascot-v2-20260518.png`;
 
 export async function onRequest(context) {
   const url = new URL(context.request.url);
@@ -216,7 +216,7 @@ function renderPostHTML(post, slug, requestUrl) {
   <meta name="twitter:title" content="${escAttr(title)}" />
   <meta name="twitter:description" content="${escAttr(description)}" />
   <meta name="twitter:image" content="${escAttr(eyecatchAbs)}" />
-  <link rel="icon" type="image/png" href="/yohelab-cat-icon-32.png?v=mascot-20260518" />
+  <link rel="icon" type="image/png" href="/yohelab-mascot-v2-20260518-32.png" />
   <link rel="stylesheet" href="/shared/site.min.css" />
   <script type="application/ld+json">${articleLd}</script>
   <script type="application/ld+json">${breadcrumbLd}</script>
@@ -259,7 +259,7 @@ function renderPostHTML(post, slug, requestUrl) {
 <body>
   <header class="nav">
     <div class="nav-inner">
-      <a class="brand" href="/"><img src="/yohelab-cat-icon.webp?v=mascot-20260518" alt="よへラボ" /><span>よへラボ</span></a>
+      <a class="brand" href="/"><img src="/yohelab-mascot-v2-20260518.webp" alt="よへラボ" /><span>よへラボ</span></a>
       <nav class="nav-links">
         <a href="/tools/">ツール</a>
         <a href="/services/">サービス</a>
