@@ -310,92 +310,178 @@
           <a href="/about/">よへラボについて</a>
         </div>
         <div class="filter-chips" aria-label="タグで絞り込む">
-          <button class="filter-chip is-active" type="button" data-filter="all">全部</button>
-          <button class="filter-chip" type="button" data-filter="ai-news">AIニュース</button>
-          <button class="filter-chip" type="button" data-filter="chatgpt">ChatGPT</button>
-          <button class="filter-chip" type="button" data-filter="claude">Claude</button>
-          <button class="filter-chip" type="button" data-filter="gemini">Gemini</button>
-          <button class="filter-chip" type="button" data-filter="earn">商品案</button>
-          <button class="filter-chip" type="button" data-filter="wordpress">WordPress</button>
-          <button class="filter-chip" type="button" data-filter="article">記事の型</button>
-          <button class="filter-chip" type="button" data-filter="home-work">在宅作業</button>
-          <button class="filter-chip" type="button" data-filter="template">テンプレ</button>
+          <button class="filter-chip is-active" type="button" data-filter="all">すべて</button>
+          <button class="filter-chip" type="button" data-filter="chatgpt">🟢 ChatGPT</button>
+          <button class="filter-chip" type="button" data-filter="claude">🟠 Claude</button>
+          <button class="filter-chip" type="button" data-filter="gemini">🔵 Gemini</button>
+          <button class="filter-chip" type="button" data-filter="perplexity">🩵 Perplexity</button>
+          <button class="filter-chip" type="button" data-filter="genspark">🟣 Genspark</button>
+          <button class="filter-chip" type="button" data-filter="grok">⚡ Grok</button>
+          <button class="filter-chip" type="button" data-filter="copilot">🪟 Copilot</button>
+          <button class="filter-chip" type="button" data-filter="midjourney">🎨 Midjourney</button>
+          <button class="filter-chip" type="button" data-filter="ai-news">🤖 AIニュース全般</button>
+          <button class="filter-chip" type="button" data-filter="wordpress">📝 WordPress</button>
+          <button class="filter-chip" type="button" data-filter="earn">💰 副業・稼ぎ方</button>
+          <button class="filter-chip" type="button" data-filter="template">📄 テンプレ</button>
+          <button class="filter-chip" type="button" data-filter="home-work">🏠 在宅作業</button>
+          <button class="filter-chip" type="button" data-filter="draft">📌 下書き</button>
         </div>
       </section>
       <div class="filter-status" id="filter-status">記事をキーワードやタグで絞り込めます。</div>
       <div id="posts" class="posts-grid">
-        <article class="post-card" data-slug="home-work-rhythm" data-tags="home-work article" data-search="家で作業 運動不足 在宅作業 習慣 ブログ AIニュース WordPress">
-          <div class="post-card-img-placeholder">家</div>
-          <div class="post-card-body">
-            <div class="post-card-meta"><span>2026-05-18</span><span class="post-card-tag">在宅作業</span><span class="post-card-tag">続け方</span></div>
-            <div class="post-card-title">家で作業すると運動不足になるので、先に動く仕組みを作る</div>
-            <div class="post-card-excerpt">AIニュースを調べる、WordPressを触る、ブログを書く。家で続ける人向けに、座りっぱなしを避ける小さい仕組みをまとめました。</div>
-            <div class="post-card-footer"><a class="open-link" href="/blog/home-work-rhythm/">在宅作業の続け方を読む →</a></div>
-          </div>
-        </article>
-        <article class="post-card" data-slug="ai-news-selling-ideas" data-tags="ai-news chatgpt claude gemini earn article template" data-search="AIニュース ChatGPT Claude Gemini 記事ネタ note X ブログ テンプレ 商品案">
+
+        <!-- ===== 公開記事 ===== -->
+        <article class="post-card" data-slug="ai-news-selling-ideas" data-tags="ai-news chatgpt claude gemini perplexity genspark earn article template" data-search="AIニュース ChatGPT Claude Gemini Perplexity Genspark 記事ネタ note X ブログ テンプレ 商品案">
           <div class="post-card-img-placeholder">AI</div>
           <div class="post-card-body">
-            <div class="post-card-meta"><span>2026-05-17</span><span class="post-card-tag">よへラボ</span><span class="post-card-tag">AIニュース</span></div>
-            <div class="post-card-title">AIニュースを記事ネタに変える方法。よへラボでこれからやること</div>
-            <div class="post-card-excerpt">よへラボを文標だけのサイトにせず、AIニュースから記事・テンプレ・ツール・商品を作る場所に変えていくための方針です。</div>
-            <div class="post-card-footer"><a class="open-link" href="/blog/ai-news-selling-ideas/">新しい方針を読む →</a></div>
+            <div class="post-card-meta"><span>2026-05-18</span><span class="post-card-tag">AIニュース</span><span class="post-card-tag">ChatGPT</span><span class="post-card-tag">Claude</span><span class="post-card-tag">Gemini</span></div>
+            <div class="post-card-title">AIニュースを記事ネタに変える方法｜ChatGPT・Claude・Gemini活用</div>
+            <div class="post-card-excerpt">よへラボでAIニュースから記事・テンプレ・ツール・商品を作る場所に変えていくための方針。ChatGPT・Claude・Geminiどのニュースでも使える手順。</div>
+            <div class="post-card-footer"><a class="open-link" href="/blog/ai-news-selling-ideas/">記事を読む →</a></div>
           </div>
         </article>
-        <article class="post-card" data-slug="bunsirube-version-history" data-tags="wordpress article template" data-search="文標 WordPress 更新履歴 テーマ">
-          <img class="post-card-img" src="/assets/blog/bunsirube-version-history/eyecatch.webp" alt="文標のバージョンアップ履歴" loading="lazy" />
+
+        <article class="post-card" data-slug="faq-source-ai-search" data-tags="ai-news chatgpt claude gemini perplexity genspark grok article wordpress" data-search="AI検索 ChatGPT Claude Gemini Perplexity FAQ 出典 Google AI Overviews Grok">
+          <img class="post-card-img" src="/assets/blog/faq-source-ai-search/eyecatch.webp" alt="AI検索向けにFAQと出典を置く理由" loading="lazy" />
           <div class="post-card-body">
-            <div class="post-card-meta"><span>2026-05-12</span><span class="post-card-tag">文標</span><span class="post-card-tag">更新履歴</span></div>
-            <div class="post-card-title">文標のバージョンアップ履歴：初期版から今までに良くしたこと</div>
-            <div class="post-card-excerpt">文標を初期版からどう育ててきたか。追加したもの、良くしたところ、不安を減らしたところをまとめました。</div>
-            <div class="post-card-footer"><a class="open-link" href="/blog/bunsirube-version-history/">文標の更新履歴を読む →</a></div>
+            <div class="post-card-meta"><span>2026-05-02</span><span class="post-card-tag">AI検索</span><span class="post-card-tag">ChatGPT</span><span class="post-card-tag">Claude</span><span class="post-card-tag">Gemini</span></div>
+            <div class="post-card-title">AI検索向けにFAQと出典を置く理由｜ChatGPT・Claude・Gemini・Grok対応</div>
+            <div class="post-card-excerpt">Google AI Overviews、ChatGPT、Claudeなど各AIに読み取られやすいFAQ構造の作り方。</div>
+            <div class="post-card-footer"><a class="open-link" href="/blog/faq-source-ai-search/">記事を読む →</a></div>
           </div>
         </article>
+
+        <article class="post-card" data-slug="comparison-article-template" data-tags="chatgpt claude gemini perplexity genspark grok ai-news article template earn wordpress" data-search="比較記事 書き方 テンプレ FAQ CTA ChatGPT Claude Gemini 比較">
+          <img class="post-card-img" src="/assets/blog/comparison-article-template/eyecatch.webp" alt="比較記事の書き方" loading="lazy" />
+          <div class="post-card-body">
+            <div class="post-card-meta"><span>2026-05-04</span><span class="post-card-tag">記事の型</span><span class="post-card-tag">テンプレ</span><span class="post-card-tag">AI比較</span></div>
+            <div class="post-card-title">比較記事の書き方：AIツール比較にも使える結論・比較表・FAQ・CTA型</div>
+            <div class="post-card-excerpt">ChatGPT vs Claude vs Geminiなど、AIツール比較記事にそのまま使える記事構成テンプレ。</div>
+            <div class="post-card-footer"><a class="open-link" href="/blog/comparison-article-template/">記事を読む →</a></div>
+          </div>
+        </article>
+
         <article class="post-card" data-slug="free-theme-vs-bunsirube" data-tags="wordpress article template" data-search="無料テーマ 文標 WordPress 比較">
           <img class="post-card-img" src="/assets/blog/free-theme-vs-bunsirube/eyecatch.webp" alt="無料テーマと文標の違い" loading="lazy" />
           <div class="post-card-body">
-            <div class="post-card-meta"><span>2026-05-04</span><span class="post-card-tag">文標</span><span class="post-card-tag">WordPress</span></div>
-            <div class="post-card-title">無料テーマと文標の違い：何でもできるより、記事の型で選ぶ</div>
+            <div class="post-card-meta"><span>2026-05-04</span><span class="post-card-tag">WordPress</span><span class="post-card-tag">文標</span></div>
+            <div class="post-card-title">無料テーマと文標の違い：記事の型で選ぶWordPressテーマ</div>
             <div class="post-card-excerpt">文標は無料テーマと機能数で正面勝負せず、記事の型・FAQ・比較表・CTA・導線確認に絞ったテーマです。</div>
-            <div class="post-card-footer"><a class="open-link" href="/blog/free-theme-vs-bunsirube/">無料テーマと文標の違いを読む →</a></div>
+            <div class="post-card-footer"><a class="open-link" href="/blog/free-theme-vs-bunsirube/">記事を読む →</a></div>
           </div>
         </article>
-        <article class="post-card" data-slug="comparison-article-template" data-tags="article template earn wordpress" data-search="比較記事 書き方 テンプレ FAQ CTA">
-          <img class="post-card-img" src="/assets/blog/comparison-article-template/eyecatch.webp" alt="比較記事の書き方" loading="lazy" />
+
+        <article class="post-card" data-slug="bunsirube-version-history" data-tags="wordpress article template" data-search="文標 WordPress 更新履歴 テーマ">
+          <img class="post-card-img" src="/assets/blog/bunsirube-version-history/eyecatch.webp" alt="文標のバージョンアップ履歴" loading="lazy" />
           <div class="post-card-body">
-            <div class="post-card-meta"><span>2026-05-04</span><span class="post-card-tag">文標</span><span class="post-card-tag">比較記事</span></div>
-            <div class="post-card-title">比較記事の書き方：結論・比較表・FAQ・CTAの順で迷いを減らす</div>
-            <div class="post-card-excerpt">比較記事を書くときの基本構成を、購入前に確認できるようにしました。</div>
-            <div class="post-card-footer"><a class="open-link" href="/blog/comparison-article-template/">比較記事の書き方を読む →</a></div>
+            <div class="post-card-meta"><span>2026-05-12</span><span class="post-card-tag">WordPress</span><span class="post-card-tag">文標</span></div>
+            <div class="post-card-title">文標のバージョンアップ履歴：初期版から今までに良くしたこと</div>
+            <div class="post-card-excerpt">文標を初期版からどう育ててきたか。追加したもの、良くしたところをまとめました。</div>
+            <div class="post-card-footer"><a class="open-link" href="/blog/bunsirube-version-history/">記事を読む →</a></div>
           </div>
         </article>
+
         <article class="post-card" data-slug="bunsirube-before-install" data-tags="wordpress article" data-search="文標 導入前 バックアップ WordPress">
           <img class="post-card-img" src="/assets/blog/bunsirube-before-install/eyecatch.webp" alt="文標を入れる前に確認すること" loading="lazy" />
           <div class="post-card-body">
-            <div class="post-card-meta"><span>2026-05-02</span><span class="post-card-tag">文標</span><span class="post-card-tag">WordPress</span></div>
+            <div class="post-card-meta"><span>2026-05-02</span><span class="post-card-tag">WordPress</span><span class="post-card-tag">文標</span></div>
             <div class="post-card-title">文標を入れる前に確認すること：既存記事・バックアップ・環境</div>
-            <div class="post-card-excerpt">WordPressテーマを変える前に、最低限ここだけは見ておきたいという確認リストです。</div>
-            <div class="post-card-footer"><a class="open-link" href="/blog/bunsirube-before-install/">文標の導入前チェックを読む →</a></div>
+            <div class="post-card-excerpt">WordPressテーマを変える前に確認しておきたい最低限のチェックリスト。</div>
+            <div class="post-card-footer"><a class="open-link" href="/blog/bunsirube-before-install/">記事を読む →</a></div>
           </div>
         </article>
-        <article class="post-card" data-slug="faq-source-ai-search" data-tags="ai-news chatgpt claude gemini article wordpress" data-search="AI検索 ChatGPT Claude Gemini FAQ 出典 Google AI Overviews">
-          <img class="post-card-img" src="/assets/blog/faq-source-ai-search/eyecatch.webp" alt="AI検索向けにFAQと出典を置く理由" loading="lazy" />
-          <div class="post-card-body">
-            <div class="post-card-meta"><span>2026-05-02</span><span class="post-card-tag">AI検索</span><span class="post-card-tag">FAQ</span></div>
-            <div class="post-card-title">AI検索向けにFAQと出典を置く理由</div>
-            <div class="post-card-excerpt">Google AI Overviews等での表示保証はありません。だからこそ、読者にも検索にも読み取りやすい構造を作ります。</div>
-            <div class="post-card-footer"><a class="open-link" href="/blog/faq-source-ai-search/">FAQと出典の置き方を読む →</a></div>
-          </div>
-        </article>
+
         <article class="post-card" data-slug="sales-page-common-mistakes" data-tags="earn article template" data-search="商品ページ note BASE 販売ページ 改善">
           <img class="post-card-img" src="/assets/blog/sales-page-common-mistakes/eyecatch.webp" alt="商品ページでよくある失敗" loading="lazy" />
           <div class="post-card-body">
-            <div class="post-card-meta"><span>2026-05-02</span><span class="post-card-tag">販売ページ</span><span class="post-card-tag">改善</span></div>
+            <div class="post-card-meta"><span>2026-05-02</span><span class="post-card-tag">副業・稼ぎ方</span><span class="post-card-tag">販売ページ</span></div>
             <div class="post-card-title">BASE・note・自サイトの商品ページでよくある失敗</div>
             <div class="post-card-excerpt">商品は悪くないのに、ページの順番で損していることがあります。</div>
-            <div class="post-card-footer"><a class="open-link" href="/blog/sales-page-common-mistakes/">商品ページの失敗例を読む →</a></div>
+            <div class="post-card-footer"><a class="open-link" href="/blog/sales-page-common-mistakes/">記事を読む →</a></div>
           </div>
         </article>
+
+        <article class="post-card" data-slug="home-work-rhythm" data-tags="home-work article" data-search="家で作業 運動不足 在宅作業 習慣 ブログ AIニュース WordPress">
+          <div class="post-card-img-placeholder">🏠</div>
+          <div class="post-card-body">
+            <div class="post-card-meta"><span>2026-05-18</span><span class="post-card-tag">在宅作業</span><span class="post-card-tag">習慣</span></div>
+            <div class="post-card-title">家で作業すると運動不足になるので、先に動く仕組みを作る</div>
+            <div class="post-card-excerpt">AIニュースを調べる、WordPressを触る、ブログを書く。家で続ける人向けに、座りっぱなしを避ける小さい仕組みをまとめました。</div>
+            <div class="post-card-footer"><a class="open-link" href="/blog/home-work-rhythm/">記事を読む →</a></div>
+          </div>
+        </article>
+
+        <!-- ===== 下書き記事（noindex・カテゴリテスト用） ===== -->
+        <article class="post-card" data-slug="chatgpt-update-2026" data-tags="chatgpt ai-news earn draft" data-search="ChatGPT アップデート 2026 OpenAI 最新機能">
+          <div class="post-card-img-placeholder" style="background:#d4f5e9;color:#10a37f;">GPT</div>
+          <div class="post-card-body">
+            <div class="post-card-meta"><span>下書き</span><span class="post-card-tag" style="background:#d4f5e9;color:#10a37f;">ChatGPT</span><span class="post-card-tag" style="background:#fff3cd;color:#856404;">下書き</span></div>
+            <div class="post-card-title">【下書き】ChatGPT 最新アップデートまとめ 2026年版｜新機能と副業への活かし方</div>
+            <div class="post-card-excerpt">ChatGPTの最新アップデートをまとめ、どう副業・ブログ収益に活かせるかをまとめる予定の記事（下書き）。</div>
+            <div class="post-card-footer"><a class="open-link" href="/blog/chatgpt-update-2026/">下書きを見る →</a></div>
+          </div>
+        </article>
+
+        <article class="post-card" data-slug="claude-update-2026" data-tags="claude ai-news earn draft" data-search="Claude アップデート 2026 Anthropic 最新機能">
+          <div class="post-card-img-placeholder" style="background:#fce8df;color:#cc785c;">CLD</div>
+          <div class="post-card-body">
+            <div class="post-card-meta"><span>下書き</span><span class="post-card-tag" style="background:#fce8df;color:#cc785c;">Claude</span><span class="post-card-tag" style="background:#fff3cd;color:#856404;">下書き</span></div>
+            <div class="post-card-title">【下書き】Claude 最新アップデートまとめ 2026年版｜Anthropicの新機能と使い方</div>
+            <div class="post-card-excerpt">Claudeの最新機能・アップデートをまとめ、副業ブログへの活用方法をまとめる予定の記事（下書き）。</div>
+            <div class="post-card-footer"><a class="open-link" href="/blog/claude-update-2026/">下書きを見る →</a></div>
+          </div>
+        </article>
+
+        <article class="post-card" data-slug="gemini-update-2026" data-tags="gemini ai-news earn draft" data-search="Gemini アップデート 2026 Google 最新機能">
+          <div class="post-card-img-placeholder" style="background:#dce8fd;color:#4285f4;">GEM</div>
+          <div class="post-card-body">
+            <div class="post-card-meta"><span>下書き</span><span class="post-card-tag" style="background:#dce8fd;color:#4285f4;">Gemini</span><span class="post-card-tag" style="background:#fff3cd;color:#856404;">下書き</span></div>
+            <div class="post-card-title">【下書き】Gemini 最新アップデートまとめ 2026年版｜Googleの新機能と副業活用</div>
+            <div class="post-card-excerpt">GeminiのアップデートをまとめてGoogleのAI動向から副業のネタを見つけるための記事（下書き）。</div>
+            <div class="post-card-footer"><a class="open-link" href="/blog/gemini-update-2026/">下書きを見る →</a></div>
+          </div>
+        </article>
+
+        <article class="post-card" data-slug="perplexity-how-to-earn" data-tags="perplexity ai-news earn draft" data-search="Perplexity 副業 稼ぎ方 AI検索 活用">
+          <div class="post-card-img-placeholder" style="background:#dff6fb;color:#1fb6cf;">PRX</div>
+          <div class="post-card-body">
+            <div class="post-card-meta"><span>下書き</span><span class="post-card-tag" style="background:#dff6fb;color:#1fb6cf;">Perplexity</span><span class="post-card-tag" style="background:#fff3cd;color:#856404;">下書き</span></div>
+            <div class="post-card-title">【下書き】Perplexityを使って副業収益を上げる方法｜AI検索の新定番</div>
+            <div class="post-card-excerpt">Perplexityで調査→記事化→収益化する流れをまとめる予定の記事（下書き）。</div>
+            <div class="post-card-footer"><a class="open-link" href="/blog/perplexity-how-to-earn/">下書きを見る →</a></div>
+          </div>
+        </article>
+
+        <article class="post-card" data-slug="genspark-how-to-earn" data-tags="genspark ai-news earn draft" data-search="Genspark 副業 稼ぎ方 AI 活用">
+          <div class="post-card-img-placeholder" style="background:#ede0fd;color:#7c3aed;">GNS</div>
+          <div class="post-card-body">
+            <div class="post-card-meta"><span>下書き</span><span class="post-card-tag" style="background:#ede0fd;color:#7c3aed;">Genspark</span><span class="post-card-tag" style="background:#fff3cd;color:#856404;">下書き</span></div>
+            <div class="post-card-title">【下書き】Gensparkで稼ぐ：使い方と副業への応用</div>
+            <div class="post-card-excerpt">Gensparkの特徴を活かして副業ブログやテンプレ制作に活用する方法（下書き）。</div>
+            <div class="post-card-footer"><a class="open-link" href="/blog/genspark-how-to-earn/">下書きを見る →</a></div>
+          </div>
+        </article>
+
+        <article class="post-card" data-slug="grok-update-2026" data-tags="grok ai-news earn draft" data-search="Grok xAI イーロン・マスク アップデート 最新機能">
+          <div class="post-card-img-placeholder" style="background:#f0f0f0;color:#333;">GRK</div>
+          <div class="post-card-body">
+            <div class="post-card-meta"><span>下書き</span><span class="post-card-tag" style="background:#f0f0f0;color:#333;">Grok</span><span class="post-card-tag" style="background:#fff3cd;color:#856404;">下書き</span></div>
+            <div class="post-card-title">【下書き】Grok（xAI）最新情報まとめ｜Xと連携した副業活用法</div>
+            <div class="post-card-excerpt">xAIのGrokの動向をまとめ、X（Twitter）と組み合わせた副業への活かし方をまとめる予定（下書き）。</div>
+            <div class="post-card-footer"><a class="open-link" href="/blog/grok-update-2026/">下書きを見る →</a></div>
+          </div>
+        </article>
+
+        <article class="post-card" data-slug="copilot-how-to-use" data-tags="copilot ai-news earn draft" data-search="Copilot Microsoft AI Windows Office 副業">
+          <div class="post-card-img-placeholder" style="background:#e6f0ff;color:#0078d4;">COP</div>
+          <div class="post-card-body">
+            <div class="post-card-meta"><span>下書き</span><span class="post-card-tag" style="background:#e6f0ff;color:#0078d4;">Copilot</span><span class="post-card-tag" style="background:#fff3cd;color:#856404;">下書き</span></div>
+            <div class="post-card-title">【下書き】Microsoft Copilotを副業に活かす使い方まとめ</div>
+            <div class="post-card-excerpt">Windows・Office・BingなどMicrosoft製品に統合されたCopilotを副業ブログに活かす方法（下書き）。</div>
+            <div class="post-card-footer"><a class="open-link" href="/blog/copilot-how-to-use/">下書きを見る →</a></div>
+          </div>
+        </article>
+
       </div>
     </div>
   </section>

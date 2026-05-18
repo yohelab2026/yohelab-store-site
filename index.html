@@ -585,18 +585,100 @@
 
     <!-- [タブ1] AIニュース -->
     <div class="tab-panel active" id="panel-ai-news" role="tabpanel">
+
+      <!-- AIツールカテゴリ別タグナビ -->
       <section class="section-card">
         <div class="section-head">
-          <h2><span>🤖</span>AIツール最新ニュース</h2>
-          <a class="more" href="/blog/?tag=ai-news">もっと見る →</a>
+          <h2><span>🤖</span>AIツール別 記事・ニュース</h2>
+          <a class="more" href="/blog/?tag=ai-news">全記事を見る →</a>
         </div>
-        <div id="newsContainer">
-          <div class="news-loading">
-            <div class="spinner"></div>
-            <div>最新ニュースを読み込み中…</div>
-          </div>
+        <!-- カテゴリタグフィルター -->
+        <div style="display:flex;flex-wrap:wrap;gap:6px;padding:10px 14px;border-bottom:1px solid #f0f0f0;">
+          <button class="ai-filter-btn active" data-ai="all" style="padding:4px 12px;border-radius:999px;border:1px solid #e8e8e8;background:#0b8f72;color:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;">すべて</button>
+          <button class="ai-filter-btn" data-ai="chatgpt" style="padding:4px 12px;border-radius:999px;border:1px solid #e8e8e8;background:#fff;color:#444;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;">ChatGPT</button>
+          <button class="ai-filter-btn" data-ai="claude" style="padding:4px 12px;border-radius:999px;border:1px solid #e8e8e8;background:#fff;color:#444;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;">Claude</button>
+          <button class="ai-filter-btn" data-ai="gemini" style="padding:4px 12px;border-radius:999px;border:1px solid #e8e8e8;background:#fff;color:#444;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;">Gemini</button>
+          <button class="ai-filter-btn" data-ai="perplexity" style="padding:4px 12px;border-radius:999px;border:1px solid #e8e8e8;background:#fff;color:#444;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;">Perplexity</button>
+          <button class="ai-filter-btn" data-ai="genspark" style="padding:4px 12px;border-radius:999px;border:1px solid #e8e8e8;background:#fff;color:#444;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;">Genspark</button>
+          <button class="ai-filter-btn" data-ai="grok" style="padding:4px 12px;border-radius:999px;border:1px solid #e8e8e8;background:#fff;color:#444;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;">Grok</button>
+          <button class="ai-filter-btn" data-ai="copilot" style="padding:4px 12px;border-radius:999px;border:1px solid #e8e8e8;background:#fff;color:#444;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;">Copilot</button>
+        </div>
+        <!-- 記事一覧（内部リンク） -->
+        <div id="aiNewsContainer">
+          <a class="news-item" href="/blog/ai-news-selling-ideas/" data-ai="chatgpt claude gemini">
+            <span class="news-tag tag-ai">AI全般</span>
+            <div class="news-body">
+              <div class="news-title">AIニュースを記事ネタに変える方法｜ChatGPT・Claude・Gemini活用</div>
+              <div class="news-meta">2026-05-18 · よへラボブログ</div>
+            </div>
+          </a>
+          <a class="news-item" href="/blog/faq-source-ai-search/" data-ai="chatgpt claude gemini">
+            <span class="news-tag tag-ai">AI検索</span>
+            <div class="news-body">
+              <div class="news-title">AI検索向けにFAQと出典を置く理由｜ChatGPT・Claude・Gemini対応</div>
+              <div class="news-meta">2026-05-02 · よへラボブログ</div>
+            </div>
+          </a>
+          <a class="news-item" href="/blog/comparison-article-template/" data-ai="chatgpt claude gemini genspark perplexity">
+            <span class="news-tag tag-ai">記事の型</span>
+            <div class="news-body">
+              <div class="news-title">比較記事の書き方：AIツール比較にも使える結論・比較表・FAQ・CTA型</div>
+              <div class="news-meta">2026-05-04 · よへラボブログ</div>
+            </div>
+          </a>
+          <!-- 下書き・テスト記事（カテゴリ別） -->
+          <a class="news-item" href="/blog/chatgpt-update-2026/" data-ai="chatgpt">
+            <span class="news-tag tag-chatgpt">ChatGPT</span>
+            <div class="news-body">
+              <div class="news-title">【下書き】ChatGPT 最新アップデートまとめ 2026年版</div>
+              <div class="news-meta">下書き · ChatGPT カテゴリ</div>
+            </div>
+          </a>
+          <a class="news-item" href="/blog/claude-update-2026/" data-ai="claude">
+            <span class="news-tag tag-claude">Claude</span>
+            <div class="news-body">
+              <div class="news-title">【下書き】Claude 最新アップデートまとめ 2026年版</div>
+              <div class="news-meta">下書き · Claude カテゴリ</div>
+            </div>
+          </a>
+          <a class="news-item" href="/blog/gemini-update-2026/" data-ai="gemini">
+            <span class="news-tag tag-gemini">Gemini</span>
+            <div class="news-body">
+              <div class="news-title">【下書き】Gemini 最新アップデートまとめ 2026年版</div>
+              <div class="news-meta">下書き · Gemini カテゴリ</div>
+            </div>
+          </a>
+          <a class="news-item" href="/blog/perplexity-how-to-earn/" data-ai="perplexity">
+            <span class="news-tag tag-perplexity">Perplexity</span>
+            <div class="news-body">
+              <div class="news-title">【下書き】Perplexityを使って副業収益を上げる方法</div>
+              <div class="news-meta">下書き · Perplexity カテゴリ</div>
+            </div>
+          </a>
+          <a class="news-item" href="/blog/genspark-how-to-earn/" data-ai="genspark">
+            <span class="news-tag tag-genspark">Genspark</span>
+            <div class="news-body">
+              <div class="news-title">【下書き】Gensparkで稼ぐ：使い方と副業への応用</div>
+              <div class="news-meta">下書き · Genspark カテゴリ</div>
+            </div>
+          </a>
+          <a class="news-item" href="/blog/grok-update-2026/" data-ai="grok">
+            <span class="news-tag" style="background:#333;flex-shrink:0;padding:2px 7px;border-radius:3px;font-size:11px;font-weight:700;color:#fff;margin-top:2px;">Grok</span>
+            <div class="news-body">
+              <div class="news-title">【下書き】Grok（xAI）最新情報まとめ｜X連携の副業活用法</div>
+              <div class="news-meta">下書き · Grok カテゴリ</div>
+            </div>
+          </a>
+          <a class="news-item" href="/blog/copilot-how-to-use/" data-ai="copilot">
+            <span class="news-tag" style="background:#0078d4;flex-shrink:0;padding:2px 7px;border-radius:3px;font-size:11px;font-weight:700;color:#fff;margin-top:2px;">Copilot</span>
+            <div class="news-body">
+              <div class="news-title">【下書き】Microsoft Copilotを副業に活かす使い方まとめ</div>
+              <div class="news-meta">下書き · Copilot カテゴリ</div>
+            </div>
+          </a>
         </div>
       </section>
+
     </div>
 
     <!-- [タブ2] 副業ブログ -->
@@ -996,98 +1078,36 @@
     showInlinePage(link);
   });
 
-  // ── AIニュース自動取得（RSSプロキシ） ──
-  const RSS_FEEDS = [
-    { name: 'ChatGPT', key: 'chatgpt', tag: 'tag-chatgpt', url: 'https://openai.com/news/rss.xml' },
-    { name: 'Claude',  key: 'claude',  tag: 'tag-claude',  url: 'https://www.anthropic.com/news/rss.xml' },
-    { name: 'Gemini',  key: 'gemini',  tag: 'tag-gemini',  url: 'https://blog.google/technology/ai/rss/' },
-    { name: 'AI全般',  key: 'ai-news', tag: 'tag-ai',      url: 'https://feeds.feedburner.com/mittr/artificial-intelligence' }
-  ];
+  // ── AIカテゴリフィルター（内部リンク方式・外部通信なし） ──
+  const aiFilterBtns = document.querySelectorAll('.ai-filter-btn');
+  const aiNewsItems = document.querySelectorAll('#aiNewsContainer .news-item');
 
-  const PROXY = 'https://api.allorigins.win/get?url=';
-  const MAX_PER_FEED = 3;
-  const MAX_TOTAL = 12;
+  aiFilterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.ai;
 
-  function parseRSS(xmlText) {
-    const doc = new DOMParser().parseFromString(xmlText, 'text/xml');
-    const items = doc.querySelectorAll('item, entry');
-    return Array.from(items).slice(0, MAX_PER_FEED).map(item => {
-      const title = (item.querySelector('title')?.textContent || '').trim();
-      const link = item.querySelector('link')?.textContent?.trim()
-        || item.querySelector('link')?.getAttribute('href') || '';
-      const rawDate = item.querySelector('pubDate, published, updated')?.textContent || '';
-      const date = rawDate ? formatDate(new Date(rawDate)) : '';
-      return { title, link, date };
-    }).filter(i => i.title && i.link);
-  }
+      // ボタンのスタイル切り替え
+      aiFilterBtns.forEach(b => {
+        b.classList.remove('active');
+        b.style.background = '#fff';
+        b.style.color = '#444';
+        b.style.borderColor = '#e8e8e8';
+      });
+      btn.classList.add('active');
+      btn.style.background = '#0b8f72';
+      btn.style.color = '#fff';
+      btn.style.borderColor = '#0b8f72';
 
-  function formatDate(d) {
-    if (isNaN(d.getTime())) return '';
-    return `${d.getFullYear()}/${String(d.getMonth()+1).padStart(2,'0')}/${String(d.getDate()).padStart(2,'0')}`;
-  }
-
-  function esc(s) {
-    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-  }
-
-  function categoryUrl(feed) {
-    return `/blog/?tag=${encodeURIComponent(feed.key || 'ai-news')}`;
-  }
-
-  async function fetchFeed(feed) {
-    const res = await fetch(PROXY + encodeURIComponent(feed.url), { signal: AbortSignal.timeout(8000) });
-    if (!res.ok) throw new Error('failed');
-    const data = await res.json();
-    return { feed, items: parseRSS(data.contents || '') };
-  }
-
-  async function loadNews() {
-    const container = document.getElementById('newsContainer');
-    const results = await Promise.allSettled(RSS_FEEDS.map(fetchFeed));
-    const all = [];
-    results.forEach(r => r.status === 'fulfilled' && r.value.items.forEach(item => all.push({ item, feed: r.value.feed })));
-
-    container.innerHTML = '';
-    if (!all.length) { container.innerHTML = fallbackNews(); return; }
-
-    all.sort((a, b) => {
-      const da = a.item.date ? new Date(a.item.date.replace(/\//g,'-')) : new Date(0);
-      const db = b.item.date ? new Date(b.item.date.replace(/\//g,'-')) : new Date(0);
-      return db - da;
+      // 記事の表示・非表示
+      aiNewsItems.forEach(item => {
+        if (target === 'all') {
+          item.style.display = '';
+        } else {
+          const tags = (item.dataset.ai || '').split(' ');
+          item.style.display = tags.includes(target) ? '' : 'none';
+        }
+      });
     });
-
-    all.slice(0, MAX_TOTAL).forEach(({ item, feed }) => {
-      const el = document.createElement('a');
-      el.className = 'news-item';
-      el.href = categoryUrl(feed);
-      el.innerHTML = `
-        <span class="news-tag ${feed.tag}">${feed.name}</span>
-        <div class="news-body">
-          <div class="news-title">${esc(item.title)}</div>
-          <div class="news-meta">${feed.name}${item.date ? ' · ' + item.date : ''}</div>
-        </div>`;
-      container.appendChild(el);
-    });
-  }
-
-  function fallbackNews() {
-    return [
-      ['tag-chatgpt', 'ChatGPT', 'ChatGPTニュースの記事一覧を見る', '/blog/?tag=chatgpt'],
-      ['tag-claude',  'Claude',  'Claudeニュースの記事一覧を見る', '/blog/?tag=claude'],
-      ['tag-gemini',  'Gemini',  'Geminiニュースの記事一覧を見る', '/blog/?tag=gemini'],
-      ['tag-ai',      'AI全般',  'AIニュース活用の記事一覧を見る', '/blog/?tag=ai-news'],
-    ].map(([tag, name, title, link]) => `
-      <a class="news-item" href="${link}">
-        <span class="news-tag ${tag}">${name}</span>
-        <div class="news-body">
-          <div class="news-title">${esc(title)}</div>
-          <div class="news-meta">${name}</div>
-        </div>
-      </a>`).join('');
-  }
-
-  loadNews().catch(() => {
-    document.getElementById('newsContainer').innerHTML = fallbackNews();
   });
 </script>
 
