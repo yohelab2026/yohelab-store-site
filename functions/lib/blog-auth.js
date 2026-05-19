@@ -10,7 +10,7 @@ export function getRequestPin(request) {
 }
 
 export function isValidPin(pin) {
-  return /^\d{4}$/.test(String(pin || ""));
+  return /^[\x21-\x7E]{4,64}$/.test(String(pin || ""));
 }
 
 export function timingSafeEqual(a, b) {

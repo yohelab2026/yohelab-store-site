@@ -221,9 +221,9 @@
     <div class="lock-box">
       <div id="login-view">
         <h1>ブログ管理</h1>
-        <p>4桁のパスワードで入る。</p>
+        <p>管理用パスワードで入る。</p>
         <div style="display:grid;gap:12px;">
-          <input id="admin-pin" type="password" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="●●●●" style="font-size:22px;letter-spacing:.24em;text-align:center;border:1px solid var(--border);border-radius:12px;padding:12px;" />
+          <input id="admin-pin" type="password" maxlength="64" autocomplete="off" placeholder="管理用パスワード" style="font-size:22px;letter-spacing:.12em;text-align:center;border:1px solid var(--border);border-radius:12px;padding:12px;" />
           <button class="btn btn-primary btn-lg" id="unlock-admin" type="button">入る</button>
         </div>
         <p style="font-size:13px;color:var(--muted);margin-top:12px;" id="lock-status"></p>
@@ -420,7 +420,6 @@
   // ── 定数・要素 ──────────────────────────────────────────────
   const SESSION_KEY = 'yohelab.blog.sess';
   const SESSION_PIN_KEY = 'yohelab.blog.pin.session';
-  const SAVED_PIN_KEY = 'yohelab.blog.pin.saved';
   const IMPORT_STATIC_SESSION_KEY = 'yohelab.blog.staticImport.tried.v2';
   const CONTENT_PAGE_SIZE = 10;
 
@@ -470,12 +469,6 @@
     adminPinEl.focus();
   }
 
-  const savedPin = readSavedPin();
-  if (savedPin) {
-    sessionStorage.setItem(SESSION_KEY, '1');
-    sessionStorage.setItem(SESSION_PIN_KEY, savedPin);
-  }
-
   if (sessionStorage.getItem(SESSION_KEY)) {
     document.body.classList.add('is-unlocked');
     loadAllLists({ importStatic: true });
@@ -487,13 +480,12 @@
 
   async function handleLogin() {
     const input = adminPinEl.value.trim();
-    if (!/^\d{4}$/.test(input)) { lockStatusEl.textContent='数字4桁で入れて。'; adminPinEl.focus(); return; }
+    if (!/^[\x21-\x7E]{4,64}$/.test(input)) { lockStatusEl.textContent='4〜64文字の管理用パスワードを入れて。'; adminPinEl.focus(); return; }
     lockStatusEl.textContent='確認中...';
     const ok = await validatePin(input);
     if (!ok) { lockStatusEl.textContent='パスワードが違う。'; adminPinEl.value=''; adminPinEl.focus(); return; }
     sessionStorage.setItem(SESSION_KEY, '1');
     sessionStorage.setItem(SESSION_PIN_KEY, input);
-    savePinForThisBrowser(input);
     document.body.classList.add('is-unlocked');
     setTimeout(() => loadAllLists({ importStatic: true }), 200);
   }
@@ -504,7 +496,6 @@
     cancelAutosave();
     sessionStorage.removeItem(SESSION_KEY);
     sessionStorage.removeItem(SESSION_PIN_KEY);
-    localStorage.removeItem(SAVED_PIN_KEY);
     document.body.classList.remove('is-unlocked');
     adminPinEl.value='';
     lockStatusEl.textContent='ログアウトした。';
@@ -512,7 +503,6 @@
   });
 
   async function validatePin(pin) {
-    // APIがある場合はそちらで認証
     try {
       const res = await fetch('/api/blog-auth', {
         method: 'POST',
@@ -521,35 +511,14 @@
       });
       const type = res.headers.get('content-type') || '';
       if (res.ok && type.includes('application/json')) {
-        savePinForThisBrowser(pin);
         return true;
       }
     } catch (_) {}
-    // APIなし/一時不調のときだけ、以前このブラウザで認証済みのPINを補助的に使う
-    const saved = readSavedPin();
-    if (saved && saved === pin) return true;
     return false;
   }
 
   function currentPin() {
     return (sessionStorage.getItem(SESSION_PIN_KEY) || '').trim();
-  }
-
-  function savePinForThisBrowser(pin) {
-    try {
-      localStorage.setItem(SAVED_PIN_KEY, btoa(`pin:${pin}`));
-    } catch (_) {}
-  }
-
-  function readSavedPin() {
-    try {
-      const raw = localStorage.getItem(SAVED_PIN_KEY) || '';
-      const decoded = raw ? atob(raw) : '';
-      const pin = decoded.startsWith('pin:') ? decoded.slice(4) : '';
-      return /^\d{4}$/.test(pin) ? pin : '';
-    } catch (_) {
-      return '';
-    }
   }
 
   // ── タイトル auto-resize ────────────────────────────────────
