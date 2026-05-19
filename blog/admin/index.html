@@ -423,8 +423,7 @@
 
   if (sessionStorage.getItem(SESSION_KEY)) {
     document.body.classList.add('is-unlocked');
-    loadDraftList();
-    loadPostList();
+    loadAllLists();
   } else {
     showLock();
     // ロック中でもstatic-posts.jsonは先読み（ログイン後の表示を速くする）
@@ -441,7 +440,7 @@
     sessionStorage.setItem(SESSION_PIN_KEY, input);
     savePinForThisBrowser(input);
     document.body.classList.add('is-unlocked');
-    setTimeout(() => { loadStaticPosts(true).then(() => { loadDraftList(); loadPostList(); }); }, 200);
+    setTimeout(() => loadAllLists(), 200);
   }
   document.getElementById('unlock-admin').addEventListener('click', handleLogin);
   adminPinEl.addEventListener('keydown', e => { if(e.key==='Enter') handleLogin(); });
@@ -898,8 +897,7 @@
     setServerSaveState('サーバー保存：公開済み', '公開済み一覧に記事を残しました。', 'saved');
     if (contentStatusFilterEl) contentStatusFilterEl.value = 'published';
     setTimeout(()=>statusEl.textContent='下書き中', 3000);
-    loadDraftList();
-    loadPostList();
+    loadAllLists();
   }
 
   document.getElementById('post-btn').addEventListener('click', publish);
@@ -919,11 +917,10 @@
     return staticPosts;
   }
 
-  async function loadDraftList() {
+  async function loadDraftList(skipRender = false) {
     if (!contentListEl) return;
     const pin = currentPin();
     if (!pin) return;
-    contentListEl.innerHTML='<p style="color:var(--muted);font-size:14px;padding:14px;">読み込み中...</p>';
     await loadStaticPosts();
     let drafts = [];
     try {
@@ -958,6 +955,21 @@
       })),
     ].sort(compareByCategory);
     updateManagerCounts(drafts.length + staticDrafts.length, null);
+    if (!skipRender) {
+      populateCategoryFilter();
+      renderContentList();
+    }
+  }
+
+  // 下書き＋公開済みを同時に読み込んで一度だけ描画する
+  async function loadAllLists() {
+    if (!contentListEl) return;
+    contentListEl.innerHTML = '<p style="color:var(--muted);font-size:14px;padding:14px;">読み込み中...</p>';
+    await loadStaticPosts();
+    await Promise.all([
+      loadDraftList(true),
+      loadPostList(true),
+    ]);
     populateCategoryFilter();
     renderContentList();
   }
@@ -1178,9 +1190,7 @@
   }
 
   // ── 投稿一覧 & 削除 ───────────────────────────────────────
-  async function loadPostList() {
-    if (!contentListEl) return;
-    contentListEl.innerHTML='<p style="color:var(--muted);font-size:14px;padding:14px;">読み込み中...</p>';
+  async function loadPostList(skipRender = false) {
     await loadStaticPosts();
     let posts = [];
     try {
@@ -1207,8 +1217,10 @@
       })),
     ].sort(compareByCategory);
     updateManagerCounts(null, postItems.length);
-    populateCategoryFilter();
-    renderContentList();
+    if (!skipRender) {
+      populateCategoryFilter();
+      renderContentList();
+    }
   }
 
   function staticPostBySlug(slug) {
@@ -1347,8 +1359,7 @@
     }
     statusEl.textContent = '下書きに戻した ✓';
     if (contentStatusFilterEl) contentStatusFilterEl.value = 'draft';
-    loadDraftList();
-    loadPostList();
+    loadAllLists();
   }
 
   async function deletePost(kvKey, btn) {
@@ -1371,8 +1382,7 @@
   }
 
   async function refreshContentLists() {
-    await loadDraftList();
-    await loadPostList();
+    await loadAllLists();
   }
 
   function setContentStatus(status) {
