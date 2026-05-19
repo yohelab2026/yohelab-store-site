@@ -283,7 +283,7 @@
           <div class="manager-head">
             <div>
               <h2>投稿</h2>
-              <p>下書き・公開済み・カテゴリ・タグで絞れます。</p>
+              <p>下書き・公開済み・親カテゴリ・子カテゴリで絞れます。</p>
             </div>
             <div class="manager-head-actions">
               <button class="btn btn-outline" id="import-static-posts" type="button">既存記事を取り込む</button>
@@ -383,10 +383,10 @@
       <div id="body" class="body-editor" contenteditable="true" data-placeholder="本文を書く..."></div>
 
       <!-- メタ設定 -->
-      <button class="meta-toggle" id="meta-toggle" type="button">⚙ 記事設定（要約・タグ・スラッグ）▾</button>
+      <button class="meta-toggle" id="meta-toggle" type="button">⚙ 記事設定（要約・カテゴリ・スラッグ）▾</button>
       <div class="meta-panel" id="meta-panel" style="display:none;">
         <label class="meta-label">要約（一覧に出る短い説明）<textarea id="excerpt" placeholder="この記事の要約を書く"></textarea></label>
-        <label class="meta-label">タグ<input id="tags" placeholder="記事作成, WordPress, お知らせ" /></label>
+        <label class="meta-label">子カテゴリ・補助キーワード<input id="tags" placeholder="ChatGPT, AIニュース, 記事作成" /></label>
         <label class="meta-label">スラッグ（URL）
           <div style="display:flex;gap:8px;align-items:center;">
             <input id="slug" placeholder="未入力ならタイトルから生成" style="flex:1;" />
@@ -1058,22 +1058,59 @@
     renderContentList();
   }
 
-  const CATEGORY_DEFS = [
-    ['chatgpt', 'ChatGPT'],
-    ['claude', 'Claude'],
-    ['gemini', 'Gemini'],
-    ['perplexity', 'Perplexity'],
-    ['genspark', 'Genspark'],
-    ['grok', 'Grok'],
-    ['copilot', 'Copilot'],
-    ['midjourney', 'Midjourney'],
-    ['ai-news', 'AIニュース'],
-    ['wordpress', 'WordPress'],
-    ['earn', '副業・稼ぎ方'],
-    ['template', 'テンプレ'],
-    ['home-work', '在宅作業'],
-    ['article', '記事の型'],
+  const CATEGORY_TREE = [
+    {
+      key: 'ai-news',
+      label: 'AIニュース',
+      children: [
+        ['ai-news', '全般'],
+        ['chatgpt', 'ChatGPT'],
+        ['claude', 'Claude'],
+        ['gemini', 'Gemini'],
+        ['perplexity', 'Perplexity'],
+        ['genspark', 'Genspark'],
+        ['grok', 'Grok'],
+        ['copilot', 'Copilot'],
+        ['midjourney', 'Midjourney'],
+      ],
+    },
+    {
+      key: 'earn',
+      label: '副業ブログ',
+      children: [
+        ['earn', '稼ぎ方'],
+        ['article', '記事作成'],
+      ],
+    },
+    {
+      key: 'wordpress',
+      label: 'ツール・商品',
+      children: [
+        ['wordpress', 'WordPress・文標'],
+        ['template', 'テンプレ・商品'],
+      ],
+    },
+    {
+      key: 'home-work',
+      label: '在宅ヒント',
+      children: [
+        ['home-work', '在宅作業'],
+      ],
+    },
   ];
+  const CATEGORY_GROUPS = {
+    'group:ai-news': ['ai-news','chatgpt','claude','gemini','perplexity','genspark','grok','copilot','midjourney'],
+    'group:earn': ['earn','article'],
+    'group:wordpress': ['wordpress','template'],
+    'group:home-work': ['home-work'],
+  };
+  const CATEGORY_LOOKUP = new Map();
+  CATEGORY_TREE.forEach(parent => {
+    parent.children.forEach(([key, label]) => {
+      CATEGORY_LOOKUP.set(key, { key, label, parentKey: parent.key, parentLabel: parent.label });
+    });
+  });
+  const CATEGORY_ORDER = ['chatgpt','claude','gemini','perplexity','genspark','grok','copilot','midjourney','ai-news','earn','article','wordpress','template','home-work'];
 
   function parseTagList(value) {
     if (Array.isArray(value)) return value.map(v => String(v || '').trim()).filter(Boolean);
@@ -1082,27 +1119,48 @@
 
   function categoryForItem(item) {
     const tags = normalizeTagsForSort(item);
-    const found = CATEGORY_DEFS.find(([key]) => tags.includes(key));
-    return found ? { key: found[0], label: found[1] } : { key: 'other', label: '未分類' };
+    const foundKey = CATEGORY_ORDER.find(key => tags.includes(key));
+    const found = foundKey ? CATEGORY_LOOKUP.get(foundKey) : null;
+    return found
+      ? { ...found, label: `${found.parentLabel} > ${found.label}` }
+      : { key: 'other', label: '未分類', parentKey: 'other', parentLabel: '未分類' };
   }
 
-  function displayTags(item) {
-    const tags = parseTagList(item.tags);
-    if (tags.length) return tags.slice(0, 4);
-    return normalizeTagsForSort(item).slice(0, 3);
+  function displayChildCategories(item) {
+    const tags = normalizeTagsForSort(item);
+    const labels = CATEGORY_ORDER
+      .filter(key => tags.includes(key))
+      .map(key => CATEGORY_LOOKUP.get(key))
+      .filter(Boolean)
+      .map(category => category.label);
+    return [...new Set(labels)].slice(0, 4);
   }
 
   function populateCategoryFilter() {
     if (!contentCategoryFilterEl) return;
     const selected = contentCategoryFilterEl.value || 'all';
-    const seen = new Map();
-    [...draftItems, ...postItems].forEach(item => {
-      const category = categoryForItem(item);
-      seen.set(category.key, category.label);
+    const validValues = new Set(['all']);
+    const groups = CATEGORY_TREE.map(parent => {
+      validValues.add(`group:${parent.key}`);
+      const options = [
+        `<option value="group:${escHtml(parent.key)}">${escHtml(parent.label)} / すべて</option>`,
+        ...parent.children.map(([key, label]) => {
+          validValues.add(key);
+          return `<option value="${escHtml(key)}">${escHtml(parent.label)} / ${escHtml(label)}</option>`;
+        }),
+      ];
+      return `<optgroup label="${escHtml(parent.label)}">${options.join('')}</optgroup>`;
     });
-    contentCategoryFilterEl.innerHTML = '<option value="all">すべてのカテゴリ</option>' +
-      [...seen.entries()].map(([key, label]) => `<option value="${escHtml(key)}">${escHtml(label)}</option>`).join('');
-    contentCategoryFilterEl.value = seen.has(selected) ? selected : 'all';
+    contentCategoryFilterEl.innerHTML = '<option value="all">すべてのカテゴリ</option>' + groups.join('');
+    contentCategoryFilterEl.value = validValues.has(selected) ? selected : 'all';
+  }
+
+  function categoryMatchesItem(selected, item) {
+    if (selected === 'all') return true;
+    const tags = normalizeTagsForSort(item);
+    const group = CATEGORY_GROUPS[selected];
+    if (group) return group.some(key => tags.includes(key));
+    return tags.includes(selected);
   }
 
   function populateDateFilter() {
@@ -1179,9 +1237,9 @@
     const baseItems = status === 'draft' ? draftItems : status === 'published' ? postItems : [...draftItems, ...postItems].sort(compareByCategory);
     const filtered = baseItems.filter(item => {
       const itemCategory = categoryForItem(item);
-      const tags = displayTags(item);
-      const haystack = [item.title, item.excerpt, itemCategory.label, ...tags].join(' ').toLowerCase();
-      return (dateFilter === 'all' || itemDateKey(item) === dateFilter) && (category === 'all' || itemCategory.key === category) && (!keyword || haystack.includes(keyword));
+      const childCategories = displayChildCategories(item);
+      const haystack = [item.title, item.excerpt, itemCategory.label, ...childCategories].join(' ').toLowerCase();
+      return (dateFilter === 'all' || itemDateKey(item) === dateFilter) && categoryMatchesItem(category, item) && (!keyword || haystack.includes(keyword));
     });
     updateStatusTabs();
     const totalPages = Math.max(1, Math.ceil(filtered.length / CONTENT_PAGE_SIZE));
@@ -1213,7 +1271,7 @@
               <th class="title-col">タイトル</th>
               <th class="status-col">状態</th>
               <th class="category-col">カテゴリー</th>
-              <th class="tags-col">タグ</th>
+              <th class="tags-col">子カテゴリ</th>
               <th class="date-col">日付</th>
               <th class="actions-col">操作</th>
             </tr>
@@ -1226,7 +1284,7 @@
 
   function renderContentRow(item) {
     const category = categoryForItem(item);
-    const tags = displayTags(item);
+    const childCategories = displayChildCategories(item);
     const statusLabel = item.kind === 'draft' ? '下書き' : '公開済み';
     const activeAttrs = item.source === 'server'
       ? `data-draft-id="${escHtml(item.id)}"`
@@ -1243,7 +1301,7 @@
         </td>
         <td class="status-col"><span class="status-badge ${item.kind === 'draft' ? 'is-draft' : 'is-published'}">${statusLabel}</span></td>
         <td class="category-col"><span class="category-badge">${escHtml(category.label)}</span></td>
-        <td class="tags-col">${tags.length ? tags.map(tag => `<span class="tag-chip">${escHtml(tag)}</span>`).join(' ') : '-'}</td>
+        <td class="tags-col">${childCategories.length ? childCategories.map(name => `<span class="tag-chip">${escHtml(name)}</span>`).join(' ') : '-'}</td>
         <td class="date-col">${escHtml(dateText)}</td>
         <td class="actions-col"><div class="row-actions">${rowActionButtons(item)}</div></td>
       </tr>
@@ -1398,8 +1456,7 @@
   function compareByCategory(a, b) {
     const rank = (post) => {
       const tags = normalizeTagsForSort(post);
-      const order = ['chatgpt','claude','gemini','perplexity','genspark','grok','copilot','midjourney','ai-news','wordpress','earn','template','home-work','article'];
-      const found = order.findIndex(tag => tags.includes(tag));
+      const found = CATEGORY_ORDER.findIndex(tag => tags.includes(tag));
       return found === -1 ? 999 : found;
     };
     return rank(a) - rank(b) || String(b.date || '').localeCompare(String(a.date || '')) || String(a.title || '').localeCompare(String(b.title || ''), 'ja');

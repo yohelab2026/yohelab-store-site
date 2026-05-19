@@ -1,9 +1,19 @@
 const postsEl = document.getElementById('posts');
 const blogSearchEl = document.getElementById('blog-search');
 const filterStatusEl = document.getElementById('filter-status');
-const filterChipEls = Array.from(document.querySelectorAll('.filter-chip'));
-let activeFilter = 'all';
-const categoryOrder = ['chatgpt','claude','gemini','perplexity','genspark','grok','copilot','midjourney','ai-news','wordpress','earn','template','home-work','article'];
+const categoryTabEls = Array.from(document.querySelectorAll('.category-tab'));
+const categoryChildEls = Array.from(document.querySelectorAll('.category-child'));
+const categoryPanelEls = Array.from(document.querySelectorAll('.child-category-panel'));
+let activeFilter = 'group:ai-news';
+let activeParent = 'ai-news';
+const aiToolTags = ['ai-news','chatgpt','claude','gemini','perplexity','genspark','grok','copilot','midjourney'];
+const categoryGroups = {
+  'group:ai-news': aiToolTags,
+  'group:earn': ['earn','article'],
+  'group:wordpress': ['wordpress','template'],
+  'group:home-work': ['home-work'],
+};
+const categoryOrder = ['ai-news','chatgpt','claude','gemini','perplexity','genspark','grok','copilot','midjourney','earn','template','article','wordpress','home-work'];
 const staticBlogSlugs = new Set([
   'ai-news-selling-ideas',
   'home-work-rhythm',
@@ -264,7 +274,12 @@ loadPosts();
 function normalizeFilter(value) {
   const v = String(value || '').trim().toLowerCase();
   if (!v) return 'all';
+  if (v.startsWith('group:')) return v;
   if (['ai', 'aiニュース', 'ai-news'].includes(v)) return 'ai-news';
+  if (['ai-news-all', 'aiニュースすべて'].includes(v)) return 'group:ai-news';
+  if (['副業すべて', 'earn-all'].includes(v)) return 'group:earn';
+  if (['wordpressすべて', 'wordpress-all'].includes(v)) return 'group:wordpress';
+  if (['在宅すべて', 'home-work-all'].includes(v)) return 'group:home-work';
   if (['chatgpt', 'openai', 'gpt', 'chatgptニュース'].includes(v)) return 'chatgpt';
   if (['claude', 'anthropic', 'claudeニュース'].includes(v)) return 'claude';
   if (['gemini', 'google-ai', 'googleai', 'geminiニュース'].includes(v)) return 'gemini';
@@ -284,7 +299,7 @@ function applyFilters() {
   cards.forEach(card => {
     const tags = (card.dataset.tags || card.innerText || '').toLowerCase();
     const text = ((card.dataset.search || '') + ' ' + card.innerText).toLowerCase();
-    const tagOk = activeFilter === 'all' || tags.includes(activeFilter);
+    const tagOk = filterMatches(activeFilter, tags);
     const queryOk = !q || text.includes(q);
     const show = tagOk && queryOk;
     card.style.display = show ? '' : 'none';
@@ -297,9 +312,29 @@ function applyFilters() {
   }
 }
 
+function filterMatches(filter, tagText) {
+  if (filter === 'all') return true;
+  const groupTags = categoryGroups[filter];
+  if (groupTags) return groupTags.some(tag => tagText.includes(tag));
+  return tagText.includes(filter);
+}
+
+function parentForFilter(filter) {
+  if (filter.startsWith('group:')) return filter.replace('group:', '');
+  if (aiToolTags.includes(filter)) return 'ai-news';
+  if (['earn', 'article', 'template'].includes(filter)) return 'earn';
+  if (['wordpress'].includes(filter)) return 'wordpress';
+  if (['home-work'].includes(filter)) return 'home-work';
+  return activeParent || 'ai-news';
+}
+
 function getFilterLabel(value) {
   const labels = {
     all: '全部',
+    'group:ai-news': 'AIニュースすべて',
+    'group:earn': '副業すべて',
+    'group:wordpress': 'WordPressすべて',
+    'group:home-work': '在宅すべて',
     'ai-news': 'AIニュース',
     chatgpt: 'ChatGPT',
     claude: 'Claude',
@@ -309,25 +344,44 @@ function getFilterLabel(value) {
     grok: 'Grok',
     copilot: 'Copilot',
     midjourney: 'Midjourney',
-    earn: '商品案',
-    wordpress: 'WordPress',
-    article: '記事の型',
+    earn: '稼ぎ方',
+    wordpress: 'WordPress・文標',
+    article: '記事作成',
     'home-work': '在宅作業',
-    template: 'テンプレ',
+    template: 'テンプレ・商品',
   };
   return labels[value] || value;
 }
 
-function setActiveFilter(value) {
+function setActiveFilter(value, parent) {
   activeFilter = normalizeFilter(value);
-  filterChipEls.forEach(btn => {
-    btn.classList.toggle('is-active', normalizeFilter(btn.dataset.filter) === activeFilter);
+  activeParent = parent || parentForFilter(activeFilter);
+  categoryTabEls.forEach(btn => {
+    const isActive = btn.dataset.parent === activeParent;
+    btn.classList.toggle('is-active', isActive);
+    btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+  });
+  categoryPanelEls.forEach(panel => {
+    panel.classList.toggle('is-active', panel.dataset.parentPanel === activeParent);
+  });
+  const activeChildren = categoryChildEls.filter(btn => btn.dataset.parent === activeParent);
+  const hasExactChild = activeChildren.some(btn => normalizeFilter(btn.dataset.filter) === activeFilter);
+  categoryChildEls.forEach(btn => {
+    const inActiveParent = btn.dataset.parent === activeParent;
+    const isActive = inActiveParent && (hasExactChild
+      ? normalizeFilter(btn.dataset.filter) === activeFilter
+      : normalizeFilter(btn.dataset.filter) === `group:${activeParent}`);
+    btn.classList.toggle('is-active', isActive);
   });
   applyFilters();
 }
 
-filterChipEls.forEach(btn => {
-  btn.addEventListener('click', () => setActiveFilter(btn.dataset.filter));
+categoryTabEls.forEach(btn => {
+  btn.addEventListener('click', () => setActiveFilter(btn.dataset.filter, btn.dataset.parent));
+});
+
+categoryChildEls.forEach(btn => {
+  btn.addEventListener('click', () => setActiveFilter(btn.dataset.filter, btn.dataset.parent));
 });
 
 if (blogSearchEl) {
@@ -335,7 +389,9 @@ if (blogSearchEl) {
 }
 
 const params = new URLSearchParams(location.search);
-if (params.get('tag')) setActiveFilter(params.get('tag'));
+if (params.get('category')) setActiveFilter(params.get('category'));
+else if (params.get('tag')) setActiveFilter(params.get('tag'));
+else setActiveFilter(activeFilter, activeParent);
 if (params.get('q') && blogSearchEl) {
   blogSearchEl.value = params.get('q');
   applyFilters();

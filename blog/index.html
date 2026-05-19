@@ -121,23 +121,83 @@
       text-decoration:none;
       white-space:nowrap;
     }
-    .filter-chips {
+    .category-tabs {
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      overflow:hidden;
+      border:1px solid #dce7fb;
+      border-radius:18px;
+      background:#fff;
+    }
+    .category-tab {
+      min-height:88px;
+      padding:14px 10px 12px;
+      border:0;
+      border-right:1px solid #e8f1ee;
+      background:#fff;
+      color:#21324c;
+      font:inherit;
+      font-weight:900;
+      cursor:pointer;
+      display:grid;
+      place-items:center;
+      gap:7px;
+      box-shadow:inset 0 0 0 0 #0b8f72;
+      transition:background .15s ease,color .15s ease,box-shadow .15s ease;
+    }
+    .category-tab:last-child {
+      border-right:0;
+    }
+    .category-tab.is-active {
+      background:#e8f7f1;
+      color:#0b8f72;
+      box-shadow:inset 0 -4px 0 #0b8f72;
+    }
+    .category-tab-icon {
+      font-size:24px;
+      line-height:1;
+    }
+    .category-tab-label {
+      font-size:15px;
+      letter-spacing:-.02em;
+    }
+    .child-category-panels {
+      margin-top:14px;
+      padding:14px;
+      border:1px solid #dce7fb;
+      border-radius:16px;
+      background:#fbfffd;
+    }
+    .child-category-panel {
+      display:none;
+    }
+    .child-category-panel.is-active {
+      display:block;
+    }
+    .child-category-title {
+      color:#52645f;
+      font-size:12px;
+      font-weight:900;
+      margin-bottom:10px;
+    }
+    .child-category-list {
       display:flex;
       flex-wrap:wrap;
       gap:8px;
     }
-    .filter-chip {
+    .category-child {
       border:1px solid #dce7fb;
-      background:#f8fbff;
+      background:#fff;
       color:#21324c;
       border-radius:999px;
       min-height:34px;
       padding:0 12px;
+      font:inherit;
       font-size:12.5px;
       font-weight:900;
       cursor:pointer;
     }
-    .filter-chip.is-active {
+    .category-child.is-active {
       background:#0b8f72;
       border-color:#0b8f72;
       color:#fff;
@@ -253,6 +313,10 @@
     @media (max-width:560px) {
       .post-card-title { font-size:21px; }
       .blog-search-row { grid-template-columns:1fr; }
+      .category-tabs { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .category-tab { min-height:76px; }
+      .category-tab:nth-child(2) { border-right:0; }
+      .category-tab:nth-child(-n+2) { border-bottom:1px solid #e8f1ee; }
     }
   </style>
 </head>
@@ -304,29 +368,71 @@
           </a>
         </div>
       </section>
-      <section class="blog-tools" aria-label="記事検索とタグ">
+      <section class="blog-tools" aria-label="記事検索とカテゴリ">
         <div class="blog-search-row">
           <input id="blog-search" type="search" placeholder="キーワードで探す。例: ChatGPT / Claude / WordPress / AI検索" autocomplete="off" />
           <a href="/about/">よへラボについて</a>
         </div>
-        <div class="filter-chips" aria-label="タグで絞り込む">
-          <button class="filter-chip is-active" type="button" data-filter="all">すべて</button>
-          <button class="filter-chip" type="button" data-filter="chatgpt">🟢 ChatGPT</button>
-          <button class="filter-chip" type="button" data-filter="claude">🟠 Claude</button>
-          <button class="filter-chip" type="button" data-filter="gemini">🔵 Gemini</button>
-          <button class="filter-chip" type="button" data-filter="perplexity">🩵 Perplexity</button>
-          <button class="filter-chip" type="button" data-filter="genspark">🟣 Genspark</button>
-          <button class="filter-chip" type="button" data-filter="grok">⚡ Grok</button>
-          <button class="filter-chip" type="button" data-filter="copilot">🪟 Copilot</button>
-          <button class="filter-chip" type="button" data-filter="midjourney">🎨 Midjourney</button>
-          <button class="filter-chip" type="button" data-filter="ai-news">🤖 AIニュース全般</button>
-          <button class="filter-chip" type="button" data-filter="wordpress">📝 WordPress</button>
-          <button class="filter-chip" type="button" data-filter="earn">💰 副業・稼ぎ方</button>
-          <button class="filter-chip" type="button" data-filter="template">📄 テンプレ</button>
-          <button class="filter-chip" type="button" data-filter="home-work">🏠 在宅作業</button>
+        <div class="category-tabs" role="tablist" aria-label="親カテゴリ">
+          <button class="category-tab is-active" type="button" role="tab" aria-selected="true" data-parent="ai-news" data-filter="group:ai-news">
+            <span class="category-tab-icon">🤖</span>
+            <span class="category-tab-label">AIニュース</span>
+          </button>
+          <button class="category-tab" type="button" role="tab" aria-selected="false" data-parent="earn" data-filter="group:earn">
+            <span class="category-tab-icon">✍️</span>
+            <span class="category-tab-label">副業ブログ</span>
+          </button>
+          <button class="category-tab" type="button" role="tab" aria-selected="false" data-parent="wordpress" data-filter="group:wordpress">
+            <span class="category-tab-icon">📦</span>
+            <span class="category-tab-label">ツール・商品</span>
+          </button>
+          <button class="category-tab" type="button" role="tab" aria-selected="false" data-parent="home-work" data-filter="group:home-work">
+            <span class="category-tab-icon">💪</span>
+            <span class="category-tab-label">在宅ヒント</span>
+          </button>
+        </div>
+        <div class="child-category-panels" aria-label="子カテゴリ">
+          <div class="child-category-panel is-active" data-parent-panel="ai-news">
+            <div class="child-category-title">AIニュースの子カテゴリ</div>
+            <div class="child-category-list">
+              <button class="category-child is-active" type="button" data-parent="ai-news" data-filter="group:ai-news">すべて</button>
+              <button class="category-child" type="button" data-parent="ai-news" data-filter="chatgpt">ChatGPT</button>
+              <button class="category-child" type="button" data-parent="ai-news" data-filter="claude">Claude</button>
+              <button class="category-child" type="button" data-parent="ai-news" data-filter="gemini">Gemini</button>
+              <button class="category-child" type="button" data-parent="ai-news" data-filter="perplexity">Perplexity</button>
+              <button class="category-child" type="button" data-parent="ai-news" data-filter="genspark">Genspark</button>
+              <button class="category-child" type="button" data-parent="ai-news" data-filter="grok">Grok</button>
+              <button class="category-child" type="button" data-parent="ai-news" data-filter="copilot">Copilot</button>
+              <button class="category-child" type="button" data-parent="ai-news" data-filter="midjourney">Midjourney</button>
+            </div>
+          </div>
+          <div class="child-category-panel" data-parent-panel="earn">
+            <div class="child-category-title">副業ブログの子カテゴリ</div>
+            <div class="child-category-list">
+              <button class="category-child" type="button" data-parent="earn" data-filter="group:earn">すべて</button>
+              <button class="category-child" type="button" data-parent="earn" data-filter="earn">稼ぎ方</button>
+              <button class="category-child" type="button" data-parent="earn" data-filter="article">記事作成</button>
+              <button class="category-child" type="button" data-parent="earn" data-filter="template">テンプレ・商品</button>
+            </div>
+          </div>
+          <div class="child-category-panel" data-parent-panel="wordpress">
+            <div class="child-category-title">ツール・商品の子カテゴリ</div>
+            <div class="child-category-list">
+              <button class="category-child" type="button" data-parent="wordpress" data-filter="group:wordpress">すべて</button>
+              <button class="category-child" type="button" data-parent="wordpress" data-filter="wordpress">WordPress・文標</button>
+              <button class="category-child" type="button" data-parent="wordpress" data-filter="template">テンプレ</button>
+            </div>
+          </div>
+          <div class="child-category-panel" data-parent-panel="home-work">
+            <div class="child-category-title">在宅ヒントの子カテゴリ</div>
+            <div class="child-category-list">
+              <button class="category-child" type="button" data-parent="home-work" data-filter="group:home-work">すべて</button>
+              <button class="category-child" type="button" data-parent="home-work" data-filter="home-work">在宅作業</button>
+            </div>
+          </div>
         </div>
       </section>
-      <div class="filter-status" id="filter-status">記事をキーワードやタグで絞り込めます。</div>
+      <div class="filter-status" id="filter-status">カテゴリやキーワードで記事を絞り込めます。</div>
       <div id="posts" class="posts-grid">
 
         <!-- ===== 公開記事 ===== -->
