@@ -20,6 +20,7 @@ export async function onRequestPost(context) {
     const body = await readJsonBody(context.request);
 
     const title = sanitizeText(body?.title);
+    const originalPostSlug = sanitizeStoredSlug(body?.originalPostSlug);
     const slugRaw = sanitizeSlug(body?.slug || body?.title);
     const excerptInput = sanitizeText(body?.excerpt);
     const bodyHtml = String(body?.bodyHtml || "").trim();
@@ -46,6 +47,10 @@ export async function onRequestPost(context) {
     await kv.put(`post:${slug}`, JSON.stringify(post), {
       metadata: { title: effectiveTitle, date, excerpt, slug: effectiveSlugRaw, eyecatch: eyecatch || "" },
     });
+
+    if (originalPostSlug && originalPostSlug !== slug) {
+      await kv.delete(`post:${originalPostSlug}`);
+    }
 
     const draftId = sanitizeDraftId(body?.draftId);
     if (draftId) {
@@ -141,6 +146,11 @@ function sanitizeSlug(value) {
       .replace(/^-+|-+$/g, "")
       .slice(0, 80) || fallback
   );
+}
+
+function sanitizeStoredSlug(value) {
+  const text = String(value || "").trim();
+  return /^[a-z0-9ぁ-んァ-ヶ一-龠ー._-]{1,140}$/i.test(text) ? text : "";
 }
 
 function sanitizeDraftId(value) {

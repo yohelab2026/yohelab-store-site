@@ -23,13 +23,23 @@
 
     /* ── ナビ（スティッキー） ── */
     .admin-nav { position:sticky;top:0;z-index:40;background:rgba(255,255,255,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:10px 0; }
-    .admin-nav .inner { width:min(900px,100% - 32px);margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px; }
+    .admin-nav .inner { width:min(1180px,100% - 32px);margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px; }
     .admin-nav .brand { font-weight:900;font-size:15px;color:var(--text);text-decoration:none; }
     .nav-actions { display:flex;gap:8px;align-items:center; }
     #status { font-size:13px;color:var(--muted); }
 
     /* ── エディタ本体 ── */
-    .editor-wrap { width:min(760px,100% - 32px);margin:0 auto;padding:32px 0 120px; }
+    .admin-workbench { width:min(1180px,100% - 32px);margin:0 auto;padding:28px 0 96px;display:grid;grid-template-columns:320px minmax(0,1fr);gap:22px;align-items:start; }
+    .content-manager { position:sticky;top:78px;display:grid;gap:14px;max-height:calc(100vh - 100px);overflow:auto;padding-right:2px; }
+    .manager-card { background:#fff;border:1px solid var(--border);border-radius:18px;box-shadow:0 10px 28px rgba(14,55,42,.06);overflow:hidden; }
+    .manager-head { display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 14px 12px;border-bottom:1px solid var(--border); }
+    .manager-head h2 { font-size:16px;font-weight:900;margin:0; }
+    .manager-head p { font-size:12px;color:var(--muted);margin:3px 0 0;line-height:1.5; }
+    .manager-list { display:grid;gap:0; }
+    .editor-panel { min-width:0;background:rgba(255,255,255,.62);border:1px solid var(--border);border-radius:24px;box-shadow:0 18px 45px rgba(14,55,42,.06); }
+    .editor-wrap { width:min(760px,100% - 36px);margin:0 auto;padding:32px 0 64px; }
+    .editor-state { display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:18px;color:var(--muted);font-size:13px;font-weight:700; }
+    .state-pill { display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:7px 12px;background:#e8f7f1;color:var(--green);font-weight:900; }
 
     /* カバー画像エリア */
     .cover-area { margin-bottom:28px; }
@@ -96,29 +106,41 @@
     label.meta-label textarea { min-height:80px;resize:vertical; }
 
     /* 投稿一覧 */
-    .post-list-item { display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--bg);border-radius:12px;border:1px solid var(--border); }
+    .post-list-item { display:flex;align-items:center;gap:10px;padding:12px 14px;background:#fff;border-bottom:1px solid var(--border); }
+    .post-list-item:hover { background:#f6fbf8; }
+    .post-list-item.is-active { background:#e8f7f1; }
     .post-list-item img { width:56px;height:40px;object-fit:cover;border-radius:8px;flex-shrink:0; }
     .post-list-item .info { flex:1;min-width:0; }
     .post-list-item .info strong { display:block;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
     .post-list-item .info span { font-size:12px;color:var(--muted); }
-    .post-list-item .actions { display:flex;gap:8px;flex-shrink:0; }
+    .post-list-item .actions { display:flex;gap:6px;flex-shrink:0; }
     .btn-del { font-size:12px;padding:5px 10px;color:#ef4444;border-color:#ef4444;border-radius:8px;border:1px solid;background:none;cursor:pointer; }
     .btn-del:hover { background:#fef2f2; }
-    .btn-view { font-size:12px;padding:5px 10px;color:var(--green);font-weight:700;text-decoration:none; }
-    .draft-list-item { display:flex;align-items:center;gap:12px;padding:12px 14px;background:#fff;border-radius:12px;border:1px solid var(--border); }
+    .btn-view, .btn-edit, .btn-draft { font-size:12px;padding:5px 9px;color:var(--green);border:1px solid var(--green);border-radius:8px;background:#fff;font-weight:800;text-decoration:none;cursor:pointer;white-space:nowrap; }
+    .btn-view:hover, .btn-edit:hover, .btn-draft:hover { background:#effaf6; }
+    .btn-draft { color:#7c5b00;border-color:#eab308; }
+    .draft-list-item { display:flex;align-items:center;gap:10px;padding:12px 14px;background:#fff;border-bottom:1px solid var(--border); }
+    .draft-list-item:hover { background:#f6fbf8; }
+    .draft-list-item.is-active { background:#e8f7f1; }
     .draft-list-item .info { flex:1;min-width:0; }
     .draft-list-item .info strong { display:block;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
     .draft-list-item .info span { font-size:12px;color:var(--muted); }
-    .draft-list-item .actions { display:flex;gap:8px;flex-shrink:0; }
+    .draft-list-item .actions { display:flex;gap:6px;flex-shrink:0; }
     .btn-open-draft { font-size:12px;padding:5px 10px;color:var(--green);border:1px solid var(--green);border-radius:8px;background:#fff;font-weight:700;cursor:pointer; }
     .btn-open-draft:hover { background:#f0f8f4; }
 
     @media (max-width: 600px) {
+      .admin-workbench { width:100%;padding:0 0 72px;display:flex;flex-direction:column-reverse;gap:16px; }
+      .content-manager { position:static;max-height:none;width:calc(100% - 24px);margin:0 auto; }
+      .editor-panel { border-radius:0;border-left:0;border-right:0;box-shadow:none; }
+      .editor-wrap { width:calc(100% - 32px);padding:24px 0 48px; }
       .toolbar { top:53px; }
       .admin-nav .inner { align-items:flex-start; }
       .nav-actions { flex-wrap:wrap; justify-content:flex-end; max-width:260px; }
       .nav-actions .btn { padding:7px 10px; font-size:12px; }
       #status { width:100%; text-align:right; }
+      .post-list-item, .draft-list-item { align-items:flex-start; }
+      .post-list-item .actions, .draft-list-item .actions { flex-wrap:wrap;justify-content:flex-end; }
     }
   </style>
 </head>
@@ -145,6 +167,7 @@
       <a class="brand" href="/blog/">← ブログ</a>
       <div class="nav-actions">
         <span id="status">下書き中</span>
+        <button class="btn btn-outline" id="new-post" type="button">新規</button>
         <button class="btn btn-outline" id="save-draft" type="button">下書き保存</button>
         <button class="btn btn-primary" id="post-btn" type="button">公開する</button>
         <button class="btn btn-outline" id="logout-admin" type="button" style="color:var(--muted);">ログアウト</button>
@@ -153,7 +176,41 @@
   </nav>
 
   <main class="shell" style="padding-top:0;">
-    <div class="editor-wrap">
+    <div class="admin-workbench">
+      <aside class="content-manager" aria-label="記事一覧">
+        <section class="manager-card">
+          <div class="manager-head">
+            <div>
+              <h2>下書き</h2>
+              <p>途中の記事を開いて編集できます。</p>
+            </div>
+            <button class="btn btn-outline" id="refresh-drafts" type="button">更新</button>
+          </div>
+          <div id="draft-list" class="manager-list">
+            <p style="color:var(--muted);font-size:14px;padding:14px;">読み込み中...</p>
+          </div>
+        </section>
+
+        <section class="manager-card">
+          <div class="manager-head">
+            <div>
+              <h2>公開済み</h2>
+              <p>表示・編集・下書き戻しができます。</p>
+            </div>
+            <button class="btn btn-outline" id="refresh-posts" type="button">更新</button>
+          </div>
+          <div id="post-list" class="manager-list">
+            <p style="color:var(--muted);font-size:14px;padding:14px;">読み込み中...</p>
+          </div>
+        </section>
+      </aside>
+
+      <section class="editor-panel" aria-label="記事エディタ">
+        <div class="editor-wrap">
+          <div class="editor-state">
+            <span class="state-pill" id="editor-mode">新規記事</span>
+            <span id="editor-hint">左の一覧から下書きや公開済み記事を開けます。</span>
+          </div>
 
       <!-- カバー画像 -->
       <div class="cover-area" id="cover-area">
@@ -217,31 +274,8 @@
           </div>
         </label>
       </div>
-    </div>
-
-    <!-- サーバー下書き一覧 -->
-    <div style="width:min(760px,100% - 32px);margin:0 auto 40px;">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
-        <div>
-          <h2 style="font-size:20px;font-weight:900;">サーバー下書き</h2>
-          <p style="font-size:13px;color:var(--muted);margin-top:4px;">画像URLも本文と一緒に保存。公開すると元の下書きは消えます。</p>
         </div>
-        <button class="btn btn-outline" id="refresh-drafts" type="button">更新</button>
-      </div>
-      <div id="draft-list" style="display:grid;gap:10px;">
-        <p style="color:var(--muted);font-size:14px;">読み込み中...</p>
-      </div>
-    </div>
-
-    <!-- 投稿済み記事一覧 -->
-    <div style="width:min(760px,100% - 32px);margin:0 auto 80px;">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
-        <h2 style="font-size:20px;font-weight:900;">投稿済みの記事</h2>
-        <button class="btn btn-outline" id="refresh-posts" type="button">更新</button>
-      </div>
-      <div id="post-list" style="display:grid;gap:10px;">
-        <p style="color:var(--muted);font-size:14px;">読み込み中...</p>
-      </div>
+      </section>
     </div>
   </main>
 
@@ -274,7 +308,11 @@
   const statusEl   = document.getElementById('status');
   const draftListEl = document.getElementById('draft-list');
   const postListEl = document.getElementById('post-list');
+  const editorModeEl = document.getElementById('editor-mode');
+  const editorHintEl = document.getElementById('editor-hint');
   let activeDraftId = '';
+  let activePostSlug = '';
+  let activePostDate = '';
 
   // ── 認証 ────────────────────────────────────────────────────
   const loginView  = document.getElementById('login-view');
@@ -518,6 +556,8 @@
   function saveDraftLocal() {
     localStorage.setItem('yohelab.blog.draft', JSON.stringify({
       draftId: activeDraftId,
+      postSlug: activePostSlug,
+      postDate: activePostDate,
       title: titleEl.value,
       bodyHtml: bodyEl.innerHTML,
       excerpt: excerptEl.value,
@@ -537,6 +577,8 @@
     const d = JSON.parse(localStorage.getItem('yohelab.blog.draft') || 'null');
     if (d) {
       activeDraftId = d.draftId || '';
+      activePostSlug = d.postSlug || '';
+      activePostDate = d.postDate || '';
       titleEl.value = d.title || '';
       bodyEl.innerHTML = d.bodyHtml || '';
       excerptEl.value = d.excerpt || '';
@@ -549,6 +591,7 @@
         coverPreview.style.display = '';
       }
       titleEl.style.height = titleEl.scrollHeight + 'px';
+      updateEditorState();
     }
   } catch {}
 
@@ -563,6 +606,47 @@
       tags: tagsEl.value.split(',').map(v=>v.trim()).filter(Boolean),
       eyecatch: eyecatchEl.value.trim() || undefined,
     };
+  }
+
+  function clearEditor() {
+    activeDraftId = '';
+    activePostSlug = '';
+    activePostDate = '';
+    titleEl.value = '';
+    bodyEl.innerHTML = '';
+    excerptEl.value = '';
+    tagsEl.value = '';
+    slugEl.value = '';
+    eyecatchEl.value = '';
+    coverImg.src = '';
+    coverPreview.style.display = 'none';
+    coverDrop.style.display = '';
+    coverFile.value = '';
+    titleEl.style.height = 'auto';
+    localStorage.removeItem('yohelab.blog.draft');
+    updateEditorState();
+    statusEl.textContent = '新規記事';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function updateEditorState() {
+    if (activePostSlug) {
+      editorModeEl.textContent = '公開済みを編集中';
+      editorHintEl.textContent = '公開すると今の記事を上書きします。下書き保存もできます。';
+    } else if (activeDraftId) {
+      editorModeEl.textContent = '下書きを編集中';
+      editorHintEl.textContent = '公開するとこの下書きは一覧から消えます。';
+    } else {
+      editorModeEl.textContent = '新規記事';
+      editorHintEl.textContent = '左の一覧から下書きや公開済み記事を開けます。';
+    }
+    document.querySelectorAll('.draft-list-item.is-active,.post-list-item.is-active').forEach(el => el.classList.remove('is-active'));
+    if (activeDraftId) document.querySelector(`[data-draft-id="${cssEscape(activeDraftId)}"]`)?.classList.add('is-active');
+    if (activePostSlug) document.querySelector(`[data-post-slug="${cssEscape(activePostSlug)}"]`)?.classList.add('is-active');
+  }
+
+  function cssEscape(value) {
+    return String(value || '').replace(/["\\]/g, '\\$&');
   }
 
   async function saveDraftServer() {
@@ -581,13 +665,22 @@
       return;
     }
     activeDraftId = data.draftId || '';
+    activePostSlug = '';
+    activePostDate = '';
     saveDraftLocal();
+    updateEditorState();
     statusEl.textContent = 'サーバー下書きを保存した ✓';
     loadDraftList();
     setTimeout(() => statusEl.textContent='下書き中', 2000);
   }
 
   document.getElementById('save-draft').addEventListener('click', saveDraftServer);
+  document.getElementById('new-post').addEventListener('click', () => {
+    if (titleEl.value.trim() || bodyEl.innerText.trim() || eyecatchEl.value.trim()) {
+      if (!confirm('今の編集内容を閉じて、新規記事を作りますか？未保存の内容は消えます。')) return;
+    }
+    clearEditor();
+  });
 
   // ── 公開 ──────────────────────────────────────────────────
   function makeSlug(text) {
@@ -609,12 +702,13 @@
       draftId: activeDraftId || undefined,
       title,
       slug: slugEl.value.trim() || makeSlug(title),
-      date: new Date().toISOString().slice(0,10),
+      date: activePostDate || new Date().toISOString().slice(0,10),
       excerpt: excerptEl.value.trim(),
       bodyHtml: bodyEl.innerHTML,
       body: bodyEl.innerText.trim(),
       tags: tagsEl.value.split(',').map(v=>v.trim()).filter(Boolean),
       eyecatch: eyecatchEl.value.trim() || undefined,
+      originalPostSlug: activePostSlug || undefined,
     };
     const res = await fetch('/api/blog-post', {
       method: 'POST',
@@ -628,10 +722,7 @@
       return;
     }
     // フォームリセット
-    titleEl.value=''; bodyEl.innerHTML=''; excerptEl.value=''; tagsEl.value=''; slugEl.value='';
-    eyecatchEl.value=''; coverImg.src=''; coverPreview.style.display='none'; coverDrop.style.display=''; coverFile.value='';
-    titleEl.style.height='auto';
-    activeDraftId = '';
+    clearEditor();
     localStorage.removeItem('yohelab.blog.draft');
     statusEl.textContent='公開した ✓';
     setTimeout(()=>statusEl.textContent='下書き中', 3000);
@@ -652,21 +743,23 @@
       const data = await res.json().catch(()=>({}));
       const drafts = data.drafts || [];
       if (!drafts.length) {
-        draftListEl.innerHTML='<p style="color:var(--muted);font-size:14px;">サーバー下書きはありません。</p>';
+      draftListEl.innerHTML='<p style="color:var(--muted);font-size:14px;padding:14px;">サーバー下書きはありません。</p>';
         return;
       }
       draftListEl.innerHTML = drafts.map(d=>`
-        <div class="draft-list-item">
+        <div class="draft-list-item" data-draft-id="${escHtml(d.draftId)}">
           <div class="info">
             <strong>${escHtml(d.title||'無題の下書き')}</strong>
             <span>${d.updatedAt ? new Date(d.updatedAt).toLocaleString('ja-JP') : ''}</span>
           </div>
           <div class="actions">
             <button class="btn-open-draft" type="button" onclick="openDraft('${escHtml(d.draftId)}')">開く</button>
+            <button class="btn-edit" type="button" onclick="openDraft('${escHtml(d.draftId)}')">編集</button>
             <button class="btn-del" type="button" onclick="deleteDraft('${escHtml(d.draftId)}',this)">削除</button>
           </div>
         </div>
       `).join('');
+      updateEditorState();
     } catch {
       draftListEl.innerHTML='<p style="color:#ef4444;font-size:14px;">下書きの読み込みに失敗。</p>';
     }
@@ -682,7 +775,7 @@
       statusEl.textContent = data.error || '下書きを開けませんでした。';
       return;
     }
-    fillEditor(data.draft);
+    fillEditor(data.draft, { draftId });
     statusEl.textContent = '下書きを開いた ✓';
     setTimeout(() => statusEl.textContent='下書き中', 2000);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -702,6 +795,7 @@
       if (activeDraftId === draftId) {
         activeDraftId = '';
         saveDraftLocal();
+        updateEditorState();
       }
       loadDraftList();
     } else {
@@ -709,8 +803,10 @@
     }
   }
 
-  function fillEditor(post) {
-    activeDraftId = post.draftId || '';
+  function fillEditor(post, options = {}) {
+    activeDraftId = options.draftId || post.draftId || '';
+    activePostSlug = options.postSlug || '';
+    activePostDate = post.date || '';
     titleEl.value = post.title || '';
     bodyEl.innerHTML = post.bodyHtml || '';
     excerptEl.value = post.excerpt || '';
@@ -729,6 +825,7 @@
     titleEl.style.height = 'auto';
     titleEl.style.height = titleEl.scrollHeight + 'px';
     saveDraftLocal();
+    updateEditorState();
   }
 
   // ── 投稿一覧 & 削除 ───────────────────────────────────────
@@ -738,9 +835,9 @@
       const res = await fetch('/api/blog-posts');
       const data = await res.json().catch(()=>({}));
       const posts = data.posts || [];
-      if (!posts.length) { postListEl.innerHTML='<p style="color:var(--muted);font-size:14px;">まだ記事がありません。</p>'; return; }
+      if (!posts.length) { postListEl.innerHTML='<p style="color:var(--muted);font-size:14px;padding:14px;">まだ記事がありません。</p>'; return; }
       postListEl.innerHTML = posts.map(p=>`
-        <div class="post-list-item">
+        <div class="post-list-item" data-post-slug="${escHtml(p.slug)}">
           ${p.eyecatch?`<img src="${p.eyecatch}" alt="" />`:'<div style="width:56px;height:40px;background:var(--bg);border-radius:8px;flex-shrink:0;"></div>'}
           <div class="info">
             <strong>${escHtml(p.title||'無題')}</strong>
@@ -748,11 +845,71 @@
           </div>
           <div class="actions">
             <a class="btn-view" href="/blog/post/?slug=${encodeURIComponent(p.slug)}" target="_blank">表示</a>
+            <button class="btn-edit" type="button" onclick="openPost('${escHtml(p.slug)}')">編集</button>
+            <button class="btn-draft" type="button" onclick="movePostToDraft('${escHtml(p.slug)}',this)">下書き</button>
             <button class="btn-del" type="button" onclick="deletePost('${escHtml(p.slug)}',this)">削除</button>
           </div>
         </div>
       `).join('');
+      updateEditorState();
     } catch { postListEl.innerHTML='<p style="color:#ef4444;font-size:14px;">読み込み失敗。</p>'; }
+  }
+
+  async function openPost(slug) {
+    if (!slug) return;
+    statusEl.textContent = '公開済み記事を開いています...';
+    const res = await fetch(`/api/blog-post-get?slug=${encodeURIComponent(slug)}`);
+    const data = await res.json().catch(()=>({}));
+    if (!res.ok || !data.post) {
+      statusEl.textContent = data.error || '記事を開けませんでした。';
+      return;
+    }
+    fillEditor(data.post, { postSlug: slug });
+    statusEl.textContent = '公開済み記事を開いた ✓';
+    setTimeout(() => statusEl.textContent='編集中', 2000);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  async function movePostToDraft(slug, btn) {
+    if (!confirm('この記事を下書きに戻しますか？公開ページからは消えます。')) return;
+    const pin = currentPin();
+    if (!pin || !slug) return;
+    btn.textContent = '処理中...';
+    btn.disabled = true;
+    const getRes = await fetch(`/api/blog-post-get?slug=${encodeURIComponent(slug)}`);
+    const getData = await getRes.json().catch(()=>({}));
+    if (!getRes.ok || !getData.post) {
+      btn.textContent = '失敗';
+      btn.disabled = false;
+      return;
+    }
+    const draftRes = await fetch('/api/blog-draft', {
+      method: 'POST',
+      headers: { 'Content-Type':'application/json','X-Yohelab-Pin': pin },
+      body: JSON.stringify(getData.post),
+    });
+    if (!draftRes.ok) {
+      btn.textContent = '失敗';
+      btn.disabled = false;
+      return;
+    }
+    const delRes = await fetch('/api/blog-post', {
+      method:'DELETE',
+      headers:{'Content-Type':'application/json','X-Yohelab-Pin':pin},
+      body: JSON.stringify({slug}),
+    });
+    if (!delRes.ok) {
+      btn.textContent = '削除失敗';
+      btn.disabled = false;
+      return;
+    }
+    if (activePostSlug === slug) {
+      activePostSlug = '';
+      updateEditorState();
+    }
+    statusEl.textContent = '下書きに戻した ✓';
+    loadDraftList();
+    loadPostList();
   }
 
   async function deletePost(kvKey, btn) {
@@ -766,7 +923,12 @@
       headers:{'Content-Type':'application/json','X-Yohelab-Pin':pin},
       body: JSON.stringify({slug}),
     });
-    res.ok ? loadPostList() : (btn.textContent='失敗', btn.disabled=false);
+    if (res.ok) {
+      if (activePostSlug === slug) clearEditor();
+      loadPostList();
+    } else {
+      btn.textContent='失敗'; btn.disabled=false;
+    }
   }
 
   document.getElementById('refresh-posts').addEventListener('click', loadPostList);
@@ -775,6 +937,14 @@
   function escHtml(str) {
     return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
+
+  Object.assign(window, {
+    openDraft,
+    deleteDraft,
+    openPost,
+    movePostToDraft,
+    deletePost,
+  });
   </script>
 </body>
 </html>
