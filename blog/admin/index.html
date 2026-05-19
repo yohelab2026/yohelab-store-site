@@ -37,6 +37,7 @@
     #content-manager-card .manager-head { padding:20px 22px 14px; }
     #content-manager-card .manager-head h2 { font-size:28px;letter-spacing:-.04em; }
     .manager-head { display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 14px 12px;border-bottom:1px solid var(--border); }
+    .manager-head-actions { display:flex;gap:8px;align-items:center;justify-content:flex-end;flex-wrap:wrap; }
     .manager-head h2 { font-size:16px;font-weight:900;margin:0; }
     .manager-head p { font-size:12px;color:var(--muted);margin:3px 0 0;line-height:1.5; }
     .manager-count { display:inline-flex;align-items:center;justify-content:center;min-width:28px;height:24px;border-radius:999px;background:#e8f7f1;color:var(--green);font-size:12px;font-weight:900;margin-left:6px; }
@@ -277,7 +278,10 @@
               <h2>投稿</h2>
               <p>下書き・公開済み・カテゴリ・タグで絞れます。</p>
             </div>
-            <button class="btn btn-outline" id="new-post-list" type="button">新規追加</button>
+            <div class="manager-head-actions">
+              <button class="btn btn-outline" id="import-static-posts" type="button">既存記事を取り込む</button>
+              <button class="btn btn-outline" id="new-post-list" type="button">新規追加</button>
+            </div>
           </div>
           <div class="manager-toolbar" aria-label="記事一覧の絞り込み">
             <div class="post-status-tabs" id="content-status-tabs" aria-label="投稿状態">
@@ -407,6 +411,7 @@
   const SESSION_KEY = 'yohelab.blog.sess';
   const SESSION_PIN_KEY = 'yohelab.blog.pin.session';
   const SAVED_PIN_KEY = 'yohelab.blog.pin.saved';
+  const IMPORT_STATIC_SESSION_KEY = 'yohelab.blog.staticImport.tried';
 
   const titleEl    = document.getElementById('title');
   const bodyEl     = document.getElementById('body');
@@ -421,6 +426,7 @@
   const contentDateFilterEl = document.getElementById('content-date-filter');
   const contentCategoryFilterEl = document.getElementById('content-category-filter');
   const contentSearchEl = document.getElementById('content-search');
+  const importStaticPostsEl = document.getElementById('import-static-posts');
   const editorModeEl = document.getElementById('editor-mode');
   const editorHintEl = document.getElementById('editor-hint');
   const saveDotEl = document.getElementById('save-dot');
@@ -460,7 +466,7 @@
 
   if (sessionStorage.getItem(SESSION_KEY)) {
     document.body.classList.add('is-unlocked');
-    loadAllLists();
+    loadAllLists({ importStatic: true });
   } else {
     showLock();
     // ロック中でもstatic-posts.jsonは先読み（ログイン後の表示を速くする）
@@ -477,7 +483,7 @@
     sessionStorage.setItem(SESSION_PIN_KEY, input);
     savePinForThisBrowser(input);
     document.body.classList.add('is-unlocked');
-    setTimeout(() => loadAllLists(), 200);
+    setTimeout(() => loadAllLists({ importStatic: true }), 200);
   }
   document.getElementById('unlock-admin').addEventListener('click', handleLogin);
   adminPinEl.addEventListener('keydown', e => { if(e.key==='Enter') handleLogin(); });
@@ -957,6 +963,54 @@
     return staticPosts;
   }
 
+  function staticImportSlug(post) {
+    return String(post?.sourceSlug || post?.staticSlug || post?.slug || '').replace(/^\d{4}-\d{2}-\d{2}-/, '');
+  }
+
+  async function importStaticPosts(options = {}) {
+    const silent = Boolean(options.silent);
+    const pin = currentPin();
+    if (!pin) return null;
+    await loadStaticPosts();
+    if (!staticPosts.length) return null;
+
+    if (!silent) {
+      importStaticPostsEl && (importStaticPostsEl.disabled = true);
+      importStaticPostsEl && (importStaticPostsEl.textContent = '取り込み中...');
+      statusEl.textContent = '既存記事をサーバーへ取り込み中...';
+    }
+
+    try {
+      const res = await fetch('/api/blog-import-static', {
+        method: 'POST',
+        headers: { 'Content-Type':'application/json', 'X-Yohelab-Pin': pin },
+        body: JSON.stringify({ posts: staticPosts }),
+      });
+      const data = await res.json().catch(()=>({}));
+      if (!res.ok || !data.ok) {
+        if (!silent) statusEl.textContent = data.error || '既存記事の取り込みに失敗した。';
+        return data;
+      }
+
+      const imported = Number(data.importedDrafts || 0) + Number(data.importedPosts || 0);
+      const skipped = Number(data.skippedDrafts || 0) + Number(data.skippedPosts || 0);
+      if (!silent) {
+        statusEl.textContent = imported
+          ? `既存記事を取り込んだ ✓（追加 ${imported}件 / 既存 ${skipped}件）`
+          : `既存記事は取り込み済み ✓（${skipped}件）`;
+      }
+      return data;
+    } catch {
+      if (!silent) statusEl.textContent = '既存記事の取り込みに失敗した。';
+      return null;
+    } finally {
+      if (!silent && importStaticPostsEl) {
+        importStaticPostsEl.disabled = false;
+        importStaticPostsEl.textContent = '既存記事を取り込む';
+      }
+    }
+  }
+
   async function loadDraftList(skipRender = false) {
     if (!contentListEl) return;
     const pin = currentPin();
@@ -969,17 +1023,21 @@
       drafts = data.drafts || [];
     } catch {}
 
-    const staticDrafts = staticPosts.filter(p => p.status === 'draft');
+    const importedDraftSlugs = new Set(drafts.map(staticImportSlug).filter(Boolean));
+    const staticDrafts = staticPosts.filter(p => p.status === 'draft' && !importedDraftSlugs.has(staticImportSlug(p)));
     draftItems = [
       ...drafts.map(d => ({
         kind: 'draft',
         source: 'server',
         id: d.draftId,
         title: d.title || '無題の下書き',
+        slug: d.slug || d.sourceSlug || '',
+        sourceSlug: d.sourceSlug || d.slug || '',
         date: d.updatedAt || '',
         excerpt: d.excerpt || '',
         tags: parseTagList(d.tags),
         eyecatch: d.eyecatch || '',
+        importedFrom: d.importedFrom || '',
       })),
       ...staticDrafts.map(p => ({
         kind: 'draft',
@@ -994,7 +1052,7 @@
         eyecatch: p.eyecatch || '',
       })),
     ].sort(compareByCategory);
-    updateManagerCounts(drafts.length + staticDrafts.length, null);
+    updateManagerCounts(draftItems.length, null);
     if (!skipRender) {
       populateCategoryFilter();
       populateDateFilter();
@@ -1003,10 +1061,14 @@
   }
 
   // 下書き＋公開済みを同時に読み込んで一度だけ描画する
-  async function loadAllLists() {
+  async function loadAllLists(options = {}) {
     if (!contentListEl) return;
     contentListEl.innerHTML = '<p style="color:var(--muted);font-size:14px;padding:14px;">読み込み中...</p>';
     await loadStaticPosts();
+    if (options.importStatic && !sessionStorage.getItem(IMPORT_STATIC_SESSION_KEY)) {
+      sessionStorage.setItem(IMPORT_STATIC_SESSION_KEY, '1');
+      await importStaticPosts({ silent: true });
+    }
     await Promise.all([
       loadDraftList(true),
       loadPostList(true),
@@ -1279,13 +1341,15 @@
       posts = data.posts || [];
     } catch {}
 
-    const staticPublished = staticPosts.filter(p => p.status !== 'draft');
+    const importedPublishedSlugs = new Set(posts.flatMap(p => [staticImportSlug(p), p.sourceSlug || '', p.slug || '']).filter(Boolean));
+    const staticPublished = staticPosts.filter(p => p.status !== 'draft' && !importedPublishedSlugs.has(staticImportSlug(p)));
     postItems = [
       ...posts.map(p => ({
         ...p,
         kind: 'published',
         source: 'dynamic',
         url: `/blog/post/?slug=${encodeURIComponent(p.slug)}`,
+        sourceSlug: p.sourceSlug || staticImportSlug(p),
         tags: parseTagList(p.tags),
       })),
       ...staticPublished.map(p => ({
@@ -1379,7 +1443,7 @@
       btn.textContent = '保存済み';
       statusEl.textContent = 'サイト内記事を下書きに保存した ✓';
       if (contentStatusFilterEl) contentStatusFilterEl.value = 'draft';
-      loadDraftList();
+      loadAllLists();
       return;
     }
     btn.textContent = '失敗';
@@ -1473,6 +1537,10 @@
   }
 
   document.getElementById('refresh-content')?.addEventListener('click', refreshContentLists);
+  importStaticPostsEl?.addEventListener('click', async () => {
+    await importStaticPosts();
+    await loadAllLists();
+  });
   contentStatusFilterEl?.addEventListener('change', renderContentList);
   contentCategoryFilterEl?.addEventListener('change', renderContentList);
   contentSearchEl?.addEventListener('input', renderContentList);

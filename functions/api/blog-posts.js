@@ -18,6 +18,8 @@ export async function onRequestGet(context) {
         excerpt: key.metadata?.excerpt || "",
         eyecatch: key.metadata?.eyecatch || "",
         tags: parseTags(key.metadata?.tags),
+        sourceSlug: key.metadata?.sourceSlug || key.metadata?.slug || "",
+        importedFrom: key.metadata?.importedFrom || "",
       }))
       .sort((a, b) => String(b.date).localeCompare(String(a.date)));
 
