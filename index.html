@@ -655,6 +655,34 @@
               <div class="news-meta">2026-05-04 · よへラボブログ</div>
             </div>
           </a>
+          <a class="news-item" href="/blog/free-theme-vs-bunsirube/" data-ai="all">
+            <span class="news-tag tag-wp">WP</span>
+            <div class="news-body">
+              <div class="news-title">無料テーマと文標の違い：記事の型で選ぶ考え方</div>
+              <div class="news-meta">2026-05-04 · よへラボブログ</div>
+            </div>
+          </a>
+          <a class="news-item" href="/blog/sales-page-common-mistakes/" data-ai="all">
+            <span class="news-tag tag-earn">販売</span>
+            <div class="news-body">
+              <div class="news-title">BASE・note・自サイトの商品ページでよくある失敗</div>
+              <div class="news-meta">2026-05-02 · よへラボブログ</div>
+            </div>
+          </a>
+          <a class="news-item" href="/blog/bunsirube-before-install/" data-ai="all">
+            <span class="news-tag tag-wp">文標</span>
+            <div class="news-body">
+              <div class="news-title">文標を入れる前に確認すること</div>
+              <div class="news-meta">2026-05-02 · よへラボブログ</div>
+            </div>
+          </a>
+          <a class="news-item" href="/blog/bunsirube-version-history/" data-ai="all">
+            <span class="news-tag tag-wp">更新</span>
+            <div class="news-body">
+              <div class="news-title">文標のバージョンアップ履歴</div>
+              <div class="news-meta">2026-05-12 · よへラボブログ</div>
+            </div>
+          </a>
         </div>
       </section>
 
@@ -1112,7 +1140,6 @@
       if (newsContainer) {
         const existingNews = new Set([...newsContainer.querySelectorAll('a[href]')].map(a => a.getAttribute('href')));
         const newsHtml = dynamicPosts
-          .filter(isAiNewsHomePost)
           .filter(post => !existingNews.has(dynamicPostUrl(post)))
           .map(renderDynamicNewsItem)
           .join('');
