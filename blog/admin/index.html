@@ -96,6 +96,16 @@
     .tag-chip { display:inline-flex;align-items:center;border-radius:999px;padding:3px 7px;background:#f0f8f4;color:#436258;font-size:11px;font-weight:800; }
     .row-actions { display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:2px; }
     .row-actions .btn-view, .row-actions .btn-edit, .row-actions .btn-draft, .row-actions .btn-del, .row-actions .btn-open-draft { font-size:11px;padding:5px 8px; }
+    .category-manager { margin-bottom:22px; }
+    .category-editor { display:grid;gap:12px;padding:16px;border-top:1px solid var(--border); }
+    .category-parent-row { display:grid;grid-template-columns:88px minmax(150px,1fr) 130px 70px 76px;gap:8px;align-items:center;padding:10px;border:1px solid var(--border);border-radius:14px;background:#f8fffc; }
+    .category-child-row { display:grid;grid-template-columns:88px minmax(150px,1fr) 130px 70px 76px;gap:8px;align-items:center;margin:6px 0 0 26px;padding:8px 10px;border:1px solid #e8f1ee;border-radius:12px;background:#fff; }
+    .category-editor input { width:100%;border:1px solid var(--border);border-radius:10px;padding:8px 10px;font-size:13px;font-family:inherit;background:#fff; }
+    .category-editor input[type="color"] { min-height:38px;padding:3px;cursor:pointer; }
+    .category-editor input[data-field="key"] { color:#64748b;background:#f8fafc; }
+    .category-row-label { font-size:12px;font-weight:900;color:var(--muted); }
+    .category-editor-actions { display:flex;gap:10px;justify-content:flex-end;padding:0 16px 16px; }
+    .category-save-message { padding:0 16px 16px;color:var(--muted);font-size:12px; }
     .editor-panel { scroll-margin-top:88px; }
     .editor-panel { min-width:0;background:rgba(255,255,255,.62);border:1px solid var(--border);border-radius:24px;box-shadow:0 18px 45px rgba(14,55,42,.06); }
     .editor-wrap { width:min(760px,100% - 36px);margin:0 auto;padding:32px 0 64px; }
@@ -279,6 +289,23 @@
           </div>
         </section>
 
+        <section class="manager-card category-manager" id="category-manager-card">
+          <div class="manager-head">
+            <div>
+              <h2>カテゴリ管理</h2>
+              <p>トップやブログ一覧に出る親カテゴリ・子カテゴリ名を編集できます。</p>
+            </div>
+            <div class="manager-head-actions">
+              <button class="btn btn-outline" id="reset-categories" type="button">初期値に戻す</button>
+              <button class="btn btn-primary" id="save-categories" type="button">カテゴリを保存</button>
+            </div>
+          </div>
+          <div class="category-editor" id="category-editor">
+            <p style="color:var(--muted);font-size:14px;">カテゴリを読み込み中...</p>
+          </div>
+          <div class="category-save-message" id="category-save-message">slugを変えると、そのslugを記事設定の子カテゴリにも入れる必要があります。</div>
+        </section>
+
         <section class="manager-card" id="content-manager-card">
           <div class="manager-head">
             <div>
@@ -434,6 +461,10 @@
   const contentCategoryFilterEl = document.getElementById('content-category-filter');
   const contentSearchEl = document.getElementById('content-search');
   const importStaticPostsEl = document.getElementById('import-static-posts');
+  const categoryEditorEl = document.getElementById('category-editor');
+  const saveCategoriesEl = document.getElementById('save-categories');
+  const resetCategoriesEl = document.getElementById('reset-categories');
+  const categorySaveMessageEl = document.getElementById('category-save-message');
   const editorModeEl = document.getElementById('editor-mode');
   const editorHintEl = document.getElementById('editor-hint');
   const saveDotEl = document.getElementById('save-dot');
@@ -469,7 +500,7 @@
 
   if (sessionStorage.getItem(SESSION_KEY)) {
     document.body.classList.add('is-unlocked');
-    loadAllLists({ importStatic: true });
+    initializeAdminAfterUnlock();
   } else {
     showLock();
     // ロック中でもstatic-posts.jsonは先読み（ログイン後の表示を速くする）
@@ -485,7 +516,7 @@
     sessionStorage.setItem(SESSION_KEY, '1');
     sessionStorage.setItem(SESSION_PIN_KEY, input);
     document.body.classList.add('is-unlocked');
-    setTimeout(() => loadAllLists({ importStatic: true }), 200);
+    setTimeout(() => initializeAdminAfterUnlock(), 200);
   }
   document.getElementById('unlock-admin').addEventListener('click', handleLogin);
   adminPinEl.addEventListener('keydown', e => { if(e.key==='Enter') handleLogin(); });
@@ -517,6 +548,11 @@
 
   function currentPin() {
     return (sessionStorage.getItem(SESSION_PIN_KEY) || '').trim();
+  }
+
+  async function initializeAdminAfterUnlock() {
+    await loadCategorySettings();
+    await loadAllLists({ importStatic: true });
   }
 
   // ── タイトル auto-resize ────────────────────────────────────
@@ -1058,69 +1094,239 @@
     renderContentList();
   }
 
-  const CATEGORY_TREE = [
+  const DEFAULT_CATEGORY_TREE = [
     {
       key: 'ai-news',
       label: 'AIニュース',
+      color: '#0b8f72',
+      order: 10,
       children: [
-        ['ai-news', 'AIニュース'],
-        ['chatgpt', 'ChatGPT'],
-        ['claude', 'Claude'],
-        ['gemini', 'Gemini'],
-        ['perplexity', 'Perplexity'],
-        ['genspark', 'Genspark'],
-        ['grok', 'Grok'],
-        ['copilot', 'Copilot'],
-        ['midjourney', 'Midjourney'],
+        { key: 'ai-news', label: 'AIニュース', color: '#0b8f72', order: 10 },
+        { key: 'chatgpt', label: 'ChatGPT', color: '#10a37f', order: 20 },
+        { key: 'claude', label: 'Claude', color: '#cc785c', order: 30 },
+        { key: 'gemini', label: 'Gemini', color: '#4285f4', order: 40 },
+        { key: 'perplexity', label: 'Perplexity', color: '#1fb6cf', order: 50 },
+        { key: 'genspark', label: 'Genspark', color: '#7c3aed', order: 60 },
+        { key: 'grok', label: 'Grok', color: '#222222', order: 70 },
+        { key: 'copilot', label: 'Copilot', color: '#2563eb', order: 80 },
+        { key: 'midjourney', label: 'Midjourney', color: '#8b5cf6', order: 90 },
       ],
     },
     {
       key: 'earn',
       label: '副業ブログ',
+      color: '#f97316',
+      order: 20,
       children: [
-        ['earn', '収益化ネタ'],
-        ['article', '記事づくり'],
+        { key: 'earn', label: '収益化ネタ', color: '#f97316', order: 10 },
+        { key: 'article', label: '記事づくり', color: '#0b8f72', order: 20 },
       ],
     },
     {
       key: 'wordpress',
       label: 'ツール・商品',
+      color: '#0b8f72',
+      order: 30,
       children: [
-        ['wordpress', 'WordPress・文標'],
-        ['template', '記事テンプレ'],
+        { key: 'wordpress', label: 'WordPress・文標', color: '#0b8f72', order: 10 },
+        { key: 'template', label: '記事テンプレ', color: '#0b8f72', order: 20 },
       ],
     },
     {
       key: 'home-work',
       label: '在宅ヒント',
+      color: '#2b8a7e',
+      order: 40,
       children: [
-        ['home-work', '在宅ワーク習慣'],
+        { key: 'home-work', label: '在宅ワーク習慣', color: '#2b8a7e', order: 10 },
       ],
     },
   ];
-  const CATEGORY_GROUPS = {
-    'group:ai-news': ['ai-news','chatgpt','claude','gemini','perplexity','genspark','grok','copilot','midjourney'],
-    'group:earn': ['earn','article'],
-    'group:wordpress': ['wordpress','template'],
-    'group:home-work': ['home-work'],
-  };
-  const CATEGORY_LOOKUP = new Map();
-  CATEGORY_TREE.forEach(parent => {
-    parent.children.forEach(([key, label]) => {
-      CATEGORY_LOOKUP.set(key, { key, label, parentKey: parent.key, parentLabel: parent.label });
-    });
-  });
-  const CATEGORY_ORDER = ['chatgpt','claude','gemini','perplexity','genspark','grok','copilot','midjourney','ai-news','earn','article','wordpress','template','home-work'];
+  let categoryTree = normalizeCategoryTree(DEFAULT_CATEGORY_TREE);
+  let categoryGroups = {};
+  let categoryLookup = new Map();
+  let categoryOrder = [];
+  rebuildCategoryCache();
 
   function parseTagList(value) {
     if (Array.isArray(value)) return value.map(v => String(v || '').trim()).filter(Boolean);
     return String(value || '').split(/[\n,、]/).map(v => v.trim()).filter(Boolean);
   }
 
+  function normalizeCategoryTree(value) {
+    const source = Array.isArray(value) && value.length ? value : DEFAULT_CATEGORY_TREE;
+    return source.map((parent, parentIndex) => {
+      const fallback = DEFAULT_CATEGORY_TREE[parentIndex] || {};
+      const key = sanitizeCategoryKey(parent?.key || fallback.key || `category-${parentIndex + 1}`);
+      const childrenSource = Array.isArray(parent?.children) && parent.children.length ? parent.children : (fallback.children || []);
+      return {
+        key,
+        label: sanitizeCategoryLabel(parent?.label || fallback.label || key),
+        color: sanitizeCategoryColor(parent?.color || fallback.color || '#0b8f72'),
+        order: sanitizeCategoryOrder(parent?.order, (parentIndex + 1) * 10),
+        children: childrenSource.map((child, childIndex) => {
+          const fallbackChild = (fallback.children || [])[childIndex] || {};
+          return {
+            key: sanitizeCategoryKey(child?.key || fallbackChild.key || `${key}-${childIndex + 1}`),
+            label: sanitizeCategoryLabel(child?.label || fallbackChild.label || child?.key || ''),
+            color: sanitizeCategoryColor(child?.color || fallbackChild.color || '#0b8f72'),
+            order: sanitizeCategoryOrder(child?.order, (childIndex + 1) * 10),
+          };
+        }).sort((a, b) => a.order - b.order),
+      };
+    }).sort((a, b) => a.order - b.order);
+  }
+
+  function rebuildCategoryCache() {
+    categoryLookup = new Map();
+    categoryGroups = {};
+    categoryOrder = [];
+    categoryTree.forEach(parent => {
+      const childKeys = [];
+      parent.children.forEach(child => {
+        childKeys.push(child.key);
+        categoryOrder.push(child.key);
+        categoryLookup.set(child.key, {
+          key: child.key,
+          label: child.label,
+          color: child.color,
+          parentKey: parent.key,
+          parentLabel: parent.label,
+          parentColor: parent.color,
+        });
+      });
+      categoryGroups[`group:${parent.key}`] = childKeys;
+    });
+  }
+
+  function sanitizeCategoryKey(value) {
+    return String(value || '')
+      .trim()
+      .toLowerCase()
+      .replace(/[^a-z0-9-]/g, '-')
+      .replace(/-+/g, '-')
+      .replace(/^-|-$/g, '')
+      .slice(0, 40);
+  }
+
+  function sanitizeCategoryLabel(value) {
+    return String(value || '').replace(/[<>]/g, '').trim().slice(0, 40);
+  }
+
+  function sanitizeCategoryColor(value) {
+    const color = String(value || '').trim();
+    return /^#[0-9a-fA-F]{6}$/.test(color) ? color : '#0b8f72';
+  }
+
+  function sanitizeCategoryOrder(value, fallback) {
+    const order = Number(value);
+    return Number.isFinite(order) ? Math.max(0, Math.min(999, Math.round(order))) : fallback;
+  }
+
+  function renderCategoryEditor() {
+    if (!categoryEditorEl) return;
+    categoryEditorEl.innerHTML = categoryTree.map((parent, parentIndex) => `
+      <div>
+        <div class="category-parent-row">
+          <div class="category-row-label">親</div>
+          <input data-kind="parent" data-parent-index="${parentIndex}" data-field="label" value="${escHtml(parent.label)}" aria-label="親カテゴリ名" />
+          <input data-kind="parent" data-parent-index="${parentIndex}" data-field="key" value="${escHtml(parent.key)}" aria-label="親カテゴリslug" />
+          <input type="color" data-kind="parent" data-parent-index="${parentIndex}" data-field="color" value="${escHtml(parent.color)}" aria-label="親カテゴリ色" />
+          <input type="number" data-kind="parent" data-parent-index="${parentIndex}" data-field="order" value="${escHtml(parent.order)}" min="0" max="999" aria-label="親カテゴリ順番" />
+        </div>
+        ${parent.children.map((child, childIndex) => `
+          <div class="category-child-row">
+            <div class="category-row-label">子</div>
+            <input data-kind="child" data-parent-index="${parentIndex}" data-child-index="${childIndex}" data-field="label" value="${escHtml(child.label)}" aria-label="子カテゴリ名" />
+            <input data-kind="child" data-parent-index="${parentIndex}" data-child-index="${childIndex}" data-field="key" value="${escHtml(child.key)}" aria-label="子カテゴリslug" />
+            <input type="color" data-kind="child" data-parent-index="${parentIndex}" data-child-index="${childIndex}" data-field="color" value="${escHtml(child.color)}" aria-label="子カテゴリ色" />
+            <input type="number" data-kind="child" data-parent-index="${parentIndex}" data-child-index="${childIndex}" data-field="order" value="${escHtml(child.order)}" min="0" max="999" aria-label="子カテゴリ順番" />
+          </div>
+        `).join('')}
+      </div>
+    `).join('');
+  }
+
+  function collectCategoryEditorValues() {
+    const next = categoryTree.map(parent => ({
+      ...parent,
+      children: parent.children.map(child => ({ ...child })),
+    }));
+    categoryEditorEl?.querySelectorAll('input[data-kind][data-field]').forEach(input => {
+      const parentIndex = Number(input.dataset.parentIndex);
+      const childIndex = Number(input.dataset.childIndex);
+      const target = input.dataset.kind === 'child'
+        ? next[parentIndex]?.children?.[childIndex]
+        : next[parentIndex];
+      if (!target) return;
+      const field = input.dataset.field;
+      if (field === 'key') target.key = sanitizeCategoryKey(input.value) || target.key;
+      if (field === 'label') target.label = sanitizeCategoryLabel(input.value) || target.label;
+      if (field === 'color') target.color = sanitizeCategoryColor(input.value);
+      if (field === 'order') target.order = sanitizeCategoryOrder(input.value, target.order);
+    });
+    return normalizeCategoryTree(next);
+  }
+
+  async function loadCategorySettings() {
+    try {
+      const res = await fetch('/api/blog-categories', { cache: 'no-store' });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && Array.isArray(data.categories)) {
+        categoryTree = normalizeCategoryTree(data.categories);
+      }
+    } catch (_) {}
+    rebuildCategoryCache();
+    renderCategoryEditor();
+    populateCategoryFilter();
+    renderContentList();
+  }
+
+  async function saveCategorySettings() {
+    const pin = currentPin();
+    if (!pin) {
+      if (categorySaveMessageEl) categorySaveMessageEl.textContent = 'ログインし直してください。';
+      return;
+    }
+    categoryTree = collectCategoryEditorValues();
+    rebuildCategoryCache();
+    renderCategoryEditor();
+    populateCategoryFilter();
+    renderContentList();
+    if (categorySaveMessageEl) categorySaveMessageEl.textContent = '保存中...';
+    try {
+      const res = await fetch('/api/blog-categories', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-Yohelab-Pin': pin },
+        body: JSON.stringify({ categories: categoryTree }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || 'save_failed');
+      categoryTree = normalizeCategoryTree(data.categories);
+      rebuildCategoryCache();
+      renderCategoryEditor();
+      populateCategoryFilter();
+      renderContentList();
+      if (categorySaveMessageEl) categorySaveMessageEl.textContent = 'カテゴリを保存しました。トップとブログ一覧の表示名にも反映されます。';
+    } catch (_) {
+      if (categorySaveMessageEl) categorySaveMessageEl.textContent = '保存に失敗しました。時間を置いてもう一度試してください。';
+    }
+  }
+
+  function resetCategorySettings() {
+    if (!confirm('カテゴリ設定を初期値に戻しますか？保存するまでは公開側には反映されません。')) return;
+    categoryTree = normalizeCategoryTree(DEFAULT_CATEGORY_TREE);
+    rebuildCategoryCache();
+    renderCategoryEditor();
+    populateCategoryFilter();
+    renderContentList();
+    if (categorySaveMessageEl) categorySaveMessageEl.textContent = '初期値に戻しました。反映するには「カテゴリを保存」を押してください。';
+  }
+
   function categoryForItem(item) {
     const tags = normalizeTagsForSort(item);
-    const foundKey = CATEGORY_ORDER.find(key => tags.includes(key));
-    const found = foundKey ? CATEGORY_LOOKUP.get(foundKey) : null;
+    const foundKey = categoryOrder.find(key => tags.includes(key));
+    const found = foundKey ? categoryLookup.get(foundKey) : null;
     return found
       ? { ...found, label: `${found.parentLabel} > ${found.label}` }
       : { key: 'other', label: '未分類', parentKey: 'other', parentLabel: '未分類' };
@@ -1128,9 +1334,9 @@
 
   function displayChildCategories(item) {
     const tags = normalizeTagsForSort(item);
-    const labels = CATEGORY_ORDER
+    const labels = categoryOrder
       .filter(key => tags.includes(key))
-      .map(key => CATEGORY_LOOKUP.get(key))
+      .map(key => categoryLookup.get(key))
       .filter(Boolean)
       .map(category => category.label);
     return [...new Set(labels)].slice(0, 4);
@@ -1140,13 +1346,13 @@
     if (!contentCategoryFilterEl) return;
     const selected = contentCategoryFilterEl.value || 'all';
     const validValues = new Set(['all']);
-    const groups = CATEGORY_TREE.map(parent => {
+    const groups = categoryTree.map(parent => {
       validValues.add(`group:${parent.key}`);
       const options = [
         `<option value="group:${escHtml(parent.key)}">${escHtml(parent.label)} / すべて</option>`,
-        ...parent.children.map(([key, label]) => {
-          validValues.add(key);
-          return `<option value="${escHtml(key)}">${escHtml(parent.label)} / ${escHtml(label)}</option>`;
+        ...parent.children.map(child => {
+          validValues.add(child.key);
+          return `<option value="${escHtml(child.key)}">${escHtml(parent.label)} / ${escHtml(child.label)}</option>`;
         }),
       ];
       return `<optgroup label="${escHtml(parent.label)}">${options.join('')}</optgroup>`;
@@ -1158,7 +1364,7 @@
   function categoryMatchesItem(selected, item) {
     if (selected === 'all') return true;
     const tags = normalizeTagsForSort(item);
-    const group = CATEGORY_GROUPS[selected];
+    const group = categoryGroups[selected];
     if (group) return group.some(key => tags.includes(key));
     return tags.includes(selected);
   }
@@ -1300,7 +1506,7 @@
           <div class="row-excerpt">${escHtml(item.excerpt || '')}</div>
         </td>
         <td class="status-col"><span class="status-badge ${item.kind === 'draft' ? 'is-draft' : 'is-published'}">${statusLabel}</span></td>
-        <td class="category-col"><span class="category-badge">${escHtml(category.label)}</span></td>
+        <td class="category-col"><span class="category-badge" style="border-color:${escHtml(category.color || '#bde7d7')};color:${escHtml(category.color || '#0b8f72')};">${escHtml(category.label)}</span></td>
         <td class="tags-col">${childCategories.length ? childCategories.map(name => `<span class="tag-chip">${escHtml(name)}</span>`).join(' ') : '-'}</td>
         <td class="date-col">${escHtml(dateText)}</td>
         <td class="actions-col"><div class="row-actions">${rowActionButtons(item)}</div></td>
@@ -1456,7 +1662,7 @@
   function compareByCategory(a, b) {
     const rank = (post) => {
       const tags = normalizeTagsForSort(post);
-      const found = CATEGORY_ORDER.findIndex(tag => tags.includes(tag));
+      const found = categoryOrder.findIndex(tag => tags.includes(tag));
       return found === -1 ? 999 : found;
     };
     return rank(a) - rank(b) || String(b.date || '').localeCompare(String(a.date || '')) || String(a.title || '').localeCompare(String(b.title || ''), 'ja');
@@ -1647,6 +1853,8 @@
   document.getElementById('new-post-list')?.addEventListener('click', () => document.getElementById('new-post')?.click());
   document.getElementById('content-search-btn')?.addEventListener('click', resetAndRenderContentList);
   contentDateFilterEl?.addEventListener('change', resetAndRenderContentList);
+  saveCategoriesEl?.addEventListener('click', saveCategorySettings);
+  resetCategoriesEl?.addEventListener('click', resetCategorySettings);
   document.querySelectorAll('#content-status-tabs [data-status]').forEach(btn => {
     btn.addEventListener('click', () => setContentStatus(btn.dataset.status || 'draft'));
   });

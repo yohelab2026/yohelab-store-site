@@ -2,18 +2,40 @@ const postsEl = document.getElementById('posts');
 const blogSearchEl = document.getElementById('blog-search');
 const filterStatusEl = document.getElementById('filter-status');
 const categoryTabEls = Array.from(document.querySelectorAll('.category-tab'));
-const categoryChildEls = Array.from(document.querySelectorAll('.category-child'));
+let categoryChildEls = Array.from(document.querySelectorAll('.category-child'));
 const categoryPanelEls = Array.from(document.querySelectorAll('.child-category-panel'));
 let activeFilter = 'group:ai-news';
 let activeParent = 'ai-news';
-const aiToolTags = ['ai-news','chatgpt','claude','gemini','perplexity','genspark','grok','copilot','midjourney'];
-const categoryGroups = {
+let aiToolTags = ['ai-news','chatgpt','claude','gemini','perplexity','genspark','grok','copilot','midjourney'];
+let categoryGroups = {
   'group:ai-news': aiToolTags,
   'group:earn': ['earn','article'],
   'group:wordpress': ['wordpress','template'],
   'group:home-work': ['home-work'],
 };
-const categoryOrder = ['ai-news','chatgpt','claude','gemini','perplexity','genspark','grok','copilot','midjourney','earn','template','article','wordpress','home-work'];
+let categoryOrder = ['ai-news','chatgpt','claude','gemini','perplexity','genspark','grok','copilot','midjourney','earn','template','article','wordpress','home-work'];
+let categoryLabels = {
+  all: '全部',
+  'group:ai-news': 'AIニュース全部',
+  'group:earn': '副業ネタ全部',
+  'group:wordpress': 'ツール全部',
+  'group:home-work': '在宅ヒント全部',
+  'ai-news': 'AIニュース',
+  chatgpt: 'ChatGPT',
+  claude: 'Claude',
+  gemini: 'Gemini',
+  perplexity: 'Perplexity',
+  genspark: 'Genspark',
+  grok: 'Grok',
+  copilot: 'Copilot',
+  midjourney: 'Midjourney',
+  earn: '収益化ネタ',
+  wordpress: 'WordPress・文標',
+  article: '記事づくり',
+  'home-work': '在宅ワーク習慣',
+  template: '記事テンプレ',
+};
+let categoryColors = {};
 const staticBlogSlugs = new Set([
   'ai-news-selling-ideas',
   'home-work-rhythm',
@@ -85,6 +107,69 @@ let totalPages = 1;
 
 function esc(str) {
   return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+async function loadCategorySettings() {
+  try {
+    const res = await fetch('/api/blog-categories', { cache: 'no-store' });
+    const data = await res.json();
+    if (!res.ok || !Array.isArray(data.categories)) return;
+    applyCategorySettings(data.categories);
+  } catch (_) {}
+}
+
+function applyCategorySettings(categories) {
+  const groups = {};
+  const order = [];
+  const labels = { ...categoryLabels };
+  const colors = { ...categoryColors };
+
+  categories.forEach(parent => {
+    const parentKey = sanitizeCategoryKey(parent.key);
+    if (!parentKey) return;
+    const children = Array.isArray(parent.children) ? parent.children : [];
+    labels[`group:${parentKey}`] = `${parent.label || parentKey}全部`;
+    labels[parentKey] = parent.label || labels[parentKey] || parentKey;
+    colors[parentKey] = parent.color || colors[parentKey] || '#0b8f72';
+    groups[`group:${parentKey}`] = children.map(child => sanitizeCategoryKey(child.key)).filter(Boolean);
+    children.forEach(child => {
+      const key = sanitizeCategoryKey(child.key);
+      if (!key) return;
+      order.push(key);
+      labels[key] = child.label || labels[key] || key;
+      colors[key] = child.color || colors[key] || parent.color || '#0b8f72';
+    });
+  });
+
+  categoryGroups = { ...categoryGroups, ...groups };
+  categoryOrder = order.length ? order : categoryOrder;
+  aiToolTags = categoryGroups['group:ai-news'] || aiToolTags;
+  categoryLabels = labels;
+  categoryColors = colors;
+  applyCategoryLabelsToNav();
+}
+
+function sanitizeCategoryKey(value) {
+  return String(value || '').trim().toLowerCase();
+}
+
+function applyCategoryLabelsToNav() {
+  categoryTabEls.forEach(btn => {
+    const label = btn.querySelector('.category-tab-label');
+    const key = normalizeFilter(btn.dataset.filter);
+    if (label && categoryLabels[key]) label.textContent = categoryLabels[key].replace(/全部$/, '');
+  });
+  categoryPanelEls.forEach(panel => {
+    const title = panel.querySelector('.child-category-title');
+    const parent = panel.dataset.parentPanel;
+    const parentName = categoryLabels[`group:${parent}`]?.replace(/全部$/, '') || categoryLabels[parent] || parent;
+    if (title) title.textContent = `${parentName}の子カテゴリ`;
+  });
+  categoryChildEls.forEach(btn => {
+    const key = normalizeFilter(btn.dataset.filter);
+    if (categoryLabels[key]) btn.textContent = categoryLabels[key];
+  });
+  applyFilters();
 }
 
 function postUrl(slug) {
@@ -280,7 +365,6 @@ postsEl.addEventListener('keydown', (event) => {
 });
 
 prepareCardLinks();
-loadPosts();
 
 function normalizeFilter(value) {
   const v = String(value || '').trim().toLowerCase();
@@ -340,28 +424,7 @@ function parentForFilter(filter) {
 }
 
 function getFilterLabel(value) {
-  const labels = {
-    all: '全部',
-    'group:ai-news': 'AIニュース全部',
-    'group:earn': '副業ネタ全部',
-    'group:wordpress': 'ツール全部',
-    'group:home-work': '在宅ヒント全部',
-    'ai-news': 'AIニュース',
-    chatgpt: 'ChatGPT',
-    claude: 'Claude',
-    gemini: 'Gemini',
-    perplexity: 'Perplexity',
-    genspark: 'Genspark',
-    grok: 'Grok',
-    copilot: 'Copilot',
-    midjourney: 'Midjourney',
-    earn: '収益化ネタ',
-    wordpress: 'WordPress・文標',
-    article: '記事づくり',
-    'home-work': '在宅ワーク習慣',
-    template: '記事テンプレ',
-  };
-  return labels[value] || value;
+  return categoryLabels[value] || value;
 }
 
 function setActiveFilter(value, parent) {
@@ -407,3 +470,5 @@ if (params.get('q') && blogSearchEl) {
   blogSearchEl.value = params.get('q');
   applyFilters();
 }
+
+loadCategorySettings().finally(() => loadPosts());
