@@ -12,6 +12,16 @@ const SITE_ORIGIN = "https://yohelab.com";
 const SITE_NAME = "よへラボ";
 const BLOG_NAME = "よへラボブログ";
 const FALLBACK_IMAGE = `${SITE_ORIGIN}/yohelab-mascot-v2-20260518.png`;
+const STATIC_POST_REDIRECTS = new Map([
+  ["ai-news-selling-ideas", "/blog/ai-news-selling-ideas/"],
+  ["home-work-rhythm", "/blog/home-work-rhythm/"],
+  ["bunsirube-version-history", "/blog/bunsirube-version-history/"],
+  ["comparison-article-template", "/blog/comparison-article-template/"],
+  ["free-theme-vs-bunsirube", "/blog/free-theme-vs-bunsirube/"],
+  ["faq-source-ai-search", "/blog/faq-source-ai-search/"],
+  ["sales-page-common-mistakes", "/blog/sales-page-common-mistakes/"],
+  ["bunsirube-before-install", "/blog/bunsirube-before-install/"],
+]);
 
 export async function onRequest(context) {
   const url = new URL(context.request.url);
@@ -20,6 +30,11 @@ export async function onRequest(context) {
   // slug がなければブログ一覧へリダイレクト
   if (!slug) {
     return Response.redirect(new URL("/blog/", url.origin).toString(), 302);
+  }
+
+  const cleanStaticPath = cleanStaticSlugPath(slug);
+  if (cleanStaticPath) {
+    return Response.redirect(new URL(cleanStaticPath, url.origin).toString(), 301);
   }
 
   const kv = context.env.BLOG_KV;
@@ -47,9 +62,16 @@ export async function onRequest(context) {
       "Content-Type": "text/html; charset=utf-8",
       // Cloudflare CDNで5分間キャッシュ。記事更新時は手動でPurge推奨
       "Cache-Control": "public, max-age=60, s-maxage=300",
-      "X-Robots-Tag": "index,follow,max-image-preview:large,max-snippet:-1",
+      "X-Robots-Tag": "noindex,follow,max-image-preview:large,max-snippet:-1",
     },
   });
+}
+
+function cleanStaticSlugPath(slug) {
+  const direct = STATIC_POST_REDIRECTS.get(slug);
+  if (direct) return direct;
+  const withoutDate = String(slug).replace(/^\d{4}-\d{2}-\d{2}-/, "");
+  return STATIC_POST_REDIRECTS.get(withoutDate) || "";
 }
 
 function escHtml(value) {
@@ -203,8 +225,12 @@ function renderPostHTML(post, slug, requestUrl) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>${escHtml(title)} | ${escHtml(BLOG_NAME)}</title>
   <meta name="description" content="${escAttr(description)}" />
-  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1" />
+  <meta name="author" content="${escAttr(SITE_NAME)}" />
+  <meta name="robots" content="noindex,follow,max-image-preview:large,max-snippet:-1" />
   <link rel="canonical" href="${escAttr(fullUrl)}" />
+  <link rel="alternate" hreflang="ja" href="${escAttr(fullUrl)}" />
+  <link rel="alternate" hreflang="x-default" href="${escAttr(fullUrl)}" />
+  <link rel="alternate" type="application/rss+xml" title="よへラボ RSS" href="${SITE_ORIGIN}/feed.xml" />
   <meta property="og:title" content="${escAttr(title)} | ${escAttr(BLOG_NAME)}" />
   <meta property="og:description" content="${escAttr(description)}" />
   <meta property="og:type" content="article" />
@@ -216,6 +242,8 @@ function renderPostHTML(post, slug, requestUrl) {
   <meta name="twitter:title" content="${escAttr(title)}" />
   <meta name="twitter:description" content="${escAttr(description)}" />
   <meta name="twitter:image" content="${escAttr(eyecatchAbs)}" />
+  <meta name="twitter:site" content="@yohe_lab" />
+  <meta name="twitter:creator" content="@yohe_lab" />
   <link rel="icon" type="image/png" href="/yohelab-mascot-v2-20260518-32.png" />
   <link rel="stylesheet" href="/shared/site.min.css" />
   <script type="application/ld+json">${articleLd}</script>
@@ -259,7 +287,7 @@ function renderPostHTML(post, slug, requestUrl) {
 <body>
   <header class="nav">
     <div class="nav-inner">
-      <a class="brand" href="/"><img src="/yohelab-mascot-v2-20260518.webp" alt="よへラボ" /><span>よへラボ</span></a>
+      <a class="brand" href="/"><img src="/yohelab-mascot-v2-20260518.webp" alt="よへラボ" width="32" height="32" decoding="async" /><span>よへラボ</span></a>
       <nav class="nav-links">
         <a href="/tools/">ツール</a>
         <a href="/services/">サービス</a>

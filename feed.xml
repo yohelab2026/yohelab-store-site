@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>よへラボ</title>
+    <link>https://yohelab.com/</link>
+    <description>家で働く人・副業をする人向けに、AIニュース、ブログ、WordPress、在宅ワーク習慣を整理する情報サイト。</description>
+    <language>ja</language>
+    <lastBuildDate>Tue, 19 May 2026 00:00:00 +0900</lastBuildDate>
+    <atom:link href="https://yohelab.com/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AIニュースを記事ネタに変える方法 | ChatGPT・Claude・Gemini活用</title>
+      <link>https://yohelab.com/blog/ai-news-selling-ideas/</link>
+      <guid isPermaLink="true">https://yohelab.com/blog/ai-news-selling-ideas/</guid>
+      <pubDate>Mon, 18 May 2026 00:00:00 +0900</pubDate>
+      <description>AIニュースを読んで終わらせず、ブログ記事やテンプレに変えるための考え方。</description>
+    </item>
+    <item>
+      <title>在宅作業の運動不足対策 | 25分サイクル・家トレ習慣</title>
+      <link>https://yohelab.com/blog/home-work-rhythm/</link>
+      <guid isPermaLink="true">https://yohelab.com/blog/home-work-rhythm/</guid>
+      <pubDate>Mon, 18 May 2026 00:00:00 +0900</pubDate>
+      <description>家で作業を続ける人向けに、運動不足を防ぐ小さな習慣をまとめた記事。</description>
+    </item>
+    <item>
+      <title>文標のバージョンアップ履歴</title>
+      <link>https://yohelab.com/blog/bunsirube-version-history/</link>
+      <guid isPermaLink="true">https://yohelab.com/blog/bunsirube-version-history/</guid>
+      <pubDate>Tue, 12 May 2026 00:00:00 +0900</pubDate>
+      <description>WordPressテーマ「文標」の更新内容をまとめた履歴ページ。</description>
+    </item>
+    <item>
+      <title>比較記事の書き方：結論・比較表・FAQ・CTAの型</title>
+      <link>https://yohelab.com/blog/comparison-article-template/</link>
+      <guid isPermaLink="true">https://yohelab.com/blog/comparison-article-template/</guid>
+      <pubDate>Mon, 04 May 2026 00:00:00 +0900</pubDate>
+      <description>比較記事を迷わず書くための基本構成とテンプレート。</description>
+    </item>
+    <item>
+      <title>無料テーマと文標の違い | どちらを選ぶべきか</title>
+      <link>https://yohelab.com/blog/free-theme-vs-bunsirube/</link>
+      <guid isPermaLink="true">https://yohelab.com/blog/free-theme-vs-bunsirube/</guid>
+      <pubDate>Mon, 04 May 2026 00:00:00 +0900</pubDate>
+      <description>無料テーマと文標の違いを、記事作成の型という視点で整理。</description>
+    </item>
+    <item>
+      <title>AI検索向けにFAQと出典を置く理由</title>
+      <link>https://yohelab.com/blog/faq-source-ai-search/</link>
+      <guid isPermaLink="true">https://yohelab.com/blog/faq-source-ai-search/</guid>
+      <pubDate>Sat, 02 May 2026 00:00:00 +0900</pubDate>
+      <description>AI検索時代の記事でFAQと出典を置く意味を整理。</description>
+    </item>
+    <item>
+      <title>BASE・note・自サイトの商品ページでよくある失敗</title>
+      <link>https://yohelab.com/blog/sales-page-common-mistakes/</link>
+      <guid isPermaLink="true">https://yohelab.com/blog/sales-page-common-mistakes/</guid>
+      <pubDate>Sat, 02 May 2026 00:00:00 +0900</pubDate>
+      <description>商品ページで起きやすい失敗と、売り場を整えるためのチェックポイント。</description>
+    </item>
+    <item>
+      <title>文標を入れる前に確認すること</title>
+      <link>https://yohelab.com/blog/bunsirube-before-install/</link>
+      <guid isPermaLink="true">https://yohelab.com/blog/bunsirube-before-install/</guid>
+      <pubDate>Sat, 02 May 2026 00:00:00 +0900</pubDate>
+      <description>WordPressテーマ「文標」を入れる前に確認しておきたいこと。</description>
+    </item>
+  </channel>
+</rss>

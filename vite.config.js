@@ -95,6 +95,23 @@ function headHardeningPlugin() {
       if (pageOgImage && !out.includes('name="twitter:image"')) {
         out = out.replace(/<meta name="twitter:card" content="summary_large_image" \/>/i, (match) => `${match}\n  <meta name="twitter:image" content="${pageOgImage}" />`);
       }
+      if (!out.includes('name="author"')) {
+        out = out.replace("</head>", `  <meta name="author" content="よへラボ" />\n</head>`);
+      }
+      if (!out.includes('name="twitter:site"')) {
+        out = out.replace("</head>", `  <meta name="twitter:site" content="@yohe_lab" />\n  <meta name="twitter:creator" content="@yohe_lab" />\n</head>`);
+      }
+      if (!out.includes('type="application/rss+xml"')) {
+        out = out.replace("</head>", `  <link rel="alternate" type="application/rss+xml" title="よへラボ RSS" href="https://yohelab.com/feed.xml" />\n</head>`);
+      }
+
+      out = out.replace(/<img([^>]+src="\/yohelab-mascot-v2-20260518\.webp"[^>]*)>/g, (match, attrs) => {
+        let next = attrs;
+        if (!/\swidth=/.test(next)) next += ' width="36"';
+        if (!/\sheight=/.test(next)) next += ' height="36"';
+        if (!/\sdecoding=/.test(next)) next += ' decoding="async"';
+        return `<img${next}>`;
+      });
 
       if (ctx.path === "/index.html" && !out.includes('"@type":"WebSite"')) {
         const website = {

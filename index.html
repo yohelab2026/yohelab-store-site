@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>よへラボ | 家で働く人のためのAI・副業情報サイト</title>
   <meta name="description" content="よへラボは、家で働く人・副業をする人のための情報サイト。AIニュース、ブログ・note収益化、WordPressテーマ（文標）、在宅ワーク習慣など、家でできる仕事に関するすべてを発信。" />
+  <meta name="author" content="よへラボ" />
   <meta property="og:title" content="よへラボ | 家で働く人のためのAI・副業情報サイト" />
   <meta property="og:description" content="AIニュース、副業ブログ、WordPressテーマ（文標）、在宅ワーク習慣。家で稼ぐための道しるべ。" />
   <meta property="og:type" content="website" />
@@ -14,16 +15,23 @@
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="よへラボ | 家で働く人のためのAI・副業情報サイト" />
+  <meta name="twitter:description" content="AIニュース、副業ブログ、WordPressテーマ（文標）、在宅ワーク習慣。家で稼ぐための道しるべ。" />
   <meta name="twitter:image" content="https://yohelab.com/assets/og/yohelab-og.png" />
+  <meta name="twitter:site" content="@yohe_lab" />
+  <meta name="twitter:creator" content="@yohe_lab" />
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
   <meta name="theme-color" content="#0b8f72" />
   <link rel="canonical" href="https://yohelab.com/" />
+  <link rel="alternate" hreflang="ja" href="https://yohelab.com/" />
+  <link rel="alternate" hreflang="x-default" href="https://yohelab.com/" />
+  <link rel="alternate" type="application/rss+xml" title="よへラボ RSS" href="https://yohelab.com/feed.xml" />
   <link rel="apple-touch-icon" href="/yohelab-mascot-v2-20260518-180.png" />
   <link rel="manifest" href="/site.webmanifest?v=mascot-v2-20260518" />
   <link rel="icon" type="image/png" href="/yohelab-mascot-v2-20260518-32.png" />
   <link rel="stylesheet" href="/shared/site.min.css" />
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"WebSite","name":"よへラボ","url":"https://yohelab.com/","description":"家で働く人・副業をする人向けに、AIニュース、ブログ、WordPress、在宅ワーク習慣を整理する情報サイト。","publisher":{"@type":"Organization","name":"よへラボ","logo":{"@type":"ImageObject","url":"https://yohelab.com/yohelab-mascot-v2-20260518.png"}},"inLanguage":"ja-JP"}
+  {"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://yohelab.com/#organization","name":"よへラボ","url":"https://yohelab.com/","logo":{"@type":"ImageObject","url":"https://yohelab.com/yohelab-mascot-v2-20260518.png","width":1024,"height":1024},"sameAs":["https://x.com/yohe_lab","https://note.com/yohelab"]},{"@type":"WebSite","@id":"https://yohelab.com/#website","name":"よへラボ","url":"https://yohelab.com/","description":"家で働く人・副業をする人向けに、AIニュース、ブログ、WordPress、在宅ワーク習慣を整理する情報サイト。","publisher":{"@id":"https://yohelab.com/#organization"},"inLanguage":"ja-JP","potentialAction":{"@type":"SearchAction","target":"https://yohelab.com/blog/?q={search_term_string}","query-input":"required name=search_term_string"}},{"@type":"BreadcrumbList","@id":"https://yohelab.com/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"ホーム","item":"https://yohelab.com/"}]}]}
   </script>
 
   <style>
@@ -51,6 +59,11 @@
     }
     a { color: inherit; text-decoration: none; }
     img { display: block; max-width: 100%; }
+    :focus-visible {
+      outline: 3px solid #ffb703;
+      outline-offset: 3px;
+      border-radius: 6px;
+    }
 
     /* ── ヘッダー ── */
     .site-header {
@@ -184,6 +197,45 @@
     /* ── タブパネル ── */
     .tab-panel { display: none; }
     .tab-panel.active { display: block; }
+
+    .site-intro-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 18px 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 4px rgba(15, 23, 42, 0.06);
+    }
+    .site-intro-card h1 {
+      font-size: clamp(20px, 3.2vw, 30px);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1.35;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .site-intro-card p {
+      font-size: 13px;
+      color: var(--text-sub);
+      line-height: 1.85;
+    }
+    .site-intro-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 12px;
+    }
+    .site-intro-list span {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: var(--brand-light);
+      color: var(--brand-dark);
+      font-size: 12px;
+      font-weight: 800;
+    }
 
     .inline-page-panel {
       display: none;
@@ -525,7 +577,7 @@
 <header class="site-header">
   <div class="header-inner">
     <a class="site-logo" href="/">
-      <img src="/yohelab-mascot-v2-20260518.webp" alt="よへラボ" />
+      <img src="/yohelab-mascot-v2-20260518.webp" alt="よへラボ" width="36" height="36" decoding="async" />
       よへラボ
     </a>
     <nav class="header-nav">
@@ -551,16 +603,16 @@
 <!-- ====== カテゴリタブバー ====== -->
 <div class="tab-bar">
   <div class="tab-bar-inner" role="tablist" aria-label="表示カテゴリ">
-    <button class="tab-btn active" type="button" role="tab" aria-label="AIニュース" aria-selected="true" aria-controls="panel-ai-news" data-tab="ai-news">
+    <button class="tab-btn active" type="button" role="tab" id="tab-ai-news" aria-label="AIニュース" aria-selected="true" aria-controls="panel-ai-news" data-tab="ai-news">
       <span class="tab-icon">🤖</span><span class="tab-label">AIニュース</span>
     </button>
-    <button class="tab-btn" type="button" role="tab" aria-label="副業ブログ" aria-selected="false" aria-controls="panel-blog" data-tab="blog">
+    <button class="tab-btn" type="button" role="tab" id="tab-blog" aria-label="副業ブログ" aria-selected="false" aria-controls="panel-blog" data-tab="blog">
       <span class="tab-icon">✍️</span><span class="tab-label">副業ブログ</span>
     </button>
-    <button class="tab-btn" type="button" role="tab" aria-label="ツール・商品" aria-selected="false" aria-controls="panel-tools" data-tab="tools">
+    <button class="tab-btn" type="button" role="tab" id="tab-tools" aria-label="ツール・商品" aria-selected="false" aria-controls="panel-tools" data-tab="tools">
       <span class="tab-icon">📦</span><span class="tab-label">ツール・商品</span>
     </button>
-    <button class="tab-btn" type="button" role="tab" aria-label="在宅ヒント" aria-selected="false" aria-controls="panel-workout" data-tab="workout">
+    <button class="tab-btn" type="button" role="tab" id="tab-workout" aria-label="在宅ヒント" aria-selected="false" aria-controls="panel-workout" data-tab="workout">
       <span class="tab-icon">💪</span><span class="tab-label">在宅ヒント</span>
     </button>
   </div>
@@ -571,6 +623,18 @@
 
   <!-- ===== 左カラム（タブパネル） ===== -->
   <div class="main-col">
+
+    <section class="site-intro-card" aria-labelledby="home-title">
+      <h1 id="home-title">家で働く人・副業をしたい人のためのAI・副業情報サイト</h1>
+      <p>よへラボは、AIニュースを読んで終わらせず、ブログ記事、無料テンプレ、WordPressテーマ、在宅ワーク習慣に変えて試す場所です。副業ブログを始めたい人、家で作業を続けたい人、文標などの道具を探している人が、今日読む記事と使う型をすぐ選べるように整理しています。</p>
+      <div class="site-intro-list" aria-label="よへラボで扱う内容">
+        <span>AIニュース</span>
+        <span>副業ブログ</span>
+        <span>無料テンプレ</span>
+        <span>WordPress</span>
+        <span>在宅ワーク</span>
+      </div>
+    </section>
 
     <div class="inline-page-panel" id="inlinePagePanel" aria-live="polite">
       <div class="inline-page-head">
@@ -613,13 +677,13 @@
     </div>
 
     <!-- [タブ1] AIニュース -->
-    <div class="tab-panel active" id="panel-ai-news" role="tabpanel">
+    <div class="tab-panel active" id="panel-ai-news" role="tabpanel" aria-labelledby="tab-ai-news">
 
       <!-- AIツールカテゴリ別タグナビ -->
       <section class="section-card">
         <div class="section-head">
           <h2><span>🤖</span>AIツール別 記事・ニュース</h2>
-          <a class="more" href="/blog/?category=group:ai-news">一覧を見る →</a>
+          <a class="more" href="/blog/?category=group:ai-news">AIニュース一覧を見る →</a>
         </div>
         <!-- カテゴリタグフィルター -->
         <div style="display:flex;flex-wrap:wrap;gap:6px;padding:6px 12px;border-bottom:1px solid #f0f0f0;">
@@ -689,11 +753,11 @@
     </div>
 
     <!-- [タブ2] 副業ブログ -->
-    <div class="tab-panel" id="panel-blog" role="tabpanel">
+    <div class="tab-panel" id="panel-blog" role="tabpanel" aria-labelledby="tab-blog">
       <section class="section-card">
         <div class="section-head">
           <h2><span>✍️</span>最新ブログ記事</h2>
-          <a class="more" href="/blog/?category=group:earn">一覧を見る →</a>
+          <a class="more" href="/blog/?category=group:earn">副業ブログ一覧を見る →</a>
         </div>
         <div>
           <a class="news-item" href="/blog/ai-news-selling-ideas/">
@@ -750,7 +814,7 @@
     </div>
 
     <!-- [タブ3] ツール・商品 -->
-    <div class="tab-panel" id="panel-tools" role="tabpanel">
+    <div class="tab-panel" id="panel-tools" role="tabpanel" aria-labelledby="tab-tools">
       <section class="section-card">
         <div class="section-head">
           <h2><span>📦</span>ツール・商品一覧</h2>
@@ -797,11 +861,11 @@
     </div>
 
     <!-- [タブ4] 在宅ヒント -->
-    <div class="tab-panel" id="panel-workout" role="tabpanel">
+    <div class="tab-panel" id="panel-workout" role="tabpanel" aria-labelledby="tab-workout">
       <section class="section-card">
         <div class="section-head">
           <h2><span>🏠</span>在宅カテゴリの記事</h2>
-          <a class="more" href="/blog/?category=group:home-work">一覧を見る →</a>
+          <a class="more" href="/blog/?category=group:home-work">在宅ヒント一覧を見る →</a>
         </div>
         <a class="news-item" href="/blog/home-work-rhythm/">
           <span class="news-tag tag-home">在宅ワーク</span>
@@ -906,7 +970,7 @@
     <section class="section-card">
       <div class="section-head">
         <h2><span>📦</span>注目ツール</h2>
-        <a class="more" href="/lp/bunsirube/">詳細 →</a>
+        <a class="more" href="/lp/bunsirube/">文標の詳細を見る →</a>
       </div>
       <div style="padding:10px 14px;display:grid;gap:8px;">
         <a href="/lp/bunsirube/" style="display:flex;align-items:center;gap:10px;padding:10px;border:1px solid var(--border);border-radius:var(--radius);transition:border-color .15s,background .15s;" onmouseover="this.style.borderColor='var(--brand)';this.style.background='var(--brand-light)'" onmouseout="this.style.borderColor='var(--border)';this.style.background=''">
@@ -953,7 +1017,7 @@
   <div class="footer-inner">
     <div>
       <div class="footer-logo">
-        <img src="/yohelab-mascot-v2-20260518.webp" alt="よへラボ" />よへラボ
+        <img src="/yohelab-mascot-v2-20260518.webp" alt="よへラボ" width="28" height="28" loading="lazy" decoding="async" />よへラボ
       </div>
       <p class="footer-tagline">家で働く人のための<br>AI・副業情報サイト</p>
     </div>

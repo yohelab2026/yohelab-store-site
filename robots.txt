@@ -1,3 +1,5 @@
+# Admin/API/private paths are blocked for every crawler.
+# AI crawlers are explicitly allowed below, so the instruction is not contradictory.
 User-agent: *
 Allow: /
 Disallow: /blog/admin/
