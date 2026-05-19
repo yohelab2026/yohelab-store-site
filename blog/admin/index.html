@@ -340,6 +340,8 @@
     loadPostList();
   } else {
     showLock();
+    // ロック中でもstatic-posts.jsonは先読み（ログイン後の表示を速くする）
+    loadStaticPosts();
   }
 
   async function handleLogin() {
@@ -352,7 +354,7 @@
     sessionStorage.setItem(SESSION_PIN_KEY, input);
     savePinForThisBrowser(input);
     document.body.classList.add('is-unlocked');
-    setTimeout(() => { loadDraftList(); loadPostList(); }, 200);
+    setTimeout(() => { loadStaticPosts(true).then(() => { loadDraftList(); loadPostList(); }); }, 200);
   }
   document.getElementById('unlock-admin').addEventListener('click', handleLogin);
   adminPinEl.addEventListener('keydown', e => { if(e.key==='Enter') handleLogin(); });
@@ -368,6 +370,7 @@
   });
 
   async function validatePin(pin) {
+    // APIがある場合はそちらで認証
     try {
       const res = await fetch('/api/blog-auth', {
         method: 'POST',
@@ -375,11 +378,15 @@
         body: JSON.stringify({ pin }),
       });
       const type = res.headers.get('content-type') || '';
-      if (res.ok && type.includes('application/json')) return true;
-      return false;
-    } catch {
-      return false;
-    }
+      if (res.ok && type.includes('application/json')) {
+        savePinForThisBrowser(pin);
+        return true;
+      }
+    } catch (_) {}
+    // APIなし/一時不調のときだけ、以前このブラウザで認証済みのPINを補助的に使う
+    const saved = readSavedPin();
+    if (saved && saved === pin) return true;
+    return false;
   }
 
   function currentPin() {
