@@ -100,7 +100,7 @@ async function loadPosts(page = 1) {
     const res = await fetch(`/api/blog-posts?page=${page}`);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
-    dynamicPosts = data.posts || [];
+    dynamicPosts = (data.posts || []).filter(isVisiblePublicPost);
     currentPage = data.page || 1;
     totalPages = data.totalPages || 1;
   } catch(e) {
@@ -110,6 +110,14 @@ async function loadPosts(page = 1) {
   const merged = mergePosts([...dynamicPosts, ...staticPublished]);
   render(merged.length ? merged : fallbackPosts, true);
   renderPagination();
+}
+
+function isVisiblePublicPost(post) {
+  const title = String(post?.title || '');
+  if (!title.trim()) return false;
+  if (title.includes('【下書き】') || title.includes('下書き')) return false;
+  if (title.includes('公開テスト') || title.toLowerCase().includes('test')) return false;
+  return true;
 }
 
 async function loadStaticPublishedPosts() {

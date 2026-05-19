@@ -305,6 +305,9 @@
     }
     .news-item:hover .news-title { color: var(--brand); }
     .news-meta { margin-top: 2px; font-size: 11px; color: var(--muted); }
+    .mobile-priority-widgets {
+      display: none;
+    }
     .news-loading {
       padding: 28px 14px;
       text-align: center;
@@ -321,42 +324,6 @@
       margin-bottom: 8px;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
-
-    /* ── ブログ記事 ── */
-    .article-item {
-      display: flex;
-      gap: 10px;
-      padding: 10px 14px;
-      border-bottom: 1px solid #f0f0f0;
-      transition: background .12s;
-    }
-    .article-item:last-child { border-bottom: none; }
-    .article-item:hover { background: #fafffe; }
-    .article-thumb {
-      flex-shrink: 0;
-      width: 54px; height: 54px;
-      border-radius: 6px;
-      background: var(--brand-light);
-      display: grid;
-      place-items: center;
-      font-size: 18px;
-      font-weight: 900;
-      color: var(--brand);
-      border: 1px solid rgba(11,143,114,.15);
-    }
-    .article-body { flex: 1; min-width: 0; }
-    .article-cat { font-size: 11px; font-weight: 700; color: var(--brand); margin-bottom: 2px; }
-    .article-title {
-      font-size: 13.5px;
-      font-weight: 700;
-      line-height: 1.45;
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-    }
-    .article-item:hover .article-title { color: var(--brand); }
-    .article-date { font-size: 11px; color: var(--muted); margin-top: 2px; }
 
     /* ── ツール・商品パネル ── */
     .product-grid {
@@ -516,24 +483,32 @@
       .mobile-hamburger { display: block; }
       .tab-bar { top: 56px; }
       .site-main { grid-template-columns: 1fr; padding: 10px; }
+      .mobile-priority-widgets {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-bottom: 14px;
+      }
       .product-grid { grid-template-columns: 1fr; }
       .tip-grid { grid-template-columns: 1fr 1fr; }
       .footer-inner { grid-template-columns: 1fr 1fr; gap: 16px; }
     }
     @media (max-width: 480px) {
       .footer-inner { grid-template-columns: 1fr; }
-      .tab-btn { padding: 10px 4px; font-size: 11px; }
-      .tab-icon { font-size: 23px; }
+      .tab-btn { padding: 9px 3px; font-size: 11px; gap: 3px; }
+      .tab-icon { font-size: 20px; }
+      .tab-label { display: block; font-size: 10.5px; line-height: 1.15; white-space: normal; }
       .inline-page-head { align-items: flex-start; flex-direction: column; }
       .inline-page-actions { width: 100%; }
       .inline-page-btn { flex: 1; text-align: center; }
-      .news-item, .article-item { padding: 12px 12px; }
+      .news-item { padding: 12px 12px; }
       .section-head { padding: 12px; }
+      .mobile-priority-widgets { grid-template-columns: 1fr; }
     }
     @media (max-width: 400px) {
-      .tab-label { display: none; }
-      .tab-btn { padding: 12px 6px; }
-      .tab-icon { font-size: 24px; }
+      .tab-btn { padding: 9px 2px; }
+      .tab-icon { font-size: 19px; }
+      .tab-label { font-size: 9.5px; }
     }
   </style>
 </head>
@@ -552,7 +527,7 @@
       <a href="/about/">サイトについて</a>
     </nav>
     <div class="header-right">
-      <a class="btn-primary-sm" href="/lp/bunsirube/">文標を見る →</a>
+      <a class="btn-primary-sm" href="/blog/comparison-article-template/">無料テンプレ →</a>
     </div>
     <button class="mobile-hamburger" id="menuBtn" aria-label="メニューを開く">☰</button>
   </div>
@@ -601,6 +576,35 @@
       <iframe class="inline-page-frame" id="inlinePageFrame" title="よへラボ内ページ"></iframe>
     </div>
 
+    <div class="mobile-priority-widgets" aria-label="スマホ向けおすすめ">
+      <section class="section-card">
+        <div class="section-head">
+          <h2><span>🔥</span>先に読む記事</h2>
+        </div>
+        <a class="pickup-item" href="/blog/comparison-article-template/">
+          <span class="pickup-num top3">1</span>
+          <span class="pickup-title">比較記事の書き方</span>
+        </a>
+        <a class="pickup-item" href="/blog/ai-news-selling-ideas/">
+          <span class="pickup-num top3">2</span>
+          <span class="pickup-title">AIニュースを記事ネタに変える方法</span>
+        </a>
+      </section>
+      <section class="section-card">
+        <div class="section-head">
+          <h2><span>📦</span>注目ツール</h2>
+        </div>
+        <a class="pickup-item" href="/lp/bunsirube/">
+          <span class="pickup-num">文</span>
+          <span class="pickup-title">文標を見る</span>
+        </a>
+        <a class="pickup-item" href="/blog/sales-page-common-mistakes/">
+          <span class="pickup-num">✓</span>
+          <span class="pickup-title">売り場チェックリスト</span>
+        </a>
+      </section>
+    </div>
+
     <!-- [タブ1] AIニュース -->
     <div class="tab-panel active" id="panel-ai-news" role="tabpanel">
 
@@ -643,56 +647,6 @@
               <div class="news-meta">2026-05-04 · よへラボブログ</div>
             </div>
           </a>
-          <!-- 下書き・テスト記事（カテゴリ別） -->
-          <a class="news-item" href="/blog/chatgpt-update-2026/" data-ai="chatgpt">
-            <span class="news-tag tag-chatgpt">ChatGPT</span>
-            <div class="news-body">
-              <div class="news-title">【下書き】ChatGPT 最新アップデートまとめ 2026年版</div>
-              <div class="news-meta">下書き · ChatGPT カテゴリ</div>
-            </div>
-          </a>
-          <a class="news-item" href="/blog/claude-update-2026/" data-ai="claude">
-            <span class="news-tag tag-claude">Claude</span>
-            <div class="news-body">
-              <div class="news-title">【下書き】Claude 最新アップデートまとめ 2026年版</div>
-              <div class="news-meta">下書き · Claude カテゴリ</div>
-            </div>
-          </a>
-          <a class="news-item" href="/blog/gemini-update-2026/" data-ai="gemini">
-            <span class="news-tag tag-gemini">Gemini</span>
-            <div class="news-body">
-              <div class="news-title">【下書き】Gemini 最新アップデートまとめ 2026年版</div>
-              <div class="news-meta">下書き · Gemini カテゴリ</div>
-            </div>
-          </a>
-          <a class="news-item" href="/blog/perplexity-how-to-earn/" data-ai="perplexity">
-            <span class="news-tag tag-perplexity">Perplexity</span>
-            <div class="news-body">
-              <div class="news-title">【下書き】Perplexityを使って副業収益を上げる方法</div>
-              <div class="news-meta">下書き · Perplexity カテゴリ</div>
-            </div>
-          </a>
-          <a class="news-item" href="/blog/genspark-how-to-earn/" data-ai="genspark">
-            <span class="news-tag tag-genspark">Genspark</span>
-            <div class="news-body">
-              <div class="news-title">【下書き】Gensparkで稼ぐ：使い方と副業への応用</div>
-              <div class="news-meta">下書き · Genspark カテゴリ</div>
-            </div>
-          </a>
-          <a class="news-item" href="/blog/grok-update-2026/" data-ai="grok">
-            <span class="news-tag" style="background:#333;flex-shrink:0;padding:2px 7px;border-radius:3px;font-size:11px;font-weight:700;color:#fff;margin-top:2px;">Grok</span>
-            <div class="news-body">
-              <div class="news-title">【下書き】Grok（xAI）最新情報まとめ｜X連携の副業活用法</div>
-              <div class="news-meta">下書き · Grok カテゴリ</div>
-            </div>
-          </a>
-          <a class="news-item" href="/blog/copilot-how-to-use/" data-ai="copilot">
-            <span class="news-tag" style="background:#0078d4;flex-shrink:0;padding:2px 7px;border-radius:3px;font-size:11px;font-weight:700;color:#fff;margin-top:2px;">Copilot</span>
-            <div class="news-body">
-              <div class="news-title">【下書き】Microsoft Copilotを副業に活かす使い方まとめ</div>
-              <div class="news-meta">下書き · Copilot カテゴリ</div>
-            </div>
-          </a>
         </div>
       </section>
 
@@ -706,60 +660,53 @@
           <a class="more" href="/blog/">一覧を見る →</a>
         </div>
         <div>
-          <a class="article-item" href="/blog/ai-news-selling-ideas/">
-            <div class="article-thumb">AI</div>
-            <div class="article-body">
-              <div class="article-cat">AIニュース活用</div>
-              <div class="article-title">AIニュースを記事ネタに変える方法</div>
-              <div class="article-date">2026-05-18</div>
+          <a class="news-item" href="/blog/ai-news-selling-ideas/">
+            <span class="news-tag tag-ai">AI活用</span>
+            <div class="news-body">
+              <div class="news-title">AIニュースを記事ネタに変える方法</div>
+              <div class="news-meta">2026-05-18 · AIニュース活用</div>
             </div>
           </a>
-          <a class="article-item" href="/blog/home-work-rhythm/">
-            <div class="article-thumb">🏠</div>
-            <div class="article-body">
-              <div class="article-cat">在宅メモ</div>
-              <div class="article-title">在宅作業の運動不足対策｜25分サイクル・家トレ習慣</div>
-              <div class="article-date">2026-05-18</div>
+          <a class="news-item" href="/blog/home-work-rhythm/">
+            <span class="news-tag tag-ai">在宅</span>
+            <div class="news-body">
+              <div class="news-title">在宅作業の運動不足対策｜25分サイクル・家トレ習慣</div>
+              <div class="news-meta">2026-05-18 · 在宅メモ</div>
             </div>
           </a>
-          <a class="article-item" href="/blog/comparison-article-template/">
-            <div class="article-thumb">比</div>
-            <div class="article-body">
-              <div class="article-cat">記事構成・テンプレ</div>
-              <div class="article-title">比較記事の書き方：結論・比較表・FAQ・CTAの型</div>
-              <div class="article-date">2026-05-04</div>
+          <a class="news-item" href="/blog/comparison-article-template/">
+            <span class="news-tag tag-ai">記事の型</span>
+            <div class="news-body">
+              <div class="news-title">比較記事の書き方：結論・比較表・FAQ・CTAの型</div>
+              <div class="news-meta">2026-05-04 · 記事構成・テンプレ</div>
             </div>
           </a>
-          <a class="article-item" href="/blog/free-theme-vs-bunsirube/">
-            <div class="article-thumb">WP</div>
-            <div class="article-body">
-              <div class="article-cat">WordPress</div>
-              <div class="article-title">無料テーマと文標の違い｜どちらを選ぶべきか</div>
-              <div class="article-date">2026-05-04</div>
+          <a class="news-item" href="/blog/free-theme-vs-bunsirube/">
+            <span class="news-tag tag-ai">WP</span>
+            <div class="news-body">
+              <div class="news-title">無料テーマと文標の違い｜どちらを選ぶべきか</div>
+              <div class="news-meta">2026-05-04 · WordPress</div>
             </div>
           </a>
-          <a class="article-item" href="/blog/faq-source-ai-search/">
-            <div class="article-thumb">FAQ</div>
-            <div class="article-body">
-              <div class="article-cat">AI検索対策</div>
-              <div class="article-title">AI検索向けにFAQと出典を置く理由</div>
-              <div class="article-date">2026-05-02</div>
+          <a class="news-item" href="/blog/faq-source-ai-search/">
+            <span class="news-tag tag-ai">FAQ</span>
+            <div class="news-body">
+              <div class="news-title">AI検索向けにFAQと出典を置く理由</div>
+              <div class="news-meta">2026-05-02 · AI検索対策</div>
             </div>
           </a>
-          <a class="article-item" href="/blog/sales-page-common-mistakes/">
-            <div class="article-thumb">💡</div>
-            <div class="article-body">
-              <div class="article-cat">販売導線</div>
-              <div class="article-title">売り場ページのよくある失敗とチェックリスト</div>
-              <div class="article-date">2026-04-28</div>
+          <a class="news-item" href="/blog/sales-page-common-mistakes/">
+            <span class="news-tag tag-ai">販売</span>
+            <div class="news-body">
+              <div class="news-title">売り場ページのよくある失敗とチェックリスト</div>
+              <div class="news-meta">2026-04-28 · 販売導線</div>
             </div>
           </a>
-          <a class="article-item" href="/blog/bunsirube-version-history/">
-            <div class="article-thumb">文</div>
-            <div class="article-body">
-              <div class="article-cat">文標・WordPress</div>
-              <div class="article-title">文標のバージョンアップ履歴</div>
-              <div class="article-date">2026-05-12</div>
+          <a class="news-item" href="/blog/bunsirube-version-history/">
+            <span class="news-tag tag-ai">文標</span>
+            <div class="news-body">
+              <div class="news-title">文標のバージョンアップ履歴</div>
+              <div class="news-meta">2026-05-12 · 文標・WordPress</div>
             </div>
           </a>
         </div>
@@ -786,7 +733,7 @@
             <div class="product-card-price">無料</div>
           </a>
           <a class="product-card" href="/blog/faq-source-ai-search/">
-            <div class="product-card-icon">❓</div>
+            <div class="product-card-icon">💬</div>
             <div class="product-card-name">FAQ型テンプレ</div>
             <div class="product-card-desc">AI検索時代に刺さるFAQ記事の書き方と構成例。</div>
             <div class="product-card-price">無料</div>
@@ -817,8 +764,20 @@
     <div class="tab-panel" id="panel-workout" role="tabpanel">
       <section class="section-card">
         <div class="section-head">
+          <h2><span>🏠</span>在宅カテゴリの記事</h2>
+          <a class="more" href="/blog/?category=group:home-work">一覧を見る →</a>
+        </div>
+        <a class="news-item" href="/blog/home-work-rhythm/">
+          <span class="news-tag tag-ai">在宅</span>
+          <div class="news-body">
+            <div class="news-title">在宅作業の運動不足対策｜25分サイクル・家トレ習慣</div>
+            <div class="news-meta">2026-05-18 · 在宅ヒント</div>
+          </div>
+        </a>
+      </section>
+      <section class="section-card">
+        <div class="section-head">
           <h2><span>💪</span>在宅ワーカーのためのヒント</h2>
-          <a class="more" href="/blog/home-work-rhythm/">詳しく読む →</a>
         </div>
         <div class="tip-grid">
           <div class="tip-item">
@@ -974,12 +933,13 @@
       <p class="footer-tagline">家で働く人のための<br>AI・副業情報サイト</p>
     </div>
     <div class="footer-col">
-      <h3>コンテンツ</h3>
+      <h3>カテゴリ</h3>
       <ul>
         <li><a href="/blog/">ブログ記事一覧</a></li>
-        <li><a href="/blog/?tag=ai-news">AIニュース活用</a></li>
-        <li><a href="/blog/?tag=wordpress">WordPress</a></li>
-        <li><a href="/blog/home-work-rhythm/">在宅ヒント</a></li>
+        <li><a href="/blog/?category=group:ai-news">AIニュース</a></li>
+        <li><a href="/blog/?category=group:earn">副業ブログ</a></li>
+        <li><a href="/blog/?category=group:wordpress">ツール・商品</a></li>
+        <li><a href="/blog/?category=group:home-work">在宅ヒント</a></li>
       </ul>
     </div>
     <div class="footer-col">
@@ -1140,6 +1100,7 @@
       const posts = Array.isArray(data.posts) ? data.posts : [];
       const dynamicPosts = posts
         .filter(post => post && post.importedFrom !== 'static-posts')
+        .filter(isVisibleHomePost)
         .slice(0, 5);
       if (!dynamicPosts.length) return;
 
@@ -1187,16 +1148,22 @@
   function renderDynamicArticleItem(post) {
     const tags = normalizeHomeTags(post.tags);
     const label = homeCategoryLabel(tags);
-    const thumb = label === '在宅' ? '🏠' : label === 'WordPress' ? 'WP' : label === 'テンプレ' ? '型' : 'AI';
     return `
-          <a class="article-item" href="${dynamicPostUrl(post)}" data-dynamic="server">
-            <div class="article-thumb">${escapeHtml(thumb)}</div>
-            <div class="article-body">
-              <div class="article-cat">${escapeHtml(label)}</div>
-              <div class="article-title">${escapeHtml(post.title || '無題の記事')}</div>
-              <div class="article-date">${escapeHtml(post.date || '')}</div>
+          <a class="news-item" href="${dynamicPostUrl(post)}" data-dynamic="server">
+            <span class="news-tag tag-ai">${escapeHtml(label)}</span>
+            <div class="news-body">
+              <div class="news-title">${escapeHtml(post.title || '無題の記事')}</div>
+              <div class="news-meta">${escapeHtml(post.date || '')} · 管理画面から公開</div>
             </div>
           </a>`;
+  }
+
+  function isVisibleHomePost(post) {
+    const title = String(post?.title || '');
+    if (!title.trim()) return false;
+    if (title.includes('【下書き】') || title.includes('下書き')) return false;
+    if (title.includes('公開テスト') || title.toLowerCase().includes('test')) return false;
+    return true;
   }
 
   function normalizeHomeTags(tags) {
