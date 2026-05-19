@@ -33,10 +33,6 @@
     .post-body { font-size:17px;line-height:2;color:var(--text); }
     .post-body h2 { font-size:30px;line-height:1.35;margin:42px 0 16px;letter-spacing:-.04em; }
     .post-body p, .post-body li { margin-bottom:16px; }
-    .article-summary { background:#f8fbff;border:1px solid #dce7fb;border-radius:18px;padding:16px 18px;margin:0 0 28px; }
-    .article-summary strong { color:#075c4c; }
-    .article-summary ul { margin:8px 0 0;padding-left:1.2em; }
-    .article-summary li { margin-bottom:6px; }
     .version-grid { display:grid;gap:12px;margin:18px 0 28px; }
     .version-card { background:#fff;border:1px solid var(--border);border-radius:18px;padding:16px 18px;box-shadow:var(--shadow-xs); }
     .version-card time { display:inline-flex;font-size:12px;font-weight:900;color:#075c4c;margin-bottom:6px; }
@@ -47,153 +43,28 @@
   </style>
 </head>
 <body>
-      <!-- ====== 共通ヘッダー ====== -->
-  <header class="yh-site-header">
-    <div class="yh-header-inner">
-      <a class="yh-logo" href="/">
-        <img src="/yohelab-mascot-v2-20260518.webp" alt="よへラボ" />
-        <span>よへラボ</span>
+    <header style="background:#fff;border-bottom:3px solid #0b8f72;position:sticky;top:0;z-index:100;">
+    <div style="max-width:1100px;margin:0 auto;padding:0 16px;display:flex;align-items:center;gap:20px;height:56px;">
+      <a href="/" style="display:flex;align-items:center;gap:10px;font-size:20px;font-weight:900;color:#0b8f72;letter-spacing:-0.03em;text-decoration:none;flex-shrink:0;">
+        <img src="/yohelab-mascot-v2-20260518.webp" alt="よへラボ" style="width:36px;height:36px;border-radius:8px;" />
+        よへラボ
       </a>
-      <nav class="yh-header-nav">
-        <a href="/blog/">ブログ</a>
-        <a href="/lp/bunsirube/">文標</a>
-        <a href="/about/">サイトについて</a>
+      <nav style="display:flex;align-items:center;gap:4px;">
+        <a href="/" style="padding:5px 11px;border-radius:4px;font-size:13px;font-weight:700;color:#444;text-decoration:none;">トップ</a>
+        <a href="/blog/" style="padding:5px 11px;border-radius:4px;font-size:13px;font-weight:700;color:#444;text-decoration:none;">ブログ</a>
+        <a href="/lp/bunsirube/" style="padding:5px 11px;border-radius:4px;font-size:13px;font-weight:700;color:#444;text-decoration:none;">文標</a>
+        <a href="/about/" style="padding:5px 11px;border-radius:4px;font-size:13px;font-weight:700;color:#444;text-decoration:none;">サイトについて</a>
       </nav>
-      <div class="yh-header-right">
-        <a href="/lp/bunsirube/" class="yh-btn-primary">文標を見る →</a>
+      <div style="margin-left:auto;">
+        <a href="/lp/bunsirube/" style="background:#0b8f72;color:#fff;padding:7px 16px;border-radius:4px;font-size:13px;font-weight:700;text-decoration:none;">文標を見る →</a>
       </div>
-      <button class="yh-hamburger" id="yhMenuBtn" aria-label="メニュー">☰</button>
     </div>
-    <!-- モバイルメニュー -->
-    <nav class="yh-mobile-nav" id="yhMobileNav">
-      <a href="/?tab=ai-news">🤖 AIニュース</a>
-      <a href="/?tab=blog">✍️ 副業ブログ</a>
-      <a href="/?tab=tools">📦 ツール・商品</a>
-      <a href="/?tab=workout">💪 在宅ヒント</a>
-      <a href="/lp/bunsirube/">文標（WPテーマ）</a>
-      <a href="/about/">サイトについて</a>
-      <a href="/contact/">お問い合わせ</a>
-      <a href="https://x.com/yohe_lab" target="_blank" rel="noopener">X（旧Twitter）</a>
-    </nav>
   </header>
-  <!-- ====== カテゴリタブバー（全ページ共通） ====== -->
-  <div class="yh-tab-bar">
-    <div class="yh-tab-bar-inner">
-      <a class="yh-tab-btn" href="/?tab=ai-news" data-tab="ai-news">
-        <span class="yh-tab-icon">🤖</span><span>AIニュース</span>
-      </a>
-      <a class="yh-tab-btn" href="/?tab=blog" data-tab="blog">
-        <span class="yh-tab-icon">✍️</span><span>副業ブログ</span>
-      </a>
-      <a class="yh-tab-btn" href="/?tab=tools" data-tab="tools">
-        <span class="yh-tab-icon">📦</span><span>ツール・商品</span>
-      </a>
-      <a class="yh-tab-btn" href="/?tab=workout" data-tab="workout">
-        <span class="yh-tab-icon">💪</span><span>在宅ヒント</span>
-      </a>
-    </div>
-  </div>
-  <!-- 共通CSS -->
-  <style>
-    .yh-site-header{background:#fff;border-bottom:3px solid #0b8f72;position:sticky;top:0;z-index:200;}
-    .yh-header-inner{max-width:1100px;margin:0 auto;padding:0 16px;display:flex;align-items:center;gap:16px;height:56px;}
-    .yh-logo{display:flex;align-items:center;gap:10px;font-size:20px;font-weight:900;color:#0b8f72;text-decoration:none;flex-shrink:0;letter-spacing:-0.03em;}
-    .yh-logo img{width:36px;height:36px;border-radius:8px;}
-    .yh-header-nav{display:flex;align-items:center;gap:2px;}
-    .yh-header-nav a{padding:5px 10px;border-radius:4px;font-size:13px;font-weight:700;color:#444;text-decoration:none;transition:background .15s,color .15s;}
-    .yh-header-nav a:hover{background:#e8f7f3;color:#0b8f72;}
-    .yh-header-right{margin-left:auto;}
-    .yh-btn-primary{background:#0b8f72;color:#fff;padding:7px 14px;border-radius:4px;font-size:13px;font-weight:700;text-decoration:none;display:inline-block;transition:background .15s;}
-    .yh-btn-primary:hover{background:#086b56;}
-    .yh-hamburger{display:none;background:none;border:1px solid #e8e8e8;border-radius:4px;padding:6px 10px;cursor:pointer;font-size:18px;color:#444;margin-left:auto;}
-    .yh-mobile-nav{display:none;background:#fff;border-bottom:1px solid #e8e8e8;padding:10px 16px;flex-direction:column;gap:2px;}
-    .yh-mobile-nav a{padding:10px 12px;border-radius:6px;font-size:14px;font-weight:700;color:#444;text-decoration:none;display:block;}
-    .yh-mobile-nav a:hover{background:#e8f7f3;color:#0b8f72;}
-    .yh-tab-bar{background:#fff;border-bottom:2px solid #e8e8e8;position:sticky;top:56px;z-index:190;}
-    .yh-tab-bar-inner{max-width:1100px;margin:0 auto;display:flex;}
-    .yh-tab-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:9px 8px;border-bottom:3px solid transparent;font-size:12px;font-weight:700;color:#666;text-decoration:none;transition:background .15s,color .15s,border-color .15s;text-align:center;}
-    .yh-tab-btn:hover{background:#e8f7f3;color:#0b8f72;}
-    .yh-tab-btn.active{color:#0b8f72;border-bottom-color:#0b8f72;background:#e8f7f3;}
-    .yh-tab-icon{font-size:20px;line-height:1;}
-    @media(max-width:768px){
-      .yh-header-nav,.yh-header-right{display:none;}
-      .yh-hamburger{display:block;}
-      .yh-tab-bar{top:56px;}
-      .yh-tab-btn{padding:10px 4px;font-size:11px;}
-      .yh-tab-icon{font-size:22px;}
-    }
-    @media(max-width:400px){
-      .yh-tab-btn span:last-child{display:none;}
-      .yh-tab-icon{font-size:24px;}
-      .yh-tab-btn{padding:12px 6px;}
-    }
-  </style>
-  <script>
-    (function(){
-      var btn=document.getElementById('yhMenuBtn');
-      var nav=document.getElementById('yhMobileNav');
-      if(btn&&nav){btn.addEventListener('click',function(){nav.style.display=nav.style.display==='flex'?'none':'flex';});}
-      // タブのアクティブ状態をパスとクエリから判定
-      var path=location.pathname;
-      var params=new URLSearchParams(location.search);
-      var tab=params.get('tab')||'';
-      document.querySelectorAll('.yh-tab-btn').forEach(function(a){
-        var t=a.dataset.tab||'';
-        var active=false;
-        if(tab&&t===tab) active=true;
-        else if(!tab){
-          if(path==='/blog/'&&t==='blog') active=true;
-          else if((path.startsWith('/blog/'))&&path!=='/blog/'&&t==='blog') active=true;
-          else if(path.startsWith('/lp/')&&t==='tools') active=true;
-          else if(path.startsWith('/apps/')&&t==='tools') active=true;
-          else if(path==='/about/'&&t==='blog') active=true;
-        }
-        if(active) a.classList.add('active');
-      });
-      // トップページ: タブクリックでパネル切り替え（ページ遷移なし）
-      if(path==='/'){
-        document.querySelectorAll('.yh-tab-btn').forEach(function(a){
-          a.addEventListener('click',function(e){
-            var t=a.dataset.tab;
-            var panel=document.getElementById('panel-'+t);
-            if(!panel) return;
-            e.preventDefault();
-            // すべてのパネルを非表示
-            document.querySelectorAll('.tab-panel').forEach(function(p){p.classList.remove('active');});
-            panel.classList.add('active');
-            // タブのactive
-            document.querySelectorAll('.yh-tab-btn').forEach(function(b){b.classList.remove('active');});
-            a.classList.add('active');
-            // URLをhistory.pushStateで更新（ページ遷移なし）
-            history.pushState({},'','/?tab='+t);
-          });
-        });
-        // 初期タブ
-        var initTab=params.get('tab')||'ai-news';
-        var initPanel=document.getElementById('panel-'+initTab);
-        if(initPanel){
-          document.querySelectorAll('.tab-panel').forEach(function(p){p.classList.remove('active');});
-          initPanel.classList.add('active');
-          document.querySelectorAll('.yh-tab-btn').forEach(function(b){b.classList.remove('active');});
-          var initBtn=document.querySelector('.yh-tab-btn[data-tab="'+initTab+'"]');
-          if(initBtn) initBtn.classList.add('active');
-        }
-      }
-    })();
-  </script>
   <main class="post-outer">
     <img class="post-cover" src="/assets/blog/bunsirube-version-history/eyecatch.webp" alt="文標のバージョンアップ履歴" loading="eager" decoding="async" width="1600" height="900" />
     <div class="post-meta"><span>2026-05-12</span><span class="post-tag">文標</span><span class="post-tag">更新履歴</span><span class="post-tag">WordPress</span></div>
     <h1 class="post-title">文標のバージョンアップ履歴：初期版から今までに良くしたこと</h1>
     <p class="post-excerpt">文標は、いきなり完成品として置いたテーマではありません。初期版から、記事を書く前の迷い、公開前の不安、購入後の分かりにくさを一つずつ減らしてきました。</p>
-    <div class="article-summary" aria-label="この記事で分かること">
-      <div><strong>この記事で分かること</strong></div>
-      <ul>
-        <li>文標で追加してきた主な機能</li>
-        <li>ベータ版から今までの改善ポイント</li>
-        <li>読了目安：4分</li>
-      </ul>
-    </div>
     <div class="post-body">
       <p>文標の更新履歴は、ただの数字の一覧だけだと分かりにくいです。</p>
       <p>なのでこの記事では、「何を追加したか」「どう良くなったか」「何の不安を減らしたか」が分かるように、初期版から順にまとめます。</p>

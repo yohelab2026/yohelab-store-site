@@ -91,6 +91,28 @@ function headHardeningPlugin() {
         );
       }
 
+      const pageOgImage = out.match(/<meta\s+property="og:image"\s+content="([^"]+)"\s*\/?>/i)?.[1];
+      if (pageOgImage && !out.includes('name="twitter:image"')) {
+        out = out.replace(/<meta name="twitter:card" content="summary_large_image" \/>/i, (match) => `${match}\n  <meta name="twitter:image" content="${pageOgImage}" />`);
+      }
+
+      if (ctx.path === "/index.html" && !out.includes('"@type":"WebSite"')) {
+        const website = {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "よへラボ",
+          url: "https://yohelab.com/",
+          description: "家で働く人・副業をする人向けに、AIニュース、ブログ、WordPress、在宅ワーク習慣を整理する情報サイト。",
+          publisher: {
+            "@type": "Organization",
+            name: "よへラボ",
+            logo: { "@type": "ImageObject", url: "https://yohelab.com/yohelab-mascot-v2-20260518.png" },
+          },
+          inLanguage: "ja-JP",
+        };
+        out = out.replace("</head>", `  <script type="application/ld+json">${JSON.stringify(website)}</script>\n</head>`);
+      }
+
       if (!out.includes('rel="apple-touch-icon"')) {
         out = out.replace(/<link rel="icon"[^>]+\/>/, (match) => `${match}\n    ${iconLinks}`);
       }
@@ -123,8 +145,30 @@ function headHardeningPlugin() {
   };
 }
 
+function mobilePolishPlugin() {
+  const style = `<style id="yohelab-mobile-polish">
+@media (max-width: 640px) {
+  .post-outer, .article-shell { width: auto !important; max-width: none !important; padding-left: 16px !important; padding-right: 16px !important; }
+  .post-title, .article-hero h1 { overflow-wrap: anywhere; }
+  .post-excerpt, .article-lead { font-size: 16px !important; line-height: 1.8 !important; }
+  .post-body, .article-card { font-size: 16px !important; line-height: 1.9 !important; }
+  .post-cover { border-radius: 16px !important; margin-bottom: 22px !important; }
+  .post-table { display: block !important; overflow-x: auto !important; -webkit-overflow-scrolling: touch; }
+}
+</style>`;
+
+  return {
+    name: "mobile-polish",
+    transformIndexHtml(html, ctx) {
+      if (!ctx?.path || ctx.path === "/google0009e82266fc5714.html") return html;
+      if (html.includes('id="yohelab-mobile-polish"')) return html;
+      return html.replace("</head>", `  ${style}\n</head>`);
+    },
+  };
+}
+
 export default defineConfig({
-  plugins: [matomoSnippetPlugin(), backToTopPlugin(), hreflangPlugin(), headHardeningPlugin()],
+  plugins: [matomoSnippetPlugin(), backToTopPlugin(), hreflangPlugin(), headHardeningPlugin(), mobilePolishPlugin()],
   build: {
     rollupOptions: {
       input: {
