@@ -56,6 +56,7 @@
       color: var(--text);
       font-size: 14px;
       line-height: 1.7;
+      overflow-x: hidden;
     }
     a { color: inherit; text-decoration: none; }
     img { display: block; max-width: 100%; }
@@ -200,9 +201,15 @@
       margin: 0 auto;
       padding: 16px;
       display: grid;
-      grid-template-columns: 1fr 300px;
+      grid-template-columns: minmax(0, 1fr) 300px;
       gap: 16px;
       align-items: start;
+    }
+    .main-col,
+    .sidebar,
+    .section-card,
+    .news-item {
+      min-width: 0;
     }
 
     /* ── タブパネル ── */
@@ -506,12 +513,13 @@
     .footer-bottom-links a:hover { color: var(--brand); }
 
     /* ── レスポンシブ ── */
-    @media (max-width: 768px) {
+    @media (max-width: 900px) {
       .header-nav { display: none; }
       .header-right { display: none; }
       .mobile-hamburger { display: block; }
       .tab-bar { top: 56px; }
       .site-main { grid-template-columns: 1fr; padding: 10px; }
+      .sidebar { display: none; }
       .mobile-priority-widgets {
         display: grid;
         grid-template-columns: 1fr 1fr;
