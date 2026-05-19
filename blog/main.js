@@ -13,7 +13,7 @@ let categoryGroups = {
   'group:wordpress': ['wordpress','template'],
   'group:home-work': ['home-work'],
 };
-let categoryOrder = ['ai-news','chatgpt','claude','gemini','perplexity','genspark','grok','copilot','midjourney','earn','template','article','wordpress','home-work'];
+let categoryOrder = ['ai-news','chatgpt','claude','gemini','perplexity','genspark','grok','copilot','midjourney','faq','earn','template','article','wordpress','home-work'];
 let categoryLabels = {
   all: '全部',
   'group:ai-news': 'AIニュース全部',
@@ -29,6 +29,7 @@ let categoryLabels = {
   grok: 'Grok',
   copilot: 'Copilot',
   midjourney: 'Midjourney',
+  faq: 'FAQ',
   earn: '収益化ネタ',
   wordpress: 'WordPress・文標',
   article: '記事づくり',
@@ -178,6 +179,16 @@ function postUrl(slug) {
     : `/blog/post/?slug=${encodeURIComponent(slug)}`;
 }
 
+function categoryUrl(filter) {
+  const value = normalizeFilter(filter);
+  if (value.startsWith('group:')) return `/blog/category/${encodeURIComponent(value.replace('group:', ''))}/`;
+  return `/blog/category/${encodeURIComponent(value)}/`;
+}
+
+function tagUrl(tag) {
+  return `/blog/tag/${encodeURIComponent(normalizeFilter(tag))}/`;
+}
+
 async function loadPosts(page = 1) {
   const staticPublished = await loadStaticPublishedPosts();
   let dynamicPosts = [];
@@ -264,6 +275,7 @@ function normalizePostTags(post) {
   if (raw.includes('テンプレ') || raw.includes('比較記事')) tags.add('template');
   if (raw.includes('在宅') || raw.includes('家で作業')) tags.add('home-work');
   if (raw.includes('aiニュース') || raw.includes('ai検索')) tags.add('ai-news');
+  if (raw.includes('faq')) tags.add('faq');
   return [...tags];
 }
 
@@ -309,7 +321,7 @@ function render(posts, hasLink = true) {
     const tags = categoryOrder
       .filter(tag => normalizedTags.map(t => String(t).toLowerCase()).includes(tag))
       .slice(0, 3)
-      .map(tag => `<a class="post-card-tag" href="/blog/?tag=${encodeURIComponent(tag)}">${esc(getFilterLabel(tag))}</a>`)
+      .map(tag => `<a class="post-card-tag" href="${tagUrl(tag)}">${esc(getFilterLabel(tag))}</a>`)
       .join('');
     const img = post.eyecatch
       ? `<img class="post-card-img" src="${esc(post.eyecatch)}" alt="${esc(post.title)}" loading="lazy" />`
@@ -452,10 +464,12 @@ function setActiveFilter(value, parent) {
 }
 
 categoryTabEls.forEach(btn => {
+  if (btn.tagName === 'A' && !btn.getAttribute('href')) btn.setAttribute('href', categoryUrl(btn.dataset.filter));
   btn.addEventListener('click', () => setActiveFilter(btn.dataset.filter, btn.dataset.parent));
 });
 
 categoryChildEls.forEach(btn => {
+  if (btn.tagName === 'A' && !btn.getAttribute('href')) btn.setAttribute('href', categoryUrl(btn.dataset.filter));
   btn.addEventListener('click', () => setActiveFilter(btn.dataset.filter, btn.dataset.parent));
 });
 
@@ -464,7 +478,11 @@ if (blogSearchEl) {
 }
 
 const params = new URLSearchParams(location.search);
-if (params.get('category')) setActiveFilter(params.get('category'));
+const pathCategory = location.pathname.match(/^\/blog\/category\/([^/]+)\/?$/);
+const pathTag = location.pathname.match(/^\/blog\/tag\/([^/]+)\/?$/);
+if (pathCategory) setActiveFilter(decodeURIComponent(pathCategory[1]));
+else if (pathTag) setActiveFilter(decodeURIComponent(pathTag[1]));
+else if (params.get('category')) setActiveFilter(params.get('category'));
 else if (params.get('tag')) setActiveFilter(params.get('tag'));
 else setActiveFilter(activeFilter, activeParent);
 if (params.get('q') && blogSearchEl) {

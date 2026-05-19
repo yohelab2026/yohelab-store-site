@@ -1,0 +1,577 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>在宅ヒントの記事一覧 | よへラボ</title>
+  <meta name="description" content="在宅ヒントに関する記事を一覧で読めるページです。AIニュース、副業ブログ、WordPress、在宅作業のメモをカテゴリ・タグ別に整理しています。" />
+  <meta property="og:title" content="在宅ヒントの記事一覧 | よへラボ" />
+  <meta property="og:description" content="在宅ヒントに関する記事を一覧で読めるページです。AIニュース、副業ブログ、WordPress、在宅作業のメモをカテゴリ・タグ別に整理しています。" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="ja_JP" />
+  <meta property="og:url" content="https://yohelab.com/blog/category/home-work/" />
+  <meta property="og:image" content="https://yohelab.com/assets/og/bunsirube-og.png" />
+  <link rel="canonical" href="https://yohelab.com/blog/category/home-work/" />
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Blog","name":"在宅ヒントの記事一覧","url":"https://yohelab.com/blog/category/home-work/","description":"AIニュースをブログ記事、note・X投稿、無料テンプレ、WordPressテーマ文標に活かすための記事一覧。","publisher":{"@type":"Organization","name":"よへラボ","url":"https://yohelab.com/","logo":{"@type":"ImageObject","url":"https://yohelab.com/yohelab-mascot-v2-20260518.png"}},"inLanguage":"ja-JP"}
+  </script>
+  <link rel="icon" type="image/png" href="/yohelab-mascot-v2-20260518-32.png" />
+  <link rel="stylesheet" href="/shared/site.min.css" />
+  <style>
+    body { background:#f8fbf9; }
+
+    .blog-intro {
+      max-width:760px;
+      margin:18px auto 0;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.85;
+    }
+    .featured-guides {
+      max-width:960px;
+      margin:26px auto 18px;
+      padding:22px;
+      border:1px solid #dce7fb;
+      border-radius:26px;
+      background:linear-gradient(135deg,#ffffff,#eef8f4);
+      box-shadow:var(--shadow-sm);
+    }
+    .featured-guides h2 {
+      font-size:clamp(24px,3.6vw,36px);
+      letter-spacing:-.05em;
+      margin:0 0 8px;
+    }
+    .featured-guides p {
+      color:var(--muted);
+      line-height:1.8;
+      margin:0 0 18px;
+      font-size:14px;
+    }
+    .featured-guide-grid {
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:14px;
+    }
+    .featured-guide-card {
+      display:grid;
+      gap:8px;
+      padding:18px;
+      border-radius:20px;
+      background:#fff;
+      border:1px solid #dce7fb;
+      color:inherit;
+      text-decoration:none;
+      min-height:150px;
+    }
+    .featured-guide-card span {
+      color:#075c4c;
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+    .featured-guide-card strong {
+      font-size:18px;
+      line-height:1.45;
+      letter-spacing:-.03em;
+    }
+    .featured-guide-card small {
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.75;
+    }
+
+    .blog-tools {
+      max-width:960px;
+      margin:22px auto 20px;
+      padding:20px;
+      border:1px solid #dce7fb;
+      border-radius:24px;
+      background:#fff;
+      box-shadow:var(--shadow-sm);
+    }
+    .blog-search-row {
+      display:grid;
+      grid-template-columns:minmax(0,1fr) auto;
+      gap:10px;
+      margin-bottom:14px;
+    }
+    .blog-search-row input {
+      min-height:46px;
+      padding:0 16px;
+      border-radius:14px;
+      border:1px solid #dce7fb;
+      font-size:15px;
+      font-weight:700;
+      color:var(--text);
+      min-width:0;
+    }
+    .blog-search-row a {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:46px;
+      padding:0 16px;
+      border-radius:14px;
+      background:#0b8f72;
+      color:#fff;
+      font-size:13px;
+      font-weight:900;
+      text-decoration:none;
+      white-space:nowrap;
+    }
+    .category-tabs {
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      overflow:hidden;
+      border:1px solid #dce7fb;
+      border-radius:18px;
+      background:#fff;
+    }
+    .category-tab {
+      min-height:88px;
+      padding:14px 10px 12px;
+      border:0;
+      border-right:1px solid #e8f1ee;
+      background:#fff;
+      color:#21324c;
+      font:inherit;
+      font-weight:900;
+      cursor:pointer;
+      display:grid;
+      place-items:center;
+      gap:7px;
+      box-shadow:inset 0 0 0 0 #0b8f72;
+      transition:background .15s ease,color .15s ease,box-shadow .15s ease;
+    }
+    .category-tab:last-child {
+      border-right:0;
+    }
+    .category-tab.is-active {
+      background:#e8f7f1;
+      color:#0b8f72;
+      box-shadow:inset 0 -4px 0 #0b8f72;
+    }
+    .category-tab-icon {
+      font-size:24px;
+      line-height:1;
+    }
+    .category-tab-label {
+      font-size:15px;
+      letter-spacing:-.02em;
+    }
+    .child-category-panels {
+      margin-top:14px;
+      padding:14px;
+      border:1px solid #dce7fb;
+      border-radius:16px;
+      background:#fbfffd;
+    }
+    .child-category-panel {
+      display:none;
+    }
+    .child-category-panel.is-active {
+      display:block;
+    }
+    .child-category-title {
+      color:#52645f;
+      font-size:12px;
+      font-weight:900;
+      margin-bottom:10px;
+    }
+    .child-category-list {
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+    .category-child {
+      border:1px solid #dce7fb;
+      background:#fff;
+      color:#21324c;
+      border-radius:999px;
+      min-height:34px;
+      padding:0 12px;
+      font:inherit;
+      font-size:12.5px;
+      font-weight:900;
+      cursor:pointer;
+    }
+    .category-child.is-active {
+      background:#0b8f72;
+      border-color:#0b8f72;
+      color:#fff;
+    }
+    .filter-status {
+      max-width:760px;
+      margin:10px auto 0;
+      color:var(--muted);
+      font-size:13px;
+      font-weight:700;
+    }
+
+    /* グリッド */
+    .posts-grid {
+      display:grid;
+      grid-template-columns:1fr;
+      gap:18px;
+      margin-top:16px;
+      max-width:760px;
+      margin-left:auto;
+      margin-right:auto;
+    }
+
+    /* カード */
+    .post-card {
+      background:#fff;border-radius:22px;
+      border:1px solid var(--border);
+      box-shadow:var(--shadow-sm);
+      overflow:hidden;
+      text-decoration:none;color:inherit;
+      display:flex;flex-direction:column;
+      transition:box-shadow .2s,transform .2s;
+      cursor:pointer;
+    }
+    .post-card:hover {
+      box-shadow:0 8px 32px rgba(0,0,0,.10);
+      transform:translateY(-2px);
+    }
+    .post-card:focus-visible {
+      outline:3px solid rgba(6,122,95,.35);
+      outline-offset:4px;
+    }
+    .post-card-head {
+      padding:20px 20px 0;
+    }
+    .post-card-img {
+      width:100%;height:auto;aspect-ratio:16/9;object-fit:contain;display:block;
+      background:#061f1b;
+    }
+    .post-card-img-placeholder {
+      width:100%;height:200px;background:linear-gradient(135deg,#e8f4ef,#d0ecdf);
+      display:flex;align-items:center;justify-content:center;
+      font-size:40px;color:rgba(0,0,0,.15);
+    }
+    .post-card-body { padding:18px 20px 20px;flex:1;display:flex;flex-direction:column; }
+    .post-card-meta { font-size:12px;color:var(--muted);margin-bottom:8px;display:flex;gap:8px;flex-wrap:wrap;align-items:center; }
+    .post-card-tag { background:#f0f8f4;color:#075c4c;border-radius:999px;padding:2px 9px;font-size:11px;font-weight:700;text-decoration:none; }
+    .post-card-tag:hover { background:#e0f4ec;color:#0b8f72; }
+    .post-card-title { font-size:24px;font-weight:900;line-height:1.35;margin-bottom:12px;letter-spacing:-.04em;flex:1; }
+    .post-card-excerpt {
+      font-size:15px;color:var(--muted);line-height:1.9;
+      display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;
+    }
+    .post-card-excerpt.is-open {
+      display:block;
+      -webkit-line-clamp:initial;
+    }
+    .post-card-preview {
+      margin-top:14px;
+      padding:14px 16px;
+      border-radius:16px;
+      background:#f7fbff;
+      border:1px solid #dce7fb;
+      color:var(--text);
+      font-size:14px;
+      line-height:1.85;
+      display:none;
+    }
+    .post-card-preview.is-open { display:block; }
+    .post-card-footer {
+      margin-top:16px;
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+    .read-more {
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      color:var(--green);
+      font-weight:800;
+      font-size:13px;
+      background:none;
+      border:none;
+      padding:0;
+      cursor:pointer;
+      text-decoration:none;
+    }
+    .read-more:hover { text-decoration:underline; }
+    .open-link {
+      color:var(--muted);
+      font-size:13px;
+      font-weight:700;
+      text-decoration:none;
+    }
+
+    .empty { padding:48px 24px;text-align:center;color:var(--muted);font-size:16px; }
+
+    @media (max-width:860px) {
+      .featured-guide-grid { grid-template-columns:1fr; }
+    }
+    @media (max-width:560px) {
+      .post-card-title { font-size:21px; }
+      .blog-search-row { grid-template-columns:1fr; }
+      .category-tabs { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .category-tab { min-height:76px; }
+      .category-tab:nth-child(2) { border-right:0; }
+      .category-tab:nth-child(-n+2) { border-bottom:1px solid #e8f1ee; }
+    }
+  </style>
+</head>
+<body>
+    <header class="site-header" style="background:#fff;border-bottom:3px solid #0b8f72;position:sticky;top:0;z-index:100;">
+    <div class="header-inner" style="max-width:1100px;margin:0 auto;padding:0 16px;display:flex;align-items:center;gap:20px;height:56px;">
+      <a href="/" style="display:flex;align-items:center;gap:10px;font-size:20px;font-weight:900;color:#0b8f72;letter-spacing:-0.03em;flex-shrink:0;text-decoration:none;">
+        <img src="/yohelab-mascot-v2-20260518.webp" alt="よへラボ" style="width:36px;height:36px;border-radius:8px;" />
+        よへラボ
+      </a>
+      <nav style="display:flex;align-items:center;gap:4px;">
+        <a href="/" style="padding:5px 11px;border-radius:4px;font-size:13px;font-weight:700;color:#444;text-decoration:none;">トップ</a>
+        <a href="/blog/" style="padding:5px 11px;border-radius:4px;font-size:13px;font-weight:700;color:#444;text-decoration:none;">ブログ</a>
+        <a href="/lp/bunsirube/" style="padding:5px 11px;border-radius:4px;font-size:13px;font-weight:700;color:#444;text-decoration:none;">文標</a>
+        <a href="/about/" style="padding:5px 11px;border-radius:4px;font-size:13px;font-weight:700;color:#444;text-decoration:none;">サイトについて</a>
+      </nav>
+      <div style="margin-left:auto;">
+        <a href="/lp/bunsirube/" style="background:#0b8f72;color:#fff;padding:7px 16px;border-radius:4px;font-size:13px;font-weight:700;text-decoration:none;">文標を見る →</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+  <section class="section">
+    <div class="container">
+      <div class="sec-head" style="text-align:center;margin-bottom:22px;">
+        <p class="sec-label">Blog</p>
+        <h1>よへラボ記事一覧</h1>
+        <p class="blog-intro">AIニュースをブログ記事、note・X投稿、無料テンプレ、WordPressの道具に変えるためのメモです。在宅作業の話は、作業を続けるための補足として扱います。</p>
+      </div>
+      <section class="featured-guides" aria-labelledby="bunsirube-guides-title">
+        <h2 id="bunsirube-guides-title">まず読む3本</h2>
+        <p>よへラボの方向性、記事の型、文標の位置づけを先に確認できます。</p>
+        <div class="featured-guide-grid">
+          <a class="featured-guide-card" href="/blog/ai-news-selling-ideas/">
+            <span>Direction</span>
+            <strong>AIニュースを記事ネタに変える方法</strong>
+            <small>ニュースを読んで終わりにしないための考え方。</small>
+          </a>
+          <a class="featured-guide-card" href="/blog/comparison-article-template/">
+            <span>Article</span>
+            <strong>比較記事の書き方</strong>
+            <small>ネタを記事として残すときの基本構造。</small>
+          </a>
+          <a class="featured-guide-card" href="/blog/bunsirube-before-install/">
+            <span>Tool</span>
+            <strong>文標を入れる前に確認すること</strong>
+            <small>よへラボの道具のひとつとして、文標を見る。</small>
+          </a>
+        </div>
+      </section>
+      <section class="blog-tools" aria-label="記事検索とカテゴリ">
+        <div class="blog-search-row">
+          <input id="blog-search" type="search" placeholder="キーワードで探す。例: ChatGPT / Claude / WordPress / AI検索" autocomplete="off" />
+          <a href="/about/">よへラボについて</a>
+        </div>
+        <div class="category-tabs" role="tablist" aria-label="親カテゴリ">
+          <a class="category-tab is-active" role="tab" aria-selected="true" data-parent="ai-news" data-filter="group:ai-news" href="/blog/category/ai-news/">
+            <span class="category-tab-icon">🤖</span>
+            <span class="category-tab-label">AIニュース</span>
+          </a>
+          <a class="category-tab" role="tab" aria-selected="false" data-parent="earn" data-filter="group:earn" href="/blog/category/earn/">
+            <span class="category-tab-icon">✍️</span>
+            <span class="category-tab-label">副業ブログ</span>
+          </a>
+          <a class="category-tab" role="tab" aria-selected="false" data-parent="wordpress" data-filter="group:wordpress" href="/blog/category/wordpress/">
+            <span class="category-tab-icon">📦</span>
+            <span class="category-tab-label">ツール・商品</span>
+          </a>
+          <a class="category-tab" role="tab" aria-selected="false" data-parent="home-work" data-filter="group:home-work" href="/blog/category/home-work/">
+            <span class="category-tab-icon">💪</span>
+            <span class="category-tab-label">在宅ヒント</span>
+          </a>
+        </div>
+        <div class="child-category-panels" aria-label="子カテゴリ">
+          <div class="child-category-panel is-active" data-parent-panel="ai-news">
+            <div class="child-category-title">AIニュースの子カテゴリ</div>
+            <div class="child-category-list">
+              <a class="category-child is-active" data-parent="ai-news" data-filter="group:ai-news" href="/blog/category/ai-news/">AIニュース全部</a>
+              <a class="category-child" data-parent="ai-news" data-filter="chatgpt" href="/blog/category/chatgpt/">ChatGPT</a>
+              <a class="category-child" data-parent="ai-news" data-filter="claude" href="/blog/category/claude/">Claude</a>
+              <a class="category-child" data-parent="ai-news" data-filter="gemini" href="/blog/category/gemini/">Gemini</a>
+              <a class="category-child" data-parent="ai-news" data-filter="perplexity" href="/blog/category/perplexity/">Perplexity</a>
+              <a class="category-child" data-parent="ai-news" data-filter="genspark" href="/blog/category/genspark/">Genspark</a>
+              <a class="category-child" data-parent="ai-news" data-filter="grok" href="/blog/category/grok/">Grok</a>
+              <a class="category-child" data-parent="ai-news" data-filter="copilot" href="/blog/category/copilot/">Copilot</a>
+              <a class="category-child" data-parent="ai-news" data-filter="midjourney" href="/blog/category/midjourney/">Midjourney</a>
+            </div>
+          </div>
+          <div class="child-category-panel" data-parent-panel="earn">
+            <div class="child-category-title">副業ブログの子カテゴリ</div>
+            <div class="child-category-list">
+              <a class="category-child" data-parent="earn" data-filter="group:earn" href="/blog/category/earn/">副業ネタ全部</a>
+              <a class="category-child" data-parent="earn" data-filter="earn" href="/blog/category/earn/">収益化ネタ</a>
+              <a class="category-child" data-parent="earn" data-filter="article" href="/blog/category/article/">記事づくり</a>
+              <a class="category-child" data-parent="earn" data-filter="template" href="/blog/category/template/">テンプレ販売</a>
+            </div>
+          </div>
+          <div class="child-category-panel" data-parent-panel="wordpress">
+            <div class="child-category-title">ツール・商品の子カテゴリ</div>
+            <div class="child-category-list">
+              <a class="category-child" data-parent="wordpress" data-filter="group:wordpress" href="/blog/category/wordpress/">ツール全部</a>
+              <a class="category-child" data-parent="wordpress" data-filter="wordpress" href="/blog/category/wordpress/">WordPress・文標</a>
+              <a class="category-child" data-parent="wordpress" data-filter="template" href="/blog/category/template/">記事テンプレ</a>
+            </div>
+          </div>
+          <div class="child-category-panel" data-parent-panel="home-work">
+            <div class="child-category-title">在宅ヒントの子カテゴリ</div>
+            <div class="child-category-list">
+              <a class="category-child" data-parent="home-work" data-filter="group:home-work" href="/blog/category/home-work/">在宅ヒント全部</a>
+              <a class="category-child" data-parent="home-work" data-filter="home-work" href="/blog/category/home-work/">在宅ワーク習慣</a>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="filter-status" id="filter-status">カテゴリやキーワードで記事を絞り込めます。</div>
+      <div id="posts" class="posts-grid">
+
+        <!-- ===== 公開記事 ===== -->
+        <article class="post-card" data-slug="ai-news-selling-ideas" data-tags="ai-news chatgpt claude gemini perplexity genspark earn article template" data-search="AIニュース ChatGPT Claude Gemini Perplexity Genspark 記事ネタ note X ブログ テンプレ 商品案">
+          <div class="post-card-img-placeholder">AI</div>
+          <div class="post-card-body">
+            <div class="post-card-meta"><span>2026-05-18</span><a class="post-card-tag" href="/blog/tag/ai-news/">AIニュース</a><a class="post-card-tag" href="/blog/tag/chatgpt/">ChatGPT</a><a class="post-card-tag" href="/blog/tag/claude/">Claude</a><a class="post-card-tag" href="/blog/tag/gemini/">Gemini</a></div>
+            <div class="post-card-title">AIニュースを記事ネタに変える方法｜ChatGPT・Claude・Gemini活用</div>
+            <div class="post-card-excerpt">よへラボでAIニュースから記事・テンプレ・ツール・商品を作る場所に変えていくための方針。ChatGPT・Claude・Geminiどのニュースでも使える手順。</div>
+            <div class="post-card-footer"><a class="open-link" href="/blog/ai-news-selling-ideas/">記事を読む →</a></div>
+          </div>
+        </article>
+
+        <article class="post-card" data-slug="faq-source-ai-search" data-tags="ai-news chatgpt claude gemini perplexity genspark grok article wordpress" data-search="AI検索 ChatGPT Claude Gemini Perplexity FAQ 出典 Google AI Overviews Grok">
+          <img class="post-card-img" src="/assets/blog/faq-source-ai-search/eyecatch.webp" alt="AI検索向けにFAQと出典を置く理由" loading="lazy" />
+          <div class="post-card-body">
+            <div class="post-card-meta"><span>2026-05-02</span><a class="post-card-tag" href="/blog/tag/ai-news/">AI検索</a><a class="post-card-tag" href="/blog/tag/chatgpt/">ChatGPT</a><a class="post-card-tag" href="/blog/tag/claude/">Claude</a><a class="post-card-tag" href="/blog/tag/gemini/">Gemini</a></div>
+            <div class="post-card-title">AI検索向けにFAQと出典を置く理由｜ChatGPT・Claude・Gemini・Grok対応</div>
+            <div class="post-card-excerpt">Google AI Overviews、ChatGPT、Claudeなど各AIに読み取られやすいFAQ構造の作り方。</div>
+            <div class="post-card-footer"><a class="open-link" href="/blog/faq-source-ai-search/">記事を読む →</a></div>
+          </div>
+        </article>
+
+        <article class="post-card" data-slug="comparison-article-template" data-tags="chatgpt claude gemini perplexity genspark grok ai-news article template earn wordpress" data-search="比較記事 書き方 テンプレ FAQ CTA ChatGPT Claude Gemini 比較">
+          <img class="post-card-img" src="/assets/blog/comparison-article-template/eyecatch.webp" alt="比較記事の書き方" loading="lazy" />
+          <div class="post-card-body">
+            <div class="post-card-meta"><span>2026-05-04</span><a class="post-card-tag" href="/blog/tag/template/">記事テンプレ</a><a class="post-card-tag" href="/blog/tag/template/">比較記事</a><a class="post-card-tag" href="/blog/tag/ai-news/">AI比較</a></div>
+            <div class="post-card-title">比較記事の書き方：AIツール比較にも使える結論・比較表・FAQ・CTA型</div>
+            <div class="post-card-excerpt">ChatGPT vs Claude vs Geminiなど、AIツール比較記事にそのまま使える記事構成テンプレ。</div>
+            <div class="post-card-footer"><a class="open-link" href="/blog/comparison-article-template/">記事を読む →</a></div>
+          </div>
+        </article>
+
+        <article class="post-card" data-slug="free-theme-vs-bunsirube" data-tags="wordpress article template" data-search="無料テーマ 文標 WordPress 比較">
+          <img class="post-card-img" src="/assets/blog/free-theme-vs-bunsirube/eyecatch.webp" alt="無料テーマと文標の違い" loading="lazy" />
+          <div class="post-card-body">
+            <div class="post-card-meta"><span>2026-05-04</span><a class="post-card-tag" href="/blog/tag/wordpress/">WordPress</a><a class="post-card-tag" href="/blog/tag/wordpress/">文標</a></div>
+            <div class="post-card-title">無料テーマと文標の違い：記事の型で選ぶWordPressテーマ</div>
+            <div class="post-card-excerpt">文標は無料テーマと機能数で正面勝負せず、記事の型・FAQ・比較表・CTA・導線確認に絞ったテーマです。</div>
+            <div class="post-card-footer"><a class="open-link" href="/blog/free-theme-vs-bunsirube/">記事を読む →</a></div>
+          </div>
+        </article>
+
+        <article class="post-card" data-slug="bunsirube-version-history" data-tags="wordpress article template" data-search="文標 WordPress 更新履歴 テーマ">
+          <img class="post-card-img" src="/assets/blog/bunsirube-version-history/eyecatch.webp" alt="文標のバージョンアップ履歴" loading="lazy" />
+          <div class="post-card-body">
+            <div class="post-card-meta"><span>2026-05-12</span><a class="post-card-tag" href="/blog/tag/wordpress/">WordPress</a><a class="post-card-tag" href="/blog/tag/wordpress/">文標</a></div>
+            <div class="post-card-title">文標のバージョンアップ履歴：初期版から今までに良くしたこと</div>
+            <div class="post-card-excerpt">文標を初期版からどう育ててきたか。追加したもの、良くしたところをまとめました。</div>
+            <div class="post-card-footer"><a class="open-link" href="/blog/bunsirube-version-history/">記事を読む →</a></div>
+          </div>
+        </article>
+
+        <article class="post-card" data-slug="bunsirube-before-install" data-tags="wordpress article" data-search="文標 導入前 バックアップ WordPress">
+          <img class="post-card-img" src="/assets/blog/bunsirube-before-install/eyecatch.webp" alt="文標を入れる前に確認すること" loading="lazy" />
+          <div class="post-card-body">
+            <div class="post-card-meta"><span>2026-05-02</span><a class="post-card-tag" href="/blog/tag/wordpress/">WordPress</a><a class="post-card-tag" href="/blog/tag/wordpress/">文標</a></div>
+            <div class="post-card-title">文標を入れる前に確認すること：既存記事・バックアップ・環境</div>
+            <div class="post-card-excerpt">WordPressテーマを変える前に確認しておきたい最低限のチェックリスト。</div>
+            <div class="post-card-footer"><a class="open-link" href="/blog/bunsirube-before-install/">記事を読む →</a></div>
+          </div>
+        </article>
+
+        <article class="post-card" data-slug="sales-page-common-mistakes" data-tags="earn article template" data-search="商品ページ note BASE 販売ページ 改善">
+          <img class="post-card-img" src="/assets/blog/sales-page-common-mistakes/eyecatch.webp" alt="商品ページでよくある失敗" loading="lazy" />
+          <div class="post-card-body">
+            <div class="post-card-meta"><span>2026-05-02</span><a class="post-card-tag" href="/blog/tag/earn/">収益化ネタ</a><a class="post-card-tag" href="/blog/tag/earn/">売り場改善</a></div>
+            <div class="post-card-title">BASE・note・自サイトの商品ページでよくある失敗</div>
+            <div class="post-card-excerpt">商品は悪くないのに、ページの順番で損していることがあります。</div>
+            <div class="post-card-footer"><a class="open-link" href="/blog/sales-page-common-mistakes/">記事を読む →</a></div>
+          </div>
+        </article>
+
+        <article class="post-card" data-slug="home-work-rhythm" data-tags="home-work article" data-search="家で作業 運動不足 在宅作業 習慣 ブログ AIニュース WordPress">
+          <div class="post-card-img-placeholder">🏠</div>
+          <div class="post-card-body">
+            <div class="post-card-meta"><span>2026-05-18</span><a class="post-card-tag" href="/blog/tag/home-work/">在宅ワーク</a><a class="post-card-tag" href="/blog/tag/home-work/">続ける習慣</a></div>
+            <div class="post-card-title">家で作業すると運動不足になるので、先に動く仕組みを作る</div>
+            <div class="post-card-excerpt">AIニュースを調べる、WordPressを触る、ブログを書く。家で続ける人向けに、座りっぱなしを避ける小さい仕組みをまとめました。</div>
+            <div class="post-card-footer"><a class="open-link" href="/blog/home-work-rhythm/">記事を読む →</a></div>
+          </div>
+        </article>
+
+        <!-- 下書き記事は公開ブログ一覧には出さず、管理画面の下書き欄で扱う。 -->
+
+      </div>
+    </div>
+  </section>
+  </main>
+
+    <footer style="background:#fff;border-top:1px solid #e8e8e8;margin-top:24px;padding:28px 16px 16px;">
+    <div style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:24px;">
+      <div>
+        <a href="/" style="display:flex;align-items:center;gap:8px;font-size:16px;font-weight:900;color:#0b8f72;text-decoration:none;margin-bottom:8px;">
+          <img src="/yohelab-mascot-v2-20260518.webp" alt="よへラボ" style="width:28px;height:28px;border-radius:6px;" />よへラボ
+        </a>
+        <p style="font-size:12px;color:#777;line-height:1.7;">家で働く人のための<br>AI・副業情報サイト</p>
+      </div>
+      <div>
+        <h3 style="font-size:12px;font-weight:900;color:#1a1a2e;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #e8e8e8;">コンテンツ</h3>
+        <ul style="list-style:none;display:grid;gap:5px;padding:0;margin:0;">
+          <li><a href="/blog/" style="font-size:12px;color:#777;text-decoration:none;">ブログ記事一覧</a></li>
+          <li><a href="/blog/tag/ai-news/" style="font-size:12px;color:#777;text-decoration:none;">AIニュース活用</a></li>
+          <li><a href="/blog/tag/wordpress/" style="font-size:12px;color:#777;text-decoration:none;">WordPress</a></li>
+          <li><a href="/blog/home-work-rhythm/" style="font-size:12px;color:#777;text-decoration:none;">在宅ヒント</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="font-size:12px;font-weight:900;color:#1a1a2e;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #e8e8e8;">ツール・商品</h3>
+        <ul style="list-style:none;display:grid;gap:5px;padding:0;margin:0;">
+          <li><a href="/lp/bunsirube/" style="font-size:12px;color:#777;text-decoration:none;">文標（WPテーマ）</a></li>
+          <li><a href="/lp/bunsirube/demo/" style="font-size:12px;color:#777;text-decoration:none;">文標デモ</a></li>
+          <li><a href="/blog/comparison-article-template/" style="font-size:12px;color:#777;text-decoration:none;">比較記事テンプレ（無料）</a></li>
+          <li><a href="/apps/research-writer/" style="font-size:12px;color:#777;text-decoration:none;">Research Writer</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="font-size:12px;font-weight:900;color:#1a1a2e;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #e8e8e8;">その他</h3>
+        <ul style="list-style:none;display:grid;gap:5px;padding:0;margin:0;">
+          <li><a href="/about/" style="font-size:12px;color:#777;text-decoration:none;">サイトについて</a></li>
+          <li><a href="/contact/" style="font-size:12px;color:#777;text-decoration:none;">お問い合わせ</a></li>
+          <li><a href="https://x.com/yohe_lab" target="_blank" rel="noopener" style="font-size:12px;color:#777;text-decoration:none;">X（旧Twitter）</a></li>
+          <li><a href="https://note.com/yohelab" target="_blank" rel="noopener" style="font-size:12px;color:#777;text-decoration:none;">note</a></li>
+          <li><a href="/legal/privacy/" style="font-size:12px;color:#777;text-decoration:none;">プライバシーポリシー</a></li>
+          <li><a href="/legal/terms/" style="font-size:12px;color:#777;text-decoration:none;">利用規約</a></li>
+        </ul>
+      </div>
+    </div>
+    <div style="max-width:1100px;margin:16px auto 0;padding-top:12px;border-top:1px solid #e8e8e8;font-size:11px;color:#777;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+      <span>© 2026 よへラボ</span>
+      <div style="display:flex;gap:12px;">
+        <a href="/legal/privacy/" style="color:#777;font-size:11px;text-decoration:none;">プライバシーポリシー</a>
+        <a href="/legal/terms/" style="color:#777;font-size:11px;text-decoration:none;">利用規約</a>
+        <a href="/contact/" style="color:#777;font-size:11px;text-decoration:none;">お問い合わせ</a>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="/blog/main.js"></script>
+</body>
+</html>

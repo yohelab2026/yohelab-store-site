@@ -40,25 +40,21 @@
   </style>
 </head>
 <body>
-    <header style="background:#fff;border-bottom:3px solid #0b8f72;position:sticky;top:0;z-index:100;">
-    <div style="max-width:1100px;margin:0 auto;padding:0 16px;display:flex;align-items:center;gap:20px;height:56px;">
-      <a href="/" style="display:flex;align-items:center;gap:10px;font-size:20px;font-weight:900;color:#0b8f72;letter-spacing:-0.03em;text-decoration:none;flex-shrink:0;">
+
+  <header class="site-header" style="background:#fff;border-bottom:3px solid #0b8f72;position:sticky;top:0;z-index:100;">
+    <div class="header-inner" style="max-width:1100px;margin:0 auto;padding:0 16px;display:flex;align-items:center;gap:20px;height:56px;">
+      <a href="/" style="display:flex;align-items:center;gap:10px;font-size:20px;font-weight:900;color:#0b8f72;letter-spacing:-0.03em;flex-shrink:0;text-decoration:none;">
         <img src="/yohelab-mascot-v2-20260518.webp" alt="よへラボ" style="width:36px;height:36px;border-radius:8px;" />
         よへラボ
       </a>
-      <nav style="display:flex;align-items:center;gap:4px;">
-        <a href="/" style="padding:5px 11px;border-radius:4px;font-size:13px;font-weight:700;color:#444;text-decoration:none;">トップ</a>
+      <nav style="display:flex;align-items:center;gap:4px;flex-wrap:wrap;">
         <a href="/blog/" style="padding:5px 11px;border-radius:4px;font-size:13px;font-weight:700;color:#444;text-decoration:none;">ブログ</a>
         <a href="/lp/bunsirube/" style="padding:5px 11px;border-radius:4px;font-size:13px;font-weight:700;color:#444;text-decoration:none;">文標</a>
         <a href="/about/" style="padding:5px 11px;border-radius:4px;font-size:13px;font-weight:700;color:#444;text-decoration:none;">サイトについて</a>
       </nav>
-      <div style="margin-left:auto;">
-        <a href="/lp/bunsirube/" style="background:#0b8f72;color:#fff;padding:7px 16px;border-radius:4px;font-size:13px;font-weight:700;text-decoration:none;">文標を見る →</a>
-      </div>
     </div>
   </header>
-
-  <main class="article-shell">
+<main class="article-shell">
     <section class="article-hero">
       <nav class="breadcrumb">
         <a href="/">トップ</a><span>/</span><a href="/blog/">記事一覧</a><span>/</span><span>在宅作業</span>
@@ -113,7 +109,7 @@
 <!-- yohelab-tags -->
 <div style="margin:24px 0;padding:16px;background:#fff;border:1px solid #e8e8e8;border-radius:8px;">
   <div style="font-size:12px;font-weight:700;color:#777;margin-bottom:8px;">タグ</div>
-  <a href="/blog/?tag=home-work" style="display:inline-block;padding:3px 10px;border-radius:999px;background:#e8f7f3;color:#0b8f72;font-size:12px;font-weight:700;text-decoration:none;margin:2px 4px 2px 0;">在宅作業</a> <a href="/blog/?tag=earn" style="display:inline-block;padding:3px 10px;border-radius:999px;background:#e8f7f3;color:#0b8f72;font-size:12px;font-weight:700;text-decoration:none;margin:2px 4px 2px 0;">習慣</a>
+  <a href="/blog/tag/home-work/" style="display:inline-block;padding:3px 10px;border-radius:999px;background:#e8f7f3;color:#0b8f72;font-size:12px;font-weight:700;text-decoration:none;margin:2px 4px 2px 0;">在宅作業</a> <a href="/blog/tag/earn/" style="display:inline-block;padding:3px 10px;border-radius:999px;background:#e8f7f3;color:#0b8f72;font-size:12px;font-weight:700;text-decoration:none;margin:2px 4px 2px 0;">習慣</a>
 </div>
 <!-- yohelab-related -->
 <div style="margin:24px 0;padding:16px;background:#fff;border:1px solid #e8e8e8;border-radius:8px;">
@@ -138,8 +134,8 @@
         <h3 style="font-size:12px;font-weight:900;color:#1a1a2e;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #e8e8e8;">コンテンツ</h3>
         <ul style="list-style:none;display:grid;gap:5px;padding:0;margin:0;">
           <li><a href="/blog/" style="font-size:12px;color:#777;text-decoration:none;">ブログ記事一覧</a></li>
-          <li><a href="/blog/?tag=ai-news" style="font-size:12px;color:#777;text-decoration:none;">AIニュース活用</a></li>
-          <li><a href="/blog/?tag=wordpress" style="font-size:12px;color:#777;text-decoration:none;">WordPress</a></li>
+          <li><a href="/blog/tag/ai-news/" style="font-size:12px;color:#777;text-decoration:none;">AIニュース活用</a></li>
+          <li><a href="/blog/tag/wordpress/" style="font-size:12px;color:#777;text-decoration:none;">WordPress</a></li>
           <li><a href="/blog/home-work-rhythm/" style="font-size:12px;color:#777;text-decoration:none;">在宅ヒント</a></li>
         </ul>
       </div>

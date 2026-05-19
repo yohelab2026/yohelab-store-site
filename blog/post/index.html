@@ -117,19 +117,21 @@
   </style>
 </head>
 <body>
-  <header class="nav">
-    <div class="nav-inner">
-      <a class="brand" href="/"><img src="/yohelab-mascot-v2-20260518.webp" alt="よへラボ" /><span>よへラボ</span></a>
-      <nav class="nav-links">
-        <a href="/lp/bunsirube/">文標</a>
-        <a href="/lp/bunsirube/demo/">デモ</a>
-        <a href="/blog/">ブログ</a>
-        <a href="/contact/">問い合わせ</a>
+
+  <header class="site-header" style="background:#fff;border-bottom:3px solid #0b8f72;position:sticky;top:0;z-index:100;">
+    <div class="header-inner" style="max-width:1100px;margin:0 auto;padding:0 16px;display:flex;align-items:center;gap:20px;height:56px;">
+      <a href="/" style="display:flex;align-items:center;gap:10px;font-size:20px;font-weight:900;color:#0b8f72;letter-spacing:-0.03em;flex-shrink:0;text-decoration:none;">
+        <img src="/yohelab-mascot-v2-20260518.webp" alt="よへラボ" style="width:36px;height:36px;border-radius:8px;" />
+        よへラボ
+      </a>
+      <nav style="display:flex;align-items:center;gap:4px;flex-wrap:wrap;">
+        <a href="/blog/" style="padding:5px 11px;border-radius:4px;font-size:13px;font-weight:700;color:#444;text-decoration:none;">ブログ</a>
+        <a href="/lp/bunsirube/" style="padding:5px 11px;border-radius:4px;font-size:13px;font-weight:700;color:#444;text-decoration:none;">文標</a>
+        <a href="/about/" style="padding:5px 11px;border-radius:4px;font-size:13px;font-weight:700;color:#444;text-decoration:none;">サイトについて</a>
       </nav>
     </div>
   </header>
-
-  <div id="cover-wrap"></div>
+<div id="cover-wrap"></div>
 
   <main>
     <div class="post-outer" id="post-outer">
@@ -213,7 +215,7 @@
         `<div class="cover-hero"><img src="${esc(post.eyecatch)}" alt="${esc(post.title)}" /></div>`;
     }
 
-    const tags = (post.tags||[]).map(t=>`<a class="post-tag" href="/blog/?tag=${encodeURIComponent(tagSlug(t))}">${esc(t)}</a>`).join('');
+    const tags = (post.tags||[]).map(t=>`<a class="post-tag" href="/blog/tag/${encodeURIComponent(tagSlug(t))}/">${esc(t)}</a>`).join('');
     const excerpt = post.excerpt ? `<p class="post-excerpt">${esc(post.excerpt)}</p>` : '';
     const bodyContent = post.bodyHtml ? sanitizeBodyHtml(post.bodyHtml) : (post.body||'').split('\n\n').map(p=>`<p>${esc(p)}</p>`).join('');
     const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(location.href)}`;
@@ -255,7 +257,7 @@
     const map = {
       'aiニュース': 'ai-news',
       'ai検索': 'ai-news',
-      'faq': 'ai-news',
+      'faq': 'faq',
       'chatgpt': 'chatgpt',
       'claude': 'claude',
       'gemini': 'gemini',
