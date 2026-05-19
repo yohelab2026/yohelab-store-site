@@ -201,16 +201,16 @@
       margin: 0 auto;
       padding: 16px;
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 300px;
+      grid-template-columns: minmax(0, 1fr);
       gap: 16px;
       align-items: start;
     }
     .main-col,
-    .sidebar,
     .section-card,
     .news-item {
       min-width: 0;
     }
+    .sidebar { display: none; }
 
     /* ── タブパネル ── */
     .tab-panel { display: none; }
@@ -520,7 +520,6 @@
       .mobile-hamburger { display: block; }
       .tab-bar { top: 56px; }
       .site-main { grid-template-columns: 1fr; padding: 10px; }
-      .sidebar { display: none; }
       .mobile-priority-widgets {
         display: grid;
         grid-template-columns: 1fr 1fr;
