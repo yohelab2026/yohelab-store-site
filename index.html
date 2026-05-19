@@ -64,6 +64,17 @@
       outline-offset: 3px;
       border-radius: 6px;
     }
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
 
     /* ── ヘッダー ── */
     .site-header {
@@ -197,45 +208,6 @@
     /* ── タブパネル ── */
     .tab-panel { display: none; }
     .tab-panel.active { display: block; }
-
-    .site-intro-card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 18px 18px 16px;
-      margin-bottom: 16px;
-      box-shadow: 0 1px 4px rgba(15, 23, 42, 0.06);
-    }
-    .site-intro-card h1 {
-      font-size: clamp(20px, 3.2vw, 30px);
-      font-weight: 900;
-      letter-spacing: -0.04em;
-      line-height: 1.35;
-      color: var(--text);
-      margin-bottom: 8px;
-    }
-    .site-intro-card p {
-      font-size: 13px;
-      color: var(--text-sub);
-      line-height: 1.85;
-    }
-    .site-intro-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 7px;
-      margin-top: 12px;
-    }
-    .site-intro-list span {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      padding: 4px 9px;
-      border-radius: 999px;
-      background: var(--brand-light);
-      color: var(--brand-dark);
-      font-size: 12px;
-      font-weight: 800;
-    }
 
     .inline-page-panel {
       display: none;
@@ -623,18 +595,7 @@
 
   <!-- ===== 左カラム（タブパネル） ===== -->
   <div class="main-col">
-
-    <section class="site-intro-card" aria-labelledby="home-title">
-      <h1 id="home-title">家で働く人・副業をしたい人のためのAI・副業情報サイト</h1>
-      <p>よへラボは、AIニュースを読んで終わらせず、ブログ記事、無料テンプレ、WordPressテーマ、在宅ワーク習慣に変えて試す場所です。副業ブログを始めたい人、家で作業を続けたい人、文標などの道具を探している人が、今日読む記事と使う型をすぐ選べるように整理しています。</p>
-      <div class="site-intro-list" aria-label="よへラボで扱う内容">
-        <span>AIニュース</span>
-        <span>副業ブログ</span>
-        <span>無料テンプレ</span>
-        <span>WordPress</span>
-        <span>在宅ワーク</span>
-      </div>
-    </section>
+    <h1 id="home-title" class="sr-only">家で働く人・副業をしたい人のためのAI・副業情報サイト</h1>
 
     <div class="inline-page-panel" id="inlinePagePanel" aria-live="polite">
       <div class="inline-page-head">
