@@ -10,11 +10,11 @@
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="ja_JP" />
   <meta property="og:url" content="https://yohelab.com/" />
-  <meta property="og:image" content="https://yohelab.com/assets/og/bunsirube-og.png" />
+  <meta property="og:image" content="https://yohelab.com/assets/og/yohelab-og.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:image" content="https://yohelab.com/assets/og/bunsirube-og.png" />
+  <meta name="twitter:image" content="https://yohelab.com/assets/og/yohelab-og.png" />
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
   <meta name="theme-color" content="#0b8f72" />
   <link rel="canonical" href="https://yohelab.com/" />
@@ -248,12 +248,13 @@
       border-radius: var(--radius);
       overflow: hidden;
       margin-bottom: 16px;
+      box-shadow: 0 1px 4px rgba(15, 23, 42, 0.06);
     }
     .section-head {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 10px 14px;
+      padding: 9px 14px;
       border-bottom: 1px solid var(--border);
     }
     .section-head h2 {
@@ -293,8 +294,8 @@
     .tag-perplexity{ background: #1fb6cf; }
     .tag-genspark  { background: #7c3aed; }
     .tag-ai        { background: #0b8f72; }
-    .tag-template  { background: #16a085; }
-    .tag-wp        { background: #198754; }
+    .tag-template  { background: #0b8f72; }
+    .tag-wp        { background: #0b8f72; }
     .tag-earn      { background: #f97316; }
     .tag-home      { background: #2b8a7e; }
     .news-body { flex: 1; min-width: 0; }
@@ -506,8 +507,10 @@
       .inline-page-actions { width: 100%; }
       .inline-page-btn { flex: 1; text-align: center; }
       .news-item { padding: 12px 12px; }
-      .section-head { padding: 12px; }
+      .section-head { padding: 10px 12px; }
       .mobile-priority-widgets { grid-template-columns: 1fr; }
+      #panel-workout .section-card { margin-bottom: 12px; }
+      #panel-workout .tip-grid { padding-top: 12px; }
     }
     @media (max-width: 400px) {
       .tab-btn { padding: 9px 2px; }
@@ -616,6 +619,7 @@
       <section class="section-card">
         <div class="section-head">
           <h2><span>🤖</span>AIツール別 記事・ニュース</h2>
+          <a class="more" href="/blog/?category=group:ai-news">一覧を見る →</a>
         </div>
         <!-- カテゴリタグフィルター -->
         <div style="display:flex;flex-wrap:wrap;gap:6px;padding:6px 12px;border-bottom:1px solid #f0f0f0;">
@@ -651,34 +655,6 @@
               <div class="news-meta">2026-05-04 · よへラボブログ</div>
             </div>
           </a>
-          <a class="news-item" href="/blog/free-theme-vs-bunsirube/" data-ai="all">
-            <span class="news-tag tag-wp">WP</span>
-            <div class="news-body">
-              <div class="news-title">無料テーマと文標の違い：記事の型で選ぶ考え方</div>
-              <div class="news-meta">2026-05-04 · WordPress</div>
-            </div>
-          </a>
-          <a class="news-item" href="/blog/sales-page-common-mistakes/" data-ai="all">
-            <span class="news-tag tag-earn">販売</span>
-            <div class="news-body">
-              <div class="news-title">BASE・note・自サイトの商品ページでよくある失敗</div>
-              <div class="news-meta">2026-05-02 · 売り場改善</div>
-            </div>
-          </a>
-          <a class="news-item" href="/blog/bunsirube-before-install/" data-ai="all">
-            <span class="news-tag tag-wp">文標</span>
-            <div class="news-body">
-              <div class="news-title">文標を入れる前に確認すること</div>
-              <div class="news-meta">2026-05-02 · WordPress</div>
-            </div>
-          </a>
-          <a class="news-item" href="/blog/bunsirube-version-history/" data-ai="all">
-            <span class="news-tag tag-wp">更新</span>
-            <div class="news-body">
-              <div class="news-title">文標のバージョンアップ履歴</div>
-              <div class="news-meta">2026-05-12 · WordPress</div>
-            </div>
-          </a>
         </div>
       </section>
 
@@ -689,56 +665,56 @@
       <section class="section-card">
         <div class="section-head">
           <h2><span>✍️</span>最新ブログ記事</h2>
-          <a class="more" href="/blog/">一覧を見る →</a>
+          <a class="more" href="/blog/?category=group:earn">一覧を見る →</a>
         </div>
         <div>
           <a class="news-item" href="/blog/ai-news-selling-ideas/">
             <span class="news-tag tag-ai">AI活用</span>
             <div class="news-body">
               <div class="news-title">AIニュースを記事ネタに変える方法</div>
-              <div class="news-meta">2026-05-18 · AIニュース活用</div>
+              <div class="news-meta">2026-05-18 · 副業ブログ</div>
             </div>
           </a>
           <a class="news-item" href="/blog/home-work-rhythm/">
             <span class="news-tag tag-home">在宅</span>
             <div class="news-body">
               <div class="news-title">在宅作業の運動不足対策</div>
-              <div class="news-meta">2026-05-18 · 25分サイクル・家トレ習慣</div>
+              <div class="news-meta">2026-05-18 · 在宅ヒント</div>
             </div>
           </a>
           <a class="news-item" href="/blog/comparison-article-template/">
             <span class="news-tag tag-template">記事の型</span>
             <div class="news-body">
               <div class="news-title">比較記事の書き方</div>
-              <div class="news-meta">2026-05-04 · 結論・比較表・FAQ・CTAの型</div>
+              <div class="news-meta">2026-05-04 · 副業ブログ</div>
             </div>
           </a>
           <a class="news-item" href="/blog/free-theme-vs-bunsirube/">
             <span class="news-tag tag-wp">WP</span>
             <div class="news-body">
               <div class="news-title">無料テーマと文標の違い｜どちらを選ぶべきか</div>
-              <div class="news-meta">2026-05-04 · WordPress</div>
+              <div class="news-meta">2026-05-04 · 副業ブログ</div>
             </div>
           </a>
           <a class="news-item" href="/blog/faq-source-ai-search/">
             <span class="news-tag tag-ai">FAQ</span>
             <div class="news-body">
               <div class="news-title">AI検索向けにFAQと出典を置く理由</div>
-              <div class="news-meta">2026-05-02 · AI検索対策</div>
+              <div class="news-meta">2026-05-02 · 副業ブログ</div>
             </div>
           </a>
           <a class="news-item" href="/blog/sales-page-common-mistakes/">
             <span class="news-tag tag-earn">販売</span>
             <div class="news-body">
               <div class="news-title">売り場ページのよくある失敗とチェックリスト</div>
-              <div class="news-meta">2026-04-28 · 販売導線</div>
+              <div class="news-meta">2026-04-28 · 副業ブログ</div>
             </div>
           </a>
           <a class="news-item" href="/blog/bunsirube-version-history/">
             <span class="news-tag tag-wp">文標</span>
             <div class="news-body">
               <div class="news-title">文標のバージョンアップ履歴</div>
-              <div class="news-meta">2026-05-12 · 文標・WordPress</div>
+              <div class="news-meta">2026-05-12 · 副業ブログ</div>
             </div>
           </a>
         </div>
@@ -803,7 +779,7 @@
           <span class="news-tag tag-home">在宅</span>
           <div class="news-body">
             <div class="news-title">在宅作業の運動不足対策</div>
-            <div class="news-meta">2026-05-18 · 25分サイクル・家トレ習慣</div>
+            <div class="news-meta">2026-05-18 · 在宅ヒント</div>
           </div>
         </a>
       </section>
@@ -887,6 +863,14 @@
           <span class="pickup-num top3">3</span>
           <span class="pickup-title">無料テーマと文標の違い</span>
         </a>
+        <a class="pickup-item" href="/blog/faq-source-ai-search/">
+          <span class="pickup-num">4</span>
+          <span class="pickup-title">AI検索向けにFAQと出典を置く理由</span>
+        </a>
+        <a class="pickup-item" href="/blog/sales-page-common-mistakes/">
+          <span class="pickup-num">5</span>
+          <span class="pickup-title">売り場ページのよくある失敗</span>
+        </a>
       </div>
     </section>
 
@@ -926,6 +910,9 @@
         <a class="sns-item" href="https://note.com/yohelab" target="_blank" rel="noopener">
           <span class="sns-icon">📝</span>noteで記事・有料コンテンツ
         </a>
+        <a class="sns-item" href="/contact/">
+          <span class="sns-icon">✉️</span>お問い合わせ・連絡
+        </a>
       </div>
     </section>
 
@@ -948,7 +935,7 @@
         <li><a href="/blog/">ブログ記事一覧</a></li>
         <li><a href="/blog/?category=group:ai-news">AIニュース</a></li>
         <li><a href="/blog/?category=group:earn">副業ブログ</a></li>
-        <li><a href="/blog/?category=group:wordpress">ツール・商品</a></li>
+        <li><a href="/?tab=tools">ツール・商品</a></li>
         <li><a href="/blog/?category=group:home-work">在宅ヒント</a></li>
       </ul>
     </div>
@@ -1004,24 +991,32 @@
 
   tabBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-      const target = btn.dataset.tab;
-      const targetPanel = document.getElementById('panel-' + target);
-      if (!targetPanel) return;
-
-      // タブバーは固定したまま、active状態だけ切り替える
-      tabBtns.forEach(b => {
-        b.classList.remove('active');
-        b.setAttribute('aria-selected', 'false');
-      });
-      btn.classList.add('active');
-      btn.setAttribute('aria-selected', 'true');
-
-      // メインカラム内のパネルだけを切り替える。サイドバー・ヘッダー・フッターは触らない。
-      hideInlinePage();
-      tabPanels.forEach(p => p.classList.remove('active'));
-      targetPanel.classList.add('active');
+      activateHomeTab(btn.dataset.tab);
     });
   });
+
+  function activateHomeTab(target) {
+    const targetBtn = document.querySelector(`.tab-btn[data-tab="${target}"]`);
+    const targetPanel = document.getElementById('panel-' + target);
+    if (!targetBtn || !targetPanel) return false;
+
+    // タブバーは固定したまま、active状態だけ切り替える
+    tabBtns.forEach(b => {
+      b.classList.remove('active');
+      b.setAttribute('aria-selected', 'false');
+    });
+    targetBtn.classList.add('active');
+    targetBtn.setAttribute('aria-selected', 'true');
+
+    // メインカラム内のパネルだけを切り替える。サイドバー・ヘッダー・フッターは触らない。
+    hideInlinePage();
+    tabPanels.forEach(p => p.classList.remove('active'));
+    targetPanel.classList.add('active');
+    return true;
+  }
+
+  const initialTab = new URLSearchParams(window.location.search).get('tab');
+  if (initialTab) activateHomeTab(initialTab);
 
   function isInlineInternalLink(link) {
     if (!link || !link.href) return false;
@@ -1117,6 +1112,7 @@
       if (newsContainer) {
         const existingNews = new Set([...newsContainer.querySelectorAll('a[href]')].map(a => a.getAttribute('href')));
         const newsHtml = dynamicPosts
+          .filter(isAiNewsHomePost)
           .filter(post => !existingNews.has(dynamicPostUrl(post)))
           .map(renderDynamicNewsItem)
           .join('');
@@ -1147,10 +1143,10 @@
     const label = homeCategoryLabel(tags);
     return `
           <a class="news-item" href="${dynamicPostUrl(post)}" data-ai="${escapeHtml(dataAi)}" data-dynamic="server">
-            <span class="news-tag tag-ai">${escapeHtml(label)}</span>
+            <span class="news-tag ${homeCategoryClass(tags)}">${escapeHtml(label)}</span>
             <div class="news-body">
               <div class="news-title">${escapeHtml(post.title || '無題の記事')}</div>
-              <div class="news-meta">${escapeHtml(post.date || '')} · 管理画面から公開</div>
+              <div class="news-meta">${escapeHtml(post.date || '')} · ${escapeHtml(label)}</div>
             </div>
           </a>`;
   }
@@ -1160,10 +1156,10 @@
     const label = homeCategoryLabel(tags);
     return `
           <a class="news-item" href="${dynamicPostUrl(post)}" data-dynamic="server">
-            <span class="news-tag tag-ai">${escapeHtml(label)}</span>
+            <span class="news-tag ${homeCategoryClass(tags)}">${escapeHtml(label)}</span>
             <div class="news-body">
               <div class="news-title">${escapeHtml(post.title || '無題の記事')}</div>
-              <div class="news-meta">${escapeHtml(post.date || '')} · 管理画面から公開</div>
+              <div class="news-meta">${escapeHtml(post.date || '')} · ${escapeHtml(label)}</div>
             </div>
           </a>`;
   }
@@ -1174,6 +1170,14 @@
     if (title.includes('【下書き】') || title.includes('下書き')) return false;
     if (title.includes('公開テスト') || title.toLowerCase().includes('test')) return false;
     return true;
+  }
+
+  function isAiNewsHomePost(post) {
+    const tags = normalizeHomeTags(post.tags);
+    const title = String(post?.title || '').toLowerCase();
+    const aiKeys = ['chatgpt','claude','gemini','perplexity','genspark','grok','copilot','ai-news'];
+    if (aiKeys.some(tag => tags.includes(tag))) return true;
+    return aiKeys.some(key => title.includes(key));
   }
 
   function normalizeHomeTags(tags) {
@@ -1188,6 +1192,13 @@
     if (tags.includes('home-work')) return '在宅';
     if (tags.includes('earn')) return '副業';
     return 'AIニュース';
+  }
+
+  function homeCategoryClass(tags) {
+    if (tags.includes('home-work')) return 'tag-home';
+    if (tags.includes('earn')) return 'tag-earn';
+    if (tags.includes('wordpress') || tags.includes('template')) return 'tag-wp';
+    return 'tag-ai';
   }
 
   function escapeHtml(value) {
