@@ -1108,9 +1108,11 @@
       doc.querySelectorAll('footer, .site-footer, .lp-footer').forEach(footer => {
         footer.style.display = 'none';
       });
+      const contentRoot = doc.querySelector('main') || doc.body || doc.documentElement;
+      const rect = contentRoot.getBoundingClientRect();
       const height = Math.max(
-        doc.body?.scrollHeight || 0,
-        doc.documentElement?.scrollHeight || 0,
+        rect.top + rect.height,
+        contentRoot.scrollHeight || 0,
         760
       );
       inlinePageFrame.style.height = `${height + 8}px`;
