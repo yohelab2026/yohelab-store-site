@@ -1127,6 +1127,103 @@
       });
     });
   });
+
+  // ── 管理画面から公開した記事をトップへ反映 ──
+  async function loadPublishedPostsForHome() {
+    const newsContainer = document.getElementById('aiNewsContainer');
+    const latestBlogList = document.querySelector('#panel-blog .section-card .section-head + div');
+    if (!newsContainer && !latestBlogList) return;
+
+    try {
+      const res = await fetch('/api/blog-posts?page=1', { cache: 'no-store' });
+      if (!res.ok) return;
+      const data = await res.json();
+      const posts = Array.isArray(data.posts) ? data.posts : [];
+      const dynamicPosts = posts
+        .filter(post => post && post.importedFrom !== 'static-posts')
+        .slice(0, 5);
+      if (!dynamicPosts.length) return;
+
+      if (newsContainer) {
+        const existingNews = new Set([...newsContainer.querySelectorAll('a[href]')].map(a => a.getAttribute('href')));
+        const newsHtml = dynamicPosts
+          .filter(post => !existingNews.has(dynamicPostUrl(post)))
+          .map(renderDynamicNewsItem)
+          .join('');
+        if (newsHtml) newsContainer.insertAdjacentHTML('afterbegin', newsHtml);
+      }
+
+      if (latestBlogList) {
+        const existingArticles = new Set([...latestBlogList.querySelectorAll('a[href]')].map(a => a.getAttribute('href')));
+        const articleHtml = dynamicPosts
+          .filter(post => !existingArticles.has(dynamicPostUrl(post)))
+          .map(renderDynamicArticleItem)
+          .join('');
+        if (articleHtml) latestBlogList.insertAdjacentHTML('afterbegin', articleHtml);
+      }
+    } catch (_) {
+      // トップページ本体は静的に表示できるので、通信失敗時は静かにそのままにする。
+    }
+  }
+
+  function dynamicPostUrl(post) {
+    return `/blog/post/?slug=${encodeURIComponent(post.slug || '')}`;
+  }
+
+  function renderDynamicNewsItem(post) {
+    const tags = normalizeHomeTags(post.tags);
+    const aiTags = tags.filter(tag => ['chatgpt','claude','gemini','perplexity','genspark','grok','copilot'].includes(tag));
+    const dataAi = aiTags.length ? aiTags.join(' ') : 'all';
+    const label = homeCategoryLabel(tags);
+    return `
+          <a class="news-item" href="${dynamicPostUrl(post)}" data-ai="${escapeHtml(dataAi)}" data-dynamic="server">
+            <span class="news-tag tag-ai">${escapeHtml(label)}</span>
+            <div class="news-body">
+              <div class="news-title">${escapeHtml(post.title || '無題の記事')}</div>
+              <div class="news-meta">${escapeHtml(post.date || '')} · 管理画面から公開</div>
+            </div>
+          </a>`;
+  }
+
+  function renderDynamicArticleItem(post) {
+    const tags = normalizeHomeTags(post.tags);
+    const label = homeCategoryLabel(tags);
+    const thumb = label === '在宅' ? '🏠' : label === 'WordPress' ? 'WP' : label === 'テンプレ' ? '型' : 'AI';
+    return `
+          <a class="article-item" href="${dynamicPostUrl(post)}" data-dynamic="server">
+            <div class="article-thumb">${escapeHtml(thumb)}</div>
+            <div class="article-body">
+              <div class="article-cat">${escapeHtml(label)}</div>
+              <div class="article-title">${escapeHtml(post.title || '無題の記事')}</div>
+              <div class="article-date">${escapeHtml(post.date || '')}</div>
+            </div>
+          </a>`;
+  }
+
+  function normalizeHomeTags(tags) {
+    return (Array.isArray(tags) ? tags : String(tags || '').split(/[\n,、]/))
+      .map(tag => String(tag || '').trim().toLowerCase())
+      .filter(Boolean);
+  }
+
+  function homeCategoryLabel(tags) {
+    if (tags.includes('wordpress')) return 'WordPress';
+    if (tags.includes('template')) return 'テンプレ';
+    if (tags.includes('home-work')) return '在宅';
+    if (tags.includes('earn')) return '副業';
+    return 'AIニュース';
+  }
+
+  function escapeHtml(value) {
+    return String(value || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  loadPublishedPostsForHome();
 </script>
 
 </body>
