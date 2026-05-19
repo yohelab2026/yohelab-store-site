@@ -1,7 +1,5 @@
 import { getBlogPin, isValidPin, timingSafeEqual } from "../lib/blog-auth.js";
 
-const DRAFT_TTL_SECONDS = 60 * 60 * 24 * 90;
-
 export async function onRequestGet(context) {
   try {
     if (!isAllowedOrigin(context.request)) {
@@ -78,7 +76,6 @@ export async function onRequestPost(context) {
         eyecatch: eyecatch || "",
         updatedAt: now,
       },
-      expirationTtl: DRAFT_TTL_SECONDS,
     });
 
     return json({ ok: true, draftId, draft }, 200, context.request);

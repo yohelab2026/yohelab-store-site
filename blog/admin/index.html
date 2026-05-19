@@ -25,7 +25,7 @@
     .admin-nav { position:sticky;top:0;z-index:40;background:rgba(255,255,255,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:10px 0; }
     .admin-nav .inner { width:min(1180px,100% - 32px);margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px; }
     .admin-nav .brand { font-weight:900;font-size:15px;color:var(--text);text-decoration:none; }
-    .nav-actions { display:flex;gap:8px;align-items:center; }
+    .nav-actions { display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end; }
     #status { font-size:13px;color:var(--muted); }
 
     /* ── エディタ本体 ── */
@@ -35,7 +35,22 @@
     .manager-head { display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 14px 12px;border-bottom:1px solid var(--border); }
     .manager-head h2 { font-size:16px;font-weight:900;margin:0; }
     .manager-head p { font-size:12px;color:var(--muted);margin:3px 0 0;line-height:1.5; }
+    .manager-count { display:inline-flex;align-items:center;justify-content:center;min-width:28px;height:24px;border-radius:999px;background:#e8f7f1;color:var(--green);font-size:12px;font-weight:900;margin-left:6px; }
     .manager-list { display:grid;gap:0; }
+    .save-overview { padding:14px;display:grid;gap:12px;background:linear-gradient(135deg,#f0fbf6,#fff); }
+    .save-line { display:flex;align-items:flex-start;gap:10px; }
+    .save-dot { width:10px;height:10px;border-radius:999px;background:#94a3b8;margin-top:5px;box-shadow:0 0 0 4px rgba(148,163,184,.12);flex-shrink:0; }
+    .save-dot.is-saving { background:#f59e0b;box-shadow:0 0 0 4px rgba(245,158,11,.16); }
+    .save-dot.is-saved { background:var(--green);box-shadow:0 0 0 4px rgba(0,150,115,.16); }
+    .save-line strong { display:block;font-size:14px;font-weight:900; }
+    .save-line span { display:block;font-size:12px;color:var(--muted);line-height:1.55;margin-top:2px; }
+    .save-metrics { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px; }
+    .save-metric { border:1px solid var(--border);border-radius:12px;background:#fff;padding:9px 10px; }
+    .save-metric span { display:block;font-size:11px;color:var(--muted);font-weight:700; }
+    .save-metric strong { display:block;font-size:20px;line-height:1.1;color:var(--text);font-weight:900;margin-top:3px; }
+    .quick-jump { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px; }
+    .quick-jump button { border:1px solid var(--border);background:#fff;border-radius:999px;padding:8px 10px;font-size:12px;font-weight:900;color:var(--green);cursor:pointer; }
+    .quick-jump button:hover { background:#effaf6; }
     .editor-panel { min-width:0;background:rgba(255,255,255,.62);border:1px solid var(--border);border-radius:24px;box-shadow:0 18px 45px rgba(14,55,42,.06); }
     .editor-wrap { width:min(760px,100% - 36px);margin:0 auto;padding:32px 0 64px; }
     .editor-state { display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:18px;color:var(--muted);font-size:13px;font-weight:700; }
@@ -167,6 +182,8 @@
       <a class="brand" href="/blog/">← ブログ</a>
       <div class="nav-actions">
         <span id="status">下書き中</span>
+        <button class="btn btn-outline" id="show-drafts" type="button">下書き一覧</button>
+        <button class="btn btn-outline" id="show-posts" type="button">公開済み一覧</button>
         <button class="btn btn-outline" id="new-post" type="button">新規</button>
         <button class="btn btn-outline" id="save-draft" type="button">下書き保存</button>
         <button class="btn btn-primary" id="post-btn" type="button">公開する</button>
@@ -178,10 +195,42 @@
   <main class="shell" style="padding-top:0;">
     <div class="admin-workbench">
       <aside class="content-manager" aria-label="記事一覧">
-        <section class="manager-card">
+        <section class="manager-card" id="save-manager">
           <div class="manager-head">
             <div>
-              <h2>下書き</h2>
+              <h2>保存状況</h2>
+              <p>書いた内容はブラウザとサーバーに残します。</p>
+            </div>
+          </div>
+          <div class="save-overview">
+            <div class="save-line">
+              <span class="save-dot" id="save-dot"></span>
+              <div>
+                <strong id="server-save-state">サーバー保存：待機中</strong>
+                <span id="last-server-save">下書き保存ボタン、または編集中の自動保存で、削除するまでサーバーに残ります。</span>
+              </div>
+            </div>
+            <div class="save-metrics">
+              <div class="save-metric">
+                <span>下書き</span>
+                <strong id="draft-count">0</strong>
+              </div>
+              <div class="save-metric">
+                <span>公開済み</span>
+                <strong id="post-count">0</strong>
+              </div>
+            </div>
+            <div class="quick-jump" aria-label="一覧へ移動">
+              <button id="jump-drafts" type="button">下書きへ</button>
+              <button id="jump-posts" type="button">公開済みへ</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="manager-card" id="draft-manager">
+          <div class="manager-head">
+            <div>
+              <h2>下書き <span class="manager-count" id="draft-head-count">0</span></h2>
               <p>途中の記事を開いて編集できます。</p>
             </div>
             <button class="btn btn-outline" id="refresh-drafts" type="button">更新</button>
@@ -191,10 +240,10 @@
           </div>
         </section>
 
-        <section class="manager-card">
+        <section class="manager-card" id="post-manager">
           <div class="manager-head">
             <div>
-              <h2>公開済み</h2>
+              <h2>公開済み <span class="manager-count" id="post-head-count">0</span></h2>
               <p>表示・編集・下書き戻しができます。</p>
             </div>
             <button class="btn btn-outline" id="refresh-posts" type="button">更新</button>
@@ -311,12 +360,21 @@
   const postListEl = document.getElementById('post-list');
   const editorModeEl = document.getElementById('editor-mode');
   const editorHintEl = document.getElementById('editor-hint');
+  const saveDotEl = document.getElementById('save-dot');
+  const serverSaveStateEl = document.getElementById('server-save-state');
+  const lastServerSaveEl = document.getElementById('last-server-save');
+  const draftCountEl = document.getElementById('draft-count');
+  const postCountEl = document.getElementById('post-count');
+  const draftHeadCountEl = document.getElementById('draft-head-count');
+  const postHeadCountEl = document.getElementById('post-head-count');
   let activeDraftId = '';
   let activePostSlug = '';
   let activePostDate = '';
   let activeStaticSlug = '';
   let staticPosts = [];
   let staticPostsLoaded = false;
+  let autosaveTimer = null;
+  let autosaveInFlight = false;
 
   // ── 認証 ────────────────────────────────────────────────────
   const loginView  = document.getElementById('login-view');
@@ -360,6 +418,7 @@
   adminPinEl.addEventListener('keydown', e => { if(e.key==='Enter') handleLogin(); });
 
   document.getElementById('logout-admin').addEventListener('click', () => {
+    cancelAutosave();
     sessionStorage.removeItem(SESSION_KEY);
     sessionStorage.removeItem(SESSION_PIN_KEY);
     localStorage.removeItem(SAVED_PIN_KEY);
@@ -419,7 +478,7 @@
 
   // ── ツールバー ────────────────────────────────────────────
   document.querySelectorAll('[data-cmd]').forEach(btn => {
-    btn.addEventListener('click', () => { document.execCommand(btn.dataset.cmd, false, null); bodyEl.focus(); });
+    btn.addEventListener('click', () => { document.execCommand(btn.dataset.cmd, false, null); bodyEl.focus(); saveDraftLocal(); });
   });
   document.querySelectorAll('[data-color]').forEach(btn => {
     btn.addEventListener('click', () => { wrapSel('span', `color:${btn.dataset.color};font-weight:700;`); });
@@ -563,8 +622,46 @@
     p.style.display = p.style.display === 'none' ? '' : 'none';
   });
 
-  // ── 下書き（localStorage） ───────────────────────────────
-  function saveDraftLocal() {
+  function setServerSaveState(text, detail = '', state = 'idle') {
+    if (serverSaveStateEl) serverSaveStateEl.textContent = text;
+    if (detail && lastServerSaveEl) lastServerSaveEl.textContent = detail;
+    if (saveDotEl) {
+      saveDotEl.classList.toggle('is-saving', state === 'saving');
+      saveDotEl.classList.toggle('is-saved', state === 'saved');
+    }
+  }
+
+  function updateManagerCounts(drafts = null, posts = null) {
+    if (drafts !== null) {
+      if (draftCountEl) draftCountEl.textContent = String(drafts);
+      if (draftHeadCountEl) draftHeadCountEl.textContent = String(drafts);
+    }
+    if (posts !== null) {
+      if (postCountEl) postCountEl.textContent = String(posts);
+      if (postHeadCountEl) postHeadCountEl.textContent = String(posts);
+    }
+  }
+
+  function hasDraftableContent() {
+    return Boolean(titleEl.value.trim() || bodyEl.innerText.trim() || eyecatchEl.value.trim());
+  }
+
+  function cancelAutosave() {
+    if (autosaveTimer) clearTimeout(autosaveTimer);
+    autosaveTimer = null;
+  }
+
+  function scheduleServerAutosave() {
+    if (!document.body.classList.contains('is-unlocked')) return;
+    if (!currentPin() || !hasDraftableContent()) return;
+    cancelAutosave();
+    setServerSaveState('サーバー保存：編集中', '数秒後に自動で下書き保存します。', 'saving');
+    autosaveTimer = setTimeout(() => saveDraftServer({ silent: true }), 6000);
+  }
+
+  // ── 下書き（localStorage + サーバー自動保存） ──────────────
+  function saveDraftLocal(options = {}) {
+    const { schedule = true } = options;
     localStorage.setItem('yohelab.blog.draft', JSON.stringify({
       draftId: activeDraftId,
       postSlug: activePostSlug,
@@ -577,6 +674,7 @@
       slug: slugEl.value,
       eyecatch: eyecatchEl.value,
     }));
+    if (schedule) scheduleServerAutosave();
   }
 
   ['input','keyup'].forEach(ev => {
@@ -622,6 +720,7 @@
   }
 
   function clearEditor() {
+    cancelAutosave();
     activeDraftId = '';
     activePostSlug = '';
     activePostDate = '';
@@ -640,6 +739,7 @@
     localStorage.removeItem('yohelab.blog.draft');
     updateEditorState();
     statusEl.textContent = '新規記事';
+    setServerSaveState('サーバー保存：待機中', 'タイトルか本文を書き始めると、数秒後に自動保存します。', 'idle');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
@@ -667,30 +767,51 @@
     return String(value || '').replace(/["\\]/g, '\\$&');
   }
 
-  async function saveDraftServer() {
-    saveDraftLocal();
+  async function saveDraftServer(options = {}) {
+    const silent = Boolean(options.silent);
+    if (autosaveInFlight) return;
+    if (silent && !hasDraftableContent()) return;
+    cancelAutosave();
+    saveDraftLocal({ schedule: false });
     const pin = currentPin();
-    if (!pin) { statusEl.textContent = 'ログインし直してください。'; return; }
-    statusEl.textContent = '下書きをサーバーに保存中...';
-    const res = await fetch('/api/blog-draft', {
-      method: 'POST',
-      headers: { 'Content-Type':'application/json','X-Yohelab-Pin': pin },
-      body: JSON.stringify(editorPayload()),
-    });
-    const data = await res.json().catch(()=>({}));
-    if (!res.ok) {
-      statusEl.textContent = data.error || '下書き保存に失敗した。';
+    if (!pin) {
+      statusEl.textContent = 'ログインし直してください。';
+      setServerSaveState('サーバー保存：未ログイン', 'ログインし直すと保存できます。', 'idle');
       return;
     }
-    activeDraftId = data.draftId || '';
-    activePostSlug = '';
-    activePostDate = '';
-    activeStaticSlug = '';
-    saveDraftLocal();
-    updateEditorState();
-    statusEl.textContent = 'サーバー下書きを保存した ✓';
-    loadDraftList();
-    setTimeout(() => statusEl.textContent='下書き中', 2000);
+    autosaveInFlight = true;
+    if (!silent) statusEl.textContent = '下書きをサーバーに保存中...';
+    setServerSaveState('サーバー保存：保存中...', 'この画面を閉じても、保存済みの下書きは一覧に残ります。', 'saving');
+    try {
+      const res = await fetch('/api/blog-draft', {
+        method: 'POST',
+        headers: { 'Content-Type':'application/json','X-Yohelab-Pin': pin },
+        body: JSON.stringify(editorPayload()),
+      });
+      const data = await res.json().catch(()=>({}));
+      if (!res.ok) {
+        const message = data.error || '下書き保存に失敗した。';
+        statusEl.textContent = message;
+        setServerSaveState('サーバー保存：失敗', message, 'idle');
+        return;
+      }
+      activeDraftId = data.draftId || '';
+      activePostSlug = '';
+      activePostDate = '';
+      activeStaticSlug = '';
+      saveDraftLocal({ schedule: false });
+      updateEditorState();
+      const savedAt = new Date().toLocaleString('ja-JP', { month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit' });
+      statusEl.textContent = silent ? '自動保存した ✓' : 'サーバー下書きを保存した ✓';
+      setServerSaveState('サーバー保存：保存済み', `最終保存：${savedAt}`, 'saved');
+      loadDraftList();
+      if (!silent) setTimeout(() => statusEl.textContent='下書き中', 2000);
+    } catch (error) {
+      statusEl.textContent = '下書き保存に失敗した。';
+      setServerSaveState('サーバー保存：失敗', '通信が戻ったらもう一度保存してください。', 'idle');
+    } finally {
+      autosaveInFlight = false;
+    }
   }
 
   document.getElementById('save-draft').addEventListener('click', saveDraftServer);
@@ -710,6 +831,7 @@
   }
 
   async function publish() {
+    cancelAutosave();
     const pin = currentPin();
     if (!pin) { sessionStorage.removeItem(SESSION_KEY); showLock(); return; }
     const title = titleEl.value.trim();
@@ -744,6 +866,7 @@
     clearEditor();
     localStorage.removeItem('yohelab.blog.draft');
     statusEl.textContent='公開した ✓';
+    setServerSaveState('サーバー保存：公開済み', '公開済み一覧に記事を残しました。', 'saved');
     setTimeout(()=>statusEl.textContent='下書き中', 3000);
     loadDraftList();
     loadPostList();
@@ -780,6 +903,7 @@
     } catch {}
 
     const staticDrafts = staticPosts.filter(p => p.status === 'draft');
+    updateManagerCounts(drafts.length + staticDrafts.length, null);
     if (!drafts.length && !staticDrafts.length) {
       draftListEl.innerHTML='<p style="color:var(--muted);font-size:14px;padding:14px;">下書きはありません。</p>';
       return;
@@ -847,7 +971,7 @@
     if (res.ok) {
       if (activeDraftId === draftId) {
         activeDraftId = '';
-        saveDraftLocal();
+        saveDraftLocal({ schedule: false });
         updateEditorState();
       }
       loadDraftList();
@@ -878,7 +1002,7 @@
     }
     titleEl.style.height = 'auto';
     titleEl.style.height = titleEl.scrollHeight + 'px';
-    saveDraftLocal();
+    saveDraftLocal({ schedule: false });
     updateEditorState();
   }
 
@@ -895,6 +1019,7 @@
 
     const staticPublished = staticPosts.filter(p => p.status !== 'draft');
     const allPosts = [...posts.map(p => ({ ...p, source: 'dynamic' })), ...staticPublished.map(p => ({ ...p, source: 'static' }))].sort(compareByCategory);
+    updateManagerCounts(null, allPosts.length);
     if (!allPosts.length) {
       postListEl.innerHTML='<p style="color:var(--muted);font-size:14px;padding:14px;">まだ記事がありません。</p>';
       return;
@@ -1089,6 +1214,13 @@
 
   document.getElementById('refresh-posts').addEventListener('click', loadPostList);
   document.getElementById('refresh-drafts').addEventListener('click', loadDraftList);
+  function scrollManager(id) {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  document.getElementById('show-drafts')?.addEventListener('click', () => scrollManager('draft-manager'));
+  document.getElementById('show-posts')?.addEventListener('click', () => scrollManager('post-manager'));
+  document.getElementById('jump-drafts')?.addEventListener('click', () => scrollManager('draft-manager'));
+  document.getElementById('jump-posts')?.addEventListener('click', () => scrollManager('post-manager'));
 
   function escHtml(str) {
     return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
