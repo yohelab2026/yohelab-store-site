@@ -25,9 +25,11 @@ export async function onRequestGet(context) {
       .map((key) => ({
         draftId: key.name.replace(/^draft:/, ""),
         title: key.metadata?.title || "",
+        slug: key.metadata?.slug || "",
         updatedAt: key.metadata?.updatedAt || "",
         excerpt: key.metadata?.excerpt || "",
         eyecatch: key.metadata?.eyecatch || "",
+        tags: parseTags(key.metadata?.tags),
       }))
       .sort((a, b) => String(b.updatedAt).localeCompare(String(a.updatedAt)));
 
@@ -56,14 +58,16 @@ export async function onRequestPost(context) {
     const bodyHtml = String(body?.bodyHtml || "");
     const excerpt = sanitizeText(body?.excerpt);
     const eyecatch = sanitizeUrl(body?.eyecatch);
+    const slug = sanitizeSlug(body?.slug);
+    const tags = normalizeTags(body?.tags);
     const draft = {
       draftId,
       title,
-      slug: sanitizeSlug(body?.slug),
+      slug,
       excerpt,
       bodyHtml,
       body: sanitizeText(body?.body),
-      tags: normalizeTags(body?.tags),
+      tags,
       eyecatch,
       imageUrls: collectImageUrls(bodyHtml, eyecatch),
       updatedAt: now,
@@ -72,8 +76,10 @@ export async function onRequestPost(context) {
     await kv.put(`draft:${draftId}`, JSON.stringify(draft), {
       metadata: {
         title,
+        slug,
         excerpt,
         eyecatch: eyecatch || "",
+        tags: tags.join(","),
         updatedAt: now,
       },
     });
@@ -163,6 +169,14 @@ function normalizeTags(value) {
         .map((t) => sanitizeText(t))
         .filter(Boolean)
         .slice(0, 10);
+}
+
+function parseTags(value) {
+  return String(value || "")
+    .split(/[\n,、]/)
+    .map((tag) => tag.trim())
+    .filter(Boolean)
+    .slice(0, 12);
 }
 
 function collectImageUrls(html, eyecatch) {

@@ -29,7 +29,7 @@
     #status { font-size:13px;color:var(--muted); }
 
     /* ── エディタ本体 ── */
-    .admin-workbench { width:min(1180px,100% - 32px);margin:0 auto;padding:28px 0 96px;display:grid;grid-template-columns:320px minmax(0,1fr);gap:22px;align-items:start; }
+    .admin-workbench { width:min(1240px,100% - 32px);margin:0 auto;padding:28px 0 96px;display:grid;grid-template-columns:430px minmax(0,1fr);gap:22px;align-items:start; }
     .content-manager { position:sticky;top:78px;display:grid;gap:14px;max-height:calc(100vh - 100px);overflow:auto;padding-right:2px; }
     .manager-card { background:#fff;border:1px solid var(--border);border-radius:18px;box-shadow:0 10px 28px rgba(14,55,42,.06);overflow:hidden; }
     .manager-head { display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 14px 12px;border-bottom:1px solid var(--border); }
@@ -51,6 +51,27 @@
     .quick-jump { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px; }
     .quick-jump button { border:1px solid var(--border);background:#fff;border-radius:999px;padding:8px 10px;font-size:12px;font-weight:900;color:var(--green);cursor:pointer; }
     .quick-jump button:hover { background:#effaf6; }
+    .manager-toolbar { display:grid;gap:10px;padding:12px 14px;border-bottom:1px solid var(--border);background:#fbfffd; }
+    .manager-toolbar-row { display:grid;grid-template-columns:1fr 1fr;gap:8px; }
+    .manager-toolbar select, .manager-toolbar input { width:100%;border:1px solid var(--border);background:#fff;border-radius:10px;padding:9px 10px;font-size:13px;font-weight:800;color:var(--text); }
+    .manager-toolbar input { font-weight:600; }
+    .manager-toolbar input::placeholder { color:#9aa8a2; }
+    .content-list-summary { padding:10px 14px;border-bottom:1px solid var(--border);font-size:12px;color:var(--muted);font-weight:800; }
+    .admin-post-row { display:grid;grid-template-columns:72px minmax(0,1fr);gap:10px;padding:12px 14px;background:#fff;border-bottom:1px solid var(--border); }
+    .admin-post-row:hover { background:#f6fbf8; }
+    .admin-post-row.is-active { background:#e8f7f1; }
+    .row-status { display:flex;flex-direction:column;gap:6px;align-items:flex-start; }
+    .status-badge, .category-badge { display:inline-flex;align-items:center;border-radius:8px;padding:5px 8px;font-size:11px;font-weight:900;line-height:1;color:#fff;background:var(--green);white-space:nowrap; }
+    .status-badge.is-draft { background:#64748b; }
+    .status-badge.is-published { background:var(--green); }
+    .category-badge { background:#e8f7f1;color:var(--green);border:1px solid #bde7d7; }
+    .row-main { min-width:0;display:grid;gap:7px; }
+    .row-title { border:0;background:transparent;padding:0;margin:0;text-align:left;font-size:14px;font-weight:900;color:var(--text);cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+    .row-title:hover { color:var(--green);text-decoration:underline; }
+    .row-meta { display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:12px;color:var(--muted);line-height:1.5; }
+    .tag-chip { display:inline-flex;align-items:center;border-radius:999px;padding:3px 7px;background:#f0f8f4;color:#436258;font-size:11px;font-weight:800; }
+    .row-actions { display:flex;flex-wrap:wrap;gap:6px;align-items:center; }
+    .row-actions .btn-view, .row-actions .btn-edit, .row-actions .btn-draft, .row-actions .btn-del, .row-actions .btn-open-draft { font-size:11px;padding:5px 8px; }
     .editor-panel { min-width:0;background:rgba(255,255,255,.62);border:1px solid var(--border);border-radius:24px;box-shadow:0 18px 45px rgba(14,55,42,.06); }
     .editor-wrap { width:min(760px,100% - 36px);margin:0 auto;padding:32px 0 64px; }
     .editor-state { display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:18px;color:var(--muted);font-size:13px;font-weight:700; }
@@ -154,6 +175,9 @@
       .nav-actions { flex-wrap:wrap; justify-content:flex-end; max-width:260px; }
       .nav-actions .btn { padding:7px 10px; font-size:12px; }
       #status { width:100%; text-align:right; }
+      .manager-toolbar-row { grid-template-columns:1fr; }
+      .admin-post-row { grid-template-columns:1fr; }
+      .row-status { flex-direction:row; }
       .post-list-item, .draft-list-item { align-items:flex-start; }
       .post-list-item .actions, .draft-list-item .actions { flex-wrap:wrap;justify-content:flex-end; }
     }
@@ -227,28 +251,29 @@
           </div>
         </section>
 
-        <section class="manager-card" id="draft-manager">
+        <section class="manager-card" id="content-manager-card">
           <div class="manager-head">
             <div>
-              <h2>下書き <span class="manager-count" id="draft-head-count">0</span></h2>
-              <p>途中の記事を開いて編集できます。</p>
+              <h2>記事一覧 <span class="manager-count" id="content-head-count">0</span></h2>
+              <p>下書き・公開済み・カテゴリ・タグで絞れます。</p>
             </div>
-            <button class="btn btn-outline" id="refresh-drafts" type="button">更新</button>
+            <button class="btn btn-outline" id="refresh-content" type="button">更新</button>
           </div>
-          <div id="draft-list" class="manager-list">
-            <p style="color:var(--muted);font-size:14px;padding:14px;">読み込み中...</p>
-          </div>
-        </section>
-
-        <section class="manager-card" id="post-manager">
-          <div class="manager-head">
-            <div>
-              <h2>公開済み <span class="manager-count" id="post-head-count">0</span></h2>
-              <p>表示・編集・下書き戻しができます。</p>
+          <div class="manager-toolbar" aria-label="記事一覧の絞り込み">
+            <div class="manager-toolbar-row">
+              <select id="content-status-filter" aria-label="状態で絞り込み">
+                <option value="draft">下書き</option>
+                <option value="published">公開済み</option>
+                <option value="all">すべて</option>
+              </select>
+              <select id="content-category-filter" aria-label="カテゴリで絞り込み">
+                <option value="all">すべてのカテゴリ</option>
+              </select>
             </div>
-            <button class="btn btn-outline" id="refresh-posts" type="button">更新</button>
+            <input id="content-search" type="search" placeholder="タイトル・タグで検索" />
           </div>
-          <div id="post-list" class="manager-list">
+          <div id="content-list-summary" class="content-list-summary">読み込み中...</div>
+          <div id="content-list" class="manager-list">
             <p style="color:var(--muted);font-size:14px;padding:14px;">読み込み中...</p>
           </div>
         </section>
@@ -356,8 +381,11 @@
   const slugEl     = document.getElementById('slug');
   const eyecatchEl = document.getElementById('eyecatch');
   const statusEl   = document.getElementById('status');
-  const draftListEl = document.getElementById('draft-list');
-  const postListEl = document.getElementById('post-list');
+  const contentListEl = document.getElementById('content-list');
+  const contentListSummaryEl = document.getElementById('content-list-summary');
+  const contentStatusFilterEl = document.getElementById('content-status-filter');
+  const contentCategoryFilterEl = document.getElementById('content-category-filter');
+  const contentSearchEl = document.getElementById('content-search');
   const editorModeEl = document.getElementById('editor-mode');
   const editorHintEl = document.getElementById('editor-hint');
   const saveDotEl = document.getElementById('save-dot');
@@ -365,14 +393,15 @@
   const lastServerSaveEl = document.getElementById('last-server-save');
   const draftCountEl = document.getElementById('draft-count');
   const postCountEl = document.getElementById('post-count');
-  const draftHeadCountEl = document.getElementById('draft-head-count');
-  const postHeadCountEl = document.getElementById('post-head-count');
+  const contentHeadCountEl = document.getElementById('content-head-count');
   let activeDraftId = '';
   let activePostSlug = '';
   let activePostDate = '';
   let activeStaticSlug = '';
   let staticPosts = [];
   let staticPostsLoaded = false;
+  let draftItems = [];
+  let postItems = [];
   let autosaveTimer = null;
   let autosaveInFlight = false;
 
@@ -634,12 +663,11 @@
   function updateManagerCounts(drafts = null, posts = null) {
     if (drafts !== null) {
       if (draftCountEl) draftCountEl.textContent = String(drafts);
-      if (draftHeadCountEl) draftHeadCountEl.textContent = String(drafts);
     }
     if (posts !== null) {
       if (postCountEl) postCountEl.textContent = String(posts);
-      if (postHeadCountEl) postHeadCountEl.textContent = String(posts);
     }
+    updateContentHeadCount();
   }
 
   function hasDraftableContent() {
@@ -757,7 +785,7 @@
       editorModeEl.textContent = '新規記事';
       editorHintEl.textContent = '左の一覧から下書きや公開済み記事を開けます。';
     }
-    document.querySelectorAll('.draft-list-item.is-active,.post-list-item.is-active').forEach(el => el.classList.remove('is-active'));
+    document.querySelectorAll('.admin-post-row.is-active,.draft-list-item.is-active,.post-list-item.is-active').forEach(el => el.classList.remove('is-active'));
     if (activeDraftId) document.querySelector(`[data-draft-id="${cssEscape(activeDraftId)}"]`)?.classList.add('is-active');
     if (activePostSlug) document.querySelector(`[data-post-slug="${cssEscape(activePostSlug)}"]`)?.classList.add('is-active');
     if (activeStaticSlug) document.querySelector(`[data-static-slug="${cssEscape(activeStaticSlug)}"]`)?.classList.add('is-active');
@@ -804,6 +832,7 @@
       const savedAt = new Date().toLocaleString('ja-JP', { month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit' });
       statusEl.textContent = silent ? '自動保存した ✓' : 'サーバー下書きを保存した ✓';
       setServerSaveState('サーバー保存：保存済み', `最終保存：${savedAt}`, 'saved');
+      if (contentStatusFilterEl) contentStatusFilterEl.value = 'draft';
       loadDraftList();
       if (!silent) setTimeout(() => statusEl.textContent='下書き中', 2000);
     } catch (error) {
@@ -867,6 +896,7 @@
     localStorage.removeItem('yohelab.blog.draft');
     statusEl.textContent='公開した ✓';
     setServerSaveState('サーバー保存：公開済み', '公開済み一覧に記事を残しました。', 'saved');
+    if (contentStatusFilterEl) contentStatusFilterEl.value = 'published';
     setTimeout(()=>statusEl.textContent='下書き中', 3000);
     loadDraftList();
     loadPostList();
@@ -890,10 +920,10 @@
   }
 
   async function loadDraftList() {
-    if (!draftListEl) return;
+    if (!contentListEl) return;
     const pin = currentPin();
     if (!pin) return;
-    draftListEl.innerHTML='<p style="color:var(--muted);font-size:14px;padding:14px;">読み込み中...</p>';
+    contentListEl.innerHTML='<p style="color:var(--muted);font-size:14px;padding:14px;">読み込み中...</p>';
     await loadStaticPosts();
     let drafts = [];
     try {
@@ -903,43 +933,184 @@
     } catch {}
 
     const staticDrafts = staticPosts.filter(p => p.status === 'draft');
+    draftItems = [
+      ...drafts.map(d => ({
+        kind: 'draft',
+        source: 'server',
+        id: d.draftId,
+        title: d.title || '無題の下書き',
+        date: d.updatedAt || '',
+        excerpt: d.excerpt || '',
+        tags: parseTagList(d.tags),
+        eyecatch: d.eyecatch || '',
+      })),
+      ...staticDrafts.map(p => ({
+        kind: 'draft',
+        source: 'static',
+        staticSlug: p.slug,
+        slug: p.slug,
+        url: p.url,
+        title: String(p.title || '無題').replace(/^【下書き】\s*/, ''),
+        date: p.date || '',
+        excerpt: p.excerpt || '',
+        tags: parseTagList(p.tags),
+        eyecatch: p.eyecatch || '',
+      })),
+    ].sort(compareByCategory);
     updateManagerCounts(drafts.length + staticDrafts.length, null);
-    if (!drafts.length && !staticDrafts.length) {
-      draftListEl.innerHTML='<p style="color:var(--muted);font-size:14px;padding:14px;">下書きはありません。</p>';
+    populateCategoryFilter();
+    renderContentList();
+  }
+
+  const CATEGORY_DEFS = [
+    ['chatgpt', 'ChatGPT'],
+    ['claude', 'Claude'],
+    ['gemini', 'Gemini'],
+    ['perplexity', 'Perplexity'],
+    ['genspark', 'Genspark'],
+    ['grok', 'Grok'],
+    ['copilot', 'Copilot'],
+    ['midjourney', 'Midjourney'],
+    ['ai-news', 'AIニュース'],
+    ['wordpress', 'WordPress'],
+    ['earn', '副業・稼ぎ方'],
+    ['template', 'テンプレ'],
+    ['home-work', '在宅作業'],
+    ['article', '記事の型'],
+  ];
+
+  function parseTagList(value) {
+    if (Array.isArray(value)) return value.map(v => String(v || '').trim()).filter(Boolean);
+    return String(value || '').split(/[\n,、]/).map(v => v.trim()).filter(Boolean);
+  }
+
+  function categoryForItem(item) {
+    const tags = normalizeTagsForSort(item);
+    const found = CATEGORY_DEFS.find(([key]) => tags.includes(key));
+    return found ? { key: found[0], label: found[1] } : { key: 'other', label: '未分類' };
+  }
+
+  function displayTags(item) {
+    const tags = parseTagList(item.tags);
+    if (tags.length) return tags.slice(0, 4);
+    return normalizeTagsForSort(item).slice(0, 3);
+  }
+
+  function populateCategoryFilter() {
+    if (!contentCategoryFilterEl) return;
+    const selected = contentCategoryFilterEl.value || 'all';
+    const seen = new Map();
+    [...draftItems, ...postItems].forEach(item => {
+      const category = categoryForItem(item);
+      seen.set(category.key, category.label);
+    });
+    contentCategoryFilterEl.innerHTML = '<option value="all">すべてのカテゴリ</option>' +
+      [...seen.entries()].map(([key, label]) => `<option value="${escHtml(key)}">${escHtml(label)}</option>`).join('');
+    contentCategoryFilterEl.value = seen.has(selected) ? selected : 'all';
+  }
+
+  function updateContentHeadCount(count = null) {
+    if (!contentHeadCountEl) return;
+    if (count !== null) {
+      contentHeadCountEl.textContent = String(count);
       return;
     }
+    const status = contentStatusFilterEl?.value || 'draft';
+    const total = status === 'draft' ? draftItems.length : status === 'published' ? postItems.length : draftItems.length + postItems.length;
+    contentHeadCountEl.textContent = String(total);
+  }
 
-    const serverRows = drafts.map(d=>`
-        <div class="draft-list-item" data-draft-id="${escHtml(d.draftId)}">
-          <div class="info">
-            <strong>${escHtml(d.title||'無題の下書き')}</strong>
-            <span>管理画面の下書き${d.updatedAt ? ` · ${new Date(d.updatedAt).toLocaleString('ja-JP')}` : ''}</span>
-          </div>
-          <div class="actions">
-            <button class="btn-open-draft" type="button" onclick="openDraft('${escHtml(d.draftId)}')">開く</button>
-            <button class="btn-edit" type="button" onclick="openDraft('${escHtml(d.draftId)}')">編集</button>
-            <button class="btn-del" type="button" onclick="deleteDraft('${escHtml(d.draftId)}',this)">削除</button>
-          </div>
-        </div>
-      `).join('');
-
-    const staticRows = staticDrafts.map(p=>`
-        <div class="draft-list-item" data-static-slug="${escHtml(p.slug)}">
-          ${p.eyecatch?`<img src="${escHtml(p.eyecatch)}" alt="" />`:'<div style="width:56px;height:40px;background:var(--bg);border-radius:8px;flex-shrink:0;"></div>'}
-          <div class="info">
-            <strong>${escHtml(String(p.title||'無題').replace(/^【下書き】\s*/, ''))}</strong>
-            <span>サイト内の下書き${p.date ? ` · ${escHtml(p.date)}` : ''}</span>
-          </div>
-          <div class="actions">
-            <a class="btn-view" href="${escHtml(p.url)}" target="_blank">表示</a>
-            <button class="btn-edit" type="button" onclick="openStaticPost('${escHtml(p.slug)}')">編集</button>
-            <button class="btn-draft" type="button" onclick="saveStaticPostAsDraft('${escHtml(p.slug)}',this)">保存</button>
-          </div>
-        </div>
-      `).join('');
-
-    draftListEl.innerHTML = serverRows + staticRows;
+  function renderContentList() {
+    if (!contentListEl) return;
+    const status = contentStatusFilterEl?.value || 'draft';
+    const category = contentCategoryFilterEl?.value || 'all';
+    const keyword = String(contentSearchEl?.value || '').trim().toLowerCase();
+    const baseItems = status === 'draft' ? draftItems : status === 'published' ? postItems : [...draftItems, ...postItems].sort(compareByCategory);
+    const filtered = baseItems.filter(item => {
+      const itemCategory = categoryForItem(item);
+      const tags = displayTags(item);
+      const haystack = [item.title, item.excerpt, itemCategory.label, ...tags].join(' ').toLowerCase();
+      return (category === 'all' || itemCategory.key === category) && (!keyword || haystack.includes(keyword));
+    });
+    updateContentHeadCount(filtered.length);
+    if (contentListSummaryEl) {
+      const label = status === 'draft' ? '下書き' : status === 'published' ? '公開済み' : 'すべて';
+      contentListSummaryEl.textContent = `${label} ${filtered.length}件 / 下書き ${draftItems.length}件 / 公開済み ${postItems.length}件`;
+    }
+    if (!filtered.length) {
+      contentListEl.innerHTML = '<p style="color:var(--muted);font-size:14px;padding:14px;">条件に合う記事はありません。</p>';
+      return;
+    }
+    contentListEl.innerHTML = filtered.map(renderContentRow).join('');
     updateEditorState();
+  }
+
+  function renderContentRow(item) {
+    const category = categoryForItem(item);
+    const tags = displayTags(item);
+    const statusLabel = item.kind === 'draft' ? '下書き' : '公開済み';
+    const activeAttrs = item.source === 'server'
+      ? `data-draft-id="${escHtml(item.id)}"`
+      : item.source === 'dynamic'
+        ? `data-post-slug="${escHtml(item.slug)}"`
+        : `data-static-slug="${escHtml(item.staticSlug || item.slug)}"`;
+    const dateText = item.date ? formatItemDate(item.date) : '-';
+    return `
+      <div class="admin-post-row" ${activeAttrs}>
+        <div class="row-status">
+          <span class="status-badge ${item.kind === 'draft' ? 'is-draft' : 'is-published'}">${statusLabel}</span>
+          <span class="category-badge">${escHtml(category.label)}</span>
+        </div>
+        <div class="row-main">
+          <button class="row-title" type="button" onclick="${rowOpenAction(item)}">${escHtml(item.title || '無題')}</button>
+          <div class="row-meta">
+            <span>${escHtml(dateText)}</span>
+            ${tags.map(tag => `<span class="tag-chip">${escHtml(tag)}</span>`).join('')}
+          </div>
+          <div class="row-actions">${rowActionButtons(item)}</div>
+        </div>
+      </div>
+    `;
+  }
+
+  function rowOpenAction(item) {
+    if (item.source === 'server') return `openDraft('${escHtml(item.id)}')`;
+    if (item.source === 'dynamic') return `openPost('${escHtml(item.slug)}')`;
+    return `openStaticPost('${escHtml(item.staticSlug || item.slug)}')`;
+  }
+
+  function rowActionButtons(item) {
+    if (item.source === 'server') {
+      return `
+        <button class="btn-open-draft" type="button" onclick="openDraft('${escHtml(item.id)}')">開く</button>
+        <button class="btn-edit" type="button" onclick="openDraft('${escHtml(item.id)}')">編集</button>
+        <button class="btn-del" type="button" onclick="deleteDraft('${escHtml(item.id)}',this)">削除</button>
+      `;
+    }
+    if (item.source === 'dynamic') {
+      return `
+        <a class="btn-view" href="${escHtml(item.url)}" target="_blank">表示</a>
+        <button class="btn-edit" type="button" onclick="openPost('${escHtml(item.slug)}')">編集</button>
+        <button class="btn-draft" type="button" onclick="movePostToDraft('${escHtml(item.slug)}',this)">下書き</button>
+        <button class="btn-del" type="button" onclick="deletePost('${escHtml(item.slug)}',this)">削除</button>
+      `;
+    }
+    const slug = item.staticSlug || item.slug;
+    const draftButton = item.kind === 'draft'
+      ? `<button class="btn-draft" type="button" onclick="saveStaticPostAsDraft('${escHtml(slug)}',this)">保存</button>`
+      : `<button class="btn-draft" type="button" onclick="saveStaticPostAsDraft('${escHtml(slug)}',this)">下書き</button>`;
+    return `
+      <a class="btn-view" href="${escHtml(item.url)}" target="_blank">表示</a>
+      <button class="btn-edit" type="button" onclick="openStaticPost('${escHtml(slug)}')">編集</button>
+      ${draftButton}
+    `;
+  }
+
+  function formatItemDate(value) {
+    if (!value) return '-';
+    if (/^\d{4}-\d{2}-\d{2}$/.test(String(value))) return value;
+    const date = new Date(value);
+    return Number.isNaN(date.getTime()) ? String(value) : date.toLocaleString('ja-JP', { month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit' });
   }
 
   async function openDraft(draftId) {
@@ -1008,7 +1179,8 @@
 
   // ── 投稿一覧 & 削除 ───────────────────────────────────────
   async function loadPostList() {
-    postListEl.innerHTML='<p style="color:var(--muted);font-size:14px;padding:14px;">読み込み中...</p>';
+    if (!contentListEl) return;
+    contentListEl.innerHTML='<p style="color:var(--muted);font-size:14px;padding:14px;">読み込み中...</p>';
     await loadStaticPosts();
     let posts = [];
     try {
@@ -1018,41 +1190,25 @@
     } catch {}
 
     const staticPublished = staticPosts.filter(p => p.status !== 'draft');
-    const allPosts = [...posts.map(p => ({ ...p, source: 'dynamic' })), ...staticPublished.map(p => ({ ...p, source: 'static' }))].sort(compareByCategory);
-    updateManagerCounts(null, allPosts.length);
-    if (!allPosts.length) {
-      postListEl.innerHTML='<p style="color:var(--muted);font-size:14px;padding:14px;">まだ記事がありません。</p>';
-      return;
-    }
-    postListEl.innerHTML = allPosts.map(p => p.source === 'static' ? `
-        <div class="post-list-item" data-static-slug="${escHtml(p.slug)}">
-          ${p.eyecatch?`<img src="${escHtml(p.eyecatch)}" alt="" />`:'<div style="width:56px;height:40px;background:var(--bg);border-radius:8px;flex-shrink:0;"></div>'}
-          <div class="info">
-            <strong>${escHtml(p.title||'無題')}</strong>
-            <span>サイト内の公開記事${p.date ? ` · ${escHtml(p.date)}` : ''}</span>
-          </div>
-          <div class="actions">
-            <a class="btn-view" href="${escHtml(p.url)}" target="_blank">表示</a>
-            <button class="btn-edit" type="button" onclick="openStaticPost('${escHtml(p.slug)}')">編集</button>
-            <button class="btn-draft" type="button" onclick="saveStaticPostAsDraft('${escHtml(p.slug)}',this)">下書き</button>
-          </div>
-        </div>
-      ` : `
-        <div class="post-list-item" data-post-slug="${escHtml(p.slug)}">
-          ${p.eyecatch?`<img src="${p.eyecatch}" alt="" />`:'<div style="width:56px;height:40px;background:var(--bg);border-radius:8px;flex-shrink:0;"></div>'}
-          <div class="info">
-            <strong>${escHtml(p.title||'無題')}</strong>
-            <span>管理画面の公開記事${p.date ? ` · ${escHtml(p.date)}` : ''}</span>
-          </div>
-          <div class="actions">
-            <a class="btn-view" href="/blog/post/?slug=${encodeURIComponent(p.slug)}" target="_blank">表示</a>
-            <button class="btn-edit" type="button" onclick="openPost('${escHtml(p.slug)}')">編集</button>
-            <button class="btn-draft" type="button" onclick="movePostToDraft('${escHtml(p.slug)}',this)">下書き</button>
-            <button class="btn-del" type="button" onclick="deletePost('${escHtml(p.slug)}',this)">削除</button>
-          </div>
-        </div>
-      `).join('');
-    updateEditorState();
+    postItems = [
+      ...posts.map(p => ({
+        ...p,
+        kind: 'published',
+        source: 'dynamic',
+        url: `/blog/post/?slug=${encodeURIComponent(p.slug)}`,
+        tags: parseTagList(p.tags),
+      })),
+      ...staticPublished.map(p => ({
+        ...p,
+        kind: 'published',
+        source: 'static',
+        staticSlug: p.slug,
+        tags: parseTagList(p.tags),
+      })),
+    ].sort(compareByCategory);
+    updateManagerCounts(null, postItems.length);
+    populateCategoryFilter();
+    renderContentList();
   }
 
   function staticPostBySlug(slug) {
@@ -1129,6 +1285,7 @@
     if (res.ok) {
       btn.textContent = '保存済み';
       statusEl.textContent = 'サイト内記事を下書きに保存した ✓';
+      if (contentStatusFilterEl) contentStatusFilterEl.value = 'draft';
       loadDraftList();
       return;
     }
@@ -1189,6 +1346,7 @@
       updateEditorState();
     }
     statusEl.textContent = '下書きに戻した ✓';
+    if (contentStatusFilterEl) contentStatusFilterEl.value = 'draft';
     loadDraftList();
     loadPostList();
   }
@@ -1212,15 +1370,28 @@
     }
   }
 
-  document.getElementById('refresh-posts').addEventListener('click', loadPostList);
-  document.getElementById('refresh-drafts').addEventListener('click', loadDraftList);
+  async function refreshContentLists() {
+    await loadDraftList();
+    await loadPostList();
+  }
+
+  function setContentStatus(status) {
+    if (contentStatusFilterEl) contentStatusFilterEl.value = status;
+    renderContentList();
+    scrollManager('content-manager-card');
+  }
+
+  document.getElementById('refresh-content')?.addEventListener('click', refreshContentLists);
+  contentStatusFilterEl?.addEventListener('change', renderContentList);
+  contentCategoryFilterEl?.addEventListener('change', renderContentList);
+  contentSearchEl?.addEventListener('input', renderContentList);
   function scrollManager(id) {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
-  document.getElementById('show-drafts')?.addEventListener('click', () => scrollManager('draft-manager'));
-  document.getElementById('show-posts')?.addEventListener('click', () => scrollManager('post-manager'));
-  document.getElementById('jump-drafts')?.addEventListener('click', () => scrollManager('draft-manager'));
-  document.getElementById('jump-posts')?.addEventListener('click', () => scrollManager('post-manager'));
+  document.getElementById('show-drafts')?.addEventListener('click', () => setContentStatus('draft'));
+  document.getElementById('show-posts')?.addEventListener('click', () => setContentStatus('published'));
+  document.getElementById('jump-drafts')?.addEventListener('click', () => setContentStatus('draft'));
+  document.getElementById('jump-posts')?.addEventListener('click', () => setContentStatus('published'));
 
   function escHtml(str) {
     return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
