@@ -25,7 +25,9 @@
     .post-hero { border-radius:28px;padding:32px;margin-bottom:30px;background:linear-gradient(135deg,#ecfdf5,#eef6ff);border:1px solid #dce7fb;box-shadow:var(--shadow-sm); }
     .post-hero-kicker { display:inline-flex;padding:7px 12px;border-radius:999px;background:#0b8f72;color:#fff;font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;margin-bottom:18px; }
     .post-meta { display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-bottom:18px; }
-    .post-tag { background:#f0f8f4;color:var(--green-dark,#075c4c);border-radius:999px;padding:3px 12px;font-size:12px;font-weight:700; }
+    .post-tag { background:#f0f8f4;color:var(--green-dark,#075c4c);border-radius:999px;padding:3px 12px;font-size:12px;font-weight:700;text-decoration:none; }
+    .post-tag:hover { background:#e0f4ec;color:var(--green); }
+    
     .post-title { font-size:clamp(30px,5.6vw,54px);font-weight:900;line-height:1.12;margin:0;color:var(--text);letter-spacing:-.055em; }
     .post-excerpt { font-size:18px;color:var(--muted);line-height:1.85;margin:22px 0 0; }
     .post-body { font-size:17px;line-height:2;color:var(--text); }
@@ -66,7 +68,7 @@
   <main class="post-outer">
     <section class="post-hero">
       <span class="post-hero-kicker">Direction</span>
-      <div class="post-meta"><span>2026-05-17</span><span class="post-tag">よへラボ</span><span class="post-tag">AIニュース</span></div>
+      <div class="post-meta"><span>2026-05-17</span><a class="post-tag" href="/blog/?tag=ai-news">よへラボ</a><a class="post-tag" href="/blog/?tag=ai-news">AIニュース</a></div>
       <h1 class="post-title">AIニュースを記事ネタに変える方法。</h1>
       <p class="post-excerpt">よへラボは、文標だけを置くサイトではなく、AIニュースから記事・テンプレ・ツール・商品を作るための実験場にしていきます。</p>
     </section>

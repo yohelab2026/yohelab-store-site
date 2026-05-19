@@ -306,10 +306,11 @@ function render(posts, hasLink = true) {
   postsEl.innerHTML = posts.map(post => {
     const url = post.url || postUrl(post.slug);
     const normalizedTags = [...new Set([...(post.tags||[]), ...normalizePostTags(post)])];
-    const displayTags = categoryOrder
+    const tags = categoryOrder
       .filter(tag => normalizedTags.map(t => String(t).toLowerCase()).includes(tag))
-      .map(getFilterLabel);
-    const tags = [...new Set(displayTags)].slice(0, 3).map(t=>`<span class="post-card-tag">${esc(t)}</span>`).join('');
+      .slice(0, 3)
+      .map(tag => `<a class="post-card-tag" href="/blog/?tag=${encodeURIComponent(tag)}">${esc(getFilterLabel(tag))}</a>`)
+      .join('');
     const img = post.eyecatch
       ? `<img class="post-card-img" src="${esc(post.eyecatch)}" alt="${esc(post.title)}" loading="lazy" />`
       : `<div class="post-card-img-placeholder">📝</div>`;

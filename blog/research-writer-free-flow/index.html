@@ -24,7 +24,9 @@
     .post-cover { width:100%;height:auto;object-fit:contain;border-radius:24px;margin-bottom:28px;border:1px solid var(--border);box-shadow:var(--shadow-sm);display:block;background:#061f1b; }
     .post-outer { max-width:760px;margin:0 auto;padding:48px 24px 100px; }
     .post-meta { display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-bottom:20px; }
-    .post-tag { background:#f0f8f4;color:var(--green-dark,#075c4c);border-radius:999px;padding:3px 12px;font-size:12px;font-weight:700; }
+    .post-tag { background:#f0f8f4;color:var(--green-dark,#075c4c);border-radius:999px;padding:3px 12px;font-size:12px;font-weight:700;text-decoration:none; }
+    .post-tag:hover { background:#e0f4ec;color:var(--green); }
+    
     .post-title { font-size:clamp(28px,5.5vw,52px);font-weight:900;line-height:1.12;margin-bottom:24px;color:var(--text); }
     .post-excerpt { font-size:19px;color:var(--muted);line-height:1.85;margin-bottom:40px;padding-bottom:32px;border-bottom:1px solid var(--border); }
     .post-body { font-size:17px;line-height:2;color:var(--text); }
@@ -54,7 +56,7 @@
   </header>
   <main class="post-outer">
     <img class="post-cover" src="/assets/blog/research-writer-free-flow/eyecatch.webp" alt="3キーワード記事メーカーの使い方" loading="eager" decoding="async" width="1600" height="900" />
-    <div class="post-meta"><span>2026-05-02</span><span class="post-tag">記事メーカー</span><span class="post-tag">使い方</span></div>
+    <div class="post-meta"><span>2026-05-02</span><a class="post-tag" href="/blog/?tag=article">記事メーカー</a><a class="post-tag" href="/blog/?tag=article">使い方</a></div>
     <h1 class="post-title">3キーワード記事メーカーの使い方：無料版で1本作る流れ</h1>
     <p class="post-excerpt">無料版で記事材料を1セット作るときの、入力から仕上げまでの流れです。</p>
     <div class="post-body">

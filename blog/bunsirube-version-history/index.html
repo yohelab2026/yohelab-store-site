@@ -24,7 +24,9 @@
     .post-cover { width:100%;height:auto;object-fit:contain;border-radius:24px;margin-bottom:28px;border:1px solid var(--border);box-shadow:var(--shadow-sm);display:block;background:#061f1b; }
     .post-outer { max-width:860px;margin:0 auto;padding:48px 24px 100px; }
     .post-meta { display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-bottom:18px; }
-    .post-tag { background:#f0f8f4;color:var(--green-dark,#075c4c);border-radius:999px;padding:3px 12px;font-size:12px;font-weight:700; }
+    .post-tag { background:#f0f8f4;color:var(--green-dark,#075c4c);border-radius:999px;padding:3px 12px;font-size:12px;font-weight:700;text-decoration:none; }
+    .post-tag:hover { background:#e0f4ec;color:var(--green); }
+    
     .post-title { font-size:clamp(30px,5.4vw,58px);font-weight:900;line-height:1.12;margin-bottom:20px;color:var(--text);letter-spacing:-.05em; }
     .post-excerpt { font-size:18px;color:var(--muted);line-height:1.9;margin-bottom:28px; }
     .hero-img, .body-img { width:100%;height:auto;border-radius:18px;border:1px solid var(--border);display:block;background:#f8fbf9; }
@@ -62,7 +64,7 @@
   </header>
   <main class="post-outer">
     <img class="post-cover" src="/assets/blog/bunsirube-version-history/eyecatch.webp" alt="文標のバージョンアップ履歴" loading="eager" decoding="async" width="1600" height="900" />
-    <div class="post-meta"><span>2026-05-12</span><span class="post-tag">文標</span><span class="post-tag">更新履歴</span><span class="post-tag">WordPress</span></div>
+    <div class="post-meta"><span>2026-05-12</span><a class="post-tag" href="/blog/?tag=wordpress">文標</a><a class="post-tag" href="/blog/?tag=wordpress">更新履歴</a><a class="post-tag" href="/blog/?tag=wordpress">WordPress</a></div>
     <h1 class="post-title">文標のバージョンアップ履歴：初期版から今までに良くしたこと</h1>
     <p class="post-excerpt">文標は、いきなり完成品として置いたテーマではありません。初期版から、記事を書く前の迷い、公開前の不安、購入後の分かりにくさを一つずつ減らしてきました。</p>
     <div class="post-body">
