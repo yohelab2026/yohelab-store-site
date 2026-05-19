@@ -18,3 +18,7 @@ public/downloads/bunsirube.zip
 !.aidesigner/.gitkeep
 
 functions/generated/
+
+# Generated from static blog HTML for the admin screen
+blog/admin/static-posts.json
+public/blog/admin/static-posts.json

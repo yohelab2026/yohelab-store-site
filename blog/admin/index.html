@@ -203,6 +203,19 @@
             <p style="color:var(--muted);font-size:14px;padding:14px;">読み込み中...</p>
           </div>
         </section>
+
+        <section class="manager-card">
+          <div class="manager-head">
+            <div>
+              <h2>サイト内記事</h2>
+              <p>既存HTMLの記事。開いて下書き保存できます。</p>
+            </div>
+            <button class="btn btn-outline" id="refresh-static-posts" type="button">更新</button>
+          </div>
+          <div id="static-post-list" class="manager-list">
+            <p style="color:var(--muted);font-size:14px;padding:14px;">読み込み中...</p>
+          </div>
+        </section>
       </aside>
 
       <section class="editor-panel" aria-label="記事エディタ">
@@ -308,11 +321,14 @@
   const statusEl   = document.getElementById('status');
   const draftListEl = document.getElementById('draft-list');
   const postListEl = document.getElementById('post-list');
+  const staticPostListEl = document.getElementById('static-post-list');
   const editorModeEl = document.getElementById('editor-mode');
   const editorHintEl = document.getElementById('editor-hint');
   let activeDraftId = '';
   let activePostSlug = '';
   let activePostDate = '';
+  let activeStaticSlug = '';
+  let staticPosts = [];
 
   // ── 認証 ────────────────────────────────────────────────────
   const loginView  = document.getElementById('login-view');
@@ -334,6 +350,7 @@
     document.body.classList.add('is-unlocked');
     loadDraftList();
     loadPostList();
+    loadStaticPostList();
   } else {
     showLock();
   }
@@ -348,7 +365,7 @@
     sessionStorage.setItem(SESSION_PIN_KEY, input);
     savePinForThisBrowser(input);
     document.body.classList.add('is-unlocked');
-    setTimeout(() => { loadDraftList(); loadPostList(); }, 200);
+    setTimeout(() => { loadDraftList(); loadPostList(); loadStaticPostList(); }, 200);
   }
   document.getElementById('unlock-admin').addEventListener('click', handleLogin);
   adminPinEl.addEventListener('keydown', e => { if(e.key==='Enter') handleLogin(); });
@@ -558,6 +575,7 @@
       draftId: activeDraftId,
       postSlug: activePostSlug,
       postDate: activePostDate,
+      staticSlug: activeStaticSlug,
       title: titleEl.value,
       bodyHtml: bodyEl.innerHTML,
       excerpt: excerptEl.value,
@@ -579,6 +597,7 @@
       activeDraftId = d.draftId || '';
       activePostSlug = d.postSlug || '';
       activePostDate = d.postDate || '';
+      activeStaticSlug = d.staticSlug || '';
       titleEl.value = d.title || '';
       bodyEl.innerHTML = d.bodyHtml || '';
       excerptEl.value = d.excerpt || '';
@@ -612,6 +631,7 @@
     activeDraftId = '';
     activePostSlug = '';
     activePostDate = '';
+    activeStaticSlug = '';
     titleEl.value = '';
     bodyEl.innerHTML = '';
     excerptEl.value = '';
@@ -636,6 +656,9 @@
     } else if (activeDraftId) {
       editorModeEl.textContent = '下書きを編集中';
       editorHintEl.textContent = '公開するとこの下書きは一覧から消えます。';
+    } else if (activeStaticSlug) {
+      editorModeEl.textContent = 'サイト内記事を編集中';
+      editorHintEl.textContent = '下書き保存すると管理画面の下書きに入ります。公開すると動的記事として保存されます。';
     } else {
       editorModeEl.textContent = '新規記事';
       editorHintEl.textContent = '左の一覧から下書きや公開済み記事を開けます。';
@@ -643,6 +666,7 @@
     document.querySelectorAll('.draft-list-item.is-active,.post-list-item.is-active').forEach(el => el.classList.remove('is-active'));
     if (activeDraftId) document.querySelector(`[data-draft-id="${cssEscape(activeDraftId)}"]`)?.classList.add('is-active');
     if (activePostSlug) document.querySelector(`[data-post-slug="${cssEscape(activePostSlug)}"]`)?.classList.add('is-active');
+    if (activeStaticSlug) document.querySelector(`[data-static-slug="${cssEscape(activeStaticSlug)}"]`)?.classList.add('is-active');
   }
 
   function cssEscape(value) {
@@ -667,10 +691,12 @@
     activeDraftId = data.draftId || '';
     activePostSlug = '';
     activePostDate = '';
+    activeStaticSlug = '';
     saveDraftLocal();
     updateEditorState();
     statusEl.textContent = 'サーバー下書きを保存した ✓';
     loadDraftList();
+    loadStaticPostList();
     setTimeout(() => statusEl.textContent='下書き中', 2000);
   }
 
@@ -728,6 +754,7 @@
     setTimeout(()=>statusEl.textContent='下書き中', 3000);
     loadDraftList();
     loadPostList();
+    loadStaticPostList();
   }
 
   document.getElementById('post-btn').addEventListener('click', publish);
@@ -806,6 +833,7 @@
   function fillEditor(post, options = {}) {
     activeDraftId = options.draftId || post.draftId || '';
     activePostSlug = options.postSlug || '';
+    activeStaticSlug = options.staticSlug || '';
     activePostDate = post.date || '';
     titleEl.value = post.title || '';
     bodyEl.innerHTML = post.bodyHtml || '';
@@ -853,6 +881,90 @@
       `).join('');
       updateEditorState();
     } catch { postListEl.innerHTML='<p style="color:#ef4444;font-size:14px;">読み込み失敗。</p>'; }
+  }
+
+  async function loadStaticPostList() {
+    if (!staticPostListEl) return;
+    staticPostListEl.innerHTML='<p style="color:var(--muted);font-size:14px;padding:14px;">読み込み中...</p>';
+    try {
+      const res = await fetch('/blog/admin/static-posts.json', { cache: 'no-store' });
+      const data = await res.json().catch(()=>({}));
+      staticPosts = data.posts || [];
+      if (!staticPosts.length) {
+        staticPostListEl.innerHTML='<p style="color:var(--muted);font-size:14px;padding:14px;">サイト内記事はありません。</p>';
+        return;
+      }
+      staticPostListEl.innerHTML = staticPosts.map(p=>`
+        <div class="post-list-item" data-static-slug="${escHtml(p.slug)}">
+          ${p.eyecatch?`<img src="${escHtml(p.eyecatch)}" alt="" />`:'<div style="width:56px;height:40px;background:var(--bg);border-radius:8px;flex-shrink:0;"></div>'}
+          <div class="info">
+            <strong>${escHtml(p.title||'無題')}</strong>
+            <span>${p.status === 'draft' ? '下書きHTML' : '公開HTML'}${p.date ? ` · ${escHtml(p.date)}` : ''}</span>
+          </div>
+          <div class="actions">
+            <a class="btn-view" href="${escHtml(p.url)}" target="_blank">表示</a>
+            <button class="btn-edit" type="button" onclick="openStaticPost('${escHtml(p.slug)}')">編集</button>
+            <button class="btn-draft" type="button" onclick="saveStaticPostAsDraft('${escHtml(p.slug)}',this)">下書き保存</button>
+          </div>
+        </div>
+      `).join('');
+      updateEditorState();
+    } catch {
+      staticPostListEl.innerHTML='<p style="color:#ef4444;font-size:14px;padding:14px;">サイト内記事の読み込みに失敗。</p>';
+    }
+  }
+
+  function staticPostBySlug(slug) {
+    return staticPosts.find(p => p.slug === slug) || null;
+  }
+
+  function openStaticPost(slug) {
+    const post = staticPostBySlug(slug);
+    if (!post) { statusEl.textContent = 'サイト内記事が見つかりません。'; return; }
+    const title = String(post.title || '').replace(/^【下書き】\s*/, '');
+    fillEditor({
+      title,
+      slug: post.slug,
+      date: post.date || '',
+      excerpt: post.excerpt || '',
+      bodyHtml: post.bodyHtml || '',
+      tags: post.tags || [],
+      eyecatch: post.eyecatch || '',
+    }, { staticSlug: slug });
+    activeDraftId = '';
+    activePostSlug = '';
+    statusEl.textContent = 'サイト内記事を開いた ✓';
+    setTimeout(() => statusEl.textContent='編集中', 2000);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  async function saveStaticPostAsDraft(slug, btn) {
+    const post = staticPostBySlug(slug);
+    const pin = currentPin();
+    if (!post || !pin) return;
+    btn.textContent = '保存中...';
+    btn.disabled = true;
+    const res = await fetch('/api/blog-draft', {
+      method: 'POST',
+      headers: { 'Content-Type':'application/json','X-Yohelab-Pin': pin },
+      body: JSON.stringify({
+        title: String(post.title || '').replace(/^【下書き】\s*/, ''),
+        slug: post.slug,
+        excerpt: post.excerpt || '',
+        bodyHtml: post.bodyHtml || '',
+        body: stripHtml(post.bodyHtml || ''),
+        tags: post.tags || [],
+        eyecatch: post.eyecatch || undefined,
+      }),
+    });
+    if (res.ok) {
+      btn.textContent = '保存済み';
+      statusEl.textContent = 'サイト内記事を下書きに保存した ✓';
+      loadDraftList();
+      return;
+    }
+    btn.textContent = '失敗';
+    btn.disabled = false;
   }
 
   async function openPost(slug) {
@@ -938,12 +1050,20 @@
     return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 
+  function stripHtml(html) {
+    const tmp = document.createElement('div');
+    tmp.innerHTML = html || '';
+    return tmp.innerText.trim();
+  }
+
   Object.assign(window, {
     openDraft,
     deleteDraft,
     openPost,
     movePostToDraft,
     deletePost,
+    openStaticPost,
+    saveStaticPostAsDraft,
   });
   </script>
 </body>
