@@ -1105,6 +1105,26 @@
     try {
       const doc = inlinePageFrame.contentDocument || inlinePageFrame.contentWindow?.document;
       if (!doc) return;
+      if (!doc.getElementById('yohelab-inline-frame-cleanup')) {
+        const style = doc.createElement('style');
+        style.id = 'yohelab-inline-frame-cleanup';
+        style.textContent = `
+          html, body {
+            overflow: hidden !important;
+            scrollbar-width: none !important;
+          }
+          body::-webkit-scrollbar,
+          html::-webkit-scrollbar {
+            display: none !important;
+            width: 0 !important;
+            height: 0 !important;
+          }
+          footer, .site-footer, .lp-footer {
+            display: none !important;
+          }
+        `;
+        doc.head?.appendChild(style);
+      }
       doc.querySelectorAll('footer, .site-footer, .lp-footer').forEach(footer => {
         footer.style.display = 'none';
       });
