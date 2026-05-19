@@ -204,18 +204,6 @@
           </div>
         </section>
 
-        <section class="manager-card">
-          <div class="manager-head">
-            <div>
-              <h2>サイト内記事</h2>
-              <p>既存HTMLの記事。開いて下書き保存できます。</p>
-            </div>
-            <button class="btn btn-outline" id="refresh-static-posts" type="button">更新</button>
-          </div>
-          <div id="static-post-list" class="manager-list">
-            <p style="color:var(--muted);font-size:14px;padding:14px;">読み込み中...</p>
-          </div>
-        </section>
       </aside>
 
       <section class="editor-panel" aria-label="記事エディタ">
@@ -321,7 +309,6 @@
   const statusEl   = document.getElementById('status');
   const draftListEl = document.getElementById('draft-list');
   const postListEl = document.getElementById('post-list');
-  const staticPostListEl = document.getElementById('static-post-list');
   const editorModeEl = document.getElementById('editor-mode');
   const editorHintEl = document.getElementById('editor-hint');
   let activeDraftId = '';
@@ -329,6 +316,7 @@
   let activePostDate = '';
   let activeStaticSlug = '';
   let staticPosts = [];
+  let staticPostsLoaded = false;
 
   // ── 認証 ────────────────────────────────────────────────────
   const loginView  = document.getElementById('login-view');
@@ -350,7 +338,6 @@
     document.body.classList.add('is-unlocked');
     loadDraftList();
     loadPostList();
-    loadStaticPostList();
   } else {
     showLock();
   }
@@ -365,7 +352,7 @@
     sessionStorage.setItem(SESSION_PIN_KEY, input);
     savePinForThisBrowser(input);
     document.body.classList.add('is-unlocked');
-    setTimeout(() => { loadDraftList(); loadPostList(); loadStaticPostList(); }, 200);
+    setTimeout(() => { loadDraftList(); loadPostList(); }, 200);
   }
   document.getElementById('unlock-admin').addEventListener('click', handleLogin);
   adminPinEl.addEventListener('keydown', e => { if(e.key==='Enter') handleLogin(); });
@@ -696,7 +683,6 @@
     updateEditorState();
     statusEl.textContent = 'サーバー下書きを保存した ✓';
     loadDraftList();
-    loadStaticPostList();
     setTimeout(() => statusEl.textContent='下書き中', 2000);
   }
 
@@ -754,30 +740,49 @@
     setTimeout(()=>statusEl.textContent='下書き中', 3000);
     loadDraftList();
     loadPostList();
-    loadStaticPostList();
   }
 
   document.getElementById('post-btn').addEventListener('click', publish);
 
   // ── サーバー下書き一覧 ───────────────────────────────────
+  async function loadStaticPosts(force = false) {
+    if (staticPostsLoaded && !force) return staticPosts;
+    try {
+      const res = await fetch('/blog/admin/static-posts.json', { cache: 'no-store' });
+      const data = await res.json().catch(()=>({}));
+      staticPosts = Array.isArray(data.posts) ? data.posts : [];
+      staticPostsLoaded = true;
+    } catch {
+      staticPosts = [];
+      staticPostsLoaded = true;
+    }
+    return staticPosts;
+  }
+
   async function loadDraftList() {
     if (!draftListEl) return;
     const pin = currentPin();
     if (!pin) return;
-    draftListEl.innerHTML='<p style="color:var(--muted);font-size:14px;">読み込み中...</p>';
+    draftListEl.innerHTML='<p style="color:var(--muted);font-size:14px;padding:14px;">読み込み中...</p>';
+    await loadStaticPosts();
+    let drafts = [];
     try {
       const res = await fetch('/api/blog-draft', { headers: { 'X-Yohelab-Pin': pin } });
       const data = await res.json().catch(()=>({}));
-      const drafts = data.drafts || [];
-      if (!drafts.length) {
-      draftListEl.innerHTML='<p style="color:var(--muted);font-size:14px;padding:14px;">サーバー下書きはありません。</p>';
-        return;
-      }
-      draftListEl.innerHTML = drafts.map(d=>`
+      drafts = data.drafts || [];
+    } catch {}
+
+    const staticDrafts = staticPosts.filter(p => p.status === 'draft');
+    if (!drafts.length && !staticDrafts.length) {
+      draftListEl.innerHTML='<p style="color:var(--muted);font-size:14px;padding:14px;">下書きはありません。</p>';
+      return;
+    }
+
+    const serverRows = drafts.map(d=>`
         <div class="draft-list-item" data-draft-id="${escHtml(d.draftId)}">
           <div class="info">
             <strong>${escHtml(d.title||'無題の下書き')}</strong>
-            <span>${d.updatedAt ? new Date(d.updatedAt).toLocaleString('ja-JP') : ''}</span>
+            <span>管理画面の下書き${d.updatedAt ? ` · ${new Date(d.updatedAt).toLocaleString('ja-JP')}` : ''}</span>
           </div>
           <div class="actions">
             <button class="btn-open-draft" type="button" onclick="openDraft('${escHtml(d.draftId)}')">開く</button>
@@ -786,10 +791,24 @@
           </div>
         </div>
       `).join('');
-      updateEditorState();
-    } catch {
-      draftListEl.innerHTML='<p style="color:#ef4444;font-size:14px;">下書きの読み込みに失敗。</p>';
-    }
+
+    const staticRows = staticDrafts.map(p=>`
+        <div class="draft-list-item" data-static-slug="${escHtml(p.slug)}">
+          ${p.eyecatch?`<img src="${escHtml(p.eyecatch)}" alt="" />`:'<div style="width:56px;height:40px;background:var(--bg);border-radius:8px;flex-shrink:0;"></div>'}
+          <div class="info">
+            <strong>${escHtml(String(p.title||'無題').replace(/^【下書き】\s*/, ''))}</strong>
+            <span>サイト内の下書き${p.date ? ` · ${escHtml(p.date)}` : ''}</span>
+          </div>
+          <div class="actions">
+            <a class="btn-view" href="${escHtml(p.url)}" target="_blank">表示</a>
+            <button class="btn-edit" type="button" onclick="openStaticPost('${escHtml(p.slug)}')">編集</button>
+            <button class="btn-draft" type="button" onclick="saveStaticPostAsDraft('${escHtml(p.slug)}',this)">保存</button>
+          </div>
+        </div>
+      `).join('');
+
+    draftListEl.innerHTML = serverRows + staticRows;
+    updateEditorState();
   }
 
   async function openDraft(draftId) {
@@ -858,18 +877,40 @@
 
   // ── 投稿一覧 & 削除 ───────────────────────────────────────
   async function loadPostList() {
-    postListEl.innerHTML='<p style="color:var(--muted);font-size:14px;">読み込み中...</p>';
+    postListEl.innerHTML='<p style="color:var(--muted);font-size:14px;padding:14px;">読み込み中...</p>';
+    await loadStaticPosts();
+    let posts = [];
     try {
       const res = await fetch('/api/blog-posts');
       const data = await res.json().catch(()=>({}));
-      const posts = data.posts || [];
-      if (!posts.length) { postListEl.innerHTML='<p style="color:var(--muted);font-size:14px;padding:14px;">まだ記事がありません。</p>'; return; }
-      postListEl.innerHTML = posts.map(p=>`
+      posts = data.posts || [];
+    } catch {}
+
+    const staticPublished = staticPosts.filter(p => p.status !== 'draft');
+    const allPosts = [...posts.map(p => ({ ...p, source: 'dynamic' })), ...staticPublished.map(p => ({ ...p, source: 'static' }))].sort(compareByCategory);
+    if (!allPosts.length) {
+      postListEl.innerHTML='<p style="color:var(--muted);font-size:14px;padding:14px;">まだ記事がありません。</p>';
+      return;
+    }
+    postListEl.innerHTML = allPosts.map(p => p.source === 'static' ? `
+        <div class="post-list-item" data-static-slug="${escHtml(p.slug)}">
+          ${p.eyecatch?`<img src="${escHtml(p.eyecatch)}" alt="" />`:'<div style="width:56px;height:40px;background:var(--bg);border-radius:8px;flex-shrink:0;"></div>'}
+          <div class="info">
+            <strong>${escHtml(p.title||'無題')}</strong>
+            <span>サイト内の公開記事${p.date ? ` · ${escHtml(p.date)}` : ''}</span>
+          </div>
+          <div class="actions">
+            <a class="btn-view" href="${escHtml(p.url)}" target="_blank">表示</a>
+            <button class="btn-edit" type="button" onclick="openStaticPost('${escHtml(p.slug)}')">編集</button>
+            <button class="btn-draft" type="button" onclick="saveStaticPostAsDraft('${escHtml(p.slug)}',this)">下書き</button>
+          </div>
+        </div>
+      ` : `
         <div class="post-list-item" data-post-slug="${escHtml(p.slug)}">
           ${p.eyecatch?`<img src="${p.eyecatch}" alt="" />`:'<div style="width:56px;height:40px;background:var(--bg);border-radius:8px;flex-shrink:0;"></div>'}
           <div class="info">
             <strong>${escHtml(p.title||'無題')}</strong>
-            <span>${p.date}</span>
+            <span>管理画面の公開記事${p.date ? ` · ${escHtml(p.date)}` : ''}</span>
           </div>
           <div class="actions">
             <a class="btn-view" href="/blog/post/?slug=${encodeURIComponent(p.slug)}" target="_blank">表示</a>
@@ -879,43 +920,39 @@
           </div>
         </div>
       `).join('');
-      updateEditorState();
-    } catch { postListEl.innerHTML='<p style="color:#ef4444;font-size:14px;">読み込み失敗。</p>'; }
-  }
-
-  async function loadStaticPostList() {
-    if (!staticPostListEl) return;
-    staticPostListEl.innerHTML='<p style="color:var(--muted);font-size:14px;padding:14px;">読み込み中...</p>';
-    try {
-      const res = await fetch('/blog/admin/static-posts.json', { cache: 'no-store' });
-      const data = await res.json().catch(()=>({}));
-      staticPosts = data.posts || [];
-      if (!staticPosts.length) {
-        staticPostListEl.innerHTML='<p style="color:var(--muted);font-size:14px;padding:14px;">サイト内記事はありません。</p>';
-        return;
-      }
-      staticPostListEl.innerHTML = staticPosts.map(p=>`
-        <div class="post-list-item" data-static-slug="${escHtml(p.slug)}">
-          ${p.eyecatch?`<img src="${escHtml(p.eyecatch)}" alt="" />`:'<div style="width:56px;height:40px;background:var(--bg);border-radius:8px;flex-shrink:0;"></div>'}
-          <div class="info">
-            <strong>${escHtml(p.title||'無題')}</strong>
-            <span>${p.status === 'draft' ? '下書きHTML' : '公開HTML'}${p.date ? ` · ${escHtml(p.date)}` : ''}</span>
-          </div>
-          <div class="actions">
-            <a class="btn-view" href="${escHtml(p.url)}" target="_blank">表示</a>
-            <button class="btn-edit" type="button" onclick="openStaticPost('${escHtml(p.slug)}')">編集</button>
-            <button class="btn-draft" type="button" onclick="saveStaticPostAsDraft('${escHtml(p.slug)}',this)">下書き保存</button>
-          </div>
-        </div>
-      `).join('');
-      updateEditorState();
-    } catch {
-      staticPostListEl.innerHTML='<p style="color:#ef4444;font-size:14px;padding:14px;">サイト内記事の読み込みに失敗。</p>';
-    }
+    updateEditorState();
   }
 
   function staticPostBySlug(slug) {
     return staticPosts.find(p => p.slug === slug) || null;
+  }
+
+  function compareByCategory(a, b) {
+    const rank = (post) => {
+      const tags = normalizeTagsForSort(post);
+      const order = ['chatgpt','claude','gemini','perplexity','genspark','grok','copilot','midjourney','ai-news','wordpress','earn','template','home-work','article'];
+      const found = order.findIndex(tag => tags.includes(tag));
+      return found === -1 ? 999 : found;
+    };
+    return rank(a) - rank(b) || String(b.date || '').localeCompare(String(a.date || '')) || String(a.title || '').localeCompare(String(b.title || ''), 'ja');
+  }
+
+  function normalizeTagsForSort(post) {
+    const raw = [...(post.tags || []), post.title || '', post.excerpt || ''].join(' ').toLowerCase();
+    const tags = new Set(String(raw).split(/\s+|,|、/).filter(Boolean));
+    if (raw.includes('chatgpt') || raw.includes('openai')) tags.add('chatgpt');
+    if (raw.includes('claude') || raw.includes('anthropic')) tags.add('claude');
+    if (raw.includes('gemini') || raw.includes('google')) tags.add('gemini');
+    if (raw.includes('perplexity')) tags.add('perplexity');
+    if (raw.includes('genspark')) tags.add('genspark');
+    if (raw.includes('grok')) tags.add('grok');
+    if (raw.includes('copilot') || raw.includes('microsoft')) tags.add('copilot');
+    if (raw.includes('wordpress') || raw.includes('文標')) tags.add('wordpress');
+    if (raw.includes('副業') || raw.includes('稼')) tags.add('earn');
+    if (raw.includes('テンプレ') || raw.includes('比較記事')) tags.add('template');
+    if (raw.includes('在宅') || raw.includes('家で作業')) tags.add('home-work');
+    if (raw.includes('aiニュース') || raw.includes('ai検索')) tags.add('ai-news');
+    return [...tags];
   }
 
   function openStaticPost(slug) {

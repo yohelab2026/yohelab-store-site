@@ -45,7 +45,7 @@ export async function onRequestPost(context) {
     if (eyecatch) post.eyecatch = eyecatch;
 
     await kv.put(`post:${slug}`, JSON.stringify(post), {
-      metadata: { title: effectiveTitle, date, excerpt, slug: effectiveSlugRaw, eyecatch: eyecatch || "" },
+      metadata: { title: effectiveTitle, date, excerpt, slug: effectiveSlugRaw, eyecatch: eyecatch || "", tags: tags.join(",") },
     });
 
     if (originalPostSlug && originalPostSlug !== slug) {

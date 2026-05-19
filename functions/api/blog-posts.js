@@ -17,6 +17,7 @@ export async function onRequestGet(context) {
         date: key.metadata?.date || "",
         excerpt: key.metadata?.excerpt || "",
         eyecatch: key.metadata?.eyecatch || "",
+        tags: parseTags(key.metadata?.tags),
       }))
       .sort((a, b) => String(b.date).localeCompare(String(a.date)));
 
@@ -29,6 +30,14 @@ export async function onRequestGet(context) {
   } catch (error) {
     return json({ error: error?.message || "unexpected_error" }, 500);
   }
+}
+
+function parseTags(value) {
+  return String(value || "")
+    .split(/[\n,、]/)
+    .map((tag) => tag.trim())
+    .filter(Boolean)
+    .slice(0, 12);
 }
 
 function json(body, status = 200) {

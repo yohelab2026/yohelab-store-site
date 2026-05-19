@@ -3,6 +3,7 @@ const blogSearchEl = document.getElementById('blog-search');
 const filterStatusEl = document.getElementById('filter-status');
 const filterChipEls = Array.from(document.querySelectorAll('.filter-chip'));
 let activeFilter = 'all';
+const categoryOrder = ['chatgpt','claude','gemini','perplexity','genspark','grok','copilot','midjourney','ai-news','wordpress','earn','template','home-work','article'];
 const staticBlogSlugs = new Set([
   'ai-news-selling-ideas',
   'home-work-rhythm',
@@ -13,6 +14,7 @@ const staticBlogSlugs = new Set([
   'faq-source-ai-search',
   'sales-page-common-mistakes',
 ]);
+let staticManifestPosts = [];
 const fallbackPosts = [
   {
     title: '家で作業すると運動不足になるので、先に動く仕組みを作る',
@@ -82,21 +84,84 @@ function postUrl(slug) {
 }
 
 async function loadPosts(page = 1) {
+  const staticPublished = await loadStaticPublishedPosts();
+  let dynamicPosts = [];
   try {
     const res = await fetch(`/api/blog-posts?page=${page}`);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
-    if (data.posts && data.posts.length) {
-      currentPage = data.page || 1;
-      totalPages = data.totalPages || 1;
-      render(data.posts, true);
-      renderPagination();
-    } else {
-      if (!postsEl.children.length) render(fallbackPosts, true);
-    }
+    dynamicPosts = data.posts || [];
+    currentPage = data.page || 1;
+    totalPages = data.totalPages || 1;
   } catch(e) {
-    if (!postsEl.children.length) render(fallbackPosts, true);
+    currentPage = 1;
+    totalPages = 1;
   }
+  const merged = mergePosts([...dynamicPosts, ...staticPublished]);
+  render(merged.length ? merged : fallbackPosts, true);
+  renderPagination();
+}
+
+async function loadStaticPublishedPosts() {
+  if (staticManifestPosts.length) return staticManifestPosts;
+  try {
+    const res = await fetch('/blog/admin/static-posts.json', { cache: 'no-store' });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    staticManifestPosts = (data.posts || [])
+      .filter(post => post.status !== 'draft')
+      .map(post => {
+        staticBlogSlugs.add(post.slug);
+        return post;
+      });
+  } catch {
+    staticManifestPosts = fallbackPosts;
+  }
+  return staticManifestPosts;
+}
+
+function mergePosts(posts) {
+  const seen = new Set();
+  return posts
+    .filter(post => post && post.slug && post.title)
+    .filter(post => {
+      const key = post.url || post.slug;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    })
+    .sort(compareByCategory);
+}
+
+function compareByCategory(a, b) {
+  return categoryRank(a) - categoryRank(b)
+    || String(b.date || '').localeCompare(String(a.date || ''))
+    || String(a.title || '').localeCompare(String(b.title || ''), 'ja');
+}
+
+function categoryRank(post) {
+  const tags = normalizePostTags(post);
+  const found = categoryOrder.findIndex(tag => tags.includes(tag));
+  return found === -1 ? 999 : found;
+}
+
+function normalizePostTags(post) {
+  const raw = [...(post.tags || []), post.title || '', post.excerpt || ''].join(' ').toLowerCase();
+  const tags = new Set(String(raw).split(/\s+|,|、/).filter(Boolean));
+  if (raw.includes('chatgpt') || raw.includes('openai')) tags.add('chatgpt');
+  if (raw.includes('claude') || raw.includes('anthropic')) tags.add('claude');
+  if (raw.includes('gemini') || raw.includes('google')) tags.add('gemini');
+  if (raw.includes('perplexity')) tags.add('perplexity');
+  if (raw.includes('genspark')) tags.add('genspark');
+  if (raw.includes('grok')) tags.add('grok');
+  if (raw.includes('copilot') || raw.includes('microsoft')) tags.add('copilot');
+  if (raw.includes('midjourney')) tags.add('midjourney');
+  if (raw.includes('wordpress') || raw.includes('文標')) tags.add('wordpress');
+  if (raw.includes('副業') || raw.includes('稼')) tags.add('earn');
+  if (raw.includes('テンプレ') || raw.includes('比較記事')) tags.add('template');
+  if (raw.includes('在宅') || raw.includes('家で作業')) tags.add('home-work');
+  if (raw.includes('aiニュース') || raw.includes('ai検索')) tags.add('ai-news');
+  return [...tags];
 }
 
 function renderPagination() {
@@ -136,13 +201,14 @@ function render(posts, hasLink = true) {
     return;
   }
   postsEl.innerHTML = posts.map(post => {
-    const url = postUrl(post.slug);
-    const tags = (post.tags||[]).slice(0,2).map(t=>`<span class="post-card-tag">${esc(t)}</span>`).join('');
+    const url = post.url || postUrl(post.slug);
+    const normalizedTags = [...new Set([...(post.tags||[]), ...normalizePostTags(post)])];
+    const tags = normalizedTags.slice(0,3).map(t=>`<span class="post-card-tag">${esc(t)}</span>`).join('');
     const img = post.eyecatch
       ? `<img class="post-card-img" src="${esc(post.eyecatch)}" alt="${esc(post.title)}" loading="lazy" />`
       : `<div class="post-card-img-placeholder">📝</div>`;
     return `
-      <article class="post-card" data-slug="${esc(post.slug)}" data-tags="${esc((post.tags||[]).join(' ').toLowerCase())}" data-search="${esc([post.title, post.excerpt, ...(post.tags||[])].join(' ').toLowerCase())}">
+      <article class="post-card" data-slug="${esc(post.slug)}" data-tags="${esc(normalizedTags.join(' ').toLowerCase())}" data-search="${esc([post.title, post.excerpt, ...normalizedTags].join(' ').toLowerCase())}">
         ${img}
         <div class="post-card-body">
           <div class="post-card-meta">
@@ -238,6 +304,11 @@ function getFilterLabel(value) {
     chatgpt: 'ChatGPT',
     claude: 'Claude',
     gemini: 'Gemini',
+    perplexity: 'Perplexity',
+    genspark: 'Genspark',
+    grok: 'Grok',
+    copilot: 'Copilot',
+    midjourney: 'Midjourney',
     earn: '商品案',
     wordpress: 'WordPress',
     article: '記事の型',
