@@ -12,6 +12,7 @@
   <meta property="og:url" content="https://yohelab.com/" />
   <meta property="og:image" content="https://yohelab.com/assets/og/bunsirube-og.png" />
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://yohelab.com/assets/og/bunsirube-og.png" />
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
   <meta name="theme-color" content="#0b8f72" />
   <link rel="canonical" href="https://yohelab.com/" />
@@ -45,86 +46,6 @@
     }
     a { color: inherit; text-decoration: none; }
     img { display: block; max-width: 100%; }
-
-    /* ── ヘッダー ── */
-    .site-header {
-      background: var(--white);
-      border-bottom: 3px solid var(--brand);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    .header-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 16px;
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      height: 56px;
-    }
-    .site-logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 20px;
-      font-weight: 900;
-      color: var(--brand);
-      letter-spacing: -0.03em;
-      flex-shrink: 0;
-    }
-    .site-logo img { width: 36px; height: 36px; border-radius: 8px; }
-    .header-nav { display: flex; align-items: center; gap: 4px; }
-    .header-nav a {
-      padding: 5px 11px;
-      border-radius: 4px;
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--text-sub);
-      transition: background .15s, color .15s;
-    }
-    .header-nav a:hover { background: var(--brand-light); color: var(--brand); }
-    .header-right { margin-left: auto; }
-    .btn-primary-sm {
-      background: var(--brand);
-      color: #fff;
-      padding: 7px 16px;
-      border-radius: 4px;
-      font-size: 13px;
-      font-weight: 700;
-      display: inline-block;
-      transition: background .15s;
-    }
-    .btn-primary-sm:hover { background: var(--brand-dark); }
-
-    .mobile-hamburger {
-      display: none;
-      background: none;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 6px 10px;
-      cursor: pointer;
-      font-size: 18px;
-      color: var(--text-sub);
-      margin-left: auto;
-    }
-    .mobile-nav-panel {
-      display: none;
-      background: var(--white);
-      border-bottom: 1px solid var(--border);
-      padding: 12px 16px;
-      flex-direction: column;
-      gap: 4px;
-    }
-    .mobile-nav-panel a {
-      padding: 10px 12px;
-      border-radius: 6px;
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--text-sub);
-      display: block;
-    }
-    .mobile-nav-panel a:hover { background: var(--brand-light); color: var(--brand); }
 
     /* ── ファーストビュー ── */
     .home-hero {
@@ -206,11 +127,11 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 42px;
-      padding: 10px 16px;
+      min-height: 44px;
+      padding: 10px 20px;
       border-radius: 999px;
       font-weight: 900;
-      font-size: 13px;
+      font-size: 14px;
       border: 1px solid var(--border);
       background: #fff;
       color: var(--brand);
@@ -279,45 +200,6 @@
       font-weight: 900;
       line-height: 1.45;
     }
-
-    /* ── カテゴリタブバー ── */
-    .tab-bar {
-      background: var(--white);
-      border-bottom: 1px solid var(--border);
-      position: sticky;
-      top: 56px;
-      z-index: 90;
-    }
-    .tab-bar-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      display: flex;
-    }
-    .tab-btn {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 5px;
-      padding: 10px 8px;
-      border: none;
-      border-bottom: 3px solid transparent;
-      background: none;
-      cursor: pointer;
-      font-family: inherit;
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--text-sub);
-      transition: background .15s, color .15s, border-color .15s;
-    }
-    .tab-btn:hover { background: var(--brand-light); color: var(--brand); }
-    .tab-btn.active {
-      color: var(--brand);
-      border-bottom-color: var(--brand);
-      background: var(--brand-light);
-      box-shadow: inset 0 -3px 0 var(--brand);
-    }
-    .tab-icon { font-size: 22px; line-height: 1; }
 
     /* ── メインレイアウト ── */
     .site-main {
@@ -707,50 +589,110 @@
 
     /* ── レスポンシブ ── */
     @media (max-width: 768px) {
-      .header-nav { display: none; }
-      .header-right { display: none; }
-      .mobile-hamburger { display: block; }
       .home-hero-inner { grid-template-columns: 1fr; padding-top: 22px; }
       .hero-flow { grid-template-columns: repeat(2, 1fr); }
-      .tab-bar { top: 56px; }
+      .hero-actions { flex-direction: column; }
+      .hero-action { width: 100%; text-align: center; }
       .site-main { grid-template-columns: 1fr; padding: 10px; }
       .product-grid { grid-template-columns: 1fr; }
       .tip-grid { grid-template-columns: 1fr 1fr; }
       .footer-inner { grid-template-columns: 1fr 1fr; gap: 16px; }
+      .news-item { gap: 8px; padding: 10px 10px; }
+      .article-item { gap: 8px; padding: 10px 10px; }
+      .section-head { padding: 8px 10px; }
+      .inline-page-frame { min-height: 500px; }
     }
     @media (max-width: 480px) {
       .footer-inner { grid-template-columns: 1fr; }
     }
   </style>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebSite","name":"よへラボ","url":"https://yohelab.com/","description":"副業・ブログ初心者がAIニュースを記事・テンプレ・商品に変えるための情報サイト","publisher":{"@type":"Organization","name":"よへラボ","logo":{"@type":"ImageObject","url":"https://yohelab.com/yohelab-mascot-v2-20260518.png"}}}
+  </script>
 </head>
 <body>
 
-<!-- ====== ヘッダー ====== -->
-<header class="site-header">
-  <div class="header-inner">
-    <a class="site-logo" href="/">
+<!-- ====== 共通ヘッダー ====== -->
+<header class="yh-site-header">
+  <div class="yh-header-inner">
+    <a class="yh-logo" href="/">
       <img src="/yohelab-mascot-v2-20260518.webp" alt="よへラボ" />
-      よへラボ
+      <span>よへラボ</span>
     </a>
-    <nav class="header-nav">
+    <nav class="yh-header-nav">
       <a href="/blog/">ブログ</a>
       <a href="/lp/bunsirube/">文標</a>
       <a href="/about/">サイトについて</a>
     </nav>
-    <div class="header-right">
-      <a class="btn-primary-sm" href="/lp/bunsirube/">文標を見る →</a>
+    <div class="yh-header-right">
+      <a href="/lp/bunsirube/" class="yh-btn-primary">文標を見る →</a>
     </div>
-    <button class="mobile-hamburger" id="menuBtn" aria-label="メニューを開く">☰</button>
+    <button class="yh-hamburger" id="yhMenuBtn" aria-label="メニュー">☰</button>
   </div>
-  <nav class="mobile-nav-panel" id="mobileNav">
-    <a href="/blog/">ブログ記事一覧</a>
-    <a href="/lp/bunsirube/">文標（WordPressテーマ）</a>
+  <!-- モバイルメニュー -->
+  <nav class="yh-mobile-nav" id="yhMobileNav">
+    <a href="/?tab=ai-news">🤖 AIニュース</a>
+    <a href="/?tab=blog">✍️ 副業ブログ</a>
+    <a href="/?tab=tools">📦 ツール・商品</a>
+    <a href="/?tab=workout">💪 在宅ヒント</a>
+    <a href="/lp/bunsirube/">文標（WPテーマ）</a>
     <a href="/about/">サイトについて</a>
-    <a href="https://x.com/yohe_lab" target="_blank" rel="noopener">X（旧Twitter）</a>
-    <a href="https://note.com/yohelab" target="_blank" rel="noopener">note</a>
     <a href="/contact/">お問い合わせ</a>
+    <a href="https://x.com/yohe_lab" target="_blank" rel="noopener">X（旧Twitter）</a>
   </nav>
 </header>
+<!-- ====== カテゴリタブバー（全ページ共通） ====== -->
+<div class="yh-tab-bar">
+  <div class="yh-tab-bar-inner">
+    <a class="yh-tab-btn" href="/?tab=ai-news" data-tab="ai-news">
+      <span class="yh-tab-icon">🤖</span><span>AIニュース</span>
+    </a>
+    <a class="yh-tab-btn" href="/?tab=blog" data-tab="blog">
+      <span class="yh-tab-icon">✍️</span><span>副業ブログ</span>
+    </a>
+    <a class="yh-tab-btn" href="/?tab=tools" data-tab="tools">
+      <span class="yh-tab-icon">📦</span><span>ツール・商品</span>
+    </a>
+    <a class="yh-tab-btn" href="/?tab=workout" data-tab="workout">
+      <span class="yh-tab-icon">💪</span><span>在宅ヒント</span>
+    </a>
+  </div>
+</div>
+<!-- 共通CSS -->
+<style>
+  .yh-site-header{background:#fff;border-bottom:3px solid #0b8f72;position:sticky;top:0;z-index:200;}
+  .yh-header-inner{max-width:1100px;margin:0 auto;padding:0 16px;display:flex;align-items:center;gap:16px;height:56px;}
+  .yh-logo{display:flex;align-items:center;gap:10px;font-size:20px;font-weight:900;color:#0b8f72;text-decoration:none;flex-shrink:0;letter-spacing:-0.03em;}
+  .yh-logo img{width:36px;height:36px;border-radius:8px;}
+  .yh-header-nav{display:flex;align-items:center;gap:2px;}
+  .yh-header-nav a{padding:5px 10px;border-radius:4px;font-size:13px;font-weight:700;color:#444;text-decoration:none;transition:background .15s,color .15s;}
+  .yh-header-nav a:hover{background:#e8f7f3;color:#0b8f72;}
+  .yh-header-right{margin-left:auto;}
+  .yh-btn-primary{background:#0b8f72;color:#fff;padding:7px 14px;border-radius:4px;font-size:13px;font-weight:700;text-decoration:none;display:inline-block;transition:background .15s;}
+  .yh-btn-primary:hover{background:#086b56;}
+  .yh-hamburger{display:none;background:none;border:1px solid #e8e8e8;border-radius:4px;padding:6px 10px;cursor:pointer;font-size:18px;color:#444;margin-left:auto;}
+  .yh-mobile-nav{display:none;background:#fff;border-bottom:1px solid #e8e8e8;padding:10px 16px;flex-direction:column;gap:2px;}
+  .yh-mobile-nav a{padding:10px 12px;border-radius:6px;font-size:14px;font-weight:700;color:#444;text-decoration:none;display:block;}
+  .yh-mobile-nav a:hover{background:#e8f7f3;color:#0b8f72;}
+  .yh-tab-bar{background:#fff;border-bottom:2px solid #e8e8e8;position:sticky;top:56px;z-index:190;}
+  .yh-tab-bar-inner{max-width:1100px;margin:0 auto;display:flex;}
+  .yh-tab-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:9px 8px;border-bottom:3px solid transparent;font-size:12px;font-weight:700;color:#666;text-decoration:none;transition:background .15s,color .15s,border-color .15s;text-align:center;}
+  .yh-tab-btn:hover{background:#e8f7f3;color:#0b8f72;}
+  .yh-tab-btn.active{color:#0b8f72;border-bottom-color:#0b8f72;background:#e8f7f3;}
+  .yh-tab-icon{font-size:20px;line-height:1;}
+  @media(max-width:768px){
+    .yh-header-nav,.yh-header-right{display:none;}
+    .yh-hamburger{display:block;}
+    .yh-tab-bar{top:56px;}
+    .yh-tab-btn{padding:10px 4px;font-size:11px;}
+    .yh-tab-icon{font-size:22px;}
+  }
+  @media(max-width:400px){
+    .yh-tab-btn span:last-child{display:none;}
+    .yh-tab-icon{font-size:24px;}
+    .yh-tab-btn{padding:12px 6px;}
+  }
+</style>
 
 <!-- ====== ファーストビュー ====== -->
 <section class="home-hero" aria-label="よへラボの入口">
@@ -785,27 +727,156 @@
     </div>
   </div>
 </section>
+        <div style="padding:0 14px 14px;">
+          <a href="/blog/home-work-rhythm/" style="display:inline-block;padding:10px 20px;background:var(--brand);color:#fff;border-radius:6px;font-size:13px;font-weight:700;">在宅ワーク習慣の記事を読む →</a>
+        </div>
+      </section>
+    </div>
 
-<!-- ====== カテゴリタブバー ====== -->
-<div class="tab-bar">
-  <div class="tab-bar-inner" role="tablist" aria-label="表示カテゴリ">
-    <button class="tab-btn active" type="button" role="tab" aria-selected="true" aria-controls="panel-ai-news" data-tab="ai-news">
-      <span class="tab-icon">🤖</span>AIニュース
-    </button>
-    <button class="tab-btn" type="button" role="tab" aria-selected="false" aria-controls="panel-blog" data-tab="blog">
-      <span class="tab-icon">✍️</span>副業ブログ
-    </button>
-    <button class="tab-btn" type="button" role="tab" aria-selected="false" aria-controls="panel-tools" data-tab="tools">
-      <span class="tab-icon">📦</span>ツール・商品
-    </button>
-    <button class="tab-btn" type="button" role="tab" aria-selected="false" aria-controls="panel-workout" data-tab="workout">
-      <span class="tab-icon">💪</span>在宅ヒント
-    </button>
+  </div><!-- /main-col -->
+
+  <!-- ===== サイドバー（常時表示） ===== -->
+  <aside class="sidebar">
+
+    <!-- 人気記事 -->
+    <section class="section-card">
+      <div class="section-head">
+        <h2><span>🔥</span>人気記事</h2>
+      </div>
+      <div>
+        <a class="pickup-item" href="/blog/comparison-article-template/">
+          <span class="pickup-num top3">1</span>
+          <span class="pickup-title">比較記事の書き方：結論・比較表・FAQ・CTA</span>
+        </a>
+        <a class="pickup-item" href="/blog/ai-news-selling-ideas/">
+          <span class="pickup-num top3">2</span>
+          <span class="pickup-title">AIニュースを記事ネタに変える方法</span>
+        </a>
+        <a class="pickup-item" href="/blog/free-theme-vs-bunsirube/">
+          <span class="pickup-num top3">3</span>
+          <span class="pickup-title">無料テーマと文標の違い</span>
+        </a>
+        <a class="pickup-item" href="/blog/faq-source-ai-search/">
+          <span class="pickup-num">4</span>
+          <span class="pickup-title">AI検索向けにFAQと出典を置く理由</span>
+        </a>
+        <a class="pickup-item" href="/blog/home-work-rhythm/">
+          <span class="pickup-num">5</span>
+          <span class="pickup-title">在宅作業の運動不足対策</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ツール・商品（サイドバー） -->
+    <section class="section-card">
+      <div class="section-head">
+        <h2><span>📦</span>注目ツール</h2>
+        <a class="more" href="/lp/bunsirube/">詳細 →</a>
+      </div>
+      <div style="padding:10px 14px;display:grid;gap:8px;">
+        <a href="/lp/bunsirube/" style="display:flex;align-items:center;gap:10px;padding:10px;border:1px solid var(--border);border-radius:var(--radius);transition:border-color .15s,background .15s;" onmouseover="this.style.borderColor='var(--brand)';this.style.background='var(--brand-light)'" onmouseout="this.style.borderColor='var(--border)';this.style.background=''">
+          <div style="flex-shrink:0;width:40px;height:40px;border-radius:8px;background:var(--brand-light);display:grid;place-items:center;font-size:20px;font-weight:900;color:var(--brand);border:1px solid rgba(11,143,114,.2);">文</div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:13px;font-weight:900;">文標（ぶんしるべ）</div>
+            <div style="font-size:11px;color:var(--muted);">WordPressテーマ ¥5,500</div>
+          </div>
+        </a>
+        <a href="/blog/comparison-article-template/" style="display:flex;align-items:center;gap:10px;padding:10px;border:1px solid var(--border);border-radius:var(--radius);transition:border-color .15s,background .15s;" onmouseover="this.style.borderColor='var(--brand)';this.style.background='var(--brand-light)'" onmouseout="this.style.borderColor='var(--border)';this.style.background=''">
+          <div style="flex-shrink:0;width:40px;height:40px;border-radius:8px;background:var(--brand-light);display:grid;place-items:center;font-size:20px;font-weight:900;color:var(--brand);border:1px solid rgba(11,143,114,.2);">比</div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:13px;font-weight:900;">比較記事テンプレ</div>
+            <div style="font-size:11px;color:var(--muted);">無料テンプレ</div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- 更新チェック -->
+    <section class="section-card">
+      <div class="section-head">
+        <h2><span>📣</span>更新をチェック</h2>
+      </div>
+      <div class="sns-list">
+        <a class="sns-item" href="https://x.com/yohe_lab" target="_blank" rel="noopener me">
+          <span class="sns-icon">𝕏</span>X（旧Twitter）で更新を見る
+        </a>
+        <a class="sns-item" href="https://note.com/yohelab" target="_blank" rel="noopener">
+          <span class="sns-icon">📝</span>noteで記事・有料コンテンツ
+        </a>
+        <a class="sns-item" href="/contact/">
+          <span class="sns-icon">✉️</span>お問い合わせ・通知登録
+        </a>
+      </div>
+    </section>
+
+    <!-- サイトについて -->
+    <section class="section-card">
+      <div class="section-head">
+        <h2><span>ℹ️</span>よへラボとは</h2>
+      </div>
+      <div style="padding:12px 14px;">
+        <p style="font-size:13px;line-height:1.7;color:var(--text-sub);">家で働く人・副業をしたい人のための情報サイトです。AIニュース、ブログ収益化、WordPressテーマ（文標）、在宅ワーク習慣など、家でできる仕事に関する情報をまとめています。</p>
+        <a href="/about/" style="display:inline-block;margin-top:10px;font-size:13px;font-weight:700;color:var(--brand);">詳しくはこちら →</a>
+      </div>
+    </section>
+
+  </aside>
+
+</main>
+
+<!-- ====== フッター ====== -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">
+        <img src="/yohelab-mascot-v2-20260518.webp" alt="よへラボ" />よへラボ
+      </div>
+      <p class="footer-tagline">家で働く人のための<br>AI・副業情報サイト</p>
+    </div>
+    <div class="footer-col">
+      <h3>コンテンツ</h3>
+      <ul>
+        <li><a href="/blog/">ブログ記事一覧</a></li>
+        <li><a href="/blog/?tag=ai-news">AIニュース活用</a></li>
+        <li><a href="/blog/?tag=wordpress">WordPress</a></li>
+        <li><a href="/blog/home-work-rhythm/">在宅ヒント</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h3>ツール・商品</h3>
+      <ul>
+        <li><a href="/lp/bunsirube/">文標（WPテーマ）</a></li>
+        <li><a href="/lp/bunsirube/demo/">文標デモ</a></li>
+        <li><a href="/blog/comparison-article-template/">比較記事テンプレ（無料）</a></li>
+        <li><a href="/apps/research-writer/">Research Writer</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h3>その他</h3>
+      <ul>
+        <li><a href="/about/">サイトについて</a></li>
+        <li><a href="/contact/">お問い合わせ</a></li>
+        <li><a href="https://x.com/yohe_lab" target="_blank" rel="noopener me">X（旧Twitter）</a></li>
+        <li><a href="https://note.com/yohelab" target="_blank" rel="noopener">note</a></li>
+        <li><a href="/legal/privacy/">プライバシーポリシー</a></li>
+        <li><a href="/legal/terms/">利用規約</a></li>
+      </ul>
+    </div>
   </div>
-</div>
+  <div class="footer-bottom">
+    <span>© 2026 よへラボ</span>
+    <div class="footer-bottom-links">
+      <a href="/legal/privacy/">プライバシーポリシー</a>
+      <a href="/legal/terms/">利用規約</a>
+      <a href="/contact/">お問い合わせ</a>
+    </div>
+  </div>
+</footer>
 
-<!-- ====== メインコンテンツ ====== -->
-<main class="site-main">
+
+
+</body>
+</html><main class="site-main">
 
   <!-- ===== 左カラム（タブパネル） ===== -->
   <div class="main-col">
@@ -1172,6 +1243,7 @@
 
 </main>
 
+
 <!-- ====== フッター ====== -->
 <footer class="site-footer">
   <div class="footer-inner">
@@ -1223,15 +1295,17 @@
 
 <!-- ====== JavaScript ====== -->
 <script>
-  // ── モバイルメニュー ──
-  const menuBtn = document.getElementById('menuBtn');
-  const mobileNav = document.getElementById('mobileNav');
-  menuBtn.addEventListener('click', () => {
-    mobileNav.style.display = mobileNav.style.display === 'flex' ? 'none' : 'flex';
-  });
+  // ── モバイルメニュー（共通ヘッダー） ──
+  const yhMenuBtn = document.getElementById('yhMenuBtn');
+  const yhMobileNav = document.getElementById('yhMobileNav');
+  if (yhMenuBtn && yhMobileNav) {
+    yhMenuBtn.addEventListener('click', () => {
+      yhMobileNav.style.display = yhMobileNav.style.display === 'flex' ? 'none' : 'flex';
+    });
+  }
 
   // ── タブ切り替え ──
-  const tabBtns = document.querySelectorAll('.tab-btn');
+  const tabBtns = document.querySelectorAll('.yh-tab-btn');
   const mainCol = document.querySelector('.main-col');
   const tabPanels = mainCol ? mainCol.querySelectorAll('.tab-panel') : document.querySelectorAll('.tab-panel');
   const inlinePagePanel = document.getElementById('inlinePagePanel');
@@ -1241,23 +1315,17 @@
   const inlineBackBtn = document.getElementById('inlineBackBtn');
 
   tabBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', (e) => {
       const target = btn.dataset.tab;
       const targetPanel = document.getElementById('panel-' + target);
       if (!targetPanel) return;
-
-      // タブバーは固定したまま、active状態だけ切り替える
-      tabBtns.forEach(b => {
-        b.classList.remove('active');
-        b.setAttribute('aria-selected', 'false');
-      });
+      e.preventDefault();
+      tabBtns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      btn.setAttribute('aria-selected', 'true');
-
-      // メインカラム内のパネルだけを切り替える。サイドバー・ヘッダー・フッターは触らない。
       hideInlinePage();
       tabPanels.forEach(p => p.classList.remove('active'));
       targetPanel.classList.add('active');
+      history.pushState({tab: target}, '', '/?tab=' + target);
     });
   });
 
@@ -1280,7 +1348,7 @@
     inlinePageTitle.textContent = link.textContent.trim().replace(/\s+/g, ' ') || 'よへラボ内ページ';
     inlineOpenBtn.href = url.pathname + url.search + url.hash;
     inlinePageFrame.src = url.pathname + url.search + url.hash;
-    mainCol.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (mainCol) mainCol.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   function hideInlinePage() {
@@ -1291,7 +1359,7 @@
 
   inlineBackBtn?.addEventListener('click', () => {
     hideInlinePage();
-    const currentBtn = document.querySelector('.tab-btn.active') || document.querySelector('.tab-btn[data-tab="ai-news"]');
+    const currentBtn = document.querySelector('.yh-tab-btn.active') || document.querySelector('.yh-tab-btn[data-tab="ai-news"]');
     const targetPanel = currentBtn ? document.getElementById('panel-' + currentBtn.dataset.tab) : document.getElementById('panel-ai-news');
     if (targetPanel) targetPanel.classList.add('active');
   });
@@ -1303,15 +1371,23 @@
     showInlinePage(link);
   });
 
-  // ── AIカテゴリフィルター（内部リンク方式・外部通信なし） ──
+  // ── URL パラメータからタブ初期化 ──
+  (function() {
+    const params = new URLSearchParams(location.search);
+    const activeTab = params.get('tab') || 'ai-news';
+    tabPanels.forEach(p => p.classList.remove('active'));
+    const initPanel = document.getElementById('panel-' + activeTab);
+    if (initPanel) initPanel.classList.add('active');
+    tabBtns.forEach(b => b.classList.toggle('active', b.dataset.tab === activeTab));
+  })();
+
+  // ── AIカテゴリフィルター ──
   const aiFilterBtns = document.querySelectorAll('.ai-filter-btn');
   const aiNewsItems = document.querySelectorAll('#aiNewsContainer .news-item');
 
   aiFilterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       const target = btn.dataset.ai;
-
-      // ボタンのスタイル切り替え
       aiFilterBtns.forEach(b => {
         b.classList.remove('active');
         b.style.background = '#fff';
@@ -1322,8 +1398,6 @@
       btn.style.background = '#0b8f72';
       btn.style.color = '#fff';
       btn.style.borderColor = '#0b8f72';
-
-      // 記事の表示・非表示
       aiNewsItems.forEach(item => {
         if (target === 'all') {
           item.style.display = '';
