@@ -126,6 +126,160 @@
     }
     .mobile-nav-panel a:hover { background: var(--brand-light); color: var(--brand); }
 
+    /* ── ファーストビュー ── */
+    .home-hero {
+      background: linear-gradient(135deg, #f4fffb 0%, #eaf8ff 52%, #fff 100%);
+      border-bottom: 1px solid #d7eee8;
+    }
+    .home-hero-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 16px 24px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(280px, .85fr);
+      gap: 18px;
+      align-items: stretch;
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 12px;
+      border-radius: 999px;
+      background: #dff7f1;
+      color: var(--brand-dark);
+      border: 1px solid rgba(11,143,114,.18);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .04em;
+      margin-bottom: 12px;
+    }
+    .hero-title {
+      font-size: clamp(34px, 5vw, 58px);
+      line-height: 1.08;
+      letter-spacing: -.07em;
+      font-weight: 950;
+      color: #071a3d;
+      margin-bottom: 14px;
+    }
+    .hero-title strong { color: var(--brand); }
+    .hero-lead {
+      color: var(--text-sub);
+      font-size: 15px;
+      line-height: 1.9;
+      max-width: 620px;
+      margin-bottom: 14px;
+    }
+    .hero-list {
+      display: grid;
+      gap: 7px;
+      margin: 0 0 16px;
+      list-style: none;
+    }
+    .hero-list li {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .hero-list li::before {
+      content: "✓";
+      display: grid;
+      place-items: center;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--brand);
+      color: #fff;
+      font-size: 11px;
+      flex: 0 0 auto;
+      margin-top: 2px;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .hero-action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: 13px;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--brand);
+    }
+    .hero-action.primary {
+      background: var(--brand);
+      color: #fff;
+      border-color: var(--brand);
+      box-shadow: 0 10px 24px rgba(11,143,114,.18);
+    }
+    .hero-side {
+      display: grid;
+      gap: 10px;
+    }
+    .hero-pick {
+      background: rgba(255,255,255,.9);
+      border: 1px solid #cfe9e3;
+      border-radius: 16px;
+      padding: 14px;
+      box-shadow: 0 12px 30px rgba(10, 70, 58, .08);
+    }
+    .hero-pick-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: var(--brand-light);
+      color: var(--brand-dark);
+      font-size: 11px;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+    .hero-pick-title {
+      font-size: 18px;
+      line-height: 1.4;
+      font-weight: 950;
+      color: #071a3d;
+      margin-bottom: 6px;
+    }
+    .hero-pick-text {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .hero-flow {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+    .hero-flow-step {
+      background: #fff;
+      border: 1px solid #dbeee9;
+      border-radius: 12px;
+      padding: 10px;
+      min-height: 82px;
+    }
+    .hero-flow-num {
+      color: var(--brand);
+      font-size: 11px;
+      font-weight: 900;
+      margin-bottom: 3px;
+    }
+    .hero-flow-title {
+      font-size: 12px;
+      font-weight: 900;
+      line-height: 1.45;
+    }
+
     /* ── カテゴリタブバー ── */
     .tab-bar {
       background: var(--white);
@@ -161,6 +315,7 @@
       color: var(--brand);
       border-bottom-color: var(--brand);
       background: var(--brand-light);
+      box-shadow: inset 0 -3px 0 var(--brand);
     }
     .tab-icon { font-size: 22px; line-height: 1; }
 
@@ -367,6 +522,7 @@
       flex-direction: column;
       gap: 8px;
       transition: border-color .15s, background .15s;
+      position: relative;
     }
     .product-card:hover { border-color: var(--brand); background: var(--brand-light); }
     .product-card-icon {
@@ -382,6 +538,36 @@
     }
     .product-card-name { font-size: 14px; font-weight: 900; color: var(--text); }
     .product-card-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+    .product-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 900;
+      background: var(--brand-light);
+      color: var(--brand);
+      border: 1px solid rgba(11,143,114,.18);
+    }
+    .product-badge.paid {
+      background: #fff1e8;
+      color: var(--accent);
+      border-color: rgba(255,107,43,.22);
+    }
+    .product-features {
+      display: grid;
+      gap: 4px;
+      margin-top: 2px;
+      color: var(--text-sub);
+      font-size: 11.5px;
+      line-height: 1.45;
+    }
+    .product-features span::before {
+      content: "・";
+      color: var(--brand);
+      font-weight: 900;
+    }
     .product-card-price {
       font-size: 13px;
       font-weight: 900;
@@ -389,6 +575,22 @@
       margin-top: auto;
     }
     .product-card-price.paid { color: var(--accent); }
+    .product-cta {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: var(--brand-light);
+      color: var(--brand);
+      font-size: 12px;
+      font-weight: 900;
+      margin-top: 4px;
+    }
+    .product-cta.paid {
+      background: var(--accent);
+      color: #fff;
+    }
 
     /* ── 在宅ヒント ── */
     .tip-grid {
@@ -508,6 +710,8 @@
       .header-nav { display: none; }
       .header-right { display: none; }
       .mobile-hamburger { display: block; }
+      .home-hero-inner { grid-template-columns: 1fr; padding-top: 22px; }
+      .hero-flow { grid-template-columns: repeat(2, 1fr); }
       .tab-bar { top: 56px; }
       .site-main { grid-template-columns: 1fr; padding: 10px; }
       .product-grid { grid-template-columns: 1fr; }
@@ -547,6 +751,40 @@
     <a href="/contact/">お問い合わせ</a>
   </nav>
 </header>
+
+<!-- ====== ファーストビュー ====== -->
+<section class="home-hero" aria-label="よへラボの入口">
+  <div class="home-hero-inner">
+    <div>
+      <div class="hero-eyebrow">YOHE LAB / AI NEWS TO CONTENT</div>
+      <h1 class="hero-title">AIニュースを、<br><strong>記事・テンプレ・小さな商品</strong>に変える。</h1>
+      <p class="hero-lead">よへラボは、副業初心者やブログ未経験者が、AIニュースを読んで終わらせず、note・ブログ・WordPress・無料テンプレに使える形へ整理する場所です。</p>
+      <ul class="hero-list">
+        <li>AIニュースから、ブログやnoteの記事ネタを作る</li>
+        <li>比較表・FAQ・CTAなど、記事の型を無料で試す</li>
+        <li>反応があるネタを、テンプレや小さな商品に育てる</li>
+      </ul>
+      <div class="hero-actions">
+        <a class="hero-action primary" href="/blog/ai-news-selling-ideas/">まず読む記事を見る</a>
+        <a class="hero-action" href="/blog/comparison-article-template/">無料テンプレを見る</a>
+        <a class="hero-action" href="/lp/bunsirube/">文標を見る</a>
+      </div>
+    </div>
+    <div class="hero-side">
+      <a class="hero-pick" href="/blog/ai-news-selling-ideas/">
+        <span class="hero-pick-label">今日の入口</span>
+        <div class="hero-pick-title">AIニュースを記事ネタに変える方法</div>
+        <p class="hero-pick-text">ChatGPT・Claude・Geminiなどのニュースを、記事・投稿・商品案に落とす流れを先に読む。</p>
+      </a>
+      <div class="hero-flow" aria-label="よへラボでできる流れ">
+        <div class="hero-flow-step"><div class="hero-flow-num">01</div><div class="hero-flow-title">AIニュースを見る</div></div>
+        <div class="hero-flow-step"><div class="hero-flow-num">02</div><div class="hero-flow-title">記事の型にする</div></div>
+        <div class="hero-flow-step"><div class="hero-flow-num">03</div><div class="hero-flow-title">テンプレで試す</div></div>
+        <div class="hero-flow-step"><div class="hero-flow-num">04</div><div class="hero-flow-title">小さく売る</div></div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ====== カテゴリタブバー ====== -->
 <div class="tab-bar">
@@ -605,75 +843,25 @@
         </div>
         <!-- 記事一覧（内部リンク） -->
         <div id="aiNewsContainer">
-          <a class="news-item" href="/blog/ai-news-selling-ideas/" data-ai="chatgpt claude gemini">
+          <a class="news-item" href="/blog/ai-news-selling-ideas/" data-ai="chatgpt claude gemini perplexity genspark grok copilot">
             <span class="news-tag tag-ai">AI全般</span>
             <div class="news-body">
               <div class="news-title">AIニュースを記事ネタに変える方法｜ChatGPT・Claude・Gemini活用</div>
               <div class="news-meta">2026-05-18 · よへラボブログ</div>
             </div>
           </a>
-          <a class="news-item" href="/blog/faq-source-ai-search/" data-ai="chatgpt claude gemini">
+          <a class="news-item" href="/blog/faq-source-ai-search/" data-ai="chatgpt claude gemini perplexity grok">
             <span class="news-tag tag-ai">AI検索</span>
             <div class="news-body">
               <div class="news-title">AI検索向けにFAQと出典を置く理由｜ChatGPT・Claude・Gemini対応</div>
               <div class="news-meta">2026-05-02 · よへラボブログ</div>
             </div>
           </a>
-          <a class="news-item" href="/blog/comparison-article-template/" data-ai="chatgpt claude gemini genspark perplexity">
+          <a class="news-item" href="/blog/comparison-article-template/" data-ai="chatgpt claude gemini genspark perplexity grok copilot">
             <span class="news-tag tag-ai">記事の型</span>
             <div class="news-body">
               <div class="news-title">比較記事の書き方：AIツール比較にも使える結論・比較表・FAQ・CTA型</div>
               <div class="news-meta">2026-05-04 · よへラボブログ</div>
-            </div>
-          </a>
-          <!-- 下書き・テスト記事（カテゴリ別） -->
-          <a class="news-item" href="/blog/chatgpt-update-2026/" data-ai="chatgpt">
-            <span class="news-tag tag-chatgpt">ChatGPT</span>
-            <div class="news-body">
-              <div class="news-title">【下書き】ChatGPT 最新アップデートまとめ 2026年版</div>
-              <div class="news-meta">下書き · ChatGPT カテゴリ</div>
-            </div>
-          </a>
-          <a class="news-item" href="/blog/claude-update-2026/" data-ai="claude">
-            <span class="news-tag tag-claude">Claude</span>
-            <div class="news-body">
-              <div class="news-title">【下書き】Claude 最新アップデートまとめ 2026年版</div>
-              <div class="news-meta">下書き · Claude カテゴリ</div>
-            </div>
-          </a>
-          <a class="news-item" href="/blog/gemini-update-2026/" data-ai="gemini">
-            <span class="news-tag tag-gemini">Gemini</span>
-            <div class="news-body">
-              <div class="news-title">【下書き】Gemini 最新アップデートまとめ 2026年版</div>
-              <div class="news-meta">下書き · Gemini カテゴリ</div>
-            </div>
-          </a>
-          <a class="news-item" href="/blog/perplexity-how-to-earn/" data-ai="perplexity">
-            <span class="news-tag tag-perplexity">Perplexity</span>
-            <div class="news-body">
-              <div class="news-title">【下書き】Perplexityを使って副業収益を上げる方法</div>
-              <div class="news-meta">下書き · Perplexity カテゴリ</div>
-            </div>
-          </a>
-          <a class="news-item" href="/blog/genspark-how-to-earn/" data-ai="genspark">
-            <span class="news-tag tag-genspark">Genspark</span>
-            <div class="news-body">
-              <div class="news-title">【下書き】Gensparkで稼ぐ：使い方と副業への応用</div>
-              <div class="news-meta">下書き · Genspark カテゴリ</div>
-            </div>
-          </a>
-          <a class="news-item" href="/blog/grok-update-2026/" data-ai="grok">
-            <span class="news-tag" style="background:#333;flex-shrink:0;padding:2px 7px;border-radius:3px;font-size:11px;font-weight:700;color:#fff;margin-top:2px;">Grok</span>
-            <div class="news-body">
-              <div class="news-title">【下書き】Grok（xAI）最新情報まとめ｜X連携の副業活用法</div>
-              <div class="news-meta">下書き · Grok カテゴリ</div>
-            </div>
-          </a>
-          <a class="news-item" href="/blog/copilot-how-to-use/" data-ai="copilot">
-            <span class="news-tag" style="background:#0078d4;flex-shrink:0;padding:2px 7px;border-radius:3px;font-size:11px;font-weight:700;color:#fff;margin-top:2px;">Copilot</span>
-            <div class="news-body">
-              <div class="news-title">【下書き】Microsoft Copilotを副業に活かす使い方まとめ</div>
-              <div class="news-meta">下書き · Copilot カテゴリ</div>
             </div>
           </a>
         </div>
@@ -757,40 +945,77 @@
         </div>
         <div class="product-grid">
           <a class="product-card" href="/lp/bunsirube/">
+            <span class="product-badge paid">有料</span>
             <div class="product-card-icon">文</div>
             <div class="product-card-name">文標（ぶんしるべ）</div>
-            <div class="product-card-desc">WordPress用軽量テーマ。比較・FAQ・レビュー記事向け。買い切りで更新無料。</div>
+            <div class="product-card-desc">比較・レビュー・FAQ記事を、WordPressで迷わず組むための軽量テーマ。</div>
+            <div class="product-features">
+              <span>7種類の記事テンプレ</span>
+              <span>FAQ・比較表・CTA導線</span>
+              <span>買い切り・30日返金保証</span>
+            </div>
             <div class="product-card-price paid">¥5,500（税込）</div>
+            <span class="product-cta paid">文標を見る →</span>
           </a>
           <a class="product-card" href="/blog/comparison-article-template/">
+            <span class="product-badge">無料</span>
             <div class="product-card-icon">比</div>
             <div class="product-card-name">比較記事テンプレ</div>
             <div class="product-card-desc">結論・比較表・FAQ・CTAの型をそのまま使える無料テンプレ。</div>
+            <div class="product-features">
+              <span>AIツール比較にも使える</span>
+              <span>記事の流れを先に決める</span>
+            </div>
             <div class="product-card-price">無料</div>
+            <span class="product-cta">読む →</span>
           </a>
           <a class="product-card" href="/blog/faq-source-ai-search/">
+            <span class="product-badge">無料</span>
             <div class="product-card-icon">❓</div>
             <div class="product-card-name">FAQ型テンプレ</div>
             <div class="product-card-desc">AI検索時代に刺さるFAQ記事の書き方と構成例。</div>
+            <div class="product-features">
+              <span>FAQと出典の置き方</span>
+              <span>読者にもAIにも読みやすい構造</span>
+            </div>
             <div class="product-card-price">無料</div>
+            <span class="product-cta">読む →</span>
           </a>
           <a class="product-card" href="/apps/research-writer/">
+            <span class="product-badge">準備中</span>
             <div class="product-card-icon">🔬</div>
             <div class="product-card-name">Research Writer</div>
-            <div class="product-card-desc">AIを使った記事リサーチ・執筆補助アプリ。</div>
-            <div class="product-card-price">無料（ベータ）</div>
+            <div class="product-card-desc">AIを使った記事リサーチ・執筆補助アプリ。現在は準備ページとして公開。</div>
+            <div class="product-features">
+              <span>記事材料の整理</span>
+              <span>正式公開前の案内ページ</span>
+            </div>
+            <div class="product-card-price">準備中</div>
+            <span class="product-cta">状態を見る →</span>
           </a>
           <a class="product-card" href="/lp/bunsirube/demo/">
+            <span class="product-badge">無料</span>
             <div class="product-card-icon">🖥️</div>
             <div class="product-card-name">文標デモ</div>
             <div class="product-card-desc">文標の実際のレイアウト・記事型・比較表を確認できるデモページ。</div>
+            <div class="product-features">
+              <span>スマホ幅の見本</span>
+              <span>比較・レビュー・FAQ例</span>
+            </div>
             <div class="product-card-price">無料（閲覧のみ）</div>
+            <span class="product-cta">デモを見る →</span>
           </a>
           <a class="product-card" href="/blog/sales-page-common-mistakes/">
+            <span class="product-badge">無料</span>
             <div class="product-card-icon">✅</div>
             <div class="product-card-name">売り場チェックリスト</div>
             <div class="product-card-desc">販売ページに必要な要素をチェックできる無料リスト。</div>
+            <div class="product-features">
+              <span>商品ページの抜けを確認</span>
+              <span>販売前の見直し用</span>
+            </div>
             <div class="product-card-price">無料</div>
+            <span class="product-cta">チェックする →</span>
           </a>
         </div>
       </section>
