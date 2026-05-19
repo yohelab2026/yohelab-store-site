@@ -221,7 +221,10 @@ function render(posts, hasLink = true) {
   postsEl.innerHTML = posts.map(post => {
     const url = post.url || postUrl(post.slug);
     const normalizedTags = [...new Set([...(post.tags||[]), ...normalizePostTags(post)])];
-    const tags = normalizedTags.slice(0,3).map(t=>`<span class="post-card-tag">${esc(t)}</span>`).join('');
+    const displayTags = categoryOrder
+      .filter(tag => normalizedTags.map(t => String(t).toLowerCase()).includes(tag))
+      .map(getFilterLabel);
+    const tags = [...new Set(displayTags)].slice(0, 3).map(t=>`<span class="post-card-tag">${esc(t)}</span>`).join('');
     const img = post.eyecatch
       ? `<img class="post-card-img" src="${esc(post.eyecatch)}" alt="${esc(post.title)}" loading="lazy" />`
       : `<div class="post-card-img-placeholder">📝</div>`;
@@ -284,18 +287,18 @@ function normalizeFilter(value) {
   if (!v) return 'all';
   if (v.startsWith('group:')) return v;
   if (['ai', 'aiニュース', 'ai-news'].includes(v)) return 'ai-news';
-  if (['ai-news-all', 'aiニュースすべて'].includes(v)) return 'group:ai-news';
-  if (['副業すべて', 'earn-all'].includes(v)) return 'group:earn';
-  if (['wordpressすべて', 'wordpress-all'].includes(v)) return 'group:wordpress';
-  if (['在宅すべて', 'home-work-all'].includes(v)) return 'group:home-work';
+  if (['ai-news-all', 'aiニュースすべて', 'aiニュース全部'].includes(v)) return 'group:ai-news';
+  if (['副業すべて', '副業ネタ全部', 'earn-all'].includes(v)) return 'group:earn';
+  if (['wordpressすべて', 'ツール全部', 'wordpress-all'].includes(v)) return 'group:wordpress';
+  if (['在宅すべて', '在宅ヒント全部', 'home-work-all'].includes(v)) return 'group:home-work';
   if (['chatgpt', 'openai', 'gpt', 'chatgptニュース'].includes(v)) return 'chatgpt';
   if (['claude', 'anthropic', 'claudeニュース'].includes(v)) return 'claude';
   if (['gemini', 'google-ai', 'googleai', 'geminiニュース'].includes(v)) return 'gemini';
-  if (['稼ぎ方', '商品案', 'earn', 'money'].includes(v)) return 'earn';
+  if (['稼ぎ方', '収益化ネタ', '商品案', 'earn', 'money'].includes(v)) return 'earn';
   if (['wp', 'wordpress', 'wordPress'.toLowerCase()].includes(v)) return 'wordpress';
-  if (['記事', 'article', 'writing'].includes(v)) return 'article';
-  if (['在宅', 'home', 'home-work'].includes(v)) return 'home-work';
-  if (['テンプレ', 'template'].includes(v)) return 'template';
+  if (['記事', '記事づくり', 'article', 'writing'].includes(v)) return 'article';
+  if (['在宅', '在宅ワーク習慣', 'home', 'home-work'].includes(v)) return 'home-work';
+  if (['テンプレ', '記事テンプレ', 'テンプレ販売', 'template'].includes(v)) return 'template';
   return v;
 }
 
@@ -339,10 +342,10 @@ function parentForFilter(filter) {
 function getFilterLabel(value) {
   const labels = {
     all: '全部',
-    'group:ai-news': 'AIニュースすべて',
-    'group:earn': '副業すべて',
-    'group:wordpress': 'WordPressすべて',
-    'group:home-work': '在宅すべて',
+    'group:ai-news': 'AIニュース全部',
+    'group:earn': '副業ネタ全部',
+    'group:wordpress': 'ツール全部',
+    'group:home-work': '在宅ヒント全部',
     'ai-news': 'AIニュース',
     chatgpt: 'ChatGPT',
     claude: 'Claude',
@@ -352,11 +355,11 @@ function getFilterLabel(value) {
     grok: 'Grok',
     copilot: 'Copilot',
     midjourney: 'Midjourney',
-    earn: '稼ぎ方',
+    earn: '収益化ネタ',
     wordpress: 'WordPress・文標',
-    article: '記事作成',
-    'home-work': '在宅作業',
-    template: 'テンプレ・商品',
+    article: '記事づくり',
+    'home-work': '在宅ワーク習慣',
+    template: '記事テンプレ',
   };
   return labels[value] || value;
 }
