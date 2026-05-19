@@ -1560,6 +1560,14 @@
     btn.addEventListener('click', () => setContentStatus(btn.dataset.status || 'draft'));
   });
 
+  if (new URLSearchParams(location.search).get('new') === '1') {
+    setTimeout(() => {
+      clearEditor();
+      localStorage.removeItem('yohelab.blog.draft');
+      statusEl.textContent = '新規記事';
+    }, 500);
+  }
+
   function escHtml(str) {
     return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
