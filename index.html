@@ -270,6 +270,7 @@
       border: 0;
       display: block;
       background: #fff;
+      overflow: hidden;
     }
 
     /* ── セクション共通 ── */
@@ -613,7 +614,7 @@
           <a class="inline-page-btn" id="inlineOpenBtn" href="/">別ページで開く</a>
         </div>
       </div>
-      <iframe class="inline-page-frame" id="inlinePageFrame" title="よへラボ内ページ"></iframe>
+      <iframe class="inline-page-frame" id="inlinePageFrame" title="よへラボ内ページ" scrolling="no"></iframe>
     </div>
 
     <div class="mobile-priority-widgets" aria-label="スマホ向けおすすめ">
@@ -1094,14 +1095,40 @@
     inlinePagePanel.classList.add('active');
     inlinePageTitle.textContent = link.textContent.trim().replace(/\s+/g, ' ') || 'よへラボ内ページ';
     inlineOpenBtn.href = url.pathname + url.search + url.hash;
+    inlinePageFrame.style.height = '760px';
     inlinePageFrame.src = url.pathname + url.search + url.hash;
     mainCol.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
+  function resizeInlineFrame() {
+    if (!inlinePageFrame?.src) return;
+    try {
+      const doc = inlinePageFrame.contentDocument || inlinePageFrame.contentWindow?.document;
+      if (!doc) return;
+      const height = Math.max(
+        doc.body?.scrollHeight || 0,
+        doc.documentElement?.scrollHeight || 0,
+        760
+      );
+      inlinePageFrame.style.height = `${height + 8}px`;
+    } catch (_) {
+      // 同一サイト内ページ以外を開いた時は、ブラウザ本体の表示に任せる。
+    }
+  }
+
+  inlinePageFrame?.addEventListener('load', () => {
+    resizeInlineFrame();
+    setTimeout(resizeInlineFrame, 250);
+    setTimeout(resizeInlineFrame, 1000);
+  });
+
   function hideInlinePage() {
     if (!inlinePagePanel) return;
     inlinePagePanel.classList.remove('active');
-    if (inlinePageFrame) inlinePageFrame.removeAttribute('src');
+    if (inlinePageFrame) {
+      inlinePageFrame.removeAttribute('src');
+      inlinePageFrame.style.height = '760px';
+    }
   }
 
   inlineBackBtn?.addEventListener('click', () => {
