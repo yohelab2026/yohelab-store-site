@@ -68,6 +68,13 @@
     .content-search { display:flex;gap:8px;align-items:center; }
     .content-search .btn { padding:8px 12px;font-size:12px;white-space:nowrap; }
     .content-list-summary { display:flex;justify-content:flex-end;padding:10px 22px;border-bottom:1px solid var(--border);font-size:12px;color:var(--muted);font-weight:800; }
+    .content-pagination { display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 22px;border-top:1px solid var(--border);background:#fbfffd; }
+    .content-pagination-info { color:var(--muted);font-size:12px;font-weight:800; }
+    .content-pagination-buttons { display:flex;align-items:center;justify-content:flex-end;gap:6px;flex-wrap:wrap; }
+    .page-btn { border:1px solid var(--border);background:#fff;color:var(--text);border-radius:999px;min-width:34px;height:34px;padding:0 10px;font-size:12px;font-weight:900;cursor:pointer; }
+    .page-btn:hover:not(:disabled), .page-btn.is-current { border-color:var(--green);background:#e8f7f1;color:var(--green); }
+    .page-btn:disabled { opacity:.45;cursor:not-allowed; }
+    .page-ellipsis { color:var(--muted);font-size:12px;font-weight:900;padding:0 2px; }
     .posts-table-wrap { overflow:auto; }
     .posts-table { width:100%;border-collapse:collapse;background:#fff;min-width:920px; }
     .posts-table th, .posts-table td { border-bottom:1px solid var(--border);padding:12px 14px;text-align:left;vertical-align:top;font-size:13px; }
@@ -198,6 +205,9 @@
       .save-overview { grid-template-columns:1fr; }
       .manager-toolbar { padding:12px; }
       .manager-toolbar-row { grid-template-columns:1fr; }
+      .content-list-summary { justify-content:flex-start;padding:10px 12px; }
+      .content-pagination { align-items:flex-start;flex-direction:column;padding:12px; }
+      .content-pagination-buttons { justify-content:flex-start; }
       .posts-table { min-width:760px; }
       .post-list-item, .draft-list-item { align-items:flex-start; }
       .post-list-item .actions, .draft-list-item .actions { flex-wrap:wrap;justify-content:flex-end; }
@@ -412,6 +422,7 @@
   const SESSION_PIN_KEY = 'yohelab.blog.pin.session';
   const SAVED_PIN_KEY = 'yohelab.blog.pin.saved';
   const IMPORT_STATIC_SESSION_KEY = 'yohelab.blog.staticImport.tried.v2';
+  const CONTENT_PAGE_SIZE = 10;
 
   const titleEl    = document.getElementById('title');
   const bodyEl     = document.getElementById('body');
@@ -445,6 +456,7 @@
   let staticPostsLoaded = false;
   let draftItems = [];
   let postItems = [];
+  let contentCurrentPage = 1;
   let autosaveTimer = null;
   let autosaveInFlight = false;
 
@@ -878,6 +890,7 @@
       statusEl.textContent = silent ? '自動保存した ✓' : 'サーバー下書きを保存した ✓';
       setServerSaveState('サーバー保存：保存済み', `最終保存：${savedAt}`, 'saved');
       if (contentStatusFilterEl) contentStatusFilterEl.value = 'draft';
+      resetContentPage();
       loadDraftList();
       if (!silent) setTimeout(() => statusEl.textContent='下書き中', 2000);
     } catch (error) {
@@ -941,6 +954,7 @@
     statusEl.textContent='公開した ✓';
     setServerSaveState('サーバー保存：公開済み', '公開済み一覧に記事を残しました。', 'saved');
     if (contentStatusFilterEl) contentStatusFilterEl.value = 'published';
+    resetContentPage();
     setTimeout(()=>statusEl.textContent='下書き中', 3000);
     loadAllLists();
   }
@@ -1153,6 +1167,43 @@
     });
   }
 
+  function resetContentPage() {
+    contentCurrentPage = 1;
+  }
+
+  function setContentPage(page) {
+    contentCurrentPage = Math.max(1, Number(page) || 1);
+    renderContentList();
+    scrollManager('content-manager-card');
+  }
+
+  function renderContentPagination(totalItems, currentPage, totalPages, startIndex, endIndex) {
+    if (totalPages <= 1) return '';
+    const pages = [];
+    for (let page = 1; page <= totalPages; page += 1) {
+      const isEdge = page === 1 || page === totalPages;
+      const isNearCurrent = Math.abs(page - currentPage) <= 1;
+      if (isEdge || isNearCurrent) {
+        pages.push(page);
+      } else if (pages[pages.length - 1] !== '...') {
+        pages.push('...');
+      }
+    }
+    return `
+      <nav class="content-pagination" aria-label="投稿一覧のページ送り">
+        <div class="content-pagination-info">${startIndex + 1}〜${endIndex}件目 / ${totalItems}件</div>
+        <div class="content-pagination-buttons">
+          <button class="page-btn" type="button" onclick="setContentPage(${currentPage - 1})" ${currentPage <= 1 ? 'disabled' : ''}>前へ</button>
+          ${pages.map(page => page === '...'
+            ? '<span class="page-ellipsis">…</span>'
+            : `<button class="page-btn ${page === currentPage ? 'is-current' : ''}" type="button" onclick="setContentPage(${page})" ${page === currentPage ? 'aria-current="page"' : ''}>${page}</button>`
+          ).join('')}
+          <button class="page-btn" type="button" onclick="setContentPage(${currentPage + 1})" ${currentPage >= totalPages ? 'disabled' : ''}>次へ</button>
+        </div>
+      </nav>
+    `;
+  }
+
   function renderContentList() {
     if (!contentListEl) return;
     const status = contentStatusFilterEl?.value || 'draft';
@@ -1167,15 +1218,22 @@
       return (dateFilter === 'all' || itemDateKey(item) === dateFilter) && (category === 'all' || itemCategory.key === category) && (!keyword || haystack.includes(keyword));
     });
     updateStatusTabs();
+    const totalPages = Math.max(1, Math.ceil(filtered.length / CONTENT_PAGE_SIZE));
+    contentCurrentPage = Math.min(Math.max(contentCurrentPage, 1), totalPages);
+    const startIndex = (contentCurrentPage - 1) * CONTENT_PAGE_SIZE;
+    const pageItems = filtered.slice(startIndex, startIndex + CONTENT_PAGE_SIZE);
+    const endIndex = startIndex + pageItems.length;
     if (contentListSummaryEl) {
       const label = status === 'draft' ? '下書き' : status === 'published' ? '公開済み' : 'すべて';
-      contentListSummaryEl.textContent = `${filtered.length}個の項目`;
+      contentListSummaryEl.textContent = filtered.length
+        ? `${label}: ${startIndex + 1}〜${endIndex} / ${filtered.length}個の項目`
+        : `${label}: 0個の項目`;
     }
     if (!filtered.length) {
       contentListEl.innerHTML = '<p style="color:var(--muted);font-size:14px;padding:14px;">条件に合う記事はありません。</p>';
       return;
     }
-    contentListEl.innerHTML = renderContentTable(filtered);
+    contentListEl.innerHTML = renderContentTable(pageItems) + renderContentPagination(filtered.length, contentCurrentPage, totalPages, startIndex, endIndex);
     updateEditorState();
   }
 
@@ -1442,6 +1500,7 @@
       btn.textContent = '保存済み';
       statusEl.textContent = 'サイト内記事を下書きに保存した ✓';
       if (contentStatusFilterEl) contentStatusFilterEl.value = 'draft';
+      resetContentPage();
       loadAllLists();
       return;
     }
@@ -1503,6 +1562,7 @@
     }
     statusEl.textContent = '下書きに戻した ✓';
     if (contentStatusFilterEl) contentStatusFilterEl.value = 'draft';
+    resetContentPage();
     loadAllLists();
   }
 
@@ -1526,23 +1586,31 @@
   }
 
   async function refreshContentLists() {
+    resetContentPage();
     await loadAllLists();
   }
 
   function setContentStatus(status) {
     if (contentStatusFilterEl) contentStatusFilterEl.value = status;
+    resetContentPage();
     renderContentList();
     scrollManager('content-manager-card');
+  }
+
+  function resetAndRenderContentList() {
+    resetContentPage();
+    renderContentList();
   }
 
   document.getElementById('refresh-content')?.addEventListener('click', refreshContentLists);
   importStaticPostsEl?.addEventListener('click', async () => {
     await importStaticPosts();
+    resetContentPage();
     await loadAllLists();
   });
-  contentStatusFilterEl?.addEventListener('change', renderContentList);
-  contentCategoryFilterEl?.addEventListener('change', renderContentList);
-  contentSearchEl?.addEventListener('input', renderContentList);
+  contentStatusFilterEl?.addEventListener('change', resetAndRenderContentList);
+  contentCategoryFilterEl?.addEventListener('change', resetAndRenderContentList);
+  contentSearchEl?.addEventListener('input', resetAndRenderContentList);
   function scrollManager(id) {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
@@ -1554,8 +1622,8 @@
   document.getElementById('jump-drafts')?.addEventListener('click', () => setContentStatus('draft'));
   document.getElementById('jump-posts')?.addEventListener('click', () => setContentStatus('published'));
   document.getElementById('new-post-list')?.addEventListener('click', () => document.getElementById('new-post')?.click());
-  document.getElementById('content-search-btn')?.addEventListener('click', renderContentList);
-  contentDateFilterEl?.addEventListener('change', renderContentList);
+  document.getElementById('content-search-btn')?.addEventListener('click', resetAndRenderContentList);
+  contentDateFilterEl?.addEventListener('change', resetAndRenderContentList);
   document.querySelectorAll('#content-status-tabs [data-status]').forEach(btn => {
     btn.addEventListener('click', () => setContentStatus(btn.dataset.status || 'draft'));
   });
@@ -1586,6 +1654,7 @@
     deletePost,
     openStaticPost,
     saveStaticPostAsDraft,
+    setContentPage,
   });
   </script>
 </body>
