@@ -463,6 +463,7 @@
   const loginView  = document.getElementById('login-view');
   const adminPinEl = document.getElementById('admin-pin');
   const lockStatusEl = document.getElementById('lock-status');
+  try { localStorage.removeItem('yohelab.blog.pin.saved'); } catch (_) {}
 
   function showLock() {
     loginView.style.display = '';
