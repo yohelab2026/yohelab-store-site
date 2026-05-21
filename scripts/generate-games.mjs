@@ -252,7 +252,7 @@ function pageTemplate(game) {
   <header class="nav lp-nav">
     <div class="nav-inner">
       <a class="brand brand-light" href="/">
-        <img src="/yohelab-mascot-v2-20260518.webp" alt="よへラボ" />
+        <img src="/yohelab-mascot-v2-20260518-64.png" alt="よへラボ" />
         <span>よへラボ</span>
       </a>
       <nav class="nav-links">

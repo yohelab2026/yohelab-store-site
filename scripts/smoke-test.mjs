@@ -275,6 +275,7 @@ checks.push(["privacy policy covers current paid products and theme analytics", 
 const blogIndex = read(dist("blog/index.html"));
 const blogIndexSource = read(src("blog/index.html"));
 const blogMain = read(src("blog/main.js"));
+checks.push(["blog index has social preview metadata", blogIndex.includes('name="twitter:card"') && blogIndex.includes('summary_large_image') && blogIndex.includes('name="twitter:image"') && blogIndex.includes('property="og:image:width"') && blogIndex.includes('property="og:image:height"')]);
 checks.push(["blog surfaces pre-purchase bunsirube guides", blogIndex.includes("文標を買う前に読む3本") && blogIndex.includes("/blog/free-theme-vs-bunsirube/") && blogIndex.includes("/blog/comparison-article-template/")]);
 checks.push(["new bunsirube guide posts exist", read(dist("blog/free-theme-vs-bunsirube/index.html")).includes("無料テーマと文標の違い") && read(dist("blog/comparison-article-template/index.html")).includes("比較記事の書き方") && read(dist("blog/bunsirube-version-history/index.html")).includes("文標のバージョンアップ履歴")]);
 checks.push(["static blog cards use indexable webp eyecatch images", !blogIndexSource.includes('<div class="post-card-img-placeholder"') && ["free-theme-vs-bunsirube", "comparison-article-template", "bunsirube-before-install", "faq-source-ai-search", "sales-page-common-mistakes", "bunsirube-version-history"].every((slug) => blogIndexSource.includes(`/assets/blog/${slug}/eyecatch.webp`)) && !blogIndexSource.includes('/blog/page-review-sample/') && !blogIndexSource.includes('/blog/research-writer-free-flow/')]);
@@ -363,6 +364,9 @@ const leakSuffixes = [".map", ".env", ".bak", ".swp", ".orig", ".DS_Store"];
 const leaked = distFiles.filter((p) => leakSuffixes.some((s) => p.endsWith(s)));
 checks.push(["dist has no leaked source maps env or backup files", leaked.length === 0]);
 checks.push(["dist has no exposed wp-content or themes directories", !distFiles.some((p) => p.includes("/wp-content/")) && !distFiles.some((p) => /\/dist\/themes\//.test(p))]);
+const publicTextFiles = distFiles.filter((p) => /\.(html|js|css|json|xml|txt|webmanifest)$/i.test(p));
+const fullMascotTextRefs = publicTextFiles.filter((p) => readFileSync(p, "utf8").includes("/yohelab-mascot-v2-20260518.webp"));
+checks.push(["public rendered pages use lightweight mascot assets", fullMascotTextRefs.length === 0 && read(dist("index.html")).includes("/yohelab-mascot-v2-20260518-64.png") && read(dist("blog/index.html")).includes("/yohelab-mascot-v2-20260518-64.png") && read(dist("lp/bunsirube/index.html")).includes("/yohelab-mascot-v2-20260518-64.png")]);
 const htmlFilesWithIndexLinks = distFiles.filter((p) => p.endsWith(".html") && readFileSync(p, "utf8").includes("/index.html"));
 checks.push(["public html does not link to /index.html", htmlFilesWithIndexLinks.length === 0]);
 checks.push(["sitemap does not include /index.html", !sitemap.includes("/index.html")]);
