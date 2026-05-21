@@ -13,6 +13,23 @@ let categoryGroups = {
   'group:wordpress': ['wordpress','template'],
   'group:home-work': ['home-work'],
 };
+let categoryParentByKey = {
+  'ai-news': 'ai-news',
+  chatgpt: 'ai-news',
+  claude: 'ai-news',
+  gemini: 'ai-news',
+  perplexity: 'ai-news',
+  genspark: 'ai-news',
+  grok: 'ai-news',
+  copilot: 'ai-news',
+  midjourney: 'ai-news',
+  faq: 'ai-news',
+  earn: 'earn',
+  article: 'earn',
+  wordpress: 'wordpress',
+  template: 'wordpress',
+  'home-work': 'home-work',
+};
 let categoryOrder = ['ai-news','chatgpt','claude','gemini','perplexity','genspark','grok','copilot','midjourney','faq','earn','template','article','wordpress','home-work'];
 let categoryLabels = {
   all: '全部',
@@ -37,6 +54,16 @@ let categoryLabels = {
   template: '記事テンプレ',
 };
 let categoryColors = {};
+const postCategoryOverrides = {
+  'ai-news-selling-ideas': ['ai-news', 'chatgpt', 'claude', 'gemini'],
+  'faq-source-ai-search': ['ai-news', 'faq'],
+  'home-work-rhythm': ['home-work'],
+  'sales-page-common-mistakes': ['earn', 'article'],
+  'comparison-article-template': ['template', 'article'],
+  'free-theme-vs-bunsirube': ['wordpress'],
+  'bunsirube-version-history': ['wordpress'],
+  'bunsirube-before-install': ['wordpress'],
+};
 const staticBlogSlugs = new Set([
   'ai-news-selling-ideas',
   'home-work-rhythm',
@@ -124,6 +151,7 @@ function applyCategorySettings(categories) {
   const order = [];
   const labels = { ...categoryLabels };
   const colors = { ...categoryColors };
+  const parents = {};
 
   categories.forEach(parent => {
     const parentKey = sanitizeCategoryKey(parent.key);
@@ -132,6 +160,7 @@ function applyCategorySettings(categories) {
     labels[`group:${parentKey}`] = `${parent.label || parentKey}全部`;
     labels[parentKey] = parent.label || labels[parentKey] || parentKey;
     colors[parentKey] = parent.color || colors[parentKey] || '#0b8f72';
+    parents[parentKey] = parentKey;
     groups[`group:${parentKey}`] = children.map(child => sanitizeCategoryKey(child.key)).filter(Boolean);
     children.forEach(child => {
       const key = sanitizeCategoryKey(child.key);
@@ -139,11 +168,13 @@ function applyCategorySettings(categories) {
       order.push(key);
       labels[key] = child.label || labels[key] || key;
       colors[key] = child.color || colors[key] || parent.color || '#0b8f72';
+      parents[key] = parentKey;
     });
   });
 
   categoryGroups = { ...categoryGroups, ...groups };
   categoryOrder = order.length ? order : categoryOrder;
+  categoryParentByKey = { ...categoryParentByKey, ...parents };
   aiToolTags = categoryGroups['group:ai-news'] || aiToolTags;
   categoryLabels = labels;
   categoryColors = colors;
@@ -279,6 +310,56 @@ function normalizePostTags(post) {
   return [...tags];
 }
 
+function categoryKeyFromTag(value) {
+  const key = normalizeFilter(value);
+  return key.startsWith('group:') ? key.replace('group:', '') : key;
+}
+
+function categoryKeysFromTags(tags) {
+  const seen = new Set();
+  return parseTagValues(tags)
+    .map(categoryKeyFromTag)
+    .filter(key => {
+      if (!key || !categoryParentByKey[key] || seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+}
+
+function parseTagValues(value) {
+  if (Array.isArray(value)) return value.map(item => String(item || '').trim()).filter(Boolean);
+  return String(value || '').split(/[\s,、]+/).map(item => item.trim()).filter(Boolean);
+}
+
+function fallbackCategoryKeys(post) {
+  const override = postCategoryOverrides[post?.slug];
+  if (override) return override.filter(key => categoryParentByKey[key]);
+  return normalizePostTags(post).map(categoryKeyFromTag).filter(key => categoryParentByKey[key]);
+}
+
+function categoryKeysForPost(post) {
+  const explicit = categoryKeysFromTags(post?.tags || []);
+  return explicit.length ? explicit : fallbackCategoryKeys(post);
+}
+
+function primaryParentForPost(post) {
+  const keys = categoryKeysForPost(post);
+  return categoryParentByKey[keys[0]] || '';
+}
+
+function categoryKeysFromCard(card) {
+  const explicit = categoryKeysFromTags(card.dataset.categoryKeys || card.dataset.tags || '');
+  if (explicit.length) return explicit;
+  return postCategoryOverrides[card.dataset.slug] || [];
+}
+
+function parentFromCard(card) {
+  const parent = normalizeFilter(card.dataset.parentCategory || '');
+  if (parent && parent !== 'all') return parent.startsWith('group:') ? parent.replace('group:', '') : parent;
+  const keys = categoryKeysFromCard(card);
+  return categoryParentByKey[keys[0]] || '';
+}
+
 function renderPagination() {
   let pager = document.getElementById('pager');
   if (!pager) {
@@ -317,9 +398,12 @@ function render(posts, hasLink = true) {
   }
   postsEl.innerHTML = posts.map(post => {
     const url = post.url || postUrl(post.slug);
+    const categoryKeys = categoryKeysForPost(post);
+    const parentCategory = primaryParentForPost(post);
     const normalizedTags = [...new Set([...(post.tags||[]), ...normalizePostTags(post)])];
     const tags = categoryOrder
-      .filter(tag => normalizedTags.map(t => String(t).toLowerCase()).includes(tag))
+      .filter(tag => categoryKeys.includes(tag) || normalizedTags.map(t => String(t).toLowerCase()).includes(tag))
+      .filter(tag => !parentCategory || categoryParentByKey[tag] === parentCategory)
       .slice(0, 3)
       .map(tag => `<a class="post-card-tag" href="${tagUrl(tag)}">${esc(getFilterLabel(tag))}</a>`)
       .join('');
@@ -327,7 +411,7 @@ function render(posts, hasLink = true) {
       ? `<img class="post-card-img" src="${esc(post.eyecatch)}" alt="${esc(post.title)}" loading="lazy" />`
       : `<div class="post-card-img-placeholder">📝</div>`;
     return `
-      <article class="post-card" data-slug="${esc(post.slug)}" data-tags="${esc(normalizedTags.join(' ').toLowerCase())}" data-search="${esc([post.title, post.excerpt, ...normalizedTags].join(' ').toLowerCase())}">
+      <article class="post-card" data-slug="${esc(post.slug)}" data-tags="${esc(normalizedTags.join(' ').toLowerCase())}" data-category-keys="${esc(categoryKeys.join(' '))}" data-parent-category="${esc(parentCategory)}" data-search="${esc([post.title, post.excerpt, ...normalizedTags].join(' ').toLowerCase())}">
         ${img}
         <div class="post-card-body">
           <div class="post-card-meta">
@@ -405,9 +489,8 @@ function applyFilters() {
   const cards = Array.from(postsEl.querySelectorAll('.post-card'));
   const filterLabel = getFilterLabel(activeFilter);
   cards.forEach(card => {
-    const tags = (card.dataset.tags || card.innerText || '').toLowerCase();
     const text = ((card.dataset.search || '') + ' ' + card.innerText).toLowerCase();
-    const tagOk = filterMatches(activeFilter, tags);
+    const tagOk = filterMatches(activeFilter, card);
     const queryOk = !q || text.includes(q);
     const show = tagOk && queryOk;
     card.style.display = show ? '' : 'none';
@@ -420,19 +503,28 @@ function applyFilters() {
   }
 }
 
-function filterMatches(filter, tagText) {
-  if (filter === 'all') return true;
-  const groupTags = categoryGroups[filter];
-  if (groupTags) return groupTags.some(tag => tagText.includes(tag));
-  return tagText.includes(filter);
+function filterMatches(filter, card) {
+  const normalized = normalizeFilter(filter);
+  if (normalized === 'all') return true;
+
+  const parent = parentFromCard(card);
+  if (normalized.startsWith('group:')) {
+    return parent === normalized.replace('group:', '');
+  }
+
+  const requiredParent = categoryParentByKey[normalized] || '';
+  if (requiredParent && parent && parent !== requiredParent) return false;
+
+  const keys = categoryKeysFromCard(card);
+  if (keys.includes(normalized)) return true;
+
+  const tagText = (card.dataset.tags || card.innerText || '').toLowerCase();
+  return !requiredParent && tagText.includes(normalized);
 }
 
 function parentForFilter(filter) {
   if (filter.startsWith('group:')) return filter.replace('group:', '');
-  if (aiToolTags.includes(filter)) return 'ai-news';
-  if (['earn', 'article', 'template'].includes(filter)) return 'earn';
-  if (['wordpress'].includes(filter)) return 'wordpress';
-  if (['home-work'].includes(filter)) return 'home-work';
+  if (categoryParentByKey[filter]) return categoryParentByKey[filter];
   return activeParent || 'ai-news';
 }
 
