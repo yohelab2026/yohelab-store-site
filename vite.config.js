@@ -128,12 +128,29 @@ function headHardeningPlugin() {
       }
 
       out = out.replace(/<img([^>]+src="\/yohelab-mascot-v2-20260518\.webp"[^>]*)>/g, (match, attrs) => {
-        let next = attrs;
+        let next = attrs.replace('src="/yohelab-mascot-v2-20260518.webp"', 'src="/yohelab-mascot-v2-20260518-64.png"');
         if (!/\swidth=/.test(next)) next += ' width="36"';
         if (!/\sheight=/.test(next)) next += ' height="36"';
         if (!/\sdecoding=/.test(next)) next += ' decoding="async"';
         return `<img${next}>`;
       });
+      out = out
+        .replace(/(<link[^>]+rel="icon"[^>]+href=")\/yohelab-mascot-v2-20260518\.png("[^>]*>)/g, `$1/yohelab-mascot-v2-20260518-32.png$2`)
+        .replace(/(<link[^>]+rel="preload"[^>]+as="image"[^>]+href=")\/yohelab-mascot-v2-20260518\.png("[^>]*>)/g, `$1/yohelab-mascot-v2-20260518-64.png$2`)
+        .replace(/<img([^>]+src="\/yohelab-mascot-v2-20260518\.png"[^>]*)>/g, (match, attrs) => {
+          let next = attrs.replace('src="/yohelab-mascot-v2-20260518.png"', 'src="/yohelab-mascot-v2-20260518-64.png"');
+          if (!/\swidth=/.test(next)) next += ' width="36"';
+          if (!/\sheight=/.test(next)) next += ' height="36"';
+          if (!/\sdecoding=/.test(next)) next += ' decoding="async"';
+          return `<img${next}>`;
+        })
+        .replace(/<img([^>]+src="\/yohelab-mascot-v2-20260518-64\.png"[^>]*)>/g, (match, attrs) => {
+          let next = attrs;
+          if (!/\swidth=/.test(next)) next += ' width="36"';
+          if (!/\sheight=/.test(next)) next += ' height="36"';
+          if (!/\sdecoding=/.test(next)) next += ' decoding="async"';
+          return `<img${next}>`;
+        });
 
       if (ctx.path === "/index.html" && !out.includes('"@type":"WebSite"')) {
         const website = {

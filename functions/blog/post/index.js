@@ -430,7 +430,7 @@ function renderBlogHeader() {
   return `<header class="site-header" style="background:#fff;border-bottom:3px solid #0b8f72;position:sticky;top:0;z-index:100;">
     <div class="header-inner" style="max-width:1100px;margin:0 auto;padding:0 16px;display:flex;align-items:center;gap:20px;height:56px;">
       <a href="/" style="display:flex;align-items:center;gap:10px;font-size:20px;font-weight:900;color:#0b8f72;letter-spacing:-0.03em;flex-shrink:0;text-decoration:none;">
-        <img src="/yohelab-mascot-v2-20260518-64.png" alt="よへラボ" style="width:36px;height:36px;border-radius:8px;" />
+        <img src="/yohelab-mascot-v2-20260518-64.png" width="36" height="36" alt="よへラボ" decoding="async" style="width:36px;height:36px;border-radius:8px;" />
         よへラボ
       </a>
       <nav style="display:flex;align-items:center;gap:4px;flex-wrap:wrap;">
