@@ -21,7 +21,7 @@
       height: 48px;
       border-radius: 50%;
       border: none;
-      background: linear-gradient(135deg, #0b8f72 0%, #1fb6cf 100%);
+      background: linear-gradient(135deg, #087a63 0%, #1fb6cf 100%);
       color: #fff;
       cursor: pointer;
       display: grid;

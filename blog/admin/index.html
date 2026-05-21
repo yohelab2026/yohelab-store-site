@@ -555,10 +555,10 @@
           <button id="link-btn" type="button" title="リンク">リンク</button>
           <button id="unlink-btn" type="button" title="リンク解除">解除</button>
           <button id="hr-btn" type="button" title="区切り線">区切り</button>
-          <button data-color="#0b8f72" type="button" style="color:#0b8f72;">緑</button>
+          <button data-color="#087a63" type="button" style="color:#087a63;">緑</button>
           <button data-color="#1d6fd8" type="button" style="color:#1d6fd8;">青</button>
           <button data-color="#ef4444" type="button" style="color:#ef4444;">赤</button>
-          <input id="text-color" type="color" value="#0b8f72" title="文字色" />
+          <input id="text-color" type="color" value="#087a63" title="文字色" />
           <input id="bg-color" type="color" value="#fff3bf" title="マーカー色" />
           <button id="clear-style" type="button">スタイル解除</button>
           <input id="insert-img-file" type="file" accept="image/jpeg,image/png,image/webp" style="display:none;" />
@@ -2406,10 +2406,10 @@
     {
       key: 'ai-news',
       label: 'AIニュース',
-      color: '#0b8f72',
+      color: '#087a63',
       order: 10,
       children: [
-        { key: 'ai-news', label: 'AIニュース', color: '#0b8f72', order: 10 },
+        { key: 'ai-news', label: 'AIニュース', color: '#087a63', order: 10 },
         { key: 'chatgpt', label: 'ChatGPT', color: '#10a37f', order: 20 },
         { key: 'claude', label: 'Claude', color: '#cc785c', order: 30 },
         { key: 'gemini', label: 'Gemini', color: '#4285f4', order: 40 },
@@ -2444,17 +2444,17 @@
       order: 20,
       children: [
         { key: 'earn', label: '収益化ネタ', color: '#f97316', order: 10 },
-        { key: 'article', label: '記事づくり', color: '#0b8f72', order: 20 },
+        { key: 'article', label: '記事づくり', color: '#087a63', order: 20 },
       ],
     },
     {
       key: 'wordpress',
       label: 'ツール・商品',
-      color: '#0b8f72',
+      color: '#087a63',
       order: 30,
       children: [
-        { key: 'wordpress', label: 'WordPress・文標', color: '#0b8f72', order: 10 },
-        { key: 'template', label: '記事テンプレ', color: '#0b8f72', order: 20 },
+        { key: 'wordpress', label: 'WordPress・文標', color: '#087a63', order: 10 },
+        { key: 'template', label: '記事テンプレ', color: '#087a63', order: 20 },
       ],
     },
     {
@@ -2489,7 +2489,7 @@
       return {
         key,
         label: sanitizeCategoryLabel(parent?.label || fallback.label || key),
-        color: sanitizeCategoryColor(parent?.color || fallback.color || '#0b8f72'),
+        color: sanitizeCategoryColor(parent?.color || fallback.color || '#087a63'),
         order: sanitizeCategoryOrder(parent?.order, (parentIndex + 1) * 10),
         children: childrenSource.map((child, childIndex) => {
           const rawChildKey = sanitizeCategoryKey(child?.key);
@@ -2497,7 +2497,7 @@
           return {
             key: rawChildKey || sanitizeCategoryKey(fallbackChild.key) || `${key}-${childIndex + 1}`,
             label: sanitizeCategoryLabel(child?.label || fallbackChild.label || child?.key || ''),
-            color: sanitizeCategoryColor(child?.color || fallbackChild.color || '#0b8f72'),
+            color: sanitizeCategoryColor(child?.color || fallbackChild.color || '#087a63'),
             order: sanitizeCategoryOrder(child?.order, (childIndex + 1) * 10),
           };
         }).sort((a, b) => a.order - b.order),
@@ -2669,7 +2669,7 @@
 
   function sanitizeCategoryColor(value) {
     const color = String(value || '').trim();
-    return /^#[0-9a-fA-F]{6}$/.test(color) ? color : '#0b8f72';
+    return /^#[0-9a-fA-F]{6}$/.test(color) ? color : '#087a63';
   }
 
   function sanitizeCategoryOrder(value, fallback) {
@@ -2976,7 +2976,7 @@
           <div class="row-excerpt">${escHtml(item.excerpt || '')}</div>
         </td>
         <td class="status-col"><span class="status-badge ${statusClass}">${statusLabel}</span></td>
-        <td class="category-col"><span class="category-badge" style="border-color:${escHtml(category.color || '#bde7d7')};color:${escHtml(category.color || '#0b8f72')};">${escHtml(category.label)}</span></td>
+        <td class="category-col"><span class="category-badge" style="border-color:${escHtml(category.color || '#bde7d7')};color:${escHtml(category.color || '#087a63')};">${escHtml(category.label)}</span></td>
         <td class="tags-col">${childCategories.length ? childCategories.map(name => `<span class="tag-chip">${escHtml(name)}</span>`).join(' ') : '-'}</td>
         <td class="date-col">${escHtml(dateText)}</td>
         <td class="actions-col"><div class="row-actions">${rowActionButtons(item)}</div></td>

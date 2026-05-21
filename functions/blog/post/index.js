@@ -427,9 +427,9 @@ function renderTags(tags, categoryMap) {
 }
 
 function renderBlogHeader() {
-  return `<header class="site-header" style="background:#fff;border-bottom:3px solid #0b8f72;position:sticky;top:0;z-index:100;">
+  return `<header class="site-header" style="background:#fff;border-bottom:3px solid #087a63;position:sticky;top:0;z-index:100;">
     <div class="header-inner" style="max-width:1100px;margin:0 auto;padding:0 16px;display:flex;align-items:center;gap:20px;height:56px;">
-      <a href="/" style="display:flex;align-items:center;gap:10px;font-size:20px;font-weight:900;color:#0b8f72;letter-spacing:-0.03em;flex-shrink:0;text-decoration:none;">
+      <a href="/" style="display:flex;align-items:center;gap:10px;font-size:20px;font-weight:900;color:#087a63;letter-spacing:-0.03em;flex-shrink:0;text-decoration:none;">
         <img src="/yohelab-mascot-v2-20260518-64.png" width="36" height="36" alt="よへラボ" decoding="async" style="width:36px;height:36px;border-radius:8px;" />
         よへラボ
       </a>
@@ -510,7 +510,7 @@ function renderPostHTML(post, slug, categoryMap = buildCategoryMap(DEFAULT_CATEG
     .post-cover { width:100%;aspect-ratio:16/9;margin:0 0 28px;overflow:hidden;border-radius:28px;background:#eef5ff;border:1px solid #dce7fb;box-shadow:var(--shadow-sm); }
     .post-cover img { width:100%;height:100%;display:block; }
     .post-hero { border-radius:28px;padding:32px;margin-bottom:30px;background:linear-gradient(135deg,#ecfdf5,#eef6ff);border:1px solid #dce7fb;box-shadow:var(--shadow-sm); }
-    .post-hero-kicker { display:inline-flex;padding:7px 12px;border-radius:999px;background:#0b8f72;color:#fff;font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;margin-bottom:18px; }
+    .post-hero-kicker { display:inline-flex;padding:7px 12px;border-radius:999px;background:#087a63;color:#fff;font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;margin-bottom:18px; }
     .post-meta { display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin:0 0 18px; }
     .post-tag { background:#f0f8f4;color:var(--green-dark,#075c4c);border-radius:999px;padding:3px 12px;font-size:12px;font-weight:700;text-decoration:none; }
     .post-title { font-size:clamp(30px,5.6vw,54px);font-weight:900;line-height:1.12;margin:0;color:var(--text);letter-spacing:-.055em; }

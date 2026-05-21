@@ -265,8 +265,8 @@ async function sendAffiliateNotification({ to, code, name, commission, from, api
         <strong>紹介報酬: ¥${escapeHtml((commission || 0).toLocaleString())}</strong><span style="margin-left:10px;font-size:12px;background:#fff;padding:2px 8px;border-radius:6px;color:#9a3412">保留中</span>
       </p>
       <p style="font-size:13px;color:#536174;">購入から30日経過後（返金可能期間が終了したのち）に確定します。返金された場合は当該成果は無効となります。</p>
-      <p><a href="https://yohelab.com/affiliate/dashboard/?code=${escapeHtml(code)}" style="display:inline-block;padding:10px 18px;border-radius:10px;background:#0b8f72;color:#fff;font-weight:900;text-decoration:none;">ダッシュボードを開く</a></p>
-      <p style="font-size:13px;color:#64748b;">口座情報がまだの場合は <a href="https://yohelab.com/contact/" style="color:#0b8f72">問い合わせフォーム</a> から送信してください（月末締め・翌月末払い）。</p>
+      <p><a href="https://yohelab.com/affiliate/dashboard/?code=${escapeHtml(code)}" style="display:inline-block;padding:10px 18px;border-radius:10px;background:#087a63;color:#fff;font-weight:900;text-decoration:none;">ダッシュボードを開く</a></p>
+      <p style="font-size:13px;color:#64748b;">口座情報がまだの場合は <a href="https://yohelab.com/contact/" style="color:#087a63">問い合わせフォーム</a> から送信してください（月末締め・翌月末払い）。</p>
     </div>
   `;
   await fetch("https://api.resend.com/emails", {

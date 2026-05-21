@@ -82,7 +82,7 @@ function headHardeningPlugin() {
       let out = html
         .replace(/<meta property="og:image" content="https:\/\/yohelab\.com\/yohelab-(?:cat-)?icon\.png" \/>/g, `<meta property="og:image" content="${ogImage}" />`)
         .replace(/<meta name="twitter:card" content="summary" \/>/g, '<meta name="twitter:card" content="summary_large_image" />')
-        .replace(/<meta name="theme-color" content="(?:#f5fbff|#ffffff)" \/>/g, '<meta name="theme-color" content="#0b8f72" />');
+        .replace(/<meta name="theme-color" content="(?:#f5fbff|#ffffff)" \/>/g, '<meta name="theme-color" content="#087a63" />');
 
       if (out.includes(`content="${ogImage}"`) && !out.includes('property="og:image:width"')) {
         out = out.replace(
@@ -207,7 +207,7 @@ body { overflow-x: clip; }
 img, video, canvas, svg { max-width: 100%; height: auto; }
 table { max-width: 100%; }
 a, button, input, select, textarea { touch-action: manipulation; }
-a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 2px solid #0b8f72; outline-offset: 3px; }
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 2px solid #087a63; outline-offset: 3px; }
 @media (max-width: 640px) {
   button, input, select, textarea, .btn, .nav-links a, .header-inner nav a, .tab-btn, .filter-btn, .post-tag, .share-btn, .back-link { min-height: 44px; }
   input, select, textarea { font-size: 16px !important; }

@@ -50,7 +50,7 @@
   color: var(--text); margin-bottom: 22px; text-wrap: balance;
 }
 .lp-hero h1 em {
-  background: linear-gradient(135deg, #0b8f72 0%, #1fb6cf 55%, #3f8cff 100%);
+  background: linear-gradient(135deg, #087a63 0%, #1fb6cf 55%, #3f8cff 100%);
   -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
 }
 .lp-lead {
@@ -111,7 +111,7 @@
 }
 .lp-free-box::before {
   content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-  background: linear-gradient(90deg, #14c4a0, #0b8f72);
+  background: linear-gradient(90deg, #14c4a0, #087a63);
 }
 .lp-free-box h3 { font-size: 19px; font-weight: 900; margin-bottom: 8px; letter-spacing: -0.03em; }
 .lp-free-box > p { color: var(--muted); font-size: 14px; margin-bottom: 20px; line-height: 1.7; }
@@ -123,7 +123,7 @@
 }
 .lp-free-item-icon {
   width: 28px; height: 28px; border-radius: 8px; flex-shrink: 0;
-  background: linear-gradient(135deg, #14c4a0, #0b8f72);
+  background: linear-gradient(135deg, #14c4a0, #087a63);
   display: grid; place-items: center; color: #fff; font-size: 13px; font-weight: 900;
 }
 .lp-free-item strong { display: block; font-size: 14px; font-weight: 800; margin-bottom: 2px; }

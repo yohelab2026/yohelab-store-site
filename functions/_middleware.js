@@ -26,8 +26,41 @@ const RETIRED_REDIRECTS = new Map([
 
 const PROTECTED_THEME_ZIP = /^\/bunsirube(?:-child)?(?:-[0-9][0-9.]+)?\.zip$/i;
 
+const ROBOTS_TXT = `# Admin/API/private paths are blocked for every crawler.
+User-agent: *
+Allow: /
+Disallow: /blog/admin/
+Disallow: /api/
+Disallow: /pro/
+Disallow: /affiliate/dashboard/
+Disallow: /games/
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+Sitemap: https://yohelab.com/sitemap.xml
+`;
+
 export async function onRequest(context) {
   const url = new URL(context.request.url);
+
+  if (url.pathname === "/robots.txt") {
+    return new Response(ROBOTS_TXT, {
+      headers: {
+        "Content-Type": "text/plain; charset=utf-8",
+        "Cache-Control": "public, max-age=3600",
+      },
+    });
+  }
 
   if (PROTECTED_THEME_ZIP.test(url.pathname)) {
     return new Response("not found", {

@@ -81,6 +81,14 @@ function assertOk(condition, message) {
 }
 
 const htmlFiles = walk(distRoot).filter((file) => extname(file).toLowerCase() === ".html");
+const renderedTextFiles = walk(distRoot).filter((file) => [".html", ".css", ".js", ".webmanifest"].includes(extname(file).toLowerCase()));
+
+for (const file of renderedTextFiles) {
+  const rel = file.replace(`${distRoot}\\`, "").replaceAll("\\", "/");
+  const text = readFileSync(file, "utf8");
+  assertOk(!/(^|[^0-9a-fA-F])#0b8f72(?![0-9a-fA-F])/i.test(text), `${rel}: old brand green can fail contrast checks`);
+  assertOk(!/(^|[^0-9a-fA-F])#777(?![0-9a-fA-F])/i.test(text), `${rel}: muted text color is too light for Lighthouse contrast`);
+}
 
 for (const file of htmlFiles) {
   const rel = file.replace(`${distRoot}\\`, "").replaceAll("\\", "/");
@@ -103,6 +111,10 @@ for (const page of criticalPages) {
   const missing = requiredHead.filter(([, re]) => !re.test(html)).map(([name]) => name);
   assertOk(missing.length === 0, `${page.path}: missing SEO head tags: ${missing.join(", ")}`);
 
+  if (page.path === "index.html") {
+    assertOk(!html.includes("/shared/site.min.css"), "index.html: avoid render-blocking shared CSS on the homepage");
+  }
+
   const htmlGzipKb = gzipSync(html).length / 1024;
   assertOk(htmlGzipKb <= page.htmlGzipKb, `${page.path}: gzipped HTML budget exceeded (${htmlGzipKb.toFixed(1)} KB > ${page.htmlGzipKb} KB)`);
 
@@ -110,5 +122,14 @@ for (const page of criticalPages) {
   const assetKb = assets.reduce((sum, file) => sum + statSync(file).size / 1024, 0);
   assertOk(assetKb <= page.assetKb, `${page.path}: local asset budget exceeded (${assetKb.toFixed(1)} KB > ${page.assetKb} KB)`);
 }
+
+const robotsTxt = readFileSync(resolve(root, "robots.txt"), "utf8");
+assertOk(!/^\s*Content-Signal\s*:/im.test(robotsTxt), "robots.txt: Content-Signal is not accepted by Lighthouse");
+
+const middleware = readFileSync(resolve(root, "functions", "_middleware.js"), "utf8");
+assertOk(
+  middleware.includes('url.pathname === "/robots.txt"') && !/^\s*Content-Signal\s*:/im.test(middleware),
+  "functions/_middleware.js: robots.txt must be served without Content-Signal directives",
+);
 
 console.log(`OK  performance and SEO budgets passed (${criticalPages.length} critical pages, ${htmlFiles.length} html files).`);

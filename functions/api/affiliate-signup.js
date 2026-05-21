@@ -156,7 +156,7 @@ async function sendAffiliateSignupEmail({ to, name, code, refLink, isNew, apiKey
         <a href="${escapeHtml(refLink)}" style="color:#0b3a73;font-weight:700;font-size:14px;word-break:break-all;">${escapeHtml(refLink)}</a>
       </p>
       <p>このリンクからアクセスして<strong>30日以内</strong>に購入されると、あなたの成果として記録され、購入金額の50%（<strong>¥2,750</strong>）が報酬となります。</p>
-      <p><a href="https://yohelab.com/affiliate/dashboard/?code=${escapeHtml(code)}" style="display:inline-block;padding:12px 22px;border-radius:10px;background:#0b8f72;color:#fff;font-weight:900;text-decoration:none;">ダッシュボードを開く</a></p>
+      <p><a href="https://yohelab.com/affiliate/dashboard/?code=${escapeHtml(code)}" style="display:inline-block;padding:12px 22px;border-radius:10px;background:#087a63;color:#fff;font-weight:900;text-decoration:none;">ダッシュボードを開く</a></p>
       <h3 style="font-size:15px;margin-top:24px;color:#065f46;">支払いについて</h3>
       <ul style="font-size:14px;color:#536174;line-height:1.85;padding-left:20px;">
         <li>最低支払額: ¥3,000（累積）</li>
@@ -167,8 +167,8 @@ async function sendAffiliateSignupEmail({ to, name, code, refLink, isNew, apiKey
       <p style="font-size:13px;color:#9a3412;background:#fff7ed;border:1px solid #fcd9b6;border-radius:10px;padding:12px 14px;margin-top:16px;">
         <strong>表示義務（必読）:</strong> 紹介リンクを掲載するページには「PR」「アフィリエイトリンクを含む」の表示をお願いします。ステマ規制（消費者庁告示）への対応として必要です。
       </p>
-      <p style="font-size:13px;color:#64748b;margin-top:16px;">規約: <a href="https://yohelab.com/legal/affiliate-terms/" style="color:#0b8f72;">アフィリエイトプログラム規約</a></p>
-      <p style="font-size:13px;color:#64748b;">ご質問は <a href="https://yohelab.com/contact/" style="color:#0b8f72;">問い合わせフォーム</a> から。</p>
+      <p style="font-size:13px;color:#64748b;margin-top:16px;">規約: <a href="https://yohelab.com/legal/affiliate-terms/" style="color:#087a63;">アフィリエイトプログラム規約</a></p>
+      <p style="font-size:13px;color:#64748b;">ご質問は <a href="https://yohelab.com/contact/" style="color:#087a63;">問い合わせフォーム</a> から。</p>
     </div>
   `;
 

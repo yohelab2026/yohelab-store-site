@@ -187,7 +187,7 @@ function applyCategorySettings(categories) {
     const children = Array.isArray(parent.children) ? parent.children : [];
     labels[`group:${parentKey}`] = `${parent.label || parentKey}全部`;
     labels[parentKey] = parent.label || labels[parentKey] || parentKey;
-    colors[parentKey] = parent.color || colors[parentKey] || '#0b8f72';
+    colors[parentKey] = parent.color || colors[parentKey] || '#087a63';
     parents[parentKey] = parentKey;
     groups[`group:${parentKey}`] = children.map(child => sanitizeCategoryKey(child.key)).filter(Boolean);
     children.forEach(child => {
@@ -195,7 +195,7 @@ function applyCategorySettings(categories) {
       if (!key) return;
       order.push(key);
       labels[key] = child.label || labels[key] || key;
-      colors[key] = child.color || colors[key] || parent.color || '#0b8f72';
+      colors[key] = child.color || colors[key] || parent.color || '#087a63';
       parents[key] = parentKey;
     });
   });

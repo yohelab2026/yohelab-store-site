@@ -6,10 +6,10 @@ const DEFAULT_CATEGORIES = [
   {
     key: "ai-news",
     label: "AIニュース",
-    color: "#0b8f72",
+    color: "#087a63",
     order: 10,
     children: [
-      { key: "ai-news", label: "AIニュース", color: "#0b8f72", order: 10 },
+      { key: "ai-news", label: "AIニュース", color: "#087a63", order: 10 },
       { key: "chatgpt", label: "ChatGPT", color: "#10a37f", order: 20 },
       { key: "claude", label: "Claude", color: "#cc785c", order: 30 },
       { key: "gemini", label: "Gemini", color: "#4285f4", order: 40 },
@@ -44,17 +44,17 @@ const DEFAULT_CATEGORIES = [
     order: 20,
     children: [
       { key: "earn", label: "収益化ネタ", color: "#f97316", order: 10 },
-      { key: "article", label: "記事づくり", color: "#0b8f72", order: 20 },
+      { key: "article", label: "記事づくり", color: "#087a63", order: 20 },
     ],
   },
   {
     key: "wordpress",
     label: "ツール・商品",
-    color: "#0b8f72",
+    color: "#087a63",
     order: 30,
     children: [
-      { key: "wordpress", label: "WordPress・文標", color: "#0b8f72", order: 10 },
-      { key: "template", label: "記事テンプレ", color: "#0b8f72", order: 20 },
+      { key: "wordpress", label: "WordPress・文標", color: "#087a63", order: 10 },
+      { key: "template", label: "記事テンプレ", color: "#087a63", order: 20 },
     ],
   },
   {
@@ -121,7 +121,7 @@ function normalizeCategories(value) {
     return {
       key,
       label: sanitizeText(parent?.label) || fallback.label || key,
-      color: sanitizeColor(parent?.color) || fallback.color || "#0b8f72",
+      color: sanitizeColor(parent?.color) || fallback.color || "#087a63",
       order: sanitizeOrder(parent?.order, (parentIndex + 1) * 10),
       children: childrenSource.map((child, childIndex) => {
         const rawChildKey = sanitizeSlug(Array.isArray(child) ? child[0] : child?.key);
@@ -130,7 +130,7 @@ function normalizeCategories(value) {
         return {
           key: childKey,
           label: sanitizeText(Array.isArray(child) ? child[1] : child?.label) || fallbackChild.label || childKey,
-          color: sanitizeColor(Array.isArray(child) ? "" : child?.color) || fallbackChild.color || "#0b8f72",
+          color: sanitizeColor(Array.isArray(child) ? "" : child?.color) || fallbackChild.color || "#087a63",
           order: sanitizeOrder(Array.isArray(child) ? childIndex * 10 : child?.order, (childIndex + 1) * 10),
         };
       }).sort((a, b) => a.order - b.order),
