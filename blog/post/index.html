@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ブログ記事 | よへラボブログ</title>
   <meta name="description" content="よへラボブログの記事ページ。記事メーカー、WordPressテーマ、AI検索、商品ページ改善に関する制作背景と運用メモ。" />
-  <meta name="robots" content="noindex,nofollow" />
+  <meta name="robots" content="noindex,follow" />
   <link rel="canonical" href="https://yohelab.com/blog/" />
   <link rel="icon" type="image/png" href="/yohelab-mascot-v2-20260518-32.png" />
   <link rel="stylesheet" href="/shared/site.min.css" />
@@ -154,8 +154,32 @@
   </footer>
 
   <script>
-  const slug = new URLSearchParams(location.search).get('slug') || '';
+  const SITE_ORIGIN = 'https://yohelab.com';
+  const FALLBACK_IMAGE = `${SITE_ORIGIN}/yohelab-mascot-v2-20260518.png`;
+  const slug = slugFromLocation();
   const fallbackPosts = [];
+
+  function slugFromLocation() {
+    const querySlug = new URLSearchParams(location.search).get('slug');
+    if (querySlug) return querySlug;
+    const match = location.pathname.match(/^\/blog\/([^/]+)\/?$/);
+    return match ? decodeURIComponent(match[1]) : '';
+  }
+
+  function postPath(value) {
+    return `/blog/${encodeURIComponent(String(value || '').trim())}/`;
+  }
+
+  function postUrl(value) {
+    return `${SITE_ORIGIN}${postPath(value)}`;
+  }
+
+  function absoluteUrl(value) {
+    const raw = String(value || '').trim();
+    if (!raw) return FALLBACK_IMAGE;
+    if (/^https?:\/\//i.test(raw)) return raw;
+    return raw.startsWith('/') ? `${SITE_ORIGIN}${raw}` : `${SITE_ORIGIN}/${raw}`;
+  }
 
   function esc(str) {
     return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
@@ -228,12 +252,52 @@
   }
 
   function render(post) {
-    // メタタグ更新
-    document.title = `${post.title || '記事'} | よへラボブログ`;
-    setMeta('description', post.excerpt || post.title || '');
-    setMeta('og:title', `${post.title} | よへラボブログ`);
-    setMeta('og:description', post.excerpt || '');
-    if (post.eyecatch) setMeta('og:image', post.eyecatch);
+    const postSlug = slug || post.slug || '';
+    const pageUrl = postUrl(postSlug);
+    const pagePath = postPath(postSlug);
+    const title = post.title || '記事';
+    const description = post.excerpt || title;
+    const imageUrl = absoluteUrl(post.eyecatch);
+    const date = post.date || new Date().toISOString().slice(0, 10);
+
+    if (postSlug && location.pathname.replace(/\/+$/, '') === '/blog/post') {
+      history.replaceState(null, '', pagePath);
+    }
+
+    document.title = `${title} | よへラボブログ`;
+    setCanonical(pageUrl);
+    setMeta('description', description);
+    setMeta('robots', 'index,follow,max-image-preview:large,max-snippet:-1');
+    setMeta('og:title', `${title} | よへラボブログ`);
+    setMeta('og:description', description);
+    setMeta('og:type', 'article');
+    setMeta('og:locale', 'ja_JP');
+    setMeta('og:url', pageUrl);
+    setMeta('og:image', imageUrl);
+    setMeta('article:published_time', `${date}T00:00:00+09:00`);
+    setMeta('article:modified_time', `${date}T00:00:00+09:00`);
+    setMeta('twitter:card', 'summary_large_image');
+    setMeta('twitter:title', title);
+    setMeta('twitter:description', description);
+    setMeta('twitter:image', imageUrl);
+    upsertJsonLd('post-jsonld', {
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      headline: title,
+      description,
+      image: imageUrl,
+      datePublished: date,
+      dateModified: date,
+      author: { '@type': 'Organization', name: 'よへラボ', url: SITE_ORIGIN },
+      publisher: {
+        '@type': 'Organization',
+        name: 'よへラボ',
+        logo: { '@type': 'ImageObject', url: FALLBACK_IMAGE },
+      },
+      mainEntityOfPage: { '@type': 'WebPage', '@id': pageUrl },
+      url: pageUrl,
+      inLanguage: 'ja-JP',
+    });
 
     // カバー画像（フルワイド）
     if (post.eyecatch) {
@@ -244,7 +308,7 @@
     const tags = (post.tags||[]).map(t=>`<a class="post-tag" href="/blog/tag/${encodeURIComponent(tagSlug(t))}/">${esc(t)}</a>`).join('');
     const excerpt = post.excerpt ? `<p class="post-excerpt">${esc(post.excerpt)}</p>` : '';
     const bodyContent = post.bodyHtml ? sanitizeBodyHtml(post.bodyHtml) : (post.body||'').split('\n\n').map(p=>`<p>${esc(p)}</p>`).join('');
-    const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(location.href)}`;
+    const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(pageUrl)}`;
 
     document.getElementById('post-outer').innerHTML = `
       <div class="post-meta">
@@ -273,8 +337,29 @@
 
   function setMeta(name, content) {
     let el = document.querySelector(`meta[name="${name}"], meta[property="${name}"]`);
-    if (!el) { el = document.createElement('meta'); el.setAttribute(name.includes(':') ? 'property' : 'name', name); document.head.appendChild(el); }
+    if (!el) {
+      el = document.createElement('meta');
+      el.setAttribute(/^(og|article):/.test(name) ? 'property' : 'name', name);
+      document.head.appendChild(el);
+    }
     el.setAttribute('content', content);
+  }
+
+  function setCanonical(href) {
+    let el = document.querySelector('link[rel="canonical"]');
+    if (!el) { el = document.createElement('link'); el.setAttribute('rel', 'canonical'); document.head.appendChild(el); }
+    el.setAttribute('href', href);
+  }
+
+  function upsertJsonLd(id, data) {
+    let el = document.getElementById(id);
+    if (!el) {
+      el = document.createElement('script');
+      el.id = id;
+      el.type = 'application/ld+json';
+      document.head.appendChild(el);
+    }
+    el.textContent = JSON.stringify(data);
   }
 
   function tagSlug(value) {

@@ -1,5 +1,5 @@
 /**
- * /blog/post/?slug=xxx を SSR でレンダリングする Cloudflare Pages Function
+ * /blog/post/?slug=xxx を個別記事URLへリダイレクトする Cloudflare Pages Function
  *
  * 静的HTMLでJS経由で取得していた記事メタデータを、サーバー側で先に埋めて返すことで
  * Googlebot・Bingbot・AIクローラー・SNSプレビューに正しいタイトル・description・OG・
@@ -12,6 +12,7 @@ const SITE_ORIGIN = "https://yohelab.com";
 const SITE_NAME = "よへラボ";
 const BLOG_NAME = "よへラボブログ";
 const FALLBACK_IMAGE = `${SITE_ORIGIN}/yohelab-mascot-v2-20260518.png`;
+const RESERVED_BLOG_SLUGS = new Set(["admin", "post", "category", "tag"]);
 const STATIC_POST_REDIRECTS = new Map([
   ["ai-news-selling-ideas", "/blog/ai-news-selling-ideas/"],
   ["home-work-rhythm", "/blog/home-work-rhythm/"],
@@ -32,9 +33,22 @@ export async function onRequest(context) {
     return Response.redirect(new URL("/blog/", url.origin).toString(), 302);
   }
 
-  const cleanStaticPath = cleanStaticSlugPath(slug);
+  return renderBlogPost(context, slug, url, { redirectToPretty: true });
+}
+
+export async function renderBlogPost(context, slug, requestUrl = new URL(context.request.url), options = {}) {
+  const cleanSlug = String(slug || "").trim();
+  if (!cleanSlug || isReservedBlogSlug(cleanSlug)) {
+    return context.next();
+  }
+
+  const cleanStaticPath = cleanStaticSlugPath(cleanSlug);
   if (cleanStaticPath) {
-    return Response.redirect(new URL(cleanStaticPath, url.origin).toString(), 301);
+    const staticUrl = new URL(cleanStaticPath, requestUrl.origin);
+    if (samePath(requestUrl.pathname, staticUrl.pathname)) {
+      return context.next();
+    }
+    return Response.redirect(staticUrl.toString(), 301);
   }
 
   const kv = context.env.BLOG_KV;
@@ -51,20 +65,40 @@ export async function onRequest(context) {
   }
 
   if (!post) {
-    // 見つからない時も静的HTMLにフォールバック（JS側でnot foundを表示）
+    // 見つからない時は静的HTMLや既存404にフォールバック。
     return context.next();
   }
 
-  const html = renderPostHTML(post, slug, url);
+  if (options.redirectToPretty) {
+    return Response.redirect(new URL(prettyPostPath(cleanSlug), requestUrl.origin).toString(), 301);
+  }
+
+  const html = renderPostHTML(post, cleanSlug);
 
   return new Response(html, {
     headers: {
       "Content-Type": "text/html; charset=utf-8",
       // Cloudflare CDNで5分間キャッシュ。記事更新時は手動でPurge推奨
       "Cache-Control": "public, max-age=60, s-maxage=300",
-      "X-Robots-Tag": "noindex,follow,max-image-preview:large,max-snippet:-1",
+      "X-Robots-Tag": "index,follow,max-image-preview:large,max-snippet:-1",
     },
   });
+}
+
+export function prettyPostPath(slug) {
+  return `/blog/${encodeURIComponent(String(slug || "").trim())}/`;
+}
+
+export function prettyPostUrl(slug) {
+  return `${SITE_ORIGIN}${prettyPostPath(slug)}`;
+}
+
+export function isReservedBlogSlug(slug) {
+  return RESERVED_BLOG_SLUGS.has(String(slug || "").trim().toLowerCase());
+}
+
+function samePath(a, b) {
+  return String(a || "").replace(/\/+$/, "") === String(b || "").replace(/\/+$/, "");
 }
 
 function cleanStaticSlugPath(slug) {
@@ -226,7 +260,7 @@ function renderTags(tags) {
     .join("");
 }
 
-function renderPostHTML(post, slug, requestUrl) {
+function renderPostHTML(post, slug) {
   const title = post.title || "無題の記事";
   const description = plainExcerpt(post, 160);
   const date = post.date || new Date().toISOString().slice(0, 10);
@@ -234,7 +268,7 @@ function renderPostHTML(post, slug, requestUrl) {
   const eyecatchAttr = post.eyecatch ? escAttr(post.eyecatch) : "";
   const tagsHtml = renderTags(post.tags);
   const bodyHtml = bodyToHtml(post);
-  const fullUrl = `${SITE_ORIGIN}/blog/post/?slug=${encodeURIComponent(slug)}`;
+  const fullUrl = prettyPostUrl(slug);
   const [articleLd, breadcrumbLd] = buildJsonLd(post, slug, fullUrl);
   const twitterShare = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
     title,
@@ -252,7 +286,7 @@ function renderPostHTML(post, slug, requestUrl) {
   <title>${escHtml(title)} | ${escHtml(BLOG_NAME)}</title>
   <meta name="description" content="${escAttr(description)}" />
   <meta name="author" content="${escAttr(SITE_NAME)}" />
-  <meta name="robots" content="noindex,follow,max-image-preview:large,max-snippet:-1" />
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1" />
   <link rel="canonical" href="${escAttr(fullUrl)}" />
   <link rel="alternate" hreflang="ja" href="${escAttr(fullUrl)}" />
   <link rel="alternate" hreflang="x-default" href="${escAttr(fullUrl)}" />

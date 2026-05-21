@@ -1,9 +1,8 @@
 /**
  * /sitemap.xml を動的生成する Cloudflare Pages Function
  *
- * 重複コンテンツを避けるため、/blog/post/?slug=... のような
- * 管理画面由来のクエリURLは sitemap に載せない。
- * 公開済みの静的記事URLだけを検索エンジンに渡す。
+ * /blog/post/?slug=... のようなクエリURLは載せず、
+ * 公開済み記事は /blog/{slug}/ の個別URLだけを検索エンジンに渡す。
  */
 
 const SITE_ORIGIN = "https://yohelab.com";
@@ -32,16 +31,17 @@ const URLS = [
   { loc: "/legal/affiliate-terms/", lastmod: "2026-05-12", changefreq: "monthly", priority: "0.3" },
 ];
 
-export async function onRequestGet() {
+export async function onRequestGet(context) {
+  const urls = mergeUrls(URLS, await dynamicBlogUrls(context.env));
   const xml =
     `<?xml version="1.0" encoding="UTF-8"?>\n` +
     `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
-    URLS.map((u) =>
+    urls.map((u) =>
       `  <url>\n` +
-      `    <loc>${SITE_ORIGIN}${u.loc}</loc>\n` +
-      `    <lastmod>${u.lastmod}</lastmod>\n` +
-      `    <changefreq>${u.changefreq}</changefreq>\n` +
-      `    <priority>${u.priority}</priority>\n` +
+      `    <loc>${xmlEscape(SITE_ORIGIN + u.loc)}</loc>\n` +
+      `    <lastmod>${xmlEscape(u.lastmod)}</lastmod>\n` +
+      `    <changefreq>${xmlEscape(u.changefreq)}</changefreq>\n` +
+      `    <priority>${xmlEscape(u.priority)}</priority>\n` +
       `  </url>`,
     ).join("\n") +
     `\n</urlset>\n`;
@@ -53,4 +53,57 @@ export async function onRequestGet() {
       "X-Robots-Tag": "index,follow",
     },
   });
+}
+
+async function dynamicBlogUrls(env) {
+  const kv = env?.BLOG_KV;
+  if (!kv) return [];
+
+  try {
+    const keys = [];
+    let cursor;
+    do {
+      const list = await kv.list({ prefix: "post:", cursor });
+      keys.push(...(list.keys || []));
+      cursor = list.list_complete ? undefined : list.cursor;
+    } while (cursor);
+
+    return keys
+      .map((key) => {
+        const slug = key.name.replace(/^post:/, "");
+        if (!slug) return null;
+        return {
+          loc: `/blog/${encodeURIComponent(slug)}/`,
+          lastmod: normalizeDate(key.metadata?.date),
+          changefreq: "monthly",
+          priority: "0.6",
+        };
+      })
+      .filter(Boolean);
+  } catch (error) {
+    return [];
+  }
+}
+
+function mergeUrls(staticUrls, dynamicUrls) {
+  const byLoc = new Map();
+  for (const item of [...staticUrls, ...dynamicUrls]) {
+    if (!item?.loc || item.loc.includes("/blog/post/")) continue;
+    byLoc.set(item.loc, item);
+  }
+  return [...byLoc.values()];
+}
+
+function normalizeDate(value) {
+  const text = String(value || "").slice(0, 10);
+  return /^\d{4}-\d{2}-\d{2}$/.test(text) ? text : new Date().toISOString().slice(0, 10);
+}
+
+function xmlEscape(value) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&apos;");
 }

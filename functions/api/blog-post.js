@@ -59,7 +59,8 @@ export async function onRequestPost(context) {
       await kv.delete(`draft:${draftId}`);
     }
 
-    return json({ ok: true, slug, post }, 200, context.request);
+    const url = `/blog/${encodeURIComponent(slug)}/`;
+    return json({ ok: true, slug, url, post: { ...post, url } }, 200, context.request);
   } catch (error) {
     return json({ error: error?.message || "unexpected_error" }, 500, context.request);
   }

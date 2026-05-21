@@ -8,19 +8,23 @@ export async function onRequestGet(context) {
     const url = new URL(context.request.url);
     const page = Math.max(1, parseInt(url.searchParams.get("page") || "1", 10));
 
-    const list = await kv.list({ prefix: "post:" });
+    const keys = await listPostKeys(kv);
 
-    const allPosts = list.keys
-      .map((key) => ({
-        slug: key.name.replace(/^post:/, ""),
-        title: key.metadata?.title || "",
-        date: key.metadata?.date || "",
-        excerpt: key.metadata?.excerpt || "",
-        eyecatch: key.metadata?.eyecatch || "",
-        tags: parseTags(key.metadata?.tags),
-        sourceSlug: key.metadata?.sourceSlug || key.metadata?.slug || "",
-        importedFrom: key.metadata?.importedFrom || "",
-      }))
+    const allPosts = keys
+      .map((key) => {
+        const slug = key.name.replace(/^post:/, "");
+        return {
+          slug,
+          url: `/blog/${encodeURIComponent(slug)}/`,
+          title: key.metadata?.title || "",
+          date: key.metadata?.date || "",
+          excerpt: key.metadata?.excerpt || "",
+          eyecatch: key.metadata?.eyecatch || "",
+          tags: parseTags(key.metadata?.tags),
+          sourceSlug: key.metadata?.sourceSlug || key.metadata?.slug || "",
+          importedFrom: key.metadata?.importedFrom || "",
+        };
+      })
       .sort((a, b) => String(b.date).localeCompare(String(a.date)));
 
     const total = allPosts.length;
@@ -32,6 +36,17 @@ export async function onRequestGet(context) {
   } catch (error) {
     return json({ error: error?.message || "unexpected_error" }, 500);
   }
+}
+
+async function listPostKeys(kv) {
+  const keys = [];
+  let cursor;
+  do {
+    const list = await kv.list({ prefix: "post:", cursor });
+    keys.push(...(list.keys || []));
+    cursor = list.list_complete ? undefined : list.cursor;
+  } while (cursor);
+  return keys;
 }
 
 function parseTags(value) {
