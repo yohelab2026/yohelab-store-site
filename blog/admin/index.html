@@ -99,6 +99,7 @@
     .status-badge, .category-badge { display:inline-flex;align-items:center;border-radius:8px;padding:5px 8px;font-size:11px;font-weight:900;line-height:1;color:#fff;background:var(--green);white-space:nowrap; }
     .status-badge.is-draft { background:#64748b; }
     .status-badge.is-published { background:var(--green); }
+    .status-badge.is-trash { background:#92400e; }
     .category-badge { background:#e8f7f1;color:var(--green);border:1px solid #bde7d7; }
     .tag-chip { display:inline-flex;align-items:center;border-radius:999px;padding:3px 7px;background:#f0f8f4;color:#436258;font-size:11px;font-weight:800; }
     .row-actions { display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:2px; }
@@ -410,11 +411,14 @@
               <button type="button" data-status="published">公開済み <span id="published-tab-count">0</span></button>
               <span>|</span>
               <button type="button" data-status="draft" class="is-active">下書き <span id="draft-tab-count">0</span></button>
+              <span>|</span>
+              <button type="button" data-status="trash">ゴミ箱 <span id="trash-tab-count">0</span></button>
             </div>
             <div class="manager-toolbar-row">
               <select id="content-status-filter" aria-label="状態で絞り込み">
                 <option value="draft">下書き</option>
                 <option value="published">公開済み</option>
+                <option value="trash">ゴミ箱</option>
                 <option value="all">すべて</option>
               </select>
               <select id="content-date-filter" aria-label="日付で絞り込み">
@@ -626,6 +630,7 @@
   const allTabCountEl = document.getElementById('all-tab-count');
   const publishedTabCountEl = document.getElementById('published-tab-count');
   const draftTabCountEl = document.getElementById('draft-tab-count');
+  const trashTabCountEl = document.getElementById('trash-tab-count');
   let activeDraftId = '';
   let activePostSlug = '';
   let activePostDate = '';
@@ -634,6 +639,7 @@
   let staticPostsLoaded = false;
   let draftItems = [];
   let postItems = [];
+  let trashItems = [];
   let contentCurrentPage = 1;
   let contentDateSortDirection = 'desc';
   let autosaveTimer = null;
@@ -1506,7 +1512,7 @@
     }
   }
 
-  function updateManagerCounts(drafts = null, posts = null) {
+  function updateManagerCounts(drafts = null, posts = null, trash = null) {
     if (drafts !== null) {
       if (draftCountEl) draftCountEl.textContent = String(drafts);
       if (draftTabCountEl) draftTabCountEl.textContent = String(drafts);
@@ -1515,6 +1521,7 @@
       if (postCountEl) postCountEl.textContent = String(posts);
       if (publishedTabCountEl) publishedTabCountEl.textContent = String(posts);
     }
+    if (trash !== null && trashTabCountEl) trashTabCountEl.textContent = String(trash);
     if (allTabCountEl) allTabCountEl.textContent = String(draftItems.length + postItems.length);
     updateStatusTabs();
   }
@@ -1889,7 +1896,37 @@
     }
   }
 
-  // 下書き＋公開済みを同時に読み込んで一度だけ描画する
+  async function loadTrashList(skipRender = false) {
+    if (!contentListEl) return;
+    const pin = currentPin();
+    if (!pin) return;
+    let items = [];
+    try {
+      const res = await fetch('/api/blog-trash', { headers: { 'X-Yohelab-Pin': pin } });
+      const data = await res.json().catch(()=>({}));
+      items = data.items || [];
+    } catch {}
+    trashItems = items.map(item => ({
+      ...item,
+      kind: 'trash',
+      source: 'trash',
+      id: item.trashId,
+      title: item.title || '無題',
+      slug: item.slug || item.originalSlug || item.originalId || '',
+      date: item.deletedAt || item.date || '',
+      excerpt: item.excerpt || '',
+      tags: parseTagList(item.tags),
+      eyecatch: item.eyecatch || '',
+    })).sort(compareByDate);
+    updateManagerCounts(null, null, trashItems.length);
+    if (!skipRender) {
+      populateCategoryFilter();
+      populateDateFilter();
+      renderContentList();
+    }
+  }
+
+  // 下書き＋公開済み＋ゴミ箱を同時に読み込んで一度だけ描画する
   async function loadAllLists(options = {}) {
     if (!contentListEl) return;
     contentListEl.innerHTML = '<p style="color:var(--muted);font-size:14px;padding:14px;">読み込み中...</p>';
@@ -1901,6 +1938,7 @@
     await Promise.all([
       loadDraftList(true),
       loadPostList(true),
+      loadTrashList(true),
     ]);
     populateCategoryFilter();
     populateDateFilter();
@@ -2255,7 +2293,7 @@
     if (!contentDateFilterEl) return;
     const selected = contentDateFilterEl.value || 'all';
     const seen = new Set();
-    [...draftItems, ...postItems].forEach(item => {
+    [...draftItems, ...postItems, ...trashItems].forEach(item => {
       const key = itemDateKey(item);
       if (key !== 'none') seen.add(key);
     });
@@ -2322,7 +2360,13 @@
     const dateFilter = contentDateFilterEl?.value || 'all';
     const category = contentCategoryFilterEl?.value || 'all';
     const keyword = String(contentSearchEl?.value || '').trim().toLowerCase();
-    const baseItems = status === 'draft' ? draftItems : status === 'published' ? postItems : [...draftItems, ...postItems].sort(compareByDate);
+    const baseItems = status === 'draft'
+      ? draftItems
+      : status === 'published'
+        ? postItems
+        : status === 'trash'
+          ? trashItems
+          : [...draftItems, ...postItems].sort(compareByDate);
     const filtered = baseItems.filter(item => {
       const itemCategory = categoryForItem(item);
       const childCategories = displayChildCategories(item);
@@ -2336,7 +2380,7 @@
     const pageItems = filtered.slice(startIndex, startIndex + CONTENT_PAGE_SIZE);
     const endIndex = startIndex + pageItems.length;
     if (contentListSummaryEl) {
-      const label = status === 'draft' ? '下書き' : status === 'published' ? '公開済み' : 'すべて';
+      const label = status === 'draft' ? '下書き' : status === 'published' ? '公開済み' : status === 'trash' ? 'ゴミ箱' : 'すべて';
       contentListSummaryEl.textContent = filtered.length
         ? `${label}: ${startIndex + 1}〜${endIndex} / ${filtered.length}個の項目`
         : `${label}: 0個の項目`;
@@ -2377,8 +2421,11 @@
   function renderContentRow(item) {
     const category = categoryForItem(item);
     const childCategories = displayChildCategories(item);
-    const statusLabel = item.kind === 'draft' ? '下書き' : '公開済み';
-    const activeAttrs = item.source === 'server'
+    const statusLabel = item.kind === 'trash' ? 'ゴミ箱' : item.kind === 'draft' ? '下書き' : '公開済み';
+    const statusClass = item.kind === 'trash' ? 'is-trash' : item.kind === 'draft' ? 'is-draft' : 'is-published';
+    const activeAttrs = item.source === 'trash'
+      ? `data-trash-id="${escHtml(item.trashId || item.id)}"`
+      : item.source === 'server'
       ? `data-draft-id="${escHtml(item.id)}"`
       : item.source === 'dynamic'
         ? `data-post-slug="${escHtml(item.slug)}"`
@@ -2391,7 +2438,7 @@
           <button class="row-title" type="button" onclick="${rowOpenAction(item)}">${escHtml(item.title || '無題')}</button>
           <div class="row-excerpt">${escHtml(item.excerpt || '')}</div>
         </td>
-        <td class="status-col"><span class="status-badge ${item.kind === 'draft' ? 'is-draft' : 'is-published'}">${statusLabel}</span></td>
+        <td class="status-col"><span class="status-badge ${statusClass}">${statusLabel}</span></td>
         <td class="category-col"><span class="category-badge" style="border-color:${escHtml(category.color || '#bde7d7')};color:${escHtml(category.color || '#0b8f72')};">${escHtml(category.label)}</span></td>
         <td class="tags-col">${childCategories.length ? childCategories.map(name => `<span class="tag-chip">${escHtml(name)}</span>`).join(' ') : '-'}</td>
         <td class="date-col">${escHtml(dateText)}</td>
@@ -2401,12 +2448,20 @@
   }
 
   function rowOpenAction(item) {
+    if (item.source === 'trash') return `restoreTrashItem('${escHtml(item.trashId || item.id)}')`;
     if (item.source === 'server') return `openDraft('${escHtml(item.id)}')`;
     if (item.source === 'dynamic') return `openPost('${escHtml(item.slug)}')`;
     return `openStaticPost('${escHtml(item.staticSlug || item.slug)}')`;
   }
 
   function rowActionButtons(item) {
+    if (item.source === 'trash') {
+      const trashId = item.trashId || item.id;
+      return `
+        <button class="btn-edit" type="button" onclick="restoreTrashItem('${escHtml(trashId)}',this)">復元</button>
+        <button class="btn-del" type="button" onclick="deleteTrashItem('${escHtml(trashId)}',this)">完全削除</button>
+      `;
+    }
     if (item.source === 'server') {
       return `
         <button class="btn-open-draft" type="button" onclick="openDraft('${escHtml(item.id)}')">開く</button>
@@ -2458,25 +2513,60 @@
   }
 
   async function deleteDraft(draftId, btn) {
-    if (!confirm('この下書きを削除しますか？')) return;
+    if (!confirm('この下書きをゴミ箱へ移動しますか？')) return;
     const pin = currentPin();
     if (!pin || !draftId) return;
-    btn.textContent='削除中...'; btn.disabled=true;
-    const res = await fetch('/api/blog-draft', {
-      method:'DELETE',
-      headers:{'Content-Type':'application/json','X-Yohelab-Pin':pin},
-      body: JSON.stringify({draftId}),
-    });
-    if (res.ok) {
+    if (btn) { btn.textContent='移動中...'; btn.disabled=true; }
+    try {
+      const getRes = await fetch(`/api/blog-draft?id=${encodeURIComponent(draftId)}`, { headers: { 'X-Yohelab-Pin': pin } });
+      const getData = await getRes.json().catch(()=>({}));
+      if (!getRes.ok || !getData.draft) throw new Error(getData.error || 'draft_not_found');
+      await moveItemToTrash({ type: 'draft', originalId: draftId, item: getData.draft });
+      const res = await fetch('/api/blog-draft', {
+        method:'DELETE',
+        headers:{'Content-Type':'application/json','X-Yohelab-Pin':pin},
+        body: JSON.stringify({draftId}),
+      });
+      if (!res.ok) throw new Error('draft_delete_failed');
       if (activeDraftId === draftId) {
         activeDraftId = '';
         saveDraftLocal({ schedule: false });
         updateEditorState();
       }
-      loadDraftList();
-    } else {
-      btn.textContent='失敗'; btn.disabled=false;
+      statusEl.textContent = 'ゴミ箱へ移動した ✓';
+      if (contentStatusFilterEl) contentStatusFilterEl.value = 'trash';
+      resetContentPage();
+      await loadAllLists();
+    } catch (error) {
+      if (btn) { btn.textContent='失敗'; btn.disabled=false; }
+      statusEl.textContent = 'ゴミ箱への移動に失敗した。';
     }
+  }
+
+  async function moveItemToTrash({ type, originalId = '', originalSlug = '', item }) {
+    const pin = currentPin();
+    if (!pin || !item) throw new Error('trash_item_required');
+    const res = await fetch('/api/blog-trash', {
+      method: 'POST',
+      headers: { 'Content-Type':'application/json','X-Yohelab-Pin': pin },
+      body: JSON.stringify({ type, originalId, originalSlug, item }),
+    });
+    const data = await res.json().catch(()=>({}));
+    if (!res.ok) throw new Error(data.error || 'trash_failed');
+    return data.entry;
+  }
+
+  async function removeTrashEntry(trashId, options = {}) {
+    const pin = currentPin();
+    if (!pin || !trashId) throw new Error('trash_id_required');
+    const res = await fetch('/api/blog-trash', {
+      method: 'DELETE',
+      headers: { 'Content-Type':'application/json','X-Yohelab-Pin': pin },
+      body: JSON.stringify({ trashId, purgeImages: options.purgeImages === true }),
+    });
+    const data = await res.json().catch(()=>({}));
+    if (!res.ok) throw new Error(data.error || 'trash_delete_failed');
+    return data;
   }
 
   function fillEditor(post, options = {}) {
@@ -2704,7 +2794,7 @@
     const delRes = await fetch('/api/blog-post', {
       method:'DELETE',
       headers:{'Content-Type':'application/json','X-Yohelab-Pin':pin},
-      body: JSON.stringify({slug}),
+      body: JSON.stringify({slug, keepImages: true}),
     });
     if (!delRes.ok) {
       btn.textContent = '削除失敗';
@@ -2722,21 +2812,83 @@
   }
 
   async function deletePost(kvKey, btn) {
-    if (!confirm('この記事を削除しますか？')) return;
+    if (!confirm('この記事をゴミ箱へ移動しますか？')) return;
     const pin = currentPin();
     if (!pin) return;
     const slug = kvKey.replace(/^post:/,'');
-    btn.textContent='削除中...'; btn.disabled=true;
-    const res = await fetch('/api/blog-post', {
-      method:'DELETE',
-      headers:{'Content-Type':'application/json','X-Yohelab-Pin':pin},
-      body: JSON.stringify({slug}),
-    });
-    if (res.ok) {
+    if (btn) { btn.textContent='移動中...'; btn.disabled=true; }
+    try {
+      const getRes = await fetch(`/api/blog-post-get?slug=${encodeURIComponent(slug)}`);
+      const getData = await getRes.json().catch(()=>({}));
+      if (!getRes.ok || !getData.post) throw new Error(getData.error || 'post_not_found');
+      await moveItemToTrash({ type: 'post', originalSlug: slug, item: getData.post });
+      const res = await fetch('/api/blog-post', {
+        method:'DELETE',
+        headers:{'Content-Type':'application/json','X-Yohelab-Pin':pin},
+        body: JSON.stringify({slug, keepImages: true}),
+      });
+      if (!res.ok) throw new Error('post_delete_failed');
       if (activePostSlug === slug) clearEditor();
-      loadPostList();
-    } else {
-      btn.textContent='失敗'; btn.disabled=false;
+      statusEl.textContent = 'ゴミ箱へ移動した ✓';
+      if (contentStatusFilterEl) contentStatusFilterEl.value = 'trash';
+      resetContentPage();
+      await loadAllLists();
+    } catch (error) {
+      if (btn) { btn.textContent='失敗'; btn.disabled=false; }
+      statusEl.textContent = 'ゴミ箱への移動に失敗した。';
+    }
+  }
+
+  async function restoreTrashItem(trashId, btn = null) {
+    const pin = currentPin();
+    if (!pin || !trashId) return;
+    if (btn) { btn.textContent = '復元中...'; btn.disabled = true; }
+    try {
+      const getRes = await fetch(`/api/blog-trash?id=${encodeURIComponent(trashId)}`, { headers: { 'X-Yohelab-Pin': pin } });
+      const getData = await getRes.json().catch(()=>({}));
+      const entry = getData.entry || {};
+      const item = entry.item || {};
+      if (!getRes.ok || !item || !entry.type) throw new Error(getData.error || 'trash_not_found');
+      if (entry.type === 'draft') {
+        const draftId = entry.originalId || item.draftId;
+        const draftBody = draftId ? { ...item, draftId } : item;
+        const draftRes = await fetch('/api/blog-draft', {
+          method: 'POST',
+          headers: { 'Content-Type':'application/json','X-Yohelab-Pin': pin },
+          body: JSON.stringify(draftBody),
+        });
+        if (!draftRes.ok) throw new Error('draft_restore_failed');
+      } else {
+        const postRes = await fetch('/api/blog-post', {
+          method: 'POST',
+          headers: { 'Content-Type':'application/json','X-Yohelab-Pin': pin },
+          body: JSON.stringify(item),
+        });
+        if (!postRes.ok) throw new Error('post_restore_failed');
+      }
+      await removeTrashEntry(trashId, { purgeImages: false });
+      statusEl.textContent = '復元した ✓';
+      if (contentStatusFilterEl) contentStatusFilterEl.value = entry.type === 'draft' ? 'draft' : 'published';
+      resetContentPage();
+      await loadAllLists();
+    } catch (error) {
+      if (btn) { btn.textContent = '失敗'; btn.disabled = false; }
+      statusEl.textContent = '復元に失敗した。';
+    }
+  }
+
+  async function deleteTrashItem(trashId, btn = null) {
+    if (!confirm('ゴミ箱から完全に削除しますか？')) return;
+    if (!trashId) return;
+    if (btn) { btn.textContent = '削除中...'; btn.disabled = true; }
+    try {
+      await removeTrashEntry(trashId, { purgeImages: true });
+      statusEl.textContent = '完全に削除した ✓';
+      resetContentPage();
+      await loadAllLists();
+    } catch (error) {
+      if (btn) { btn.textContent = '失敗'; btn.disabled = false; }
+      statusEl.textContent = '完全削除に失敗した。';
     }
   }
 
@@ -2762,6 +2914,7 @@
     contentDateSortDirection = contentDateSortDirection === 'desc' ? 'asc' : 'desc';
     draftItems.sort(compareByDate);
     postItems.sort(compareByDate);
+    trashItems.sort(compareByDate);
     resetAndRenderContentList();
   }
 
@@ -2823,6 +2976,8 @@
     openPost,
     movePostToDraft,
     deletePost,
+    restoreTrashItem,
+    deleteTrashItem,
     openStaticPost,
     saveStaticPostAsDraft,
     setContentPage,

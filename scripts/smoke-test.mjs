@@ -168,6 +168,7 @@ const blogPostPage = read(dist("blog/post/index.html"));
 const blogPostApi = read(src("functions/api/blog-post.js"));
 const blogPostsApi = read(src("functions/api/blog-posts.js"));
 const blogDraftApi = read(src("functions/api/blog-draft.js"));
+const blogTrashApi = read(src("functions/api/blog-trash.js"));
 const blogAuthLib = read(src("functions/lib/blog-auth.js"));
 const blogAuthApi = read(src("functions/api/blog-auth.js"));
 const lineWebhook = read(src("functions/api/line-webhook.js"));
@@ -228,6 +229,7 @@ checks.push(["blog admin content list sorts by clickable date", blogAdminSource.
 checks.push(["blog images are stable and lazy", blogAdmin.includes('width="${image.width}"') && blogAdmin.includes('height="${image.height}"') && blogPostFunction.includes("enhanceArticleImages") && blogPostFunction.includes('loading="lazy"') && blogPostPage.includes("enhanceArticleImages") && blogPostApi.includes("autoExcerpt")]);
 checks.push(["blog drafts are stored server side and removed on publish", blogDraftApi.includes("draft:") && blogDraftApi.includes("DRAFT_TTL_SECONDS") && blogDraftApi.includes("imageUrls") && blogDraftApi.includes("X-Robots-Tag") && blogPostApi.includes("draftId") && blogPostApi.includes("kv.delete(`draft:${draftId}`)")]);
 checks.push(["blog admin saves server drafts", blogAdmin.includes("/api/blog-draft") && blogAdmin.includes("サーバー下書き") && blogAdmin.includes("loadDraftList") && blogAdmin.includes("openDraft") && blogAdmin.includes("deleteDraft")]);
+checks.push(["blog admin has trash tab and restore flow", blogAdminSource.includes('data-status="trash"') && blogAdminSource.includes('id="trash-tab-count"') && blogAdminSource.includes("let trashItems = []") && blogAdminSource.includes("loadTrashList") && blogAdminSource.includes("moveItemToTrash") && blogAdminSource.includes("restoreTrashItem") && blogAdminSource.includes("deleteTrashItem") && blogTrashApi.includes('prefix: "trash:"') && blogTrashApi.includes("TRASH_TTL_SECONDS") && blogTrashApi.includes("purgeImages") && blogPostApi.includes("keepImages")]);
 checks.push(["blog admin remembers pin in browser", blogAdmin.includes("SAVED_PIN_KEY") && blogAdmin.includes("savePinForThisBrowser") && blogAdmin.includes("readSavedPin")]);
 checks.push(["test blog posts are removed from public index and sitemap", !read(dist("blog/index.html")).includes("yohelab-blog-start") && !read(dist("blog/index.html")).includes("starter-kit") && !read(dist("blog/index.html")).includes("theme-note") && !sitemap.includes("/blog/yohelab-blog-start/") && !sitemap.includes("/blog/starter-kit/") && !sitemap.includes("/blog/theme-note/")]);
 checks.push(["middleware redirects removed test blog pages", middleware.includes('"/blog/yohelab-blog-start/"') && middleware.includes('"/blog/starter-kit/"') && middleware.includes('"/blog/theme-note/"')]);

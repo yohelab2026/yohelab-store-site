@@ -84,11 +84,12 @@ export async function onRequestDelete(context) {
 
     const body = await readJsonBody(context.request);
     const slug = String(body?.slug || "").trim();
+    const keepImages = body?.keepImages === true;
     if (!slug) return json({ error: "slug_required" }, 400, context.request);
 
     // 投稿を取得してアイキャッチ画像のキーを確認
     const raw = await kv.get(`post:${slug}`);
-    if (raw) {
+    if (!keepImages && raw) {
       try {
         const post = JSON.parse(raw);
         const eyecatch = post?.eyecatch || "";
