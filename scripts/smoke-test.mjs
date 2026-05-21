@@ -162,6 +162,7 @@ const blogAdminSource = read(src("blog/admin/index.html"));
 const blogAdmin = read(dist("blog/admin/index.html"));
 const blogImageFunction = read(src("functions/api/blog-image.js"));
 const blogPostFunction = read(src("functions/blog/post/index.js"));
+const blogCardImageFunction = read(src("functions/blog-images/[key].js"));
 const blogPrettyPostFunction = read(src("functions/blog/[slug].js"));
 const blogPostPageSource = read(src("blog/post/index.html"));
 const blogPostPage = read(dist("blog/post/index.html"));
@@ -243,6 +244,7 @@ checks.push(["dynamic blog posts use unified article layout", blogPostFunction.i
 checks.push(["blog post footer returns home without tool list", blogPostFunction.includes('href="/">← トップページに戻る') && blogPostPageSource.includes('href="/">← トップページに戻る') && !blogPostFunction.includes("よへラボのツール") && !blogPostPageSource.includes("よへラボのツール") && !blogPostFunction.includes("related-links") && !blogPostPageSource.includes("related-links")]);
 checks.push(["blog post title area does not duplicate excerpt", !blogPostFunction.includes("post-excerpt") && !blogPostPageSource.includes("post-excerpt")]);
 checks.push(["dynamic blog posts render featured cover image", blogPostFunction.includes('class="post-cover"') && blogPostFunction.includes("const coverHtml = post.eyecatch") && blogPostFunction.includes("coverImageStyle(post)") && blogPostFunction.includes('fetchpriority="high"') && blogPostPageSource.includes('fetchpriority="high"')]);
+checks.push(["dynamic blog card images use same-origin image route", blogPostFunction.includes("function cardImageUrl") && blogPostFunction.includes("/blog-images/") && blogPostFunction.includes("og:image:secure_url") && blogPostFunction.includes("twitter:image:alt") && blogCardImageFunction.includes("BLOG_IMAGES") && blogCardImageFunction.includes("X-Robots-Tag") && blogCardImageFunction.includes("Access-Control-Allow-Origin")]);
 checks.push(["dynamic blog posts show category labels and updated dates", blogPostFunction.includes("readCategoryMap") && blogPostFunction.includes("displayCategoryLabel") && blogPostFunction.includes("post-date-line") && blogPostFunction.includes("投稿日") && blogPostFunction.includes("最終更新日") && blogPostApi.includes("updatedAt") && blogPostsApi.includes("updatedAt") && blogPostPageSource.includes("loadCategoryLabels") && blogPostPageSource.includes("最終更新日")]);
 checks.push(["blog post fallback rewrites canonical and structured data", blogPostPageSource.includes("slugFromLocation") && blogPostPageSource.includes("history.replaceState") && blogPostPageSource.includes("setCanonical(pageUrl)") && blogPostPageSource.includes("'@type': 'BlogPosting'") && blogPostPageSource.includes("setMeta('og:url', pageUrl)") && blogPostPageSource.includes("setMeta('robots', 'index,follow")]);
 checks.push(["dynamic sitemap lists pretty blog post urls", sitemapFunction.includes("dynamicBlogUrls") && sitemapFunction.includes("BLOG_KV") && sitemapFunction.includes("/blog/${encodeURIComponent(slug)}/") && sitemapFunction.includes("mergeUrls(URLS, await dynamicBlogUrls")]);

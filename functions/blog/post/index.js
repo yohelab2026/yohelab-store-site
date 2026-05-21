@@ -269,7 +269,7 @@ function buildJsonLd(post, slug, fullUrl) {
   const description = plainExcerpt(post, 200);
   const datePublished = post.date || new Date().toISOString().slice(0, 10);
   const dateModified = post.updatedAt || post.modifiedAt || post.date || datePublished;
-  const eyecatch = post.eyecatch ? absoluteUrl(post.eyecatch) : FALLBACK_IMAGE;
+  const eyecatch = cardImageUrl(post.eyecatch || FALLBACK_IMAGE);
 
   const article = {
     "@context": "https://schema.org",
@@ -325,6 +325,24 @@ function absoluteUrl(value) {
   if (value.startsWith("http://") || value.startsWith("https://")) return value;
   if (value.startsWith("/")) return `${SITE_ORIGIN}${value}`;
   return `${SITE_ORIGIN}/${value}`;
+}
+
+function cardImageUrl(value) {
+  const abs = absoluteUrl(value);
+  try {
+    const parsed = new URL(abs);
+    if (parsed.hostname === "images.yohelab.com" || parsed.hostname.endsWith(".r2.dev")) {
+      const key = parsed.pathname.replace(/^\/+/, "");
+      if (/^[\w.-]+\.webp$/i.test(key)) return `${SITE_ORIGIN}/blog-images/${encodeURIComponent(key)}`;
+    }
+    if (parsed.hostname === "yohelab.com" && parsed.pathname === "/api/blog-image") {
+      const key = parsed.searchParams.get("key") || "";
+      if (/^[\w.-]+\.webp$/i.test(key)) return `${SITE_ORIGIN}/blog-images/${encodeURIComponent(key)}`;
+    }
+  } catch {
+    return abs;
+  }
+  return abs;
 }
 
 function normalizeCoverSettings(value) {
@@ -397,7 +415,7 @@ function renderPostHTML(post, slug, categoryMap = buildCategoryMap(DEFAULT_CATEG
   const publishedLabel = formatPostDate(date);
   const updatedLabel = formatPostDate(updatedAt);
   const dateMetaHtml = `<div class="post-date-line"><time datetime="${escAttr(dateTimeAttr(date))}">投稿日 ${escHtml(publishedLabel)}</time><span>/</span><time datetime="${escAttr(dateTimeAttr(updatedAt))}">最終更新日 ${escHtml(updatedLabel || publishedLabel)}</time></div>`;
-  const eyecatchAbs = post.eyecatch ? absoluteUrl(post.eyecatch) : FALLBACK_IMAGE;
+  const eyecatchAbs = cardImageUrl(post.eyecatch || FALLBACK_IMAGE);
   const eyecatchAttr = post.eyecatch ? escAttr(post.eyecatch) : "";
   const coverHtml = post.eyecatch
     ? `<figure class="post-cover"><img src="${eyecatchAttr}" alt="${escAttr(imageAltText(post, post.eyecatch, "cover"))}" style="${escAttr(coverImageStyle(post))}" loading="eager" decoding="async" fetchpriority="high" /></figure>`
@@ -429,12 +447,15 @@ function renderPostHTML(post, slug, categoryMap = buildCategoryMap(DEFAULT_CATEG
   <meta property="og:locale" content="ja_JP" />
   <meta property="og:url" content="${escAttr(fullUrl)}" />
   <meta property="og:image" content="${escAttr(eyecatchAbs)}" />
+  <meta property="og:image:secure_url" content="${escAttr(eyecatchAbs)}" />
+  <meta property="og:image:type" content="image/webp" />
   <meta property="article:published_time" content="${escAttr(date)}T00:00:00+09:00" />
   <meta property="article:modified_time" content="${escAttr(dateTimeAttr(updatedAt))}" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="${escAttr(title)}" />
   <meta name="twitter:description" content="${escAttr(description)}" />
   <meta name="twitter:image" content="${escAttr(eyecatchAbs)}" />
+  <meta name="twitter:image:alt" content="${escAttr(imageAltText(post, post.eyecatch, "cover"))}" />
   <meta name="twitter:site" content="@yohe_lab" />
   <meta name="twitter:creator" content="@yohe_lab" />
   <link rel="icon" type="image/png" href="/yohelab-mascot-v2-20260518-32.png" />
