@@ -7,7 +7,7 @@ const categoryPanelEls = Array.from(document.querySelectorAll('.child-category-p
 let activeFilter = 'all';
 let activeParent = 'ai-news';
 let aiToolTags = ['ai-news','chatgpt','claude','gemini','perplexity','genspark','grok','copilot','midjourney'];
-const aiRumorTags = ['ai-rumor','ai-leak','ai-prediction'];
+const aiRumorTags = ['rumor-chatgpt','rumor-claude','rumor-gemini','rumor-perplexity','rumor-genspark','rumor-grok','rumor-copilot','rumor-midjourney','rumor-other'];
 let categoryGroups = {
   'group:ai-news': aiToolTags,
   'group:ai-rumor': aiRumorTags,
@@ -27,26 +27,40 @@ let categoryParentByKey = {
   midjourney: 'ai-news',
   faq: 'ai-news',
   'ai-rumor': 'ai-rumor',
-  'ai-leak': 'ai-rumor',
-  'ai-prediction': 'ai-rumor',
+  'rumor-chatgpt': 'ai-rumor',
+  'rumor-claude': 'ai-rumor',
+  'rumor-gemini': 'ai-rumor',
+  'rumor-perplexity': 'ai-rumor',
+  'rumor-genspark': 'ai-rumor',
+  'rumor-grok': 'ai-rumor',
+  'rumor-copilot': 'ai-rumor',
+  'rumor-midjourney': 'ai-rumor',
+  'rumor-other': 'ai-rumor',
   earn: 'earn',
   article: 'earn',
   wordpress: 'wordpress',
   template: 'wordpress',
   'home-work': 'home-work',
 };
-let categoryOrder = ['ai-news','chatgpt','claude','gemini','perplexity','genspark','grok','copilot','midjourney','faq','ai-rumor','ai-leak','ai-prediction','earn','template','article','wordpress','home-work'];
+let categoryOrder = ['ai-news','chatgpt','claude','gemini','perplexity','genspark','grok','copilot','midjourney','faq','rumor-chatgpt','rumor-claude','rumor-gemini','rumor-perplexity','rumor-genspark','rumor-grok','rumor-copilot','rumor-midjourney','rumor-other','earn','template','article','wordpress','home-work'];
 let categoryLabels = {
   all: 'すべて',
   'group:ai-news': 'AIニュース全部',
-  'group:ai-rumor': 'AIの噂・予測全部',
+  'group:ai-rumor': 'AIの噂全部',
   'group:earn': '副業ネタ全部',
   'group:wordpress': 'ツール全部',
   'group:home-work': '在宅ヒント全部',
   'ai-news': 'AIニュース',
   'ai-rumor': 'AIの噂',
-  'ai-leak': 'リーク・未発表',
-  'ai-prediction': '今後の予測',
+  'rumor-chatgpt': 'ChatGPT',
+  'rumor-claude': 'Claude',
+  'rumor-gemini': 'Gemini',
+  'rumor-perplexity': 'Perplexity',
+  'rumor-genspark': 'Genspark',
+  'rumor-grok': 'Grok',
+  'rumor-copilot': 'Copilot',
+  'rumor-midjourney': 'Midjourney',
+  'rumor-other': 'その他',
   chatgpt: 'ChatGPT',
   claude: 'Claude',
   gemini: 'Gemini',
@@ -63,7 +77,7 @@ let categoryLabels = {
   template: '記事テンプレ',
 };
 let categoryColors = {};
-const queryOnlyCategoryFilters = new Set(['group:ai-rumor', 'ai-rumor', 'ai-leak', 'ai-prediction']);
+const queryOnlyCategoryFilters = new Set(['group:ai-rumor', 'ai-rumor', 'ai-leak', 'ai-prediction', ...aiRumorTags]);
 const postCategoryOverrides = {
   'ai-news-selling-ideas': ['ai-news', 'chatgpt', 'claude', 'gemini'],
   'faq-source-ai-search': ['ai-news', 'faq'],
@@ -326,9 +340,19 @@ function normalizePostTags(post) {
   if (raw.includes('grok')) tags.add('grok');
   if (raw.includes('copilot') || raw.includes('microsoft')) tags.add('copilot');
   if (raw.includes('midjourney')) tags.add('midjourney');
-  if (raw.includes('噂') || raw.includes('うわさ')) tags.add('ai-rumor');
-  if (raw.includes('リーク') || raw.includes('未発表')) tags.add('ai-leak');
-  if (raw.includes('予測') || raw.includes('今後')) tags.add('ai-prediction');
+  const rumorCue = raw.includes('噂') || raw.includes('うわさ') || raw.includes('リーク') || raw.includes('未発表') || raw.includes('予測') || raw.includes('今後') || tags.has('ai-rumor') || tags.has('ai-leak') || tags.has('ai-prediction');
+  if (rumorCue) {
+    let matchedRumorTool = false;
+    if (raw.includes('chatgpt') || raw.includes('openai')) { tags.add('rumor-chatgpt'); matchedRumorTool = true; }
+    if (raw.includes('claude') || raw.includes('anthropic')) { tags.add('rumor-claude'); matchedRumorTool = true; }
+    if (raw.includes('gemini') || raw.includes('google')) { tags.add('rumor-gemini'); matchedRumorTool = true; }
+    if (raw.includes('perplexity')) { tags.add('rumor-perplexity'); matchedRumorTool = true; }
+    if (raw.includes('genspark')) { tags.add('rumor-genspark'); matchedRumorTool = true; }
+    if (raw.includes('grok')) { tags.add('rumor-grok'); matchedRumorTool = true; }
+    if (raw.includes('copilot') || raw.includes('microsoft')) { tags.add('rumor-copilot'); matchedRumorTool = true; }
+    if (raw.includes('midjourney')) { tags.add('rumor-midjourney'); matchedRumorTool = true; }
+    if (!matchedRumorTool) tags.add('rumor-other');
+  }
   if (raw.includes('wordpress') || raw.includes('文標')) tags.add('wordpress');
   if (raw.includes('副業') || raw.includes('稼')) tags.add('earn');
   if (raw.includes('テンプレ') || raw.includes('比較記事')) tags.add('template');
@@ -345,13 +369,17 @@ function categoryKeyFromTag(value) {
 
 function categoryKeysFromTags(tags) {
   const seen = new Set();
-  return parseTagValues(tags)
-    .map(categoryKeyFromTag)
+  const normalized = parseTagValues(tags).map(categoryKeyFromTag);
+  const keys = normalized
     .filter(key => {
-      if (!key || !categoryParentByKey[key] || seen.has(key)) return false;
+      if (!key || ['ai-rumor', 'ai-leak', 'ai-prediction'].includes(key) || !categoryParentByKey[key] || seen.has(key)) return false;
       seen.add(key);
       return true;
     });
+  if (!keys.some(key => key.startsWith('rumor-')) && normalized.some(key => ['ai-rumor', 'ai-leak', 'ai-prediction'].includes(key))) {
+    keys.push('rumor-other');
+  }
+  return keys;
 }
 
 function parseTagValues(value) {
@@ -497,10 +525,18 @@ function normalizeFilter(value) {
   if (v.startsWith('group:')) return v;
   if (['ai', 'aiニュース', 'ai-news'].includes(v)) return 'ai-news';
   if (['ai-news-all', 'aiニュースすべて', 'aiニュース全部'].includes(v)) return 'group:ai-news';
-  if (['ai-rumor-all', 'aiの噂すべて', 'aiの噂・予測全部'].includes(v)) return 'group:ai-rumor';
-  if (['aiの噂', 'ai噂', 'ai-rumor', 'うわさ'].includes(v)) return 'ai-rumor';
-  if (['リーク', '未発表', 'リーク・未発表', 'ai-leak'].includes(v)) return 'ai-leak';
-  if (['今後の予測', '予測', 'ai-prediction'].includes(v)) return 'ai-prediction';
+  if (['ai-rumor-all', 'aiの噂すべて', 'aiの噂全部', 'aiの噂・予測全部', 'ai-rumor'].includes(v)) return 'group:ai-rumor';
+  if (['aiの噂', 'ai噂', 'うわさ'].includes(v)) return 'group:ai-rumor';
+  if (['リーク', '未発表', 'リーク・未発表', 'ai-leak', '今後の予測', '予測', 'ai-prediction'].includes(v)) return 'rumor-other';
+  if (['rumor-chatgpt', 'chatgptの噂', 'chatgpt噂'].includes(v)) return 'rumor-chatgpt';
+  if (['rumor-claude', 'claudeの噂', 'claude噂'].includes(v)) return 'rumor-claude';
+  if (['rumor-gemini', 'geminiの噂', 'gemini噂'].includes(v)) return 'rumor-gemini';
+  if (['rumor-perplexity', 'perplexityの噂', 'perplexity噂'].includes(v)) return 'rumor-perplexity';
+  if (['rumor-genspark', 'gensparkの噂', 'genspark噂'].includes(v)) return 'rumor-genspark';
+  if (['rumor-grok', 'grokの噂', 'grok噂'].includes(v)) return 'rumor-grok';
+  if (['rumor-copilot', 'copilotの噂', 'copilot噂'].includes(v)) return 'rumor-copilot';
+  if (['rumor-midjourney', 'midjourneyの噂', 'midjourney噂'].includes(v)) return 'rumor-midjourney';
+  if (['rumor-other', 'その他の噂'].includes(v)) return 'rumor-other';
   if (['副業すべて', '副業ネタ全部', 'earn-all'].includes(v)) return 'group:earn';
   if (['wordpressすべて', 'ツール全部', 'wordpress-all'].includes(v)) return 'group:wordpress';
   if (['在宅すべて', '在宅ヒント全部', 'home-work-all'].includes(v)) return 'group:home-work';

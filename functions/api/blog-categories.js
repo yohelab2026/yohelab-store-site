@@ -22,13 +22,19 @@ const DEFAULT_CATEGORIES = [
   },
   {
     key: "ai-rumor",
-    label: "AIの噂・予測",
+    label: "AIの噂",
     color: "#0e7490",
     order: 15,
     children: [
-      { key: "ai-rumor", label: "AIの噂", color: "#0e7490", order: 10 },
-      { key: "ai-leak", label: "リーク・未発表", color: "#f59e0b", order: 20 },
-      { key: "ai-prediction", label: "今後の予測", color: "#475569", order: 30 },
+      { key: "rumor-chatgpt", label: "ChatGPT", color: "#10a37f", order: 10 },
+      { key: "rumor-claude", label: "Claude", color: "#cc785c", order: 20 },
+      { key: "rumor-gemini", label: "Gemini", color: "#4285f4", order: 30 },
+      { key: "rumor-perplexity", label: "Perplexity", color: "#1fb6cf", order: 40 },
+      { key: "rumor-genspark", label: "Genspark", color: "#7c3aed", order: 50 },
+      { key: "rumor-grok", label: "Grok", color: "#222222", order: 60 },
+      { key: "rumor-copilot", label: "Copilot", color: "#2563eb", order: 70 },
+      { key: "rumor-midjourney", label: "Midjourney", color: "#8b5cf6", order: 80 },
+      { key: "rumor-other", label: "その他", color: "#64748b", order: 90 },
     ],
   },
   {
@@ -149,6 +155,11 @@ function mergeDefaultCategories(value) {
         ...defaultParent,
         children: defaultParent.children.map((child) => ({ ...child })),
       });
+      return;
+    }
+
+    if (defaultParentKey === "ai-rumor") {
+      parent.children = defaultParent.children.map((child) => ({ ...child }));
       return;
     }
 

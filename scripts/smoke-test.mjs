@@ -170,6 +170,7 @@ const blogPostPageSource = read(src("blog/post/index.html"));
 const blogPostPage = read(dist("blog/post/index.html"));
 const blogPostApi = read(src("functions/api/blog-post.js"));
 const blogPostsApi = read(src("functions/api/blog-posts.js"));
+const blogCategoriesApi = read(src("functions/api/blog-categories.js"));
 const blogDraftApi = read(src("functions/api/blog-draft.js"));
 const blogTrashApi = read(src("functions/api/blog-trash.js"));
 const blogAuthLib = read(src("functions/lib/blog-auth.js"));
@@ -280,6 +281,7 @@ checks.push(["static blog cards use indexable webp eyecatch images", !blogIndexS
 checks.push(["blog publish requires eyecatch", blogAdmin.includes("アイキャッチ画像を設定してください。") && blogAdmin.includes("coverDrop.scrollIntoView")]);
 checks.push(["blog slugs stay ascii only", blogAdminSource.includes("sanitizeSlugInput") && blogAdminSource.includes('pattern="[a-z0-9._-]*"') && blogPostApi.includes("replace(/[^a-z0-9._-]+/g") && blogDraftApi.includes("replace(/[^a-z0-9._-]+/g")]);
 checks.push(["blog cards are fully clickable", blogIndexSource.includes(".post-card:focus-visible") && blogMain.includes("prepareCardLinks") && blogMain.includes("window.location.href = link.href") && blogMain.includes("role', 'link'")]);
+checks.push(["blog rumor parent uses tool child categories", blogCategoriesApi.includes('label: "AIの噂"') && blogCategoriesApi.includes('key: "rumor-chatgpt"') && blogCategoriesApi.includes('key: "rumor-other"') && blogAdminSource.includes("rumor-perplexity") && blogIndexSource.includes('data-filter="rumor-chatgpt"') && blogIndexSource.includes('data-filter="rumor-other"') && blogMain.includes("const aiRumorTags = ['rumor-chatgpt'") && !blogCategoriesApi.includes('label: "リーク・未発表"') && !blogCategoriesApi.includes('label: "今後の予測"')]);
 checks.push(["blog category tabs respect selected child categories", blogMain.includes("data-category-keys") && blogMain.includes("categoryKeysForPost(post)") && blogMain.includes("return categoryKeysFromTags(post?.tags || []).slice(0, 4)") && blogMain.includes("card.hasAttribute('data-category-keys')") && blogMain.includes("const explicit = categoryKeysFromTags(card.dataset.categoryKeys || '')") && !blogMain.includes("card.dataset.categoryKeys || card.dataset.tags") && blogMain.includes("return keys.some(key => categoryParentByKey[key] === parent)") && blogMain.includes("if (requiredParent) return keys.includes(normalized)")]);
 checks.push(["blog all child filters show every post", blogIndexSource.includes('data-filter="all" href="/blog/">すべて</a>') && blogMain.includes("let activeFilter = 'all'") && blogMain.includes("all: 'すべて'") && blogMain.includes("btn.dataset.filter = 'all'") && blogMain.includes("if (normalized === 'all') return true")]);
 checks.push(["blog card eyecatches are not cropped", blogIndexSource.includes("object-fit:contain") && !blogIndexSource.includes("post-card-img {\n      width:100%;height:240px;object-fit:cover")]);

@@ -591,8 +591,8 @@
     <button class="tab-btn active" type="button" role="tab" id="tab-ai-news" aria-label="AIニュース" aria-selected="true" aria-controls="panel-ai-news" data-tab="ai-news">
       <span class="tab-icon">🤖</span><span class="tab-label">AIニュース</span>
     </button>
-    <button class="tab-btn" type="button" role="tab" id="tab-ai-rumor" aria-label="AIの噂・予測" aria-selected="false" aria-controls="panel-ai-rumor" data-tab="ai-rumor">
-      <span class="tab-icon">🔮</span><span class="tab-label">AIの噂・予測</span>
+    <button class="tab-btn" type="button" role="tab" id="tab-ai-rumor" aria-label="AIの噂" aria-selected="false" aria-controls="panel-ai-rumor" data-tab="ai-rumor">
+      <span class="tab-icon">🔮</span><span class="tab-label">AIの噂</span>
     </button>
     <button class="tab-btn" type="button" role="tab" id="tab-blog" aria-label="副業ブログ" aria-selected="false" aria-controls="panel-blog" data-tab="blog">
       <span class="tab-icon">✍️</span><span class="tab-label">副業ブログ</span>
@@ -735,15 +735,15 @@
 
     </div>
 
-    <!-- [タブ2] AIの噂・予測 -->
+    <!-- [タブ2] AIの噂 -->
     <div class="tab-panel" id="panel-ai-rumor" role="tabpanel" aria-labelledby="tab-ai-rumor">
       <section class="section-card">
         <div class="section-head">
-          <h2><span>🔮</span>AIの噂・予測</h2>
+          <h2><span>🔮</span>AIの噂</h2>
         </div>
         <p style="padding:12px 14px 0;color:var(--muted);font-size:13px;line-height:1.7;">まだ確定していない話、リーク、今後出そうな動きは、AIニュースとは分けて置きます。あとから確定情報に変わったものだけ、AIニュース側へ移します。</p>
         <div id="aiRumorContainer"></div>
-        <p id="aiRumorEmpty" style="margin:12px;padding:12px 14px;border-radius:14px;background:#f7fbff;color:#52645f;font-size:13px;font-weight:700;">AIの噂・予測の記事は、公開したらここに並びます。</p>
+        <p id="aiRumorEmpty" style="margin:12px;padding:12px 14px;border-radius:14px;background:#f7fbff;color:#52645f;font-size:13px;font-weight:700;">AIの噂の記事は、公開したらここに並びます。</p>
       </section>
     </div>
 
@@ -1034,7 +1034,7 @@
       <ul>
         <li><a href="/blog/">ブログ記事一覧</a></li>
         <li><a href="/blog/?category=group:ai-news">AIニュース</a></li>
-        <li><a href="/blog/?category=group:ai-rumor">AIの噂・予測</a></li>
+        <li><a href="/blog/?category=group:ai-rumor">AIの噂</a></li>
         <li><a href="/blog/?category=group:earn">副業ブログ</a></li>
         <li><a href="/blog/category/wordpress/">ツール・商品</a></li>
         <li><a href="/blog/?category=group:home-work">在宅ヒント</a></li>
@@ -1162,8 +1162,15 @@
   const homeCategoryLabels = {
     'ai-news': 'AIニュース',
     'ai-rumor': 'AIの噂',
-    'ai-leak': 'リーク・未発表',
-    'ai-prediction': '今後の予測',
+    'rumor-chatgpt': 'ChatGPT',
+    'rumor-claude': 'Claude',
+    'rumor-gemini': 'Gemini',
+    'rumor-perplexity': 'Perplexity',
+    'rumor-genspark': 'Genspark',
+    'rumor-grok': 'Grok',
+    'rumor-copilot': 'Copilot',
+    'rumor-midjourney': 'Midjourney',
+    'rumor-other': 'その他',
     chatgpt: 'ChatGPT',
     claude: 'Claude',
     gemini: 'Gemini',
@@ -1302,7 +1309,7 @@
   function isAiRumorHomePost(post) {
     const tags = normalizeHomeTags(post.tags);
     const title = String(post?.title || '').toLowerCase();
-    const rumorKeys = ['ai-rumor','ai-leak','ai-prediction'];
+    const rumorKeys = ['ai-rumor','ai-leak','ai-prediction','rumor-chatgpt','rumor-claude','rumor-gemini','rumor-perplexity','rumor-genspark','rumor-grok','rumor-copilot','rumor-midjourney','rumor-other'];
     if (rumorKeys.some(tag => tags.includes(tag))) return true;
     return title.includes('噂') || title.includes('リーク') || title.includes('未発表') || title.includes('予測');
   }
@@ -1314,8 +1321,9 @@
   }
 
   function homeCategoryLabel(tags) {
-    if (tags.includes('ai-leak')) return homeCategoryLabels['ai-leak'] || 'リーク・未発表';
-    if (tags.includes('ai-prediction')) return homeCategoryLabels['ai-prediction'] || '今後の予測';
+    const rumorTag = tags.find(tag => tag.startsWith('rumor-'));
+    if (rumorTag) return homeCategoryLabels[rumorTag] || 'AIの噂';
+    if (tags.includes('ai-leak') || tags.includes('ai-prediction')) return homeCategoryLabels['rumor-other'] || 'その他';
     if (tags.includes('ai-rumor')) return homeCategoryLabels['ai-rumor'] || 'AIの噂';
     if (tags.includes('wordpress')) return homeCategoryLabels.wordpress || 'WordPress';
     if (tags.includes('template')) return homeCategoryLabels.template || '記事テンプレ';
@@ -1325,7 +1333,7 @@
   }
 
   function homeCategoryClass(tags) {
-    if (tags.includes('ai-rumor') || tags.includes('ai-leak') || tags.includes('ai-prediction')) return 'tag-rumor';
+    if (tags.includes('ai-rumor') || tags.includes('ai-leak') || tags.includes('ai-prediction') || tags.some(tag => tag.startsWith('rumor-'))) return 'tag-rumor';
     if (tags.includes('home-work')) return 'tag-home';
     if (tags.includes('earn')) return 'tag-earn';
     if (tags.includes('wordpress') || tags.includes('template')) return 'tag-wp';
