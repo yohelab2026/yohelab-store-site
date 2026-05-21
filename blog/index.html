@@ -123,7 +123,7 @@
     }
     .category-tabs {
       display:grid;
-      grid-template-columns:repeat(4,minmax(0,1fr));
+      grid-template-columns:repeat(5,minmax(0,1fr));
       overflow:hidden;
       border:1px solid #dce7fb;
       border-radius:18px;
@@ -201,6 +201,15 @@
       background:#0b8f72;
       border-color:#0b8f72;
       color:#fff;
+    }
+    .child-category-panel[data-parent-panel="ai-news"] .child-category-list {
+      display:grid;
+      grid-template-columns:repeat(5,minmax(0,1fr));
+    }
+    .child-category-panel[data-parent-panel="ai-news"] .category-child {
+      width:100%;
+      text-align:center;
+      padding:0 8px;
     }
     .filter-status {
       max-width:760px;
@@ -315,9 +324,15 @@
       .post-card-title { font-size:21px; }
       .blog-search-row { grid-template-columns:1fr; }
       .category-tabs { grid-template-columns:repeat(2,minmax(0,1fr)); }
-      .category-tab { min-height:76px; }
-      .category-tab:nth-child(2) { border-right:0; }
-      .category-tab:nth-child(-n+2) { border-bottom:1px solid #e8f1ee; }
+      .category-tab { min-height:76px;border-bottom:1px solid #e8f1ee; }
+      .category-tab:nth-child(even) { border-right:0; }
+      .category-tab:last-child { border-bottom:0; }
+      .child-category-panel[data-parent-panel="ai-news"] .child-category-list {
+        display:flex;
+      }
+      .child-category-panel[data-parent-panel="ai-news"] .category-child {
+        width:auto;
+      }
     }
   </style>
 </head>
@@ -349,7 +364,7 @@
         <p class="blog-intro">AIニュースをブログ記事、note・X投稿、無料テンプレ、WordPressの道具に変えるためのメモです。在宅作業の話は、作業を続けるための補足として扱います。</p>
       </div>
       <section class="featured-guides" aria-labelledby="bunsirube-guides-title">
-        <h2 id="bunsirube-guides-title">まず読む3本</h2>
+        <h2 id="bunsirube-guides-title">文標を買う前に読む3本</h2>
         <p>よへラボの方向性、記事の型、文標の位置づけを先に確認できます。</p>
         <div class="featured-guide-grid">
           <a class="featured-guide-card" href="/blog/ai-news-selling-ideas/">
@@ -379,6 +394,10 @@
             <span class="category-tab-icon">🤖</span>
             <span class="category-tab-label">AIニュース</span>
           </a>
+          <a class="category-tab" role="tab" aria-selected="false" data-parent="ai-rumor" data-filter="group:ai-rumor" href="/blog/?category=group:ai-rumor">
+            <span class="category-tab-icon">🔮</span>
+            <span class="category-tab-label">AIの噂・予測</span>
+          </a>
           <a class="category-tab" role="tab" aria-selected="false" data-parent="earn" data-filter="group:earn" href="/blog/category/earn/">
             <span class="category-tab-icon">✍️</span>
             <span class="category-tab-label">副業ブログ</span>
@@ -405,6 +424,15 @@
               <a class="category-child" data-parent="ai-news" data-filter="grok" href="/blog/category/grok/">Grok</a>
               <a class="category-child" data-parent="ai-news" data-filter="copilot" href="/blog/category/copilot/">Copilot</a>
               <a class="category-child" data-parent="ai-news" data-filter="midjourney" href="/blog/category/midjourney/">Midjourney</a>
+            </div>
+          </div>
+          <div class="child-category-panel" data-parent-panel="ai-rumor">
+            <div class="child-category-title">AIの噂・予測の子カテゴリ</div>
+            <div class="child-category-list">
+              <a class="category-child" data-parent="ai-rumor" data-filter="all" href="/blog/">すべて</a>
+              <a class="category-child" data-parent="ai-rumor" data-filter="ai-rumor" href="/blog/?category=ai-rumor">AIの噂</a>
+              <a class="category-child" data-parent="ai-rumor" data-filter="ai-leak" href="/blog/?category=ai-leak">リーク・未発表</a>
+              <a class="category-child" data-parent="ai-rumor" data-filter="ai-prediction" href="/blog/?category=ai-prediction">今後の予測</a>
             </div>
           </div>
           <div class="child-category-panel" data-parent-panel="earn">
@@ -438,7 +466,7 @@
 
         <!-- ===== 公開記事 ===== -->
         <article class="post-card" data-slug="ai-news-selling-ideas" data-tags="ai-news chatgpt claude gemini perplexity genspark earn article template" data-search="AIニュース ChatGPT Claude Gemini Perplexity Genspark 記事ネタ note X ブログ テンプレ 商品案">
-          <div class="post-card-img-placeholder">AI</div>
+          <img class="post-card-img" src="/assets/blog/faq-source-ai-search/eyecatch.webp" alt="AIニュースを記事ネタに変える方法" loading="lazy" />
           <div class="post-card-body">
             <div class="post-card-meta"><span>2026-05-18</span><a class="post-card-tag" href="/blog/tag/ai-news/">AIニュース</a><a class="post-card-tag" href="/blog/tag/chatgpt/">ChatGPT</a><a class="post-card-tag" href="/blog/tag/claude/">Claude</a><a class="post-card-tag" href="/blog/tag/gemini/">Gemini</a></div>
             <div class="post-card-title">AIニュースを記事ネタに変える方法｜ChatGPT・Claude・Gemini活用</div>
@@ -508,7 +536,7 @@
         </article>
 
         <article class="post-card" data-slug="home-work-rhythm" data-tags="home-work article" data-search="家で作業 運動不足 在宅作業 習慣 ブログ AIニュース WordPress">
-          <div class="post-card-img-placeholder">🏠</div>
+          <img class="post-card-img" src="/assets/blog/sales-page-common-mistakes/eyecatch.webp" alt="家で作業すると運動不足になるので、先に動く仕組みを作る" loading="lazy" />
           <div class="post-card-body">
             <div class="post-card-meta"><span>2026-05-18</span><a class="post-card-tag" href="/blog/tag/home-work/">在宅ワーク</a><a class="post-card-tag" href="/blog/tag/home-work/">続ける習慣</a></div>
             <div class="post-card-title">家で作業すると運動不足になるので、先に動く仕組みを作る</div>
@@ -557,18 +585,14 @@
           <li><a href="/contact/" style="font-size:12px;color:#777;text-decoration:none;">お問い合わせ</a></li>
           <li><a href="https://x.com/yohe_lab" target="_blank" rel="noopener" style="font-size:12px;color:#777;text-decoration:none;">X（旧Twitter）</a></li>
           <li><a href="https://note.com/yohelab" target="_blank" rel="noopener" style="font-size:12px;color:#777;text-decoration:none;">note</a></li>
+          <li><a href="/legal/commerce/" style="font-size:12px;color:#777;text-decoration:none;">特定商取引法に基づく表記</a></li>
           <li><a href="/legal/privacy/" style="font-size:12px;color:#777;text-decoration:none;">プライバシーポリシー</a></li>
           <li><a href="/legal/terms/" style="font-size:12px;color:#777;text-decoration:none;">利用規約</a></li>
         </ul>
       </div>
     </div>
     <div style="max-width:1100px;margin:16px auto 0;padding-top:12px;border-top:1px solid #e8e8e8;font-size:11px;color:#777;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
-      <span>© 2026 よへラボ</span>
-      <div style="display:flex;gap:12px;">
-        <a href="/legal/privacy/" style="color:#777;font-size:11px;text-decoration:none;">プライバシーポリシー</a>
-        <a href="/legal/terms/" style="color:#777;font-size:11px;text-decoration:none;">利用規約</a>
-        <a href="/contact/" style="color:#777;font-size:11px;text-decoration:none;">お問い合わせ</a>
-      </div>
+      <span>© よへラボ / yohelab.com</span>
     </div>
   </footer>
 

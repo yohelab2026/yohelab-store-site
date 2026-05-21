@@ -11,13 +11,13 @@
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="ja_JP" />
   <meta property="og:url" content="https://yohelab.com/" />
-  <meta property="og:image" content="https://yohelab.com/assets/og/yohelab-og.png" />
+  <meta property="og:image" content="https://yohelab.com/assets/og/bunsirube-og.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="よへラボ | 家で働く人のためのAI・副業情報サイト" />
   <meta name="twitter:description" content="AIニュース、副業ブログ、WordPressテーマ（文標）、在宅ワーク習慣。家で稼ぐための道しるべ。" />
-  <meta name="twitter:image" content="https://yohelab.com/assets/og/yohelab-og.png" />
+  <meta name="twitter:image" content="https://yohelab.com/assets/og/bunsirube-og.png" />
   <meta name="twitter:site" content="@yohe_lab" />
   <meta name="twitter:creator" content="@yohe_lab" />
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
@@ -169,9 +169,13 @@
       max-width: 1100px;
       margin: 0 auto;
       display: flex;
+      overflow-x: auto;
+      scrollbar-width: none;
     }
+    .tab-bar-inner::-webkit-scrollbar { display: none; }
     .tab-btn {
       flex: 1;
+      min-width: 92px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -190,7 +194,7 @@
     .tab-btn:hover { background: var(--brand-light); color: var(--brand); }
     .tab-btn.active {
       color: var(--brand);
-      border-bottom-color: var(--brand);
+      border-bottom-color: var(--brand-dark);
       background: var(--brand-light);
     }
     .tab-icon { font-size: 22px; line-height: 1; }
@@ -269,6 +273,7 @@
     .tag-perplexity{ background: #1fb6cf; }
     .tag-genspark  { background: #7c3aed; }
     .tag-ai        { background: #0b8f72; }
+    .tag-rumor     { background: #0e7490; }
     .tag-template  { background: #0b8f72; }
     .tag-wp        { background: #0b8f72; }
     .tag-earn      { background: #f97316; }
@@ -287,6 +292,64 @@
     .news-meta { margin-top: 2px; font-size: 11px; color: var(--muted); }
     .mobile-priority-widgets {
       display: none;
+    }
+    .home-bunsirube-strip {
+      background: linear-gradient(135deg, #0b8f72 0%, #075c4c 100%);
+      color: #fff;
+      border-radius: var(--radius);
+      padding: 18px;
+      margin-bottom: 14px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 14px;
+      align-items: center;
+    }
+    .home-bunsirube-strip h2 {
+      font-size: 20px;
+      line-height: 1.4;
+      margin-bottom: 6px;
+    }
+    .home-bunsirube-strip p {
+      color: rgba(255,255,255,.84);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+    .home-bunsirube-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .home-bunsirube-actions a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 0 14px;
+      border-radius: 6px;
+      background: #fff;
+      color: var(--brand-dark);
+      font-size: 13px;
+      font-weight: 900;
+    }
+    .home-bunsirube-actions a.secondary {
+      background: rgba(255,255,255,.14);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,.36);
+    }
+    .home-bunsirube-note {
+      grid-column: 1 / -1;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255,255,255,.18);
+      color: rgba(255,255,255,.76);
+      font-size: 12px;
+      line-height: 1.8;
+    }
+    .home-bunsirube-note a {
+      color: #fff;
+      font-weight: 900;
+      text-decoration: underline;
+      text-underline-offset: 3px;
     }
     .news-loading {
       padding: 28px 14px;
@@ -457,7 +520,7 @@
     .footer-bottom-links a:hover { color: var(--brand); }
 
     /* ── レスポンシブ ── */
-    @media (max-width: 900px) {
+    @media (max-width: 720px) {
       .header-nav { display: none; }
       .header-right { display: none; }
       .mobile-hamburger { display: block; }
@@ -469,6 +532,8 @@
         gap: 12px;
         margin-bottom: 14px;
       }
+      .home-bunsirube-strip { grid-template-columns: 1fr; }
+      .home-bunsirube-actions { justify-content: flex-start; }
       .product-grid { grid-template-columns: 1fr; }
       .tip-grid { grid-template-columns: 1fr 1fr; }
       .footer-inner { grid-template-columns: 1fr 1fr; gap: 16px; }
@@ -506,7 +571,7 @@
       <a href="/about/">サイトについて</a>
     </nav>
     <div class="header-right">
-      <a class="btn-primary-sm" href="/blog/comparison-article-template/">無料テンプレ →</a>
+      <a class="btn-primary-sm" href="/lp/bunsirube/">文標を見る →</a>
     </div>
     <button class="mobile-hamburger" id="menuBtn" aria-label="メニューを開く">☰</button>
   </div>
@@ -525,6 +590,9 @@
   <div class="tab-bar-inner" role="tablist" aria-label="表示カテゴリ">
     <button class="tab-btn active" type="button" role="tab" id="tab-ai-news" aria-label="AIニュース" aria-selected="true" aria-controls="panel-ai-news" data-tab="ai-news">
       <span class="tab-icon">🤖</span><span class="tab-label">AIニュース</span>
+    </button>
+    <button class="tab-btn" type="button" role="tab" id="tab-ai-rumor" aria-label="AIの噂・予測" aria-selected="false" aria-controls="panel-ai-rumor" data-tab="ai-rumor">
+      <span class="tab-icon">🔮</span><span class="tab-label">AIの噂・予測</span>
     </button>
     <button class="tab-btn" type="button" role="tab" id="tab-blog" aria-label="副業ブログ" aria-selected="false" aria-controls="panel-blog" data-tab="blog">
       <span class="tab-icon">✍️</span><span class="tab-label">副業ブログ</span>
@@ -545,10 +613,27 @@
   <div class="main-col">
     <h1 id="home-title" class="sr-only">家で働く人・副業をしたい人のためのAI・副業情報サイト</h1>
 
+    <section class="home-bunsirube-strip" aria-labelledby="home-bunsirube-title">
+      <div>
+        <h2 id="home-bunsirube-title">比較記事もレビューも、7種類のテンプレから始める</h2>
+        <p>文標は、AIニュースから見つけたネタをFAQ・比較表・CTAつきの記事に残すためのWordPressテーマです。記事を書く前に止まる時間を減らすため、購入前に読める確認メモも用意しています。</p>
+      </div>
+      <div class="home-bunsirube-actions">
+        <a href="https://buy.stripe.com/bJeaEPfTN2ze2Cubvb73G0e?client_reference_id=wordpress-theme">今すぐ文標を試す</a>
+        <a class="secondary" href="/blog/bunsirube-before-install/">購入前に読める確認メモ</a>
+      </div>
+      <div class="home-bunsirube-note">
+        先行提供 ¥5,500（税込）。表示価格はすべて税込です。
+        <a href="/lp/bunsirube/updates/">更新履歴</a>、
+        <a href="/lp/bunsirube/#fit-check">向き不向き</a>も購入前に確認できます。
+        市場メモ: WordPressは全Webの42.2%、CMS市場シェアは59.6%。販売導線は200+国・地域に届けられる形を意識していますが、検索順位やAI表示を保証する数字ではありません。
+      </div>
+    </section>
+
     <div class="mobile-priority-widgets" aria-label="スマホ向けおすすめ">
       <section class="section-card">
         <div class="section-head">
-          <h2><span>🔥</span>先に読む記事</h2>
+          <h2><span>🧭</span>先に読む記事</h2>
         </div>
         <a class="pickup-item" href="/blog/comparison-article-template/">
           <span class="pickup-num top3">1</span>
@@ -645,8 +730,21 @@
             </div>
           </a>
         </div>
+        <p id="aiFilterEmpty" style="display:none;margin:12px;padding:12px 14px;border-radius:14px;background:#f8f3ea;color:#6b5b45;font-size:13px;font-weight:700;">このAIツールの記事はまだ準備中です。先に「すべて」や近いツールの記事を見てください。</p>
       </section>
 
+    </div>
+
+    <!-- [タブ2] AIの噂・予測 -->
+    <div class="tab-panel" id="panel-ai-rumor" role="tabpanel" aria-labelledby="tab-ai-rumor">
+      <section class="section-card">
+        <div class="section-head">
+          <h2><span>🔮</span>AIの噂・予測</h2>
+        </div>
+        <p style="padding:12px 14px 0;color:var(--muted);font-size:13px;line-height:1.7;">まだ確定していない話、リーク、今後出そうな動きは、AIニュースとは分けて置きます。あとから確定情報に変わったものだけ、AIニュース側へ移します。</p>
+        <div id="aiRumorContainer"></div>
+        <p id="aiRumorEmpty" style="margin:12px;padding:12px 14px;border-radius:14px;background:#f7fbff;color:#52645f;font-size:13px;font-weight:700;">AIの噂・予測の記事は、公開したらここに並びます。</p>
+      </section>
     </div>
 
     <!-- [タブ2] 副業ブログ -->
@@ -734,11 +832,11 @@
             <div class="product-card-desc">AI検索時代に刺さるFAQ記事の書き方と構成例。</div>
             <div class="product-card-price">無料</div>
           </a>
-          <a class="product-card" href="/apps/research-writer/">
-            <div class="product-card-icon">🔬</div>
-            <div class="product-card-name">Research Writer</div>
-            <div class="product-card-desc">AIを使った記事リサーチ・執筆補助アプリ。</div>
-            <div class="product-card-price">無料（ベータ）</div>
+          <a class="product-card" href="/blog/ai-news-selling-ideas/">
+            <div class="product-card-icon">種</div>
+            <div class="product-card-name">AIニュース活用メモ</div>
+            <div class="product-card-desc">AIニュースを記事、投稿、テンプレ、小さな商品案に分けて残すための整理メモ。</div>
+            <div class="product-card-price">無料</div>
           </a>
           <a class="product-card" href="/lp/bunsirube/demo/">
             <div class="product-card-icon">🖥️</div>
@@ -760,13 +858,28 @@
     <div class="tab-panel" id="panel-workout" role="tabpanel" aria-labelledby="tab-workout">
       <section class="section-card">
         <div class="section-head">
-          <h2><span>🏠</span>在宅カテゴリの記事</h2>
+          <h2><span>🏠</span>在宅作業を続ける入口</h2>
         </div>
+        <p style="padding:12px 14px 0;color:var(--muted);font-size:13px;line-height:1.7;">在宅ヒントは、記事数を増やすより先に「家で作業を続ける土台」をまとめています。AIニュースを記事やテンプレに変える前の、体力とリズムの置き場所です。</p>
         <a class="news-item" href="/blog/home-work-rhythm/">
           <span class="news-tag tag-home" data-category-label="home-work">在宅ワーク</span>
           <div class="news-body">
             <div class="news-title">在宅作業の運動不足対策</div>
             <div class="news-meta">2026-05-18 · 在宅ヒント</div>
+          </div>
+        </a>
+        <a class="news-item" href="/blog/ai-news-selling-ideas/">
+          <span class="news-tag tag-ai" data-category-label="ai-news">AIニュース</span>
+          <div class="news-body">
+            <div class="news-title">家で調べたAIニュースを、記事ネタに変える流れ</div>
+            <div class="news-meta">2026-05-18 · 作業メモ</div>
+          </div>
+        </a>
+        <a class="news-item" href="/blog/comparison-article-template/">
+          <span class="news-tag tag-template" data-category-label="template">記事テンプレ</span>
+          <div class="news-body">
+            <div class="news-title">在宅作業で迷わないための比較記事テンプレ</div>
+            <div class="news-meta">2026-05-04 · 作業メモ</div>
           </div>
         </a>
       </section>
@@ -864,7 +977,7 @@
     <!-- ツール・商品（サイドバー） -->
     <section class="section-card">
       <div class="section-head">
-        <h2><span>📦</span>注目ツール</h2>
+        <h2><span>🧰</span>注目ツール</h2>
         <a class="more" href="/lp/bunsirube/">文標の詳細を見る →</a>
       </div>
       <div style="padding:10px 14px;display:grid;gap:8px;">
@@ -872,7 +985,7 @@
           <div style="flex-shrink:0;width:40px;height:40px;border-radius:8px;background:var(--brand-light);display:grid;place-items:center;font-size:20px;font-weight:900;color:var(--brand);border:1px solid rgba(11,143,114,.2);">文</div>
           <div style="flex:1;min-width:0;">
             <div style="font-size:13px;font-weight:900;">文標（ぶんしるべ）</div>
-            <div style="font-size:11px;color:var(--muted);">WordPressテーマ ¥5,500</div>
+            <div style="font-size:11px;color:var(--muted);">WordPressテーマ ¥5,500（税込）</div>
           </div>
         </a>
         <a href="/blog/comparison-article-template/" style="display:flex;align-items:center;gap:10px;padding:10px;border:1px solid var(--border);border-radius:var(--radius);transition:border-color .15s,background .15s;" onmouseover="this.style.borderColor='var(--brand)';this.style.background='var(--brand-light)'" onmouseout="this.style.borderColor='var(--border)';this.style.background=''">
@@ -921,8 +1034,9 @@
       <ul>
         <li><a href="/blog/">ブログ記事一覧</a></li>
         <li><a href="/blog/?category=group:ai-news">AIニュース</a></li>
+        <li><a href="/blog/?category=group:ai-rumor">AIの噂・予測</a></li>
         <li><a href="/blog/?category=group:earn">副業ブログ</a></li>
-        <li><a href="/?tab=tools">ツール・商品</a></li>
+        <li><a href="/blog/category/wordpress/">ツール・商品</a></li>
         <li><a href="/blog/?category=group:home-work">在宅ヒント</a></li>
       </ul>
     </div>
@@ -932,7 +1046,7 @@
         <li><a href="/lp/bunsirube/">文標（WPテーマ）</a></li>
         <li><a href="/lp/bunsirube/demo/">文標デモ</a></li>
         <li><a href="/blog/comparison-article-template/">比較記事テンプレ（無料）</a></li>
-        <li><a href="/apps/research-writer/">Research Writer</a></li>
+        <li><a href="/blog/ai-news-selling-ideas/">AIニュース活用メモ</a></li>
       </ul>
     </div>
     <div class="footer-col">
@@ -942,18 +1056,16 @@
         <li><a href="/contact/">お問い合わせ</a></li>
         <li><a href="https://x.com/yohe_lab" target="_blank" rel="noopener me">X（旧Twitter）</a></li>
         <li><a href="https://note.com/yohelab" target="_blank" rel="noopener">note</a></li>
+        <li><a href="/legal/commerce/">特定商取引法に基づく表記</a></li>
         <li><a href="/legal/privacy/">プライバシーポリシー</a></li>
         <li><a href="/legal/terms/">利用規約</a></li>
+        <li><a href="/lp/bunsirube/affiliate/">アフィリエイト</a></li>
+        <li><a href="/legal/affiliate-terms/">アフィリエイト規約</a></li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
-    <span>© 2026 よへラボ</span>
-    <div class="footer-bottom-links">
-      <a href="/legal/privacy/">プライバシーポリシー</a>
-      <a href="/legal/terms/">利用規約</a>
-      <a href="/contact/">お問い合わせ</a>
-    </div>
+    <span>© よへラボ / yohelab.com</span>
   </div>
 </footer>
 
@@ -1001,11 +1113,11 @@
 
   // ── AIカテゴリフィルター（内部リンク方式・外部通信なし） ──
   const aiFilterBtns = document.querySelectorAll('.ai-filter-btn');
-  const aiNewsItems = document.querySelectorAll('#aiNewsContainer .news-item');
 
   aiFilterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       const target = btn.dataset.ai;
+      const currentAiNewsItems = document.querySelectorAll('#aiNewsContainer .news-item');
 
       // ボタンのスタイル切り替え
       aiFilterBtns.forEach(b => {
@@ -1020,7 +1132,7 @@
       btn.style.borderColor = '#0b8f72';
 
       // 記事の表示・非表示
-      aiNewsItems.forEach(item => {
+      currentAiNewsItems.forEach(item => {
         if (target === 'all') {
           item.style.display = '';
         } else {
@@ -1028,11 +1140,30 @@
           item.style.display = tags.includes(target) ? '' : 'none';
         }
       });
+
+      const empty = document.getElementById('aiFilterEmpty');
+      if (empty) {
+        const visibleCount = [...currentAiNewsItems].filter(item => item.style.display !== 'none').length;
+        empty.style.display = visibleCount ? 'none' : 'block';
+      }
     });
   });
 
+  function formatHomeDateText(text) {
+    return String(text || '').replace(/\b(20\d{2})-(\d{2})-(\d{2})\b/g, (_, y, m, d) => `${y}年${Number(m)}月${Number(d)}日`);
+  }
+
+  function formatHomeDates(root = document) {
+    root.querySelectorAll('.news-meta').forEach(el => {
+      el.textContent = formatHomeDateText(el.textContent);
+    });
+  }
+
   const homeCategoryLabels = {
     'ai-news': 'AIニュース',
+    'ai-rumor': 'AIの噂',
+    'ai-leak': 'リーク・未発表',
+    'ai-prediction': '今後の予測',
     chatgpt: 'ChatGPT',
     claude: 'Claude',
     gemini: 'Gemini',
@@ -1068,8 +1199,9 @@
   // ── 管理画面から公開した記事をトップへ反映 ──
   async function loadPublishedPostsForHome() {
     const newsContainer = document.getElementById('aiNewsContainer');
+    const rumorContainer = document.getElementById('aiRumorContainer');
     const latestBlogList = document.querySelector('#panel-blog .section-card .section-head + div');
-    if (!newsContainer && !latestBlogList) return;
+    if (!newsContainer && !rumorContainer && !latestBlogList) return;
 
     try {
       const res = await fetch('/api/blog-posts?page=1', { cache: 'no-store' });
@@ -1085,10 +1217,25 @@
       if (newsContainer) {
         const existingNews = new Set([...newsContainer.querySelectorAll('a[href]')].map(a => a.getAttribute('href')));
         const newsHtml = dynamicPosts
+          .filter(post => isAiNewsHomePost(post) && !isAiRumorHomePost(post))
           .filter(post => !existingNews.has(dynamicPostUrl(post)))
           .map(renderDynamicNewsItem)
           .join('');
         if (newsHtml) newsContainer.insertAdjacentHTML('afterbegin', newsHtml);
+      }
+
+      if (rumorContainer) {
+        const existingRumors = new Set([...rumorContainer.querySelectorAll('a[href]')].map(a => a.getAttribute('href')));
+        const rumorHtml = dynamicPosts
+          .filter(isAiRumorHomePost)
+          .filter(post => !existingRumors.has(dynamicPostUrl(post)))
+          .map(renderDynamicNewsItem)
+          .join('');
+        if (rumorHtml) {
+          rumorContainer.insertAdjacentHTML('afterbegin', rumorHtml);
+          const empty = document.getElementById('aiRumorEmpty');
+          if (empty) empty.style.display = 'none';
+        }
       }
 
       if (latestBlogList) {
@@ -1118,7 +1265,7 @@
             <span class="news-tag ${homeCategoryClass(tags)}">${escapeHtml(label)}</span>
             <div class="news-body">
               <div class="news-title">${escapeHtml(post.title || '無題の記事')}</div>
-              <div class="news-meta">${escapeHtml(post.date || '')} · ${escapeHtml(label)}</div>
+              <div class="news-meta">${escapeHtml(formatHomeDateText(post.date || ''))} · ${escapeHtml(label)}</div>
             </div>
           </a>`;
   }
@@ -1131,7 +1278,7 @@
             <span class="news-tag ${homeCategoryClass(tags)}">${escapeHtml(label)}</span>
             <div class="news-body">
               <div class="news-title">${escapeHtml(post.title || '無題の記事')}</div>
-              <div class="news-meta">${escapeHtml(post.date || '')} · ${escapeHtml(label)}</div>
+              <div class="news-meta">${escapeHtml(formatHomeDateText(post.date || ''))} · ${escapeHtml(label)}</div>
             </div>
           </a>`;
   }
@@ -1152,6 +1299,14 @@
     return aiKeys.some(key => title.includes(key));
   }
 
+  function isAiRumorHomePost(post) {
+    const tags = normalizeHomeTags(post.tags);
+    const title = String(post?.title || '').toLowerCase();
+    const rumorKeys = ['ai-rumor','ai-leak','ai-prediction'];
+    if (rumorKeys.some(tag => tags.includes(tag))) return true;
+    return title.includes('噂') || title.includes('リーク') || title.includes('未発表') || title.includes('予測');
+  }
+
   function normalizeHomeTags(tags) {
     return (Array.isArray(tags) ? tags : String(tags || '').split(/[\n,、]/))
       .map(tag => String(tag || '').trim().toLowerCase())
@@ -1159,6 +1314,9 @@
   }
 
   function homeCategoryLabel(tags) {
+    if (tags.includes('ai-leak')) return homeCategoryLabels['ai-leak'] || 'リーク・未発表';
+    if (tags.includes('ai-prediction')) return homeCategoryLabels['ai-prediction'] || '今後の予測';
+    if (tags.includes('ai-rumor')) return homeCategoryLabels['ai-rumor'] || 'AIの噂';
     if (tags.includes('wordpress')) return homeCategoryLabels.wordpress || 'WordPress';
     if (tags.includes('template')) return homeCategoryLabels.template || '記事テンプレ';
     if (tags.includes('home-work')) return homeCategoryLabels['home-work'] || '在宅ワーク';
@@ -1167,6 +1325,7 @@
   }
 
   function homeCategoryClass(tags) {
+    if (tags.includes('ai-rumor') || tags.includes('ai-leak') || tags.includes('ai-prediction')) return 'tag-rumor';
     if (tags.includes('home-work')) return 'tag-home';
     if (tags.includes('earn')) return 'tag-earn';
     if (tags.includes('wordpress') || tags.includes('template')) return 'tag-wp';
@@ -1182,7 +1341,25 @@
       .replace(/'/g, '&#39;');
   }
 
-  loadHomeCategorySettings().finally(loadPublishedPostsForHome);
+  formatHomeDates();
+  loadHomeCategorySettings().finally(() => {
+    loadPublishedPostsForHome().finally(formatHomeDates);
+  });
+</script>
+
+<script>
+/* Affiliate referral tracking */
+(function(){
+  var REF_RE=/^AFF-[A-Z0-9]{4}-[A-Z0-9]{4}$/,COOKIE_NAME='yohelab_aff',DAYS=30;
+  function getCookie(n){var m=document.cookie.match(new RegExp('(?:^|;\\s*)'+n+'=([^;]+)'));return m?decodeURIComponent(m[1]):null;}
+  function setCookie(n,v,d){document.cookie=n+'='+encodeURIComponent(v)+'; expires='+new Date(Date.now()+d*864e5).toUTCString()+'; path=/; SameSite=Lax';}
+  var p=new URLSearchParams(location.search), ref=(p.get('ref')||'').toUpperCase(), ex=getCookie(COOKIE_NAME), active=null;
+  if(REF_RE.test(ref)){active=ref;setCookie(COOKIE_NAME,ref,DAYS);navigator.sendBeacon&&navigator.sendBeacon('/api/affiliate-click',new Blob([JSON.stringify({code:ref,path:location.pathname})],{type:'application/json'}));}
+  else if(REF_RE.test(ex)){active=ex;}
+  if(!active)return;
+  function decorate(){document.querySelectorAll('a[href*="buy.stripe.com"]').forEach(function(a){try{var u=new URL(a.href);if(u.host!=='buy.stripe.com')return;var c=u.searchParams.get('client_reference_id')||'';if(c.indexOf(':'+active)!==-1)return;c=c.replace(/:AFF-[A-Z0-9-]+$/,'');u.searchParams.set('client_reference_id',c+':'+active);a.href=u.toString();}catch(e){}});}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',decorate);else decorate();
+})();
 </script>
 
 </body>

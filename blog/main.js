@@ -7,8 +7,10 @@ const categoryPanelEls = Array.from(document.querySelectorAll('.child-category-p
 let activeFilter = 'all';
 let activeParent = 'ai-news';
 let aiToolTags = ['ai-news','chatgpt','claude','gemini','perplexity','genspark','grok','copilot','midjourney'];
+const aiRumorTags = ['ai-rumor','ai-leak','ai-prediction'];
 let categoryGroups = {
   'group:ai-news': aiToolTags,
+  'group:ai-rumor': aiRumorTags,
   'group:earn': ['earn','article'],
   'group:wordpress': ['wordpress','template'],
   'group:home-work': ['home-work'],
@@ -24,20 +26,27 @@ let categoryParentByKey = {
   copilot: 'ai-news',
   midjourney: 'ai-news',
   faq: 'ai-news',
+  'ai-rumor': 'ai-rumor',
+  'ai-leak': 'ai-rumor',
+  'ai-prediction': 'ai-rumor',
   earn: 'earn',
   article: 'earn',
   wordpress: 'wordpress',
   template: 'wordpress',
   'home-work': 'home-work',
 };
-let categoryOrder = ['ai-news','chatgpt','claude','gemini','perplexity','genspark','grok','copilot','midjourney','faq','earn','template','article','wordpress','home-work'];
+let categoryOrder = ['ai-news','chatgpt','claude','gemini','perplexity','genspark','grok','copilot','midjourney','faq','ai-rumor','ai-leak','ai-prediction','earn','template','article','wordpress','home-work'];
 let categoryLabels = {
   all: 'すべて',
   'group:ai-news': 'AIニュース全部',
+  'group:ai-rumor': 'AIの噂・予測全部',
   'group:earn': '副業ネタ全部',
   'group:wordpress': 'ツール全部',
   'group:home-work': '在宅ヒント全部',
   'ai-news': 'AIニュース',
+  'ai-rumor': 'AIの噂',
+  'ai-leak': 'リーク・未発表',
+  'ai-prediction': '今後の予測',
   chatgpt: 'ChatGPT',
   claude: 'Claude',
   gemini: 'Gemini',
@@ -54,6 +63,7 @@ let categoryLabels = {
   template: '記事テンプレ',
 };
 let categoryColors = {};
+const queryOnlyCategoryFilters = new Set(['group:ai-rumor', 'ai-rumor', 'ai-leak', 'ai-prediction']);
 const postCategoryOverrides = {
   'ai-news-selling-ideas': ['ai-news', 'chatgpt', 'claude', 'gemini'],
   'faq-source-ai-search': ['ai-news', 'faq'],
@@ -137,6 +147,10 @@ function esc(str) {
   return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
+function formatDisplayDate(value) {
+  return String(value || '').replace(/\b(20\d{2})-(\d{2})-(\d{2})\b/g, (_, y, m, d) => `${y}年${Number(m)}月${Number(d)}日`);
+}
+
 async function loadCategorySettings() {
   try {
     const res = await fetch('/api/blog-categories', { cache: 'no-store' });
@@ -173,7 +187,9 @@ function applyCategorySettings(categories) {
   });
 
   categoryGroups = { ...categoryGroups, ...groups };
-  categoryOrder = order.length ? order : categoryOrder;
+  categoryOrder = order.length
+    ? [...order, ...categoryOrder.filter(key => !order.includes(key))]
+    : categoryOrder;
   categoryParentByKey = { ...categoryParentByKey, ...parents };
   aiToolTags = categoryGroups['group:ai-news'] || aiToolTags;
   categoryLabels = labels;
@@ -218,12 +234,15 @@ function postUrl(slug) {
 
 function categoryUrl(filter) {
   const value = normalizeFilter(filter);
+  if (queryOnlyCategoryFilters.has(value)) return `/blog/?category=${encodeURIComponent(value)}`;
   if (value.startsWith('group:')) return `/blog/category/${encodeURIComponent(value.replace('group:', ''))}/`;
   return `/blog/category/${encodeURIComponent(value)}/`;
 }
 
 function tagUrl(tag) {
-  return `/blog/tag/${encodeURIComponent(normalizeFilter(tag))}/`;
+  const value = normalizeFilter(tag);
+  if (queryOnlyCategoryFilters.has(value)) return `/blog/?category=${encodeURIComponent(value)}`;
+  return `/blog/tag/${encodeURIComponent(value)}/`;
 }
 
 async function loadPosts(page = 1) {
@@ -307,6 +326,9 @@ function normalizePostTags(post) {
   if (raw.includes('grok')) tags.add('grok');
   if (raw.includes('copilot') || raw.includes('microsoft')) tags.add('copilot');
   if (raw.includes('midjourney')) tags.add('midjourney');
+  if (raw.includes('噂') || raw.includes('うわさ')) tags.add('ai-rumor');
+  if (raw.includes('リーク') || raw.includes('未発表')) tags.add('ai-leak');
+  if (raw.includes('予測') || raw.includes('今後')) tags.add('ai-prediction');
   if (raw.includes('wordpress') || raw.includes('文標')) tags.add('wordpress');
   if (raw.includes('副業') || raw.includes('稼')) tags.add('earn');
   if (raw.includes('テンプレ') || raw.includes('比較記事')) tags.add('template');
@@ -421,7 +443,7 @@ function render(posts, hasLink = true) {
         ${img}
         <div class="post-card-body">
           <div class="post-card-meta">
-            <span>${esc(post.date)}</span>
+            <span>${esc(formatDisplayDate(post.date))}</span>
             ${tags}
           </div>
           <div class="post-card-title">${esc(post.title)}</div>
@@ -475,6 +497,10 @@ function normalizeFilter(value) {
   if (v.startsWith('group:')) return v;
   if (['ai', 'aiニュース', 'ai-news'].includes(v)) return 'ai-news';
   if (['ai-news-all', 'aiニュースすべて', 'aiニュース全部'].includes(v)) return 'group:ai-news';
+  if (['ai-rumor-all', 'aiの噂すべて', 'aiの噂・予測全部'].includes(v)) return 'group:ai-rumor';
+  if (['aiの噂', 'ai噂', 'ai-rumor', 'うわさ'].includes(v)) return 'ai-rumor';
+  if (['リーク', '未発表', 'リーク・未発表', 'ai-leak'].includes(v)) return 'ai-leak';
+  if (['今後の予測', '予測', 'ai-prediction'].includes(v)) return 'ai-prediction';
   if (['副業すべて', '副業ネタ全部', 'earn-all'].includes(v)) return 'group:earn';
   if (['wordpressすべて', 'ツール全部', 'wordpress-all'].includes(v)) return 'group:wordpress';
   if (['在宅すべて', '在宅ヒント全部', 'home-work-all'].includes(v)) return 'group:home-work';

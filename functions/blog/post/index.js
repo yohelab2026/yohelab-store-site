@@ -26,6 +26,11 @@ const DEFAULT_CATEGORY_TREE = [
     { key: "copilot", label: "Copilot" },
     { key: "midjourney", label: "Midjourney" },
   ] },
+  { key: "ai-rumor", label: "AIの噂・予測", children: [
+    { key: "ai-rumor", label: "AIの噂" },
+    { key: "ai-leak", label: "リーク・未発表" },
+    { key: "ai-prediction", label: "今後の予測" },
+  ] },
   { key: "earn", label: "副業ブログ", children: [
     { key: "earn", label: "収益化ネタ" },
     { key: "article", label: "記事づくり" },
@@ -138,7 +143,7 @@ async function readCategoryMap(kv) {
 
 function buildCategoryMap(categories) {
   const map = new Map();
-  const source = Array.isArray(categories) && categories.length ? categories : DEFAULT_CATEGORY_TREE;
+  const source = mergeDefaultCategoryTree(Array.isArray(categories) && categories.length ? categories : DEFAULT_CATEGORY_TREE);
   source.forEach((parent) => {
     const parentKey = sanitizeCategoryKey(parent?.key);
     const parentLabel = sanitizeCategoryLabel(parent?.label);
@@ -150,6 +155,35 @@ function buildCategoryMap(categories) {
     });
   });
   return map;
+}
+
+function mergeDefaultCategoryTree(value) {
+  const source = Array.isArray(value) && value.length ? value : DEFAULT_CATEGORY_TREE;
+  const parents = source.map((parent) => ({
+    ...parent,
+    children: Array.isArray(parent?.children) ? parent.children.map((child) => ({ ...child })) : [],
+  }));
+
+  DEFAULT_CATEGORY_TREE.forEach((defaultParent) => {
+    const defaultParentKey = sanitizeCategoryKey(defaultParent.key);
+    const parent = parents.find((item) => sanitizeCategoryKey(item?.key) === defaultParentKey);
+    if (!parent) {
+      parents.push({
+        ...defaultParent,
+        children: defaultParent.children.map((child) => ({ ...child })),
+      });
+      return;
+    }
+
+    if (!Array.isArray(parent.children)) parent.children = [];
+    const childKeys = new Set(parent.children.map((child) => sanitizeCategoryKey(child?.key)).filter(Boolean));
+    defaultParent.children.forEach((defaultChild) => {
+      const childKey = sanitizeCategoryKey(defaultChild.key);
+      if (!childKeys.has(childKey)) parent.children.push({ ...defaultChild });
+    });
+  });
+
+  return parents;
 }
 
 function sanitizeCategoryKey(value) {
@@ -490,6 +524,15 @@ function renderPostHTML(post, slug, categoryMap = buildCategoryMap(DEFAULT_CATEG
     .post-body blockquote { border-left:4px solid var(--green); padding:14px 20px; background:#f0f8f4; border-radius:0 12px 12px 0; margin:24px 0; color:var(--muted); font-size:16px; }
     .post-body img { max-width:100%; height:auto; border-radius:12px; margin:24px 0; display:block; }
     .post-body a { color:var(--green); text-decoration:underline; }
+    .post-body .blog-link-card { display:grid;grid-template-columns:minmax(0,1fr) 148px;gap:16px;align-items:stretch;margin:28px 0;padding:16px;border:1px solid var(--border);border-radius:18px;background:#fff;color:var(--text);text-decoration:none;box-shadow:0 12px 30px rgba(14,55,42,.07); }
+    .post-body .blog-link-card:hover { border-color:#bde7d7;background:#fbfffd; }
+    .post-body .blog-link-card-main { min-width:0;display:grid;gap:7px;align-content:center; }
+    .post-body .blog-link-card-site { color:var(--green);font-size:12px;font-weight:900;line-height:1.4; }
+    .post-body .blog-link-card-title { color:var(--text);font-size:16px;font-weight:900;line-height:1.55; }
+    .post-body .blog-link-card-desc { color:var(--muted);font-size:13px;line-height:1.65;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden; }
+    .post-body .blog-link-card-url { color:#78908a;font-size:12px;line-height:1.4;overflow:hidden;text-overflow:ellipsis;white-space:nowrap; }
+    .post-body .blog-link-card-thumb { border-radius:14px;overflow:hidden;background:#e8f7f1;min-height:104px;display:grid;place-items:center;color:var(--green);font-size:24px;font-weight:900; }
+    .post-body .blog-link-card-thumb img { width:100%;height:100%;object-fit:cover;display:block;margin:0;border-radius:0; }
     .post-footer { margin-top:56px; padding-top:28px; border-top:1px solid var(--border); }
     .post-footer-inner { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px; }
     .back-link { display:inline-flex; align-items:center; gap:6px; color:var(--muted); font-size:14px; font-weight:700; text-decoration:none; transition:color .2s; }
@@ -501,6 +544,8 @@ function renderPostHTML(post, slug, categoryMap = buildCategoryMap(DEFAULT_CATEG
       .post-outer { padding:32px 18px 80px; }
       .post-cover { border-radius:22px;margin-bottom:20px; }
       .post-hero { padding:24px 20px;border-radius:22px; }
+      .post-body .blog-link-card { grid-template-columns:1fr; }
+      .post-body .blog-link-card-thumb { min-height:150px; }
     }
   </style>
 </head>

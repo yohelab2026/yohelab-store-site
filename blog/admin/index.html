@@ -244,6 +244,31 @@
       content:"";position:absolute;left:50%;top:50%;width:3px;height:30px;transform:translate(-50%,-50%);
       border-left:2px solid rgba(255,255,255,.9);border-right:2px solid rgba(255,255,255,.9);
     }
+    .body-editor .blog-link-card {
+      display:grid;grid-template-columns:minmax(0,1fr) 128px;gap:14px;align-items:stretch;
+      margin:22px 0;padding:14px;border:1px solid var(--border);border-radius:16px;background:#fff;
+      color:var(--text);text-decoration:none;box-shadow:0 10px 28px rgba(14,55,42,.06);
+    }
+    .body-editor .blog-link-card:hover { border-color:#bde7d7;background:#fbfffd; }
+    .body-editor .blog-link-card-main { min-width:0;display:grid;gap:6px;align-content:center; }
+    .body-editor .blog-link-card-site { color:var(--green);font-size:12px;font-weight:900;line-height:1.4; }
+    .body-editor .blog-link-card-title { font-size:15px;font-weight:900;line-height:1.55; }
+    .body-editor .blog-link-card-desc { color:var(--muted);font-size:12px;line-height:1.65;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden; }
+    .body-editor .blog-link-card-url { color:#78908a;font-size:11px;line-height:1.4;overflow:hidden;text-overflow:ellipsis;white-space:nowrap; }
+    .body-editor .blog-link-card-thumb { border-radius:12px;overflow:hidden;background:#e8f7f1;min-height:92px;display:grid;place-items:center;color:var(--green);font-size:22px;font-weight:900; }
+    .body-editor .blog-link-card-thumb img { width:100%;height:100%;object-fit:cover;display:block; }
+    .body-editor .blog-link-card.is-loading { opacity:.72; }
+    .editor-context-menu {
+      position:fixed;z-index:80;min-width:190px;padding:8px;border:1px solid var(--border);
+      border-radius:14px;background:#fff;box-shadow:0 18px 42px rgba(14,55,42,.18);
+      display:none;
+    }
+    .editor-context-menu.is-open { display:grid;gap:4px; }
+    .editor-context-menu button {
+      border:0;background:transparent;color:var(--text);border-radius:10px;padding:10px 12px;
+      text-align:left;font:inherit;font-size:13px;font-weight:900;cursor:pointer;
+    }
+    .editor-context-menu button:hover { background:#effaf6;color:var(--green); }
 
     /* メタ設定パネル（折りたたみ） */
     .meta-toggle { display:flex;align-items:center;gap:8px;cursor:pointer;color:var(--muted);font-size:14px;font-weight:700;margin:32px 0 0;user-select:none;border:none;background:none;padding:0; }
@@ -289,6 +314,8 @@
       .editor-toolbar-head { align-items:stretch;flex-direction:column; }
       .editor-mode-tabs { justify-content:flex-end; }
       .cover-adjust-grid { grid-template-columns:1fr; }
+      .body-editor .blog-link-card { grid-template-columns:1fr; }
+      .body-editor .blog-link-card-thumb { min-height:150px; }
       .admin-nav .inner { align-items:flex-start; }
       .admin-view-tabs { width:100%;order:-1;border-right:0;border-bottom:1px solid var(--border);padding:0 0 8px;margin:0; }
       .nav-actions { flex-wrap:wrap; justify-content:flex-end; max-width:260px; }
@@ -541,6 +568,9 @@
       <!-- 本文 -->
       <div id="body" class="body-editor" contenteditable="true" data-placeholder="本文を書く..."></div>
       <textarea id="body-source" class="body-source" hidden spellcheck="false" aria-label="本文HTML"></textarea>
+      <div id="editor-context-menu" class="editor-context-menu" role="menu" aria-label="本文の右クリックメニュー">
+        <button type="button" role="menuitem" data-editor-context-action="media">メディアを追加</button>
+      </div>
 
       <!-- メタ設定 -->
       <button class="meta-toggle" id="meta-toggle" type="button">⚙ 記事設定（要約・カテゴリ・スラッグ）▾</button>
@@ -628,6 +658,7 @@
   const editorRedoEl = document.getElementById('editor-redo');
   const editorModeEl = document.getElementById('editor-mode');
   const editorHintEl = document.getElementById('editor-hint');
+  const editorContextMenuEl = document.getElementById('editor-context-menu');
   const postBtnEl = document.getElementById('post-btn');
   const adminViewTabs = document.querySelectorAll('[data-admin-tab]');
   const editorModeTabs = document.querySelectorAll('[data-editor-mode]');
@@ -655,6 +686,7 @@
   let autosaveTimer = null;
   let autosaveInFlight = false;
   let editorEditMode = 'visual';
+  let blogCardAutoTimer = null;
 
   // ── 認証 ────────────────────────────────────────────────────
   const loginView  = document.getElementById('login-view');
@@ -1035,6 +1067,145 @@
     ].join('');
   }
 
+  function plainUrlFromText(text) {
+    const raw = String(text || '').trim().replace(/[)\]）】、。,.]+$/u, '');
+    return /^https?:\/\/[^\s<>"']+$/i.test(raw) ? raw : '';
+  }
+
+  function safeBlogCardUrl(value) {
+    const raw = plainUrlFromText(value);
+    if (!raw) return '';
+    try {
+      const parsed = new URL(raw);
+      if (!['http:', 'https:'].includes(parsed.protocol)) return '';
+      parsed.hash = '';
+      return parsed.toString();
+    } catch {
+      return '';
+    }
+  }
+
+  function blogCardId() {
+    return `blog-card-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+  }
+
+  function fallbackBlogCard(url, title = '') {
+    let siteName = url;
+    try { siteName = new URL(url).hostname.replace(/^www\./, ''); } catch {}
+    return {
+      url,
+      title: title || url,
+      description: '',
+      siteName,
+      image: '',
+    };
+  }
+
+  function normalizeBlogCard(card, fallbackUrl) {
+    const safeUrl = safeBlogCardUrl(card?.url || fallbackUrl) || fallbackUrl;
+    const fallback = fallbackBlogCard(safeUrl);
+    const image = safeBlogCardUrl(card?.image || '');
+    return {
+      url: safeUrl,
+      title: String(card?.title || fallback.title).trim().slice(0, 120),
+      description: String(card?.description || '').trim().slice(0, 160),
+      siteName: String(card?.siteName || fallback.siteName).trim().slice(0, 80),
+      image,
+    };
+  }
+
+  function blogCardHtml(card, options = {}) {
+    const normalized = normalizeBlogCard(card, card?.url || '');
+    const id = options.id || blogCardId();
+    const loadingClass = options.loading ? ' is-loading' : '';
+    const includeParagraph = options.includeParagraph !== false;
+    let displayUrl = normalized.url;
+    try { displayUrl = new URL(normalized.url).hostname.replace(/^www\./, ''); } catch {}
+    const imageHtml = normalized.image
+      ? `<img src="${escAttrValue(normalized.image)}" alt="" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;margin:0;border-radius:0;" />`
+      : '↗';
+    const descHtml = normalized.description
+      ? `<span class="blog-link-card-desc">${escHtml(normalized.description)}</span>`
+      : '';
+    const html = [
+      `<a class="blog-link-card${loadingClass}" data-blog-card="true" data-blog-card-id="${escAttrValue(id)}" href="${escAttrValue(normalized.url)}" target="_blank" rel="noopener noreferrer" contenteditable="false">`,
+      `<span class="blog-link-card-main">`,
+      `<span class="blog-link-card-site">${escHtml(normalized.siteName)}</span>`,
+      `<span class="blog-link-card-title">${escHtml(normalized.title)}</span>`,
+      descHtml,
+      `<span class="blog-link-card-url">${escHtml(displayUrl)}</span>`,
+      `</span>`,
+      `<span class="blog-link-card-thumb">${imageHtml}</span>`,
+      `</a>`,
+    ].join('');
+    return includeParagraph ? `${html}<p><br></p>` : html;
+  }
+
+  async function fetchBlogCardMeta(url) {
+    const safeUrl = safeBlogCardUrl(url);
+    const fallback = fallbackBlogCard(safeUrl || url);
+    if (!safeUrl) return fallback;
+    try {
+      const res = await fetch(`/api/blog-card?url=${encodeURIComponent(safeUrl)}`, {
+        cache: 'no-store',
+        headers: { 'X-Yohelab-Pin': currentPin() },
+      });
+      if (!res.ok) return fallback;
+      const data = await res.json();
+      return normalizeBlogCard(data.card || {}, safeUrl);
+    } catch {
+      return fallback;
+    }
+  }
+
+  async function replaceBlogCardElement(id, card) {
+    const target = bodyEl.querySelector(`[data-blog-card-id="${CSS.escape(id)}"]`);
+    if (!target) return;
+    target.outerHTML = blogCardHtml(card, { id, includeParagraph: false });
+    saveDraftLocal({ history: false });
+    pushEditorHistory({ force: true });
+  }
+
+  async function insertBlogCardFromUrl(url) {
+    const safeUrl = safeBlogCardUrl(url);
+    if (!safeUrl) return false;
+    ensureVisualMode();
+    const id = blogCardId();
+    insertHtmlIntoEditor(blogCardHtml(fallbackBlogCard(safeUrl, 'ブログカードを読み込み中...'), { id, loading: true }));
+    const card = await fetchBlogCardMeta(safeUrl);
+    await replaceBlogCardElement(id, card);
+    return true;
+  }
+
+  function canReplacePlainUrlBlock(block) {
+    if (!block || block.closest('[data-blog-card],[data-media-block]')) return false;
+    const richChild = Array.from(block.children || []).some(child => child.tagName !== 'BR');
+    return !richChild && Boolean(safeBlogCardUrl(block.innerText || block.textContent));
+  }
+
+  function replacePlainUrlBlocksWithCards() {
+    if (editorEditMode !== 'visual') return;
+    const blocks = Array.from(bodyEl.querySelectorAll('p,div')).filter(canReplacePlainUrlBlock);
+    blocks.forEach(block => {
+      const url = safeBlogCardUrl(block.innerText || block.textContent);
+      if (!url) return;
+      const id = blogCardId();
+      block.insertAdjacentHTML('afterend', blogCardHtml(fallbackBlogCard(url, 'ブログカードを読み込み中...'), { id, loading: true, includeParagraph: false }));
+      block.remove();
+      fetchBlogCardMeta(url).then(card => replaceBlogCardElement(id, card));
+    });
+    if (blocks.length) {
+      saveDraftLocal({ history: false });
+      pushEditorHistory({ force: true });
+    }
+  }
+
+  function scheduleAutoBlogCardConversion() {
+    if (editorEditMode !== 'visual') return;
+    if (blogCardAutoTimer) clearTimeout(blogCardAutoTimer);
+    blogCardAutoTimer = setTimeout(replacePlainUrlBlocksWithCards, 450);
+  }
+
   function cleanEditorMediaHtml(html) {
     const wrap = document.createElement('div');
     wrap.innerHTML = html || '';
@@ -1043,6 +1214,11 @@
       block.classList.remove('is-selected', 'is-dragging');
       block.removeAttribute('contenteditable');
       block.removeAttribute('draggable');
+    });
+    wrap.querySelectorAll('[data-blog-card]').forEach(card => {
+      card.removeAttribute('contenteditable');
+      card.removeAttribute('data-blog-card-id');
+      card.classList.remove('is-loading');
     });
     wrap.querySelectorAll('.media-drop-caret').forEach(node => node.remove());
     return wrap.innerHTML;
@@ -1073,6 +1249,8 @@
     if (editorEditMode === 'text') setEditorEditMode('visual');
   }
 
+  let editorContextRange = null;
+
   function insertHtmlIntoEditor(html) {
     if (editorEditMode === 'text' && bodySourceEl) {
       const start = bodySourceEl.selectionStart ?? bodySourceEl.value.length;
@@ -1080,6 +1258,16 @@
       bodySourceEl.value = `${bodySourceEl.value.slice(0, start)}${html}${bodySourceEl.value.slice(end)}`;
       bodySourceEl.selectionStart = bodySourceEl.selectionEnd = start + html.length;
       bodySourceEl.focus();
+      saveDraftLocal();
+      return;
+    }
+    if (editorContextRange && bodyEl.contains(editorContextRange.commonAncestorContainer)) {
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(editorContextRange);
+      document.execCommand('insertHTML', false, html);
+      editorContextRange = null;
+      bodyEl.focus();
       saveDraftLocal();
       return;
     }
@@ -1141,6 +1329,51 @@
   });
   document.getElementById('unlink-btn')?.addEventListener('click', () => { ensureVisualMode(); document.execCommand('unlink', false, null); saveDraftLocal(); });
   document.getElementById('hr-btn')?.addEventListener('click', () => insertHtmlIntoEditor('<hr />'));
+  function caretRangeFromPoint(x, y) {
+    if (document.caretRangeFromPoint) return document.caretRangeFromPoint(x, y);
+    if (document.caretPositionFromPoint) {
+      const pos = document.caretPositionFromPoint(x, y);
+      if (!pos) return null;
+      const range = document.createRange();
+      range.setStart(pos.offsetNode, pos.offset);
+      range.collapse(true);
+      return range;
+    }
+    return null;
+  }
+
+  function saveEditorContextRange(event) {
+    editorContextRange = null;
+    if (editorEditMode === 'text') return;
+    const block = event.target.closest?.('[data-media-block]');
+    if (block && bodyEl.contains(block)) {
+      selectMediaBlock(block);
+      return;
+    }
+    selectMediaBlock(null);
+    const range = caretRangeFromPoint(event.clientX, event.clientY);
+    if (!range || !bodyEl.contains(range.commonAncestorContainer)) return;
+    editorContextRange = range;
+    const selection = window.getSelection();
+    selection.removeAllRanges();
+    selection.addRange(range);
+  }
+
+  function showEditorContextMenu(event) {
+    if (!editorContextMenuEl) return;
+    editorContextMenuEl.style.visibility = 'hidden';
+    editorContextMenuEl.classList.add('is-open');
+    const maxLeft = window.innerWidth - editorContextMenuEl.offsetWidth - 10;
+    const maxTop = window.innerHeight - editorContextMenuEl.offsetHeight - 10;
+    editorContextMenuEl.style.left = `${Math.max(10, Math.min(event.clientX, maxLeft))}px`;
+    editorContextMenuEl.style.top = `${Math.max(10, Math.min(event.clientY, maxTop))}px`;
+    editorContextMenuEl.style.visibility = '';
+  }
+
+  function hideEditorContextMenu() {
+    editorContextMenuEl?.classList.remove('is-open');
+  }
+
   editorModeTabs.forEach(tab => {
     tab.addEventListener('click', () => setEditorEditMode(tab.dataset.editorMode || 'visual'));
   });
@@ -1457,7 +1690,51 @@
   // ── 本文内画像挿入 ────────────────────────────────────────
   const insertImgBtn  = document.getElementById('insert-img-btn');
   const insertImgFile = document.getElementById('insert-img-file');
-  insertImgBtn.addEventListener('click', () => insertImgFile.click());
+
+  function openEditorMediaPicker(options = {}) {
+    if (!options.keepContextRange) editorContextRange = null;
+    hideEditorContextMenu();
+    if (editorEditMode !== 'text') ensureVisualMode();
+    insertImgFile.click();
+  }
+
+  insertImgBtn.addEventListener('click', () => openEditorMediaPicker());
+  bodyEl.addEventListener('contextmenu', event => {
+    if (!bodyEl.contains(event.target)) return;
+    event.preventDefault();
+    saveEditorContextRange(event);
+    showEditorContextMenu(event);
+  });
+  bodySourceEl.addEventListener('contextmenu', event => {
+    event.preventDefault();
+    showEditorContextMenu(event);
+  });
+  editorContextMenuEl?.addEventListener('click', event => {
+    const action = event.target.closest?.('[data-editor-context-action]')?.dataset.editorContextAction;
+    if (action === 'media') openEditorMediaPicker({ keepContextRange: true });
+  });
+  bodyEl.addEventListener('paste', event => {
+    const url = safeBlogCardUrl(event.clipboardData?.getData('text/plain') || '');
+    if (!url) return;
+    event.preventDefault();
+    insertBlogCardFromUrl(url);
+  });
+  bodySourceEl.addEventListener('paste', async event => {
+    const url = safeBlogCardUrl(event.clipboardData?.getData('text/plain') || '');
+    if (!url) return;
+    event.preventDefault();
+    const card = await fetchBlogCardMeta(url);
+    insertHtmlIntoEditor(blogCardHtml(card));
+  });
+  document.addEventListener('click', event => {
+    if (!editorContextMenuEl?.classList.contains('is-open')) return;
+    if (editorContextMenuEl.contains(event.target)) return;
+    hideEditorContextMenu();
+  });
+  document.addEventListener('scroll', hideEditorContextMenu, true);
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape') hideEditorContextMenu();
+  });
   insertImgFile.addEventListener('change', async () => {
     const file = insertImgFile.files[0];
     if (!file) return;
@@ -1730,6 +2007,10 @@
 
   ['input','keyup'].forEach(ev => {
     [bodyEl, bodySourceEl, excerptEl, tagsEl, slugEl].forEach(el => el.addEventListener(ev, saveDraftLocal));
+  });
+  bodyEl.addEventListener('input', scheduleAutoBlogCardConversion);
+  bodyEl.addEventListener('keyup', event => {
+    if (event.key === 'Enter' || event.key === ' ') scheduleAutoBlogCardConversion();
   });
   postParentCategoryEl?.addEventListener('change', () => {
     populateEditorChildCategorySelect([]);
@@ -2140,6 +2421,17 @@
       ],
     },
     {
+      key: 'ai-rumor',
+      label: 'AIの噂・予測',
+      color: '#0e7490',
+      order: 15,
+      children: [
+        { key: 'ai-rumor', label: 'AIの噂', color: '#0e7490', order: 10 },
+        { key: 'ai-leak', label: 'リーク・未発表', color: '#f59e0b', order: 20 },
+        { key: 'ai-prediction', label: '今後の予測', color: '#475569', order: 30 },
+      ],
+    },
+    {
       key: 'earn',
       label: '副業ブログ',
       color: '#f97316',
@@ -2182,10 +2474,11 @@
   }
 
   function normalizeCategoryTree(value) {
-    const source = Array.isArray(value) && value.length ? value : DEFAULT_CATEGORY_TREE;
+    const source = mergeDefaultCategoryTree(Array.isArray(value) && value.length ? value : DEFAULT_CATEGORY_TREE);
     return source.map((parent, parentIndex) => {
-      const fallback = DEFAULT_CATEGORY_TREE[parentIndex] || {};
-      const key = sanitizeCategoryKey(parent?.key || fallback.key || `category-${parentIndex + 1}`);
+      const rawKey = sanitizeCategoryKey(parent?.key);
+      const fallback = DEFAULT_CATEGORY_TREE.find(item => item.key === rawKey) || DEFAULT_CATEGORY_TREE[parentIndex] || {};
+      const key = rawKey || sanitizeCategoryKey(fallback.key) || `category-${parentIndex + 1}`;
       const childrenSource = Array.isArray(parent?.children) && parent.children.length ? parent.children : (fallback.children || []);
       return {
         key,
@@ -2193,9 +2486,10 @@
         color: sanitizeCategoryColor(parent?.color || fallback.color || '#0b8f72'),
         order: sanitizeCategoryOrder(parent?.order, (parentIndex + 1) * 10),
         children: childrenSource.map((child, childIndex) => {
-          const fallbackChild = (fallback.children || [])[childIndex] || {};
+          const rawChildKey = sanitizeCategoryKey(child?.key);
+          const fallbackChild = (fallback.children || []).find(item => item.key === rawChildKey) || (fallback.children || [])[childIndex] || {};
           return {
-            key: sanitizeCategoryKey(child?.key || fallbackChild.key || `${key}-${childIndex + 1}`),
+            key: rawChildKey || sanitizeCategoryKey(fallbackChild.key) || `${key}-${childIndex + 1}`,
             label: sanitizeCategoryLabel(child?.label || fallbackChild.label || child?.key || ''),
             color: sanitizeCategoryColor(child?.color || fallbackChild.color || '#0b8f72'),
             order: sanitizeCategoryOrder(child?.order, (childIndex + 1) * 10),
@@ -2203,6 +2497,35 @@
         }).sort((a, b) => a.order - b.order),
       };
     }).sort((a, b) => a.order - b.order);
+  }
+
+  function mergeDefaultCategoryTree(value) {
+    const source = Array.isArray(value) && value.length ? value : DEFAULT_CATEGORY_TREE;
+    const parents = source.map(parent => ({
+      ...parent,
+      children: Array.isArray(parent?.children) ? parent.children.map(child => ({ ...child })) : [],
+    }));
+
+    DEFAULT_CATEGORY_TREE.forEach(defaultParent => {
+      const defaultParentKey = sanitizeCategoryKey(defaultParent.key);
+      const parent = parents.find(item => sanitizeCategoryKey(item?.key) === defaultParentKey);
+      if (!parent) {
+        parents.push({
+          ...defaultParent,
+          children: defaultParent.children.map(child => ({ ...child })),
+        });
+        return;
+      }
+
+      if (!Array.isArray(parent.children)) parent.children = [];
+      const childKeys = new Set(parent.children.map(child => sanitizeCategoryKey(child?.key)).filter(Boolean));
+      defaultParent.children.forEach(defaultChild => {
+        const childKey = sanitizeCategoryKey(defaultChild.key);
+        if (!childKeys.has(childKey)) parent.children.push({ ...defaultChild });
+      });
+    });
+
+    return parents;
   }
 
   function rebuildCategoryCache() {
@@ -2891,6 +3214,9 @@
     if (raw.includes('genspark')) tags.add('genspark');
     if (raw.includes('grok')) tags.add('grok');
     if (raw.includes('copilot') || raw.includes('microsoft')) tags.add('copilot');
+    if (raw.includes('噂') || raw.includes('うわさ')) tags.add('ai-rumor');
+    if (raw.includes('リーク') || raw.includes('未発表')) tags.add('ai-leak');
+    if (raw.includes('予測') || raw.includes('今後')) tags.add('ai-prediction');
     if (raw.includes('wordpress') || raw.includes('文標')) tags.add('wordpress');
     if (raw.includes('副業') || raw.includes('稼')) tags.add('earn');
     if (raw.includes('テンプレ') || raw.includes('比較記事')) tags.add('template');

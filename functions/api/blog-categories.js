@@ -21,6 +21,17 @@ const DEFAULT_CATEGORIES = [
     ],
   },
   {
+    key: "ai-rumor",
+    label: "AIの噂・予測",
+    color: "#0e7490",
+    order: 15,
+    children: [
+      { key: "ai-rumor", label: "AIの噂", color: "#0e7490", order: 10 },
+      { key: "ai-leak", label: "リーク・未発表", color: "#f59e0b", order: 20 },
+      { key: "ai-prediction", label: "今後の予測", color: "#475569", order: 30 },
+    ],
+  },
+  {
     key: "earn",
     label: "副業ブログ",
     color: "#f97316",
@@ -93,10 +104,11 @@ async function readCategories(env) {
 }
 
 function normalizeCategories(value) {
-  const source = Array.isArray(value) && value.length ? value : DEFAULT_CATEGORIES;
+  const source = mergeDefaultCategories(Array.isArray(value) && value.length ? value : DEFAULT_CATEGORIES);
   const parents = source.map((parent, parentIndex) => {
-    const fallback = DEFAULT_CATEGORIES[parentIndex] || {};
-    const key = sanitizeSlug(parent?.key) || fallback.key || `category-${parentIndex + 1}`;
+    const rawKey = sanitizeSlug(parent?.key);
+    const fallback = DEFAULT_CATEGORIES.find((item) => item.key === rawKey) || DEFAULT_CATEGORIES[parentIndex] || {};
+    const key = rawKey || fallback.key || `category-${parentIndex + 1}`;
     const childrenSource = Array.isArray(parent?.children) && parent.children.length
       ? parent.children
       : fallback.children || [];
@@ -106,8 +118,9 @@ function normalizeCategories(value) {
       color: sanitizeColor(parent?.color) || fallback.color || "#0b8f72",
       order: sanitizeOrder(parent?.order, (parentIndex + 1) * 10),
       children: childrenSource.map((child, childIndex) => {
-        const fallbackChild = (fallback.children || [])[childIndex] || {};
-        const childKey = sanitizeSlug(Array.isArray(child) ? child[0] : child?.key) || fallbackChild.key || `${key}-${childIndex + 1}`;
+        const rawChildKey = sanitizeSlug(Array.isArray(child) ? child[0] : child?.key);
+        const fallbackChild = (fallback.children || []).find((item) => item.key === rawChildKey) || (fallback.children || [])[childIndex] || {};
+        const childKey = rawChildKey || fallbackChild.key || `${key}-${childIndex + 1}`;
         return {
           key: childKey,
           label: sanitizeText(Array.isArray(child) ? child[1] : child?.label) || fallbackChild.label || childKey,
@@ -119,6 +132,35 @@ function normalizeCategories(value) {
   }).sort((a, b) => a.order - b.order);
 
   return parents.slice(0, 12);
+}
+
+function mergeDefaultCategories(value) {
+  const source = Array.isArray(value) && value.length ? value : DEFAULT_CATEGORIES;
+  const parents = source.map((parent) => ({
+    ...parent,
+    children: Array.isArray(parent?.children) ? parent.children.map((child) => ({ ...child })) : [],
+  }));
+
+  DEFAULT_CATEGORIES.forEach((defaultParent) => {
+    const defaultParentKey = sanitizeSlug(defaultParent.key);
+    const parent = parents.find((item) => sanitizeSlug(item?.key) === defaultParentKey);
+    if (!parent) {
+      parents.push({
+        ...defaultParent,
+        children: defaultParent.children.map((child) => ({ ...child })),
+      });
+      return;
+    }
+
+    if (!Array.isArray(parent.children)) parent.children = [];
+    const childKeys = new Set(parent.children.map((child) => sanitizeSlug(child?.key)).filter(Boolean));
+    defaultParent.children.forEach((defaultChild) => {
+      const childKey = sanitizeSlug(defaultChild.key);
+      if (!childKeys.has(childKey)) parent.children.push({ ...defaultChild });
+    });
+  });
+
+  return parents;
 }
 
 function sanitizeSlug(value) {
