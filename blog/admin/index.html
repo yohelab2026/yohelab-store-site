@@ -245,8 +245,10 @@
     .meta-toggle { display:flex;align-items:center;gap:8px;cursor:pointer;color:var(--muted);font-size:14px;font-weight:700;margin:32px 0 0;user-select:none;border:none;background:none;padding:0; }
     .meta-panel { display:grid;gap:14px;margin-top:16px;padding:20px;background:#fff;border:1px solid var(--border);border-radius:16px; }
     label.meta-label { display:grid;gap:6px;font-size:13px;font-weight:700;color:var(--text-sub); }
-    label.meta-label input, label.meta-label textarea { border:1px solid var(--border);border-radius:10px;padding:10px 13px;font-size:14px;width:100%; }
+    label.meta-label input, label.meta-label select, label.meta-label textarea { border:1px solid var(--border);border-radius:10px;padding:10px 13px;font-size:14px;width:100%;background:#fff;color:var(--text); }
     label.meta-label textarea { min-height:80px;resize:vertical; }
+    .meta-category-grid { display:grid;grid-template-columns:1fr 1fr;gap:10px; }
+    .meta-help { color:var(--muted);font-size:12px;line-height:1.7;font-weight:600; }
 
     /* 投稿一覧 */
     .post-list-item { display:flex;align-items:center;gap:10px;padding:12px 14px;background:#fff;border-bottom:1px solid var(--border); }
@@ -535,7 +537,16 @@
       <button class="meta-toggle" id="meta-toggle" type="button">⚙ 記事設定（要約・カテゴリ・スラッグ）▾</button>
       <div class="meta-panel" id="meta-panel" style="display:none;">
         <label class="meta-label">要約（一覧に出る短い説明）<textarea id="excerpt" placeholder="この記事の要約を書く"></textarea></label>
-        <label class="meta-label">子カテゴリ・補助キーワード<input id="tags" placeholder="ChatGPT, AIニュース, 記事作成" /></label>
+        <div class="meta-category-grid" aria-label="カテゴリ変更">
+          <label class="meta-label">親カテゴリ
+            <select id="post-parent-category" aria-label="親カテゴリ"></select>
+          </label>
+          <label class="meta-label">子カテゴリ
+            <select id="post-child-category" aria-label="子カテゴリ"></select>
+          </label>
+        </div>
+        <label class="meta-label">補助キーワード<input id="tags" placeholder="ChatGPT, AIニュース, 記事作成" /></label>
+        <div class="meta-help" id="post-category-hint">カテゴリ管理で作った親カテゴリ・子カテゴリから選べます。</div>
         <label class="meta-label">スラッグ（URL）
           <div style="display:flex;gap:8px;align-items:center;">
             <input id="slug" inputmode="url" pattern="[a-z0-9._-]*" placeholder="未入力なら英数字で自動生成" style="flex:1;" />
@@ -575,6 +586,9 @@
   const bodySourceEl = document.getElementById('body-source');
   const excerptEl  = document.getElementById('excerpt');
   const tagsEl     = document.getElementById('tags');
+  const postParentCategoryEl = document.getElementById('post-parent-category');
+  const postChildCategoryEl = document.getElementById('post-child-category');
+  const postCategoryHintEl = document.getElementById('post-category-hint');
   const slugEl     = document.getElementById('slug');
   const eyecatchEl = document.getElementById('eyecatch');
   const coverAdjustPanelEl = document.getElementById('cover-adjust-panel');
@@ -1529,7 +1543,7 @@
       title: titleEl.value,
       bodyHtml: currentBodyHtml(),
       excerpt: excerptEl.value,
-      tags: tagsEl.value,
+      tags: editorTags().join(', '),
       slug: sanitizeSlugInput(slugEl.value),
       eyecatch: eyecatchEl.value,
       cover: coverSettings(),
@@ -1541,6 +1555,11 @@
   ['input','keyup'].forEach(ev => {
     [bodyEl, bodySourceEl, excerptEl, tagsEl, slugEl].forEach(el => el.addEventListener(ev, saveDraftLocal));
   });
+  postParentCategoryEl?.addEventListener('change', () => {
+    populateEditorChildCategorySelect();
+    saveDraftLocal();
+  });
+  postChildCategoryEl?.addEventListener('change', saveDraftLocal);
   bodyEl.addEventListener('blur', saveDraftLocal);
   bodySourceEl.addEventListener('blur', saveDraftLocal);
 
@@ -1581,7 +1600,7 @@
       excerpt: excerptEl.value.trim(),
       bodyHtml: currentBodyHtml(),
       body: currentBodyText(),
-      tags: tagsEl.value.split(',').map(v=>v.trim()).filter(Boolean),
+      tags: editorTags(),
       eyecatch: eyecatchEl.value.trim() || undefined,
       cover: eyecatchEl.value.trim() ? coverSettings() : undefined,
     };
@@ -1598,6 +1617,7 @@
     bodySourceEl.value = '';
     excerptEl.value = '';
     tagsEl.value = '';
+    populateEditorCategoryControlsFromTags('');
     slugEl.value = '';
     eyecatchEl.value = '';
     resetCoverSettings(16, 9);
@@ -1724,7 +1744,7 @@
       excerpt: excerptEl.value.trim(),
       bodyHtml: currentBodyHtml(),
       body: currentBodyText(),
-      tags: tagsEl.value.split(',').map(v=>v.trim()).filter(Boolean),
+      tags: editorTags(),
       eyecatch: eyecatchEl.value.trim() || undefined,
       cover: eyecatchEl.value.trim() ? coverSettings() : undefined,
       originalPostSlug: activePostSlug || undefined,
@@ -1936,6 +1956,7 @@
   let categoryLookup = new Map();
   let categoryOrder = [];
   rebuildCategoryCache();
+  populateEditorCategoryControlsFromTags(tagsEl.value);
 
   function parseTagList(value) {
     if (Array.isArray(value)) return value.map(v => String(v || '').trim()).filter(Boolean);
@@ -1986,6 +2007,71 @@
       });
       categoryGroups[`group:${parent.key}`] = childKeys;
     });
+  }
+
+  function firstEditorCategoryKey() {
+    return categoryTree[0]?.children?.[0]?.key || categoryOrder[0] || '';
+  }
+
+  function categoryKeysFromTags(tags) {
+    const normalized = parseTagList(tags).map(tag => sanitizeCategoryKey(tag)).filter(Boolean);
+    return categoryOrder.filter(key => normalized.includes(key));
+  }
+
+  function selectedEditorCategoryKey() {
+    const selected = sanitizeCategoryKey(postChildCategoryEl?.value);
+    return selected && categoryLookup.has(selected) ? selected : firstEditorCategoryKey();
+  }
+
+  function editorExtraTags() {
+    const selectedKey = selectedEditorCategoryKey();
+    return parseTagList(tagsEl.value).filter(tag => {
+      const key = sanitizeCategoryKey(tag);
+      const isParentKey = categoryTree.some(parent => parent.key === key);
+      return !key || (key !== selectedKey && !categoryLookup.has(key) && !isParentKey);
+    });
+  }
+
+  function editorTags() {
+    return [...new Set([selectedEditorCategoryKey(), ...editorExtraTags()].filter(Boolean))];
+  }
+
+  function populateEditorCategoryControlsFromTags(tags) {
+    if (!postParentCategoryEl || !postChildCategoryEl) return;
+    const currentSelected = selectedEditorCategoryKey();
+    const pickedKey = categoryKeysFromTags(tags)[0] || currentSelected || firstEditorCategoryKey();
+    const picked = categoryLookup.get(pickedKey);
+    const parentKey = picked?.parentKey || categoryTree[0]?.key || '';
+    postParentCategoryEl.innerHTML = categoryTree
+      .map(parent => `<option value="${escHtml(parent.key)}">${escHtml(parent.label)}</option>`)
+      .join('');
+    postParentCategoryEl.value = parentKey;
+    populateEditorChildCategorySelect(pickedKey);
+    tagsEl.value = editorExtraTagsFromTags(tags).join(', ');
+  }
+
+  function editorExtraTagsFromTags(tags) {
+    return parseTagList(tags).filter(tag => {
+      const key = sanitizeCategoryKey(tag);
+      const isParentKey = categoryTree.some(parent => parent.key === key);
+      return !categoryLookup.has(key) && !isParentKey;
+    });
+  }
+
+  function populateEditorChildCategorySelect(selectedChildKey = '') {
+    if (!postParentCategoryEl || !postChildCategoryEl) return;
+    const parent = categoryTree.find(item => item.key === postParentCategoryEl.value) || categoryTree[0];
+    const children = parent?.children || [];
+    const fallbackKey = children[0]?.key || firstEditorCategoryKey();
+    const safeSelected = children.some(child => child.key === selectedChildKey) ? selectedChildKey : fallbackKey;
+    postChildCategoryEl.innerHTML = children
+      .map(child => `<option value="${escHtml(child.key)}">${escHtml(child.label)}</option>`)
+      .join('');
+    postChildCategoryEl.value = safeSelected;
+    const selected = categoryLookup.get(safeSelected);
+    if (postCategoryHintEl && selected) {
+      postCategoryHintEl.textContent = `選択中：${selected.parentLabel} / ${selected.label}`;
+    }
   }
 
   function sanitizeCategoryKey(value) {
@@ -2068,6 +2154,7 @@
     rebuildCategoryCache();
     renderCategoryEditor();
     populateCategoryFilter();
+    populateEditorCategoryControlsFromTags(tagsEl.value || selectedEditorCategoryKey());
     renderContentList();
   }
 
@@ -2095,6 +2182,7 @@
       rebuildCategoryCache();
       renderCategoryEditor();
       populateCategoryFilter();
+      populateEditorCategoryControlsFromTags(tagsEl.value || selectedEditorCategoryKey());
       renderContentList();
       if (categorySaveMessageEl) categorySaveMessageEl.textContent = 'カテゴリを保存しました。トップとブログ一覧の表示名にも反映されます。';
     } catch (_) {
@@ -2108,13 +2196,13 @@
     rebuildCategoryCache();
     renderCategoryEditor();
     populateCategoryFilter();
+    populateEditorCategoryControlsFromTags(tagsEl.value || selectedEditorCategoryKey());
     renderContentList();
     if (categorySaveMessageEl) categorySaveMessageEl.textContent = '初期値に戻しました。反映するには「カテゴリを保存」を押してください。';
   }
 
   function categoryForItem(item) {
-    const tags = normalizeTagsForSort(item);
-    const foundKey = categoryOrder.find(key => tags.includes(key));
+    const foundKey = primaryCategoryKey(item);
     const found = foundKey ? categoryLookup.get(foundKey) : null;
     return found
       ? { ...found, label: `${found.parentLabel} > ${found.label}` }
@@ -2122,7 +2210,8 @@
   }
 
   function displayChildCategories(item) {
-    const tags = normalizeTagsForSort(item);
+    const explicitKeys = explicitCategoryKeys(item);
+    const tags = explicitKeys.length ? explicitKeys : normalizeTagsForSort(item);
     const labels = categoryOrder
       .filter(key => tags.includes(key))
       .map(key => categoryLookup.get(key))
@@ -2393,6 +2482,7 @@
     upgradeMediaBlocks();
     excerptEl.value = post.excerpt || '';
     tagsEl.value = Array.isArray(post.tags) ? post.tags.join(', ') : '';
+    populateEditorCategoryControlsFromTags(tagsEl.value);
     slugEl.value = sanitizeSlugInput(post.slug) || '';
     eyecatchEl.value = post.eyecatch || '';
     if (post.eyecatch) {
@@ -2459,11 +2549,23 @@
 
   function compareByCategory(a, b) {
     const rank = (post) => {
-      const tags = normalizeTagsForSort(post);
-      const found = categoryOrder.findIndex(tag => tags.includes(tag));
+      const foundKey = primaryCategoryKey(post);
+      const found = foundKey ? categoryOrder.indexOf(foundKey) : -1;
       return found === -1 ? 999 : found;
     };
     return rank(a) - rank(b) || String(b.date || '').localeCompare(String(a.date || '')) || String(a.title || '').localeCompare(String(b.title || ''), 'ja');
+  }
+
+  function explicitCategoryKeys(post) {
+    const normalized = parseTagList(post.tags).map(tag => sanitizeCategoryKey(tag)).filter(Boolean);
+    return categoryOrder.filter(key => normalized.includes(key));
+  }
+
+  function primaryCategoryKey(post) {
+    const explicit = explicitCategoryKeys(post);
+    if (explicit.length) return explicit[0];
+    const tags = normalizeTagsForSort(post);
+    return categoryOrder.find(key => tags.includes(key)) || '';
   }
 
   function normalizeTagsForSort(post) {
