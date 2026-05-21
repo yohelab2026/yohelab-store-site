@@ -628,6 +628,7 @@
   const editorRedoEl = document.getElementById('editor-redo');
   const editorModeEl = document.getElementById('editor-mode');
   const editorHintEl = document.getElementById('editor-hint');
+  const postBtnEl = document.getElementById('post-btn');
   const adminViewTabs = document.querySelectorAll('[data-admin-tab]');
   const editorModeTabs = document.querySelectorAll('[data-editor-mode]');
   const saveDotEl = document.getElementById('save-dot');
@@ -1818,7 +1819,7 @@
   function updateEditorState() {
     if (activePostSlug) {
       editorModeEl.textContent = '公開済みを編集中';
-      editorHintEl.textContent = '公開すると今の記事を上書きします。下書き保存もできます。';
+      editorHintEl.textContent = '「上書き公開」で今の記事を更新します。下書き保存もできます。';
     } else if (activeDraftId) {
       editorModeEl.textContent = '下書きを編集中';
       editorHintEl.textContent = '公開するとこの下書きは一覧から消えます。';
@@ -1828,6 +1829,12 @@
     } else {
       editorModeEl.textContent = '新規記事';
       editorHintEl.textContent = '左の一覧から下書きや公開済み記事を開けます。';
+    }
+    const overwriteMode = Boolean(activePostSlug);
+    if (postBtnEl) {
+      postBtnEl.textContent = overwriteMode ? '上書き公開' : '公開する';
+      postBtnEl.setAttribute('aria-label', overwriteMode ? '公開済みの記事を上書き公開する' : '記事を公開する');
+      postBtnEl.title = overwriteMode ? '公開済みの記事を上書きして公開します' : '記事を公開します';
     }
     document.querySelectorAll('.admin-post-row.is-active,.draft-list-item.is-active,.post-list-item.is-active').forEach(el => el.classList.remove('is-active'));
     if (activeDraftId) document.querySelector(`[data-draft-id="${cssEscape(activeDraftId)}"]`)?.classList.add('is-active');
@@ -1914,7 +1921,8 @@
       coverDrop.scrollIntoView({ behavior: 'smooth', block: 'center' });
       return;
     }
-    statusEl.textContent = '公開中...';
+    const isOverwritePublish = Boolean(activePostSlug);
+    statusEl.textContent = isOverwritePublish ? '上書き公開中...' : '公開中...';
     const post = {
       draftId: activeDraftId || undefined,
       title,
@@ -1942,15 +1950,15 @@
     // フォームリセット
     clearEditor();
     localStorage.removeItem('yohelab.blog.draft');
-    statusEl.textContent='公開した ✓';
-    setServerSaveState('サーバー保存：公開済み', '公開済み一覧に記事を残しました。', 'saved');
+    statusEl.textContent = isOverwritePublish ? '上書き公開した ✓' : '公開した ✓';
+    setServerSaveState('サーバー保存：公開済み', isOverwritePublish ? '公開済みの記事を更新しました。' : '公開済み一覧に記事を残しました。', 'saved');
     if (contentStatusFilterEl) contentStatusFilterEl.value = 'published';
     resetContentPage();
     setTimeout(()=>statusEl.textContent='下書き中', 3000);
     loadAllLists();
   }
 
-  document.getElementById('post-btn').addEventListener('click', publish);
+  postBtnEl?.addEventListener('click', publish);
 
   // ── サーバー下書き一覧 ───────────────────────────────────
   async function loadStaticPosts(force = false) {
