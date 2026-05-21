@@ -90,6 +90,9 @@
     .tags-col { width:210px; }
     .date-col { width:150px; }
     .actions-col { width:190px; }
+    .sort-header-button { border:0;background:transparent;color:inherit;font:inherit;font-weight:900;padding:0;cursor:pointer;display:inline-flex;align-items:center;gap:6px; }
+    .sort-header-button:hover { color:var(--green);text-decoration:underline;text-underline-offset:4px; }
+    .sort-indicator { color:var(--green);font-size:12px;line-height:1; }
     .row-title { border:0;background:transparent;padding:0;margin:0;text-align:left;font-size:14px;font-weight:900;color:var(--green);cursor:pointer;line-height:1.45; }
     .row-title:hover { color:var(--green);text-decoration:underline; }
     .row-excerpt { color:var(--muted);font-size:12px;line-height:1.6;margin-top:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden; }
@@ -632,6 +635,7 @@
   let draftItems = [];
   let postItems = [];
   let contentCurrentPage = 1;
+  let contentDateSortDirection = 'desc';
   let autosaveTimer = null;
   let autosaveInFlight = false;
   let editorEditMode = 'visual';
@@ -1876,7 +1880,7 @@
         tags: parseTagList(p.tags),
         eyecatch: p.eyecatch || '',
       })),
-    ].sort(compareByCategory);
+    ].sort(compareByDate);
     updateManagerCounts(draftItems.length, null);
     if (!skipRender) {
       populateCategoryFilter();
@@ -2318,7 +2322,7 @@
     const dateFilter = contentDateFilterEl?.value || 'all';
     const category = contentCategoryFilterEl?.value || 'all';
     const keyword = String(contentSearchEl?.value || '').trim().toLowerCase();
-    const baseItems = status === 'draft' ? draftItems : status === 'published' ? postItems : [...draftItems, ...postItems].sort(compareByCategory);
+    const baseItems = status === 'draft' ? draftItems : status === 'published' ? postItems : [...draftItems, ...postItems].sort(compareByDate);
     const filtered = baseItems.filter(item => {
       const itemCategory = categoryForItem(item);
       const childCategories = displayChildCategories(item);
@@ -2356,7 +2360,11 @@
               <th class="status-col">状態</th>
               <th class="category-col">カテゴリー</th>
               <th class="tags-col">子カテゴリ</th>
-              <th class="date-col">日付</th>
+              <th class="date-col" aria-sort="${contentDateSortDirection === 'desc' ? 'descending' : 'ascending'}">
+                <button class="sort-header-button" type="button" data-sort-date title="日付順を切り替え">
+                  日付 <span class="sort-indicator">${contentDateSortDirection === 'desc' ? '新↓' : '古↑'}</span>
+                </button>
+              </th>
               <th class="actions-col">操作</th>
             </tr>
           </thead>
@@ -2534,7 +2542,7 @@
         staticSlug: p.slug,
         tags: parseTagList(p.tags),
       })),
-    ].sort(compareByCategory);
+    ].sort(compareByDate);
     updateManagerCounts(null, postItems.length);
     if (!skipRender) {
       populateCategoryFilter();
@@ -2554,6 +2562,21 @@
       return found === -1 ? 999 : found;
     };
     return rank(a) - rank(b) || String(b.date || '').localeCompare(String(a.date || '')) || String(a.title || '').localeCompare(String(b.title || ''), 'ja');
+  }
+
+  function compareByDate(a, b) {
+    const direction = contentDateSortDirection === 'asc' ? 1 : -1;
+    const diff = itemDateValue(a) - itemDateValue(b);
+    if (diff) return diff * direction;
+    return String(a.title || '').localeCompare(String(b.title || ''), 'ja');
+  }
+
+  function itemDateValue(item) {
+    const value = String(item?.date || '').trim();
+    if (!value) return 0;
+    if (/^\d{4}-\d{2}-\d{2}$/.test(value)) return new Date(`${value}T00:00:00`).getTime();
+    const time = new Date(value).getTime();
+    return Number.isNaN(time) ? 0 : time;
   }
 
   function explicitCategoryKeys(post) {
@@ -2735,6 +2758,13 @@
     renderContentList();
   }
 
+  function toggleContentDateSort() {
+    contentDateSortDirection = contentDateSortDirection === 'desc' ? 'asc' : 'desc';
+    draftItems.sort(compareByDate);
+    postItems.sort(compareByDate);
+    resetAndRenderContentList();
+  }
+
   document.getElementById('refresh-content')?.addEventListener('click', refreshContentLists);
   importStaticPostsEl?.addEventListener('click', async () => {
     await importStaticPosts();
@@ -2744,6 +2774,9 @@
   contentStatusFilterEl?.addEventListener('change', resetAndRenderContentList);
   contentCategoryFilterEl?.addEventListener('change', resetAndRenderContentList);
   contentSearchEl?.addEventListener('input', resetAndRenderContentList);
+  contentListEl?.addEventListener('click', event => {
+    if (event.target.closest?.('[data-sort-date]')) toggleContentDateSort();
+  });
   adminViewTabs.forEach(tab => {
     tab.addEventListener('click', () => setAdminView(tab.dataset.adminTab || 'editor'));
   });
