@@ -208,17 +208,33 @@
       outline:2px solid var(--green);outline-offset:4px;box-shadow:0 0 0 6px rgba(0,150,115,.08);
     }
     .body-editor .media-block.is-selected::before {
-      content:"ドラッグで移動 / 右端でサイズ変更";position:absolute;left:8px;top:8px;z-index:2;
-      background:rgba(11,143,114,.92);color:#fff;border-radius:999px;padding:5px 9px;font-size:11px;font-weight:900;
+      content:"ドラッグで移動";position:absolute;left:10px;bottom:10px;z-index:2;
+      background:rgba(11,143,114,.94);color:#fff;border-radius:999px;padding:7px 11px;font-size:12px;font-weight:900;
       pointer-events:none;
-    }
-    .body-editor .media-block.is-selected::after {
-      content:"";position:absolute;right:-8px;top:50%;z-index:3;width:16px;height:42px;
-      transform:translateY(-50%);border-radius:999px;background:var(--green);box-shadow:0 6px 16px rgba(0,150,115,.25);
-      cursor:ew-resize;
     }
     .body-editor .media-block.is-dragging { opacity:.55;cursor:grabbing; }
     .body-editor .media-drop-caret { height:4px;border-radius:999px;background:var(--green);margin:14px 0;box-shadow:0 0 0 4px rgba(0,150,115,.12); }
+    .body-editor .media-tools {
+      position:absolute;left:10px;top:10px;right:10px;z-index:4;display:flex;gap:6px;align-items:center;flex-wrap:wrap;
+      padding:7px;border-radius:14px;background:rgba(255,255,255,.94);border:1px solid rgba(11,143,114,.22);
+      box-shadow:0 12px 28px rgba(14,55,42,.14);cursor:default;
+    }
+    .body-editor .media-tools button {
+      border:1px solid var(--border);background:#fff;color:var(--text);border-radius:999px;padding:5px 9px;
+      font-size:11px;font-weight:900;cursor:pointer;line-height:1;
+    }
+    .body-editor .media-tools button:hover { background:#effaf6;color:var(--green);border-color:#bde7d7; }
+    .body-editor .media-tools .media-delete { color:#ef4444;border-color:#fecaca; }
+    .body-editor .media-tools .media-help { color:var(--muted);font-size:11px;font-weight:900;margin-left:auto;padding-right:4px; }
+    .body-editor .media-resize-handle {
+      position:absolute;right:-14px;top:50%;z-index:5;width:28px;height:68px;transform:translateY(-50%);
+      border-radius:999px;background:var(--green);box-shadow:0 8px 20px rgba(0,150,115,.28);cursor:ew-resize;
+      border:4px solid #fff;
+    }
+    .body-editor .media-resize-handle::before {
+      content:"";position:absolute;left:50%;top:50%;width:3px;height:30px;transform:translate(-50%,-50%);
+      border-left:2px solid rgba(255,255,255,.9);border-right:2px solid rgba(255,255,255,.9);
+    }
 
     /* メタ設定パネル（折りたたみ） */
     .meta-toggle { display:flex;align-items:center;gap:8px;cursor:pointer;color:var(--muted);font-size:14px;font-weight:700;margin:32px 0 0;user-select:none;border:none;background:none;padding:0; }
@@ -759,6 +775,7 @@
   function cleanEditorMediaHtml(html) {
     const wrap = document.createElement('div');
     wrap.innerHTML = html || '';
+    wrap.querySelectorAll('.media-tools,.media-resize-handle,.media-drop-caret').forEach(node => node.remove());
     wrap.querySelectorAll('[data-media-block]').forEach(block => {
       block.classList.remove('is-selected', 'is-dragging');
       block.removeAttribute('contenteditable');
@@ -867,17 +884,90 @@
   const mediaDropCaret = document.createElement('div');
   mediaDropCaret.className = 'media-drop-caret';
 
+  function clearMediaChrome(block) {
+    block?.querySelectorAll?.('.media-tools,.media-resize-handle').forEach(node => node.remove());
+  }
+
+  function ensureMediaChrome(block) {
+    if (!block || block.querySelector('.media-tools')) return;
+    const tools = document.createElement('div');
+    tools.className = 'media-tools';
+    tools.innerHTML = [
+      '<button type="button" data-media-action="delete" class="media-delete">削除</button>',
+      '<button type="button" data-media-action="small">小</button>',
+      '<button type="button" data-media-action="medium">中</button>',
+      '<button type="button" data-media-action="full">大</button>',
+      '<button type="button" data-media-action="left">左</button>',
+      '<button type="button" data-media-action="center">中央</button>',
+      '<button type="button" data-media-action="right">右</button>',
+      '<span class="media-help">Deleteでも削除</span>',
+    ].join('');
+    const handle = document.createElement('span');
+    handle.className = 'media-resize-handle';
+    handle.setAttribute('aria-hidden', 'true');
+    block.appendChild(tools);
+    block.appendChild(handle);
+  }
+
   function selectMediaBlock(block) {
     if (selectedMediaBlock && selectedMediaBlock !== block) {
       selectedMediaBlock.classList.remove('is-selected');
+      clearMediaChrome(selectedMediaBlock);
     }
     selectedMediaBlock = block || null;
-    if (selectedMediaBlock) selectedMediaBlock.classList.add('is-selected');
+    if (selectedMediaBlock) {
+      selectedMediaBlock.classList.add('is-selected');
+      ensureMediaChrome(selectedMediaBlock);
+    }
   }
 
   function isMediaResizePoint(block, event) {
+    if (event.target.closest?.('.media-resize-handle')) return true;
     const rect = block.getBoundingClientRect();
-    return Math.abs(event.clientX - rect.right) <= 18 && event.clientY >= rect.top && event.clientY <= rect.bottom;
+    return Math.abs(event.clientX - rect.right) <= 28 && event.clientY >= rect.top && event.clientY <= rect.bottom;
+  }
+
+  function setMediaWidth(block, percent) {
+    const safe = Math.max(18, Math.min(100, Number(percent) || 100));
+    block.style.width = `${safe}%`;
+    block.style.maxWidth = '100%';
+  }
+
+  function setMediaAlign(block, align) {
+    if (align === 'left') {
+      block.style.marginLeft = '0';
+      block.style.marginRight = 'auto';
+    } else if (align === 'right') {
+      block.style.marginLeft = 'auto';
+      block.style.marginRight = '0';
+    } else {
+      block.style.marginLeft = 'auto';
+      block.style.marginRight = 'auto';
+    }
+  }
+
+  function deleteSelectedMediaBlock() {
+    if (!selectedMediaBlock) return false;
+    const nextFocus = document.createElement('p');
+    nextFocus.innerHTML = '<br>';
+    selectedMediaBlock.insertAdjacentElement('afterend', nextFocus);
+    selectedMediaBlock.remove();
+    selectedMediaBlock = null;
+    mediaDropCaret.remove();
+    saveDraftLocal();
+    return true;
+  }
+
+  function autoScrollDuringMediaDrag(event) {
+    const edge = 92;
+    const maxSpeed = 34;
+    let delta = 0;
+    if (event.clientY < edge) {
+      delta = -Math.ceil(((edge - event.clientY) / edge) * maxSpeed);
+    } else if (window.innerHeight - event.clientY < edge) {
+      delta = Math.ceil(((edge - (window.innerHeight - event.clientY)) / edge) * maxSpeed);
+    }
+    if (delta) window.scrollBy({ top: delta, behavior: 'auto' });
   }
 
   function editorChildFromPoint(event) {
@@ -902,6 +992,7 @@
 
   bodyEl.addEventListener('mousedown', event => {
     if (editorEditMode !== 'visual') return;
+    if (event.target.closest?.('.media-tools')) return;
     const block = event.target.closest?.('[data-media-block]');
     if (!block || !bodyEl.contains(block)) {
       selectMediaBlock(null);
@@ -928,14 +1019,12 @@
   document.addEventListener('mousemove', event => {
     if (!mediaPointerState) return;
     const { block, mode } = mediaPointerState;
+    autoScrollDuringMediaDrag(event);
     if (mode === 'resize') {
       const delta = event.clientX - mediaPointerState.startX;
       const nextWidth = Math.max(120, Math.min(mediaPointerState.editorWidth, mediaPointerState.startWidth + delta));
       const percent = Math.max(18, Math.min(100, Math.round((nextWidth / mediaPointerState.editorWidth) * 100)));
-      block.style.width = `${percent}%`;
-      block.style.maxWidth = '100%';
-      block.style.marginLeft = 'auto';
-      block.style.marginRight = 'auto';
+      setMediaWidth(block, percent);
       return;
     }
     placeMediaDropCaret(event, block);
@@ -951,6 +1040,37 @@
     mediaDropCaret.remove();
     mediaPointerState = null;
     saveDraftLocal();
+  });
+
+  bodyEl.addEventListener('click', event => {
+    const actionButton = event.target.closest?.('[data-media-action]');
+    if (!actionButton) return;
+    event.preventDefault();
+    event.stopPropagation();
+    const block = actionButton.closest('[data-media-block]');
+    if (!block) return;
+    selectMediaBlock(block);
+    const action = actionButton.dataset.mediaAction;
+    if (action === 'delete') {
+      deleteSelectedMediaBlock();
+      return;
+    }
+    if (action === 'small') setMediaWidth(block, 35);
+    if (action === 'medium') setMediaWidth(block, 65);
+    if (action === 'full') setMediaWidth(block, 100);
+    if (action === 'left' || action === 'center' || action === 'right') setMediaAlign(block, action);
+    saveDraftLocal();
+  });
+
+  document.addEventListener('keydown', event => {
+    if (!selectedMediaBlock || editorEditMode !== 'visual') return;
+    const activeTag = document.activeElement?.tagName?.toLowerCase();
+    if (activeTag === 'input' || activeTag === 'textarea' || (document.activeElement?.isContentEditable && document.activeElement !== bodyEl)) return;
+    if (event.key === 'Delete' || event.key === 'Backspace') {
+      event.preventDefault();
+      deleteSelectedMediaBlock();
+    }
+    if (event.key === 'Escape') selectMediaBlock(null);
   });
 
   // ── 本文内画像挿入 ────────────────────────────────────────
