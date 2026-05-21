@@ -355,8 +355,9 @@ function primaryParentForPost(post) {
 }
 
 function categoryKeysFromCard(card) {
-  const explicit = categoryKeysFromTags(card.dataset.categoryKeys || card.dataset.tags || '');
-  if (explicit.length) return explicit;
+  const hasExplicitKeys = card.hasAttribute('data-category-keys');
+  const explicit = categoryKeysFromTags(card.dataset.categoryKeys || '');
+  if (hasExplicitKeys || explicit.length) return explicit;
   return postCategoryOverrides[card.dataset.slug] || [];
 }
 
