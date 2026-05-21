@@ -285,6 +285,7 @@ function buildJsonLd(post, slug, fullUrl) {
       name: SITE_NAME,
       logo: { "@type": "ImageObject", url: FALLBACK_IMAGE },
     },
+    isPartOf: { "@type": "Blog", name: BLOG_NAME, url: `${SITE_ORIGIN}/blog/` },
     mainEntityOfPage: { "@type": "WebPage", "@id": fullUrl },
     url: fullUrl,
     inLanguage: "ja-JP",
@@ -441,16 +442,21 @@ function renderPostHTML(post, slug, categoryMap = buildCategoryMap(DEFAULT_CATEG
   <link rel="alternate" hreflang="ja" href="${escAttr(fullUrl)}" />
   <link rel="alternate" hreflang="x-default" href="${escAttr(fullUrl)}" />
   <link rel="alternate" type="application/rss+xml" title="よへラボ RSS" href="${SITE_ORIGIN}/feed.xml" />
+  <link rel="preload" as="image" href="${escAttr(post.eyecatch ? post.eyecatch : FALLBACK_IMAGE)}" fetchpriority="high" />
   <meta property="og:title" content="${escAttr(title)} | ${escAttr(BLOG_NAME)}" />
   <meta property="og:description" content="${escAttr(description)}" />
   <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="${escAttr(SITE_NAME)}" />
   <meta property="og:locale" content="ja_JP" />
   <meta property="og:url" content="${escAttr(fullUrl)}" />
   <meta property="og:image" content="${escAttr(eyecatchAbs)}" />
   <meta property="og:image:secure_url" content="${escAttr(eyecatchAbs)}" />
   <meta property="og:image:type" content="image/webp" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="675" />
   <meta property="article:published_time" content="${escAttr(date)}T00:00:00+09:00" />
   <meta property="article:modified_time" content="${escAttr(dateTimeAttr(updatedAt))}" />
+  <meta property="article:author" content="${SITE_ORIGIN}/about/" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="${escAttr(title)}" />
   <meta name="twitter:description" content="${escAttr(description)}" />

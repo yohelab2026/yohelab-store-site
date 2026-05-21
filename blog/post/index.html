@@ -185,6 +185,24 @@
     return raw.startsWith('/') ? `${SITE_ORIGIN}${raw}` : `${SITE_ORIGIN}/${raw}`;
   }
 
+  function cardImageUrl(value) {
+    const abs = absoluteUrl(value);
+    try {
+      const parsed = new URL(abs);
+      if (parsed.hostname === 'images.yohelab.com' || parsed.hostname.endsWith('.r2.dev')) {
+        const key = parsed.pathname.replace(/^\/+/, '');
+        if (/^[\w.-]+\.webp$/i.test(key)) return `${SITE_ORIGIN}/blog-images/${encodeURIComponent(key)}`;
+      }
+      if (parsed.hostname === 'yohelab.com' && parsed.pathname === '/api/blog-image') {
+        const key = parsed.searchParams.get('key') || '';
+        if (/^[\w.-]+\.webp$/i.test(key)) return `${SITE_ORIGIN}/blog-images/${encodeURIComponent(key)}`;
+      }
+    } catch (_) {
+      return abs;
+    }
+    return abs;
+  }
+
   function esc(str) {
     return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
@@ -325,7 +343,7 @@
     const pagePath = postPath(postSlug);
     const title = post.title || '記事';
     const description = post.excerpt || title;
-    const imageUrl = absoluteUrl(post.eyecatch);
+    const imageUrl = cardImageUrl(post.eyecatch);
     const date = post.date || new Date().toISOString().slice(0, 10);
     const updatedAt = post.updatedAt || post.modifiedAt || date;
     const publishedLabel = formatPostDate(date);
@@ -342,15 +360,22 @@
     setMeta('og:title', `${title} | よへラボブログ`);
     setMeta('og:description', description);
     setMeta('og:type', 'article');
+    setMeta('og:site_name', 'よへラボ');
     setMeta('og:locale', 'ja_JP');
     setMeta('og:url', pageUrl);
     setMeta('og:image', imageUrl);
+    setMeta('og:image:secure_url', imageUrl);
+    setMeta('og:image:type', imageUrl.endsWith('.webp') ? 'image/webp' : 'image/png');
+    setMeta('og:image:width', '1200');
+    setMeta('og:image:height', '675');
     setMeta('article:published_time', `${date}T00:00:00+09:00`);
     setMeta('article:modified_time', dateTimeAttr(updatedAt));
+    setMeta('article:author', `${SITE_ORIGIN}/about/`);
     setMeta('twitter:card', 'summary_large_image');
     setMeta('twitter:title', title);
     setMeta('twitter:description', description);
     setMeta('twitter:image', imageUrl);
+    setMeta('twitter:image:alt', imageAltText(post, 'cover'));
     upsertJsonLd('post-jsonld', {
       '@context': 'https://schema.org',
       '@type': 'BlogPosting',
@@ -365,6 +390,7 @@
         name: 'よへラボ',
         logo: { '@type': 'ImageObject', url: FALLBACK_IMAGE },
       },
+      isPartOf: { '@type': 'Blog', name: 'よへラボブログ', url: `${SITE_ORIGIN}/blog/` },
       mainEntityOfPage: { '@type': 'WebPage', '@id': pageUrl },
       url: pageUrl,
       inLanguage: 'ja-JP',

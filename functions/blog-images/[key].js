@@ -1,6 +1,14 @@
 const KEY_PATTERN = /^[\w.-]+\.webp$/i;
 
 export async function onRequestGet(context) {
+  return imageResponse(context, false);
+}
+
+export async function onRequestHead(context) {
+  return imageResponse(context, true);
+}
+
+async function imageResponse(context, headOnly) {
   const key = String(context.params?.key || "").trim();
   if (!KEY_PATTERN.test(key)) return notFound();
 
@@ -10,7 +18,7 @@ export async function onRequestGet(context) {
   const entry = await readImage(storage, key);
   if (!entry) return notFound();
 
-  return new Response(entry.body, {
+  return new Response(headOnly ? null : entry.body, {
     headers: {
       "Content-Type": entry.contentType || "image/webp",
       "Cache-Control": "public, max-age=31536000, immutable",

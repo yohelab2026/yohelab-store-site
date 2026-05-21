@@ -95,11 +95,33 @@ function headHardeningPlugin() {
       if (pageOgImage && !out.includes('name="twitter:image"')) {
         out = out.replace(/<meta name="twitter:card" content="summary_large_image" \/>/i, (match) => `${match}\n  <meta name="twitter:image" content="${pageOgImage}" />`);
       }
+      if (pageOgImage && !out.includes('property="og:image:secure_url"')) {
+        out = out.replace(/<meta\s+property="og:image"\s+content="([^"]+)"\s*\/?>/i, (match, imageUrl) => `${match}\n  <meta property="og:image:secure_url" content="${imageUrl}" />`);
+      }
+      if (pageOgImage && !out.includes('property="og:image:type"')) {
+        const imageType = pageOgImage.endsWith(".webp") ? "image/webp" : pageOgImage.endsWith(".png") ? "image/png" : pageOgImage.endsWith(".jpg") || pageOgImage.endsWith(".jpeg") ? "image/jpeg" : "";
+        if (imageType) {
+          out = out.replace(/<meta\s+property="og:image(?:\:secure_url)?"\s+content="[^"]+"\s*\/?>/i, (match) => `${match}\n  <meta property="og:image:type" content="${imageType}" />`);
+        }
+      }
       if (!out.includes('name="author"')) {
         out = out.replace("</head>", `  <meta name="author" content="よへラボ" />\n</head>`);
       }
+      if (!out.includes('property="og:site_name"')) {
+        out = out.replace("</head>", `  <meta property="og:site_name" content="よへラボ" />\n</head>`);
+      }
+      if (!out.includes('property="og:locale"')) {
+        out = out.replace("</head>", `  <meta property="og:locale" content="ja_JP" />\n</head>`);
+      }
       if (!out.includes('name="twitter:site"')) {
         out = out.replace("</head>", `  <meta name="twitter:site" content="@yohe_lab" />\n  <meta name="twitter:creator" content="@yohe_lab" />\n</head>`);
+      }
+      const canonical = out.match(/<link\s+rel="canonical"\s+href="([^"]+)"\s*\/?>/i)?.[1];
+      if (canonical && !out.includes('property="og:url"')) {
+        out = out.replace("</head>", `  <meta property="og:url" content="${canonical}" />\n</head>`);
+      }
+      if (!out.includes('name="format-detection"')) {
+        out = out.replace("</head>", `  <meta name="format-detection" content="telephone=no,address=no,email=no" />\n</head>`);
       }
       if (!out.includes('type="application/rss+xml"')) {
         out = out.replace("</head>", `  <link rel="alternate" type="application/rss+xml" title="よへラボ RSS" href="https://yohelab.com/feed.xml" />\n</head>`);
@@ -143,7 +165,6 @@ function headHardeningPlugin() {
         out = out.replace("</head>", `  ${claritySnippet}\n</head>`);
       }
 
-      const canonical = out.match(/<link\s+rel="canonical"\s+href="([^"]+)"\s*\/?>/i)?.[1];
       const title = out.match(/<title>([^<]+)<\/title>/i)?.[1]?.replace(/\s*\|\s*よへラボ.*$/, "").trim();
       if (canonical && canonical !== "https://yohelab.com/" && title && !out.includes('"@type":"BreadcrumbList"')) {
         const breadcrumb = {
@@ -164,13 +185,25 @@ function headHardeningPlugin() {
 
 function mobilePolishPlugin() {
   const style = `<style id="yohelab-mobile-polish">
+html { overflow-x: clip; text-size-adjust: 100%; -webkit-text-size-adjust: 100%; }
+body { overflow-x: clip; }
+img, video, canvas, svg { max-width: 100%; height: auto; }
+table { max-width: 100%; }
+a, button, input, select, textarea { touch-action: manipulation; }
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 2px solid #0b8f72; outline-offset: 3px; }
 @media (max-width: 640px) {
+  button, input, select, textarea, .btn, .nav-links a, .header-inner nav a, .tab-btn, .filter-btn, .post-tag, .share-btn, .back-link { min-height: 44px; }
+  input, select, textarea { font-size: 16px !important; }
+  .site-header { width: 100%; }
+  .header-inner { max-width: none !important; width: 100% !important; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .header-inner nav { min-width: max-content; }
   .post-outer, .article-shell { width: auto !important; max-width: none !important; padding-left: 16px !important; padding-right: 16px !important; }
   .post-title, .article-hero h1 { overflow-wrap: anywhere; }
   .post-excerpt, .article-lead { font-size: 16px !important; line-height: 1.8 !important; }
   .post-body, .article-card { font-size: 16px !important; line-height: 1.9 !important; }
   .post-cover { border-radius: 16px !important; margin-bottom: 22px !important; }
-  .post-table { display: block !important; overflow-x: auto !important; -webkit-overflow-scrolling: touch; }
+  .post-body table, .post-table, .compare, table { display: block !important; width: 100% !important; overflow-x: auto !important; -webkit-overflow-scrolling: touch; }
+  .post-body pre, .post-body code { white-space: pre-wrap; overflow-wrap: anywhere; }
 }
 </style>`;
 
