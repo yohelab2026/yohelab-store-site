@@ -150,7 +150,7 @@ function sanitizeSlug(value) {
   return String(value || "")
     .trim()
     .toLowerCase()
-    .replace(/[^a-z0-9ぁ-んァ-ヶ一-龠ー._-]+/g, "-")
+    .replace(/[^a-z0-9._-]+/g, "-")
     .replace(/-+/g, "-")
     .replace(/^-+|-+$/g, "")
     .slice(0, 80);

@@ -138,12 +138,12 @@ function autoExcerpt(htmlOrText, title) {
 }
 
 function sanitizeSlug(value) {
-  const fallback = `post-${new Date().toISOString().slice(0, 10)}`;
+  const fallback = `post-${new Date().toISOString().slice(0, 10)}-${crypto.randomUUID().slice(0, 8).toLowerCase()}`;
   return (
     String(value || "")
       .trim()
       .toLowerCase()
-      .replace(/[^a-z0-9ぁ-んァ-ヶ一-龠ー._-]+/g, "-")
+      .replace(/[^a-z0-9._-]+/g, "-")
       .replace(/-+/g, "-")
       .replace(/^-+|-+$/g, "")
       .slice(0, 80) || fallback

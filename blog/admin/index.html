@@ -196,6 +196,29 @@
     .body-editor ul, .body-editor ol { padding-left:24px;margin-bottom:16px; }
     .body-editor li { margin-bottom:6px; }
     .body-editor blockquote { border-left:4px solid var(--green);padding:10px 16px;background:var(--bg);border-radius:0 10px 10px 0;margin:16px 0;color:var(--muted); }
+    .body-editor .media-block {
+      position:relative;display:block;width:100%;max-width:100%;margin:20px auto;border-radius:14px;
+      cursor:grab;user-select:none;transition:outline-color .15s,box-shadow .15s,opacity .15s;
+    }
+    .body-editor .media-block img {
+      display:block;width:100%;height:auto;border-radius:14px;margin:0;pointer-events:none;
+      box-shadow:0 10px 28px rgba(14,55,42,.08);
+    }
+    .body-editor .media-block.is-selected {
+      outline:2px solid var(--green);outline-offset:4px;box-shadow:0 0 0 6px rgba(0,150,115,.08);
+    }
+    .body-editor .media-block.is-selected::before {
+      content:"ドラッグで移動 / 右端でサイズ変更";position:absolute;left:8px;top:8px;z-index:2;
+      background:rgba(11,143,114,.92);color:#fff;border-radius:999px;padding:5px 9px;font-size:11px;font-weight:900;
+      pointer-events:none;
+    }
+    .body-editor .media-block.is-selected::after {
+      content:"";position:absolute;right:-8px;top:50%;z-index:3;width:16px;height:42px;
+      transform:translateY(-50%);border-radius:999px;background:var(--green);box-shadow:0 6px 16px rgba(0,150,115,.25);
+      cursor:ew-resize;
+    }
+    .body-editor .media-block.is-dragging { opacity:.55;cursor:grabbing; }
+    .body-editor .media-drop-caret { height:4px;border-radius:999px;background:var(--green);margin:14px 0;box-shadow:0 0 0 4px rgba(0,150,115,.12); }
 
     /* メタ設定パネル（折りたたみ） */
     .meta-toggle { display:flex;align-items:center;gap:8px;cursor:pointer;color:var(--muted);font-size:14px;font-weight:700;margin:32px 0 0;user-select:none;border:none;background:none;padding:0; }
@@ -492,7 +515,7 @@
         <label class="meta-label">子カテゴリ・補助キーワード<input id="tags" placeholder="ChatGPT, AIニュース, 記事作成" /></label>
         <label class="meta-label">スラッグ（URL）
           <div style="display:flex;gap:8px;align-items:center;">
-            <input id="slug" placeholder="未入力ならタイトルから生成" style="flex:1;" />
+            <input id="slug" inputmode="url" pattern="[a-z0-9._-]*" placeholder="未入力なら英数字で自動生成" style="flex:1;" />
             <button type="button" id="gen-slug" style="white-space:nowrap;border:1px solid var(--border);background:#fff;border-radius:10px;padding:8px 12px;font-size:13px;font-weight:700;cursor:pointer;flex-shrink:0;">🎲 自動生成</button>
           </div>
         </label>
@@ -680,10 +703,11 @@
 
   function syncVisualFromText() {
     if (bodySourceEl) bodyEl.innerHTML = bodySourceEl.value;
+    upgradeMediaBlocks();
   }
 
   function currentBodyHtml() {
-    return editorEditMode === 'text' && bodySourceEl ? bodySourceEl.value : bodyEl.innerHTML;
+    return editorEditMode === 'text' && bodySourceEl ? bodySourceEl.value : cleanEditorMediaHtml(bodyEl.innerHTML);
   }
 
   function currentBodyText() {
@@ -714,6 +738,55 @@
       tab.setAttribute('aria-pressed', active ? 'true' : 'false');
     });
     saveDraftLocal();
+  }
+
+  function escAttrValue(value) {
+    return String(value || '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  function mediaBlockHtml(image) {
+    const src = escAttrValue(image.url);
+    const width = Number(image.width) || 0;
+    const height = Number(image.height) || 0;
+    const sizeAttrs = width && height ? ` width="${width}" height="${height}"` : '';
+    return [
+      `<figure class="media-block" data-media-block="image" contenteditable="false" style="width:100%;max-width:100%;margin:20px auto;">`,
+      `<img src="${src}" alt="記事内画像"${sizeAttrs} loading="lazy" decoding="async" style="width:100%;height:auto;border-radius:14px;display:block;" />`,
+      `</figure><p><br></p>`,
+    ].join('');
+  }
+
+  function cleanEditorMediaHtml(html) {
+    const wrap = document.createElement('div');
+    wrap.innerHTML = html || '';
+    wrap.querySelectorAll('[data-media-block]').forEach(block => {
+      block.classList.remove('is-selected', 'is-dragging');
+      block.removeAttribute('contenteditable');
+      block.removeAttribute('draggable');
+    });
+    wrap.querySelectorAll('.media-drop-caret').forEach(node => node.remove());
+    return wrap.innerHTML;
+  }
+
+  function upgradeMediaBlocks() {
+    bodyEl.querySelectorAll('img').forEach(img => {
+      if (img.closest('[data-media-block]')) return;
+      const figure = document.createElement('figure');
+      figure.className = 'media-block';
+      figure.dataset.mediaBlock = 'image';
+      figure.contentEditable = 'false';
+      figure.style.cssText = 'width:100%;max-width:100%;margin:20px auto;';
+      img.style.width = '100%';
+      img.style.height = 'auto';
+      img.style.borderRadius = img.style.borderRadius || '14px';
+      img.style.display = 'block';
+      img.parentNode.insertBefore(figure, img);
+      figure.appendChild(img);
+    });
+    bodyEl.querySelectorAll('[data-media-block]').forEach(block => {
+      block.contentEditable = 'false';
+      block.draggable = false;
+    });
   }
 
   function ensureVisualMode() {
@@ -788,6 +861,98 @@
     saveDraftLocal();
   }
 
+  // ── ビジュアル画面の画像操作 ─────────────────────────────
+  let selectedMediaBlock = null;
+  let mediaPointerState = null;
+  const mediaDropCaret = document.createElement('div');
+  mediaDropCaret.className = 'media-drop-caret';
+
+  function selectMediaBlock(block) {
+    if (selectedMediaBlock && selectedMediaBlock !== block) {
+      selectedMediaBlock.classList.remove('is-selected');
+    }
+    selectedMediaBlock = block || null;
+    if (selectedMediaBlock) selectedMediaBlock.classList.add('is-selected');
+  }
+
+  function isMediaResizePoint(block, event) {
+    const rect = block.getBoundingClientRect();
+    return Math.abs(event.clientX - rect.right) <= 18 && event.clientY >= rect.top && event.clientY <= rect.bottom;
+  }
+
+  function editorChildFromPoint(event) {
+    let node = document.elementFromPoint(event.clientX, event.clientY);
+    if (!node || !bodyEl.contains(node)) return null;
+    while (node && node.parentElement && node.parentElement !== bodyEl) {
+      node = node.parentElement;
+    }
+    return node === bodyEl ? null : node;
+  }
+
+  function placeMediaDropCaret(event, block) {
+    const target = editorChildFromPoint(event);
+    if (!target || target === block || target === mediaDropCaret) {
+      if (!mediaDropCaret.parentNode) bodyEl.appendChild(mediaDropCaret);
+      return;
+    }
+    const rect = target.getBoundingClientRect();
+    const before = event.clientY < rect.top + rect.height / 2;
+    bodyEl.insertBefore(mediaDropCaret, before ? target : target.nextSibling);
+  }
+
+  bodyEl.addEventListener('mousedown', event => {
+    if (editorEditMode !== 'visual') return;
+    const block = event.target.closest?.('[data-media-block]');
+    if (!block || !bodyEl.contains(block)) {
+      selectMediaBlock(null);
+      return;
+    }
+    event.preventDefault();
+    selectMediaBlock(block);
+    const rect = block.getBoundingClientRect();
+    const editorRect = bodyEl.getBoundingClientRect();
+    mediaPointerState = {
+      block,
+      mode: isMediaResizePoint(block, event) ? 'resize' : 'move',
+      startX: event.clientX,
+      startY: event.clientY,
+      startWidth: rect.width,
+      editorWidth: Math.max(320, editorRect.width),
+    };
+    if (mediaPointerState.mode === 'move') {
+      block.classList.add('is-dragging');
+      placeMediaDropCaret(event, block);
+    }
+  });
+
+  document.addEventListener('mousemove', event => {
+    if (!mediaPointerState) return;
+    const { block, mode } = mediaPointerState;
+    if (mode === 'resize') {
+      const delta = event.clientX - mediaPointerState.startX;
+      const nextWidth = Math.max(120, Math.min(mediaPointerState.editorWidth, mediaPointerState.startWidth + delta));
+      const percent = Math.max(18, Math.min(100, Math.round((nextWidth / mediaPointerState.editorWidth) * 100)));
+      block.style.width = `${percent}%`;
+      block.style.maxWidth = '100%';
+      block.style.marginLeft = 'auto';
+      block.style.marginRight = 'auto';
+      return;
+    }
+    placeMediaDropCaret(event, block);
+  });
+
+  document.addEventListener('mouseup', () => {
+    if (!mediaPointerState) return;
+    const { block, mode } = mediaPointerState;
+    if (mode === 'move' && mediaDropCaret.parentNode) {
+      bodyEl.insertBefore(block, mediaDropCaret);
+    }
+    block.classList.remove('is-dragging');
+    mediaDropCaret.remove();
+    mediaPointerState = null;
+    saveDraftLocal();
+  });
+
   // ── 本文内画像挿入 ────────────────────────────────────────
   const insertImgBtn  = document.getElementById('insert-img-btn');
   const insertImgFile = document.getElementById('insert-img-file');
@@ -797,7 +962,8 @@
     if (!file) return;
     const image = await uploadImage(file);
     if (!image?.url) return;
-    insertHtmlIntoEditor(`<img src="${image.url}" alt="記事内画像" width="${image.width}" height="${image.height}" loading="lazy" decoding="async" style="max-width:100%;height:auto;border-radius:10px;margin:12px 0;display:block;" />`);
+    insertHtmlIntoEditor(mediaBlockHtml(image));
+    upgradeMediaBlocks();
     insertImgFile.value = '';
   });
 
@@ -968,9 +1134,24 @@
     const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
     return Array.from({length: 7}, () => chars[Math.floor(Math.random() * chars.length)]).join('');
   }
+
+  function sanitizeSlugInput(value) {
+    return String(value || '')
+      .trim()
+      .toLowerCase()
+      .replace(/[^a-z0-9._-]+/g, '-')
+      .replace(/-+/g, '-')
+      .replace(/^-+|-+$/g, '')
+      .slice(0, 80);
+  }
+
   document.getElementById('gen-slug').addEventListener('click', () => {
-    slugEl.value = genShortId();
+    slugEl.value = `post-${genShortId()}`;
     saveDraftLocal();
+  });
+  slugEl.addEventListener('input', () => {
+    const cleaned = sanitizeSlugInput(slugEl.value);
+    if (slugEl.value !== cleaned) slugEl.value = cleaned;
   });
 
   // ── メタパネル開閉 ────────────────────────────────────────
@@ -1030,7 +1211,7 @@
       bodyHtml: currentBodyHtml(),
       excerpt: excerptEl.value,
       tags: tagsEl.value,
-      slug: slugEl.value,
+      slug: sanitizeSlugInput(slugEl.value),
       eyecatch: eyecatchEl.value,
       cover: coverSettings(),
     }));
@@ -1054,9 +1235,10 @@
       titleEl.value = d.title || '';
       bodyEl.innerHTML = d.bodyHtml || '';
       bodySourceEl.value = d.bodyHtml || '';
+      upgradeMediaBlocks();
       excerptEl.value = d.excerpt || '';
       tagsEl.value = d.tags || '';
-      slugEl.value = d.slug || '';
+      slugEl.value = sanitizeSlugInput(d.slug) || '';
       if (d.eyecatch) {
         eyecatchEl.value = d.eyecatch;
         coverImg.src = d.eyecatch;
@@ -1074,7 +1256,7 @@
     return {
       draftId: activeDraftId || undefined,
       title: titleEl.value.trim(),
-      slug: slugEl.value.trim(),
+      slug: sanitizeSlugInput(slugEl.value),
       excerpt: excerptEl.value.trim(),
       bodyHtml: currentBodyHtml(),
       body: currentBodyText(),
@@ -1196,10 +1378,8 @@
 
   // ── 公開 ──────────────────────────────────────────────────
   function makeSlug(text) {
-    const fallback = `post-${new Date().toISOString().slice(0,10)}`;
-    return String(text||fallback).trim().toLowerCase()
-      .replace(/[^a-z0-9ぁ-んァ-ヶ一-龠ー._-]+/g,'-')
-      .replace(/-+/g,'-').replace(/^-+|-+$/g,'').slice(0,80) || fallback;
+    const fallback = `post-${new Date().toISOString().slice(0,10)}-${genShortId()}`;
+    return sanitizeSlugInput(text) || fallback;
   }
 
   async function publish() {
@@ -1217,7 +1397,7 @@
     const post = {
       draftId: activeDraftId || undefined,
       title,
-      slug: slugEl.value.trim() || makeSlug(title),
+      slug: sanitizeSlugInput(slugEl.value) || makeSlug(title),
       date: activePostDate || new Date().toISOString().slice(0,10),
       excerpt: excerptEl.value.trim(),
       bodyHtml: currentBodyHtml(),
@@ -1888,9 +2068,10 @@
     titleEl.value = post.title || '';
     bodyEl.innerHTML = post.bodyHtml || '';
     bodySourceEl.value = post.bodyHtml || '';
+    upgradeMediaBlocks();
     excerptEl.value = post.excerpt || '';
     tagsEl.value = Array.isArray(post.tags) ? post.tags.join(', ') : '';
-    slugEl.value = post.slug || '';
+    slugEl.value = sanitizeSlugInput(post.slug) || '';
     eyecatchEl.value = post.eyecatch || '';
     if (post.eyecatch) {
       coverImg.src = post.eyecatch;
@@ -1986,7 +2167,7 @@
     const title = String(post.title || '').replace(/^【下書き】\s*/, '');
     fillEditor({
       title,
-      slug: post.slug,
+      slug: sanitizeSlugInput(post.slug) || makeSlug(title),
       date: post.date || '',
       excerpt: post.excerpt || '',
       bodyHtml: post.bodyHtml || '',
@@ -2012,7 +2193,7 @@
       headers: { 'Content-Type':'application/json','X-Yohelab-Pin': pin },
       body: JSON.stringify({
         title: String(post.title || '').replace(/^【下書き】\s*/, ''),
-        slug: post.slug,
+        slug: sanitizeSlugInput(post.slug) || makeSlug(post.title),
         excerpt: post.excerpt || '',
         bodyHtml: post.bodyHtml || '',
         body: stripHtml(post.bodyHtml || ''),
