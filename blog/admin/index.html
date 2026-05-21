@@ -642,6 +642,7 @@
   let trashItems = [];
   let contentCurrentPage = 1;
   let contentDateSortDirection = 'desc';
+  let suppressAdminHistory = false;
   let autosaveTimer = null;
   let autosaveInFlight = false;
   let editorEditMode = 'visual';
@@ -718,6 +719,62 @@
     try { return (localStorage.getItem(SAVED_PIN_KEY) || '').trim(); } catch (_) { return ''; }
   }
 
+  function normalizedAdminView(view) {
+    return ['editor', 'content', 'categories'].includes(view) ? view : 'editor';
+  }
+
+  function normalizedContentStatus(status) {
+    return ['all', 'published', 'draft', 'trash'].includes(status) ? status : 'draft';
+  }
+
+  function selectedAdminView() {
+    const activeTab = document.querySelector('[data-admin-tab].is-active');
+    return normalizedAdminView(activeTab?.dataset.adminTab || 'editor');
+  }
+
+  function adminHistoryUrl(view, status) {
+    const nextUrl = new URL(location.href);
+    nextUrl.searchParams.set('view', normalizedAdminView(view));
+    if (normalizedAdminView(view) === 'content') {
+      nextUrl.searchParams.set('status', normalizedContentStatus(status));
+    } else {
+      nextUrl.searchParams.delete('status');
+    }
+    return nextUrl;
+  }
+
+  function updateAdminHistory(options = {}) {
+    if (suppressAdminHistory) return;
+    const view = selectedAdminView();
+    const status = normalizedContentStatus(contentStatusFilterEl?.value || 'draft');
+    const nextUrl = adminHistoryUrl(view, status);
+    const nextPath = `${nextUrl.pathname}${nextUrl.search}${nextUrl.hash}`;
+    const currentPath = `${location.pathname}${location.search}${location.hash}`;
+    const state = { yohelabAdmin: true, view, status };
+    if (options.replace || nextPath === currentPath) {
+      history.replaceState(state, '', nextUrl);
+    } else {
+      history.pushState(state, '', nextUrl);
+    }
+  }
+
+  function applyAdminLocation(options = {}) {
+    const params = new URLSearchParams(location.search);
+    const view = normalizedAdminView(params.get('view'));
+    const status = normalizedContentStatus(params.get('status'));
+    suppressAdminHistory = true;
+    if (contentStatusFilterEl) contentStatusFilterEl.value = status;
+    if (view === 'content') {
+      resetContentPage();
+      setAdminView('content', { scroll: options.scroll !== false, history: false });
+      renderContentList();
+    } else {
+      setAdminView(view, { scroll: options.scroll !== false, history: false });
+    }
+    suppressAdminHistory = false;
+    if (options.replaceHistory) updateAdminHistory({ replace: true });
+  }
+
   function setAdminView(view, options = {}) {
     const nextView = view || 'editor';
     document.querySelectorAll('[data-admin-view]').forEach(panel => {
@@ -731,13 +788,19 @@
     if (options.scroll !== false) {
       document.querySelector('.admin-workbench')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
+    if (options.history !== false) updateAdminHistory({ replace: options.replaceHistory === true });
   }
 
   async function initializeAdminAfterUnlock() {
     await loadCategorySettings();
     await loadAllLists({ importStatic: true });
-    setAdminView('editor', { scroll: false });
+    applyAdminLocation({ scroll: false, replaceHistory: true });
   }
+
+  window.addEventListener('popstate', () => {
+    if (!document.body.classList.contains('is-unlocked')) return;
+    applyAdminLocation({ scroll: false });
+  });
 
   // ── タイトル auto-resize ────────────────────────────────────
   titleEl.addEventListener('input', () => {
@@ -2897,12 +2960,14 @@
     await loadAllLists();
   }
 
-  function setContentStatus(status) {
-    setAdminView('content', { scroll: false });
-    if (contentStatusFilterEl) contentStatusFilterEl.value = status;
+  function setContentStatus(status, options = {}) {
+    const nextStatus = normalizedContentStatus(status);
+    setAdminView('content', { scroll: false, history: false });
+    if (contentStatusFilterEl) contentStatusFilterEl.value = nextStatus;
     resetContentPage();
     renderContentList();
-    scrollManager('content-manager-card');
+    if (options.scroll !== false) scrollManager('content-manager-card');
+    if (options.history !== false) updateAdminHistory({ replace: options.replaceHistory === true });
   }
 
   function resetAndRenderContentList() {
@@ -2924,7 +2989,7 @@
     resetContentPage();
     await loadAllLists();
   });
-  contentStatusFilterEl?.addEventListener('change', resetAndRenderContentList);
+  contentStatusFilterEl?.addEventListener('change', () => setContentStatus(contentStatusFilterEl.value, { scroll: false }));
   contentCategoryFilterEl?.addEventListener('change', resetAndRenderContentList);
   contentSearchEl?.addEventListener('input', resetAndRenderContentList);
   contentListEl?.addEventListener('click', event => {
