@@ -260,106 +260,6 @@ function renderTags(tags) {
     .join("");
 }
 
-const BLOG_CATEGORY_TREE = [
-  {
-    key: "ai-news",
-    label: "AIニュース",
-    icon: "🤖",
-    href: "/blog/category/ai-news/",
-    children: [
-      ["ai-news", "AIニュース全部", "/blog/category/ai-news/"],
-      ["chatgpt", "ChatGPT", "/blog/category/chatgpt/"],
-      ["claude", "Claude", "/blog/category/claude/"],
-      ["gemini", "Gemini", "/blog/category/gemini/"],
-      ["perplexity", "Perplexity", "/blog/category/perplexity/"],
-      ["genspark", "Genspark", "/blog/category/genspark/"],
-      ["grok", "Grok", "/blog/category/grok/"],
-      ["copilot", "Copilot", "/blog/category/copilot/"],
-      ["midjourney", "Midjourney", "/blog/category/midjourney/"],
-    ],
-  },
-  {
-    key: "earn",
-    label: "副業ブログ",
-    icon: "✍️",
-    href: "/blog/category/earn/",
-    children: [
-      ["earn", "副業ネタ全部", "/blog/category/earn/"],
-      ["article", "記事づくり", "/blog/category/article/"],
-      ["template", "テンプレ販売", "/blog/category/template/"],
-    ],
-  },
-  {
-    key: "wordpress",
-    label: "ツール・商品",
-    icon: "📦",
-    href: "/blog/category/wordpress/",
-    children: [
-      ["wordpress", "ツール全部", "/blog/category/wordpress/"],
-      ["template", "記事テンプレ", "/blog/category/template/"],
-    ],
-  },
-  {
-    key: "home-work",
-    label: "在宅ヒント",
-    icon: "💪",
-    href: "/blog/category/home-work/",
-    children: [
-      ["home-work", "在宅ヒント全部", "/blog/category/home-work/"],
-    ],
-  },
-];
-
-function normalizeCategoryKey(value) {
-  const raw = String(value || "").trim().toLowerCase();
-  if (!raw) return "";
-  if (raw.includes("chatgpt") || raw.includes("openai")) return "chatgpt";
-  if (raw.includes("claude") || raw.includes("anthropic")) return "claude";
-  if (raw.includes("gemini") || raw.includes("google")) return "gemini";
-  if (raw.includes("perplexity")) return "perplexity";
-  if (raw.includes("genspark")) return "genspark";
-  if (raw.includes("grok")) return "grok";
-  if (raw.includes("copilot") || raw.includes("microsoft")) return "copilot";
-  if (raw.includes("midjourney")) return "midjourney";
-  if (raw.includes("aiニュース") || raw.includes("ai検索") || raw.includes("ray-ban") || raw.includes("meta")) return "ai-news";
-  if (raw.includes("wordpress") || raw.includes("文標")) return "wordpress";
-  if (raw.includes("在宅") || raw.includes("家で作業") || raw.includes("home-work")) return "home-work";
-  if (raw.includes("比較記事") || raw.includes("テンプレ") || raw.includes("template")) return "template";
-  if (raw.includes("副業") || raw.includes("稼") || raw.includes("収益") || raw === "earn") return "earn";
-  return raw.replace(/[^a-z0-9._-]+/g, "-").replace(/^-+|-+$/g, "");
-}
-
-function categoryKeysForPost(post) {
-  const raw = [
-    ...(Array.isArray(post.tags) ? post.tags : []),
-    post.title || "",
-    post.excerpt || "",
-  ];
-  return [...new Set(raw.map(normalizeCategoryKey).filter(Boolean))];
-}
-
-function parentKeyForCategory(key) {
-  const found = BLOG_CATEGORY_TREE.find((parent) =>
-    parent.key === key || parent.children.some(([childKey]) => childKey === key),
-  );
-  return found?.key || "";
-}
-
-function primaryCategoryParent(post) {
-  const keys = categoryKeysForPost(post);
-  for (const parent of BLOG_CATEGORY_TREE) {
-    if (keys.some((key) => parentKeyForCategory(key) === parent.key)) return parent.key;
-  }
-  return "ai-news";
-}
-
-function activeChildKey(post, activeParent) {
-  const keys = categoryKeysForPost(post);
-  const parent = BLOG_CATEGORY_TREE.find((item) => item.key === activeParent);
-  if (!parent) return activeParent;
-  return parent.children.find(([key]) => keys.includes(key))?.[0] || activeParent;
-}
-
 function renderBlogHeader() {
   return `<header class="site-header" style="background:#fff;border-bottom:3px solid #0b8f72;position:sticky;top:0;z-index:100;">
     <div class="header-inner" style="max-width:1100px;margin:0 auto;padding:0 16px;display:flex;align-items:center;gap:20px;height:56px;">
@@ -368,41 +268,12 @@ function renderBlogHeader() {
         よへラボ
       </a>
       <nav style="display:flex;align-items:center;gap:4px;flex-wrap:wrap;">
-        <a href="/" style="padding:5px 11px;border-radius:4px;font-size:13px;font-weight:700;color:#444;text-decoration:none;">トップ</a>
         <a href="/blog/" style="padding:5px 11px;border-radius:4px;font-size:13px;font-weight:700;color:#444;text-decoration:none;">ブログ</a>
         <a href="/lp/bunsirube/" style="padding:5px 11px;border-radius:4px;font-size:13px;font-weight:700;color:#444;text-decoration:none;">文標</a>
         <a href="/about/" style="padding:5px 11px;border-radius:4px;font-size:13px;font-weight:700;color:#444;text-decoration:none;">サイトについて</a>
       </nav>
-      <div style="margin-left:auto;">
-        <a href="/lp/bunsirube/" style="background:#0b8f72;color:#fff;padding:7px 16px;border-radius:4px;font-size:13px;font-weight:700;text-decoration:none;white-space:nowrap;">文標を見る →</a>
-      </div>
     </div>
   </header>`;
-}
-
-function renderBlogCategoryNav(post) {
-  const activeParent = primaryCategoryParent(post);
-  const activeChild = activeChildKey(post, activeParent);
-  const parentTabs = BLOG_CATEGORY_TREE.map((parent) => {
-    const active = parent.key === activeParent;
-    return `<a class="category-tab${active ? " is-active" : ""}" role="tab" aria-selected="${active ? "true" : "false"}" href="${parent.href}">
-      <span class="category-tab-icon">${parent.icon}</span>
-      <span class="category-tab-label">${escHtml(parent.label)}</span>
-    </a>`;
-  }).join("");
-  const activePanel = BLOG_CATEGORY_TREE.find((parent) => parent.key === activeParent) || BLOG_CATEGORY_TREE[0];
-  const childLinks = activePanel.children.map(([key, label, href]) =>
-    `<a class="category-child${key === activeChild ? " is-active" : ""}" href="${href}">${escHtml(label)}</a>`,
-  ).join("");
-  return `<section class="blog-category-nav" aria-label="ブログカテゴリ">
-    <div class="category-tabs" role="tablist" aria-label="親カテゴリ">${parentTabs}</div>
-    <div class="child-category-panels" aria-label="子カテゴリ">
-      <div class="child-category-panel is-active" data-parent-panel="${escAttr(activePanel.key)}">
-        <div class="child-category-title">${escHtml(activePanel.label)}の子カテゴリ</div>
-        <div class="child-category-list">${childLinks}</div>
-      </div>
-    </div>
-  </section>`;
 }
 
 function renderPostHTML(post, slug) {
@@ -418,10 +289,6 @@ function renderPostHTML(post, slug) {
   const twitterShare = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
     title,
   )}&url=${encodeURIComponent(fullUrl)}`;
-
-  const coverHtml = post.eyecatch
-    ? `<div id="cover-wrap"><div class="cover-hero"><img src="${escAttr(post.eyecatch)}" alt="${escAttr(title)}" fetchpriority="high" decoding="async" style="${escAttr(coverImageStyle(post))}" /></div></div>`
-    : `<div id="cover-wrap"></div>`;
 
   return `<!doctype html>
 <html lang="ja">
@@ -456,28 +323,14 @@ function renderPostHTML(post, slug) {
   <script async src="/shared/matomo-loader.js"></script>
   <script defer src="/shared/back-to-top.js"></script>
   <style>
-    body { background:#fff; color: var(--text); }
-    .cover-hero { width:min(1180px, calc(100% - 32px)); aspect-ratio:16/9; margin:24px auto 0; overflow:hidden; background:#eef7f2; border-radius:24px; }
-    .cover-hero img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .18s ease; }
-    .blog-category-nav { max-width:1100px; margin:18px auto 0; padding:0 16px; }
-    .category-tabs { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); overflow:hidden; border:1px solid #dce7fb; border-radius:18px; background:#fff; }
-    .category-tab { min-height:88px; padding:14px 10px 12px; border-right:1px solid #e8f1ee; background:#fff; color:#21324c; font:inherit; font-weight:900; display:grid; place-items:center; gap:7px; box-shadow:inset 0 0 0 0 #0b8f72; text-decoration:none; transition:background .15s ease,color .15s ease,box-shadow .15s ease; }
-    .category-tab:last-child { border-right:0; }
-    .category-tab.is-active { background:#e8f7f1; color:#0b8f72; box-shadow:inset 0 -4px 0 #0b8f72; }
-    .category-tab-icon { font-size:24px; line-height:1; }
-    .category-tab-label { font-size:15px; letter-spacing:-.02em; }
-    .child-category-panels { margin-top:14px; padding:14px; border:1px solid #dce7fb; border-radius:16px; background:#fbfffd; }
-    .child-category-title { color:#52645f; font-size:12px; font-weight:900; margin-bottom:10px; }
-    .child-category-list { display:flex; flex-wrap:wrap; gap:8px; }
-    .child-category-panel[data-parent-panel="ai-news"] .child-category-list { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); }
-    .category-child { border:1px solid #dce7fb; background:#fff; color:#21324c; border-radius:999px; min-height:34px; padding:0 12px; font:inherit; font-size:12.5px; font-weight:900; display:inline-flex; align-items:center; justify-content:center; text-decoration:none; }
-    .child-category-panel[data-parent-panel="ai-news"] .category-child { width:100%; text-align:center; padding:0 8px; }
-    .category-child.is-active { background:#0b8f72; border-color:#0b8f72; color:#fff; }
-    .post-outer { max-width:720px; margin:0 auto; padding:48px 24px 100px; }
-    .post-meta { display:flex; align-items:center; gap:10px; flex-wrap:wrap; font-size:13px; color:var(--muted); margin-bottom:20px; }
-    .post-tag { background:#f0f8f4; color: var(--green-dark,#075c4c); border-radius:999px; padding:3px 12px; font-size:12px; font-weight:700; }
-    .post-title { font-size: clamp(28px,5.5vw,52px); font-weight:900; letter-spacing:-.05em; line-height:1.12; margin-bottom:24px; color:var(--text); }
-    .post-excerpt { font-size:19px; color:var(--muted); line-height:1.85; margin-bottom:40px; padding-bottom:32px; border-bottom:1px solid var(--border); }
+    body { background:#fff;color:var(--text); }
+    .post-outer { max-width:760px;margin:0 auto;padding:48px 24px 100px; }
+    .post-hero { border-radius:28px;padding:32px;margin-bottom:30px;background:linear-gradient(135deg,#ecfdf5,#eef6ff);border:1px solid #dce7fb;box-shadow:var(--shadow-sm); }
+    .post-hero-kicker { display:inline-flex;padding:7px 12px;border-radius:999px;background:#0b8f72;color:#fff;font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;margin-bottom:18px; }
+    .post-meta { display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-bottom:18px; }
+    .post-tag { background:#f0f8f4;color:var(--green-dark,#075c4c);border-radius:999px;padding:3px 12px;font-size:12px;font-weight:700;text-decoration:none; }
+    .post-title { font-size:clamp(30px,5.6vw,54px);font-weight:900;line-height:1.12;margin:0;color:var(--text);letter-spacing:-.055em; }
+    .post-excerpt { font-size:18px;color:var(--muted);line-height:1.85;margin:22px 0 0; }
     .post-body { font-size:17px; line-height:2; color:var(--text); }
     .post-body h2 { font-size: clamp(20px,3.5vw,26px); font-weight:900; margin:44px 0 16px; letter-spacing:-.03em; padding-bottom:10px; border-bottom:2px solid var(--border); }
     .post-body h3 { font-size: clamp(17px,3vw,21px); font-weight:800; margin:32px 0 12px; }
@@ -500,32 +353,25 @@ function renderPostHTML(post, slug) {
     @media (max-width:600px) {
       .header-inner { flex-wrap:wrap; height:auto !important; padding-top:8px !important; padding-bottom:8px !important; }
       .header-inner > nav { order:3; width:100%; }
-      .blog-category-nav { margin-top:12px; padding:0 12px; }
-      .category-tabs { grid-template-columns:repeat(2,minmax(0,1fr)); }
-      .category-tab { min-height:76px; }
-      .category-tab:nth-child(2) { border-right:0; }
-      .category-tab:nth-child(-n+2) { border-bottom:1px solid #e8f1ee; }
-      .child-category-panel[data-parent-panel="ai-news"] .child-category-list { display:flex; }
-      .child-category-panel[data-parent-panel="ai-news"] .category-child { width:auto; }
       .post-outer { padding:32px 18px 80px; }
+      .post-hero { padding:24px 20px;border-radius:22px; }
     }
   </style>
 </head>
 <body>
   ${renderBlogHeader()}
 
-  ${renderBlogCategoryNav(post)}
-
-  ${coverHtml}
-
-  <main>
-    <article class="post-outer" id="post-outer">
-      <div class="post-meta">
-        <span>${escHtml(date)}</span>
-        ${tagsHtml}
-      </div>
-      <h1 class="post-title">${escHtml(title)}</h1>
-      ${post.excerpt ? `<p class="post-excerpt">${escHtml(post.excerpt)}</p>` : ""}
+  <main class="post-outer" id="post-outer">
+    <article>
+      <section class="post-hero">
+        <span class="post-hero-kicker">Article</span>
+        <div class="post-meta">
+          <span>${escHtml(date)}</span>
+          ${tagsHtml}
+        </div>
+        <h1 class="post-title">${escHtml(title)}</h1>
+        ${post.excerpt ? `<p class="post-excerpt">${escHtml(post.excerpt)}</p>` : ""}
+      </section>
       <div class="post-body">${bodyHtml}</div>
       <div class="post-footer">
         <div class="post-footer-inner">
