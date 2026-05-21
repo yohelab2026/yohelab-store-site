@@ -12,7 +12,6 @@
     "test:smoke": "node scripts/smoke-test.mjs",
     "test:theme-download": "node scripts/test-theme-download.mjs",
     "test:purchase-flow": "node scripts/test-purchase-flow.mjs",
-    "notify:line-maintenance": "node scripts/send-line-maintenance-report.mjs",
     "cleanup:line-issues": "node scripts/cleanup-line-issues.mjs",
     "line:rich-menu": "node scripts/setup-line-rich-menu.mjs",
     "line:rich-menu:dry": "node scripts/setup-line-rich-menu.mjs --dry-run",

@@ -40,10 +40,8 @@ jobs:
       - name: Install
         run: npm ci
 
-      - name: Create sales draft and notify LINE
+      - name: Create sales draft
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          LINE_CHANNEL_ACCESS_TOKEN: ${{ secrets.LINE_CHANNEL_ACCESS_TOKEN }}
-          LINE_TO: ${{ secrets.LINE_TO }}
           SALES_DRAFT_MODE: ${{ github.event.inputs.mode || 'auto' }}
         run: npm run sales:draft

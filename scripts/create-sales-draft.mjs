@@ -1,6 +1,4 @@
 const token = process.env.GITHUB_TOKEN || "";
-const lineToken = process.env.LINE_CHANNEL_ACCESS_TOKEN || "";
-const lineTo = process.env.LINE_TO || process.env.LINE_USER_ID || process.env.LINE_GROUP_ID || "";
 const repo = process.env.GITHUB_REPOSITORY || "yohelab2026/yohelab-store-site";
 const dryRun = process.env.SALES_DRAFT_DRY_RUN === "1" || process.argv.includes("--dry-run");
 const inputMode = process.env.SALES_DRAFT_MODE || process.argv.find((arg) => arg.startsWith("--mode="))?.split("=")[1] || "auto";
@@ -204,26 +202,6 @@ function buildBody(topic, mode, dateParts) {
   ].join("\n");
 }
 
-function buildLineMessage(issueUrl, topic, mode, dateParts) {
-  const modeInfo = modeMap[mode];
-  return [
-    "よへラボ 自動営業マン",
-    "",
-    `${dateParts.ymd} ${modeInfo.label}の投稿案を保存しました。`,
-    `テーマ: ${topic.theme}`,
-    `おすすめ: ${modeInfo.focus}`,
-    "",
-    "今日やるなら:",
-    "1. X投稿案を1つ出す",
-    "2. noteかブログへ下書きを移す",
-    "3. 最後に文標LPへ案内する",
-    "",
-    `下書きIssue:\n${issueUrl}`,
-    "",
-    "自動投稿はしていません。公開前に確認してください。",
-  ].join("\n");
-}
-
 async function github(path, init = {}) {
   if (!token) throw new Error("GITHUB_TOKEN is not configured.");
   const response = await fetch(`${apiBase}${path}`, {
@@ -265,31 +243,6 @@ async function createIssue(title, body) {
   return issue;
 }
 
-async function sendLine(message) {
-  if (!lineToken || !lineTo) {
-    console.log("LINE notification skipped: LINE_CHANNEL_ACCESS_TOKEN and LINE_TO are not configured.");
-    console.log(message);
-    return;
-  }
-
-  const response = await fetch("https://api.line.me/v2/bot/message/push", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${lineToken}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      to: lineTo,
-      messages: [{ type: "text", text: message.slice(0, 5000) }],
-    }),
-  });
-
-  if (!response.ok) {
-    const body = await response.text();
-    throw new Error(`LINE push failed: ${response.status} ${body}`);
-  }
-}
-
 const dateParts = getJstParts();
 const mode = resolveMode();
 const modeInfo = modeMap[mode];
@@ -309,7 +262,6 @@ if (dryRun) {
 }
 
 const issue = await createIssue(title, body);
-await sendLine(buildLineMessage(issue.html_url, topic, mode, dateParts));
 
 console.log(JSON.stringify({
   ok: true,
