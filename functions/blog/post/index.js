@@ -191,7 +191,7 @@ function escJsonString(value) {
     .replace(/<\/script/gi, "<\\/script");
 }
 
-function sanitizeBodyHtml(html) {
+function sanitizeBodyHtml(html, post = {}) {
   // 管理画面からの投稿でも、公開HTMLに出す前に危険なタグと属性は落とす。
   return enhanceArticleImages(String(html || "")
     .replace(/<\s*(script|style|iframe|object|embed|form|input|button|select|textarea|meta|link|base|svg|math)\b[^>]*>[\s\S]*?<\s*\/\s*\1\s*>/gi, "")
@@ -203,13 +203,37 @@ function sanitizeBodyHtml(html) {
     .replace(/\s(srcdoc|formaction)\s*=\s*'[^']*'/gi, "")
     .replace(/\s(srcdoc|formaction)\s*=\s*[^\s>]+/gi, "")
     .replace(/(href|src)\s*=\s*(['"]?)\s*(javascript:|data:text\/html|vbscript:)[^'"\s>]*/gi, '$1="#"')
-    .replace(/<\/script/gi, "<\\/script"));
+    .replace(/<\/script/gi, "<\\/script"), post);
 }
 
-function enhanceArticleImages(html) {
+function imageAltText(post = {}, src = "", type = "body") {
+  const title = String(post.title || "").replace(/\s+/g, " ").trim();
+  const fallback = type === "cover" ? "アイキャッチ画像" : "記事内画像";
+  if (title) return type === "cover" ? `${title}のアイキャッチ画像` : `${title}の画像`;
+  return fallback;
+}
+
+function isGenericImageAlt(value) {
+  const text = String(value || "").replace(/\s+/g, " ").trim().toLowerCase();
+  return !text || ["画像", "記事内画像", "image", "photo", "picture"].includes(text);
+}
+
+function attrValue(attrs, name) {
+  const match = String(attrs || "").match(new RegExp(`\\s${name}\\s*=\\s*(?:"([^"]*)"|'([^']*)'|([^\\s>]+))`, "i"));
+  return match ? (match[1] || match[2] || match[3] || "") : "";
+}
+
+function setAttr(attrs, name, value) {
+  const safe = escAttr(value);
+  const pattern = new RegExp(`(\\s${name}\\s*=\\s*)(?:"[^"]*"|'[^']*'|[^\\s>]+)`, "i");
+  if (pattern.test(attrs)) return attrs.replace(pattern, `$1"${safe}"`);
+  return `${attrs} ${name}="${safe}"`;
+}
+
+function enhanceArticleImages(html, post = {}) {
   return html.replace(/<img\b([^>]*)>/gi, (match, attrs) => {
     let next = attrs;
-    if (!/\salt\s*=/.test(next)) next += ' alt="記事内画像"';
+    if (isGenericImageAlt(attrValue(next, "alt"))) next = setAttr(next, "alt", imageAltText(post, attrValue(next, "src")));
     if (!/\sloading\s*=/.test(next)) next += ' loading="lazy"';
     if (!/\sdecoding\s*=/.test(next)) next += ' decoding="async"';
     if (!/\sstyle\s*=/.test(next)) next += ' style="max-width:100%;height:auto;border-radius:12px;margin:24px 0;display:block;"';
@@ -219,7 +243,7 @@ function enhanceArticleImages(html) {
 
 function bodyToHtml(post) {
   if (post.bodyHtml && post.bodyHtml.trim()) {
-    return sanitizeBodyHtml(post.bodyHtml);
+    return sanitizeBodyHtml(post.bodyHtml, post);
   }
   if (post.body && post.body.trim()) {
     return String(post.body)
@@ -376,7 +400,7 @@ function renderPostHTML(post, slug, categoryMap = buildCategoryMap(DEFAULT_CATEG
   const eyecatchAbs = post.eyecatch ? absoluteUrl(post.eyecatch) : FALLBACK_IMAGE;
   const eyecatchAttr = post.eyecatch ? escAttr(post.eyecatch) : "";
   const coverHtml = post.eyecatch
-    ? `<figure class="post-cover"><img src="${eyecatchAttr}" alt="${escAttr(title)}" style="${escAttr(coverImageStyle(post))}" loading="eager" decoding="async" fetchpriority="high" /></figure>`
+    ? `<figure class="post-cover"><img src="${eyecatchAttr}" alt="${escAttr(imageAltText(post, post.eyecatch, "cover"))}" style="${escAttr(coverImageStyle(post))}" loading="eager" decoding="async" fetchpriority="high" /></figure>`
     : "";
   const tagsHtml = renderTags(post.tags, categoryMap);
   const bodyHtml = bodyToHtml(post);

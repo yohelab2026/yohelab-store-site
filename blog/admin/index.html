@@ -827,7 +827,8 @@
   }
 
   function currentBodyHtml() {
-    return editorEditMode === 'text' && bodySourceEl ? bodySourceEl.value : cleanEditorMediaHtml(bodyEl.innerHTML);
+    const html = editorEditMode === 'text' && bodySourceEl ? bodySourceEl.value : cleanEditorMediaHtml(bodyEl.innerHTML);
+    return htmlWithAutomaticImageAlts(html);
   }
 
   function currentBodyText() {
@@ -936,14 +937,99 @@
     return String(value || '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   }
 
+  function cleanAltSource(value) {
+    return String(value || '')
+      .replace(/\.[a-z0-9]{2,5}$/i, '')
+      .replace(/[_-]+/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  function readableImageName(value) {
+    const fileName = String(value || '').split(/[\\/]/).pop().split('?')[0].split('#')[0];
+    const decoded = (() => {
+      try { return decodeURIComponent(fileName); } catch { return fileName; }
+    })();
+    const cleaned = cleanAltSource(decoded);
+    if (!cleaned) return '';
+    if (/^(img|image|photo|picture|screenshot|screen shot|pasted image|clipboard|blog image|cover|eyecatch|download|untitled|dsc|dcim|pxl)[\s\d._-]*$/i.test(cleaned)) return '';
+    if (/^\d{8,}[\s\w-]*$/i.test(cleaned)) return '';
+    return cleaned.slice(0, 70);
+  }
+
+  function isGenericImageAlt(value) {
+    const text = cleanAltSource(value).toLowerCase();
+    return !text || ['画像', '記事内画像', 'image', 'photo', 'picture'].includes(text);
+  }
+
+  function selectedEditorText() {
+    if (editorEditMode === 'text' && bodySourceEl) {
+      const start = bodySourceEl.selectionStart ?? 0;
+      const end = bodySourceEl.selectionEnd ?? start;
+      return cleanAltSource(bodySourceEl.value.slice(start, end)).slice(0, 70);
+    }
+    const selection = window.getSelection?.();
+    if (!selection || !selection.rangeCount) return '';
+    const range = selection.getRangeAt(0);
+    const container = range.commonAncestorContainer.nodeType === Node.ELEMENT_NODE
+      ? range.commonAncestorContainer
+      : range.commonAncestorContainer.parentElement;
+    if (!container || !bodyEl.contains(container)) return '';
+    return cleanAltSource(selection.toString()).slice(0, 70);
+  }
+
+  function nearestEditorHeadingText() {
+    if (!bodyEl || editorEditMode === 'text') return '';
+    const selection = window.getSelection?.();
+    let anchor = selectedMediaBlock && bodyEl.contains(selectedMediaBlock) ? selectedMediaBlock : null;
+    if (!anchor && selection?.rangeCount) {
+      const node = selection.getRangeAt(0).startContainer;
+      const element = node.nodeType === Node.ELEMENT_NODE ? node : node.parentElement;
+      if (element && bodyEl.contains(element)) anchor = element;
+    }
+    if (!anchor) anchor = bodyEl.lastElementChild || bodyEl;
+    let found = '';
+    bodyEl.querySelectorAll('h2,h3,h4,h5').forEach(heading => {
+      const text = cleanAltSource(heading.innerText || heading.textContent);
+      if (!text) return;
+      if (heading === anchor || heading.contains(anchor) || (heading.compareDocumentPosition(anchor) & Node.DOCUMENT_POSITION_FOLLOWING)) {
+        found = text;
+      }
+    });
+    return found.slice(0, 70);
+  }
+
+  function imageAltForEditor(image = {}, type = 'body') {
+    const title = cleanAltSource(titleEl?.value).slice(0, 90);
+    const selected = selectedEditorText();
+    const heading = nearestEditorHeadingText();
+    const fileLabel = readableImageName(image.name || image.fileName || image.url);
+    const base = [selected, heading, title, fileLabel].find(Boolean);
+    if (!base) return type === 'cover' ? 'アイキャッチ画像' : '記事内画像';
+    return type === 'cover' ? `${base}のアイキャッチ画像` : `${base}の画像`;
+  }
+
+  function htmlWithAutomaticImageAlts(html) {
+    const wrap = document.createElement('div');
+    wrap.innerHTML = html || '';
+    wrap.querySelectorAll('img').forEach(img => {
+      if (isGenericImageAlt(img.getAttribute('alt'))) {
+        img.setAttribute('alt', imageAltForEditor({ url: img.getAttribute('src') }));
+        img.dataset.autoAlt = 'true';
+      }
+    });
+    return wrap.innerHTML;
+  }
+
   function mediaBlockHtml(image) {
     const src = escAttrValue(image.url);
+    const alt = escAttrValue(image.alt || imageAltForEditor(image));
     const width = Number(image.width) || 0;
     const height = Number(image.height) || 0;
     const sizeAttrs = width && height ? ` width="${width}" height="${height}"` : '';
     return [
       `<figure class="media-block" data-media-block="image" contenteditable="false" style="width:100%;max-width:100%;margin:20px auto;">`,
-      `<img src="${src}" alt="記事内画像"${sizeAttrs} loading="lazy" decoding="async" style="width:100%;height:auto;border-radius:14px;display:block;" />`,
+      `<img src="${src}" alt="${alt}" data-auto-alt="true"${sizeAttrs} loading="lazy" decoding="async" style="width:100%;height:auto;border-radius:14px;display:block;" />`,
       `</figure><p><br></p>`,
     ].join('');
   }
@@ -1481,6 +1567,7 @@
     if (!image?.url) { coverDrop.innerHTML = '❌ アップロード失敗'; return; }
     eyecatchEl.value = image.url;
     coverImg.src = image.url;
+    coverImg.alt = imageAltForEditor(image, 'cover');
     resetCoverSettings(image.width, image.height);
     if (coverSizeHintEl) coverSizeHintEl.textContent = `WebP ${image.width}×${image.height}px に変換済み。横幅に合わせて自動調整します。`;
     coverDrop.style.display = 'none';
@@ -1503,7 +1590,13 @@
         body: fd,
       });
       const data = await res.json().catch(()=>({}));
-      return res.ok ? { url: data.url, width: webpFile.convertedWidth, height: webpFile.convertedHeight } : null;
+      return res.ok ? {
+        url: data.url,
+        width: webpFile.convertedWidth,
+        height: webpFile.convertedHeight,
+        name: file.name || webpFile.name,
+        alt: imageAltForEditor({ name: file.name || webpFile.name, url: data.url }),
+      } : null;
     } catch { return null; }
   }
 
@@ -1666,6 +1759,7 @@
       if (d.eyecatch) {
         eyecatchEl.value = d.eyecatch;
         coverImg.src = d.eyecatch;
+        coverImg.alt = imageAltForEditor({ url: d.eyecatch }, 'cover');
         setCoverSettings(d.cover || d.coverSettings || {});
         setCoverControlsVisible(true);
         coverDrop.style.display = 'none';
@@ -2682,6 +2776,7 @@
     eyecatchEl.value = post.eyecatch || '';
     if (post.eyecatch) {
       coverImg.src = post.eyecatch;
+      coverImg.alt = imageAltForEditor({ url: post.eyecatch }, 'cover');
       setCoverSettings(post.cover || post.coverSettings || {});
       setCoverControlsVisible(true);
       coverDrop.style.display = 'none';
