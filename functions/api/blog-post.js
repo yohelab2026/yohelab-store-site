@@ -29,6 +29,7 @@ export async function onRequestPost(context) {
     const date = sanitizeDate(body?.date) || new Date().toISOString().slice(0, 10);
     const tags = normalizeTags(body?.tags);
     const eyecatch = sanitizeUrl(body?.eyecatch);
+    const cover = normalizeCoverSettings(body?.cover);
 
     // タイトルがなくてもアイキャッチ画像があればOK（画像がタイトル代わり）
     if (!title && !eyecatch) {
@@ -43,6 +44,7 @@ export async function onRequestPost(context) {
 
     const post = { title: effectiveTitle, slug: effectiveSlugRaw, date, excerpt, bodyHtml, tags };
     if (eyecatch) post.eyecatch = eyecatch;
+    if (eyecatch) post.cover = cover;
 
     await kv.put(`post:${slug}`, JSON.stringify(post), {
       metadata: { title: effectiveTitle, date, excerpt, slug: effectiveSlugRaw, eyecatch: eyecatch || "", tags: tags.join(",") },
@@ -174,6 +176,22 @@ function sanitizeUrl(value) {
   } catch {
     return "";
   }
+}
+
+function normalizeCoverSettings(value) {
+  const input = typeof value === "object" && value ? value : {};
+  return {
+    fit: input.fit === "contain" ? "contain" : "cover",
+    x: clampNumber(input.x, 0, 100, 50),
+    y: clampNumber(input.y, 0, 100, 50),
+    zoom: clampNumber(input.zoom, 100, 160, 100),
+  };
+}
+
+function clampNumber(value, min, max, fallback) {
+  const number = Number(value);
+  if (!Number.isFinite(number)) return fallback;
+  return Math.min(max, Math.max(min, Math.round(number)));
 }
 
 function normalizeTags(value) {

@@ -27,6 +27,10 @@
     .admin-nav .brand { font-weight:900;font-size:15px;color:var(--text);text-decoration:none; }
     .nav-actions { display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end; }
     #status { font-size:13px;color:var(--muted); }
+    .admin-view-tabs { display:flex;gap:10px;align-items:center;margin-right:6px;padding-right:12px;border-right:1px solid var(--border); }
+    .admin-view-tab { border:0;background:transparent;color:var(--green);border-radius:0;padding:4px 0;font-size:13px;font-weight:900;white-space:nowrap;cursor:pointer;text-decoration:none; }
+    .admin-view-tab:hover, .admin-view-tab.is-active { color:var(--text);text-decoration:underline;text-underline-offset:4px; }
+    [data-admin-view][hidden] { display:none!important; }
 
     /* ── エディタ本体 ── */
     .admin-workbench { width:min(1240px,100% - 32px);margin:0 auto;padding:28px 0 96px;display:grid;grid-template-columns:1fr;gap:22px;align-items:start; }
@@ -121,8 +125,8 @@
       font-size:14px;color:var(--muted);font-weight:600;
     }
     .cover-drop:hover { border-color:var(--green);background:#e8f7f1; }
-    .cover-preview { position:relative;border-radius:18px;overflow:hidden; }
-    .cover-preview img { width:100%;aspect-ratio:16/9;max-height:480px;object-fit:cover;display:block; }
+    .cover-preview { position:relative;border-radius:18px;overflow:hidden;background:#edf7f2;aspect-ratio:16/9;max-height:480px; }
+    .cover-preview img { width:100%;height:100%;object-fit:cover;object-position:50% 50%;display:block;transition:transform .18s ease,object-position .18s ease; }
     .cover-preview .cover-actions {
       position:absolute;bottom:12px;right:12px;display:flex;gap:8px;
     }
@@ -131,6 +135,15 @@
       padding:6px 14px;font-size:13px;font-weight:700;cursor:pointer;backdrop-filter:blur(4px);
     }
     .cover-btn:hover { background:rgba(0,0,0,.75); }
+    .cover-adjust-panel { display:grid;gap:12px;margin-top:12px;padding:14px;border:1px solid var(--border);border-radius:16px;background:#fbfffd; }
+    .cover-adjust-head { display:flex;align-items:center;justify-content:space-between;gap:10px; }
+    .cover-adjust-head strong { font-size:13px;font-weight:900;color:var(--text); }
+    .cover-adjust-head span { font-size:12px;color:var(--muted); }
+    .cover-adjust-grid { display:grid;grid-template-columns:150px repeat(3,minmax(0,1fr));gap:10px;align-items:end; }
+    .cover-adjust-grid label { display:grid;gap:6px;font-size:12px;font-weight:900;color:var(--muted); }
+    .cover-adjust-grid select, .cover-adjust-grid input { width:100%;border:1px solid var(--border);border-radius:10px;background:#fff;padding:8px 10px;font-size:13px;font-weight:800;color:var(--text); }
+    .cover-adjust-grid input[type="range"] { padding:0;accent-color:var(--green); }
+    .cover-adjust-panel[hidden] { display:none; }
 
     /* タイトル */
     .title-field {
@@ -142,11 +155,21 @@
     .title-field::placeholder { color:#c0cac5; }
 
     /* ツールバー */
-    .toolbar {
-      display:flex;flex-wrap:wrap;gap:4px;padding:10px 0;
+    .editor-toolbar-shell {
+      margin:14px 0 20px;position:sticky;top:57px;z-index:30;
+      background:rgba(255,255,255,.96);backdrop-filter:blur(8px);
       border-top:1px solid var(--border);border-bottom:1px solid var(--border);
-      margin-bottom:20px;position:sticky;top:57px;z-index:30;
-      background:rgba(255,255,255,.95);backdrop-filter:blur(8px);
+      padding:10px 0;
+    }
+    .editor-toolbar-head { display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px; }
+    .media-add-btn { display:inline-flex;align-items:center;gap:7px;border:1px solid var(--border);background:#fff;color:var(--green);border-radius:10px;padding:8px 12px;font-size:13px;font-weight:900;cursor:pointer; }
+    .media-add-btn:hover { background:#effaf6; }
+    .editor-mode-tabs { display:flex;gap:4px;align-items:center; }
+    .editor-mode-tab { border:1px solid var(--border);background:#fff;color:var(--muted);border-radius:10px;padding:8px 11px;font-size:13px;font-weight:900;cursor:pointer; }
+    .editor-mode-tab.is-active { background:#e8f7f1;color:var(--green);border-color:#bde7d7; }
+    .toolbar {
+      display:flex;flex-wrap:wrap;gap:4px;padding:0;
+      margin:0;
     }
     .toolbar button, .toolbar select {
       border:1px solid var(--border);background:#fff;color:var(--text);
@@ -161,6 +184,11 @@
       min-height:480px;outline:none;font-size:17px;line-height:1.95;color:var(--text);
       caret-color:var(--green);
     }
+    .body-source {
+      width:100%;min-height:480px;border:1px solid var(--border);border-radius:16px;background:#fbfffd;color:var(--text);
+      padding:16px;font-family:"SFMono-Regular",Consolas,monospace;font-size:14px;line-height:1.8;resize:vertical;outline:none;
+    }
+    .body-source[hidden] { display:none; }
     .body-editor:empty::before { content:attr(data-placeholder);color:#b0bec5;pointer-events:none; }
     .body-editor h2 { font-size:24px;font-weight:900;margin:32px 0 12px;letter-spacing:-.03em; }
     .body-editor h3 { font-size:20px;font-weight:800;margin:24px 0 10px; }
@@ -205,8 +233,12 @@
       .content-manager { position:static;max-height:none;width:calc(100% - 24px);margin:0 auto; }
       .editor-panel { border-radius:0;border-left:0;border-right:0;box-shadow:none; }
       .editor-wrap { width:calc(100% - 32px);padding:24px 0 48px; }
-      .toolbar { top:53px; }
+      .editor-toolbar-shell { top:53px; }
+      .editor-toolbar-head { align-items:stretch;flex-direction:column; }
+      .editor-mode-tabs { justify-content:flex-end; }
+      .cover-adjust-grid { grid-template-columns:1fr; }
       .admin-nav .inner { align-items:flex-start; }
+      .admin-view-tabs { width:100%;order:-1;border-right:0;border-bottom:1px solid var(--border);padding:0 0 8px;margin:0; }
       .nav-actions { flex-wrap:wrap; justify-content:flex-end; max-width:260px; }
       .nav-actions .btn { padding:7px 10px; font-size:12px; }
       #status { width:100%; text-align:right; }
@@ -243,6 +275,11 @@
     <div class="inner">
       <a class="brand" href="/blog/">← ブログ</a>
       <div class="nav-actions">
+        <div class="admin-view-tabs" aria-label="管理画面の切り替え">
+          <button class="admin-view-tab is-active" type="button" data-admin-tab="editor" aria-pressed="true">投稿を書く</button>
+          <button class="admin-view-tab" type="button" data-admin-tab="content" aria-pressed="false">投稿管理</button>
+          <button class="admin-view-tab" type="button" data-admin-tab="categories" aria-pressed="false">カテゴリ管理</button>
+        </div>
         <span id="status">下書き中</span>
         <button class="btn btn-outline" id="show-drafts" type="button">下書き一覧</button>
         <button class="btn btn-outline" id="show-posts" type="button">公開済み一覧</button>
@@ -257,7 +294,7 @@
   <main class="shell" style="padding-top:0;">
     <div class="admin-workbench">
       <aside class="content-manager" aria-label="記事一覧">
-        <section class="manager-card" id="save-manager">
+        <section class="manager-card" id="save-manager" data-admin-view="save" hidden>
           <div class="manager-head">
             <div>
               <h2>保存状況</h2>
@@ -289,7 +326,7 @@
           </div>
         </section>
 
-        <section class="manager-card category-manager" id="category-manager-card">
+        <section class="manager-card category-manager" id="category-manager-card" data-admin-view="categories" hidden>
           <div class="manager-head">
             <div>
               <h2>カテゴリ管理</h2>
@@ -306,7 +343,7 @@
           <div class="category-save-message" id="category-save-message">slugを変えると、そのslugを記事設定の子カテゴリにも入れる必要があります。</div>
         </section>
 
-        <section class="manager-card" id="content-manager-card">
+        <section class="manager-card" id="content-manager-card" data-admin-view="content" hidden>
           <div class="manager-head">
             <div>
               <h2>投稿</h2>
@@ -352,7 +389,7 @@
 
       </aside>
 
-      <section class="editor-panel" aria-label="記事エディタ">
+      <section class="editor-panel" aria-label="記事エディタ" data-admin-view="editor">
         <div class="editor-wrap">
           <div class="editor-state">
             <span class="state-pill" id="editor-mode">新規記事</span>
@@ -373,6 +410,32 @@
             <button class="cover-btn" id="cover-remove" type="button">削除</button>
           </div>
         </div>
+        <div class="cover-adjust-panel" id="cover-adjust-panel" hidden>
+          <div class="cover-adjust-head">
+            <div>
+              <strong>カバー画像の表示調整</strong>
+              <span id="cover-size-hint">WebPに変換して、幅に合わせて自動調整します。</span>
+            </div>
+            <button class="btn btn-outline" id="cover-reset" type="button">自動に戻す</button>
+          </div>
+          <div class="cover-adjust-grid">
+            <label>表示
+              <select id="cover-fit">
+                <option value="cover">トリミングして合わせる</option>
+                <option value="contain">全体を表示する</option>
+              </select>
+            </label>
+            <label>横位置
+              <input id="cover-pos-x" type="range" min="0" max="100" value="50" />
+            </label>
+            <label>縦位置
+              <input id="cover-pos-y" type="range" min="0" max="100" value="50" />
+            </label>
+            <label>拡大
+              <input id="cover-zoom" type="range" min="100" max="160" value="100" />
+            </label>
+          </div>
+        </div>
         <input id="cover-file" type="file" accept="image/jpeg,image/png,image/webp" style="display:none;" />
         <input id="eyecatch" type="hidden" />
       </div>
@@ -381,33 +444,46 @@
       <textarea id="title" class="title-field" placeholder="タイトルを入力" rows="1" spellcheck="false"></textarea>
 
       <!-- ツールバー -->
-      <div class="toolbar">
-        <select id="format-select" aria-label="段落スタイル">
-          <option value="P">本文</option>
-          <option value="H2">見出し2</option>
-          <option value="H3">見出し3</option>
-          <option value="BLOCKQUOTE">引用</option>
-        </select>
-        <button data-cmd="bold" title="太字"><b>B</b></button>
-        <button data-cmd="italic" title="斜体"><i>I</i></button>
-        <button data-cmd="underline" title="下線"><u>U</u></button>
-        <button data-cmd="insertUnorderedList" title="箇条書き">・リスト</button>
-        <button data-cmd="insertOrderedList" title="番号リスト">1.リスト</button>
-        <button data-align="left">左</button>
-        <button data-align="center">中央</button>
-        <button data-align="right">右</button>
-        <button data-color="#0b8f72" style="color:#0b8f72;">■緑</button>
-        <button data-color="#1d6fd8" style="color:#1d6fd8;">■青</button>
-        <button data-color="#ef4444" style="color:#ef4444;">■赤</button>
-        <input id="text-color" type="color" value="#0b8f72" title="文字色" />
-        <input id="bg-color" type="color" value="#fff3bf" title="マーカー色" />
-        <button id="clear-style">スタイル解除</button>
-        <button id="insert-img-btn" title="画像を挿入">📷 画像</button>
-        <input id="insert-img-file" type="file" accept="image/jpeg,image/png,image/webp" style="display:none;" />
+      <div class="editor-toolbar-shell">
+        <div class="editor-toolbar-head">
+          <button class="media-add-btn" id="insert-img-btn" type="button">メディアを追加</button>
+          <div class="editor-mode-tabs" aria-label="本文入力モード">
+            <button class="editor-mode-tab is-active" type="button" data-editor-mode="visual" aria-pressed="true">ビジュアル</button>
+            <button class="editor-mode-tab" type="button" data-editor-mode="text" aria-pressed="false">テキスト</button>
+          </div>
+        </div>
+        <div class="toolbar" aria-label="本文編集ツール">
+          <select id="format-select" aria-label="段落スタイル">
+            <option value="P">段落</option>
+            <option value="H2">見出し2</option>
+            <option value="H3">見出し3</option>
+            <option value="BLOCKQUOTE">引用</option>
+          </select>
+          <button data-cmd="bold" type="button" title="太字"><b>B</b></button>
+          <button data-cmd="italic" type="button" title="斜体"><i>I</i></button>
+          <button data-cmd="underline" type="button" title="下線"><u>U</u></button>
+          <button data-cmd="insertUnorderedList" type="button" title="箇条書き">リスト</button>
+          <button data-cmd="insertOrderedList" type="button" title="番号リスト">番号</button>
+          <button data-cmd="formatBlock" data-block="BLOCKQUOTE" type="button" title="引用">引用</button>
+          <button data-align="left" type="button">左</button>
+          <button data-align="center" type="button">中央</button>
+          <button data-align="right" type="button">右</button>
+          <button id="link-btn" type="button" title="リンク">リンク</button>
+          <button id="unlink-btn" type="button" title="リンク解除">解除</button>
+          <button id="hr-btn" type="button" title="区切り線">区切り</button>
+          <button data-color="#0b8f72" type="button" style="color:#0b8f72;">緑</button>
+          <button data-color="#1d6fd8" type="button" style="color:#1d6fd8;">青</button>
+          <button data-color="#ef4444" type="button" style="color:#ef4444;">赤</button>
+          <input id="text-color" type="color" value="#0b8f72" title="文字色" />
+          <input id="bg-color" type="color" value="#fff3bf" title="マーカー色" />
+          <button id="clear-style" type="button">スタイル解除</button>
+          <input id="insert-img-file" type="file" accept="image/jpeg,image/png,image/webp" style="display:none;" />
+        </div>
       </div>
 
       <!-- 本文 -->
       <div id="body" class="body-editor" contenteditable="true" data-placeholder="本文を書く..."></div>
+      <textarea id="body-source" class="body-source" hidden spellcheck="false" aria-label="本文HTML"></textarea>
 
       <!-- メタ設定 -->
       <button class="meta-toggle" id="meta-toggle" type="button">⚙ 記事設定（要約・カテゴリ・スラッグ）▾</button>
@@ -444,15 +520,23 @@
   // ── 定数・要素 ──────────────────────────────────────────────
   const SESSION_KEY = 'yohelab.blog.sess';
   const SESSION_PIN_KEY = 'yohelab.blog.pin.session';
+  const SAVED_PIN_KEY = 'yohelab.blog.pin.saved';
   const IMPORT_STATIC_SESSION_KEY = 'yohelab.blog.staticImport.tried.v2';
   const CONTENT_PAGE_SIZE = 10;
 
   const titleEl    = document.getElementById('title');
   const bodyEl     = document.getElementById('body');
+  const bodySourceEl = document.getElementById('body-source');
   const excerptEl  = document.getElementById('excerpt');
   const tagsEl     = document.getElementById('tags');
   const slugEl     = document.getElementById('slug');
   const eyecatchEl = document.getElementById('eyecatch');
+  const coverAdjustPanelEl = document.getElementById('cover-adjust-panel');
+  const coverFitEl = document.getElementById('cover-fit');
+  const coverPosXEl = document.getElementById('cover-pos-x');
+  const coverPosYEl = document.getElementById('cover-pos-y');
+  const coverZoomEl = document.getElementById('cover-zoom');
+  const coverSizeHintEl = document.getElementById('cover-size-hint');
   const statusEl   = document.getElementById('status');
   const contentListEl = document.getElementById('content-list');
   const contentListSummaryEl = document.getElementById('content-list-summary');
@@ -467,6 +551,8 @@
   const categorySaveMessageEl = document.getElementById('category-save-message');
   const editorModeEl = document.getElementById('editor-mode');
   const editorHintEl = document.getElementById('editor-hint');
+  const adminViewTabs = document.querySelectorAll('[data-admin-tab]');
+  const editorModeTabs = document.querySelectorAll('[data-editor-mode]');
   const saveDotEl = document.getElementById('save-dot');
   const serverSaveStateEl = document.getElementById('server-save-state');
   const lastServerSaveEl = document.getElementById('last-server-save');
@@ -486,12 +572,13 @@
   let contentCurrentPage = 1;
   let autosaveTimer = null;
   let autosaveInFlight = false;
+  let editorEditMode = 'visual';
 
   // ── 認証 ────────────────────────────────────────────────────
   const loginView  = document.getElementById('login-view');
   const adminPinEl = document.getElementById('admin-pin');
   const lockStatusEl = document.getElementById('lock-status');
-  try { localStorage.removeItem('yohelab.blog.pin.saved'); } catch (_) {}
+  adminPinEl.value = readSavedPin();
 
   function showLock() {
     loginView.style.display = '';
@@ -515,6 +602,7 @@
     if (!ok) { lockStatusEl.textContent='パスワードが違う。'; adminPinEl.value=''; adminPinEl.focus(); return; }
     sessionStorage.setItem(SESSION_KEY, '1');
     sessionStorage.setItem(SESSION_PIN_KEY, input);
+    savePinForThisBrowser(input);
     document.body.classList.add('is-unlocked');
     setTimeout(() => initializeAdminAfterUnlock(), 200);
   }
@@ -550,9 +638,33 @@
     return (sessionStorage.getItem(SESSION_PIN_KEY) || '').trim();
   }
 
+  function savePinForThisBrowser(pin) {
+    try { localStorage.setItem(SAVED_PIN_KEY, pin); } catch (_) {}
+  }
+
+  function readSavedPin() {
+    try { return (localStorage.getItem(SAVED_PIN_KEY) || '').trim(); } catch (_) { return ''; }
+  }
+
+  function setAdminView(view, options = {}) {
+    const nextView = view || 'editor';
+    document.querySelectorAll('[data-admin-view]').forEach(panel => {
+      panel.hidden = panel.dataset.adminView !== nextView;
+    });
+    adminViewTabs.forEach(tab => {
+      const active = tab.dataset.adminTab === nextView;
+      tab.classList.toggle('is-active', active);
+      tab.setAttribute('aria-pressed', active ? 'true' : 'false');
+    });
+    if (options.scroll !== false) {
+      document.querySelector('.admin-workbench')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
   async function initializeAdminAfterUnlock() {
     await loadCategorySettings();
     await loadAllLists({ importStatic: true });
+    setAdminView('editor', { scroll: false });
   }
 
   // ── タイトル auto-resize ────────────────────────────────────
@@ -562,22 +674,106 @@
     saveDraftLocal();
   });
 
+  function syncTextFromVisual() {
+    if (bodySourceEl) bodySourceEl.value = bodyEl.innerHTML;
+  }
+
+  function syncVisualFromText() {
+    if (bodySourceEl) bodyEl.innerHTML = bodySourceEl.value;
+  }
+
+  function currentBodyHtml() {
+    return editorEditMode === 'text' && bodySourceEl ? bodySourceEl.value : bodyEl.innerHTML;
+  }
+
+  function currentBodyText() {
+    const html = currentBodyHtml();
+    const tmp = document.createElement('div');
+    tmp.innerHTML = html;
+    return tmp.innerText.trim();
+  }
+
+  function setEditorEditMode(mode) {
+    const nextMode = mode === 'text' ? 'text' : 'visual';
+    if (nextMode === editorEditMode) return;
+    if (nextMode === 'text') {
+      syncTextFromVisual();
+      bodyEl.hidden = true;
+      bodySourceEl.hidden = false;
+      bodySourceEl.focus();
+    } else {
+      syncVisualFromText();
+      bodySourceEl.hidden = true;
+      bodyEl.hidden = false;
+      bodyEl.focus();
+    }
+    editorEditMode = nextMode;
+    editorModeTabs.forEach(tab => {
+      const active = tab.dataset.editorMode === nextMode;
+      tab.classList.toggle('is-active', active);
+      tab.setAttribute('aria-pressed', active ? 'true' : 'false');
+    });
+    saveDraftLocal();
+  }
+
+  function ensureVisualMode() {
+    if (editorEditMode === 'text') setEditorEditMode('visual');
+  }
+
+  function insertHtmlIntoEditor(html) {
+    if (editorEditMode === 'text' && bodySourceEl) {
+      const start = bodySourceEl.selectionStart ?? bodySourceEl.value.length;
+      const end = bodySourceEl.selectionEnd ?? start;
+      bodySourceEl.value = `${bodySourceEl.value.slice(0, start)}${html}${bodySourceEl.value.slice(end)}`;
+      bodySourceEl.selectionStart = bodySourceEl.selectionEnd = start + html.length;
+      bodySourceEl.focus();
+      saveDraftLocal();
+      return;
+    }
+    document.execCommand('insertHTML', false, html);
+    bodyEl.focus();
+    saveDraftLocal();
+  }
+
   // ── ツールバー ────────────────────────────────────────────
   document.querySelectorAll('[data-cmd]').forEach(btn => {
-    btn.addEventListener('click', () => { document.execCommand(btn.dataset.cmd, false, null); bodyEl.focus(); saveDraftLocal(); });
+    btn.addEventListener('click', () => {
+      ensureVisualMode();
+      if (btn.dataset.cmd === 'formatBlock' && btn.dataset.block) {
+        document.execCommand('formatBlock', false, btn.dataset.block);
+      } else {
+        document.execCommand(btn.dataset.cmd, false, null);
+      }
+      bodyEl.focus();
+      saveDraftLocal();
+    });
   });
   document.querySelectorAll('[data-color]').forEach(btn => {
-    btn.addEventListener('click', () => { wrapSel('span', `color:${btn.dataset.color};font-weight:700;`); });
+    btn.addEventListener('click', () => { ensureVisualMode(); wrapSel('span', `color:${btn.dataset.color};font-weight:700;`); });
   });
   document.querySelectorAll('[data-align]').forEach(btn => {
-    btn.addEventListener('click', () => { document.execCommand(`justify${cap(btn.dataset.align)}`, false, null); });
+    btn.addEventListener('click', () => { ensureVisualMode(); document.execCommand(`justify${cap(btn.dataset.align)}`, false, null); });
   });
   document.getElementById('format-select').addEventListener('change', e => {
+    ensureVisualMode();
     document.execCommand('formatBlock', false, e.target.value); e.target.value='P'; bodyEl.focus();
   });
-  document.getElementById('text-color').addEventListener('input', e => wrapSel('span',`color:${e.target.value};font-weight:700;`));
-  document.getElementById('bg-color').addEventListener('input', e => wrapSel('span',`background:${e.target.value};padding:0 .15em;border-radius:3px;`));
-  document.getElementById('clear-style').addEventListener('click', () => document.execCommand('removeFormat', false, null));
+  document.getElementById('text-color').addEventListener('input', e => { ensureVisualMode(); wrapSel('span',`color:${e.target.value};font-weight:700;`); });
+  document.getElementById('bg-color').addEventListener('input', e => { ensureVisualMode(); wrapSel('span',`background:${e.target.value};padding:0 .15em;border-radius:3px;`); });
+  document.getElementById('clear-style').addEventListener('click', () => { ensureVisualMode(); document.execCommand('removeFormat', false, null); saveDraftLocal(); });
+  document.getElementById('link-btn')?.addEventListener('click', () => {
+    ensureVisualMode();
+    const url = prompt('リンク先URLを入力してください。');
+    if (!url) return;
+    document.execCommand('createLink', false, url);
+    bodyEl.focus();
+    saveDraftLocal();
+  });
+  document.getElementById('unlink-btn')?.addEventListener('click', () => { ensureVisualMode(); document.execCommand('unlink', false, null); saveDraftLocal(); });
+  document.getElementById('hr-btn')?.addEventListener('click', () => insertHtmlIntoEditor('<hr />'));
+  editorModeTabs.forEach(tab => {
+    tab.addEventListener('click', () => setEditorEditMode(tab.dataset.editorMode || 'visual'));
+  });
 
   function cap(s) { return s[0].toUpperCase() + s.slice(1); }
   function wrapSel(tag, style) {
@@ -589,6 +785,7 @@
     el.appendChild(r.extractContents());
     r.insertNode(el);
     sel.removeAllRanges();
+    saveDraftLocal();
   }
 
   // ── 本文内画像挿入 ────────────────────────────────────────
@@ -600,9 +797,8 @@
     if (!file) return;
     const image = await uploadImage(file);
     if (!image?.url) return;
-    document.execCommand('insertHTML', false, `<img src="${image.url}" alt="記事内画像" width="${image.width}" height="${image.height}" loading="lazy" decoding="async" style="max-width:100%;height:auto;border-radius:10px;margin:12px 0;display:block;" />`);
+    insertHtmlIntoEditor(`<img src="${image.url}" alt="記事内画像" width="${image.width}" height="${image.height}" loading="lazy" decoding="async" style="max-width:100%;height:auto;border-radius:10px;margin:12px 0;display:block;" />`);
     insertImgFile.value = '';
-    saveDraftLocal();
   });
 
   // ── カバー画像 ─────────────────────────────────────────────
@@ -610,6 +806,64 @@
   const coverPreview = document.getElementById('cover-preview');
   const coverImg     = document.getElementById('cover-img');
   const coverFile    = document.getElementById('cover-file');
+
+  function clampNumber(value, min, max, fallback) {
+    const number = Number(value);
+    if (!Number.isFinite(number)) return fallback;
+    return Math.min(max, Math.max(min, Math.round(number)));
+  }
+
+  function coverSettings() {
+    return {
+      fit: coverFitEl?.value === 'contain' ? 'contain' : 'cover',
+      x: clampNumber(coverPosXEl?.value, 0, 100, 50),
+      y: clampNumber(coverPosYEl?.value, 0, 100, 50),
+      zoom: clampNumber(coverZoomEl?.value, 100, 160, 100),
+    };
+  }
+
+  function suggestedCoverFit(width, height) {
+    const ratio = width && height ? width / height : 16 / 9;
+    return ratio < 1.35 || ratio > 2.2 ? 'contain' : 'cover';
+  }
+
+  function setCoverSettings(settings = {}) {
+    const next = {
+      fit: settings.fit === 'contain' ? 'contain' : 'cover',
+      x: clampNumber(settings.x, 0, 100, 50),
+      y: clampNumber(settings.y, 0, 100, 50),
+      zoom: clampNumber(settings.zoom, 100, 160, 100),
+    };
+    if (coverFitEl) coverFitEl.value = next.fit;
+    if (coverPosXEl) coverPosXEl.value = String(next.x);
+    if (coverPosYEl) coverPosYEl.value = String(next.y);
+    if (coverZoomEl) coverZoomEl.value = String(next.zoom);
+    applyCoverSettings();
+  }
+
+  function applyCoverSettings() {
+    const settings = coverSettings();
+    coverImg.style.objectFit = settings.fit;
+    coverImg.style.objectPosition = `${settings.x}% ${settings.y}%`;
+    coverImg.style.transform = `scale(${settings.zoom / 100})`;
+    coverImg.style.transformOrigin = `${settings.x}% ${settings.y}%`;
+  }
+
+  function resetCoverSettings(width, height) {
+    setCoverSettings({ fit: suggestedCoverFit(width, height), x: 50, y: 50, zoom: 100 });
+  }
+
+  function setCoverControlsVisible(visible) {
+    if (coverAdjustPanelEl) coverAdjustPanelEl.hidden = !visible;
+  }
+
+  function resetCoverDropLabel() {
+    coverDrop.innerHTML = `
+      <span style="font-size:28px;">🖼</span>
+      <span>カバー画像を追加（タップ or ドロップ）</span>
+      <span style="font-size:12px;font-weight:400;">JPG / PNG / WebPを自動でWebP 1枚に変換</span>
+    `;
+  }
 
   coverFile.addEventListener('change', async () => {
     const file = coverFile.files[0];
@@ -625,7 +879,20 @@
   document.getElementById('cover-remove').addEventListener('click', () => {
     eyecatchEl.value = ''; coverImg.src = '';
     coverPreview.style.display = 'none'; coverDrop.style.display = '';
+    setCoverControlsVisible(false);
+    resetCoverSettings(16, 9);
+    resetCoverDropLabel();
     coverFile.value = ''; saveDraftLocal();
+  });
+  [coverFitEl, coverPosXEl, coverPosYEl, coverZoomEl].forEach(el => {
+    el?.addEventListener('input', () => {
+      applyCoverSettings();
+      saveDraftLocal();
+    });
+  });
+  document.getElementById('cover-reset')?.addEventListener('click', () => {
+    resetCoverSettings(16, 9);
+    saveDraftLocal();
   });
 
   async function uploadCover(file) {
@@ -634,8 +901,12 @@
     if (!image?.url) { coverDrop.innerHTML = '❌ アップロード失敗'; return; }
     eyecatchEl.value = image.url;
     coverImg.src = image.url;
+    resetCoverSettings(image.width, image.height);
+    if (coverSizeHintEl) coverSizeHintEl.textContent = `WebP ${image.width}×${image.height}px に変換済み。横幅に合わせて自動調整します。`;
     coverDrop.style.display = 'none';
     coverPreview.style.display = '';
+    setCoverControlsVisible(true);
+    resetCoverDropLabel();
     saveDraftLocal();
   }
 
@@ -731,7 +1002,7 @@
   }
 
   function hasDraftableContent() {
-    return Boolean(titleEl.value.trim() || bodyEl.innerText.trim() || eyecatchEl.value.trim());
+    return Boolean(titleEl.value.trim() || currentBodyText() || eyecatchEl.value.trim());
   }
 
   function cancelAutosave() {
@@ -756,19 +1027,21 @@
       postDate: activePostDate,
       staticSlug: activeStaticSlug,
       title: titleEl.value,
-      bodyHtml: bodyEl.innerHTML,
+      bodyHtml: currentBodyHtml(),
       excerpt: excerptEl.value,
       tags: tagsEl.value,
       slug: slugEl.value,
       eyecatch: eyecatchEl.value,
+      cover: coverSettings(),
     }));
     if (schedule) scheduleServerAutosave();
   }
 
   ['input','keyup'].forEach(ev => {
-    [bodyEl, excerptEl, tagsEl, slugEl].forEach(el => el.addEventListener(ev, saveDraftLocal));
+    [bodyEl, bodySourceEl, excerptEl, tagsEl, slugEl].forEach(el => el.addEventListener(ev, saveDraftLocal));
   });
   bodyEl.addEventListener('blur', saveDraftLocal);
+  bodySourceEl.addEventListener('blur', saveDraftLocal);
 
   // 下書き復元
   try {
@@ -780,12 +1053,15 @@
       activeStaticSlug = d.staticSlug || '';
       titleEl.value = d.title || '';
       bodyEl.innerHTML = d.bodyHtml || '';
+      bodySourceEl.value = d.bodyHtml || '';
       excerptEl.value = d.excerpt || '';
       tagsEl.value = d.tags || '';
       slugEl.value = d.slug || '';
       if (d.eyecatch) {
         eyecatchEl.value = d.eyecatch;
         coverImg.src = d.eyecatch;
+        setCoverSettings(d.cover || d.coverSettings || {});
+        setCoverControlsVisible(true);
         coverDrop.style.display = 'none';
         coverPreview.style.display = '';
       }
@@ -800,10 +1076,11 @@
       title: titleEl.value.trim(),
       slug: slugEl.value.trim(),
       excerpt: excerptEl.value.trim(),
-      bodyHtml: bodyEl.innerHTML,
-      body: bodyEl.innerText.trim(),
+      bodyHtml: currentBodyHtml(),
+      body: currentBodyText(),
       tags: tagsEl.value.split(',').map(v=>v.trim()).filter(Boolean),
       eyecatch: eyecatchEl.value.trim() || undefined,
+      cover: eyecatchEl.value.trim() ? coverSettings() : undefined,
     };
   }
 
@@ -815,14 +1092,18 @@
     activeStaticSlug = '';
     titleEl.value = '';
     bodyEl.innerHTML = '';
+    bodySourceEl.value = '';
     excerptEl.value = '';
     tagsEl.value = '';
     slugEl.value = '';
     eyecatchEl.value = '';
+    resetCoverSettings(16, 9);
+    setCoverControlsVisible(false);
     coverImg.src = '';
     coverPreview.style.display = 'none';
     coverDrop.style.display = '';
     coverFile.value = '';
+    resetCoverDropLabel();
     titleEl.style.height = 'auto';
     localStorage.removeItem('yohelab.blog.draft');
     updateEditorState();
@@ -906,10 +1187,11 @@
 
   document.getElementById('save-draft').addEventListener('click', saveDraftServer);
   document.getElementById('new-post').addEventListener('click', () => {
-    if (titleEl.value.trim() || bodyEl.innerText.trim() || eyecatchEl.value.trim()) {
+    if (titleEl.value.trim() || currentBodyText() || eyecatchEl.value.trim()) {
       if (!confirm('今の編集内容を閉じて、新規記事を作りますか？未保存の内容は消えます。')) return;
     }
     clearEditor();
+    setAdminView('editor');
   });
 
   // ── 公開 ──────────────────────────────────────────────────
@@ -925,8 +1207,12 @@
     const pin = currentPin();
     if (!pin) { sessionStorage.removeItem(SESSION_KEY); showLock(); return; }
     const title = titleEl.value.trim();
-    const eyecatch = eyecatchEl.value.trim() || '/assets/og/bunsirube-og.png';
     if (!title) { statusEl.textContent='タイトルを入れてください。'; titleEl.focus(); return; }
+    if (!eyecatchEl.value.trim()) {
+      statusEl.textContent = 'アイキャッチ画像を設定してください。';
+      coverDrop.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
     statusEl.textContent = '公開中...';
     const post = {
       draftId: activeDraftId || undefined,
@@ -934,10 +1220,11 @@
       slug: slugEl.value.trim() || makeSlug(title),
       date: activePostDate || new Date().toISOString().slice(0,10),
       excerpt: excerptEl.value.trim(),
-      bodyHtml: bodyEl.innerHTML,
-      body: bodyEl.innerText.trim(),
+      bodyHtml: currentBodyHtml(),
+      body: currentBodyText(),
       tags: tagsEl.value.split(',').map(v=>v.trim()).filter(Boolean),
       eyecatch: eyecatchEl.value.trim() || undefined,
+      cover: eyecatchEl.value.trim() ? coverSettings() : undefined,
       originalPostSlug: activePostSlug || undefined,
     };
     const res = await fetch('/api/blog-post', {
@@ -1567,6 +1854,7 @@
     fillEditor(data.draft, { draftId });
     statusEl.textContent = '下書きを開いた ✓';
     setTimeout(() => statusEl.textContent='下書き中', 2000);
+    setAdminView('editor', { scroll: false });
     scrollEditorIntoView();
   }
 
@@ -1599,18 +1887,24 @@
     activePostDate = post.date || '';
     titleEl.value = post.title || '';
     bodyEl.innerHTML = post.bodyHtml || '';
+    bodySourceEl.value = post.bodyHtml || '';
     excerptEl.value = post.excerpt || '';
     tagsEl.value = Array.isArray(post.tags) ? post.tags.join(', ') : '';
     slugEl.value = post.slug || '';
     eyecatchEl.value = post.eyecatch || '';
     if (post.eyecatch) {
       coverImg.src = post.eyecatch;
+      setCoverSettings(post.cover || post.coverSettings || {});
+      setCoverControlsVisible(true);
       coverDrop.style.display = 'none';
       coverPreview.style.display = '';
     } else {
       coverImg.src = '';
+      resetCoverSettings(16, 9);
+      setCoverControlsVisible(false);
       coverDrop.style.display = '';
       coverPreview.style.display = 'none';
+      resetCoverDropLabel();
     }
     titleEl.style.height = 'auto';
     titleEl.style.height = titleEl.scrollHeight + 'px';
@@ -1703,6 +1997,7 @@
     activePostSlug = '';
     statusEl.textContent = 'サイト内記事を開いた ✓';
     setTimeout(() => statusEl.textContent='編集中', 2000);
+    setAdminView('editor', { scroll: false });
     scrollEditorIntoView();
   }
 
@@ -1723,6 +2018,7 @@
         body: stripHtml(post.bodyHtml || ''),
         tags: post.tags || [],
         eyecatch: post.eyecatch || undefined,
+        cover: post.eyecatch ? { fit: 'cover', x: 50, y: 50, zoom: 100 } : undefined,
       }),
     });
     if (res.ok) {
@@ -1749,6 +2045,7 @@
     fillEditor(data.post, { postSlug: slug });
     statusEl.textContent = '公開済み記事を開いた ✓';
     setTimeout(() => statusEl.textContent='編集中', 2000);
+    setAdminView('editor', { scroll: false });
     scrollEditorIntoView();
   }
 
@@ -1820,6 +2117,7 @@
   }
 
   function setContentStatus(status) {
+    setAdminView('content', { scroll: false });
     if (contentStatusFilterEl) contentStatusFilterEl.value = status;
     resetContentPage();
     renderContentList();
@@ -1840,6 +2138,9 @@
   contentStatusFilterEl?.addEventListener('change', resetAndRenderContentList);
   contentCategoryFilterEl?.addEventListener('change', resetAndRenderContentList);
   contentSearchEl?.addEventListener('input', resetAndRenderContentList);
+  adminViewTabs.forEach(tab => {
+    tab.addEventListener('click', () => setAdminView(tab.dataset.adminTab || 'editor'));
+  });
   function scrollManager(id) {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }

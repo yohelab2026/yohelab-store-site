@@ -14,11 +14,11 @@
 
     /* カバー画像（フルワイド・ヒーロー） */
     .cover-hero {
-      width:100%;overflow:hidden;
+      width:min(1180px, calc(100% - 32px));aspect-ratio:16/9;margin:24px auto 0;overflow:hidden;border-radius:24px;
       background:#eef5ff;
     }
     .cover-hero img {
-      width:100%;height:auto;object-fit:contain;display:block;
+      width:100%;height:100%;object-fit:cover;display:block;
       animation:fadeIn .6s ease;
     }
     @keyframes fadeIn { from{opacity:0} to{opacity:1} }
@@ -161,6 +161,32 @@
     return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 
+  function clampNumber(value, min, max, fallback) {
+    const number = Number(value);
+    if (!Number.isFinite(number)) return fallback;
+    return Math.min(max, Math.max(min, Math.round(number)));
+  }
+
+  function coverSettings(post) {
+    const input = post?.cover && typeof post.cover === 'object' ? post.cover : {};
+    return {
+      fit: input.fit === 'contain' ? 'contain' : 'cover',
+      x: clampNumber(input.x, 0, 100, 50),
+      y: clampNumber(input.y, 0, 100, 50),
+      zoom: clampNumber(input.zoom, 100, 160, 100),
+    };
+  }
+
+  function coverStyle(post) {
+    const cover = coverSettings(post);
+    return [
+      `object-fit:${cover.fit}`,
+      `object-position:${cover.x}% ${cover.y}%`,
+      `transform:scale(${cover.zoom / 100})`,
+      `transform-origin:${cover.x}% ${cover.y}%`,
+    ].join(';');
+  }
+
   function sanitizeBodyHtml(html) {
     return enhanceArticleImages(String(html || '')
       .replace(/<\s*(script|style|iframe|object|embed|form|input|button|select|textarea|meta|link|base|svg|math)\b[^>]*>[\s\S]*?<\s*\/\s*\1\s*>/gi, '')
@@ -212,7 +238,7 @@
     // カバー画像（フルワイド）
     if (post.eyecatch) {
       document.getElementById('cover-wrap').innerHTML =
-        `<div class="cover-hero"><img src="${esc(post.eyecatch)}" alt="${esc(post.title)}" /></div>`;
+        `<div class="cover-hero"><img src="${esc(post.eyecatch)}" alt="${esc(post.title)}" style="${esc(coverStyle(post))}" /></div>`;
     }
 
     const tags = (post.tags||[]).map(t=>`<a class="post-tag" href="/blog/tag/${encodeURIComponent(tagSlug(t))}/">${esc(t)}</a>`).join('');

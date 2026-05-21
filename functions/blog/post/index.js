@@ -192,6 +192,32 @@ function absoluteUrl(value) {
   return `${SITE_ORIGIN}/${value}`;
 }
 
+function normalizeCoverSettings(value) {
+  const input = typeof value === "object" && value ? value : {};
+  return {
+    fit: input.fit === "contain" ? "contain" : "cover",
+    x: clampNumber(input.x, 0, 100, 50),
+    y: clampNumber(input.y, 0, 100, 50),
+    zoom: clampNumber(input.zoom, 100, 160, 100),
+  };
+}
+
+function clampNumber(value, min, max, fallback) {
+  const number = Number(value);
+  if (!Number.isFinite(number)) return fallback;
+  return Math.min(max, Math.max(min, Math.round(number)));
+}
+
+function coverImageStyle(post) {
+  const cover = normalizeCoverSettings(post.cover);
+  return [
+    `object-fit:${cover.fit}`,
+    `object-position:${cover.x}% ${cover.y}%`,
+    `transform:scale(${cover.zoom / 100})`,
+    `transform-origin:${cover.x}% ${cover.y}%`,
+  ].join(";");
+}
+
 function renderTags(tags) {
   if (!Array.isArray(tags) || !tags.length) return "";
   return tags
@@ -215,7 +241,7 @@ function renderPostHTML(post, slug, requestUrl) {
   )}&url=${encodeURIComponent(fullUrl)}`;
 
   const coverHtml = post.eyecatch
-    ? `<div id="cover-wrap"><div class="cover-hero"><img src="${escAttr(post.eyecatch)}" alt="${escAttr(title)}" fetchpriority="high" decoding="async" /></div></div>`
+    ? `<div id="cover-wrap"><div class="cover-hero"><img src="${escAttr(post.eyecatch)}" alt="${escAttr(title)}" fetchpriority="high" decoding="async" style="${escAttr(coverImageStyle(post))}" /></div></div>`
     : `<div id="cover-wrap"></div>`;
 
   return `<!doctype html>
@@ -252,8 +278,8 @@ function renderPostHTML(post, slug, requestUrl) {
   <script defer src="/shared/back-to-top.js"></script>
   <style>
     body { background:#fff; color: var(--text); }
-    .cover-hero { width:100%; overflow:hidden; background:#0b1613; }
-    .cover-hero img { width:100%; height:auto; object-fit:contain; display:block; }
+    .cover-hero { width:min(1180px, calc(100% - 32px)); aspect-ratio:16/9; margin:24px auto 0; overflow:hidden; background:#eef7f2; border-radius:24px; }
+    .cover-hero img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .18s ease; }
     .nav { background: rgba(5,15,12,.88) !important; }
     .post-outer { max-width:720px; margin:0 auto; padding:48px 24px 100px; }
     .post-meta { display:flex; align-items:center; gap:10px; flex-wrap:wrap; font-size:13px; color:var(--muted); margin-bottom:20px; }

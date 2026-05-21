@@ -1,5 +1,7 @@
 import { getBlogPin, isValidPin, timingSafeEqual } from "../lib/blog-auth.js";
 
+const DRAFT_TTL_SECONDS = 60 * 60 * 24 * 30;
+
 export async function onRequestGet(context) {
   try {
     if (!isAllowedOrigin(context.request)) {
@@ -60,6 +62,7 @@ export async function onRequestPost(context) {
     const bodyHtml = String(body?.bodyHtml || "");
     const excerpt = sanitizeText(body?.excerpt);
     const eyecatch = sanitizeUrl(body?.eyecatch);
+    const cover = normalizeCoverSettings(body?.cover);
     const slug = sanitizeSlug(body?.slug);
     const tags = normalizeTags(body?.tags);
     const draft = {
@@ -71,11 +74,13 @@ export async function onRequestPost(context) {
       body: sanitizeText(body?.body),
       tags,
       eyecatch,
+      cover,
       imageUrls: collectImageUrls(bodyHtml, eyecatch),
       updatedAt: now,
     };
 
     await kv.put(`draft:${draftId}`, JSON.stringify(draft), {
+      expirationTtl: DRAFT_TTL_SECONDS,
       metadata: {
         title,
         slug,
@@ -161,6 +166,22 @@ function sanitizeUrl(value) {
   } catch {
     return "";
   }
+}
+
+function normalizeCoverSettings(value) {
+  const input = typeof value === "object" && value ? value : {};
+  return {
+    fit: input.fit === "contain" ? "contain" : "cover",
+    x: clampNumber(input.x, 0, 100, 50),
+    y: clampNumber(input.y, 0, 100, 50),
+    zoom: clampNumber(input.zoom, 100, 160, 100),
+  };
+}
+
+function clampNumber(value, min, max, fallback) {
+  const number = Number(value);
+  if (!Number.isFinite(number)) return fallback;
+  return Math.min(max, Math.max(min, Math.round(number)));
 }
 
 function normalizeTags(value) {
