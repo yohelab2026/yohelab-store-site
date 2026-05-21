@@ -42,12 +42,6 @@
       margin-bottom:24px;color:var(--text);
     }
 
-    .post-excerpt {
-      font-size:19px;color:var(--muted);line-height:1.85;
-      margin-bottom:40px;padding-bottom:32px;
-      border-bottom:1px solid var(--border);
-    }
-
     /* 本文 */
     .post-body { font-size:17px;line-height:2;color:var(--text); }
     .post-body h2 {
@@ -381,7 +375,6 @@
       seenLabels.add(item.label);
       return true;
     }).map(item=>`<a class="post-tag" href="/blog/tag/${encodeURIComponent(tagSlug(item.raw))}/">${esc(item.label)}</a>`).join('');
-    const excerpt = post.excerpt ? `<p class="post-excerpt">${esc(post.excerpt)}</p>` : '';
     const bodyContent = post.bodyHtml ? sanitizeBodyHtml(post.bodyHtml) : (post.body||'').split('\n\n').map(p=>`<p>${esc(p)}</p>`).join('');
     const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(pageUrl)}`;
 
@@ -395,7 +388,6 @@
         <span>/</span>
         <time datetime="${esc(dateTimeAttr(updatedAt))}">最終更新日 ${esc(updatedLabel)}</time>
       </div>
-      ${excerpt}
       <div class="post-body">${bodyContent}</div>
       <div class="post-footer">
         <div class="post-footer-inner">

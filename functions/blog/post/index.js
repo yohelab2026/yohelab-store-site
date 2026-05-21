@@ -430,7 +430,6 @@ function renderPostHTML(post, slug, categoryMap = buildCategoryMap(DEFAULT_CATEG
     .post-tag { background:#f0f8f4;color:var(--green-dark,#075c4c);border-radius:999px;padding:3px 12px;font-size:12px;font-weight:700;text-decoration:none; }
     .post-title { font-size:clamp(30px,5.6vw,54px);font-weight:900;line-height:1.12;margin:0;color:var(--text);letter-spacing:-.055em; }
     .post-date-line { display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:16px 0 0;color:var(--muted);font-size:14px;font-weight:700;line-height:1.7; }
-    .post-excerpt { font-size:18px;color:var(--muted);line-height:1.85;margin:22px 0 0; }
     .post-body { font-size:17px; line-height:2; color:var(--text); }
     .post-body h2 { font-size: clamp(20px,3.5vw,26px); font-weight:900; margin:44px 0 16px; letter-spacing:-.03em; padding-bottom:10px; border-bottom:2px solid var(--border); }
     .post-body h3 { font-size: clamp(17px,3vw,21px); font-weight:800; margin:32px 0 12px; }
@@ -472,7 +471,6 @@ function renderPostHTML(post, slug, categoryMap = buildCategoryMap(DEFAULT_CATEG
         </div>
         <h1 class="post-title">${escHtml(title)}</h1>
         ${dateMetaHtml}
-        ${post.excerpt ? `<p class="post-excerpt">${escHtml(post.excerpt)}</p>` : ""}
       </section>
       <div class="post-body">${bodyHtml}</div>
       <div class="post-footer">
