@@ -158,6 +158,31 @@
   const FALLBACK_IMAGE = `${SITE_ORIGIN}/yohelab-mascot-v2-20260518.png`;
   const slug = slugFromLocation();
   const fallbackPosts = [];
+  const DEFAULT_CATEGORY_TREE = [
+    { key: 'ai-news', label: 'AIニュース', children: [
+      { key: 'ai-news', label: 'AIニュース' },
+      { key: 'chatgpt', label: 'ChatGPT' },
+      { key: 'claude', label: 'Claude' },
+      { key: 'gemini', label: 'Gemini' },
+      { key: 'perplexity', label: 'Perplexity' },
+      { key: 'genspark', label: 'Genspark' },
+      { key: 'grok', label: 'Grok' },
+      { key: 'copilot', label: 'Copilot' },
+      { key: 'midjourney', label: 'Midjourney' },
+    ] },
+    { key: 'earn', label: '副業ブログ', children: [
+      { key: 'earn', label: '収益化ネタ' },
+      { key: 'article', label: '記事づくり' },
+    ] },
+    { key: 'wordpress', label: 'ツール・商品', children: [
+      { key: 'wordpress', label: 'WordPress・文標' },
+      { key: 'template', label: '記事テンプレ' },
+    ] },
+    { key: 'home-work', label: '在宅ヒント', children: [
+      { key: 'home-work', label: '在宅ワーク習慣' },
+    ] },
+  ];
+  let categoryLabelMap = buildCategoryLabelMap(DEFAULT_CATEGORY_TREE);
 
   function slugFromLocation() {
     const querySlug = new URLSearchParams(location.search).get('slug');
@@ -183,6 +208,47 @@
 
   function esc(str) {
     return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function buildCategoryLabelMap(categories) {
+    const map = new Map();
+    const source = Array.isArray(categories) && categories.length ? categories : DEFAULT_CATEGORY_TREE;
+    source.forEach(parent => {
+      if (parent?.key && parent?.label) map.set(String(parent.key).toLowerCase(), String(parent.label));
+      (Array.isArray(parent?.children) ? parent.children : []).forEach(child => {
+        if (child?.key && child?.label) map.set(String(child.key).toLowerCase(), String(child.label));
+      });
+    });
+    return map;
+  }
+
+  async function loadCategoryLabels() {
+    try {
+      const res = await fetch('/api/blog-categories', { cache: 'no-store' });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && Array.isArray(data.categories)) categoryLabelMap = buildCategoryLabelMap(data.categories);
+    } catch (_) {}
+  }
+
+  function displayCategoryLabel(tag) {
+    const raw = String(tag || '').trim();
+    return categoryLabelMap.get(raw.toLowerCase()) || raw;
+  }
+
+  function formatPostDate(value) {
+    const raw = String(value || '').trim();
+    if (!raw) return '';
+    const normalized = /^\d{4}-\d{2}-\d{2}$/.test(raw) ? `${raw}T00:00:00+09:00` : raw;
+    const date = new Date(normalized);
+    return Number.isNaN(date.getTime()) ? raw : date.toLocaleDateString('ja-JP', { year:'numeric', month:'long', day:'numeric', timeZone:'Asia/Tokyo' });
+  }
+
+  function dateTimeAttr(value) {
+    const raw = String(value || '').trim();
+    if (!raw) return '';
+    if (/^\d{4}-\d{2}-\d{2}$/.test(raw)) return raw;
+    const date = new Date(raw);
+    return Number.isNaN(date.getTime()) ? raw : date.toISOString();
   }
 
   function clampNumber(value, min, max, fallback) {
@@ -239,6 +305,7 @@
 
   async function loadPost() {
     if (!slug) { showError('記事が見つかりません。'); return; }
+    await loadCategoryLabels();
     try {
       const res = await fetch(`/api/blog-post-get?slug=${encodeURIComponent(slug)}`);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -259,6 +326,9 @@
     const description = post.excerpt || title;
     const imageUrl = absoluteUrl(post.eyecatch);
     const date = post.date || new Date().toISOString().slice(0, 10);
+    const updatedAt = post.updatedAt || post.modifiedAt || date;
+    const publishedLabel = formatPostDate(date);
+    const updatedLabel = formatPostDate(updatedAt) || publishedLabel;
 
     if (postSlug && location.pathname.replace(/\/+$/, '') === '/blog/post') {
       history.replaceState(null, '', pagePath);
@@ -275,7 +345,7 @@
     setMeta('og:url', pageUrl);
     setMeta('og:image', imageUrl);
     setMeta('article:published_time', `${date}T00:00:00+09:00`);
-    setMeta('article:modified_time', `${date}T00:00:00+09:00`);
+    setMeta('article:modified_time', dateTimeAttr(updatedAt));
     setMeta('twitter:card', 'summary_large_image');
     setMeta('twitter:title', title);
     setMeta('twitter:description', description);
@@ -287,7 +357,7 @@
       description,
       image: imageUrl,
       datePublished: date,
-      dateModified: date,
+      dateModified: updatedAt,
       author: { '@type': 'Organization', name: 'よへラボ', url: SITE_ORIGIN },
       publisher: {
         '@type': 'Organization',
@@ -305,17 +375,26 @@
         `<div class="cover-hero"><img src="${esc(post.eyecatch)}" alt="${esc(post.title)}" style="${esc(coverStyle(post))}" loading="eager" decoding="async" fetchpriority="high" /></div>`;
     }
 
-    const tags = (post.tags||[]).map(t=>`<a class="post-tag" href="/blog/tag/${encodeURIComponent(tagSlug(t))}/">${esc(t)}</a>`).join('');
+    const seenLabels = new Set();
+    const tags = (post.tags||[]).map(t => ({ raw: t, label: displayCategoryLabel(t) })).filter(item => {
+      if (!item.label || seenLabels.has(item.label)) return false;
+      seenLabels.add(item.label);
+      return true;
+    }).map(item=>`<a class="post-tag" href="/blog/tag/${encodeURIComponent(tagSlug(item.raw))}/">${esc(item.label)}</a>`).join('');
     const excerpt = post.excerpt ? `<p class="post-excerpt">${esc(post.excerpt)}</p>` : '';
     const bodyContent = post.bodyHtml ? sanitizeBodyHtml(post.bodyHtml) : (post.body||'').split('\n\n').map(p=>`<p>${esc(p)}</p>`).join('');
     const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(pageUrl)}`;
 
     document.getElementById('post-outer').innerHTML = `
       <div class="post-meta">
-        <span>${esc(post.date||'')}</span>
         ${tags}
       </div>
       <h1 class="post-title">${esc(post.title||'')}</h1>
+      <div class="post-meta" style="margin-top:-10px;">
+        <time datetime="${esc(dateTimeAttr(date))}">投稿日 ${esc(publishedLabel)}</time>
+        <span>/</span>
+        <time datetime="${esc(dateTimeAttr(updatedAt))}">最終更新日 ${esc(updatedLabel)}</time>
+      </div>
       ${excerpt}
       <div class="post-body">${bodyContent}</div>
       <div class="post-footer">

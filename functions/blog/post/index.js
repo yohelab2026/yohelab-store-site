@@ -12,7 +12,32 @@ const SITE_ORIGIN = "https://yohelab.com";
 const SITE_NAME = "よへラボ";
 const BLOG_NAME = "よへラボブログ";
 const FALLBACK_IMAGE = `${SITE_ORIGIN}/yohelab-mascot-v2-20260518.png`;
+const CATEGORY_KEY = "settings:blog-categories";
 const RESERVED_BLOG_SLUGS = new Set(["admin", "post", "category", "tag"]);
+const DEFAULT_CATEGORY_TREE = [
+  { key: "ai-news", label: "AIニュース", children: [
+    { key: "ai-news", label: "AIニュース" },
+    { key: "chatgpt", label: "ChatGPT" },
+    { key: "claude", label: "Claude" },
+    { key: "gemini", label: "Gemini" },
+    { key: "perplexity", label: "Perplexity" },
+    { key: "genspark", label: "Genspark" },
+    { key: "grok", label: "Grok" },
+    { key: "copilot", label: "Copilot" },
+    { key: "midjourney", label: "Midjourney" },
+  ] },
+  { key: "earn", label: "副業ブログ", children: [
+    { key: "earn", label: "収益化ネタ" },
+    { key: "article", label: "記事づくり" },
+  ] },
+  { key: "wordpress", label: "ツール・商品", children: [
+    { key: "wordpress", label: "WordPress・文標" },
+    { key: "template", label: "記事テンプレ" },
+  ] },
+  { key: "home-work", label: "在宅ヒント", children: [
+    { key: "home-work", label: "在宅ワーク習慣" },
+  ] },
+];
 const STATIC_POST_REDIRECTS = new Map([
   ["ai-news-selling-ideas", "/blog/ai-news-selling-ideas/"],
   ["home-work-rhythm", "/blog/home-work-rhythm/"],
@@ -73,7 +98,8 @@ export async function renderBlogPost(context, slug, requestUrl = new URL(context
     return Response.redirect(new URL(prettyPostPath(cleanSlug), requestUrl.origin).toString(), 301);
   }
 
-  const html = renderPostHTML(post, cleanSlug);
+  const categoryMap = await readCategoryMap(kv);
+  const html = renderPostHTML(post, cleanSlug, categoryMap);
 
   return new Response(html, {
     headers: {
@@ -99,6 +125,39 @@ export function isReservedBlogSlug(slug) {
 
 function samePath(a, b) {
   return String(a || "").replace(/\/+$/, "") === String(b || "").replace(/\/+$/, "");
+}
+
+async function readCategoryMap(kv) {
+  try {
+    const saved = await kv.get(CATEGORY_KEY, { type: "json" });
+    return buildCategoryMap(saved?.categories || saved || DEFAULT_CATEGORY_TREE);
+  } catch {
+    return buildCategoryMap(DEFAULT_CATEGORY_TREE);
+  }
+}
+
+function buildCategoryMap(categories) {
+  const map = new Map();
+  const source = Array.isArray(categories) && categories.length ? categories : DEFAULT_CATEGORY_TREE;
+  source.forEach((parent) => {
+    const parentKey = sanitizeCategoryKey(parent?.key);
+    const parentLabel = sanitizeCategoryLabel(parent?.label);
+    if (parentKey && parentLabel) map.set(parentKey, parentLabel);
+    (Array.isArray(parent?.children) ? parent.children : []).forEach((child) => {
+      const childKey = sanitizeCategoryKey(child?.key);
+      const childLabel = sanitizeCategoryLabel(child?.label);
+      if (childKey && childLabel) map.set(childKey, childLabel);
+    });
+  });
+  return map;
+}
+
+function sanitizeCategoryKey(value) {
+  return String(value || "").trim().toLowerCase();
+}
+
+function sanitizeCategoryLabel(value) {
+  return String(value || "").replace(/[<>]/g, "").trim().slice(0, 40);
 }
 
 function cleanStaticSlugPath(slug) {
@@ -185,6 +244,7 @@ function buildJsonLd(post, slug, fullUrl) {
   const title = post.title || "記事";
   const description = plainExcerpt(post, 200);
   const datePublished = post.date || new Date().toISOString().slice(0, 10);
+  const dateModified = post.updatedAt || post.modifiedAt || post.date || datePublished;
   const eyecatch = post.eyecatch ? absoluteUrl(post.eyecatch) : FALLBACK_IMAGE;
 
   const article = {
@@ -194,7 +254,7 @@ function buildJsonLd(post, slug, fullUrl) {
     description,
     image: eyecatch,
     datePublished,
-    dateModified: datePublished,
+    dateModified,
     author: { "@type": "Organization", name: SITE_NAME, url: SITE_ORIGIN },
     publisher: {
       "@type": "Organization",
@@ -217,6 +277,23 @@ function buildJsonLd(post, slug, fullUrl) {
   };
 
   return [JSON.stringify(article), JSON.stringify(breadcrumb)];
+}
+
+function formatPostDate(value) {
+  const raw = String(value || "").trim();
+  if (!raw) return "";
+  const normalized = /^\d{4}-\d{2}-\d{2}$/.test(raw) ? `${raw}T00:00:00+09:00` : raw;
+  const date = new Date(normalized);
+  if (Number.isNaN(date.getTime())) return raw;
+  return date.toLocaleDateString("ja-JP", { year: "numeric", month: "long", day: "numeric", timeZone: "Asia/Tokyo" });
+}
+
+function dateTimeAttr(value) {
+  const raw = String(value || "").trim();
+  if (!raw) return "";
+  if (/^\d{4}-\d{2}-\d{2}$/.test(raw)) return raw;
+  const date = new Date(raw);
+  return Number.isNaN(date.getTime()) ? raw : date.toISOString();
 }
 
 function absoluteUrl(value) {
@@ -252,11 +329,23 @@ function coverImageStyle(post) {
   ].join(";");
 }
 
-function renderTags(tags) {
+function displayCategoryLabel(tag, categoryMap) {
+  const raw = String(tag || "").trim();
+  return categoryMap.get(raw.toLowerCase()) || raw;
+}
+
+function renderTags(tags, categoryMap) {
   if (!Array.isArray(tags) || !tags.length) return "";
+  const seen = new Set();
   return tags
+    .map((tag) => displayCategoryLabel(tag, categoryMap))
+    .filter((label) => {
+      if (!label || seen.has(label)) return false;
+      seen.add(label);
+      return true;
+    })
     .slice(0, 8)
-    .map((t) => `<span class="post-tag">${escHtml(t)}</span>`)
+    .map((label) => `<span class="post-tag">${escHtml(label)}</span>`)
     .join("");
 }
 
@@ -276,16 +365,20 @@ function renderBlogHeader() {
   </header>`;
 }
 
-function renderPostHTML(post, slug) {
+function renderPostHTML(post, slug, categoryMap = buildCategoryMap(DEFAULT_CATEGORY_TREE)) {
   const title = post.title || "無題の記事";
   const description = plainExcerpt(post, 160);
   const date = post.date || new Date().toISOString().slice(0, 10);
+  const updatedAt = post.updatedAt || post.modifiedAt || date;
+  const publishedLabel = formatPostDate(date);
+  const updatedLabel = formatPostDate(updatedAt);
+  const dateMetaHtml = `<div class="post-date-line"><time datetime="${escAttr(dateTimeAttr(date))}">投稿日 ${escHtml(publishedLabel)}</time><span>/</span><time datetime="${escAttr(dateTimeAttr(updatedAt))}">最終更新日 ${escHtml(updatedLabel || publishedLabel)}</time></div>`;
   const eyecatchAbs = post.eyecatch ? absoluteUrl(post.eyecatch) : FALLBACK_IMAGE;
   const eyecatchAttr = post.eyecatch ? escAttr(post.eyecatch) : "";
   const coverHtml = post.eyecatch
     ? `<figure class="post-cover"><img src="${eyecatchAttr}" alt="${escAttr(title)}" style="${escAttr(coverImageStyle(post))}" loading="eager" decoding="async" fetchpriority="high" /></figure>`
     : "";
-  const tagsHtml = renderTags(post.tags);
+  const tagsHtml = renderTags(post.tags, categoryMap);
   const bodyHtml = bodyToHtml(post);
   const fullUrl = prettyPostUrl(slug);
   const [articleLd, breadcrumbLd] = buildJsonLd(post, slug, fullUrl);
@@ -313,6 +406,7 @@ function renderPostHTML(post, slug) {
   <meta property="og:url" content="${escAttr(fullUrl)}" />
   <meta property="og:image" content="${escAttr(eyecatchAbs)}" />
   <meta property="article:published_time" content="${escAttr(date)}T00:00:00+09:00" />
+  <meta property="article:modified_time" content="${escAttr(dateTimeAttr(updatedAt))}" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="${escAttr(title)}" />
   <meta name="twitter:description" content="${escAttr(description)}" />
@@ -332,9 +426,10 @@ function renderPostHTML(post, slug) {
     .post-cover img { width:100%;height:100%;display:block; }
     .post-hero { border-radius:28px;padding:32px;margin-bottom:30px;background:linear-gradient(135deg,#ecfdf5,#eef6ff);border:1px solid #dce7fb;box-shadow:var(--shadow-sm); }
     .post-hero-kicker { display:inline-flex;padding:7px 12px;border-radius:999px;background:#0b8f72;color:#fff;font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;margin-bottom:18px; }
-    .post-meta { display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-bottom:18px; }
+    .post-meta { display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin:0 0 18px; }
     .post-tag { background:#f0f8f4;color:var(--green-dark,#075c4c);border-radius:999px;padding:3px 12px;font-size:12px;font-weight:700;text-decoration:none; }
     .post-title { font-size:clamp(30px,5.6vw,54px);font-weight:900;line-height:1.12;margin:0;color:var(--text);letter-spacing:-.055em; }
+    .post-date-line { display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:16px 0 0;color:var(--muted);font-size:14px;font-weight:700;line-height:1.7; }
     .post-excerpt { font-size:18px;color:var(--muted);line-height:1.85;margin:22px 0 0; }
     .post-body { font-size:17px; line-height:2; color:var(--text); }
     .post-body h2 { font-size: clamp(20px,3.5vw,26px); font-weight:900; margin:44px 0 16px; letter-spacing:-.03em; padding-bottom:10px; border-bottom:2px solid var(--border); }
@@ -373,10 +468,10 @@ function renderPostHTML(post, slug) {
       <section class="post-hero">
         <span class="post-hero-kicker">Article</span>
         <div class="post-meta">
-          <span>${escHtml(date)}</span>
           ${tagsHtml}
         </div>
         <h1 class="post-title">${escHtml(title)}</h1>
+        ${dateMetaHtml}
         ${post.excerpt ? `<p class="post-excerpt">${escHtml(post.excerpt)}</p>` : ""}
       </section>
       <div class="post-body">${bodyHtml}</div>

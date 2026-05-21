@@ -27,6 +27,7 @@ export async function onRequestPost(context) {
     const bodyText = sanitizeText(body?.body);
     const excerpt = excerptInput || autoExcerpt(bodyHtml || bodyText, title);
     const date = sanitizeDate(body?.date) || new Date().toISOString().slice(0, 10);
+    const updatedAt = new Date().toISOString();
     const tags = normalizeTags(body?.tags);
     const eyecatch = sanitizeUrl(body?.eyecatch);
     const cover = normalizeCoverSettings(body?.cover);
@@ -42,12 +43,12 @@ export async function onRequestPost(context) {
     const effectiveSlugRaw = slugRaw || sanitizeSlug(effectiveTitle);
     const slug = `${date}-${effectiveSlugRaw}`;
 
-    const post = { title: effectiveTitle, slug: effectiveSlugRaw, date, excerpt, bodyHtml, tags };
+    const post = { title: effectiveTitle, slug: effectiveSlugRaw, date, updatedAt, excerpt, bodyHtml, tags };
     if (eyecatch) post.eyecatch = eyecatch;
     if (eyecatch) post.cover = cover;
 
     await kv.put(`post:${slug}`, JSON.stringify(post), {
-      metadata: { title: effectiveTitle, date, excerpt, slug: effectiveSlugRaw, eyecatch: eyecatch || "", tags: tags.join(",") },
+      metadata: { title: effectiveTitle, date, updatedAt, excerpt, slug: effectiveSlugRaw, eyecatch: eyecatch || "", tags: tags.join(",") },
     });
 
     if (originalPostSlug && originalPostSlug !== slug) {

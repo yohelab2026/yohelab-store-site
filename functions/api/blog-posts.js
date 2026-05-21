@@ -18,6 +18,7 @@ export async function onRequestGet(context) {
           url: `/blog/${encodeURIComponent(slug)}/`,
           title: key.metadata?.title || "",
           date: key.metadata?.date || "",
+          updatedAt: key.metadata?.updatedAt || key.metadata?.date || "",
           excerpt: key.metadata?.excerpt || "",
           eyecatch: key.metadata?.eyecatch || "",
           tags: parseTags(key.metadata?.tags),
