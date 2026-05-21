@@ -216,63 +216,6 @@
     .tab-panel { display: none; }
     .tab-panel.active { display: block; }
 
-    .inline-page-panel {
-      display: none;
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      margin-bottom: 16px;
-    }
-    .inline-page-panel.active { display: block; }
-    .inline-page-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 10px 14px;
-      border-bottom: 1px solid var(--border);
-      background: #fafffe;
-    }
-    .inline-page-title {
-      font-size: 14px;
-      font-weight: 900;
-      color: var(--text);
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    .inline-page-actions {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-shrink: 0;
-    }
-    .inline-page-btn {
-      border: 1px solid var(--border);
-      background: var(--white);
-      color: var(--brand);
-      border-radius: 999px;
-      padding: 7px 12px;
-      font-family: inherit;
-      font-size: 12px;
-      font-weight: 800;
-      cursor: pointer;
-      text-decoration: none;
-    }
-    .inline-page-btn:hover {
-      border-color: var(--brand);
-      background: var(--brand-light);
-    }
-    .inline-page-frame {
-      width: 100%;
-      min-height: 760px;
-      border: 0;
-      display: block;
-      background: #fff;
-      overflow: hidden;
-    }
-
     /* ── セクション共通 ── */
     .section-card {
       background: var(--white);
@@ -535,9 +478,6 @@
       .tab-btn { padding: 9px 3px; font-size: 11px; gap: 3px; }
       .tab-icon { font-size: 20px; }
       .tab-label { display: block; font-size: 10.5px; line-height: 1.15; white-space: normal; }
-      .inline-page-head { align-items: flex-start; flex-direction: column; }
-      .inline-page-actions { width: 100%; }
-      .inline-page-btn { flex: 1; text-align: center; }
       .news-item { padding: 12px 12px; }
       .section-head { padding: 10px 12px; }
       .mobile-priority-widgets { grid-template-columns: 1fr; }
@@ -604,17 +544,6 @@
   <!-- ===== 左カラム（タブパネル） ===== -->
   <div class="main-col">
     <h1 id="home-title" class="sr-only">家で働く人・副業をしたい人のためのAI・副業情報サイト</h1>
-
-    <div class="inline-page-panel" id="inlinePagePanel" aria-live="polite">
-      <div class="inline-page-head">
-        <div class="inline-page-title" id="inlinePageTitle">ページを表示中</div>
-        <div class="inline-page-actions">
-          <button class="inline-page-btn" type="button" id="inlineBackBtn">一覧に戻る</button>
-          <a class="inline-page-btn" id="inlineOpenBtn" href="/">別ページで開く</a>
-        </div>
-      </div>
-      <iframe class="inline-page-frame" id="inlinePageFrame" title="よへラボ内ページ" scrolling="no"></iframe>
-    </div>
 
     <div class="mobile-priority-widgets" aria-label="スマホ向けおすすめ">
       <section class="section-card">
@@ -1041,11 +970,6 @@
   const tabBtns = document.querySelectorAll('.tab-btn');
   const mainCol = document.querySelector('.main-col');
   const tabPanels = mainCol ? mainCol.querySelectorAll('.tab-panel') : document.querySelectorAll('.tab-panel');
-  const inlinePagePanel = document.getElementById('inlinePagePanel');
-  const inlinePageFrame = document.getElementById('inlinePageFrame');
-  const inlinePageTitle = document.getElementById('inlinePageTitle');
-  const inlineOpenBtn = document.getElementById('inlineOpenBtn');
-  const inlineBackBtn = document.getElementById('inlineBackBtn');
 
   tabBtns.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -1067,7 +991,6 @@
     targetBtn.setAttribute('aria-selected', 'true');
 
     // メインカラム内のパネルだけを切り替える。サイドバー・ヘッダー・フッターは触らない。
-    hideInlinePage();
     tabPanels.forEach(p => p.classList.remove('active'));
     targetPanel.classList.add('active');
     return true;
@@ -1075,99 +998,6 @@
 
   const initialTab = new URLSearchParams(window.location.search).get('tab');
   if (initialTab) activateHomeTab(initialTab);
-
-  function isInlineInternalLink(link) {
-    if (!link || !link.href) return false;
-    if (link.target === '_blank') return false;
-    const url = new URL(link.href, location.href);
-    if (url.origin !== location.origin) return false;
-    return url.pathname.startsWith('/blog/')
-      || url.pathname.startsWith('/lp/')
-      || url.pathname.startsWith('/apps/')
-      || url.pathname.startsWith('/about/')
-      || url.pathname.startsWith('/contact/');
-  }
-
-  function showInlinePage(link) {
-    const url = new URL(link.href, location.href);
-    tabPanels.forEach(p => p.classList.remove('active'));
-    inlinePagePanel.classList.add('active');
-    inlinePageTitle.textContent = link.textContent.trim().replace(/\s+/g, ' ') || 'よへラボ内ページ';
-    inlineOpenBtn.href = url.pathname + url.search + url.hash;
-    inlinePageFrame.style.height = '760px';
-    inlinePageFrame.src = url.pathname + url.search + url.hash;
-    mainCol.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-
-  function resizeInlineFrame() {
-    if (!inlinePageFrame?.src) return;
-    try {
-      const doc = inlinePageFrame.contentDocument || inlinePageFrame.contentWindow?.document;
-      if (!doc) return;
-      if (!doc.getElementById('yohelab-inline-frame-cleanup')) {
-        const style = doc.createElement('style');
-        style.id = 'yohelab-inline-frame-cleanup';
-        style.textContent = `
-          html, body {
-            overflow: hidden !important;
-            scrollbar-width: none !important;
-          }
-          body::-webkit-scrollbar,
-          html::-webkit-scrollbar {
-            display: none !important;
-            width: 0 !important;
-            height: 0 !important;
-          }
-          footer, .site-footer, .lp-footer {
-            display: none !important;
-          }
-        `;
-        doc.head?.appendChild(style);
-      }
-      doc.querySelectorAll('footer, .site-footer, .lp-footer').forEach(footer => {
-        footer.style.display = 'none';
-      });
-      const contentRoot = doc.querySelector('main') || doc.body || doc.documentElement;
-      const rect = contentRoot.getBoundingClientRect();
-      const height = Math.max(
-        rect.top + rect.height,
-        contentRoot.scrollHeight || 0,
-        760
-      );
-      inlinePageFrame.style.height = `${height + 8}px`;
-    } catch (_) {
-      // 同一サイト内ページ以外を開いた時は、ブラウザ本体の表示に任せる。
-    }
-  }
-
-  inlinePageFrame?.addEventListener('load', () => {
-    resizeInlineFrame();
-    setTimeout(resizeInlineFrame, 250);
-    setTimeout(resizeInlineFrame, 1000);
-  });
-
-  function hideInlinePage() {
-    if (!inlinePagePanel) return;
-    inlinePagePanel.classList.remove('active');
-    if (inlinePageFrame) {
-      inlinePageFrame.removeAttribute('src');
-      inlinePageFrame.style.height = '760px';
-    }
-  }
-
-  inlineBackBtn?.addEventListener('click', () => {
-    hideInlinePage();
-    const currentBtn = document.querySelector('.tab-btn.active') || document.querySelector('.tab-btn[data-tab="ai-news"]');
-    const targetPanel = currentBtn ? document.getElementById('panel-' + currentBtn.dataset.tab) : document.getElementById('panel-ai-news');
-    if (targetPanel) targetPanel.classList.add('active');
-  });
-
-  document.querySelector('.site-main')?.addEventListener('click', (event) => {
-    const link = event.target.closest('a');
-    if (!isInlineInternalLink(link)) return;
-    event.preventDefault();
-    showInlinePage(link);
-  });
 
   // ── AIカテゴリフィルター（内部リンク方式・外部通信なし） ──
   const aiFilterBtns = document.querySelectorAll('.ai-filter-btn');
@@ -1275,7 +1105,7 @@
   }
 
   function dynamicPostUrl(post) {
-    return `/blog/post/?slug=${encodeURIComponent(post.slug || '')}`;
+    return post.url || `/blog/${encodeURIComponent(post.slug || '')}/`;
   }
 
   function renderDynamicNewsItem(post) {
