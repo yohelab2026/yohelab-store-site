@@ -4,7 +4,7 @@ const filterStatusEl = document.getElementById('filter-status');
 const categoryTabEls = Array.from(document.querySelectorAll('.category-tab'));
 let categoryChildEls = Array.from(document.querySelectorAll('.category-child'));
 const categoryPanelEls = Array.from(document.querySelectorAll('.child-category-panel'));
-let activeFilter = 'group:ai-news';
+let activeFilter = 'all';
 let activeParent = 'ai-news';
 let aiToolTags = ['ai-news','chatgpt','claude','gemini','perplexity','genspark','grok','copilot','midjourney'];
 let categoryGroups = {
@@ -32,7 +32,7 @@ let categoryParentByKey = {
 };
 let categoryOrder = ['ai-news','chatgpt','claude','gemini','perplexity','genspark','grok','copilot','midjourney','faq','earn','template','article','wordpress','home-work'];
 let categoryLabels = {
-  all: '全部',
+  all: 'すべて',
   'group:ai-news': 'AIニュース全部',
   'group:earn': '副業ネタ全部',
   'group:wordpress': 'ツール全部',
@@ -199,6 +199,12 @@ function applyCategoryLabelsToNav() {
   });
   categoryChildEls.forEach(btn => {
     const key = normalizeFilter(btn.dataset.filter);
+    if (key.startsWith('group:')) {
+      btn.dataset.filter = 'all';
+      if (btn.tagName === 'A') btn.setAttribute('href', '/blog/');
+      btn.textContent = 'すべて';
+      return;
+    }
     if (categoryLabels[key]) btn.textContent = categoryLabels[key];
   });
   applyFilters();
@@ -285,8 +291,8 @@ function compareByCategory(a, b) {
 }
 
 function categoryRank(post) {
-  const tags = normalizePostTags(post);
-  const found = categoryOrder.findIndex(tag => tags.includes(tag));
+  const keys = categoryKeysForPost(post);
+  const found = categoryOrder.findIndex(tag => keys.includes(tag));
   return found === -1 ? 999 : found;
 }
 
@@ -334,12 +340,13 @@ function parseTagValues(value) {
 function fallbackCategoryKeys(post) {
   const override = postCategoryOverrides[post?.slug];
   if (override) return override.filter(key => categoryParentByKey[key]);
-  return normalizePostTags(post).map(categoryKeyFromTag).filter(key => categoryParentByKey[key]);
+  return [];
 }
 
 function categoryKeysForPost(post) {
-  const explicit = categoryKeysFromTags(post?.tags || []);
-  return explicit.length ? explicit : fallbackCategoryKeys(post);
+  const fallback = fallbackCategoryKeys(post);
+  if (fallback.length) return fallback.slice(0, 4);
+  return categoryKeysFromTags(post?.tags || []).slice(0, 4);
 }
 
 function primaryParentForPost(post) {
@@ -401,10 +408,8 @@ function render(posts, hasLink = true) {
     const categoryKeys = categoryKeysForPost(post);
     const parentCategory = primaryParentForPost(post);
     const normalizedTags = [...new Set([...(post.tags||[]), ...normalizePostTags(post)])];
-    const tags = categoryOrder
-      .filter(tag => categoryKeys.includes(tag) || normalizedTags.map(t => String(t).toLowerCase()).includes(tag))
-      .filter(tag => !parentCategory || categoryParentByKey[tag] === parentCategory)
-      .slice(0, 3)
+    const tags = categoryKeys
+      .slice(0, 4)
       .map(tag => `<a class="post-card-tag" href="${tagUrl(tag)}">${esc(getFilterLabel(tag))}</a>`)
       .join('');
     const img = post.eyecatch
@@ -507,19 +512,17 @@ function filterMatches(filter, card) {
   const normalized = normalizeFilter(filter);
   if (normalized === 'all') return true;
 
-  const parent = parentFromCard(card);
+  const keys = categoryKeysFromCard(card);
   if (normalized.startsWith('group:')) {
-    return parent === normalized.replace('group:', '');
+    const parent = normalized.replace('group:', '');
+    return keys.some(key => categoryParentByKey[key] === parent);
   }
 
   const requiredParent = categoryParentByKey[normalized] || '';
-  if (requiredParent && parent && parent !== requiredParent) return false;
-
-  const keys = categoryKeysFromCard(card);
-  if (keys.includes(normalized)) return true;
+  if (requiredParent) return keys.includes(normalized);
 
   const tagText = (card.dataset.tags || card.innerText || '').toLowerCase();
-  return !requiredParent && tagText.includes(normalized);
+  return tagText.includes(normalized);
 }
 
 function parentForFilter(filter) {

@@ -252,6 +252,8 @@
     label.meta-label input, label.meta-label select, label.meta-label textarea { border:1px solid var(--border);border-radius:10px;padding:10px 13px;font-size:14px;width:100%;background:#fff;color:var(--text); }
     label.meta-label textarea { min-height:80px;resize:vertical; }
     .meta-category-grid { display:grid;grid-template-columns:1fr 1fr;gap:10px; }
+    .child-category-selects { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px; }
+    .child-category-selects select { min-width:0; }
     .meta-help { color:var(--muted);font-size:12px;line-height:1.7;font-weight:600; }
 
     /* 投稿一覧 */
@@ -548,8 +550,13 @@
           <label class="meta-label">親カテゴリ
             <select id="post-parent-category" aria-label="親カテゴリ"></select>
           </label>
-          <label class="meta-label">子カテゴリ
-            <select id="post-child-category" aria-label="子カテゴリ"></select>
+          <label class="meta-label">子カテゴリ（最大4つ）
+            <div class="child-category-selects">
+              <select id="post-child-category" data-post-child-category aria-label="子カテゴリ1"></select>
+              <select id="post-child-category-2" data-post-child-category aria-label="子カテゴリ2"></select>
+              <select id="post-child-category-3" data-post-child-category aria-label="子カテゴリ3"></select>
+              <select id="post-child-category-4" data-post-child-category aria-label="子カテゴリ4"></select>
+            </div>
           </label>
         </div>
         <label class="meta-label">補助キーワード<input id="tags" placeholder="ChatGPT, AIニュース, 記事作成" /></label>
@@ -595,6 +602,7 @@
   const tagsEl     = document.getElementById('tags');
   const postParentCategoryEl = document.getElementById('post-parent-category');
   const postChildCategoryEl = document.getElementById('post-child-category');
+  const postChildCategoryEls = Array.from(document.querySelectorAll('[data-post-child-category]'));
   const postCategoryHintEl = document.getElementById('post-category-hint');
   const slugEl     = document.getElementById('slug');
   const eyecatchEl = document.getElementById('eyecatch');
@@ -1630,10 +1638,13 @@
     [bodyEl, bodySourceEl, excerptEl, tagsEl, slugEl].forEach(el => el.addEventListener(ev, saveDraftLocal));
   });
   postParentCategoryEl?.addEventListener('change', () => {
-    populateEditorChildCategorySelect();
+    populateEditorChildCategorySelect([]);
     saveDraftLocal();
   });
-  postChildCategoryEl?.addEventListener('change', saveDraftLocal);
+  postChildCategoryEls.forEach(el => el.addEventListener('change', () => {
+    updateEditorCategoryHint();
+    saveDraftLocal();
+  }));
   bodyEl.addEventListener('blur', saveDraftLocal);
   bodySourceEl.addEventListener('blur', saveDraftLocal);
 
@@ -2123,35 +2134,46 @@
     return categoryOrder.filter(key => normalized.includes(key));
   }
 
+  function selectedEditorCategoryKeys() {
+    const seen = new Set();
+    return postChildCategoryEls
+      .map(select => sanitizeCategoryKey(select.value))
+      .filter(key => {
+        if (!key || !categoryLookup.has(key) || seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      })
+      .slice(0, 4);
+  }
+
   function selectedEditorCategoryKey() {
-    const selected = sanitizeCategoryKey(postChildCategoryEl?.value);
-    return selected && categoryLookup.has(selected) ? selected : firstEditorCategoryKey();
+    return selectedEditorCategoryKeys()[0] || '';
   }
 
   function editorExtraTags() {
-    const selectedKey = selectedEditorCategoryKey();
+    const selectedKeys = new Set(selectedEditorCategoryKeys());
     return parseTagList(tagsEl.value).filter(tag => {
       const key = sanitizeCategoryKey(tag);
       const isParentKey = categoryTree.some(parent => parent.key === key);
-      return !key || (key !== selectedKey && !categoryLookup.has(key) && !isParentKey);
+      return !key || (!selectedKeys.has(key) && !categoryLookup.has(key) && !isParentKey);
     });
   }
 
   function editorTags() {
-    return [...new Set([selectedEditorCategoryKey(), ...editorExtraTags()].filter(Boolean))];
+    return [...new Set([...selectedEditorCategoryKeys(), ...editorExtraTags()].filter(Boolean))];
   }
 
   function populateEditorCategoryControlsFromTags(tags) {
     if (!postParentCategoryEl || !postChildCategoryEl) return;
-    const currentSelected = selectedEditorCategoryKey();
-    const pickedKey = categoryKeysFromTags(tags)[0] || currentSelected || firstEditorCategoryKey();
-    const picked = categoryLookup.get(pickedKey);
+    const currentSelected = selectedEditorCategoryKeys();
+    const pickedKeys = (categoryKeysFromTags(tags).length ? categoryKeysFromTags(tags) : currentSelected).slice(0, 4);
+    const picked = categoryLookup.get(pickedKeys[0]);
     const parentKey = picked?.parentKey || categoryTree[0]?.key || '';
     postParentCategoryEl.innerHTML = categoryTree
       .map(parent => `<option value="${escHtml(parent.key)}">${escHtml(parent.label)}</option>`)
       .join('');
     postParentCategoryEl.value = parentKey;
-    populateEditorChildCategorySelect(pickedKey);
+    populateEditorChildCategorySelect(pickedKeys);
     tagsEl.value = editorExtraTagsFromTags(tags).join(', ');
   }
 
@@ -2163,20 +2185,32 @@
     });
   }
 
-  function populateEditorChildCategorySelect(selectedChildKey = '') {
+  function populateEditorChildCategorySelect(selectedChildKeys = []) {
     if (!postParentCategoryEl || !postChildCategoryEl) return;
     const parent = categoryTree.find(item => item.key === postParentCategoryEl.value) || categoryTree[0];
     const children = parent?.children || [];
-    const fallbackKey = children[0]?.key || firstEditorCategoryKey();
-    const safeSelected = children.some(child => child.key === selectedChildKey) ? selectedChildKey : fallbackKey;
-    postChildCategoryEl.innerHTML = children
+    const selectedSet = new Set((Array.isArray(selectedChildKeys) ? selectedChildKeys : [selectedChildKeys]).map(sanitizeCategoryKey).filter(Boolean));
+    const available = new Set(children.map(child => child.key));
+    const safeSelected = [...selectedSet].filter(key => available.has(key)).slice(0, 4);
+    const options = '<option value="">— 選択しない —</option>' + children
       .map(child => `<option value="${escHtml(child.key)}">${escHtml(child.label)}</option>`)
       .join('');
-    postChildCategoryEl.value = safeSelected;
-    const selected = categoryLookup.get(safeSelected);
-    if (postCategoryHintEl && selected) {
-      postCategoryHintEl.textContent = `選択中：${selected.parentLabel} / ${selected.label}`;
+    postChildCategoryEls.forEach((select, index) => {
+      select.innerHTML = options;
+      select.value = safeSelected[index] || '';
+    });
+    updateEditorCategoryHint();
+  }
+
+  function updateEditorCategoryHint() {
+    const selected = selectedEditorCategoryKeys().map(key => categoryLookup.get(key)).filter(Boolean);
+    if (!postCategoryHintEl) return;
+    if (!selected.length) {
+      const parent = categoryTree.find(item => item.key === postParentCategoryEl?.value);
+      postCategoryHintEl.textContent = `選択中：${parent?.label || 'カテゴリ'} / 子カテゴリなし`;
+      return;
     }
+    postCategoryHintEl.textContent = `選択中：${selected[0].parentLabel} / ${selected.map(item => item.label).join('、')}`;
   }
 
   function sanitizeCategoryKey(value) {
