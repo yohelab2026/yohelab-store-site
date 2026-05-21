@@ -282,6 +282,9 @@ function renderPostHTML(post, slug) {
   const date = post.date || new Date().toISOString().slice(0, 10);
   const eyecatchAbs = post.eyecatch ? absoluteUrl(post.eyecatch) : FALLBACK_IMAGE;
   const eyecatchAttr = post.eyecatch ? escAttr(post.eyecatch) : "";
+  const coverHtml = post.eyecatch
+    ? `<figure class="post-cover"><img src="${eyecatchAttr}" alt="${escAttr(title)}" style="${escAttr(coverImageStyle(post))}" loading="eager" decoding="async" fetchpriority="high" /></figure>`
+    : "";
   const tagsHtml = renderTags(post.tags);
   const bodyHtml = bodyToHtml(post);
   const fullUrl = prettyPostUrl(slug);
@@ -325,6 +328,8 @@ function renderPostHTML(post, slug) {
   <style>
     body { background:#fff;color:var(--text); }
     .post-outer { max-width:760px;margin:0 auto;padding:48px 24px 100px; }
+    .post-cover { width:100%;aspect-ratio:16/9;margin:0 0 28px;overflow:hidden;border-radius:28px;background:#eef5ff;border:1px solid #dce7fb;box-shadow:var(--shadow-sm); }
+    .post-cover img { width:100%;height:100%;display:block; }
     .post-hero { border-radius:28px;padding:32px;margin-bottom:30px;background:linear-gradient(135deg,#ecfdf5,#eef6ff);border:1px solid #dce7fb;box-shadow:var(--shadow-sm); }
     .post-hero-kicker { display:inline-flex;padding:7px 12px;border-radius:999px;background:#0b8f72;color:#fff;font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;margin-bottom:18px; }
     .post-meta { display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-bottom:18px; }
@@ -354,6 +359,7 @@ function renderPostHTML(post, slug) {
       .header-inner { flex-wrap:wrap; height:auto !important; padding-top:8px !important; padding-bottom:8px !important; }
       .header-inner > nav { order:3; width:100%; }
       .post-outer { padding:32px 18px 80px; }
+      .post-cover { border-radius:22px;margin-bottom:20px; }
       .post-hero { padding:24px 20px;border-radius:22px; }
     }
   </style>
@@ -363,6 +369,7 @@ function renderPostHTML(post, slug) {
 
   <main class="post-outer" id="post-outer">
     <article>
+      ${coverHtml}
       <section class="post-hero">
         <span class="post-hero-kicker">Article</span>
         <div class="post-meta">

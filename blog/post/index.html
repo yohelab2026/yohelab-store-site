@@ -302,7 +302,7 @@
     // カバー画像（フルワイド）
     if (post.eyecatch) {
       document.getElementById('cover-wrap').innerHTML =
-        `<div class="cover-hero"><img src="${esc(post.eyecatch)}" alt="${esc(post.title)}" style="${esc(coverStyle(post))}" /></div>`;
+        `<div class="cover-hero"><img src="${esc(post.eyecatch)}" alt="${esc(post.title)}" style="${esc(coverStyle(post))}" loading="eager" decoding="async" fetchpriority="high" /></div>`;
     }
 
     const tags = (post.tags||[]).map(t=>`<a class="post-tag" href="/blog/tag/${encodeURIComponent(tagSlug(t))}/">${esc(t)}</a>`).join('');
