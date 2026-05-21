@@ -88,21 +88,6 @@
       text-decoration:none;
     }
 
-    /* 関連リンク */
-    .related {
-      margin-top:48px;padding:24px;
-      background:#f6fbf8;border-radius:18px;
-      border:1px solid var(--border);
-    }
-    .related p { font-size:13px;font-weight:700;color:var(--muted);margin-bottom:14px; }
-    .related-links { display:flex;flex-wrap:wrap;gap:10px; }
-    .related-links a {
-      padding:8px 16px;background:#fff;border:1px solid var(--border);
-      border-radius:999px;font-size:13px;font-weight:700;color:var(--text);
-      text-decoration:none;transition:border-color .2s;
-    }
-    .related-links a:hover { border-color:var(--green);color:var(--green); }
-
     .not-found { text-align:center;padding:80px 24px;color:var(--muted);font-size:18px; }
 
     @media (max-width:600px) {
@@ -413,16 +398,8 @@
       <div class="post-body">${bodyContent}</div>
       <div class="post-footer">
         <div class="post-footer-inner">
-          <a class="back-link" href="/blog/">← 記事一覧に戻る</a>
+          <a class="back-link" href="/">← トップページに戻る</a>
           <a class="share-btn" href="${twitterUrl}" target="_blank" rel="noreferrer">𝕏 シェア</a>
-        </div>
-      </div>
-      <div class="related">
-        <p>よへラボのツール</p>
-        <div class="related-links">
-          <a href="/lp/bunsirube/">文標（ぶんしるべ）</a>
-          <a href="/lp/bunsirube/demo/">文標 デモ</a>
-          <a href="/blog/">ブログ一覧</a>
         </div>
       </div>
     `;
@@ -493,7 +470,7 @@
 
   function showError(msg) {
     document.getElementById('post-outer').innerHTML = `
-      <a class="back-link" href="/blog/" style="display:inline-flex;align-items:center;gap:6px;color:var(--muted);font-size:14px;font-weight:700;text-decoration:none;margin-bottom:32px;">← 記事一覧に戻る</a>
+      <a class="back-link" href="/" style="display:inline-flex;align-items:center;gap:6px;color:var(--muted);font-size:14px;font-weight:700;text-decoration:none;margin-bottom:32px;">← トップページに戻る</a>
       <div class="not-found">${esc(msg)}</div>
     `;
   }

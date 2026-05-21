@@ -468,11 +468,6 @@ function renderPostHTML(post, slug, categoryMap = buildCategoryMap(DEFAULT_CATEG
     .back-link { display:inline-flex; align-items:center; gap:6px; color:var(--muted); font-size:14px; font-weight:700; text-decoration:none; transition:color .2s; }
     .back-link:hover { color:var(--green); }
     .share-btn { display:inline-flex; align-items:center; gap:6px; background:#1d9bf0; color:#fff; border:none; border-radius:999px; padding:8px 18px; font-size:13px; font-weight:700; cursor:pointer; text-decoration:none; }
-    .related { margin-top:48px; padding:24px; background:#f6fbf8; border-radius:18px; border:1px solid var(--border); }
-    .related p { font-size:13px; font-weight:700; color:var(--muted); margin-bottom:14px; }
-    .related-links { display:flex; flex-wrap:wrap; gap:10px; }
-    .related-links a { padding:8px 16px; background:#fff; border:1px solid var(--border); border-radius:999px; font-size:13px; font-weight:700; color:var(--text); text-decoration:none; transition:border-color .2s; }
-    .related-links a:hover { border-color:var(--green); color:var(--green); }
     @media (max-width:600px) {
       .header-inner { flex-wrap:wrap; height:auto !important; padding-top:8px !important; padding-bottom:8px !important; }
       .header-inner > nav { order:3; width:100%; }
@@ -499,16 +494,8 @@ function renderPostHTML(post, slug, categoryMap = buildCategoryMap(DEFAULT_CATEG
       <div class="post-body">${bodyHtml}</div>
       <div class="post-footer">
         <div class="post-footer-inner">
-          <a class="back-link" href="/blog/">← 記事一覧に戻る</a>
+          <a class="back-link" href="/">← トップページに戻る</a>
           <a class="share-btn" href="${escAttr(twitterShare)}" target="_blank" rel="noreferrer">𝕏 シェア</a>
-        </div>
-      </div>
-      <div class="related">
-        <p>よへラボのツール</p>
-        <div class="related-links">
-          <a href="/lp/research-writer/">3キーワードの記事メーカー</a>
-          <a href="/lp/bunsirube/">文標（ぶんしるべ）</a>
-          <a href="/blog/">ブログ一覧</a>
         </div>
       </div>
     </article>
