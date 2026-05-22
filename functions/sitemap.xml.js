@@ -30,6 +30,16 @@ const URLS = [
   { loc: "/legal/terms/", lastmod: "2026-05-12", changefreq: "monthly", priority: "0.3" },
   { loc: "/legal/affiliate-terms/", lastmod: "2026-05-12", changefreq: "monthly", priority: "0.3" },
 ];
+const STATIC_CANONICAL_SLUGS = new Set([
+  "ai-news-selling-ideas",
+  "home-work-rhythm",
+  "bunsirube-version-history",
+  "comparison-article-template",
+  "free-theme-vs-bunsirube",
+  "faq-source-ai-search",
+  "sales-page-common-mistakes",
+  "bunsirube-before-install",
+]);
 
 export async function onRequestGet(context) {
   const urls = mergeUrls(URLS, await dynamicBlogUrls(context.env));
@@ -72,6 +82,8 @@ async function dynamicBlogUrls(env) {
       .map((key) => {
         const slug = key.name.replace(/^post:/, "");
         if (!slug) return null;
+        const canonicalSlug = slug.replace(/^\d{4}-\d{2}-\d{2}-/, "");
+        if (STATIC_CANONICAL_SLUGS.has(canonicalSlug)) return null;
         return {
           loc: `/blog/${encodeURIComponent(slug)}/`,
           lastmod: normalizeDate(key.metadata?.date),
