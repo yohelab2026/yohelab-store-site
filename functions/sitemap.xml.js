@@ -4,6 +4,7 @@
  * /blog/post/?slug=... のようなクエリURLは載せず、
  * 公開済み記事は /blog/{slug}/ の個別URLだけを検索エンジンに渡す。
  */
+import { staticBlogSitemapPosts } from "./generated/static-blog-posts.js";
 
 const SITE_ORIGIN = "https://yohelab.com";
 
@@ -11,14 +12,6 @@ const URLS = [
   { loc: "/", lastmod: "2026-05-19", changefreq: "weekly", priority: "1.0" },
   { loc: "/about/", lastmod: "2026-05-18", changefreq: "monthly", priority: "0.7" },
   { loc: "/blog/", lastmod: "2026-05-19", changefreq: "weekly", priority: "0.6" },
-  { loc: "/blog/ai-news-selling-ideas/", lastmod: "2026-05-18", changefreq: "monthly", priority: "0.7" },
-  { loc: "/blog/home-work-rhythm/", lastmod: "2026-05-18", changefreq: "monthly", priority: "0.7" },
-  { loc: "/blog/bunsirube-version-history/", lastmod: "2026-05-12", changefreq: "monthly", priority: "0.5" },
-  { loc: "/blog/comparison-article-template/", lastmod: "2026-05-04", changefreq: "monthly", priority: "0.7" },
-  { loc: "/blog/free-theme-vs-bunsirube/", lastmod: "2026-05-04", changefreq: "monthly", priority: "0.7" },
-  { loc: "/blog/faq-source-ai-search/", lastmod: "2026-05-02", changefreq: "monthly", priority: "0.6" },
-  { loc: "/blog/sales-page-common-mistakes/", lastmod: "2026-05-02", changefreq: "monthly", priority: "0.5" },
-  { loc: "/blog/bunsirube-before-install/", lastmod: "2026-05-02", changefreq: "monthly", priority: "0.6" },
   { loc: "/lp/bunsirube/", lastmod: "2026-05-19", changefreq: "weekly", priority: "0.9" },
   { loc: "/lp/bunsirube/install/", lastmod: "2026-05-12", changefreq: "monthly", priority: "0.7" },
   { loc: "/lp/bunsirube/demo/", lastmod: "2026-05-12", changefreq: "monthly", priority: "0.7" },
@@ -30,19 +23,10 @@ const URLS = [
   { loc: "/legal/terms/", lastmod: "2026-05-12", changefreq: "monthly", priority: "0.3" },
   { loc: "/legal/affiliate-terms/", lastmod: "2026-05-12", changefreq: "monthly", priority: "0.3" },
 ];
-const STATIC_CANONICAL_SLUGS = new Set([
-  "ai-news-selling-ideas",
-  "home-work-rhythm",
-  "bunsirube-version-history",
-  "comparison-article-template",
-  "free-theme-vs-bunsirube",
-  "faq-source-ai-search",
-  "sales-page-common-mistakes",
-  "bunsirube-before-install",
-]);
+const STATIC_CANONICAL_SLUGS = new Set(staticBlogSitemapPosts.map((post) => post.slug).filter(Boolean));
 
 export async function onRequestGet(context) {
-  const urls = mergeUrls(URLS, await dynamicBlogUrls(context.env));
+  const urls = mergeUrls(URLS, staticBlogUrls(), await dynamicBlogUrls(context.env));
   const xml =
     `<?xml version="1.0" encoding="UTF-8"?>\n` +
     `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
@@ -63,6 +47,17 @@ export async function onRequestGet(context) {
       "X-Robots-Tag": "index,follow",
     },
   });
+}
+
+function staticBlogUrls() {
+  return staticBlogSitemapPosts
+    .map((post) => ({
+      loc: post.url,
+      lastmod: normalizeDate(post.date),
+      changefreq: "monthly",
+      priority: "0.6",
+    }))
+    .filter((item) => item.loc && /^\/blog\/[^/]+\/$/.test(item.loc));
 }
 
 async function dynamicBlogUrls(env) {
@@ -97,9 +92,9 @@ async function dynamicBlogUrls(env) {
   }
 }
 
-function mergeUrls(staticUrls, dynamicUrls) {
+function mergeUrls(...groups) {
   const byLoc = new Map();
-  for (const item of [...staticUrls, ...dynamicUrls]) {
+  for (const item of groups.flat()) {
     if (!item?.loc || item.loc.includes("/blog/post/")) continue;
     byLoc.set(item.loc, item);
   }
