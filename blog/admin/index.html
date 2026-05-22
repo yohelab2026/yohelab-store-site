@@ -88,7 +88,7 @@
     .status-col { width:100px; }
     .category-col { width:140px; }
     .tags-col { width:210px; }
-    .date-col { width:150px; }
+    .date-col { width:210px; }
     .actions-col { width:190px; }
     .sort-header-button { border:0;background:transparent;color:inherit;font:inherit;font-weight:900;padding:0;cursor:pointer;display:inline-flex;align-items:center;gap:6px; }
     .sort-header-button:hover { color:var(--green);text-decoration:underline;text-underline-offset:4px; }
@@ -2327,6 +2327,7 @@
         slug: d.slug || d.sourceSlug || '',
         sourceSlug: d.sourceSlug || d.slug || '',
         date: d.updatedAt || '',
+        actionAt: d.updatedAt || '',
         excerpt: d.excerpt || '',
         tags: parseTagList(d.tags),
         eyecatch: d.eyecatch || '',
@@ -2340,6 +2341,7 @@
         url: p.url,
         title: String(p.title || '無題').replace(/^【下書き】\s*/, ''),
         date: p.date || '',
+        actionAt: p.updatedAt || p.date || '',
         excerpt: p.excerpt || '',
         tags: parseTagList(p.tags),
         eyecatch: p.eyecatch || '',
@@ -2371,6 +2373,7 @@
       title: item.title || '無題',
       slug: item.slug || item.originalSlug || item.originalId || '',
       date: item.deletedAt || item.date || '',
+      actionAt: item.deletedAt || item.date || '',
       excerpt: item.excerpt || '',
       tags: parseTagList(item.tags),
       eyecatch: item.eyecatch || '',
@@ -2840,12 +2843,22 @@
   }
 
   function itemDateKey(item) {
-    const value = String(item.date || '').trim();
-    if (/^\d{4}-\d{2}/.test(value)) return value.slice(0, 7);
+    const value = String(item.actionAt || item.date || '').trim();
+    if (/^\d{4}-\d{2}-\d{2}$/.test(value)) return value.slice(0, 7);
     const date = new Date(value);
     if (Number.isNaN(date.getTime())) return 'none';
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    return `${date.getFullYear()}-${month}`;
+    return date.toLocaleDateString('ja-JP', {
+      timeZone: 'Asia/Tokyo',
+      year: 'numeric',
+      month: '2-digit',
+    }).replace(/\//g, '-');
+  }
+
+  function dateColumnLabel(status) {
+    if (status === 'published') return '公開日時';
+    if (status === 'draft') return '下書き日時';
+    if (status === 'trash') return '削除日時';
+    return '反映日時';
   }
 
   function updateStatusTabs() {
@@ -2931,6 +2944,8 @@
   }
 
   function renderContentTable(items) {
+    const status = contentStatusFilterEl?.value || 'draft';
+    const dateLabel = dateColumnLabel(status);
     return `
       <div class="posts-table-wrap">
         <table class="posts-table">
@@ -2942,8 +2957,8 @@
               <th class="category-col">カテゴリー</th>
               <th class="tags-col">子カテゴリ</th>
               <th class="date-col" aria-sort="${contentDateSortDirection === 'desc' ? 'descending' : 'ascending'}">
-                <button class="sort-header-button" type="button" data-sort-date title="日付順を切り替え">
-                  日付 <span class="sort-indicator">${contentDateSortDirection === 'desc' ? '新↓' : '古↑'}</span>
+                <button class="sort-header-button" type="button" data-sort-date title="${escHtml(dateLabel)}順を切り替え">
+                  ${escHtml(dateLabel)} <span class="sort-indicator">${contentDateSortDirection === 'desc' ? '新↓' : '古↑'}</span>
                 </button>
               </th>
               <th class="actions-col">操作</th>
@@ -2967,7 +2982,7 @@
       : item.source === 'dynamic'
         ? `data-post-slug="${escHtml(item.slug)}"`
         : `data-static-slug="${escHtml(item.staticSlug || item.slug)}"`;
-    const dateText = item.date ? formatItemDate(item.date) : '-';
+    const dateText = item.actionAt || item.date ? formatItemDate(item.actionAt || item.date) : '-';
     return `
       <tr class="admin-post-row" ${activeAttrs}>
         <td class="check-col"><input type="checkbox" aria-label="${escHtml(item.title || '無題')}を選択" /></td>
@@ -3027,9 +3042,19 @@
 
   function formatItemDate(value) {
     if (!value) return '-';
-    if (/^\d{4}-\d{2}-\d{2}$/.test(String(value))) return value;
+    if (/^\d{4}-\d{2}-\d{2}$/.test(String(value))) {
+      return String(value).replace(/^(\d{4})-(\d{2})-(\d{2})$/, '$1年$2月$3日 00:00');
+    }
     const date = new Date(value);
-    return Number.isNaN(date.getTime()) ? String(value) : date.toLocaleString('ja-JP', { month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit' });
+    return Number.isNaN(date.getTime()) ? String(value) : date.toLocaleString('ja-JP', {
+      timeZone: 'Asia/Tokyo',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+    });
   }
 
   async function openDraft(draftId) {
@@ -3161,6 +3186,9 @@
         source: 'dynamic',
         url: p.url || `/blog/${encodeURIComponent(p.slug)}/`,
         sourceSlug: p.sourceSlug || staticImportSlug(p),
+        date: p.actionAt || p.updatedAt || p.date || '',
+        actionAt: p.actionAt || p.updatedAt || p.date || '',
+        publishedDate: p.date || '',
         tags: parseTagList(p.tags),
       })),
       ...staticPublished.map(p => ({
@@ -3168,6 +3196,7 @@
         kind: 'published',
         source: 'static',
         staticSlug: p.slug,
+        actionAt: p.updatedAt || p.date || '',
         tags: parseTagList(p.tags),
       })),
     ].sort(compareByDate);
@@ -3189,7 +3218,7 @@
       const found = foundKey ? categoryOrder.indexOf(foundKey) : -1;
       return found === -1 ? 999 : found;
     };
-    return rank(a) - rank(b) || String(b.date || '').localeCompare(String(a.date || '')) || String(a.title || '').localeCompare(String(b.title || ''), 'ja');
+    return rank(a) - rank(b) || String(b.actionAt || b.date || '').localeCompare(String(a.actionAt || a.date || '')) || String(a.title || '').localeCompare(String(b.title || ''), 'ja');
   }
 
   function compareByDate(a, b) {
@@ -3200,9 +3229,9 @@
   }
 
   function itemDateValue(item) {
-    const value = String(item?.date || '').trim();
+    const value = String(item?.actionAt || item?.date || '').trim();
     if (!value) return 0;
-    if (/^\d{4}-\d{2}-\d{2}$/.test(value)) return new Date(`${value}T00:00:00`).getTime();
+    if (/^\d{4}-\d{2}-\d{2}$/.test(value)) return new Date(`${value}T00:00:00+09:00`).getTime();
     const time = new Date(value).getTime();
     return Number.isNaN(time) ? 0 : time;
   }

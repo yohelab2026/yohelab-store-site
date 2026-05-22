@@ -18,6 +18,7 @@ export async function onRequestGet(context) {
           url: `/blog/${encodeURIComponent(slug)}/`,
           title: key.metadata?.title || "",
           date: key.metadata?.date || "",
+          actionAt: key.metadata?.updatedAt || key.metadata?.date || "",
           updatedAt: key.metadata?.updatedAt || key.metadata?.date || "",
           excerpt: key.metadata?.excerpt || "",
           eyecatch: key.metadata?.eyecatch || "",
@@ -26,7 +27,7 @@ export async function onRequestGet(context) {
           importedFrom: key.metadata?.importedFrom || "",
         };
       })
-      .sort((a, b) => String(b.date).localeCompare(String(a.date)));
+      .sort((a, b) => String(b.actionAt || b.updatedAt || b.date).localeCompare(String(a.actionAt || a.updatedAt || a.date)));
 
     const total = allPosts.length;
     const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
@@ -63,7 +64,7 @@ function json(body, status = 200) {
     status,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
-      "Cache-Control": "public, max-age=60, s-maxage=300",
+      "Cache-Control": "no-store",
       "X-Robots-Tag": "noindex, follow",
       "Access-Control-Allow-Origin": "*",
     },
