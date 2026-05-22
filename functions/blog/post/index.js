@@ -452,10 +452,20 @@ function renderPostHTML(post, slug, categoryMap = buildCategoryMap(DEFAULT_CATEG
   const dateMetaHtml = `<div class="post-date-line"><time datetime="${escAttr(dateTimeAttr(date))}">投稿日 ${escHtml(publishedLabel)}</time><span>/</span><time datetime="${escAttr(dateTimeAttr(updatedAt))}">最終更新日 ${escHtml(updatedLabel || publishedLabel)}</time></div>`;
   const eyecatchAbs = cardImageUrl(post.eyecatch || FALLBACK_IMAGE);
   const eyecatchAttr = post.eyecatch ? escAttr(post.eyecatch) : "";
+  const tagsHtml = renderTags(post.tags, categoryMap);
   const coverHtml = post.eyecatch
     ? `<figure class="post-cover"><img src="${eyecatchAttr}" alt="${escAttr(imageAltText(post, post.eyecatch, "cover"))}" style="${escAttr(coverImageStyle(post))}" loading="eager" decoding="async" fetchpriority="high" /></figure>`
     : "";
-  const tagsHtml = renderTags(post.tags, categoryMap);
+  const titleHtml = post.eyecatch
+    ? `<h1 class="sr-only">${escHtml(title)}</h1>`
+    : `<section class="post-hero">
+        <span class="post-hero-kicker">Article</span>
+        <div class="post-meta">
+          ${tagsHtml}
+        </div>
+        <h1 class="post-title">${escHtml(title)}</h1>
+        ${dateMetaHtml}
+      </section>`;
   const bodyHtml = bodyToHtml(post);
   const fullUrl = prettyPostUrl(slug);
   const [articleLd, breadcrumbLd] = buildJsonLd(post, slug, fullUrl);
@@ -509,6 +519,7 @@ function renderPostHTML(post, slug, categoryMap = buildCategoryMap(DEFAULT_CATEG
     .post-outer { max-width:760px;margin:0 auto;padding:48px 24px 100px; }
     .post-cover { width:100%;aspect-ratio:16/9;margin:0 0 28px;overflow:hidden;border-radius:28px;background:#eef5ff;border:1px solid #dce7fb;box-shadow:var(--shadow-sm); }
     .post-cover img { width:100%;height:100%;display:block; }
+    .sr-only { position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0; }
     .post-hero { border-radius:28px;padding:32px;margin-bottom:30px;background:linear-gradient(135deg,#ecfdf5,#eef6ff);border:1px solid #dce7fb;box-shadow:var(--shadow-sm); }
     .post-hero-kicker { display:inline-flex;padding:7px 12px;border-radius:999px;background:#087a63;color:#fff;font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;margin-bottom:18px; }
     .post-meta { display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin:0 0 18px; }
@@ -555,14 +566,7 @@ function renderPostHTML(post, slug, categoryMap = buildCategoryMap(DEFAULT_CATEG
   <main class="post-outer" id="post-outer">
     <article>
       ${coverHtml}
-      <section class="post-hero">
-        <span class="post-hero-kicker">Article</span>
-        <div class="post-meta">
-          ${tagsHtml}
-        </div>
-        <h1 class="post-title">${escHtml(title)}</h1>
-        ${dateMetaHtml}
-      </section>
+      ${titleHtml}
       <div class="post-body">${bodyHtml}</div>
       <div class="post-footer">
         <div class="post-footer-inner">

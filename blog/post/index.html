@@ -28,6 +28,7 @@
 
     /* 記事本体 */
     .post-outer { max-width:720px;margin:0 auto;padding:48px 24px 100px; }
+    .sr-only { position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0; }
 
     .post-meta {
       display:flex;align-items:center;gap:10px;flex-wrap:wrap;
@@ -460,7 +461,9 @@
     const bodyContent = post.bodyHtml ? sanitizeBodyHtml(post.bodyHtml, post) : (post.body||'').split('\n\n').map(p=>`<p>${esc(p)}</p>`).join('');
     const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(pageUrl)}`;
 
-    document.getElementById('post-outer').innerHTML = `
+    const titleBlock = post.eyecatch ? `
+      <h1 class="sr-only">${esc(post.title||'')}</h1>
+    ` : `
       <div class="post-meta">
         ${tags}
       </div>
@@ -470,6 +473,10 @@
         <span>/</span>
         <time datetime="${esc(dateTimeAttr(updatedAt))}">最終更新日 ${esc(updatedLabel)}</time>
       </div>
+    `;
+
+    document.getElementById('post-outer').innerHTML = `
+      ${titleBlock}
       <div class="post-body">${bodyContent}</div>
       <div class="post-footer">
         <div class="post-footer-inner">
