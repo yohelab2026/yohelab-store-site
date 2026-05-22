@@ -1,4 +1,4 @@
-const KEY_PATTERN = /^[\w.-]+\.webp$/i;
+const KEY_PATTERN = /^[\w.-]+\.(webp|png|jpe?g)$/i;
 
 export async function onRequestGet(context) {
   return imageResponse(context, false);
@@ -20,7 +20,7 @@ async function imageResponse(context, headOnly) {
 
   return new Response(headOnly ? null : entry.body, {
     headers: {
-      "Content-Type": entry.contentType || "image/webp",
+      "Content-Type": entry.contentType || contentTypeForKey(key),
       "Cache-Control": "public, max-age=31536000, immutable",
       "Access-Control-Allow-Origin": "*",
       "X-Content-Type-Options": "nosniff",
@@ -49,7 +49,7 @@ async function readImage(storage, key) {
     if (!object) return null;
     return {
       body: object.body,
-      contentType: object.httpMetadata?.contentType || object.customMetadata?.contentType || "image/webp",
+      contentType: object.httpMetadata?.contentType || object.customMetadata?.contentType || contentTypeForKey(key),
     };
   }
 
@@ -57,6 +57,12 @@ async function readImage(storage, key) {
   if (!entry.value) return null;
   return {
     body: entry.value,
-    contentType: entry.metadata?.contentType || "image/webp",
+    contentType: entry.metadata?.contentType || contentTypeForKey(key),
   };
+}
+
+function contentTypeForKey(key) {
+  if (/\.jpe?g$/i.test(key)) return "image/jpeg";
+  if (/\.png$/i.test(key)) return "image/png";
+  return "image/webp";
 }

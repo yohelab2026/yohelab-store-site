@@ -675,6 +675,7 @@
   let activePostSlug = '';
   let activePostDate = '';
   let activeStaticSlug = '';
+  let activeCoverSocialImage = '';
   let staticPosts = [];
   let staticPostsLoaded = false;
   let draftItems = [];
@@ -1822,6 +1823,7 @@
   });
   document.getElementById('cover-remove').addEventListener('click', () => {
     eyecatchEl.value = ''; coverImg.src = '';
+    activeCoverSocialImage = '';
     coverPreview.style.display = 'none'; coverDrop.style.display = '';
     setCoverControlsVisible(false);
     resetCoverSettings(16, 9);
@@ -1841,9 +1843,10 @@
 
   async function uploadCover(file) {
     coverDrop.textContent = 'WebPに変換してアップロード中...';
-    const image = await uploadImage(file);
+    const image = await uploadImage(file, { includeSocial: true });
     if (!image?.url) { coverDrop.innerHTML = '❌ アップロード失敗'; return; }
     eyecatchEl.value = image.url;
+    activeCoverSocialImage = image.socialUrl || '';
     coverImg.src = image.url;
     coverImg.alt = imageAltForEditor(image, 'cover');
     resetCoverSettings(image.width, image.height);
@@ -1855,12 +1858,14 @@
     saveDraftLocal();
   }
 
-  async function uploadImage(file) {
+  async function uploadImage(file, options = {}) {
     const pin = currentPin();
     if (!pin) return null;
     const webpFile = await convertToSingleWebp(file);
     if (!webpFile) return null;
     const fd = new FormData(); fd.append('file', webpFile);
+    const socialFile = options.includeSocial ? await convertToSocialJpeg(file) : null;
+    if (socialFile) fd.append('socialFile', socialFile);
     try {
       const res = await fetch('/api/blog-image', {
         method: 'POST',
@@ -1870,6 +1875,7 @@
       const data = await res.json().catch(()=>({}));
       return res.ok ? {
         url: data.url,
+        socialUrl: data.socialUrl || '',
         width: webpFile.convertedWidth,
         height: webpFile.convertedHeight,
         name: file.name || webpFile.name,
@@ -1912,6 +1918,36 @@
     converted.convertedWidth = width;
     converted.convertedHeight = height;
     return converted;
+  }
+
+  async function convertToSocialJpeg(file) {
+    const bitmap = await createImageBitmap(file).catch(() => null);
+    if (!bitmap) return null;
+    const width = 1200;
+    const height = 675;
+    const sourceRatio = bitmap.width / bitmap.height;
+    const targetRatio = width / height;
+    let sx = 0, sy = 0, sw = bitmap.width, sh = bitmap.height;
+    if (sourceRatio > targetRatio) {
+      sw = Math.round(bitmap.height * targetRatio);
+      sx = Math.round((bitmap.width - sw) / 2);
+    } else {
+      sh = Math.round(bitmap.width / targetRatio);
+      sy = Math.round((bitmap.height - sh) / 2);
+    }
+    const canvas = document.createElement('canvas');
+    canvas.width = width;
+    canvas.height = height;
+    const ctx = canvas.getContext('2d', { alpha: false });
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, width, height);
+    ctx.drawImage(bitmap, sx, sy, sw, sh, 0, 0, width, height);
+    bitmap.close?.();
+
+    const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', 0.86));
+    if (!blob) return null;
+    const baseName = (file.name || 'blog-card').replace(/\.[^.]+$/, '').replace(/[^\w-]+/g, '-').replace(/^-+|-+$/g, '') || 'blog-card';
+    return new File([blob], `${baseName}-card.jpg`, { type: 'image/jpeg' });
   }
 
   // ── スラッグ自動生成 ──────────────────────────────────────
@@ -1999,6 +2035,7 @@
       tags: editorTags().join(', '),
       slug: sanitizeSlugInput(slugEl.value),
       eyecatch: eyecatchEl.value,
+      socialImage: activeCoverSocialImage,
       cover: coverSettings(),
     }));
     if (history) pushEditorHistory();
@@ -2031,6 +2068,7 @@
       activePostSlug = d.postSlug || '';
       activePostDate = d.postDate || '';
       activeStaticSlug = d.staticSlug || '';
+      activeCoverSocialImage = d.socialImage || '';
       titleEl.value = d.title || '';
       bodyEl.innerHTML = d.bodyHtml || '';
       bodySourceEl.value = d.bodyHtml || '';
@@ -2063,6 +2101,7 @@
       body: currentBodyText(),
       tags: editorTags(),
       eyecatch: eyecatchEl.value.trim() || undefined,
+      socialImage: activeCoverSocialImage || undefined,
       cover: eyecatchEl.value.trim() ? coverSettings() : undefined,
     };
   }
@@ -2073,6 +2112,7 @@
     activePostSlug = '';
     activePostDate = '';
     activeStaticSlug = '';
+    activeCoverSocialImage = '';
     titleEl.value = '';
     bodyEl.innerHTML = '';
     bodySourceEl.value = '';
@@ -2214,6 +2254,7 @@
       body: currentBodyText(),
       tags: editorTags(),
       eyecatch: eyecatchEl.value.trim() || undefined,
+      socialImage: activeCoverSocialImage || undefined,
       cover: eyecatchEl.value.trim() ? coverSettings() : undefined,
       originalPostSlug: activePostSlug || undefined,
     };
@@ -3136,6 +3177,7 @@
     activePostSlug = options.postSlug || '';
     activeStaticSlug = options.staticSlug || '';
     activePostDate = post.date || '';
+    activeCoverSocialImage = post.socialImage || '';
     titleEl.value = post.title || '';
     bodyEl.innerHTML = post.bodyHtml || '';
     bodySourceEl.value = post.bodyHtml || '';
@@ -3154,6 +3196,7 @@
       coverPreview.style.display = '';
     } else {
       coverImg.src = '';
+      activeCoverSocialImage = '';
       resetCoverSettings(16, 9);
       setCoverControlsVisible(false);
       coverDrop.style.display = '';
@@ -3295,6 +3338,7 @@
       bodyHtml: post.bodyHtml || '',
       tags: post.tags || [],
       eyecatch: post.eyecatch || '',
+      socialImage: post.socialImage || '',
     }, { staticSlug: slug });
     activeDraftId = '';
     activePostSlug = '';
@@ -3321,6 +3365,7 @@
         body: stripHtml(post.bodyHtml || ''),
         tags: post.tags || [],
         eyecatch: post.eyecatch || undefined,
+        socialImage: post.socialImage || undefined,
         cover: post.eyecatch ? { fit: 'cover', x: 50, y: 50, zoom: 100 } : undefined,
       }),
     });

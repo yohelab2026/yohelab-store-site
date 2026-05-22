@@ -22,6 +22,7 @@ export async function onRequestGet(context) {
           updatedAt: key.metadata?.updatedAt || key.metadata?.date || "",
           excerpt: key.metadata?.excerpt || "",
           eyecatch: key.metadata?.eyecatch || "",
+          socialImage: key.metadata?.socialImage || "",
           tags: parseTags(key.metadata?.tags),
           sourceSlug: key.metadata?.sourceSlug || key.metadata?.slug || "",
           importedFrom: key.metadata?.importedFrom || "",

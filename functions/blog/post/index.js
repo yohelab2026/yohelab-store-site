@@ -307,7 +307,7 @@ function buildJsonLd(post, slug, fullUrl) {
   const description = plainExcerpt(post, 200);
   const datePublished = post.date || new Date().toISOString().slice(0, 10);
   const dateModified = post.updatedAt || post.modifiedAt || post.date || datePublished;
-  const eyecatch = cardImageUrl(post.eyecatch || FALLBACK_IMAGE);
+  const eyecatch = socialImageUrl(post);
 
   const article = {
     "@context": "https://schema.org",
@@ -384,6 +384,17 @@ function cardImageUrl(value) {
   return abs;
 }
 
+function socialImageUrl(post = {}) {
+  return absoluteUrl(post.socialImage || post.eyecatch || FALLBACK_IMAGE);
+}
+
+function imageMimeForUrl(value) {
+  const url = String(value || "").toLowerCase().split("?")[0];
+  if (url.endsWith(".jpg") || url.endsWith(".jpeg")) return "image/jpeg";
+  if (url.endsWith(".png")) return "image/png";
+  return "image/webp";
+}
+
 function normalizeCoverSettings(value) {
   const input = typeof value === "object" && value ? value : {};
   return {
@@ -454,14 +465,19 @@ function renderPostHTML(post, slug, categoryMap = buildCategoryMap(DEFAULT_CATEG
   const publishedLabel = formatPostDate(date);
   const updatedLabel = formatPostDate(updatedAt);
   const dateMetaHtml = `<div class="post-date-line"><time datetime="${escAttr(dateTimeAttr(date))}">投稿日 ${escHtml(publishedLabel)}</time><span>/</span><time datetime="${escAttr(dateTimeAttr(updatedAt))}">最終更新日 ${escHtml(updatedLabel || publishedLabel)}</time></div>`;
-  const eyecatchAbs = cardImageUrl(post.eyecatch || FALLBACK_IMAGE);
+  const eyecatchAbs = socialImageUrl(post);
+  const displayEyecatch = post.eyecatch || FALLBACK_IMAGE;
   const eyecatchAttr = post.eyecatch ? escAttr(post.eyecatch) : "";
   const tagsHtml = renderTags(post.tags, categoryMap);
   const coverHtml = post.eyecatch
     ? `<figure class="post-cover"><img src="${eyecatchAttr}" alt="${escAttr(imageAltText(post, post.eyecatch, "cover"))}" style="${escAttr(coverImageStyle(post))}" loading="eager" decoding="async" fetchpriority="high" /></figure>`
     : "";
   const titleHtml = post.eyecatch
-    ? `<h1 class="sr-only">${escHtml(title)}</h1>`
+    ? `<h1 class="sr-only">${escHtml(title)}</h1>
+      <div class="post-meta">
+        ${tagsHtml}
+      </div>
+      ${dateMetaHtml}`
     : `<section class="post-hero">
         <span class="post-hero-kicker">Article</span>
         <div class="post-meta">
@@ -490,7 +506,7 @@ function renderPostHTML(post, slug, categoryMap = buildCategoryMap(DEFAULT_CATEG
   <link rel="alternate" hreflang="ja" href="${escAttr(fullUrl)}" />
   <link rel="alternate" hreflang="x-default" href="${escAttr(fullUrl)}" />
   <link rel="alternate" type="application/rss+xml" title="よへラボ RSS" href="${SITE_ORIGIN}/feed.xml" />
-  <link rel="preload" as="image" href="${escAttr(post.eyecatch ? post.eyecatch : FALLBACK_IMAGE)}" fetchpriority="high" />
+  <link rel="preload" as="image" href="${escAttr(displayEyecatch)}" fetchpriority="high" />
   <meta property="og:title" content="${escAttr(title)} | ${escAttr(BLOG_NAME)}" />
   <meta property="og:description" content="${escAttr(description)}" />
   <meta property="og:type" content="article" />
@@ -498,10 +514,12 @@ function renderPostHTML(post, slug, categoryMap = buildCategoryMap(DEFAULT_CATEG
   <meta property="og:locale" content="ja_JP" />
   <meta property="og:url" content="${escAttr(fullUrl)}" />
   <meta property="og:image" content="${escAttr(eyecatchAbs)}" />
+  <meta property="og:image:url" content="${escAttr(eyecatchAbs)}" />
   <meta property="og:image:secure_url" content="${escAttr(eyecatchAbs)}" />
-  <meta property="og:image:type" content="image/webp" />
+  <meta property="og:image:type" content="${escAttr(imageMimeForUrl(eyecatchAbs))}" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="675" />
+  <meta property="og:image:alt" content="${escAttr(imageAltText(post, post.eyecatch, "cover"))}" />
   <meta property="article:published_time" content="${escAttr(date)}T00:00:00+09:00" />
   <meta property="article:modified_time" content="${escAttr(dateTimeAttr(updatedAt))}" />
   <meta property="article:author" content="${SITE_ORIGIN}/about/" />
@@ -509,6 +527,7 @@ function renderPostHTML(post, slug, categoryMap = buildCategoryMap(DEFAULT_CATEG
   <meta name="twitter:title" content="${escAttr(title)}" />
   <meta name="twitter:description" content="${escAttr(description)}" />
   <meta name="twitter:image" content="${escAttr(eyecatchAbs)}" />
+  <meta name="twitter:image:src" content="${escAttr(eyecatchAbs)}" />
   <meta name="twitter:image:alt" content="${escAttr(imageAltText(post, post.eyecatch, "cover"))}" />
   <meta name="twitter:site" content="@yohe_lab" />
   <meta name="twitter:creator" content="@yohe_lab" />

@@ -31,6 +31,7 @@ export async function onRequestGet(context) {
         updatedAt: key.metadata?.updatedAt || "",
         excerpt: key.metadata?.excerpt || "",
         eyecatch: key.metadata?.eyecatch || "",
+        socialImage: key.metadata?.socialImage || "",
         tags: parseTags(key.metadata?.tags),
         sourceSlug: key.metadata?.sourceSlug || key.metadata?.slug || "",
         importedFrom: key.metadata?.importedFrom || "",
@@ -62,6 +63,7 @@ export async function onRequestPost(context) {
     const bodyHtml = String(body?.bodyHtml || "");
     const excerpt = sanitizeText(body?.excerpt);
     const eyecatch = sanitizeUrl(body?.eyecatch);
+    const socialImage = sanitizeUrl(body?.socialImage);
     const cover = normalizeCoverSettings(body?.cover);
     const slug = sanitizeSlug(body?.slug);
     const tags = normalizeTags(body?.tags);
@@ -74,8 +76,9 @@ export async function onRequestPost(context) {
       body: sanitizeText(body?.body),
       tags,
       eyecatch,
+      socialImage,
       cover,
-      imageUrls: collectImageUrls(bodyHtml, eyecatch),
+      imageUrls: collectImageUrls(bodyHtml, eyecatch, socialImage),
       updatedAt: now,
     };
 
@@ -86,6 +89,7 @@ export async function onRequestPost(context) {
         slug,
         excerpt,
         eyecatch: eyecatch || "",
+        socialImage: socialImage || "",
         tags: tags.join(","),
         updatedAt: now,
       },
@@ -202,9 +206,10 @@ function parseTags(value) {
     .slice(0, 12);
 }
 
-function collectImageUrls(html, eyecatch) {
+function collectImageUrls(html, eyecatch, socialImage) {
   const urls = new Set();
   if (eyecatch) urls.add(eyecatch);
+  if (socialImage) urls.add(socialImage);
   for (const match of String(html || "").matchAll(/<img\b[^>]*\bsrc=(["'])(.*?)\1/gi)) {
     const safe = sanitizeUrl(match[2]);
     if (safe) urls.add(safe);

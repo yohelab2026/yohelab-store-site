@@ -30,6 +30,7 @@ export async function onRequestPost(context) {
     const updatedAt = new Date().toISOString();
     const tags = normalizeTags(body?.tags);
     const eyecatch = sanitizeUrl(body?.eyecatch);
+    const socialImage = sanitizeUrl(body?.socialImage);
     const cover = normalizeCoverSettings(body?.cover);
 
     // タイトルがなくてもアイキャッチ画像があればOK（画像がタイトル代わり）
@@ -45,10 +46,11 @@ export async function onRequestPost(context) {
 
     const post = { title: effectiveTitle, slug: effectiveSlugRaw, date, updatedAt, excerpt, bodyHtml, tags };
     if (eyecatch) post.eyecatch = eyecatch;
+    if (socialImage) post.socialImage = socialImage;
     if (eyecatch) post.cover = cover;
 
     await kv.put(`post:${slug}`, JSON.stringify(post), {
-      metadata: { title: effectiveTitle, date, updatedAt, excerpt, slug: effectiveSlugRaw, eyecatch: eyecatch || "", tags: tags.join(",") },
+      metadata: { title: effectiveTitle, date, updatedAt, excerpt, slug: effectiveSlugRaw, eyecatch: eyecatch || "", socialImage: socialImage || "", tags: tags.join(",") },
     });
 
     if (originalPostSlug && originalPostSlug !== slug) {
