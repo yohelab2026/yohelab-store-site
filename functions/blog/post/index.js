@@ -277,7 +277,7 @@ function enhanceArticleImages(html, post = {}) {
 
 function bodyToHtml(post) {
   if (post.bodyHtml && post.bodyHtml.trim()) {
-    return sanitizeBodyHtml(post.bodyHtml, post);
+    return removeLeadingH1(sanitizeBodyHtml(post.bodyHtml, post));
   }
   if (post.body && post.body.trim()) {
     return String(post.body)
@@ -286,6 +286,10 @@ function bodyToHtml(post) {
       .join("");
   }
   return "<p>本文がまだありません。</p>";
+}
+
+function removeLeadingH1(html) {
+  return String(html || "").replace(/^\s*<h1\b[^>]*>[\s\S]*?<\/h1>\s*/i, "");
 }
 
 function plainExcerpt(post, max = 160) {

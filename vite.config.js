@@ -17,6 +17,25 @@ function collectGameInputs() {
   return input;
 }
 
+function collectBlogTaxonomyInputs() {
+  const input = {};
+
+  for (const section of ["category", "tag"]) {
+    const sectionRoot = resolve("blog", section);
+    if (!existsSync(sectionRoot)) continue;
+
+    for (const entry of readdirSync(sectionRoot, { withFileTypes: true })) {
+      if (!entry.isDirectory()) continue;
+      const indexPath = `blog/${section}/${entry.name}/index.html`;
+      if (existsSync(indexPath)) {
+        input[`blog-${section}-${entry.name}`] = indexPath;
+      }
+    }
+  }
+
+  return input;
+}
+
 function matomoSnippetPlugin() {
   const snippet = `<script async src="/shared/matomo-loader.js"></script>`;
 
@@ -280,6 +299,7 @@ export default defineConfig({
         lpWordpressThemeAffiliate: "lp/bunsirube/affiliate/index.html",
         affiliateDashboard: "affiliate/dashboard/index.html",
         affiliateTerms: "legal/affiliate-terms/index.html",
+        ...collectBlogTaxonomyInputs(),
         ...collectGameInputs(),
       },
     },
