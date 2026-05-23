@@ -63,7 +63,7 @@ export async function onRequestPost(context) {
     const bodyHtml = String(body?.bodyHtml || "");
     const excerpt = sanitizeText(body?.excerpt);
     const eyecatch = sanitizeUrl(body?.eyecatch);
-    const socialImage = sanitizeUrl(body?.socialImage);
+    const socialImage = sanitizeUrl(body?.socialImage) || eyecatch;
     const cover = normalizeCoverSettings(body?.cover);
     const slug = sanitizeSlug(body?.slug);
     const tags = normalizeTags(body?.tags);

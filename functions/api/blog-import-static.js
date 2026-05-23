@@ -46,7 +46,8 @@ export async function onRequestPost(context) {
           body: normalized.body,
           tags: normalized.tags,
           eyecatch: normalized.eyecatch,
-          imageUrls: collectImageUrls(normalized.bodyHtml, normalized.eyecatch),
+          socialImage: normalized.socialImage,
+          imageUrls: collectImageUrls(normalized.bodyHtml, normalized.eyecatch, normalized.socialImage),
           updatedAt: normalized.updatedAt,
           importedFrom: "static-posts",
           sourceSlug: normalized.slug,
@@ -59,6 +60,7 @@ export async function onRequestPost(context) {
             sourceSlug: draft.sourceSlug,
             excerpt: draft.excerpt,
             eyecatch: draft.eyecatch || "",
+            socialImage: draft.socialImage || "",
             tags: draft.tags.join(","),
             updatedAt: draft.updatedAt,
             importedFrom: draft.importedFrom,
@@ -85,6 +87,7 @@ export async function onRequestPost(context) {
         body: normalized.body,
         tags: normalized.tags,
         eyecatch: normalized.eyecatch,
+        socialImage: normalized.socialImage,
         importedFrom: "static-posts",
         sourceSlug: normalized.slug,
       };
@@ -97,6 +100,7 @@ export async function onRequestPost(context) {
           slug: post.slug,
           sourceSlug: post.sourceSlug,
           eyecatch: post.eyecatch || "",
+          socialImage: post.socialImage || "",
           tags: post.tags.join(","),
           importedFrom: post.importedFrom,
         },
@@ -121,6 +125,8 @@ function normalizeStaticPost(rawPost, now) {
   const bodyHtml = String(rawPost?.bodyHtml || "").trim();
   const body = sanitizeText(rawPost?.body || stripHtml(bodyHtml));
   const excerpt = sanitizeText(rawPost?.excerpt) || autoExcerpt(bodyHtml || body, title);
+  const eyecatch = sanitizeUrl(rawPost?.eyecatch);
+  const socialImage = sanitizeUrl(rawPost?.socialImage) || eyecatch;
   return {
     title,
     slug,
@@ -129,7 +135,8 @@ function normalizeStaticPost(rawPost, now) {
     bodyHtml,
     body,
     tags: normalizeTags(rawPost?.tags),
-    eyecatch: sanitizeUrl(rawPost?.eyecatch),
+    eyecatch,
+    socialImage,
     status: String(rawPost?.status || "").trim() === "draft" ? "draft" : "published",
     updatedAt: rawPost?.updatedAt || now,
   };
@@ -203,9 +210,10 @@ function stripHtml(value) {
     .replace(/&nbsp;/g, " ");
 }
 
-function collectImageUrls(html, eyecatch) {
+function collectImageUrls(html, eyecatch, socialImage) {
   const urls = new Set();
   if (eyecatch) urls.add(eyecatch);
+  if (socialImage) urls.add(socialImage);
   for (const match of String(html || "").matchAll(/<img\b[^>]*\bsrc=(["'])(.*?)\1/gi)) {
     const safe = sanitizeUrl(match[2]);
     if (safe) urls.add(safe);

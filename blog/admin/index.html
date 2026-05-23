@@ -1767,6 +1767,10 @@
     };
   }
 
+  function coverSocialImageUrl() {
+    return activeCoverSocialImage || eyecatchEl.value.trim() || '';
+  }
+
   function suggestedCoverFit(width, height) {
     const ratio = width && height ? width / height : 16 / 9;
     return ratio < 1.35 || ratio > 2.2 ? 'contain' : 'cover';
@@ -1846,7 +1850,7 @@
     const image = await uploadImage(file, { includeSocial: true });
     if (!image?.url) { coverDrop.innerHTML = '❌ アップロード失敗'; return; }
     eyecatchEl.value = image.url;
-    activeCoverSocialImage = image.socialUrl || '';
+    activeCoverSocialImage = image.socialUrl || image.url || '';
     coverImg.src = image.url;
     coverImg.alt = imageAltForEditor(image, 'cover');
     resetCoverSettings(image.width, image.height);
@@ -2035,7 +2039,7 @@
       tags: editorTags().join(', '),
       slug: sanitizeSlugInput(slugEl.value),
       eyecatch: eyecatchEl.value,
-      socialImage: activeCoverSocialImage,
+      socialImage: coverSocialImageUrl(),
       cover: coverSettings(),
     }));
     if (history) pushEditorHistory();
@@ -2068,7 +2072,7 @@
       activePostSlug = d.postSlug || '';
       activePostDate = d.postDate || '';
       activeStaticSlug = d.staticSlug || '';
-      activeCoverSocialImage = d.socialImage || '';
+    activeCoverSocialImage = d.socialImage || d.eyecatch || '';
       titleEl.value = d.title || '';
       bodyEl.innerHTML = d.bodyHtml || '';
       bodySourceEl.value = d.bodyHtml || '';
@@ -2101,7 +2105,7 @@
       body: currentBodyText(),
       tags: editorTags(),
       eyecatch: eyecatchEl.value.trim() || undefined,
-      socialImage: activeCoverSocialImage || undefined,
+      socialImage: coverSocialImageUrl() || undefined,
       cover: eyecatchEl.value.trim() ? coverSettings() : undefined,
     };
   }
@@ -2254,7 +2258,7 @@
       body: currentBodyText(),
       tags: editorTags(),
       eyecatch: eyecatchEl.value.trim() || undefined,
-      socialImage: activeCoverSocialImage || undefined,
+      socialImage: coverSocialImageUrl() || undefined,
       cover: eyecatchEl.value.trim() ? coverSettings() : undefined,
       originalPostSlug: activePostSlug || undefined,
     };
@@ -3177,7 +3181,7 @@
     activePostSlug = options.postSlug || '';
     activeStaticSlug = options.staticSlug || '';
     activePostDate = post.date || '';
-    activeCoverSocialImage = post.socialImage || '';
+    activeCoverSocialImage = post.socialImage || post.eyecatch || '';
     titleEl.value = post.title || '';
     bodyEl.innerHTML = post.bodyHtml || '';
     bodySourceEl.value = post.bodyHtml || '';
@@ -3338,7 +3342,7 @@
       bodyHtml: post.bodyHtml || '',
       tags: post.tags || [],
       eyecatch: post.eyecatch || '',
-      socialImage: post.socialImage || '',
+      socialImage: post.socialImage || post.eyecatch || '',
     }, { staticSlug: slug });
     activeDraftId = '';
     activePostSlug = '';
@@ -3365,7 +3369,7 @@
         body: stripHtml(post.bodyHtml || ''),
         tags: post.tags || [],
         eyecatch: post.eyecatch || undefined,
-        socialImage: post.socialImage || undefined,
+        socialImage: post.socialImage || post.eyecatch || undefined,
         cover: post.eyecatch ? { fit: 'cover', x: 50, y: 50, zoom: 100 } : undefined,
       }),
     });

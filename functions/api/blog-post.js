@@ -30,7 +30,7 @@ export async function onRequestPost(context) {
     const updatedAt = new Date().toISOString();
     const tags = normalizeTags(body?.tags);
     const eyecatch = sanitizeUrl(body?.eyecatch);
-    const socialImage = sanitizeUrl(body?.socialImage);
+    const socialImage = sanitizeUrl(body?.socialImage) || eyecatch;
     const cover = normalizeCoverSettings(body?.cover);
 
     // タイトルがなくてもアイキャッチ画像があればOK（画像がタイトル代わり）

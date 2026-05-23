@@ -1,3 +1,5 @@
+import { staticBlogSocialPosts } from "../generated/static-blog-social-posts.js";
+
 const PAGE_SIZE = 20;
 
 export async function onRequestGet(context) {
@@ -13,6 +15,10 @@ export async function onRequestGet(context) {
     const allPosts = keys
       .map((key) => {
         const slug = key.name.replace(/^post:/, "");
+        const sourceSlug = key.metadata?.sourceSlug || key.metadata?.slug || "";
+        const meta = staticPostMetaFor({ slug, sourceSlug });
+        const eyecatch = key.metadata?.eyecatch || meta?.eyecatch || "";
+        const socialImage = key.metadata?.socialImage || meta?.socialImage || eyecatch || "";
         return {
           slug,
           url: `/blog/${encodeURIComponent(slug)}/`,
@@ -21,10 +27,10 @@ export async function onRequestGet(context) {
           actionAt: key.metadata?.updatedAt || key.metadata?.date || "",
           updatedAt: key.metadata?.updatedAt || key.metadata?.date || "",
           excerpt: key.metadata?.excerpt || "",
-          eyecatch: key.metadata?.eyecatch || "",
-          socialImage: key.metadata?.socialImage || "",
+          eyecatch,
+          socialImage,
           tags: parseTags(key.metadata?.tags),
-          sourceSlug: key.metadata?.sourceSlug || key.metadata?.slug || "",
+          sourceSlug,
           importedFrom: key.metadata?.importedFrom || "",
         };
       })
@@ -58,6 +64,16 @@ function parseTags(value) {
     .map((tag) => tag.trim())
     .filter(Boolean)
     .slice(0, 12);
+}
+
+function staticPostMetaFor(post = {}) {
+  const candidates = [
+    post.sourceSlug,
+    post.staticSlug,
+    post.slug,
+    String(post.slug || "").replace(/^\d{4}-\d{2}-\d{2}-/, ""),
+  ].filter(Boolean);
+  return staticBlogSocialPosts.find((item) => candidates.includes(item.slug)) || null;
 }
 
 function json(body, status = 200) {
