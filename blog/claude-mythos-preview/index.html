@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>「一般公開しないClaude」が現れた——Claude MythosがAI業界をざわつかせる本当の理由 | よへラボブログ</title>
+  <meta name="description" content="Claude Mythos Previewがなぜ注目されているのか。一般公開されていない理由、防御目的の枠組み、日本企業への影響を整理します。" />
+  <meta name="robots" content="noindex,nofollow,max-image-preview:large,max-snippet:-1" />
+  <meta property="og:title" content="「一般公開しないClaude」が現れた——Claude MythosがAI業界をざわつかせる本当の理由 | よへラボブログ" />
+  <meta property="og:description" content="Claude Mythos Previewがなぜ注目されているのか。一般公開されていない理由、防御目的の枠組み、日本企業への影響を整理します。" />
+  <meta property="og:type" content="article" />
+  <meta property="og:locale" content="ja_JP" />
+  <meta property="og:url" content="https://yohelab.com/blog/claude-mythos-preview/" />
+  <meta property="og:image" content="https://yohelab.com/assets/og/claude-mythos-preview.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="canonical" href="https://yohelab.com/blog/claude-mythos-preview/" />
+  <link rel="icon" type="image/png" href="/yohelab-mascot-v2-20260518-32.png" />
+  <link rel="stylesheet" href="/shared/site.min.css" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BlogPosting","headline":"「一般公開しないClaude」が現れた——Claude MythosがAI業界をざわつかせる本当の理由","datePublished":"2026-05-23","dateModified":"2026-05-23","url":"https://yohelab.com/blog/claude-mythos-preview/","image":"https://yohelab.com/assets/og/claude-mythos-preview.png","author":{"@type":"Organization","name":"よへラボ AIニュース担当"},"publisher":{"@type":"Organization","name":"よへラボ","logo":{"@type":"ImageObject","url":"https://yohelab.com/yohelab-mascot-v2-20260518.png"}},"description":"Claude Mythos Previewがなぜ注目されているのか。一般公開されていない理由、防御目的の枠組み、日本企業への影響を整理します。","inLanguage":"ja-JP"}
+  </script>
+  <style>
+    :root {
+      --mythos-ink:#17202b;
+      --mythos-muted:#5f6b7a;
+      --mythos-line:#dfe7ec;
+      --mythos-paper:#fffdf8;
+      --mythos-wash:#f1f7f7;
+      --mythos-blue:#0c6f84;
+      --mythos-gold:#cf8d33;
+      --mythos-night:#071421;
+    }
+    body {
+      margin:0;
+      background:
+        radial-gradient(circle at top left, rgba(12,111,132,.18), transparent 34rem),
+        linear-gradient(180deg, #f5faf9 0%, #fffdf8 38%, #ffffff 100%);
+      color:var(--mythos-ink);
+      font-family:-apple-system,"Hiragino Sans","Yu Gothic UI","Noto Sans JP",sans-serif;
+    }
+    .post-outer {
+      max-width:920px;
+      margin:0 auto;
+      padding:42px 18px 88px;
+    }
+    .draft-banner {
+      border:1px solid #ead19c;
+      background:#fff7e6;
+      color:#6f4a10;
+      border-radius:16px;
+      padding:12px 16px;
+      margin:0 0 22px;
+      font-size:13px;
+      font-weight:800;
+    }
+    .breadcrumb {
+      color:var(--mythos-muted);
+      font-size:12px;
+      margin:0 0 16px;
+    }
+    .breadcrumb a { color:var(--mythos-blue);font-weight:800;text-decoration:none; }
+    .post-card {
+      background:rgba(255,255,255,.86);
+      border:1px solid rgba(12,111,132,.12);
+      border-radius:30px;
+      box-shadow:0 24px 70px rgba(18,45,58,.12);
+      overflow:hidden;
+    }
+    .post-cover {
+      width:100%;
+      height:auto;
+      display:block;
+      background:var(--mythos-night);
+    }
+    .post-head {
+      padding:34px clamp(20px, 5vw, 56px) 28px;
+    }
+    .post-meta {
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      color:var(--mythos-muted);
+      font-size:13px;
+      font-weight:700;
+      margin-bottom:18px;
+    }
+    .post-tag {
+      display:inline-flex;
+      align-items:center;
+      border-radius:999px;
+      background:#e8f6f5;
+      color:#075c4c;
+      padding:4px 12px;
+      font-size:12px;
+      font-weight:900;
+      text-decoration:none;
+    }
+    .post-title {
+      font-size:clamp(30px, 5.8vw, 56px);
+      line-height:1.17;
+      letter-spacing:-.055em;
+      margin:0 0 18px;
+      color:#0f1720;
+      font-weight:950;
+    }
+    .article-stamp {
+      display:inline-flex;
+      max-width:100%;
+      border:1px solid #ecd9ac;
+      background:#fffaf0;
+      color:#6c4b15;
+      border-radius:999px;
+      padding:7px 14px;
+      font-size:13px;
+      font-weight:800;
+      line-height:1.6;
+    }
+    .post-excerpt {
+      margin:22px 0 0;
+      color:var(--mythos-muted);
+      font-size:18px;
+      line-height:1.9;
+    }
+    .post-body {
+      padding:0 clamp(20px, 5vw, 56px) 52px;
+      color:var(--mythos-ink);
+      font-size:17px;
+      line-height:2.08;
+    }
+    .post-body p {
+      margin:0 0 20px;
+    }
+    .post-body h2 {
+      position:relative;
+      font-size:clamp(25px, 4vw, 34px);
+      line-height:1.35;
+      letter-spacing:-.045em;
+      margin:56px 0 20px;
+      padding-top:18px;
+      color:#101820;
+    }
+    .post-body h2::before {
+      content:"";
+      position:absolute;
+      top:0;
+      left:0;
+      width:72px;
+      height:5px;
+      border-radius:999px;
+      background:linear-gradient(90deg, var(--mythos-gold), var(--mythos-blue));
+    }
+    .post-body strong {
+      background:linear-gradient(transparent 62%, rgba(255,202,110,.42) 62%);
+      color:#0d3440;
+      font-weight:900;
+    }
+    .lead-block {
+      border-left:5px solid var(--mythos-gold);
+      background:linear-gradient(135deg, #fffaf0, #f3fbfb);
+      border-radius:0 18px 18px 0;
+      padding:20px 22px 4px;
+      margin:0 0 32px;
+    }
+    .article-note {
+      border:1px solid rgba(12,111,132,.16);
+      background:var(--mythos-wash);
+      border-radius:22px;
+      padding:20px;
+      margin:28px 0;
+    }
+    .article-note p {
+      margin:0;
+      color:#24434d;
+      font-weight:800;
+    }
+    .visual-frame {
+      margin:34px 0 38px;
+      border:1px solid rgba(12,111,132,.14);
+      border-radius:26px;
+      overflow:hidden;
+      background:#fff;
+      box-shadow:0 18px 42px rgba(18,45,58,.10);
+    }
+    .visual-frame img {
+      display:block;
+      width:100%;
+      height:auto;
+    }
+    .visual-frame figcaption {
+      color:var(--mythos-muted);
+      font-size:13px;
+      line-height:1.7;
+      padding:12px 16px 14px;
+      background:#fff;
+    }
+    .point-table {
+      width:100%;
+      border-collapse:separate;
+      border-spacing:0;
+      overflow:hidden;
+      border:1px solid var(--mythos-line);
+      border-radius:20px;
+      margin:32px 0;
+      background:#fff;
+      font-size:15px;
+      line-height:1.8;
+    }
+    .point-table th,
+    .point-table td {
+      text-align:left;
+      vertical-align:top;
+      padding:14px 16px;
+      border-bottom:1px solid var(--mythos-line);
+    }
+    .point-table th {
+      background:#0f3340;
+      color:#fff;
+      font-size:13px;
+      letter-spacing:.04em;
+    }
+    .point-table tr:last-child td { border-bottom:0; }
+    .point-table td:first-child {
+      width:32%;
+      color:#0c5b67;
+      font-weight:900;
+      background:#f7fbfb;
+    }
+    .closing-box {
+      background:linear-gradient(135deg, #071421, #0c3d4d);
+      color:#fff;
+      border-radius:26px;
+      padding:28px;
+      margin-top:44px;
+    }
+    .closing-box h2 {
+      color:#fff;
+      margin-top:0;
+      padding-top:0;
+    }
+    .closing-box h2::before {
+      display:none;
+    }
+    .closing-box p {
+      color:#f3fbff;
+      margin-bottom:16px;
+    }
+    .closing-box strong {
+      color:#fff;
+      background:linear-gradient(transparent 64%, rgba(255,183,77,.42) 64%);
+    }
+    .back-link {
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      margin-top:32px;
+      color:var(--mythos-muted);
+      font-size:14px;
+      font-weight:800;
+      text-decoration:none;
+    }
+    @media (max-width: 720px) {
+      .post-outer { padding:24px 12px 64px; }
+      .post-card { border-radius:22px; }
+      .post-head { padding:24px 18px 22px; }
+      .post-body { padding:0 18px 36px;font-size:16px;line-height:1.98; }
+      .article-stamp { border-radius:14px; }
+      .point-table { display:block;overflow-x:auto;white-space:nowrap; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header" style="background:#fff;border-bottom:3px solid #087a63;position:sticky;top:0;z-index:100;">
+    <div class="header-inner" style="max-width:1100px;margin:0 auto;padding:0 16px;display:flex;align-items:center;gap:20px;height:56px;">
+      <a href="/" style="display:flex;align-items:center;gap:10px;font-size:20px;font-weight:900;color:#087a63;letter-spacing:-0.03em;flex-shrink:0;text-decoration:none;">
+        <img src="/yohelab-mascot-v2-20260518-64.png" alt="よへラボ" style="width:36px;height:36px;border-radius:8px;" />
+        よへラボ
+      </a>
+      <nav style="display:flex;align-items:center;gap:4px;flex-wrap:wrap;">
+        <a href="/blog/" style="padding:5px 11px;border-radius:4px;font-size:13px;font-weight:700;color:#444;text-decoration:none;">ブログ</a>
+        <a href="/lp/bunsirube/" style="padding:5px 11px;border-radius:4px;font-size:13px;font-weight:700;color:#444;text-decoration:none;">文標</a>
+        <a href="/about/" style="padding:5px 11px;border-radius:4px;font-size:13px;font-weight:700;color:#444;text-decoration:none;">サイトについて</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="post-outer">
+    <div class="draft-banner">この記事は下書きです。noindex設定で、検索には出さない状態にしています。</div>
+    <nav class="breadcrumb">
+      <a href="/">トップ</a> &rsaquo;
+      <a href="/blog/">ブログ</a> &rsaquo;
+      <span>AIニュース</span>
+    </nav>
+
+    <article class="post-card">
+      <img class="post-cover" src="/assets/blog/claude-mythos-preview/eyecatch.webp" alt="「一般公開しないClaude」が現れた——Claude MythosがAI業界をざわつかせる本当の理由" loading="eager" decoding="async" width="1600" height="900" />
+      <div class="post-head">
+        <div class="post-meta">
+          <span>2026-05-23</span>
+          <a class="post-tag" href="/blog/tag/ai-news/">AIニュース</a>
+          <a class="post-tag" href="/blog/tag/claude/">Claude</a>
+          <span class="post-tag">サイバー防衛</span>
+        </div>
+        <h1 class="post-title">「一般公開しないClaude」が現れた——Claude MythosがAI業界をざわつかせる本当の理由</h1>
+        <div class="article-stamp">公開日：2026年5月23日　／　よへラボ AIニュース担当</div>
+      </div>
+
+      <div class="post-body">
+        <div class="lead-block">
+          <p>Anthropicが今年4月に発表した「Claude Mythos Preview」、聞いた方も多いんじゃないかと思います。</p>
+          <p>でも正直、最初に流れてきた情報は「危険すぎて封印されたAI」とか「最強AIが日本解禁」みたいな言い方ばかりで、肝心なところがよく分かりませんでした。実際のところ何が起きているのか、少し整理してみます。</p>
+        </div>
+
+        <h2>一般公開されていない、という事実</h2>
+        <p>これがいちばん重要なポイントだと思います。</p>
+        <p>文章を書いたり、コードを組んだり、資料を整理したり——そういうAIはもう珍しくありません。でもClaude Mythosが注目されている理由は、そこじゃない。<strong>ソフトウェアに潜む未知の脆弱性を見つける能力が、従来のAIとは別次元に達した</strong>と見られているからです。</p>
+        <p>その結果、Anthropicはこのモデルを一般向けに公開しないことを選びました。</p>
+        <p>「危険すぎる」という表現は煽りっぽく聞こえるかもしれませんが、事実として今は誰でも使えるAIではありません。「Project Glasswing」という防御目的の枠組みの中で、限られた企業や組織にだけ提供されているモデルです。</p>
+
+        <h2>何がそんなに問題なのか</h2>
+        <p>Anthropicの発表によると、Claude Mythos Previewは主要なOSやWebブラウザに潜む<strong>未知の脆弱性を発見し、条件によってはその悪用方法まで組み立てられる</strong>能力を持っているとされています。</p>
+        <p>この能力の厄介なところは、<strong>防御にも攻撃にも使える</strong>という点です。</p>
+        <p>脆弱性を先に見つけて修正できれば、利用者を守る強力な武器になります。でも同じ能力が攻撃者の手に渡ったら、これまで一部の高度な専門家にしかできなかった攻撃の準備が、一気に安く・速く・広く可能になる。そういうリスクがあるわけです。</p>
+        <p>だからAnthropicは、まず防御側の企業や組織に使わせる道を選んだわけです。</p>
+
+        <figure class="visual-frame">
+          <img src="/assets/blog/claude-mythos-preview/defense-flow.webp" alt="脆弱性の発見から検証、修正、保護までの流れを示す図" loading="lazy" decoding="async" width="1600" height="900" />
+          <figcaption>発見、検証、修正、保護へ進む流れを、読みやすい図として添えています。</figcaption>
+        </figure>
+
+        <h2>Project Glasswingとは何か</h2>
+        <p>AWS、Apple、Broadcom、Cisco、CrowdStrike、Google、JPMorganChase、Microsoft、NVIDIA、Palo Alto Networks……名前を並べると、世界の重要なソフトウェアやインフラに関わる企業がほぼ全部入っている印象を受けます。</p>
+        <p>それだけじゃなく、40以上の追加組織にもアクセスを広げ、重要なソフトウェア基盤やオープンソースの安全性を高める取り組みが進んでいます。</p>
+        <p>これはつまり「新しい便利AIが出た」という話じゃありません。<strong>AIがサイバー攻撃と防御の速度を変えてしまったので、世界の主要企業が先に防御体制を作り始めた</strong>、という話です。</p>
+
+        <table class="point-table" aria-label="本文の要点整理">
+          <thead>
+            <tr>
+              <th>本文のポイント</th>
+              <th>読んでおきたい意味</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>一般公開されていない</td>
+              <td>今は誰でも使えるAIではなく、防御目的の枠組みで提供されている。</td>
+            </tr>
+            <tr>
+              <td>防御にも攻撃にも使える</td>
+              <td>脆弱性発見の速度が上がる一方で、悪用された場合のリスクも大きい。</td>
+            </tr>
+            <tr>
+              <td>まず防御側から使う</td>
+              <td>重要なソフトウェア基盤やオープンソースを先に守る方向で動いている。</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>「永遠に封印」ではない</h2>
+        <p>ここは誤解されやすいので、少し丁寧に書いておきます。</p>
+        <p>「一般公開しない」とAnthropicは言っていますが、それは「永遠に封印する」と宣言したわけじゃありません。<strong>今の時点では安全対策が追いついていないから、一般公開には進まない</strong>という判断です。</p>
+        <p>実際、Anthropicは将来的にMythos級の能力を持つモデルを安全に展開することを目標にしているとも述べています。</p>
+        <p>つまり今起きているのは「公開中止」じゃなく、<strong>「危険な能力が見えてきたので、まずは防御用途に限定して慎重に動かす」という段階</strong>です。この違いはかなり大きいと思います。</p>
+
+        <h2>日本は特に要注意かもしれない</h2>
+        <p>日本では、AIといえば画像生成・文章作成・業務効率化の話がほとんどです。でもClaude Mythosが示しているのは、もっと地に足のついた問題だと思います。</p>
+        <p>銀行、病院、自治体、学校、ECサイト、交通、通信。どの組織も、何らかのソフトウェアとオープンソースに依存しています。そこに長年見つかっていなかった脆弱性があって、それをAIが一気に探し出せるようになるなら、守る側の速度も変えなければなりません。</p>
+        <p>日本企業は「問題が起きてから対応する」傾向が強いとよく言われます。でも、Mythosが示した世界では、それでは間に合わない可能性がある。「攻撃されたら直す」じゃなく、<strong>「AIで先に見つけて、先に直す」方向への転換</strong>が求められていくはずです。</p>
+
+        <figure class="visual-frame">
+          <img src="/assets/blog/claude-mythos-preview/japan-infrastructure.webp" alt="銀行、病院、自治体、学校、交通、通信をAIの防御網が覆うイメージ" loading="lazy" decoding="async" width="1600" height="900" />
+          <figcaption>銀行、病院、自治体、学校、交通、通信など、生活に近いインフラにも関わる話として見せています。</figcaption>
+        </figure>
+
+        <div class="closing-box">
+          <h2>まとめ：これは&quot;AIニュース&quot;より&quot;防衛ニュース&quot;に近い</h2>
+          <p>Claude Mythos Previewを一言で言うなら、「新しいAIが出た」じゃなくて、<strong>「AIが、ソフトウェアの穴を探す速度を変えた」</strong>という話だと思います。</p>
+          <p>だから防御側もAIを使わないと追いつかなくなってきた。それが今回の本質です。</p>
+          <p>一般ユーザーが今日から使えるAIではありません。でも、これからのセキュリティ、AI規制、企業のシステム運用に確実に影響してくるニュースです。</p>
+          <p>AIは「文章を書く道具」から「世界のソフトウェアを点検する道具」へと進み始めています。便利さと危険さを同時に持ったまま。Claude Mythosが注目されている理由は、まさにそこにあります。</p>
+        </div>
+      </div>
+    </article>
+
+    <a class="back-link" href="/blog/">ブログ一覧に戻る</a>
+  </main>
+
+  <footer style="background:#fff;border-top:1px solid #e8e8e8;margin-top:40px;padding:28px 16px 16px;">
+    <div style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:24px;">
+      <div>
+        <a href="/" style="display:flex;align-items:center;gap:8px;font-size:16px;font-weight:900;color:#087a63;text-decoration:none;margin-bottom:8px;">
+          <img src="/yohelab-mascot-v2-20260518-64.png" alt="よへラボ" style="width:28px;height:28px;border-radius:6px;" />よへラボ
+        </a>
+        <p style="font-size:12px;color:#5f6b7a;line-height:1.7;">家で働く人のための<br>AI・副業情報サイト</p>
+      </div>
+      <div>
+        <h3 style="font-size:12px;font-weight:900;color:#1a1a2e;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #e8e8e8;">コンテンツ</h3>
+        <ul style="list-style:none;display:grid;gap:5px;padding:0;margin:0;">
+          <li><a href="/blog/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">ブログ記事一覧</a></li>
+          <li><a href="/blog/tag/ai-news/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">AIニュース活用</a></li>
+          <li><a href="/blog/tag/wordpress/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">WordPress</a></li>
+          <li><a href="/blog/home-work-rhythm/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">在宅ヒント</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="font-size:12px;font-weight:900;color:#1a1a2e;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #e8e8e8;">ツール・商品</h3>
+        <ul style="list-style:none;display:grid;gap:5px;padding:0;margin:0;">
+          <li><a href="/lp/bunsirube/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">文標（WPテーマ）</a></li>
+          <li><a href="/lp/bunsirube/demo/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">文標デモ</a></li>
+          <li><a href="/blog/comparison-article-template/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">比較記事テンプレ（無料）</a></li>
+          <li><a href="/apps/research-writer/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">Research Writer</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="font-size:12px;font-weight:900;color:#1a1a2e;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #e8e8e8;">その他</h3>
+        <ul style="list-style:none;display:grid;gap:5px;padding:0;margin:0;">
+          <li><a href="/about/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">サイトについて</a></li>
+          <li><a href="/contact/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">お問い合わせ</a></li>
+          <li><a href="https://x.com/yohe_lab" target="_blank" rel="noopener" style="font-size:12px;color:#5f6b7a;text-decoration:none;">X（旧Twitter）</a></li>
+          <li><a href="https://note.com/yohelab" target="_blank" rel="noopener" style="font-size:12px;color:#5f6b7a;text-decoration:none;">note</a></li>
+          <li><a href="/legal/privacy/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">プライバシーポリシー</a></li>
+          <li><a href="/legal/terms/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">利用規約</a></li>
+        </ul>
+      </div>
+    </div>
+    <div style="max-width:1100px;margin:16px auto 0;padding-top:12px;border-top:1px solid #e8e8e8;font-size:11px;color:#5f6b7a;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+      <span>© 2026 よへラボ</span>
+      <div style="display:flex;gap:12px;">
+        <a href="/legal/privacy/" style="color:#5f6b7a;font-size:11px;text-decoration:none;">プライバシーポリシー</a>
+        <a href="/legal/terms/" style="color:#5f6b7a;font-size:11px;text-decoration:none;">利用規約</a>
+        <a href="/contact/" style="color:#5f6b7a;font-size:11px;text-decoration:none;">お問い合わせ</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

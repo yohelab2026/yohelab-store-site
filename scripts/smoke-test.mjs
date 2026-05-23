@@ -158,6 +158,7 @@ const middleware = read(src("functions/_middleware.js"));
 const viteConfig = read(src("vite.config.js"));
 const gitignore = read(src(".gitignore"));
 const sitemapFunction = read(src("functions/sitemap.xml.js"));
+const staticBlogPostsModule = read(src("functions/generated/static-blog-posts.js"));
 const blogAdminGate = read(src("functions/blog/admin/[[catchall]].js"));
 const blogAdminSource = read(src("blog/admin/index.html"));
 const blogAdmin = read(dist("blog/admin/index.html"));
@@ -292,7 +293,7 @@ checks.push(["blog card eyecatches are not cropped", blogIndexSource.includes("o
 checks.push(["blog cover images can be adjusted manually", blogAdminSource.includes("cover-adjust-panel") && blogAdminSource.includes("coverSettings()") && blogPostPageSource.includes("coverStyle(post)") && blogPostFunction.includes("coverImageStyle(post)") && blogPostFunction.includes("object-position:${cover.x}% ${cover.y}%")]);
 checks.push(["paused product blog samples are noindex follow", read(dist("blog/page-review-sample/index.html")).includes('content="noindex,follow') && read(dist("blog/research-writer-free-flow/index.html")).includes('content="noindex,follow') && read(dist("blog/free-theme-vs-bunsirube/index.html")).includes('content="index,follow')]);
 checks.push(["sitemap includes new bunsirube guide posts", sitemap.includes("https://yohelab.com/blog/free-theme-vs-bunsirube/") && sitemap.includes("https://yohelab.com/blog/comparison-article-template/") && sitemap.includes("https://yohelab.com/blog/bunsirube-version-history/")]);
-checks.push(["dynamic sitemap includes new bunsirube guide posts", sitemapFunction.includes("/blog/free-theme-vs-bunsirube/") && sitemapFunction.includes("/blog/comparison-article-template/") && sitemapFunction.includes("/blog/bunsirube-version-history/")]);
+checks.push(["dynamic sitemap includes new bunsirube guide posts", staticBlogPostsModule.includes("/blog/free-theme-vs-bunsirube/") && staticBlogPostsModule.includes("/blog/comparison-article-template/") && staticBlogPostsModule.includes("/blog/bunsirube-version-history/")]);
 checks.push(["dynamic sitemap includes bunsirube updates", sitemapFunction.includes("/lp/bunsirube/updates/")]);
 checks.push(["dynamic sitemap includes bunsirube install guide", sitemapFunction.includes("/lp/bunsirube/install/")]);
 checks.push(["matomo skips local without explicit url", matomoLoader.includes("isLocal && !window.YOHELAB_MATOMO_URL") && !matomoLoader.includes("http://localhost:8080/")]);

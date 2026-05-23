@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>10,000件超の高危険度バグを見つけたAI——Project Glasswingが示した“次のサイバー防衛” | よへラボブログ</title>
+  <meta name="description" content="Project Glasswingが示した、AIによる脆弱性発見の速度変化と、発見後の検証・修正体制の重要性を整理します。" />
+  <meta name="robots" content="noindex,nofollow,max-image-preview:large,max-snippet:-1" />
+  <meta property="og:title" content="10,000件超の高危険度バグを見つけたAI——Project Glasswingが示した“次のサイバー防衛” | よへラボブログ" />
+  <meta property="og:description" content="Project Glasswingが示した、AIによる脆弱性発見の速度変化と、発見後の検証・修正体制の重要性を整理します。" />
+  <meta property="og:type" content="article" />
+  <meta property="og:locale" content="ja_JP" />
+  <meta property="og:url" content="https://yohelab.com/blog/project-glasswing-10000-bugs/" />
+  <meta property="og:image" content="https://yohelab.com/assets/og/project-glasswing-10000-bugs.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="canonical" href="https://yohelab.com/blog/project-glasswing-10000-bugs/" />
+  <link rel="icon" type="image/png" href="/yohelab-mascot-v2-20260518-32.png" />
+  <link rel="stylesheet" href="/shared/site.min.css" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BlogPosting","headline":"10,000件超の高危険度バグを見つけたAI——Project Glasswingが示した“次のサイバー防衛”","datePublished":"2026-05-23","dateModified":"2026-05-23","url":"https://yohelab.com/blog/project-glasswing-10000-bugs/","image":"https://yohelab.com/assets/og/project-glasswing-10000-bugs.png","author":{"@type":"Organization","name":"よへラボ AIニュース担当"},"publisher":{"@type":"Organization","name":"よへラボ","logo":{"@type":"ImageObject","url":"https://yohelab.com/yohelab-mascot-v2-20260518.png"}},"description":"Project Glasswingが示した、AIによる脆弱性発見の速度変化と、発見後の検証・修正体制の重要性を整理します。","inLanguage":"ja-JP"}
+  </script>
+  <style>
+    :root {
+      --article-ink:#17202b;
+      --article-muted:#5f6b7a;
+      --article-line:#dfe7ec;
+      --article-blue:#0c6f84;
+      --article-gold:#cf8d33;
+      --article-red:#dc5a63;
+      --article-night:#071421;
+    }
+    body {
+      margin:0;
+      background:linear-gradient(180deg, #f5faf9 0%, #fffdf8 46%, #fff 100%);
+      color:var(--article-ink);
+      font-family:-apple-system,"Hiragino Sans","Yu Gothic UI","Noto Sans JP",sans-serif;
+    }
+    .post-outer { max-width:920px;margin:0 auto;padding:42px 18px 88px; }
+    .draft-banner { border:1px solid #ead19c;background:#fff7e6;color:#6f4a10;border-radius:16px;padding:12px 16px;margin:0 0 22px;font-size:13px;font-weight:800; }
+    .breadcrumb { color:var(--article-muted);font-size:12px;margin:0 0 16px; }
+    .breadcrumb a { color:var(--article-blue);font-weight:800;text-decoration:none; }
+    .post-card { background:rgba(255,255,255,.9);border:1px solid rgba(12,111,132,.12);border-radius:30px;box-shadow:0 24px 70px rgba(18,45,58,.12);overflow:hidden; }
+    .post-cover { width:100%;height:auto;display:block;background:var(--article-night); }
+    .post-head { padding:34px clamp(20px,5vw,56px) 30px; }
+    .post-meta { display:flex;align-items:center;gap:10px;flex-wrap:wrap;color:var(--article-muted);font-size:13px;font-weight:700;margin-bottom:18px; }
+    .post-tag { display:inline-flex;align-items:center;border-radius:999px;background:#e8f6f5;color:#075c4c;padding:4px 12px;font-size:12px;font-weight:900;text-decoration:none; }
+    .post-title { font-size:clamp(30px,5.8vw,56px);line-height:1.17;letter-spacing:-.055em;margin:0;color:#0f1720;font-weight:950; }
+    .post-body { padding:0 clamp(20px,5vw,56px) 52px;color:var(--article-ink);font-size:17px;line-height:2.08; }
+    .post-body p { margin:0 0 20px; }
+    .post-body h2 { position:relative;font-size:clamp(25px,4vw,34px);line-height:1.35;letter-spacing:-.045em;margin:56px 0 20px;padding-top:18px;color:#101820; }
+    .post-body h2::before { content:"";position:absolute;top:0;left:0;width:72px;height:5px;border-radius:999px;background:linear-gradient(90deg,var(--article-red),var(--article-blue)); }
+    .lead-block { border-left:5px solid var(--article-red);background:linear-gradient(135deg,#fff7f4,#f3fbfb);border-radius:0 18px 18px 0;padding:20px 22px 4px;margin:0 0 32px; }
+    .visual-frame { margin:34px 0 38px;border:1px solid rgba(12,111,132,.14);border-radius:26px;overflow:hidden;background:#fff;box-shadow:0 18px 42px rgba(18,45,58,.10); }
+    .visual-frame img { display:block;width:100%;height:auto; }
+    .visual-frame figcaption { color:var(--article-muted);font-size:13px;line-height:1.7;padding:12px 16px 14px;background:#fff; }
+    .closing-box { background:linear-gradient(135deg,#071421,#0c3d4d);color:#fff;border-radius:26px;padding:28px;margin-top:44px; }
+    .closing-box h2 { color:#fff;margin-top:0;padding-top:0; }
+    .closing-box h2::before { display:none; }
+    .closing-box p { color:#f3fbff;margin-bottom:16px; }
+    .back-link { display:inline-flex;align-items:center;gap:6px;margin-top:32px;color:var(--article-muted);font-size:14px;font-weight:800;text-decoration:none; }
+    @media (max-width:720px) {
+      .post-outer { padding:24px 12px 64px; }
+      .post-card { border-radius:22px; }
+      .post-head { padding:24px 18px 22px; }
+      .post-body { padding:0 18px 36px;font-size:16px;line-height:1.98; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header" style="background:#fff;border-bottom:3px solid #087a63;position:sticky;top:0;z-index:100;">
+    <div class="header-inner" style="max-width:1100px;margin:0 auto;padding:0 16px;display:flex;align-items:center;gap:20px;height:56px;">
+      <a href="/" style="display:flex;align-items:center;gap:10px;font-size:20px;font-weight:900;color:#087a63;letter-spacing:-0.03em;flex-shrink:0;text-decoration:none;">
+        <img src="/yohelab-mascot-v2-20260518-64.png" alt="よへラボ" style="width:36px;height:36px;border-radius:8px;" />
+        よへラボ
+      </a>
+      <nav style="display:flex;align-items:center;gap:4px;flex-wrap:wrap;">
+        <a href="/blog/" style="padding:5px 11px;border-radius:4px;font-size:13px;font-weight:700;color:#444;text-decoration:none;">ブログ</a>
+        <a href="/lp/bunsirube/" style="padding:5px 11px;border-radius:4px;font-size:13px;font-weight:700;color:#444;text-decoration:none;">文標</a>
+        <a href="/about/" style="padding:5px 11px;border-radius:4px;font-size:13px;font-weight:700;color:#444;text-decoration:none;">サイトについて</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="post-outer">
+    <div class="draft-banner">この記事は下書きです。noindex設定で、検索には出さない状態にしています。</div>
+    <nav class="breadcrumb"><a href="/">トップ</a> &rsaquo; <a href="/blog/">ブログ</a> &rsaquo; <span>AIニュース</span></nav>
+
+    <article class="post-card">
+      <img class="post-cover" src="/assets/blog/project-glasswing-10000-bugs/eyecatch.webp" alt="10,000件超の高危険度バグを見つけたAI——Project Glasswingが示した“次のサイバー防衛”" loading="eager" decoding="async" width="1600" height="900" />
+      <div class="post-head">
+        <div class="post-meta">
+          <span>2026-05-23</span>
+          <a class="post-tag" href="/blog/tag/ai-news/">AIニュース</a>
+          <span class="post-tag">サイバー防衛</span>
+          <span class="post-tag">Project Glasswing</span>
+        </div>
+        <h1 class="post-title">10,000件超の高危険度バグを見つけたAI——Project Glasswingが示した“次のサイバー防衛”</h1>
+      </div>
+
+      <div class="post-body">
+        <div class="lead-block">
+          <p>Claude Mythos Previewの話題で、いちばん目を引く数字があります。</p>
+          <p>「10,000件超」。</p>
+          <p>ただし、この数字は少し丁寧に扱う必要があります。SNSでは「1ヶ月で1万件のゼロデイを発見」といった言い方を見かけるかもしれませんが、正確には、Project Glasswingの開始後、Anthropicと約50のパートナーが、世界的に重要なソフトウェアから「高・重大度」と見られる脆弱性を1万件超見つけた、という内容です。</p>
+          <p>すべてがゼロデイとして確定したわけではありません。すべてがすぐ攻撃可能だと確認されたわけでもありません。けれど、それでも十分に大きなニュースです。</p>
+          <p>なぜなら、問題は「見つけた数」そのものではなく、AIによって脆弱性発見の速度が一気に上がったことにあるからです。</p>
+        </div>
+
+        <h2>何が起きたのか</h2>
+        <p>Project Glasswingは、AnthropicがClaude Mythos Previewを防御目的で使うために始めた取り組みです。開始から約1ヶ月の初期報告では、複数のパートナーが自社ソフトウェアから数百件規模の高・重大度脆弱性を見つけたとされています。</p>
+        <p>Cloudflareは、重要なシステム群から約2,000件のバグを見つけ、そのうち約400件が高・重大度に分類されたと報告されています。しかも、Cloudflare側は誤検知率について、人間のテスターよりも良い水準だと評価しています。</p>
+        <p>Mozillaの例も印象的です。Firefox 150では、Claude Mythos Previewを使った初期評価で見つかった271件の脆弱性が修正されました。これは、以前にClaude Opus 4.6を使ってFirefox 148で見つかった件数と比べ、10倍以上の規模だと説明されています。</p>
+        <p>このあたりを見ると、Mythosの衝撃は単に「AIがバグを見つけた」という話ではありません。これまで人間の専門家が時間をかけて探していたものを、AIが大量に、しかもかなり実用的な形で拾い上げ始めたということです。</p>
+
+        <figure class="visual-frame">
+          <img src="/assets/blog/project-glasswing-10000-bugs/defense-workflow.webp" alt="AIが脆弱性を見つけ、人間が確認して修正へ進める流れの図" loading="lazy" decoding="async" width="1600" height="900" />
+          <figcaption>AIによる発見から、人間の確認、優先順位づけ、修正へ進む流れを図解しています。</figcaption>
+        </figure>
+
+        <h2>オープンソースにも波が来ている</h2>
+        <p>Anthropicは、1,000以上のオープンソースプロジェクトもスキャンしています。その結果、Mythosは合計23,019件の脆弱性を見つけたと推定し、そのうち6,202件を高・重大度と見積もりました。</p>
+        <p>もちろん、AIの見積もりをそのまま信じるわけにはいきません。そこで、一部の高・重大度候補について、外部のセキュリティ企業などが確認を行っています。確認済みの1,752件のうち、90.6％が真陽性、つまり実際に有効な指摘だったとされています。さらに、そのうち62.4％は高・重大度として確認されました。</p>
+        <p>この数字はかなり重いです。</p>
+        <p>AIのバグ報告には、雑な指摘や誤検知が混ざることも多く、オープンソースの保守担当者にとっては負担になりがちです。しかし、Mythosのようなモデルが高い精度で危険な脆弱性を見つけるなら、ソフトウェア開発の現場は対応の仕組みそのものを変える必要があります。</p>
+
+        <h2>発見よりも、修正がボトルネックになる</h2>
+        <p>これまでのサイバー防衛では、「脆弱性を見つけること」が大きな壁でした。ところが、AIによって発見速度が上がると、次の壁が見えてきます。</p>
+        <p>それは、見つかった脆弱性を人間が確認し、優先順位をつけ、関係者に連絡し、修正し、パッチを配るまでの流れです。</p>
+        <p>Anthropicの初期報告でも、問題は発見そのものから、検証・開示・修正の速度へ移っていると説明されています。実際、オープンソース側では、報告された脆弱性を処理する人手が足りず、対応に時間がかかるケースも出ています。</p>
+        <p>ここが一番怖いところです。</p>
+        <p>AIがバグを大量に見つけても、それを直す体制がなければ、守る側は情報の洪水に飲み込まれます。さらに、同じような能力が攻撃者側にも広がれば、未修正の穴を突かれる速度も上がります。</p>
+
+        <figure class="visual-frame">
+          <img src="/assets/blog/project-glasswing-10000-bugs/triage-bottleneck.webp" alt="大量の脆弱性報告を確認し、修正へ整理していく開発現場の図" loading="lazy" decoding="async" width="1600" height="900" />
+          <figcaption>大量の報告を、検証と修正へつなげる体制が次の課題になります。</figcaption>
+        </figure>
+
+        <h2>日本企業が見るべきポイント</h2>
+        <p>日本企業にとって、このニュースは遠い海外のAI実験ではありません。</p>
+        <p>多くの企業システムは、クラウド、Webアプリ、外部ライブラリ、オープンソースに支えられています。つまり、世界中のソフトウェアで見つかった脆弱性は、日本の金融、医療、行政、EC、製造業にもつながっています。</p>
+        <p>これから重要になるのは、「AIでスキャンするかどうか」だけではありません。見つかった脆弱性をどう扱うかです。</p>
+        <p>どのシステムを優先的に直すのか。誰が確認するのか。パッチを何日以内に当てるのか。外部から報告を受けたときの窓口はあるのか。使っているオープンソースを把握できているのか。</p>
+        <p>ここまで含めて整えておかないと、AI時代のサイバー防衛には追いつけません。</p>
+
+        <div class="closing-box">
+          <h2>結論：AIは“発見役”になり、人間は“判断と修正”を問われる</h2>
+          <p>Claude Mythos PreviewとProject Glasswingが示したのは、AIがセキュリティ担当者を置き換えるという単純な話ではありません。</p>
+          <p>むしろ、人間の仕事が変わるという話です。</p>
+          <p>AIが大量に見つける。人間が真偽を確認する。危険度を判断する。関係者と調整する。修正を出す。利用者に届ける。</p>
+          <p>この流れを作れる組織は、AI時代の防御で一歩前に出ます。逆に、発見された脆弱性を処理できない組織は、むしろリスクが増える可能性があります。</p>
+          <p>「AIが1万件の脆弱性を見つけた」という数字は派手です。けれど、本当に見るべきなのはその先です。</p>
+          <p>AIが見つける時代に、人間はどれだけ速く直せるのか。</p>
+          <p>Project Glasswingの衝撃は、そこにあります。</p>
+        </div>
+      </div>
+    </article>
+
+    <a class="back-link" href="/blog/">ブログ一覧に戻る</a>
+  </main>
+
+  <footer style="background:#fff;border-top:1px solid #e8e8e8;margin-top:40px;padding:28px 16px 16px;">
+    <div style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:24px;">
+      <div><a href="/" style="display:flex;align-items:center;gap:8px;font-size:16px;font-weight:900;color:#087a63;text-decoration:none;margin-bottom:8px;"><img src="/yohelab-mascot-v2-20260518-64.png" alt="よへラボ" style="width:28px;height:28px;border-radius:6px;" />よへラボ</a><p style="font-size:12px;color:#5f6b7a;line-height:1.7;">家で働く人のための<br>AI・副業情報サイト</p></div>
+      <div><h3 style="font-size:12px;font-weight:900;color:#1a1a2e;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #e8e8e8;">コンテンツ</h3><ul style="list-style:none;display:grid;gap:5px;padding:0;margin:0;"><li><a href="/blog/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">ブログ記事一覧</a></li><li><a href="/blog/tag/ai-news/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">AIニュース活用</a></li><li><a href="/blog/tag/wordpress/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">WordPress</a></li><li><a href="/blog/home-work-rhythm/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">在宅ヒント</a></li></ul></div>
+      <div><h3 style="font-size:12px;font-weight:900;color:#1a1a2e;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #e8e8e8;">ツール・商品</h3><ul style="list-style:none;display:grid;gap:5px;padding:0;margin:0;"><li><a href="/lp/bunsirube/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">文標（WPテーマ）</a></li><li><a href="/lp/bunsirube/demo/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">文標デモ</a></li><li><a href="/blog/comparison-article-template/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">比較記事テンプレ（無料）</a></li><li><a href="/apps/research-writer/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">Research Writer</a></li></ul></div>
+      <div><h3 style="font-size:12px;font-weight:900;color:#1a1a2e;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #e8e8e8;">その他</h3><ul style="list-style:none;display:grid;gap:5px;padding:0;margin:0;"><li><a href="/about/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">サイトについて</a></li><li><a href="/contact/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">お問い合わせ</a></li><li><a href="https://x.com/yohe_lab" target="_blank" rel="noopener" style="font-size:12px;color:#5f6b7a;text-decoration:none;">X（旧Twitter）</a></li><li><a href="https://note.com/yohelab" target="_blank" rel="noopener" style="font-size:12px;color:#5f6b7a;text-decoration:none;">note</a></li><li><a href="/legal/privacy/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">プライバシーポリシー</a></li><li><a href="/legal/terms/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">利用規約</a></li></ul></div>
+    </div>
+    <div style="max-width:1100px;margin:16px auto 0;padding-top:12px;border-top:1px solid #e8e8e8;font-size:11px;color:#5f6b7a;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;"><span>© 2026 よへラボ</span><div style="display:flex;gap:12px;"><a href="/legal/privacy/" style="color:#5f6b7a;font-size:11px;text-decoration:none;">プライバシーポリシー</a><a href="/legal/terms/" style="color:#5f6b7a;font-size:11px;text-decoration:none;">利用規約</a><a href="/contact/" style="color:#5f6b7a;font-size:11px;text-decoration:none;">お問い合わせ</a></div></div>
+  </footer>
+</body>
+</html>

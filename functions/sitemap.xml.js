@@ -26,7 +26,7 @@ const URLS = [
 const STATIC_CANONICAL_SLUGS = new Set(staticBlogSitemapPosts.map((post) => post.slug).filter(Boolean));
 
 export async function onRequestGet(context) {
-  const urls = mergeUrls(URLS, staticBlogUrls(), await dynamicBlogUrls(context.env));
+  const urls = mergeUrls(URLS, await dynamicBlogUrls(context.env), staticBlogUrls());
   const xml =
     `<?xml version="1.0" encoding="UTF-8"?>\n` +
     `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +

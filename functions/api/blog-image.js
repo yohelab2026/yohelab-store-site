@@ -5,7 +5,8 @@
 
 import { getBlogPin, isValidPin, timingSafeEqual } from "../lib/blog-auth.js";
 
-const ALLOWED_TYPES = ["image/webp", "image/jpeg", "image/png"];
+const ALLOWED_TYPES = ["image/webp"];
+const ALLOWED_SOCIAL_TYPES = ["image/jpeg"];
 const MAX_BYTES = 25 * 1024 * 1024; // 25MB
 const DEFAULT_PUBLIC_IMAGE_BASE = "https://images.yohelab.com";
 
@@ -60,13 +61,13 @@ export async function onRequestPost(context) {
     const buffer = await file.arrayBuffer();
     if (buffer.byteLength > MAX_BYTES) return json({ error: "too large (max 25MB)" }, 400, context.request);
 
-    const key = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${extensionForType(file.type)}`;
+    const key = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.webp`;
     await writeImage(storage, key, buffer, file);
 
     const response = { ok: true, url: publicImageUrl(context.env, key, storage), key };
     const socialFile = formData.get("socialFile");
     if (socialFile && typeof socialFile !== "string") {
-      if (!ALLOWED_TYPES.includes(socialFile.type)) return json({ error: "unsupported_social_image_type", type: socialFile.type || "" }, 400, context.request);
+      if (!ALLOWED_SOCIAL_TYPES.includes(socialFile.type)) return json({ error: "unsupported_social_image_type", type: socialFile.type || "" }, 400, context.request);
       const socialBuffer = await socialFile.arrayBuffer();
       if (socialBuffer.byteLength > MAX_BYTES) return json({ error: "social image too large (max 25MB)" }, 400, context.request);
       const socialKey = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}-card.${extensionForType(socialFile.type)}`;
