@@ -98,6 +98,51 @@ const staticBlogSlugs = new Set([
   'faq-source-ai-search',
   'sales-page-common-mistakes',
 ]);
+const searchAliasGroups = [
+  ['chatgpt', 'chat gpt', 'gpt', 'openai', 'チャットgpt', 'チャットジーピーティー', 'チャットジーピーティ', 'オープンai', 'オープンエーアイ'],
+  ['claude', 'anthropic', 'クロード', 'くろーど', 'アンソロピック', 'アンスロピック'],
+  ['gemini', 'google ai', 'googleai', 'ジェミニ', 'ジェミナイ', 'グーグルai', 'グーグルエーアイ'],
+  ['perplexity', 'パープレキシティ', 'パープレキシティー', 'パープレ'],
+  ['genspark', 'ジェンスパーク', 'ジェンスパ'],
+  ['grok', 'グロック', 'グローク'],
+  ['copilot', 'microsoft copilot', 'コパイロット', 'コーパイロット', 'マイクロソフトコパイロット'],
+  ['midjourney', 'mid journey', 'ミッドジャーニー'],
+  ['cursor', 'カーソル', 'カーサー', 'かーそる', 'かーさー'],
+  ['manus', 'マヌス', 'まぬす'],
+  ['notebooklm', 'notebook lm', 'ノートブックlm', 'ノートブックエルエム'],
+  ['sora', 'ソラ'],
+  ['runway', 'ランウェイ'],
+  ['canva', 'キャンバ', 'キャンヴァ'],
+  ['notion', 'ノーション'],
+  ['figma', 'フィグマ'],
+  ['devin', 'デビン', 'デヴィン'],
+  ['lovable', 'ラバブル'],
+  ['replit', 'レプリット'],
+  ['v0', 'vゼロ', 'ブイゼロ'],
+  ['bolt', 'bolt.new', 'ボルト'],
+  ['dify', 'ディファイ'],
+  ['gamma', 'ガンマ'],
+  ['napkin', 'ナプキン'],
+  ['dall-e', 'dalle', 'dall e', 'ダリ', 'ダリー'],
+  ['stable diffusion', 'stablediffusion', 'ステーブルディフュージョン'],
+  ['adobe firefly', 'firefly', 'アドビファイアフライ', 'ファイアフライ'],
+  ['llama', 'meta ai', 'ラマ', 'メタai'],
+  ['deepseek', 'ディープシーク'],
+  ['mistral', 'ミストラル'],
+  ['qwen', 'クウェン'],
+  ['kling', 'クリング'],
+  ['pika', 'ピカ'],
+  ['veo', 'ヴェオ', 'ベオ'],
+  ['elevenlabs', 'eleven labs', 'イレブンラボ', 'イレブンラボズ'],
+  ['capcut', 'キャップカット'],
+  ['wordpress', 'wp', 'ワードプレス'],
+  ['bunsirube', '文標', 'ぶんしるべ', 'ブンシルベ'],
+  ['yohelab', 'よへラボ', 'よへらぼ'],
+  ['faq', 'エフエーキュー'],
+  ['seo', 'エスイーオー'],
+  ['aio', 'エーアイオー'],
+  ['llms', 'llm', 'エルエルエム', 'エルエルエムズ'],
+];
 let staticManifestPosts = [];
 const fallbackPosts = [
   {
@@ -159,6 +204,56 @@ let totalPages = 1;
 
 function esc(str) {
   return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function toSearchBase(value) {
+  return String(value || '').normalize('NFKC').toLowerCase().replace(/\s+/g, ' ').trim();
+}
+
+function compactSearch(value) {
+  return toSearchBase(value).replace(/[\s._・･-]+/g, '');
+}
+
+function hiraToKata(value) {
+  return String(value || '').replace(/[\u3041-\u3096]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 0x60));
+}
+
+function normalizedAliasTerms(group) {
+  const terms = new Set();
+  group.forEach(item => {
+    const base = toSearchBase(item);
+    const kata = hiraToKata(base);
+    [base, kata, compactSearch(base), compactSearch(kata)].forEach(term => {
+      if (term) terms.add(term);
+    });
+  });
+  return [...terms];
+}
+
+function expandSearchText(value) {
+  const base = toSearchBase(value);
+  const compact = compactSearch(base);
+  const expanded = new Set([base, hiraToKata(base), compact]);
+  searchAliasGroups.forEach(group => {
+    const terms = normalizedAliasTerms(group);
+    if (terms.some(term => term && (base.includes(term) || compact.includes(term)))) {
+      terms.forEach(term => expanded.add(term));
+    }
+  });
+  return [...expanded].join(' ');
+}
+
+function queryMatchesText(query, text) {
+  const queryTokens = toSearchBase(query).split(/\s+/).filter(Boolean);
+  if (!queryTokens.length) return true;
+  const expandedText = expandSearchText(text);
+  return queryTokens.every(token => {
+    const expandedToken = expandSearchText(token);
+    return expandedToken
+      .split(/\s+/)
+      .filter(Boolean)
+      .some(term => expandedText.includes(term));
+  });
 }
 
 function formatDisplayDate(value) {
@@ -330,7 +425,7 @@ function categoryRank(post) {
 }
 
 function normalizePostTags(post) {
-  const raw = [...(post.tags || []), post.title || '', post.excerpt || ''].join(' ').toLowerCase();
+  const raw = expandSearchText([...(post.tags || []), post.title || '', post.excerpt || ''].join(' '));
   const tags = new Set(String(raw).split(/\s+|,|、/).filter(Boolean));
   if (raw.includes('chatgpt') || raw.includes('openai')) tags.add('chatgpt');
   if (raw.includes('claude') || raw.includes('anthropic')) tags.add('claude');
@@ -540,11 +635,16 @@ function normalizeFilter(value) {
   if (['副業すべて', '副業ネタ全部', 'earn-all'].includes(v)) return 'group:earn';
   if (['wordpressすべて', 'ツール全部', 'wordpress-all'].includes(v)) return 'group:wordpress';
   if (['在宅すべて', '在宅ヒント全部', 'home-work-all'].includes(v)) return 'group:home-work';
-  if (['chatgpt', 'openai', 'gpt', 'chatgptニュース'].includes(v)) return 'chatgpt';
-  if (['claude', 'anthropic', 'claudeニュース'].includes(v)) return 'claude';
-  if (['gemini', 'google-ai', 'googleai', 'geminiニュース'].includes(v)) return 'gemini';
+  if (['chatgpt', 'openai', 'gpt', 'chatgptニュース', 'チャットgpt', 'チャットジーピーティー', 'チャットジーピーティ', 'オープンai', 'オープンエーアイ'].includes(v)) return 'chatgpt';
+  if (['claude', 'anthropic', 'claudeニュース', 'クロード', 'くろーど', 'アンソロピック', 'アンスロピック'].includes(v)) return 'claude';
+  if (['gemini', 'google-ai', 'googleai', 'geminiニュース', 'ジェミニ', 'ジェミナイ', 'グーグルai', 'グーグルエーアイ'].includes(v)) return 'gemini';
+  if (['perplexity', 'パープレキシティ', 'パープレキシティー', 'パープレ'].includes(v)) return 'perplexity';
+  if (['genspark', 'ジェンスパーク', 'ジェンスパ'].includes(v)) return 'genspark';
+  if (['grok', 'グロック', 'グローク'].includes(v)) return 'grok';
+  if (['copilot', 'コパイロット', 'コーパイロット', 'マイクロソフトコパイロット'].includes(v)) return 'copilot';
+  if (['midjourney', 'mid journey', 'ミッドジャーニー'].includes(v)) return 'midjourney';
   if (['稼ぎ方', '収益化ネタ', '商品案', 'earn', 'money'].includes(v)) return 'earn';
-  if (['wp', 'wordpress', 'wordPress'.toLowerCase()].includes(v)) return 'wordpress';
+  if (['wp', 'wordpress', 'wordPress'.toLowerCase(), 'ワードプレス', '文標', 'ぶんしるべ', 'ブンシルベ'].includes(v)) return 'wordpress';
   if (['記事', '記事づくり', 'article', 'writing'].includes(v)) return 'article';
   if (['在宅', '在宅ワーク習慣', 'home', 'home-work'].includes(v)) return 'home-work';
   if (['テンプレ', '記事テンプレ', 'テンプレ販売', 'template'].includes(v)) return 'template';
@@ -559,7 +659,7 @@ function applyFilters() {
   cards.forEach(card => {
     const text = ((card.dataset.search || '') + ' ' + card.innerText).toLowerCase();
     const tagOk = filterMatches(activeFilter, card);
-    const queryOk = !q || text.includes(q);
+    const queryOk = !q || text.includes(q) || queryMatchesText(q, text);
     const show = tagOk && queryOk;
     card.style.display = show ? '' : 'none';
     if (show) visible++;
