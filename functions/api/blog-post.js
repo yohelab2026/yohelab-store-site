@@ -85,9 +85,10 @@ export async function onRequestDelete(context) {
       return json({ error: "unauthorized" }, 401, context.request);
     }
 
+    const url = new URL(context.request.url);
     const body = await readJsonBody(context.request);
-    const slug = String(body?.slug || "").trim();
-    const keepImages = body?.keepImages === true;
+    const slug = String(body?.slug || url.searchParams.get("slug") || "").trim();
+    const keepImages = body?.keepImages === true || url.searchParams.get("keepImages") === "1";
     if (!slug) return json({ error: "slug_required" }, 400, context.request);
 
     // 投稿を取得してアイキャッチ画像のキーを確認

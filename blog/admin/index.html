@@ -71,6 +71,10 @@
     .manager-toolbar input::placeholder { color:#9aa8a2; }
     .content-search { display:flex;gap:8px;align-items:center; }
     .content-search .btn { padding:8px 12px;font-size:12px;white-space:nowrap; }
+    .bulk-actions { display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 22px;border-bottom:1px solid var(--border);background:#fbfffd; }
+    .bulk-actions-info { color:var(--muted);font-size:12px;font-weight:800; }
+    .bulk-actions .btn-del { padding:8px 12px;font-size:12px; }
+    .bulk-actions .btn-del:disabled { opacity:.45;cursor:not-allowed; }
     .content-list-summary { display:flex;justify-content:flex-end;padding:10px 22px;border-bottom:1px solid var(--border);font-size:12px;color:var(--muted);font-weight:800; }
     .content-pagination { display:flex;align-items:center;justify-content:center;gap:12px;padding:14px 22px;border-top:1px solid var(--border);background:#fbfffd; }
     .content-pagination-buttons { display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap; }
@@ -463,6 +467,10 @@
               </div>
             </div>
           </div>
+          <div class="bulk-actions" id="content-bulk-actions">
+            <span class="bulk-actions-info" id="content-bulk-info">チェックした記事をまとめて削除できます。</span>
+            <button class="btn btn-del" id="content-bulk-delete" type="button" disabled>選択した記事を削除</button>
+          </div>
           <div id="content-list-summary" class="content-list-summary">読み込み中...</div>
           <div id="content-list" class="manager-list">
             <p style="color:var(--muted);font-size:14px;padding:14px;">読み込み中...</p>
@@ -649,6 +657,8 @@
   const contentDateFilterEl = document.getElementById('content-date-filter');
   const contentCategoryFilterEl = document.getElementById('content-category-filter');
   const contentSearchEl = document.getElementById('content-search');
+  const contentBulkDeleteEl = document.getElementById('content-bulk-delete');
+  const contentBulkInfoEl = document.getElementById('content-bulk-info');
   const importStaticPostsEl = document.getElementById('import-static-posts');
   const categoryEditorEl = document.getElementById('category-editor');
   const saveCategoriesEl = document.getElementById('save-categories');
@@ -2982,9 +2992,11 @@
     }
     if (!filtered.length) {
       contentListEl.innerHTML = '<p style="color:var(--muted);font-size:14px;padding:14px;">条件に合う記事はありません。</p>';
+      updateBulkControls();
       return;
     }
     contentListEl.innerHTML = renderContentTable(pageItems) + renderContentPagination(filtered.length, contentCurrentPage, totalPages, startIndex, endIndex);
+    updateBulkControls();
     updateEditorState();
   }
 
@@ -2996,7 +3008,7 @@
         <table class="posts-table">
           <thead>
             <tr>
-              <th class="check-col"><input type="checkbox" aria-label="すべて選択" /></th>
+              <th class="check-col"><input id="content-select-all" type="checkbox" aria-label="表示中の記事をすべて選択" /></th>
               <th class="title-col">タイトル</th>
               <th class="status-col">状態</th>
               <th class="category-col">カテゴリー</th>
@@ -3028,9 +3040,13 @@
         ? `data-post-slug="${escHtml(item.slug)}"`
         : `data-static-slug="${escHtml(item.staticSlug || item.slug)}"`;
     const dateText = item.actionAt || item.date ? formatItemDate(item.actionAt || item.date) : '-';
+    const selectable = isBulkSelectable(item);
+    const bulkSource = bulkSourceForItem(item);
+    const bulkId = bulkIdForItem(item);
+    const checkboxTitle = selectable ? `${item.title || '無題'}を選択` : '固定記事は一括削除できません';
     return `
       <tr class="admin-post-row" ${activeAttrs}>
-        <td class="check-col"><input type="checkbox" aria-label="${escHtml(item.title || '無題')}を選択" /></td>
+        <td class="check-col"><input class="content-select-item" type="checkbox" aria-label="${escHtml(checkboxTitle)}" data-bulk-source="${escHtml(bulkSource)}" data-bulk-id="${escHtml(bulkId)}" ${selectable ? '' : 'disabled'} /></td>
         <td class="title-col">
           <button class="row-title" type="button" onclick="${rowOpenAction(item)}">${escHtml(item.title || '無題')}</button>
           <div class="row-excerpt">${escHtml(item.excerpt || '')}</div>
@@ -3042,6 +3058,59 @@
         <td class="actions-col"><div class="row-actions">${rowActionButtons(item)}</div></td>
       </tr>
     `;
+  }
+
+  function isBulkSelectable(item) {
+    return ['server', 'dynamic', 'trash'].includes(item.source) && Boolean(bulkIdForItem(item));
+  }
+
+  function bulkSourceForItem(item) {
+    if (item.source === 'server') return 'draft';
+    if (item.source === 'dynamic') return 'post';
+    if (item.source === 'trash') return 'trash';
+    return '';
+  }
+
+  function bulkIdForItem(item) {
+    if (item.source === 'server') return item.id || '';
+    if (item.source === 'dynamic') return item.slug || '';
+    if (item.source === 'trash') return item.trashId || item.id || '';
+    return '';
+  }
+
+  function selectedContentTargets() {
+    return [...contentListEl.querySelectorAll('.content-select-item:checked')]
+      .map(input => ({
+        source: input.dataset.bulkSource || '',
+        id: input.dataset.bulkId || '',
+      }))
+      .filter(item => item.source && item.id);
+  }
+
+  function updateBulkControls() {
+    const selected = selectedContentTargets();
+    const selectable = [...contentListEl.querySelectorAll('.content-select-item:not(:disabled)')];
+    const selectAllEl = document.getElementById('content-select-all');
+    if (selectAllEl) {
+      selectAllEl.checked = selectable.length > 0 && selectable.every(input => input.checked);
+      selectAllEl.indeterminate = selected.length > 0 && !selectAllEl.checked;
+      selectAllEl.disabled = selectable.length === 0;
+    }
+    const status = contentStatusFilterEl?.value || 'draft';
+    const isTrash = status === 'trash' && selected.every(item => item.source === 'trash');
+    if (contentBulkDeleteEl) {
+      contentBulkDeleteEl.disabled = selected.length === 0;
+      contentBulkDeleteEl.textContent = selected.length
+        ? isTrash
+          ? `選択した${selected.length}件を完全削除`
+          : `選択した${selected.length}件を削除`
+        : '選択した記事を削除';
+    }
+    if (contentBulkInfoEl) {
+      contentBulkInfoEl.textContent = selected.length
+        ? `${selected.length}件選択中。${isTrash ? '完全削除します。' : 'ゴミ箱へ移動します。'}`
+        : 'チェックした記事をまとめて削除できます。';
+    }
   }
 
   function rowOpenAction(item) {
@@ -3121,20 +3190,9 @@
 
   async function deleteDraft(draftId, btn) {
     if (!confirm('この下書きをゴミ箱へ移動しますか？')) return;
-    const pin = currentPin();
-    if (!pin || !draftId) return;
     if (btn) { btn.textContent='移動中...'; btn.disabled=true; }
     try {
-      const getRes = await fetch(`/api/blog-draft?id=${encodeURIComponent(draftId)}`, { headers: { 'X-Yohelab-Pin': pin } });
-      const getData = await getRes.json().catch(()=>({}));
-      if (!getRes.ok || !getData.draft) throw new Error(getData.error || 'draft_not_found');
-      await moveItemToTrash({ type: 'draft', originalId: draftId, item: getData.draft });
-      const res = await fetch('/api/blog-draft', {
-        method:'DELETE',
-        headers:{'Content-Type':'application/json','X-Yohelab-Pin':pin},
-        body: JSON.stringify({draftId}),
-      });
-      if (!res.ok) throw new Error('draft_delete_failed');
+      await deleteDraftRecord(draftId);
       if (activeDraftId === draftId) {
         activeDraftId = '';
         saveDraftLocal({ schedule: false });
@@ -3148,6 +3206,21 @@
       if (btn) { btn.textContent='失敗'; btn.disabled=false; }
       statusEl.textContent = 'ゴミ箱への移動に失敗した。';
     }
+  }
+
+  async function deleteDraftRecord(draftId) {
+    const pin = currentPin();
+    if (!pin || !draftId) throw new Error('draft_id_required');
+    const getRes = await fetch(`/api/blog-draft?id=${encodeURIComponent(draftId)}`, { headers: { 'X-Yohelab-Pin': pin } });
+    const getData = await getRes.json().catch(()=>({}));
+    if (!getRes.ok || !getData.draft) throw new Error(getData.error || 'draft_not_found');
+    await moveItemToTrash({ type: 'draft', originalId: draftId, item: getData.draft });
+    const res = await fetch(`/api/blog-draft?id=${encodeURIComponent(draftId)}`, {
+      method:'DELETE',
+      headers:{'X-Yohelab-Pin':pin},
+    });
+    if (!res.ok) throw new Error('draft_delete_failed');
+    return true;
   }
 
   async function moveItemToTrash({ type, originalId = '', originalSlug = '', item }) {
@@ -3166,10 +3239,10 @@
   async function removeTrashEntry(trashId, options = {}) {
     const pin = currentPin();
     if (!pin || !trashId) throw new Error('trash_id_required');
-    const res = await fetch('/api/blog-trash', {
+    const url = `/api/blog-trash?id=${encodeURIComponent(trashId)}${options.purgeImages === true ? '&purgeImages=1' : ''}`;
+    const res = await fetch(url, {
       method: 'DELETE',
-      headers: { 'Content-Type':'application/json','X-Yohelab-Pin': pin },
-      body: JSON.stringify({ trashId, purgeImages: options.purgeImages === true }),
+      headers: { 'X-Yohelab-Pin': pin },
     });
     const data = await res.json().catch(()=>({}));
     if (!res.ok) throw new Error(data.error || 'trash_delete_failed');
@@ -3424,10 +3497,9 @@
       btn.disabled = false;
       return;
     }
-    const delRes = await fetch('/api/blog-post', {
+    const delRes = await fetch(`/api/blog-post?slug=${encodeURIComponent(slug)}&keepImages=1`, {
       method:'DELETE',
-      headers:{'Content-Type':'application/json','X-Yohelab-Pin':pin},
-      body: JSON.stringify({slug, keepImages: true}),
+      headers:{'X-Yohelab-Pin':pin},
     });
     if (!delRes.ok) {
       btn.textContent = '削除失敗';
@@ -3446,21 +3518,10 @@
 
   async function deletePost(kvKey, btn) {
     if (!confirm('この記事をゴミ箱へ移動しますか？')) return;
-    const pin = currentPin();
-    if (!pin) return;
     const slug = kvKey.replace(/^post:/,'');
     if (btn) { btn.textContent='移動中...'; btn.disabled=true; }
     try {
-      const getRes = await fetch(`/api/blog-post-get?slug=${encodeURIComponent(slug)}`);
-      const getData = await getRes.json().catch(()=>({}));
-      if (!getRes.ok || !getData.post) throw new Error(getData.error || 'post_not_found');
-      await moveItemToTrash({ type: 'post', originalSlug: slug, item: getData.post });
-      const res = await fetch('/api/blog-post', {
-        method:'DELETE',
-        headers:{'Content-Type':'application/json','X-Yohelab-Pin':pin},
-        body: JSON.stringify({slug, keepImages: true}),
-      });
-      if (!res.ok) throw new Error('post_delete_failed');
+      await deletePostRecord(slug);
       if (activePostSlug === slug) clearEditor();
       statusEl.textContent = 'ゴミ箱へ移動した ✓';
       if (contentStatusFilterEl) contentStatusFilterEl.value = 'trash';
@@ -3470,6 +3531,21 @@
       if (btn) { btn.textContent='失敗'; btn.disabled=false; }
       statusEl.textContent = 'ゴミ箱への移動に失敗した。';
     }
+  }
+
+  async function deletePostRecord(slug) {
+    const pin = currentPin();
+    if (!pin || !slug) throw new Error('post_slug_required');
+    const getRes = await fetch(`/api/blog-post-get?slug=${encodeURIComponent(slug)}`);
+    const getData = await getRes.json().catch(()=>({}));
+    if (!getRes.ok || !getData.post) throw new Error(getData.error || 'post_not_found');
+    await moveItemToTrash({ type: 'post', originalSlug: slug, item: getData.post });
+    const res = await fetch(`/api/blog-post?slug=${encodeURIComponent(slug)}&keepImages=1`, {
+      method:'DELETE',
+      headers:{'X-Yohelab-Pin':pin},
+    });
+    if (!res.ok) throw new Error('post_delete_failed');
+    return true;
   }
 
   async function restoreTrashItem(trashId, btn = null) {
@@ -3515,7 +3591,7 @@
     if (!trashId) return;
     if (btn) { btn.textContent = '削除中...'; btn.disabled = true; }
     try {
-      await removeTrashEntry(trashId, { purgeImages: true });
+      await deleteTrashRecord(trashId);
       statusEl.textContent = '完全に削除した ✓';
       resetContentPage();
       await loadAllLists();
@@ -3523,6 +3599,53 @@
       if (btn) { btn.textContent = '失敗'; btn.disabled = false; }
       statusEl.textContent = '完全削除に失敗した。';
     }
+  }
+
+  async function deleteTrashRecord(trashId) {
+    if (!trashId) throw new Error('trash_id_required');
+    await removeTrashEntry(trashId, { purgeImages: true });
+    return true;
+  }
+
+  async function bulkDeleteSelected() {
+    const targets = selectedContentTargets();
+    if (!targets.length) return;
+    const trashOnly = targets.every(item => item.source === 'trash');
+    const message = trashOnly
+      ? `選択した${targets.length}件を完全に削除しますか？`
+      : `選択した${targets.length}件をゴミ箱へ移動しますか？`;
+    if (!confirm(message)) return;
+    if (contentBulkDeleteEl) {
+      contentBulkDeleteEl.disabled = true;
+      contentBulkDeleteEl.textContent = '処理中...';
+    }
+    let success = 0;
+    const failures = [];
+    for (const target of targets) {
+      try {
+        if (target.source === 'draft') await deleteDraftRecord(target.id);
+        else if (target.source === 'post') await deletePostRecord(target.id);
+        else if (target.source === 'trash') await deleteTrashRecord(target.id);
+        else throw new Error('unsupported_item');
+        success += 1;
+      } catch (error) {
+        failures.push(target);
+      }
+    }
+    if (activeDraftId && targets.some(item => item.source === 'draft' && item.id === activeDraftId)) {
+      activeDraftId = '';
+      saveDraftLocal({ schedule: false });
+      updateEditorState();
+    }
+    if (activePostSlug && targets.some(item => item.source === 'post' && item.id === activePostSlug)) clearEditor();
+    statusEl.textContent = failures.length
+      ? `${success}件削除、${failures.length}件失敗。`
+      : trashOnly
+        ? `${success}件を完全に削除した ✓`
+        : `${success}件をゴミ箱へ移動した ✓`;
+    if (!failures.length && contentStatusFilterEl) contentStatusFilterEl.value = trashOnly ? 'trash' : 'trash';
+    resetContentPage();
+    await loadAllLists();
   }
 
   async function refreshContentLists() {
@@ -3565,6 +3688,14 @@
   contentListEl?.addEventListener('click', event => {
     if (event.target.closest?.('[data-sort-date]')) toggleContentDateSort();
   });
+  contentListEl?.addEventListener('change', event => {
+    if (event.target?.id === 'content-select-all') {
+      const checked = event.target.checked;
+      contentListEl.querySelectorAll('.content-select-item:not(:disabled)').forEach(input => { input.checked = checked; });
+    }
+    if (event.target?.matches?.('#content-select-all,.content-select-item')) updateBulkControls();
+  });
+  contentBulkDeleteEl?.addEventListener('click', bulkDeleteSelected);
   adminViewTabs.forEach(tab => {
     tab.addEventListener('click', () => setAdminView(tab.dataset.adminTab || 'editor'));
   });

@@ -59,16 +59,16 @@ export async function onRequestPost(context) {
     if (!type || !item) return json({ error: "invalid_trash_item" }, 400, context.request);
 
     const now = new Date().toISOString();
-    const originalId = sanitizeText(body?.originalId || item.draftId || "");
-    const originalSlug = sanitizeText(body?.originalSlug || item.slug || "");
+    const originalId = sanitizeMetadataText(body?.originalId || item.draftId || "", 80);
+    const originalSlug = sanitizeMetadataText(body?.originalSlug || item.slug || "", 80);
     const safeBase = sanitizeKeyPart(originalId || originalSlug || item.title || crypto.randomUUID());
     const trashId = `${type}-${safeBase}-${Date.now()}`;
-    const title = sanitizeText(item.title) || "無題";
-    const slug = sanitizeText(item.slug || originalSlug);
-    const date = sanitizeText(item.date || item.updatedAt || now);
-    const excerpt = sanitizeText(item.excerpt);
-    const eyecatch = sanitizeText(item.eyecatch);
-    const tags = normalizeTags(item.tags);
+    const title = sanitizeMetadataText(item.title, 90) || "無題";
+    const slug = sanitizeMetadataText(item.slug || originalSlug, 80);
+    const date = sanitizeMetadataText(item.date || item.updatedAt || now, 32);
+    const excerpt = sanitizeMetadataText(item.excerpt, 90);
+    const eyecatch = sanitizeMetadataText(item.eyecatch, 160);
+    const tags = normalizeTags(item.tags).map((tag) => sanitizeMetadataText(tag, 24)).filter(Boolean).slice(0, 4);
     const entry = { trashId, type, originalId, originalSlug, item, deletedAt: now };
 
     await kv.put(`trash:${trashId}`, JSON.stringify(entry), {
@@ -101,10 +101,12 @@ export async function onRequestDelete(context) {
     const authError = authorize(context);
     if (authError) return authError;
 
+    const url = new URL(context.request.url);
     const body = await readJsonBody(context.request);
-    const trashId = sanitizeTrashId(body?.trashId || new URL(context.request.url).searchParams.get("id"));
+    const trashId = sanitizeTrashId(body?.trashId || url.searchParams.get("id"));
     if (!trashId) return json({ error: "trash_id_required" }, 400, context.request);
-    if (body?.purgeImages === true && context.env.BLOG_IMAGES) {
+    const purgeImages = body?.purgeImages === true || url.searchParams.get("purgeImages") === "1";
+    if (purgeImages && context.env.BLOG_IMAGES) {
       const entry = await kv.get(`trash:${trashId}`, { type: "json" });
       if (entry?.item) await deleteStoredImages(context.env.BLOG_IMAGES, entry.item);
     }
@@ -145,6 +147,19 @@ function sanitizeKeyPart(value) {
 
 function sanitizeText(value) {
   return String(value || "").trim().replace(/\s+/g, " ").slice(0, 500);
+}
+
+function sanitizeMetadataText(value, maxBytes) {
+  const text = sanitizeText(value);
+  if (!text) return "";
+  const encoder = new TextEncoder();
+  let output = "";
+  for (const char of text) {
+    const next = output + char;
+    if (encoder.encode(next).length > maxBytes) break;
+    output = next;
+  }
+  return output;
 }
 
 function normalizeTags(value) {
