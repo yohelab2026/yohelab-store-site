@@ -12,6 +12,7 @@ const SITE_ORIGIN = "https://yohelab.com";
 const SITE_NAME = "よへラボ";
 const BLOG_NAME = "よへラボブログ";
 const FALLBACK_IMAGE = `${SITE_ORIGIN}/yohelab-mascot-v2-20260518.png`;
+const GA4_MEASUREMENT_ID = "G-ZK7SP3RVSB";
 const CATEGORY_KEY = "settings:blog-categories";
 const RESERVED_BLOG_SLUGS = new Set(["admin", "post", "category", "tag"]);
 const DEFAULT_CATEGORY_TREE = [
@@ -441,6 +442,16 @@ function renderTags(tags, categoryMap) {
     .join("");
 }
 
+function ga4Snippet() {
+  return `<script async src="https://www.googletagmanager.com/gtag/js?id=${GA4_MEASUREMENT_ID}"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', '${GA4_MEASUREMENT_ID}');
+  </script>`;
+}
+
 function renderBlogHeader() {
   return `<header class="site-header" style="background:#fff;border-bottom:3px solid #087a63;position:sticky;top:0;z-index:100;">
     <div class="header-inner" style="max-width:1100px;margin:0 auto;padding:0 16px;display:flex;align-items:center;gap:20px;height:56px;">
@@ -536,6 +547,7 @@ function renderPostHTML(post, slug, categoryMap = buildCategoryMap(DEFAULT_CATEG
   <script type="application/ld+json">${articleLd}</script>
   <script type="application/ld+json">${breadcrumbLd}</script>
   <script async src="/shared/matomo-loader.js"></script>
+  ${ga4Snippet()}
   <script defer src="/shared/back-to-top.js"></script>
   <style>
     body { background:#fff;color:var(--text); }

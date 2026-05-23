@@ -49,6 +49,27 @@ function matomoSnippetPlugin() {
   };
 }
 
+function ga4SnippetPlugin() {
+  const measurementId = "G-ZK7SP3RVSB";
+  const snippet = `<script async src="https://www.googletagmanager.com/gtag/js?id=${measurementId}"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', '${measurementId}');
+  </script>`;
+
+  return {
+    name: "ga4-snippet",
+    transformIndexHtml(html, ctx) {
+      if (!ctx?.path || ctx.path === "/google0009e82266fc5714.html") return html;
+      if (ctx.path.includes("/blog/admin/")) return html;
+      if (html.includes(measurementId) || html.includes("googletagmanager.com/gtag/js")) return html;
+      return html.replace("</head>", `  ${snippet}\n</head>`);
+    },
+  };
+}
+
 function backToTopPlugin() {
   const snippet = `<script defer src="/shared/back-to-top.js"></script>`;
 
@@ -254,7 +275,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 }
 
 export default defineConfig({
-  plugins: [matomoSnippetPlugin(), backToTopPlugin(), hreflangPlugin(), headHardeningPlugin(), mobilePolishPlugin()],
+  plugins: [matomoSnippetPlugin(), ga4SnippetPlugin(), backToTopPlugin(), hreflangPlugin(), headHardeningPlugin(), mobilePolishPlugin()],
   build: {
     rollupOptions: {
       input: {
