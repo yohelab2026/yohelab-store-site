@@ -128,6 +128,7 @@ checks.push(["wp product embeds demo videos", wpProduct.includes('/assets/bunsir
 checks.push(["research product has no checkout cta while paused", !researchProduct.includes('buy.stripe.com') && !researchProduct.includes('1日1セットまで')]);
 
 const contact = read(dist("contact/index.html"));
+const contactApi = read(src("functions/api/contact.js"));
 checks.push(["contact prioritizes bunsirube support scope", contact.includes('文標本体の不具合') && contact.includes('広告リンク・CTAの表示不具合') && contact.includes('文標（ぶんしるべ）')]);
 checks.push(["contact removes shortcut cards", !contact.includes('ツール一覧') && !contact.includes('サービス一覧') && !contact.includes('各ページへ直接行く')]);
 checks.push(["contact removes cancellation wording", !contact.includes('解約')]);
@@ -135,6 +136,7 @@ checks.push(["contact no legacy tools", legacyLabels.every((label) => !contact.i
 checks.push(["contact limits accepted inquiry types", contact.includes("受け付ける内容") && contact.includes("30日返金希望") && contact.includes("決済・個人情報に関する連絡") && !contact.includes("記事作成スターターキット")]);
 checks.push(["contact avoids broad post-purchase support", contact.includes("SEO相談、広告運用相談は対象外") && contact.includes("対象外の相談は個別返信できない場合があります") && !contact.includes("導入、使い方、不具合の相談") && !contact.includes("使い方を確認したい") && !contact.includes("購入前に確認したい")]);
 checks.push(["contact uses first-party api and optional turnstile", contact.includes('/api/contact') && contact.includes('turnstile-site-key') && contact.includes('turnstile-token') && !contact.includes('formsubmit.co') && !contact.includes('yohelab2026@gmail.com')]);
+checks.push(["contact mail falls back to yohelab Gmail inbox", contactApi.includes('DEFAULT_ADMIN_EMAIL = "yohelab2026@gmail.com"') && contactApi.includes('env.ADMIN_EMAIL || DEFAULT_ADMIN_EMAIL')]);
 
 const sitemap = read(dist("sitemap.xml"));
 checks.push(["sitemap excludes preparing research writer", !sitemap.includes('https://yohelab.com/lp/research-writer/') && !sitemap.includes('https://yohelab.com/apps/research-writer/')]);
@@ -351,7 +353,8 @@ checks.push(["affiliate lib has stable code generation and stats", affiliateLib.
 checks.push(["affiliate-track.js handles ?ref and decorates checkout links", affiliateTrackJs.includes('AFF-') && affiliateTrackJs.includes('yohelab_aff') && affiliateTrackJs.includes('30') && affiliateTrackJs.includes('buy.stripe.com') && affiliateTrackJs.includes('/api/checkout') && affiliateTrackJs.includes('client_reference_id') && affiliateTrackJs.includes('/api/affiliate-click')]);
 checks.push(["pages with checkout link include affiliate tracking script", lpHasInlineAffiliate && homeHasInlineAffiliate && read(dist("lp/bunsirube/install/index.html")).includes('yohelab_aff') && read(dist("lp/bunsirube/demo/index.html")).includes('yohelab_aff') && read(dist("products/bunsirube/index.html")).includes('yohelab_aff')]);
 checks.push(["stripe webhook parses affiliate code and prevents self-referral", stripeWebhookSrc.includes('AFFILIATE_REF_RE') && stripeWebhookSrc.includes('rawRef.split(":")') && stripeWebhookSrc.includes('meta.email === String(email).toLowerCase()') && stripeWebhookSrc.includes('recordSale')]);
-checks.push(["stripe webhook notifies admin on every affiliate sale", stripeWebhookSrc.includes('sendAdminSaleNotification') && stripeWebhookSrc.includes('ADMIN_EMAIL') && stripeWebhookSrc.includes('[Affiliate] 成果記録') && stripeWebhookSrc.includes('aff:sale:')]);
+checks.push(["stripe webhook notifies admin on every affiliate sale", stripeWebhookSrc.includes('sendAdminSaleNotification') && stripeWebhookSrc.includes('ADMIN_EMAIL') && stripeWebhookSrc.includes('yohelab2026@gmail.com') && stripeWebhookSrc.includes('[Affiliate] 成果記録') && stripeWebhookSrc.includes('aff:sale:')]);
+checks.push(["affiliate signup admin mail falls back to yohelab Gmail inbox", affiliateSignupApi.includes('DEFAULT_ADMIN_EMAIL = "yohelab2026@gmail.com"') && affiliateSignupApi.includes('env.ADMIN_EMAIL || DEFAULT_ADMIN_EMAIL')]);
 checks.push(["affiliate footer links present on LP and home", bunsirubeLp.includes('/lp/bunsirube/affiliate/') && bunsirubeLp.includes('/legal/affiliate-terms/') && read(dist("index.html")).includes('/lp/bunsirube/affiliate/') && read(dist("index.html")).includes('/legal/affiliate-terms/')]);
 checks.push(["affiliate signup rate-limits and caps input lengths", affiliateSignupApi.includes('rateLimitOk') && affiliateSignupApi.includes('"signup"') && affiliateSignupApi.includes('status: 429') === false && affiliateSignupApi.includes(', 429)') && affiliateSignupApi.includes('.slice(0, 120)') && affiliateSignupApi.includes('.slice(0, 254)') && affiliateSignupApi.includes('.slice(0, 500)')]);
 checks.push(["affiliate status hides existence and rate-limits", affiliateStatusApi.includes('rateLimitOk') && affiliateStatusApi.includes('"status"') && affiliateStatusApi.includes('MISMATCH_RESPONSE') && !/コードが見つかりません/.test(affiliateStatusApi)]);

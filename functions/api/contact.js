@@ -1,5 +1,7 @@
 import { getClientIp, rateLimitOk } from "../lib/affiliate.js";
 
+const DEFAULT_ADMIN_EMAIL = "yohelab2026@gmail.com";
+
 const ALLOWED_PURPOSES = new Set([
   "文標本体の不具合",
   "広告リンク・CTAの表示不具合",
@@ -80,7 +82,7 @@ async function verifyTurnstileIfConfigured(env, token, ip) {
 async function sendContactEmail({ env, purpose, name, email, message, detail, pageUrl, ip, userAgent }) {
   const apiKey = env.RESEND_API_KEY;
   const from = env.RESEND_FROM_EMAIL;
-  const to = env.ADMIN_EMAIL || "support@yohelab.com";
+  const to = env.ADMIN_EMAIL || DEFAULT_ADMIN_EMAIL;
   if (!apiKey || !from) {
     throw new Error("問い合わせ送信用メール設定が未設定です。");
   }

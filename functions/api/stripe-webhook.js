@@ -13,6 +13,8 @@ import {
 } from "../lib/affiliate.js";
 import { getBunsirubePriceJpy } from "../lib/bunsirube-pricing.js";
 
+const DEFAULT_ADMIN_EMAIL = "yohelab2026@gmail.com";
+
 const SUPPORTED_EVENTS = new Set([
   "checkout.session.completed",
   "checkout.session.async_payment_succeeded",
@@ -122,7 +124,7 @@ export async function onRequestPost(context) {
             // having to walk Cloudflare KV manually.
             try {
               await sendAdminSaleNotification({
-                to: context.env.ADMIN_EMAIL || "support@yohelab.com",
+                to: context.env.ADMIN_EMAIL || DEFAULT_ADMIN_EMAIL,
                 code: affiliateCode,
                 affiliateName: meta.name || "",
                 affiliateEmail: meta.email || "",

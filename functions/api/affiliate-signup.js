@@ -1,5 +1,7 @@
 import { makeAffiliateCode, getAffiliateMeta, setAffiliateMeta, getKv, rateLimitOk, getClientIp } from "../lib/affiliate.js";
 
+const DEFAULT_ADMIN_EMAIL = "yohelab2026@gmail.com";
+
 export async function onRequestPost(context) {
   try {
     const ip = getClientIp(context.request);
@@ -55,7 +57,7 @@ export async function onRequestPost(context) {
           code,
           apiKey: context.env.RESEND_API_KEY,
           from: context.env.RESEND_FROM_EMAIL,
-          adminEmail: context.env.ADMIN_EMAIL || "support@yohelab.com",
+          adminEmail: context.env.ADMIN_EMAIL || DEFAULT_ADMIN_EMAIL,
         });
       } catch {}
     }
