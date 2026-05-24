@@ -336,6 +336,7 @@ const affiliateStatusApi = read(src("functions/api/affiliate-status.js"));
 const affiliateClickApi = read(src("functions/api/affiliate-click.js"));
 const affiliateLib = read(src("functions/lib/affiliate.js"));
 const affiliateTrackJs = read(src("public/shared/affiliate-track.js"));
+const headersTxt = read(dist("_headers"));
 const homeHtml = read(dist("index.html"));
 const installHtml = read(dist("lp/bunsirube/install/index.html"));
 const demoHtml = read(dist("lp/bunsirube/demo/index.html"));
@@ -347,6 +348,7 @@ checks.push(["30-day refund guarantee documented in legal/terms", read(dist("leg
 checks.push(["30-day refund prominent on LP", bunsirubeLp.includes("30日返金保証") && bunsirubeLp.includes("理由を問わず") && bunsirubeLp.includes("Stripe経由")]);
 checks.push(["30-day refund in welcome email", stripeWebhookSrc.includes("30日返金保証") && stripeWebhookSrc.includes("文標 返金希望")]);
 checks.push(["referral public pages are paused and noindex", affiliateLp.includes("現在停止中") && affiliateLp.includes("noindex,nofollow") && affiliateDashboard.includes("現在停止しています") && affiliateDashboard.includes("noindex,nofollow") && affiliateTerms.includes("現在停止しています") && affiliateTerms.includes("noindex,nofollow")]);
+checks.push(["referral pages send noindex x-robots headers", headersTxt.includes("/lp/bunsirube/affiliate/") && headersTxt.includes("/affiliate/dashboard/") && headersTxt.includes("/legal/affiliate-terms/") && headersTxt.match(/X-Robots-Tag: noindex, nofollow, noarchive/g)?.length >= 3]);
 checks.push(["referral signup and status APIs return paused", affiliateLib.includes("AFFILIATE_PROGRAM_ENABLED = false") && affiliateSignupApi.includes("AFFILIATE_PROGRAM_ENABLED") && affiliateSignupApi.includes(", 410)") && affiliateStatusApi.includes("AFFILIATE_PROGRAM_ENABLED") && affiliateStatusApi.includes(", 410)")]);
 checks.push(["referral click and checkout do not activate tracking", affiliateClickApi.includes("active: false") && read(src("functions/api/checkout.js")).includes("AFFILIATE_PROGRAM_ENABLED ? getAffiliateRef") && affiliateTrackJs.includes("harmless no-op")]);
 checks.push(["public pages do not include referral tracking script", !bunsirubeLp.includes("yohelab_aff") && !homeHtml.includes("yohelab_aff") && !installHtml.includes("yohelab_aff") && !demoHtml.includes("yohelab_aff") && !productHtml.includes("yohelab_aff")]);
