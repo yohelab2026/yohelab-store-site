@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>文標 更新履歴 | よへラボ</title>
-  <meta name="description" content="WordPressテーマ「文標（ぶんしるべ）」の更新履歴。v0.3.3から初期版までの変更内容を確認できます。" />
+  <meta name="description" content="WordPressテーマ「文標（ぶんしるべ）」の更新履歴。v0.3.4から初期版までの変更内容を確認できます。" />
   <meta property="og:title" content="文標 更新履歴 | よへラボ" />
   <meta property="og:description" content="文標のバージョンごとの変更内容、追加機能、事故防止の改善内容をまとめた更新履歴ページです。" />
   <meta property="og:type" content="website" />
@@ -71,6 +71,11 @@
       <div class="container updates-layout">
         <div class="timeline" aria-label="文標の更新履歴一覧">
           <article class="release-card latest">
+            <time datetime="2026-05-24">2026.05.24</time>
+            <h2>v0.3.4 ｜ 正式版リリースに向けたセキュリティ強化</h2>
+            <p>正式版リリース（2026年7月1日）に向けた事前ハードニング。テーマ自動更新のSHA-256整合性検証を追加（配布元が万一改ざんされても、ハッシュが合わなければ更新を中止）、内部解析のクリック計測APIにIP単位レート制限を追加、軽量キャッシュのキー正規化で任意クエリによるキャッシュ汚染を防ぎました。自動更新マニフェストに <code>package_sha256</code> と <code>last_updated</code> を追加しています。価格据え置き（先行提供価格¥5,500・税込）。</p>
+          </article>
+          <article class="release-card">
             <time datetime="2026-05-24">2026.05.24</time>
             <h2>正式版リリース日と価格改定を明記</h2>
             <p>2026年6月30日までは先行提供価格¥5,500（税込）、2026年7月1日から正式版¥8,800（税込）へ改定する案内に統一しました。</p>
