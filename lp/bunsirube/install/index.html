@@ -250,9 +250,9 @@
             <li>記事型から1本書く</li>
             <li>公開前チェックを見る</li>
           </ul>
-          <p><a class="btn btn-primary" href="https://buy.stripe.com/bJeaEPfTN2ze2Cubvb73G0e?client_reference_id=wordpress-theme">¥5,500（税込）で購入する</a></p>
+          <p><a class="btn btn-primary" href="/api/checkout?product=wordpress-theme">6月30日まで¥5,500（税込）で購入する</a></p>
           <p><a href="/lp/bunsirube/demo/">デモを見る</a> / <a href="/lp/bunsirube/updates/">更新履歴を見る</a></p>
-          <p>表示価格はすべて税込です。<strong style="color:#0d8f72;">30日返金保証つき</strong> — 30日以内なら理由を問わず全額返金。</p>
+          <p>表示価格はすべて税込です。2026年7月1日から正式版¥8,800（税込）へ改定します。<strong style="color:#0d8f72;">30日返金保証つき</strong> — 30日以内なら理由を問わず全額返金。</p>
         </aside>
       </div>
     </section>
@@ -278,7 +278,7 @@
   if(ref&&REF_RE.test(ref)){setCookie(COOKIE_NAME,ref,DAYS);active=ref;try{fetch('/api/affiliate-click?code='+encodeURIComponent(ref),{method:'POST',keepalive:true});}catch(e){}}
   else if(REF_RE.test(ex)){active=ex;}
   if(!active)return;
-  function decorate(){document.querySelectorAll('a[href*="buy.stripe.com"]').forEach(function(a){try{var u=new URL(a.href);if(u.host!=='buy.stripe.com')return;var c=u.searchParams.get('client_reference_id')||'';if(c.indexOf(':'+active)!==-1)return;c=c.replace(/:AFF-[A-Z0-9-]+$/,'');u.searchParams.set('client_reference_id',c+':'+active);a.href=u.toString();}catch(e){}});}
+  function decorate(){document.querySelectorAll('a[href*="buy.stripe.com"],a[href^="/api/checkout"],a[href*="/api/checkout"]').forEach(function(a){try{var u=new URL(a.href);if(u.host==='buy.stripe.com'){var c=u.searchParams.get('client_reference_id')||'';if(c.indexOf(':'+active)!==-1)return;c=c.replace(/:AFF-[A-Z0-9-]+$/,'');u.searchParams.set('client_reference_id',c+':'+active);}else if(u.pathname==='/api/checkout'){u.searchParams.set('ref',active);}else{return;}a.href=u.toString();}catch(e){}});}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',decorate);else decorate();
 })();
 </script>

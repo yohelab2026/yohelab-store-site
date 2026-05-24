@@ -10,8 +10,8 @@ import {
   getAffiliateMeta,
   markSaleRefundedByPurchaseId,
   recordSale,
-  AFFILIATE_PRODUCT_AMOUNT,
 } from "../lib/affiliate.js";
+import { getBunsirubePriceJpy } from "../lib/bunsirube-pricing.js";
 
 const SUPPORTED_EVENTS = new Set([
   "checkout.session.completed",
@@ -98,7 +98,7 @@ export async function onRequestPost(context) {
           if (meta.email && meta.email === String(email).toLowerCase()) {
             affiliateRecorded = false;
           } else {
-            const amount = Number(session?.amount_total) || AFFILIATE_PRODUCT_AMOUNT;
+            const amount = Number(session?.amount_total) || getBunsirubePriceJpy();
             await recordSale({
               code: affiliateCode,
               purchaseId,

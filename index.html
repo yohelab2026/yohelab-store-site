@@ -618,11 +618,11 @@
         <p>文標は、AIニュースから見つけたネタをFAQ・比較表・CTAつきの記事に残すためのWordPressテーマです。記事を書く前に止まる時間を減らすため、購入前に読める確認メモも用意しています。</p>
       </div>
       <div class="home-bunsirube-actions">
-        <a href="https://buy.stripe.com/bJeaEPfTN2ze2Cubvb73G0e?client_reference_id=wordpress-theme">今すぐ文標を試す</a>
+        <a href="/api/checkout?product=wordpress-theme">文標を購入してZIPを受け取る</a>
         <a class="secondary" href="/blog/bunsirube-before-install/">購入前に読める確認メモ</a>
       </div>
       <div class="home-bunsirube-note">
-        先行提供 ¥5,500（税込）。表示価格はすべて税込です。
+        2026年6月30日までは先行提供 ¥5,500（税込）。2026年7月1日から正式版 ¥8,800（税込）。表示価格はすべて税込です。
         <a href="/lp/bunsirube/updates/">更新履歴</a>、
         <a href="/lp/bunsirube/#fit-check">向き不向き</a>も購入前に確認できます。
         市場メモ: WordPressは全Webの42.2%、CMS市場シェアは59.6%。販売導線は200+国・地域に届けられる形を意識していますが、検索順位やAI表示を保証する数字ではありません。
@@ -817,7 +817,7 @@
             <div class="product-card-icon">文</div>
             <div class="product-card-name">文標（ぶんしるべ）</div>
             <div class="product-card-desc">WordPress用軽量テーマ。比較・FAQ・レビュー記事向け。買い切りで更新無料。</div>
-            <div class="product-card-price paid">¥5,500（税込）</div>
+            <div class="product-card-price paid">6/30まで¥5,500税込 / 7/1から¥8,800税込</div>
           </a>
           <a class="product-card" href="/blog/comparison-article-template/">
             <div class="product-card-icon">比</div>
@@ -984,7 +984,7 @@
           <div style="flex-shrink:0;width:40px;height:40px;border-radius:8px;background:var(--brand-light);display:grid;place-items:center;font-size:20px;font-weight:900;color:var(--brand);border:1px solid rgba(11,143,114,.2);">文</div>
           <div style="flex:1;min-width:0;">
             <div style="font-size:13px;font-weight:900;">文標（ぶんしるべ）</div>
-            <div style="font-size:11px;color:var(--muted);">WordPressテーマ ¥5,500（税込）</div>
+            <div style="font-size:11px;color:var(--muted);">WordPressテーマ 6/30まで¥5,500税込</div>
           </div>
         </a>
         <a href="/blog/comparison-article-template/" style="display:flex;align-items:center;gap:10px;padding:10px;border:1px solid var(--border);border-radius:var(--radius);transition:border-color .15s,background .15s;" onmouseover="this.style.borderColor='var(--brand)';this.style.background='var(--brand-light)'" onmouseout="this.style.borderColor='var(--border)';this.style.background=''">
@@ -1364,7 +1364,7 @@
   if(REF_RE.test(ref)){active=ref;setCookie(COOKIE_NAME,ref,DAYS);navigator.sendBeacon&&navigator.sendBeacon('/api/affiliate-click',new Blob([JSON.stringify({code:ref,path:location.pathname})],{type:'application/json'}));}
   else if(REF_RE.test(ex)){active=ex;}
   if(!active)return;
-  function decorate(){document.querySelectorAll('a[href*="buy.stripe.com"]').forEach(function(a){try{var u=new URL(a.href);if(u.host!=='buy.stripe.com')return;var c=u.searchParams.get('client_reference_id')||'';if(c.indexOf(':'+active)!==-1)return;c=c.replace(/:AFF-[A-Z0-9-]+$/,'');u.searchParams.set('client_reference_id',c+':'+active);a.href=u.toString();}catch(e){}});}
+  function decorate(){document.querySelectorAll('a[href*="buy.stripe.com"],a[href^="/api/checkout"],a[href*="/api/checkout"]').forEach(function(a){try{var u=new URL(a.href);if(u.host==='buy.stripe.com'){var c=u.searchParams.get('client_reference_id')||'';if(c.indexOf(':'+active)!==-1)return;c=c.replace(/:AFF-[A-Z0-9-]+$/,'');u.searchParams.set('client_reference_id',c+':'+active);}else if(u.pathname==='/api/checkout'){u.searchParams.set('ref',active);}else{return;}a.href=u.toString();}catch(e){}});}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',decorate);else decorate();
 })();
 </script>

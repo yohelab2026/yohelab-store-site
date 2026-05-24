@@ -236,8 +236,8 @@
             <div class="setting-row"><span>GA4</span><strong>任意</strong></div>
           </div>
           <p class="note">これは購入前に雰囲気を確認するためのデモです。実際の表示はWordPress環境、投稿内容、設定によって変わります。</p>
-          <p><a class="btn btn-primary" href="https://buy.stripe.com/bJeaEPfTN2ze2Cubvb73G0e?client_reference_id=wordpress-theme">¥5,500（税込）で購入する</a></p>
-          <p class="note">表示価格はすべて税込です。</p>
+          <p><a class="btn btn-primary" href="/api/checkout?product=wordpress-theme">6月30日まで¥5,500（税込）で購入する</a></p>
+          <p class="note">表示価格はすべて税込です。2026年7月1日から正式版¥8,800（税込）へ改定します。</p>
         </aside>
       </div>
     </section>
@@ -342,7 +342,7 @@
   if(ref&&REF_RE.test(ref)){setCookie(COOKIE_NAME,ref,DAYS);active=ref;try{fetch('/api/affiliate-click?code='+encodeURIComponent(ref),{method:'POST',keepalive:true});}catch(e){}}
   else if(REF_RE.test(ex)){active=ex;}
   if(!active)return;
-  function decorate(){document.querySelectorAll('a[href*="buy.stripe.com"]').forEach(function(a){try{var u=new URL(a.href);if(u.host!=='buy.stripe.com')return;var c=u.searchParams.get('client_reference_id')||'';if(c.indexOf(':'+active)!==-1)return;c=c.replace(/:AFF-[A-Z0-9-]+$/,'');u.searchParams.set('client_reference_id',c+':'+active);a.href=u.toString();}catch(e){}});}
+  function decorate(){document.querySelectorAll('a[href*="buy.stripe.com"],a[href^="/api/checkout"],a[href*="/api/checkout"]').forEach(function(a){try{var u=new URL(a.href);if(u.host==='buy.stripe.com'){var c=u.searchParams.get('client_reference_id')||'';if(c.indexOf(':'+active)!==-1)return;c=c.replace(/:AFF-[A-Z0-9-]+$/,'');u.searchParams.set('client_reference_id',c+':'+active);}else if(u.pathname==='/api/checkout'){u.searchParams.set('ref',active);}else{return;}a.href=u.toString();}catch(e){}});}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',decorate);else decorate();
 })();
 </script>

@@ -1,8 +1,12 @@
 import { hmacBase64Url } from "./entitlements.js";
+import {
+  BUNSIRUBE_FORMAL_PRICE_JPY,
+  getBunsirubePriceJpy,
+} from "./bunsirube-pricing.js";
 
 export const AFFILIATE_COMMISSION_RATE = 0.5;
-export const AFFILIATE_COMMISSION_AMOUNT = 2750; // 50% of 5500
-export const AFFILIATE_PRODUCT_AMOUNT = 5500;
+export const AFFILIATE_COMMISSION_AMOUNT = Math.floor(BUNSIRUBE_FORMAL_PRICE_JPY * AFFILIATE_COMMISSION_RATE);
+export const AFFILIATE_PRODUCT_AMOUNT = BUNSIRUBE_FORMAL_PRICE_JPY;
 export const AFFILIATE_ATTRIBUTION_DAYS = 30;
 export const AFFILIATE_MIN_PAYOUT = 3000;
 export const AFFILIATE_REFUND_WINDOW_DAYS = 30;
@@ -79,10 +83,11 @@ export async function getClickCount(code, env) {
 export async function recordSale({ code, purchaseId, amount, email, createdAt }, env) {
   const kv = getKv(env);
   if (!kv) throw new Error("BLOG_KV is not configured");
-  const commission = Math.floor((amount || AFFILIATE_PRODUCT_AMOUNT) * AFFILIATE_COMMISSION_RATE);
+  const saleAmount = Number(amount) || getBunsirubePriceJpy(createdAt || Date.now());
+  const commission = Math.floor(saleAmount * AFFILIATE_COMMISSION_RATE);
   const sale = {
     purchaseId,
-    amount: amount || AFFILIATE_PRODUCT_AMOUNT,
+    amount: saleAmount,
     commission,
     email: String(email || "").toLowerCase(),
     createdAt: createdAt || Date.now(),

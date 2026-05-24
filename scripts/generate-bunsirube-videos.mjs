@@ -33,7 +33,7 @@ const DEMO_CONTENT = `
 
 <h2>テーマ選びで見るポイント</h2>
 [bunsirube_compare]
-[bunsirube_compare_item label="記事向け" name="文標" price="¥5,500（税込）" feature="記事型・FAQ・比較表カード・CTA・導線確認" fit="比較記事やレビュー記事を迷わず書きたい人" caution="デザインを細かく作り込む総合テーマではありません" button="デモを見る" url="https://yohelab.com/lp/bunsirube/"]
+[bunsirube_compare_item label="記事向け" name="文標" price="6/30まで¥5,500 / 7/1から¥8,800（税込）" feature="記事型・FAQ・比較表カード・CTA・導線確認" fit="比較記事やレビュー記事を迷わず書きたい人" caution="デザインを細かく作り込む総合テーマではありません" button="デモを見る" url="https://yohelab.com/lp/bunsirube/"]
 [bunsirube_compare_item label="総合型" name="一般的な有料テーマ" price="テーマにより異なる" feature="装飾・ブロック・デザイン調整が豊富" fit="見た目を細かく作り込みたい人" caution="記事構造は自分で組み立てる場面があります" button="比較する" url="https://yohelab.com/lp/bunsirube/demo/"]
 [/bunsirube_compare]
 

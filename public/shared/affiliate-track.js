@@ -1,4 +1,4 @@
-/* Affiliate referral tracking — captures ?ref=AFF-XXXX-XXXX and decorates Stripe checkout links. */
+/* Affiliate referral tracking — captures ?ref=AFF-XXXX-XXXX and decorates checkout links. */
 (function(){
   var REF_RE = /^AFF-[A-Z0-9]{4}-[A-Z0-9]{4}$/;
   var COOKIE_NAME = 'yohelab_aff';
@@ -29,17 +29,21 @@
 
   if (!activeRef) return;
 
-  var STRIPE_HOST = 'buy.stripe.com';
   function decorateLinks() {
-    var links = document.querySelectorAll('a[href*="' + STRIPE_HOST + '"]');
+    var links = document.querySelectorAll('a[href*="buy.stripe.com"],a[href^="/api/checkout"],a[href*="/api/checkout"]');
     links.forEach(function(a){
       try {
         var u = new URL(a.href);
-        if (u.host !== STRIPE_HOST) return;
-        var current = u.searchParams.get('client_reference_id') || '';
-        if (current.indexOf(':' + activeRef) !== -1) return;
-        current = current.replace(/:AFF-[A-Z0-9-]+$/, '');
-        u.searchParams.set('client_reference_id', current + ':' + activeRef);
+        if (u.host === 'buy.stripe.com') {
+          var current = u.searchParams.get('client_reference_id') || '';
+          if (current.indexOf(':' + activeRef) !== -1) return;
+          current = current.replace(/:AFF-[A-Z0-9-]+$/, '');
+          u.searchParams.set('client_reference_id', current + ':' + activeRef);
+        } else if (u.pathname === '/api/checkout') {
+          u.searchParams.set('ref', activeRef);
+        } else {
+          return;
+        }
         a.href = u.toString();
       } catch(e){}
     });

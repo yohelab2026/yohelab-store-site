@@ -120,7 +120,8 @@ async function sendAffiliateSignupEmail({ to, name, code, refLink, isNew, apiKey
     refLink,
     "",
     "このリンクからアクセスして30日以内に購入されると、",
-    "あなたの成果として記録され、購入金額の50%（¥2,750）が報酬となります。",
+    "あなたの成果として記録され、購入金額の50%が報酬となります。",
+    "2026年6月30日までは1件¥2,750、2026年7月1日からは1件¥4,400です。",
     "",
     "■ ダッシュボード（成果確認）",
     `https://yohelab.com/affiliate/dashboard/?code=${code}`,
@@ -155,7 +156,7 @@ async function sendAffiliateSignupEmail({ to, name, code, refLink, isNew, apiKey
         <strong style="font-size:14px;color:#0b3a73;">あなたの紹介リンク</strong><br />
         <a href="${escapeHtml(refLink)}" style="color:#0b3a73;font-weight:700;font-size:14px;word-break:break-all;">${escapeHtml(refLink)}</a>
       </p>
-      <p>このリンクからアクセスして<strong>30日以内</strong>に購入されると、あなたの成果として記録され、購入金額の50%（<strong>¥2,750</strong>）が報酬となります。</p>
+      <p>このリンクからアクセスして<strong>30日以内</strong>に購入されると、あなたの成果として記録され、購入金額の50%が報酬となります。2026年6月30日までは1件<strong>¥2,750</strong>、2026年7月1日からは1件<strong>¥4,400</strong>です。</p>
       <p><a href="https://yohelab.com/affiliate/dashboard/?code=${escapeHtml(code)}" style="display:inline-block;padding:12px 22px;border-radius:10px;background:#087a63;color:#fff;font-weight:900;text-decoration:none;">ダッシュボードを開く</a></p>
       <h3 style="font-size:15px;margin-top:24px;color:#065f46;">支払いについて</h3>
       <ul style="font-size:14px;color:#536174;line-height:1.85;padding-left:20px;">
