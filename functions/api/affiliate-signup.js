@@ -1,9 +1,13 @@
-import { makeAffiliateCode, getAffiliateMeta, setAffiliateMeta, getKv, rateLimitOk, getClientIp } from "../lib/affiliate.js";
+import { AFFILIATE_PROGRAM_ENABLED, makeAffiliateCode, getAffiliateMeta, setAffiliateMeta, getKv, rateLimitOk, getClientIp } from "../lib/affiliate.js";
 
 const DEFAULT_ADMIN_EMAIL = "yohelab2026@gmail.com";
 
 export async function onRequestPost(context) {
   try {
+    if (!AFFILIATE_PROGRAM_ENABLED) {
+      return json({ ok: false, error: "現在、この受付は停止しています。" }, 410);
+    }
+
     const ip = getClientIp(context.request);
     const within = await rateLimitOk(context.env, "signup", ip, { limit: 5, windowSec: 3600 });
     if (!within) {

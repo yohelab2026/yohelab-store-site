@@ -1,5 +1,6 @@
 import { getProductConfig } from "../lib/entitlements.js";
 import { isBunsirubeFormalPriceActive } from "../lib/bunsirube-pricing.js";
+import { AFFILIATE_PROGRAM_ENABLED } from "../lib/affiliate.js";
 
 const PRODUCT_PAYMENT_LINKS = {
   "research-writer": "https://buy.stripe.com/aFa4gr6jd6Pu4KC7eV73G0d?client_reference_id=research-writer",
@@ -19,7 +20,7 @@ export async function onRequestGet(context) {
     return redirect("/contact/");
   }
 
-  const affiliateRef = getAffiliateRef(context.request, url);
+  const affiliateRef = AFFILIATE_PROGRAM_ENABLED ? getAffiliateRef(context.request, url) : "";
   const formalPriceActive = product === "wordpress-theme" && isBunsirubeFormalPriceActive();
   const paymentLink = getPaymentLink(product, context.env, formalPriceActive);
   if (paymentLink) {

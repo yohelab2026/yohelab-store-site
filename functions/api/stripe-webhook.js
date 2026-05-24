@@ -7,6 +7,7 @@ import {
   getAllProducts,
 } from "../lib/entitlements.js";
 import {
+  AFFILIATE_PROGRAM_ENABLED,
   getAffiliateMeta,
   markSaleRefundedByPurchaseId,
   recordSale,
@@ -92,7 +93,7 @@ export async function onRequestPost(context) {
 
     // Record affiliate sale (best-effort — don't block grant on this)
     let affiliateRecorded = false;
-    if (affiliateCode && product === "wordpress-theme") {
+    if (AFFILIATE_PROGRAM_ENABLED && affiliateCode && product === "wordpress-theme") {
       try {
         const meta = await getAffiliateMeta(affiliateCode, context.env);
         if (meta && meta.status !== "suspended") {

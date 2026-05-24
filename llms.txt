@@ -14,7 +14,6 @@
 - [文標 デモ](https://yohelab.com/lp/bunsirube/demo/): 比較記事、レビュー記事、FAQ記事、管理画面、スマホ幅、操作動画の見本。
 - [文標 インストール方法](https://yohelab.com/lp/bunsirube/install/): ZIPアップロード、有効化、初期設定、SEOプラグイン併用、子テーマの使い方。
 - [文標 更新履歴](https://yohelab.com/lp/bunsirube/updates/): バージョンごとの変更内容。
-- [文標 アフィリエイト](https://yohelab.com/lp/bunsirube/affiliate/): 紹介プログラムの概要。
 
 ## ブログ
 
@@ -39,4 +38,3 @@
 - [特定商取引法に基づく表記](https://yohelab.com/legal/commerce/)
 - [プライバシーポリシー](https://yohelab.com/legal/privacy/)
 - [利用規約](https://yohelab.com/legal/terms/)
-- [アフィリエイト規約](https://yohelab.com/legal/affiliate-terms/)

@@ -1,9 +1,13 @@
-import { getAffiliateMeta, listSales, computeAffiliateStats, getClickCount, rateLimitOk, getClientIp } from "../lib/affiliate.js";
+import { AFFILIATE_PROGRAM_ENABLED, getAffiliateMeta, listSales, computeAffiliateStats, getClickCount, rateLimitOk, getClientIp } from "../lib/affiliate.js";
 
 const MISMATCH_RESPONSE = { ok: false, error: "コードまたはメールアドレスが一致しません。" };
 
 export async function onRequestGet(context) {
   try {
+    if (!AFFILIATE_PROGRAM_ENABLED) {
+      return json({ ok: false, error: "現在、この確認画面は停止しています。" }, 410);
+    }
+
     const ip = getClientIp(context.request);
     const within = await rateLimitOk(context.env, "status", ip, { limit: 30, windowSec: 600 });
     if (!within) {

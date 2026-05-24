@@ -7,7 +7,6 @@ const apiBase = "https://api.github.com";
 const productUrl = "https://yohelab.com/lp/bunsirube/";
 const demoUrl = "https://yohelab.com/lp/bunsirube/demo/";
 const installUrl = "https://yohelab.com/lp/bunsirube/install/";
-const affiliateUrl = "https://yohelab.com/lp/bunsirube/affiliate/";
 
 const topics = [
   {
@@ -22,7 +21,7 @@ const topics = [
   {
     key: "comparison-post",
     theme: "比較記事の作り方",
-    audience: "商品紹介・アフィリエイト記事を書きたい人",
+    audience: "商品紹介・レビュー記事を書きたい人",
     angle: "比較表、向いている人、注意点、CTAを先に置く",
     blogTitle: "比較記事の書き方：商品名・価格・違い・CTAを迷わず並べる型",
     noteTitle: "比較記事で迷わないための、最初の見出しセット",
@@ -63,15 +62,6 @@ const topics = [
     blogTitle: "WordPressテーマを入れる前に確認すること：バックアップ・SEO・キャッシュ",
     noteTitle: "テーマ導入で怖いのは、機能より事故。先に見る場所まとめ",
     imagePrompt: "チェックリスト形式で、バックアップ、PHP、SEO、キャッシュ、子テーマが並ぶ画面",
-  },
-  {
-    key: "affiliate-shelf",
-    theme: "アフィリエイトで棚を増やす",
-    audience: "文標を紹介したいブロガー・制作者",
-    angle: "DM営業ではなく、記事やnoteに置いてもらう導線を作る",
-    blogTitle: "文標アフィリエイトの使い方：紹介記事に置きやすいポイント",
-    noteTitle: "DMしない販売。文標をブログの棚に置いてもらう考え方",
-    imagePrompt: "小さな棚にWordPressテーマの箱が置かれ、複数のブログへ矢印が伸びる図解",
   },
 ];
 
@@ -187,7 +177,6 @@ function buildBody(topic, mode, dateParts) {
     `- 文標LP: ${productUrl}`,
     `- デモ: ${demoUrl}`,
     `- インストール方法: ${installUrl}`,
-    `- アフィリエイト: ${affiliateUrl}`,
     "",
     "## 投稿前チェック",
     "- `AI検索に出る`、`必ず売れる`、`順位が上がる` とは書かない",

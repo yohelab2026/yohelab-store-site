@@ -16,12 +16,10 @@ const URLS = [
   { loc: "/lp/bunsirube/install/", lastmod: "2026-05-12", changefreq: "monthly", priority: "0.7" },
   { loc: "/lp/bunsirube/demo/", lastmod: "2026-05-12", changefreq: "monthly", priority: "0.7" },
   { loc: "/lp/bunsirube/updates/", lastmod: "2026-05-12", changefreq: "weekly", priority: "0.6" },
-  { loc: "/lp/bunsirube/affiliate/", lastmod: "2026-05-12", changefreq: "monthly", priority: "0.4" },
   { loc: "/contact/", lastmod: "2026-05-12", changefreq: "monthly", priority: "0.4" },
   { loc: "/legal/commerce/", lastmod: "2026-05-12", changefreq: "monthly", priority: "0.3" },
   { loc: "/legal/privacy/", lastmod: "2026-05-12", changefreq: "monthly", priority: "0.3" },
   { loc: "/legal/terms/", lastmod: "2026-05-12", changefreq: "monthly", priority: "0.3" },
-  { loc: "/legal/affiliate-terms/", lastmod: "2026-05-12", changefreq: "monthly", priority: "0.3" },
 ];
 const STATIC_CANONICAL_SLUGS = new Set(staticBlogSitemapPosts.map((post) => post.slug).filter(Boolean));
 

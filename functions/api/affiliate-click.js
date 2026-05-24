@@ -1,4 +1,4 @@
-import { getAffiliateMeta, recordClick, rateLimitOk, getClientIp } from "../lib/affiliate.js";
+import { AFFILIATE_PROGRAM_ENABLED, getAffiliateMeta, recordClick, rateLimitOk, getClientIp } from "../lib/affiliate.js";
 
 // Lightweight click tracking. Called from LP via fetch(beacon).
 // Idempotent: callers can fire-and-forget.
@@ -12,6 +12,10 @@ export async function onRequestPost(context) {
 
 async function handle(context) {
   try {
+    if (!AFFILIATE_PROGRAM_ENABLED) {
+      return json({ ok: false, active: false }, 200);
+    }
+
     const url = new URL(context.request.url);
     const code = (url.searchParams.get("code") || "").trim().toUpperCase();
     if (!code || !/^AFF-[A-Z0-9]{4}-[A-Z0-9]{4}$/.test(code)) {
