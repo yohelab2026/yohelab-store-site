@@ -118,6 +118,22 @@ export async function onRequestPost(context) {
                 apiKey: context.env.RESEND_API_KEY,
               });
             } catch {}
+            // Notify admin so payouts can be reconciled at month-end without
+            // having to walk Cloudflare KV manually.
+            try {
+              await sendAdminSaleNotification({
+                to: context.env.ADMIN_EMAIL || "support@yohelab.com",
+                code: affiliateCode,
+                affiliateName: meta.name || "",
+                affiliateEmail: meta.email || "",
+                buyerEmail: email,
+                amount,
+                commission: Math.floor(amount * 0.5),
+                purchaseId,
+                from: context.env.RESEND_FROM_EMAIL,
+                apiKey: context.env.RESEND_API_KEY,
+              });
+            } catch {}
           }
         }
       } catch (e) {
@@ -276,6 +292,49 @@ async function sendAffiliateNotification({ to, code, name, commission, from, api
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ from, to, subject, text, html }),
+  });
+}
+
+// Send an admin-only ledger email each time an affiliate sale is recorded.
+// Used at month-end to reconcile payouts without walking Cloudflare KV by hand.
+async function sendAdminSaleNotification({
+  to,
+  code,
+  affiliateName,
+  affiliateEmail,
+  buyerEmail,
+  amount,
+  commission,
+  purchaseId,
+  from,
+  apiKey,
+}) {
+  if (!apiKey || !from || !to) return;
+  const subject = `[Affiliate] 成果記録: ${code} ¥${(commission || 0).toLocaleString()}`;
+  const text = [
+    "アフィリエイト経由の購入が発生しました（pending）。",
+    "",
+    `紹介コード     : ${code}`,
+    `紹介者         : ${affiliateName || "(名前未設定)"} <${affiliateEmail || "(メール未設定)"}>`,
+    `購入者メール   : ${buyerEmail || "(不明)"}`,
+    `購入金額       : ¥${(amount || 0).toLocaleString()}`,
+    `報酬（50%）    : ¥${(commission || 0).toLocaleString()}`,
+    `purchaseId     : ${purchaseId || "(不明)"}`,
+    "",
+    "30日経過後に確定します。返金された場合は無効化されます。",
+    `KV参照: aff:sale:${code}:${purchaseId}`,
+    "",
+    "月末締めで紹介者に振込するときは、",
+    "https://yohelab.com/affiliate/dashboard/?code=" + encodeURIComponent(code),
+    "で確定済み額を確認してください。",
+  ].join("\n");
+  await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ from, to, subject, text }),
   });
 }
 
