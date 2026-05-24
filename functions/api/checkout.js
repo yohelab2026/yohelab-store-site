@@ -7,6 +7,7 @@ const PRODUCT_PAYMENT_LINKS = {
 };
 
 const WORDPRESS_THEME_EARLY_PAYMENT_LINK = "https://buy.stripe.com/bJeaEPfTN2ze2Cubvb73G0e?client_reference_id=wordpress-theme";
+const WORDPRESS_THEME_FORMAL_PAYMENT_LINK = "https://buy.stripe.com/5kQ9ALePJddS2Cu9n373G0g";
 const AFFILIATE_REF_RE = /^AFF-[A-Z0-9]{4}-[A-Z0-9]{4}$/;
 
 export async function onRequestGet(context) {
@@ -71,7 +72,7 @@ function getPaymentLink(product, env, formalPriceActive) {
       env.BUNSIRUBE_PAYMENT_LINK_8800 ||
       env.WORDPRESS_THEME_PAYMENT_LINK_8800 ||
       env.STRIPE_WORDPRESS_THEME_PAYMENT_LINK_8800 ||
-      ""
+      WORDPRESS_THEME_FORMAL_PAYMENT_LINK
     );
   }
 
