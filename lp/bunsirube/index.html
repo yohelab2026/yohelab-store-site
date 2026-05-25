@@ -23,6 +23,7 @@
   <link rel="manifest" href="/site.webmanifest?v=mascot-v2-20260518" />
   <link rel="preload" as="image" href="/yohelab-mascot-v2-20260518-64.png" type="image/png" fetchpriority="high" />
   <link rel="stylesheet" href="/shared/site.min.css" />
+  <link rel="stylesheet" href="/shared/bunsirube-lp.css" />
   <script type="application/ld+json">
   {"@context":"https://schema.org","@graph":[
     {"@type":"WebSite","name":"よへラボ","url":"https://yohelab.com/"},
@@ -122,20 +123,6 @@
       border-radius:50%;
       background:var(--lp-cyan);
       box-shadow:0 0 0 5px rgba(34,199,213,.14);
-    }
-    .dual-badge {
-      display:inline-flex; align-items:center; gap:4px;
-      padding:5px 12px; border-radius:999px;
-      background:linear-gradient(135deg,#0d8f72,#1fb6cf);
-      color:#fff; font-size:11px; font-weight:900;
-      letter-spacing:.08em; text-transform:none;
-      box-shadow:0 6px 14px rgba(13,143,114,.22);
-      margin-right:4px;
-    }
-    .dual-badge-light {
-      background:transparent; color:var(--lp-muted);
-      box-shadow:none; font-size:12px; letter-spacing:0;
-      padding:5px 0;
     }
     .theme-hero h1 {
       font-size:clamp(38px,5.8vw,72px);
@@ -1496,34 +1483,16 @@
           <p>文標は、これらのAI検索エンジンが参照しやすい記事構造を、最初から備えています。</p>
         </div>
         <div class="engines-wall" aria-label="対応AI検索エンジン">
-          <div class="engine-card"><div class="engine-logo" aria-hidden="true"><svg viewBox="0 0 40 40" width="40" height="40"><circle cx="20" cy="20" r="18" fill="none" stroke="#10a37f" stroke-width="2.5"/><path d="M14 18 L20 24 L26 18" fill="none" stroke="#10a37f" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="engine-name">ChatGPT</div><div class="engine-sub">OpenAI</div></div>
-          <div class="engine-card"><div class="engine-logo" aria-hidden="true"><svg viewBox="0 0 40 40" width="40" height="40"><path d="M20 6 L32 32 L8 32 Z" fill="none" stroke="#cc7f4f" stroke-width="2.5" stroke-linejoin="round"/><circle cx="20" cy="24" r="2.5" fill="#cc7f4f"/></svg></div><div class="engine-name">Claude</div><div class="engine-sub">Anthropic</div></div>
-          <div class="engine-card"><div class="engine-logo" aria-hidden="true"><svg viewBox="0 0 40 40" width="40" height="40"><path d="M20 8 C26 12 32 18 32 20 C32 22 26 28 20 32 C14 28 8 22 8 20 C8 18 14 12 20 8 Z" fill="none" stroke="#4285f4" stroke-width="2.5" stroke-linejoin="round"/><circle cx="20" cy="20" r="3" fill="#4285f4"/></svg></div><div class="engine-name">Gemini</div><div class="engine-sub">Google</div></div>
-          <div class="engine-card"><div class="engine-logo" aria-hidden="true"><svg viewBox="0 0 40 40" width="40" height="40"><circle cx="20" cy="20" r="12" fill="none" stroke="#20b8cd" stroke-width="2.5"/><line x1="28" y1="28" x2="34" y2="34" stroke="#20b8cd" stroke-width="2.5" stroke-linecap="round"/></svg></div><div class="engine-name">Perplexity</div><div class="engine-sub">AI Search</div></div>
-          <div class="engine-card"><div class="engine-logo" aria-hidden="true"><svg viewBox="0 0 40 40" width="40" height="40"><rect x="6" y="14" width="28" height="14" rx="3" fill="none" stroke="#fbbc04" stroke-width="2.5"/><circle cx="13" cy="21" r="1.8" fill="#fbbc04"/><circle cx="20" cy="21" r="1.8" fill="#fbbc04"/><circle cx="27" cy="21" r="1.8" fill="#fbbc04"/></svg></div><div class="engine-name">AI Overviews</div><div class="engine-sub">Google検索</div></div>
+          <div class="engine-card"><div class="engine-logo" aria-hidden="true" style="color:#10a37f">◉</div><div class="engine-name">ChatGPT</div><div class="engine-sub">OpenAI</div></div>
+          <div class="engine-card"><div class="engine-logo" aria-hidden="true" style="color:#cc7f4f">▲</div><div class="engine-name">Claude</div><div class="engine-sub">Anthropic</div></div>
+          <div class="engine-card"><div class="engine-logo" aria-hidden="true" style="color:#4285f4">✦</div><div class="engine-name">Gemini</div><div class="engine-sub">Google</div></div>
+          <div class="engine-card"><div class="engine-logo" aria-hidden="true" style="color:#20b8cd">⌕</div><div class="engine-name">Perplexity</div><div class="engine-sub">AI Search</div></div>
+          <div class="engine-card"><div class="engine-logo" aria-hidden="true" style="color:#fbbc04">▤</div><div class="engine-name">AI Overviews</div><div class="engine-sub">Google検索</div></div>
         </div>
         <p class="engines-foot">※ ロゴ・名称は各社の商標です。文標が各社の公式パートナーであることを示すものではありません。各AIへの引用・表示は保証しません。文標は「AIに読み取られやすい本文構造」を提供します。</p>
       </div>
     </section>
-    <style>
-      .engines-head { text-align:center; max-width:680px; margin:0 auto 22px; }
-      .engines-eyebrow { display:inline-block; font-size:11px; font-weight:900; letter-spacing:.18em; color:#1fb6cf; background:rgba(31,182,207,.12); padding:5px 12px; border-radius:999px; margin-bottom:10px; }
-      .engines-head p { color:rgba(255,255,255,.78); font-size:14px; line-height:1.85; margin:0; }
-      .engines-wall { display:grid; grid-template-columns:repeat(5,1fr); gap:12px; max-width:980px; margin:0 auto; }
-      .engine-card { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1); border-radius:14px; padding:18px 12px; text-align:center; transition:background .2s,border-color .2s,transform .2s; }
-      .engine-card:hover { background:rgba(255,255,255,.08); border-color:rgba(31,182,207,.4); transform:translateY(-2px); }
-      .engine-logo { display:grid; place-items:center; margin-bottom:10px; }
-      .engine-name { font-size:14px; font-weight:900; color:#fff; letter-spacing:.02em; }
-      .engine-sub { font-size:11px; color:rgba(255,255,255,.55); margin-top:2px; }
-      .engines-foot { color:rgba(255,255,255,.5); font-size:11px; line-height:1.7; text-align:center; margin:22px auto 0; max-width:740px; }
-      @media (max-width:720px) {
-        .engines-wall { grid-template-columns:repeat(3,1fr); }
-        .engines-wall .engine-card:nth-child(4), .engines-wall .engine-card:nth-child(5) { /* keep visible */ }
-      }
-      @media (max-width:420px) {
-        .engines-wall { grid-template-columns:repeat(2,1fr); }
-      }
-    </style>
+
 
     <section class="lp-section" id="dual-optimization" style="padding-top:56px;padding-bottom:56px;background:linear-gradient(180deg,#f5fbf9 0%,#ffffff 100%);">
       <div class="container">
@@ -1561,24 +1530,7 @@
         <p class="dual-foot">※ 特定のAI検索や検索結果での表示順位・採用は保証しません。文標は「AIにも人にも読み取られやすい記事構造」を提供するテーマです。最後に評価するのは記事の中身です。</p>
       </div>
     </section>
-    <style>
-      .dual-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:20px; margin-top:8px; }
-      .dual-card { background:#fff; border:1px solid #dce7e1; border-radius:22px; padding:28px 26px; box-shadow:0 16px 40px rgba(11,32,68,.06); position:relative; overflow:hidden; }
-      .dual-card::before { content:""; position:absolute; top:0; left:0; right:0; height:4px; background:linear-gradient(90deg,transparent,currentColor,transparent); opacity:.7; }
-      .dual-card.dual-ai { color:#0d8f72; }
-      .dual-card.dual-seo { color:#2f7df6; }
-      .dual-card-icon { font-size:36px; line-height:1; margin-bottom:8px; }
-      .dual-card-tag { display:inline-block; font-size:11px; font-weight:900; letter-spacing:.1em; text-transform:uppercase; color:currentColor; background:rgba(0,0,0,.04); padding:3px 9px; border-radius:4px; }
-      .dual-card h3 { color:var(--lp-ink); font-size:20px; font-weight:900; margin:12px 0 10px; line-height:1.45; }
-      .dual-card > p { color:var(--lp-muted); font-size:14px; line-height:1.85; margin:0 0 14px; }
-      .dual-card-list { list-style:none; padding:0; margin:0; display:grid; gap:8px; }
-      .dual-card-list li { font-size:13.5px; color:var(--lp-ink); line-height:1.7; padding-left:22px; position:relative; }
-      .dual-card-list li::before { content:"✓"; position:absolute; left:0; top:0; color:currentColor; font-weight:900; color:#0d8f72; }
-      .dual-card.dual-seo .dual-card-list li::before { color:#2f7df6; }
-      .dual-card-list li strong { font-weight:900; }
-      .dual-foot { text-align:center; color:var(--lp-muted); font-size:12px; line-height:1.8; margin:20px 0 0; }
-      @media (max-width:780px) { .dual-grid { grid-template-columns:1fr; } }
-    </style>
+
 
     <section class="lp-section" id="quick-judge">
       <div class="container">
@@ -1781,74 +1733,7 @@
         <p class="change-foot">この変化は「テーマだけ」では完成しません。<strong>記事を書く側の意志</strong>と、<strong>道具がそれを助ける</strong>こと、両方で起こります。文標は、その「助ける側」を担当します。</p>
       </div>
     </section>
-    <style>
-      .change-timeline {
-        position:relative;
-        max-width:760px;
-        margin:24px auto 0;
-        padding-left:64px;
-      }
-      .change-timeline::before {
-        content:""; position:absolute; left:30px; top:18px; bottom:18px; width:3px;
-        background:linear-gradient(180deg,#0d8f72 0%,#1fb6cf 100%);
-        border-radius:999px;
-      }
-      .change-step {
-        position:relative;
-        background:#fff;
-        border:1px solid #dce7e1;
-        border-radius:18px;
-        padding:22px 26px;
-        margin-bottom:18px;
-        box-shadow:0 12px 32px rgba(11,32,68,.06);
-        transition:transform .2s, box-shadow .2s;
-      }
-      .change-step:hover { transform:translateX(4px); box-shadow:0 16px 40px rgba(11,32,68,.1); }
-      .change-step::before {
-        content:""; position:absolute; left:-54px; top:24px;
-        width:48px; height:3px; background:#dce7e1;
-      }
-      .change-step::after {
-        content:""; position:absolute; left:-49px; top:14px;
-        width:24px; height:24px; border-radius:50%;
-        background:#fff; border:3px solid #0d8f72;
-        box-shadow:0 0 0 4px rgba(13,143,114,.12);
-        transition:transform .2s;
-      }
-      .change-step:nth-child(2)::after { border-color:#0d8f72; }
-      .change-step:nth-child(3)::after { border-color:#15a48a; }
-      .change-step:nth-child(4)::after { border-color:#1bbaa3; }
-      .change-step:nth-child(5)::after { border-color:#1fb6cf; background:#1fb6cf; box-shadow:0 0 0 6px rgba(31,182,207,.18); }
-      .change-step:hover::after { transform:scale(1.15); }
-      .change-day {
-        display:inline-block;
-        font-size:11px; font-weight:900;
-        letter-spacing:.14em;
-        color:#0d8f72; background:#e6f8f2;
-        padding:5px 12px; border-radius:999px;
-        margin-bottom:10px;
-      }
-      .change-step.change-final {
-        background:linear-gradient(135deg,#fff 0%,#f0fbfd 100%);
-        border:1px solid #b8e9f1;
-        box-shadow:0 16px 44px rgba(31,182,207,.15);
-      }
-      .change-step.change-final .change-day {
-        color:#fff;
-        background:linear-gradient(135deg,#0d8f72,#1fb6cf);
-      }
-      .change-step h3 { font-size:18px; font-weight:900; color:var(--lp-ink); margin:6px 0 10px; line-height:1.5; }
-      .change-step p { color:var(--lp-muted); font-size:14px; line-height:1.85; margin:0; }
-      .change-step p strong { color:var(--lp-ink); font-weight:900; }
-      .change-foot { text-align:center; color:var(--lp-muted); font-size:13.5px; line-height:1.85; margin:24px 0 0; max-width:680px; margin-left:auto; margin-right:auto; }
-      .change-foot strong { color:var(--lp-ink); }
-      @media (max-width:600px) {
-        .change-timeline { padding-left:36px; }
-        .change-timeline::before { left:13px; }
-        .change-step::before { left:-30px; width:26px; }
-        .change-step::after { left:-27px; width:18px; height:18px; top:18px; }
-      }
-    </style>
+
 
     <section class="lp-section">
       <div class="container">
@@ -1987,11 +1872,7 @@
         </div>
       </div>
     </section>
-    <style>
-      @media (max-width:640px) {
-        .speed-grid { grid-template-columns: repeat(2,1fr) !important; }
-      }
-    </style>
+
 
     <section class="lp-section" id="market-facts" style="padding-top:40px;padding-bottom:40px;background:linear-gradient(180deg,#f5fbf9 0%,#ffffff 100%);">
       <div class="container">
@@ -2025,21 +1906,7 @@
         <p class="market-foot">数値は変動します。AI検索（Google AI Overviews等）への表示や検索順位は保証していません。文標は、本文・FAQ・出典・構造化データを「内容と一致させやすくする」ためのテーマです。</p>
       </div>
     </section>
-    <style>
-      .market-facts-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
-      .fact-card { background:#fff; border:1px solid #dce7e1; border-radius:18px; padding:22px 20px; text-align:left; }
-      .fact-number { font-size:40px; font-weight:900; line-height:1; letter-spacing:-.04em; color:#0a8559; }
-      .fact-number span { font-size:18px; font-weight:900; margin-left:2px; color:#0d8f72; }
-      .fact-label { margin-top:10px; font-size:13.5px; font-weight:900; color:#0b1b13; line-height:1.55; }
-      .fact-source { margin-top:10px; font-size:11.5px; color:#5b6b84; line-height:1.7; }
-      .market-foot { margin-top:18px; font-size:12px; color:#5b6b84; line-height:1.8; text-align:center; }
-      @media (max-width:880px) {
-        .market-facts-grid { grid-template-columns:repeat(2,1fr); }
-      }
-      @media (max-width:520px) {
-        .market-facts-grid { grid-template-columns:1fr; }
-      }
-    </style>
+
 
     <section class="lp-section" id="why-now" style="padding-top:48px;padding-bottom:48px;background:linear-gradient(180deg,#ffffff 0%,#f5fbf9 100%);">
       <div class="container">
@@ -2136,24 +2003,7 @@
         </div>
       </div>
     </section>
-    <style>
-      .why-now-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:22px; }
-      .why-card-wide { grid-column: 1 / -1; }
-      .why-card { background:#fff; border:1px solid #dce7e1; border-radius:22px; padding:24px; box-shadow:0 14px 36px rgba(11,32,68,.06); }
-      .why-head { margin-bottom:16px; }
-      .why-tag { display:inline-block; padding:4px 10px; border-radius:999px; background:#e6f8f2; color:#075c4c; font-size:11px; font-weight:900; letter-spacing:.06em; text-transform:uppercase; margin-bottom:8px; }
-      .why-head h3 { font-size:17px; margin:6px 0; line-height:1.55; }
-      .why-head p { color:var(--lp-muted); font-size:13.5px; line-height:1.8; margin:0; }
-      .why-chart { width:100%; height:auto; display:block; }
-      .why-source { color:var(--lp-muted); font-size:11.5px; line-height:1.7; margin:10px 0 0; }
-      .aff-bars { background:#f5fbf9; border-radius:14px; padding:14px; margin-top:6px; }
-      .aff-cta { display:flex; gap:12px; flex-wrap:wrap; margin-top:16px; }
-      .aff-cta .btn { flex:1; min-width:240px; justify-content:center; }
-      @media (max-width:760px) {
-        .why-now-grid { grid-template-columns:1fr; }
-        .aff-cta .btn { min-width:0; }
-      }
-    </style>
+
 
     <section class="lp-section">
       <div class="container">
@@ -2487,84 +2337,7 @@
         </div>
       </div>
     </section>
-    <style>
-      .final-cta-dramatic {
-        position:relative;
-        background:
-          radial-gradient(circle at 20% 30%, rgba(31,182,207,.35), transparent 45%),
-          radial-gradient(circle at 80% 70%, rgba(13,143,114,.4), transparent 50%),
-          linear-gradient(135deg,#0a3c33 0%,#062a24 100%);
-        color:#fff;
-        padding:80px 0 !important;
-        overflow:hidden;
-      }
-      .final-cta-dramatic::before {
-        content:""; position:absolute; inset:0;
-        background-image:
-          linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
-        background-size:48px 48px;
-        mask-image:radial-gradient(ellipse 80% 70% at 50% 50%,#000,transparent 80%);
-        -webkit-mask-image:radial-gradient(ellipse 80% 70% at 50% 50%,#000,transparent 80%);
-        pointer-events:none;
-      }
-      .final-cta-dramatic .container { position:relative; z-index:1; text-align:center; max-width:760px; margin:0 auto; }
-      .final-cta-badge {
-        display:inline-block;
-        font-size:12px; font-weight:900; letter-spacing:.18em;
-        background:linear-gradient(135deg,#ffd54f,#ffae00); color:#3a2a00;
-        padding:8px 18px; border-radius:999px;
-        box-shadow:0 12px 28px rgba(255,174,0,.28);
-        margin-bottom:18px;
-      }
-      .final-cta-dramatic h2 {
-        font-size:clamp(28px,4.8vw,46px) !important;
-        line-height:1.18 !important; letter-spacing:-.04em !important;
-        margin:0 0 24px !important; color:#fff !important;
-      }
-      .final-cta-dramatic h2 strong { color:#ffd54f; }
-      .final-cta-price {
-        display:inline-flex; align-items:baseline; gap:18px;
-        background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.14);
-        padding:18px 28px; border-radius:18px;
-        margin:8px auto 22px;
-        flex-wrap:wrap; justify-content:center;
-      }
-      .final-price-now {
-        font-size:48px; font-weight:900; line-height:1; letter-spacing:-.04em;
-        color:#fff;
-      }
-      .final-price-now small { font-size:18px; font-weight:700; margin-left:4px; }
-      .final-price-meta { display:flex; flex-direction:column; gap:4px; text-align:left; }
-      .final-strike { font-size:13px; color:rgba(255,255,255,.6); text-decoration:line-through; }
-      .final-save { font-size:13px; font-weight:900; color:#ffd54f; letter-spacing:.04em; }
-      .final-cta-dramatic p {
-        font-size:15px !important; line-height:1.85 !important;
-        color:rgba(255,255,255,.86) !important;
-        max-width:560px; margin:0 auto 26px !important;
-      }
-      .final-cta-btn {
-        display:inline-flex !important; align-items:center !important; gap:8px !important;
-        background:linear-gradient(135deg,#ffd54f,#ffae00) !important; color:#3a2a00 !important;
-        border:none !important;
-        padding:18px 36px !important; border-radius:14px !important;
-        font-size:17px !important; font-weight:900 !important; letter-spacing:.02em !important;
-        box-shadow:0 18px 40px rgba(255,174,0,.32) !important;
-        transition:transform .15s, box-shadow .15s !important;
-      }
-      .final-cta-btn:hover { transform:translateY(-2px); box-shadow:0 22px 48px rgba(255,174,0,.42) !important; }
-      .final-cta-trust {
-        display:flex; justify-content:center; gap:20px; flex-wrap:wrap;
-        margin-top:26px;
-        font-size:12.5px; font-weight:700; color:rgba(255,255,255,.7);
-      }
-      .final-cta-trust span { white-space:nowrap; }
-      @media (max-width:560px) {
-        .final-cta-dramatic { padding:60px 0 !important; }
-        .final-price-now { font-size:38px; }
-        .final-cta-btn { padding:16px 26px !important; font-size:15px !important; }
-      }
-    </style>
+
   </main>
 
   <aside class="sticky-cta-bar" aria-label="文標の固定購入案内">
