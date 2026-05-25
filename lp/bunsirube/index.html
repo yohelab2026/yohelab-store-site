@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>文標（ぶんしるべ）| AI検索時代、記事は構造まで読まれるWordPressテーマ | よへラボ</title>
-  <meta name="description" content="文標（ぶんしるべ）は、SEOとAI検索時代の記事構造を意識し、結論・根拠・比較・FAQ・出典・CTAを迷わず並べられる軽量WordPressテーマ。7種類のテンプレ、構造化データ、llms.txt、導線確認まで備えます。" />
-  <meta property="og:title" content="文標（ぶんしるべ）| AI検索時代、記事は構造まで読まれるWordPressテーマ" />
-  <meta property="og:description" content="SEOとAI検索時代の記事構造を意識し、結論・根拠・比較・FAQ・出典・CTAを迷わず並べられる軽量WordPressテーマ。" />
+  <title>文標（ぶんしるべ）| AI検索時代の記事構造とSEOを整えるWordPressテーマ | よへラボ</title>
+  <meta name="description" content="文標（ぶんしるべ）は、SEOとAI検索時代の記事構造を意識し、短い答え・根拠・FAQ・比較表・出典・CTAを迷わず並べられる軽量WordPressテーマ。7種類のテンプレ、構造化データ、llms.txt、導線確認まで備えます。" />
+  <meta property="og:title" content="文標（ぶんしるべ）| AI検索時代の記事構造とSEOを整えるWordPressテーマ" />
+  <meta property="og:description" content="SEOとAI検索時代の記事構造を意識し、短い答え・根拠・FAQ・比較表・出典・CTAを迷わず並べられる軽量WordPressテーマ。" />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="ja_JP" />
   <meta property="og:url" content="https://yohelab.com/lp/bunsirube/" />
@@ -14,8 +14,8 @@
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="文標 | AI検索時代、記事は構造まで読まれるWordPressテーマ" />
-  <meta name="twitter:description" content="結論・根拠・比較・FAQ・出典・CTAを、人にもAIにも読み取りやすく並べるWordPressテーマ。" />
+  <meta name="twitter:title" content="文標 | AI検索時代の記事構造とSEOを整えるWordPressテーマ" />
+  <meta name="twitter:description" content="短い答え・根拠・FAQ・比較表・出典・CTAを、人にもAIにも読み取りやすく並べるWordPressテーマ。" />
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1" />
   <meta name="theme-color" content="#087a63" />
   <meta name="twitter:image" content="https://yohelab.com/assets/og/bunsirube-og.png" />
@@ -222,121 +222,6 @@
       margin:0;
       line-height:1.65;
       font-size:13px;
-    }
-    .structure-rail {
-      display:flex;
-      flex-wrap:wrap;
-      gap:9px;
-      margin:18px 0 0;
-    }
-    .structure-rail span {
-      display:inline-grid;
-      place-items:center;
-      min-width:64px;
-      padding:9px 12px;
-      border-radius:999px;
-      background:rgba(255,255,255,.82);
-      border:1px solid rgba(47,125,246,.16);
-      color:#075c4c;
-      font-size:13px;
-      font-weight:900;
-      box-shadow:0 10px 26px rgba(38,78,118,.08);
-    }
-    .old-new-grid {
-      display:grid;
-      grid-template-columns:1fr auto 1fr;
-      gap:18px;
-      align-items:stretch;
-      margin-top:28px;
-    }
-    .old-new-arrow {
-      align-self:center;
-      display:grid;
-      place-items:center;
-      width:48px;
-      height:48px;
-      border-radius:50%;
-      background:linear-gradient(135deg,var(--lp-blue),var(--lp-cyan));
-      color:#fff;
-      font-weight:900;
-      box-shadow:0 14px 34px rgba(47,125,246,.24);
-    }
-    .pain-grid {
-      display:grid;
-      grid-template-columns:repeat(5,1fr);
-      gap:12px;
-      margin-top:20px;
-    }
-    .pain-card {
-      min-height:150px;
-      padding:18px;
-      border-radius:22px;
-      background:#fff;
-      border:1px solid #dfeaf5;
-      box-shadow:0 16px 42px rgba(25,86,120,.08);
-    }
-    .pain-card strong {
-      display:block;
-      margin-bottom:8px;
-      color:#075c4c;
-      font-size:17px;
-      letter-spacing:-.03em;
-    }
-    .pain-card span {
-      color:var(--lp-muted);
-      font-size:13px;
-      line-height:1.75;
-      font-weight:700;
-    }
-    .position-flow {
-      display:grid;
-      grid-template-columns:repeat(6,1fr);
-      gap:10px;
-      margin:24px 0;
-    }
-    .position-flow span {
-      padding:16px 10px;
-      border-radius:18px;
-      background:linear-gradient(180deg,#fff,#f4fbf8);
-      border:1px solid #cfe7dd;
-      color:#075c4c;
-      text-align:center;
-      font-weight:900;
-      box-shadow:0 12px 28px rgba(11,143,114,.08);
-    }
-    .tool-kit-grid {
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:14px;
-      margin-top:22px;
-    }
-    .tool-kit-card {
-      padding:20px;
-      border-radius:22px;
-      background:#fff;
-      border:1px solid #dfeaf5;
-      box-shadow:0 16px 42px rgba(25,86,120,.07);
-    }
-    .tool-kit-card strong {
-      display:block;
-      color:var(--lp-blue);
-      font-size:28px;
-      line-height:1;
-      margin-bottom:8px;
-      letter-spacing:-.04em;
-    }
-    .tool-kit-card span {
-      display:block;
-      color:var(--lp-ink);
-      font-size:16px;
-      font-weight:900;
-      margin-bottom:6px;
-    }
-    .tool-kit-card p {
-      margin:0;
-      color:var(--lp-muted);
-      font-size:13px;
-      line-height:1.75;
     }
     .refund-banner {
       max-width:520px;
@@ -1414,20 +1299,8 @@
       .value-grid,
       .problem-grid,
       .feature-grid,
-      .template-grid,
-      .tool-kit-grid {
+      .template-grid {
         grid-template-columns:repeat(2,1fr);
-      }
-      .pain-grid,
-      .position-flow {
-        grid-template-columns:repeat(2,1fr);
-      }
-      .old-new-grid {
-        grid-template-columns:1fr;
-      }
-      .old-new-arrow {
-        transform:rotate(90deg);
-        margin:0 auto;
       }
     }
     @media (max-width:640px) {
@@ -1437,10 +1310,7 @@
       .value-grid,
       .problem-grid,
       .feature-grid,
-      .template-grid,
-      .pain-grid,
-      .position-flow,
-      .tool-kit-grid {
+      .template-grid {
         grid-template-columns:1fr;
       }
       .mock-screen {
@@ -1531,16 +1401,13 @@
     <section class="theme-hero">
       <div class="container hero-layout">
         <div>
-          <p class="eyebrow"><span class="dual-badge">BUNSIRUBE</span><span class="dual-badge">AI SEARCH ERA</span></p>
-          <h1>AI検索時代、<strong>記事は構造まで読まれる。</strong></h1>
-          <p class="hero-lead">文標（ぶんしるべ）は、結論・根拠・比較・FAQ・出典・CTAを迷わず置けるWordPressテーマ。白紙から悩まない。プラグインを継ぎ足さない。人にもAIにも伝わる記事の型を、今日からWordPressに作ります。</p>
-          <p class="hero-lead" style="font-size:15px;line-height:1.8;margin-top:-10px;">SEOとAI検索時代の記事構造を同時に意識して、FAQPage / Article / BreadcrumbList 等の構造化データと、本文の見える内容をそろえやすくします。<br /><small style="color:var(--lp-muted);">※検索順位・AI表示・引用・収益は保証しません。文標は「伝わる記事構造」を作りやすくするテーマです。</small></p>
-          <div class="structure-rail" aria-label="文標で整える記事構造">
-            <span>比較</span><span>FAQ</span><span>出典</span><span>CTA</span>
-          </div>
+          <p class="eyebrow"><span class="dual-badge">🤖 AI検索最適化</span><span class="dual-badge">🔍 SEO最適化</span><span class="dual-badge dual-badge-light">— 両対応の軽量WordPressテーマ</span></p>
+          <h1>AIに聞かれる時代に、<strong>あなたの記事が“ちゃんと伝わる場所”を作る。</strong></h1>
+          <p class="hero-lead">文標（ぶんしるべ）は、AI検索時代に「読み取られる記事構造」を、迷わず書き始められる軽量WordPressテーマ。短い答え・根拠・FAQ・比較表・出典・CTAを、迷いにくい順番で置けるようにします。</p>
+          <p class="hero-lead" style="font-size:15px;line-height:1.8;margin-top:-10px;">ChatGPT・Claude・Gemini・Perplexity・Google AI OverviewsがWebの根拠を読む場面を意識して、FAQPage / Article / BreadcrumbList 等の構造化データと、本文の見える内容をそろえやすくします。SEOとAI検索時代の記事構造、両方を同時に育てるテーマです。<br /><small style="color:var(--lp-muted);">※AI検索や検索結果での表示・引用・順位は保証しません。文標は「読み取られやすい記事構造」を作りやすくするテーマです。</small></p>
           <div class="hero-actions">
-            <a class="btn btn-primary btn-xl" href="/api/checkout?product=wordpress-theme">発売記念価格で文標を始める →</a>
-            <a class="btn btn-outline btn-xl" href="/lp/bunsirube/demo/">先にデモを見る</a>
+            <a class="btn btn-primary btn-xl" href="/api/checkout?product=wordpress-theme">文標を購入してZIPを受け取る（30日返金保証つき） →</a>
+            <a class="btn btn-outline btn-xl" href="/lp/bunsirube/install/">インストール方法を見る</a>
           </div>
           <div class="refund-banner">30日返金保証つき。理由を問わず全額返金。Stripe経由で5〜10営業日が目安です。</div>
           <div class="price-push" aria-label="発売記念価格">
@@ -1577,12 +1444,12 @@
               <div class="editor-card">
                 <span class="template-chip">比較記事</span>
                 <span class="template-chip">FAQ</span>
-                <div class="editor-card-title">答え → 根拠 → 比較 → FAQ → CTA</div>
+                <div class="editor-card-title">結論 → 理由 → 比較 → FAQ の順で書ける</div>
                 <div class="line w78"></div>
                 <div class="line"></div>
                 <div class="line w60"></div>
                 <div style="margin-top:14px;">
-                  <span class="template-chip">出典</span>
+                  <span class="template-chip">要点まとめ</span>
                   <span class="template-chip">CTA</span>
                 </div>
               </div>
@@ -1605,8 +1472,8 @@
     <div class="value-strip">
       <div class="container value-grid">
         <div class="value-item"><strong>7種</strong><span>記事テンプレート</span></div>
-        <div class="value-item"><strong>FAQ</strong><span>JSON-LD対応</span></div>
-        <div class="value-item"><strong>導線</strong><span>CTAクリック確認</span></div>
+        <div class="value-item"><strong>FAQ</strong><span>構造化データ対応</span></div>
+        <div class="value-item"><strong>解析</strong><span>内部 / 外部を選択</span></div>
         <div class="value-item"><strong>6/30まで¥5,500税込</strong><span>7/1から¥8,800税込 買い切り</span></div>
       </div>
     </div>
@@ -1633,31 +1500,32 @@
       <div class="container">
         <div class="section-head">
           <span class="section-label" style="background:linear-gradient(135deg,#0d8f72,#1fb6cf);color:#fff;padding:4px 12px;border-radius:999px;">🚀 New Era of Search</span>
-          <h2 style="margin-top:14px;">今までの記事構成のまま、<br /><strong style="color:#0a8559;">AI検索時代に入っていいのか。</strong></h2>
-          <p>Google検索だけを見て記事を書く時代から、AIがWeb上の情報を読み取り、要約し、回答する時代へ。これからの記事は、ただ読みやすいだけでは足りません。どこが答えで、どこが根拠で、どこがFAQなのか。ページの中から取り出しやすい構造が必要になります。</p>
+          <h2 style="margin-top:14px;">「SEOテーマ」じゃない。<br /><strong style="color:#0a8559;">AI検索 × SEO、両方のために設計された</strong>テーマです。</h2>
+          <p>Google検索にはAI OverviewsやAI Modeが入り、ChatGPT・Claude・Gemini・Perplexityのように、質問へ直接答える体験も広がっています。<br />これからの記事は、人に読みやすいだけでなく、<strong>AIにも文脈を取り出しやすい構造</strong> を持っているかで、見つけられ方に差が出ます。</p>
         </div>
-        <div class="old-new-grid">
+        <div class="dual-grid">
           <article class="dual-card dual-ai">
-            <div class="dual-card-icon">旧</div>
-            <span class="dual-card-tag">古い作り方</span>
-            <h3>見出しと本文を、なんとなく並べる。</h3>
-            <p>記事ごとに構成が変わり、答え・根拠・比較・FAQ・CTAの位置がバラバラになる。読む人にも、AIにも、ページの文脈が取り出しにくくなります。</p>
+            <div class="dual-card-icon">🤖</div>
+            <span class="dual-card-tag">AI検索最適化</span>
+            <h3>AIが回答に使いやすい本文構造</h3>
+            <p>「短い答え → 根拠 → 比較 → FAQ → 出典」の順番を、テンプレートがガイドします。明確な答え、根拠、出典が分かれているほど、読者にもAIにも本文の文脈が伝わりやすくなります。</p>
             <ul class="dual-card-list">
-              <li>白紙から構成を考える</li>
-              <li>FAQや比較表をあとから足す</li>
-              <li>CTAが本文の流れから浮く</li>
+              <li><strong>FAQPage JSON-LD</strong>を自動生成（質問→回答のペアをAIが取り出しやすい）</li>
+              <li><strong>Article / Person / BreadcrumbList</strong>の構造化データ標準対応</li>
+              <li><strong>llms.txt</strong> をテーマ側で自動生成（AIクローラー向け案内）</li>
+              <li><strong>出典・引用ブロック</strong>を本文に置きやすい</li>
             </ul>
           </article>
-          <div class="old-new-arrow" aria-hidden="true">→</div>
           <article class="dual-card dual-seo">
-            <div class="dual-card-icon">新</div>
-            <span class="dual-card-tag">新しい作り方</span>
-            <h3>答え・根拠・FAQまで、型から書く。</h3>
-            <p><strong>AI検索 × SEO</strong>の時代に向けて、短い答え、根拠、比較、FAQ、出典、CTAを最初から置けるようにする。文標は、そこに特化したテーマです。</p>
+            <div class="dual-card-icon">🔍</div>
+            <span class="dual-card-tag">SEO最適化</span>
+            <h3>Google検索でも、基本の土台を整える</h3>
+            <p>従来のSEOで大切なテクニカル要素も、主要なものを押さえています。<strong>Lighthouse 100/100/100/100</strong>（Performance / Accessibility / Best Practices / SEO）。重いプラグインを足さなくても、テーマ単体で土台が整います。</p>
             <ul class="dual-card-list">
-              <li>7種類の記事テンプレート</li>
-              <li>FAQPage JSON-LD / Article / BreadcrumbList</li>
-              <li>出典・比較表・CTAを本文に置きやすい</li>
+              <li><strong>Core Web Vitals</strong>を考慮した軽量設計（余計なCSS/JSなし）</li>
+              <li><strong>セマンティックHTML</strong>と適切な見出し階層</li>
+              <li><strong>OG・Twitter Cards・canonical</strong> 自動出力</li>
+              <li><strong>サイトマップ・breadcrumb</strong> 自動対応</li>
             </ul>
           </article>
         </div>
@@ -1668,19 +1536,35 @@
 
     <section class="lp-section" id="quick-judge">
       <div class="container">
-        <div class="section-head">
-          <span class="section-label">Pain</span>
-          <h2>いい内容なのに、伝わりにくい。<br />その原因は、文章力だけじゃない。</h2>
-          <p>記事の「置き方」が毎回バラバラになると、読む人は迷います。AI検索時代には、ページの中にある答え、根拠、比較、FAQ、CTAの場所が見えやすいことも大事になります。</p>
+        <div class="quick-judge">
+          <article class="judge-board">
+            <span class="section-label">60 seconds</span>
+            <h2>文標で何が変わるか、先に見る。</h2>
+            <p>長い説明を読む前に、買う理由だけを短くまとめます。文標は、記事を書く前の迷いを減らすためのテーマです。</p>
+            <div class="judge-points">
+              <div class="judge-point"><strong>1</strong><span>比較・レビュー・FAQなど7種類の型から書き始められる。</span></div>
+              <div class="judge-point"><strong>2</strong><span>結論、根拠、比較、FAQ、CTAを本文に置く順番を作りやすい。</span></div>
+              <div class="judge-point"><strong>3</strong><span>CTA、比較表、広告リンクのクリックをWordPress内で小さく確認できる。</span></div>
+              <div class="judge-point"><strong>4</strong><span>2026年6月30日までは¥5,500（税込）。7月1日から通常価格¥8,800（税込）。</span></div>
+            </div>
+            <div class="flow-strip" aria-label="文標で作りやすい記事構造">
+              <span>答え</span><span>根拠</span><span>比較</span><span>FAQ</span><span>CTA</span>
+            </div>
+          </article>
+          <article class="deliver-board">
+            <span class="section-label">What you get</span>
+            <h2>購入後に届くもの。</h2>
+            <p>決済後、ZIPとシリアルを受け取ってWordPressに入れます。月額ではなく買い切りです。</p>
+            <table class="deliver-table">
+              <tbody>
+                <tr><th>親テーマZIP</th><td>文標本体。WordPressの「外観 → テーマ」からアップロードして使います。</td></tr>
+                <tr><th>子テーマZIP</th><td>CSSや小さな関数追加を安全に残すための改造用テーマです。</td></tr>
+                <tr><th>シリアル</th><td>購入者確認と自動更新に使います。返金後は無効化されます。</td></tr>
+                <tr><th>案内ページ</th><td>インストール方法、デモ、更新履歴、対応範囲を購入前後に確認できます。</td></tr>
+              </tbody>
+            </table>
+          </article>
         </div>
-        <div class="pain-grid">
-          <article class="pain-card"><strong>白紙で止まる</strong><span>毎回、構成をゼロから考えている。</span></article>
-          <article class="pain-card"><strong>FAQが面倒</strong><span>質問と回答、構造化データまで手が回らない。</span></article>
-          <article class="pain-card"><strong>比較表が崩れる</strong><span>商品ごとに見せ方が揃わない。</span></article>
-          <article class="pain-card"><strong>CTAが浮く</strong><span>本文の流れから急にボタンだけ出てくる。</span></article>
-          <article class="pain-card"><strong>導線が見えない</strong><span>クリックされたか確認しにくい。</span></article>
-        </div>
-        <p style="max-width:760px;margin:22px auto 0;text-align:center;color:var(--lp-muted);line-height:1.85;font-weight:800;">文標は、この「止まる時間」を減らすための作業台です。</p>
       </div>
     </section>
 
@@ -1690,26 +1574,23 @@
           <div class="mini-phone" aria-label="文標のスマホ表示見本">
             <div class="mini-phone-head"><span>9:41</span><span>文標</span></div>
             <div class="mini-phone-body">
-              <h3>型から書く。</h3>
+              <h3>最初に答えを置く。</h3>
               <p>細い画面でも、結論から読める流れを作ります。</p>
-              <div class="mini-answer">答え → 根拠 → 比較 → FAQ → CTA</div>
-              <p>記事を公開して終わりではなく、導線を見ながら育てます。</p>
+              <div class="mini-answer">答え → 理由 → 比較 → FAQ → CTA</div>
+              <p>FAQやCTAが本文の流れから外れにくいように、記事の型から始めます。</p>
               <a class="mini-phone-btn" href="/lp/bunsirube/demo/">スマホ幅デモを見る</a>
             </div>
           </div>
           <article class="mobile-proof-board">
-            <span class="section-label">Position</span>
-            <h2>文標は、記事サイトの型を先に作るテーマです。</h2>
-            <p>きれいなだけのテーマではなく、記事を積み上げるための作業台。装飾よりも、伝わる順番を作ることに絞ります。</p>
-            <div class="position-flow" aria-label="文標が整える記事の流れ">
-              <span>答え</span>
-              <span>根拠</span>
-              <span>比較</span>
-              <span>FAQ</span>
-              <span>出典</span>
-              <span>CTA</span>
+            <span class="section-label">Mobile first check</span>
+            <h2>スマホで読まれる順番も、LP上で先に確認。</h2>
+            <p>PCで整っていても、スマホで結論やCTAが埋もれると読まれにくい。文標は、答え、理由、比較、FAQ、CTAを細い画面でも追いやすい順番で置くためのテーマです。</p>
+            <div class="payment-pills" style="margin-top:18px;">
+              <span>答えを先に出す</span>
+              <span>FAQを折りたたむ</span>
+              <span>CTAを本文の流れに置く</span>
+              <span>比較表から行動につなげる</span>
             </div>
-            <p style="margin:0;color:var(--lp-muted);font-size:13px;line-height:1.8;">白紙から悩むのではなく、型から書く。記事を公開して終わりではなく、導線を見ながら育てる。文標はその流れをWordPressに作ります。</p>
           </article>
         </div>
       </div>
@@ -1771,17 +1652,16 @@
     <section class="lp-section" id="features">
       <div class="container">
         <div class="section-head">
-          <span class="section-label">What you get</span>
-          <h2>記事を書く前に必要な部品を、<br />最初からまとめる。</h2>
-          <p>あとから探して足すほど散らかりやすい。文標は、比較・FAQ・CTA・出典・解析をひとつの流れにします。</p>
+          <span class="section-label">Structure</span>
+          <h2>AI検索時代に、本文で読み取りやすい構造を作る。</h2>
+          <p>裏技ではなく、読者にも検索エンジンにも伝わりやすい本文の並びを整える。文標はそこに絞ります。</p>
         </div>
-        <div class="tool-kit-grid">
-          <article class="tool-kit-card"><strong>7種類</strong><span>記事テンプレート</span><p>比較、レビュー、ランキング、FAQ、商品紹介、案件紹介、基本の型から始められます。</p></article>
-          <article class="tool-kit-card"><strong>FAQ</strong><span>JSON-LD対応</span><p>質問と回答を見える形で置き、FAQPage JSON-LDも出力しやすくします。</p></article>
-          <article class="tool-kit-card"><strong>比較表</strong><span>カード型CTA</span><p>価格、特徴、向いている人、注意点を並べ、本文の流れから行動につなげます。</p></article>
-          <article class="tool-kit-card"><strong>出典</strong><span>引用を置きやすい</span><p>根拠や参考リンクを本文に残し、読者にもAIにも文脈を伝えやすくします。</p></article>
-          <article class="tool-kit-card"><strong>解析</strong><span>CTAクリック確認</span><p>CTA、比較表、広告リンクが押されたかをWordPress内で小さく確認できます。</p></article>
-          <article class="tool-kit-card"><strong>更新</strong><span>シリアル認証</span><p>購入者向けに親テーマZIP、子テーマZIP、シリアル、自動更新を用意します。</p></article>
+        <div class="feature-grid">
+          <article class="feature-card"><span class="mini-tag">Answer</span><h3>答えを先に出す</h3><p>記事の冒頭や最初の見出しで、読者が知りたい結論を短く出しやすくします。</p></article>
+          <article class="feature-card"><span class="mini-tag">Evidence</span><h3>根拠と補足を分ける</h3><p>意見、理由、注意点、出典を混ぜず、本文の中で読み取りやすく並べます。</p></article>
+          <article class="feature-card"><span class="mini-tag">FAQ</span><h3>質問と答えを整理する</h3><p>FAQとFAQPage JSON-LDで、ページ内にある質問と回答を見える形で残せます。</p></article>
+          <article class="feature-card"><span class="mini-tag">Compare</span><h3>違いを比較表で見せる</h3><p>商品・サービス・選択肢の違いを、価格、特徴、向いている人、注意点で整理します。</p></article>
+          <article class="feature-card"><span class="mini-tag">Route</span><h3>CTAと導線確認で改善する</h3><p>書いて終わりではなく、CTA・比較表・広告リンクが押されたかを小さく確認できます。</p></article>
         </div>
         <div class="article-link-row" aria-label="関連する読み物">
           <a href="/blog/comparison-article-template/">比較記事の書き方を読む →</a>
@@ -1822,34 +1702,34 @@
       <div class="container">
         <div class="section-head">
           <span class="section-label">Your transformation</span>
-          <h2>文標を入れた日から、<br /><strong style="color:#0a8559;">記事作成の感覚が変わる。</strong></h2>
-          <p>機能の羅列ではなく、書く側の体験を変えるためのテーマです。「何を書こう」で止まる時間を、型で減らします。</p>
+          <h2>文標を入れた1ヶ月で、<br /><strong style="color:#0a8559;">発信の景色はここから変えられます。</strong></h2>
+          <p>機能の羅列ではなく、書く側の体験を変えるためのテーマです。書く迷い、見た目の不安、読み取られ方の不安を減らし、記事を積み上げる感覚を取り戻します。</p>
         </div>
         <div class="change-timeline">
           <article class="change-step">
             <div class="change-day">Day 1</div>
-            <h3>白紙ではなく、テンプレから始める。</h3>
-            <p>ZIP導入後、すぐに7種類の記事テンプレ（比較・レビュー・ランキング・FAQ・商品紹介・案件紹介・基本）から、書きたい型を選んで開けます。</p>
+            <h3>「何を書こう」で止まらなくなる。</h3>
+            <p>ZIP導入後、すぐに7種類の記事テンプレ（比較・レビュー・ランキング・FAQ・商品紹介・案件紹介・基本）から、書きたい型を選んで開ける。白紙のエディタを見つめて止まる時間を減らせます。</p>
           </article>
           <article class="change-step">
             <div class="change-day">Day 3</div>
-            <h3>結論・根拠・FAQの置き場が見える。</h3>
+            <h3>構成で悩む時間を、ぐっと減らせる。</h3>
             <p>結論・根拠・比較表・FAQ・CTAの<strong>置き場所が最初から見えている</strong>ので、本文の流れを作りやすい。調べた内容を、記事として並べる作業に集中できます。</p>
           </article>
           <article class="change-step">
             <div class="change-day">Day 7</div>
-            <h3>記事全体の見た目がそろってくる。</h3>
+            <h3>サイトの見た目に、自信が持ちやすい。</h3>
             <p>FAQブロック、比較表カード、CTAボタン、ブログカードを同じ空気感で置ける。外注やプラグインで継ぎ足したように見えにくく、記事サイトらしい骨格を作りやすくなります。</p>
           </article>
           <article class="change-step">
             <div class="change-day">Day 14</div>
-            <h3>クリックと導線を見ながら育てる。</h3>
+            <h3>Search Consoleで見る場所が決まる。</h3>
             <p>FAQ JSON-LD、Article、BreadcrumbList、内部リンク、CTAをそろえておくと、公開後に表示回数・クリック・クエリを見ながら直しやすい。記事を出して終わりではなく、育てる前提で動けます。</p>
           </article>
           <article class="change-step change-final">
             <div class="change-day">Day 30</div>
             <h3>AIに拾われても、意味が伝わる記事構造へ。</h3>
-            <p>ChatGPT・Claude・Perplexity・Gemini・AI OverviewsのようなAI回答面でページ内容が参照される可能性を意識し、答え、根拠、出典、FAQをそろえた記事に近づけます。記事を書くたび、AI検索時代に向けた「伝わる構造」が積み上がります。<br /><small style="color:var(--lp-muted);">※ 特定のAIに引用・表示されることは保証しません。記事内容、信頼性、検索エンジン側の判断にも左右されます。</small></p>
+            <p>ChatGPT・Claude・Perplexity・Gemini・AI OverviewsのようなAI回答面でページ内容が参照される可能性を意識し、答え、根拠、出典、FAQをそろえた記事に近づけます。これは検索順位だけではない、新しい「読まれ方」への準備です。<br /><small style="color:var(--lp-muted);">※ 特定のAIに引用・表示されることは保証しません。記事内容、信頼性、検索エンジン側の判断にも左右されます。</small></p>
           </article>
         </div>
         <p class="change-foot">この変化は「テーマだけ」では完成しません。<strong>記事を書く側の意志</strong>と、<strong>道具がそれを助ける</strong>こと、両方で起こります。文標は、その「助ける側」を担当します。</p>
@@ -2160,9 +2040,9 @@
     <section class="lp-section alt">
       <div class="container">
         <div class="section-head">
-          <span class="section-label">Difference</span>
-          <h2>無料テーマで十分な人もいる。<br />でも、型で止まる人には文標が速い。</h2>
-          <p>Cocoon、SWELL、AFFINGERと同じ土俵で多機能勝負はしません。文標は、比較・レビュー・FAQ記事を「構造から作る」方向に絞ります。</p>
+          <span class="section-label">Value</span>
+          <h2>無料テーマや高機能テーマと、<br />同じ土俵で比べない。</h2>
+          <p>文標は、見た目の作り込みや多機能さで勝負するテーマではありません。「短い答え・根拠・FAQ・出典・比較表・CTAを本文に置きやすくする」方向に絞っています。</p>
         </div>
         <div class="compare-wrap">
           <table class="compare-table">
@@ -2221,7 +2101,7 @@
             </tbody>
           </table>
         </div>
-        <p class="value-note">これは優劣ではなく住み分けです。Cocoonは無料で自由に作る。SWELLは美しく作る。AFFINGER6は細かく作る。文標は、記事を構造から作る。記事の型で止まる時間を減らしたい人に向いています。</p>
+        <p class="value-note">価格は2026年5月12日時点の公式販売ページ確認です。これは優劣ではなく住み分けです。CocoonやSWELLで満足している人には文標は不要。これから比較記事・レビュー記事を積み上げたい人、設定より先に記事の型が欲しい人に向いています。</p>
       </div>
     </section>
 
@@ -2404,7 +2284,7 @@
     <section class="final-cta final-cta-dramatic">
       <div class="container">
         <div class="final-cta-badge">🎉 LAUNCH SPECIAL — 2026/6/30 まで</div>
-        <h2>今日、記事の<br /><strong>作り方を変える。</strong></h2>
+        <h2>AI検索時代の発信を、<br /><strong>今日、いちばん安い価格で始める。</strong></h2>
         <div class="final-cta-price">
           <div class="final-price-now">¥5,500<small>（税込）</small></div>
           <div class="final-price-meta">
@@ -2412,9 +2292,8 @@
             <span class="final-save">¥3,300 OFF（37%）</span>
           </div>
         </div>
-        <p>AI検索時代に向けて、結論・根拠・比較・FAQ・出典・CTAが伝わる記事構造へ。買い切り・月額なし・30日返金保証つき。発売記念期間に購入した方も、今後のアップデートを追加料金なしで受け取れます。</p>
+        <p>買い切り・月額なし・30日返金保証つき。発売記念期間に購入した方も、今後のアップデートを追加料金なしで受け取れます。今すぐ始めて、AI検索時代に「伝わる土台」を作りましょう。</p>
         <a class="btn btn-white btn-xl final-cta-btn" href="/api/checkout?product=wordpress-theme">発売記念価格で文標を始める →</a>
-        <p style="margin-top:18px;font-size:16px;color:rgba(255,255,255,.82);">記事を書くたびに構成で止まる時間を、そろそろ終わらせましょう。</p>
         <div class="final-cta-trust">
           <span>🛡 30日返金保証</span>
           <span>💳 Stripe決済</span>
