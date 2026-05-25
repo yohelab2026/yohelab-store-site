@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>文標（ぶんしるべ）| AI検索時代の記事構造とSEOを整えるWordPressテーマ | よへラボ</title>
-  <meta name="description" content="文標（ぶんしるべ）は、SEOとAI検索時代の記事構造を意識し、短い答え・根拠・FAQ・比較表・出典・CTAを迷わず並べられる軽量WordPressテーマ。7種類のテンプレ、構造化データ、llms.txt、導線確認まで備えます。" />
+  <meta name="description" content="文標（ぶんしるべ）は、比較・レビュー・FAQ記事を、AI検索時代の記事構造とSEOの土台まで考えて積み上げるための軽量WordPressテーマ。7種類のテンプレ、構造化データ、llms.txt、導線確認、30日返金保証つき。" />
   <meta property="og:title" content="文標（ぶんしるべ）| AI検索時代の記事構造とSEOを整えるWordPressテーマ" />
-  <meta property="og:description" content="SEOとAI検索時代の記事構造を意識し、短い答え・根拠・FAQ・比較表・出典・CTAを迷わず並べられる軽量WordPressテーマ。" />
+  <meta property="og:description" content="記事をただ投稿して終わらせない。AI検索時代の記事構造とSEOの土台を、WordPressの中にまとめる軽量テーマ。" />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="ja_JP" />
   <meta property="og:url" content="https://yohelab.com/lp/bunsirube/" />
@@ -15,7 +15,7 @@
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="文標 | AI検索時代の記事構造とSEOを整えるWordPressテーマ" />
-  <meta name="twitter:description" content="短い答え・根拠・FAQ・比較表・出典・CTAを、人にもAIにも読み取りやすく並べるWordPressテーマ。" />
+  <meta name="twitter:description" content="比較・レビュー・FAQ記事を、短い答え・根拠・比較表・出典・CTAまで迷わず積み上げるWordPressテーマ。" />
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1" />
   <meta name="theme-color" content="#087a63" />
   <meta name="twitter:image" content="https://yohelab.com/assets/og/bunsirube-og.png" />
@@ -381,6 +381,139 @@
       color:var(--lp-muted);
       font-size:12px;
       font-weight:700;
+    }
+    .buy-meaning {
+      position:relative;
+      overflow:hidden;
+      background:linear-gradient(180deg,#fff,#f5fbf9);
+      border-bottom:1px solid var(--lp-line);
+    }
+    .buy-meaning-layout {
+      display:grid;
+      grid-template-columns:minmax(0,.92fr) minmax(360px,1.08fr);
+      gap:28px;
+      align-items:stretch;
+    }
+    .buy-copy-panel,
+    .buy-flow-panel {
+      border:1px solid #dce9f5;
+      border-radius:30px;
+      background:rgba(255,255,255,.88);
+      box-shadow:0 24px 64px rgba(38,78,118,.10);
+      padding:30px;
+    }
+    .buy-copy-panel h2 {
+      font-size:clamp(30px,4.6vw,54px);
+      line-height:1.12;
+      letter-spacing:-.06em;
+      margin:0 0 14px;
+    }
+    .buy-copy-panel h2 strong {
+      color:#087a63;
+    }
+    .buy-copy-panel p {
+      color:var(--lp-muted);
+      line-height:1.9;
+      margin:0 0 18px;
+    }
+    .buy-promise-list {
+      display:grid;
+      gap:10px;
+      margin:22px 0 0;
+      padding:0;
+      list-style:none;
+    }
+    .buy-promise-list li {
+      display:grid;
+      grid-template-columns:34px 1fr;
+      gap:11px;
+      align-items:start;
+      padding:13px 14px;
+      border-radius:16px;
+      background:#f4fbf8;
+      border:1px solid #d5eee5;
+      color:#263c4d;
+      font-size:14px;
+      line-height:1.7;
+      font-weight:800;
+    }
+    .buy-promise-list b {
+      display:grid;
+      place-items:center;
+      width:34px;
+      height:34px;
+      border-radius:50%;
+      background:#087a63;
+      color:#fff;
+      font-size:14px;
+    }
+    .buy-flow-panel {
+      display:grid;
+      gap:14px;
+    }
+    .buy-flow-title {
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:flex-start;
+      border-bottom:1px solid #e3edf8;
+      padding-bottom:14px;
+    }
+    .buy-flow-title h3 {
+      margin:0;
+      font-size:24px;
+      line-height:1.25;
+      letter-spacing:-.04em;
+    }
+    .buy-flow-grid {
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+    .buy-flow-box {
+      border-radius:20px;
+      padding:18px;
+      border:1px solid #e2ecf6;
+      background:#f8fbff;
+    }
+    .buy-flow-box.is-after {
+      background:linear-gradient(180deg,#ecfdf5,#ffffff);
+      border-color:#a9e5d5;
+    }
+    .buy-flow-box small {
+      display:inline-flex;
+      border-radius:999px;
+      padding:5px 9px;
+      margin-bottom:12px;
+      background:#e9eef5;
+      color:#536174;
+      font-size:11px;
+      font-weight:900;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+    .buy-flow-box.is-after small {
+      background:#087a63;
+      color:#fff;
+    }
+    .buy-flow-box ul {
+      margin:0;
+      padding:0;
+      list-style:none;
+      display:grid;
+      gap:9px;
+    }
+    .buy-flow-box li {
+      color:#345166;
+      font-size:13px;
+      line-height:1.65;
+      font-weight:800;
+    }
+    .buy-actions {
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-top:20px;
     }
     .quick-judge {
       display:grid;
@@ -1289,8 +1422,18 @@
       .quick-judge,
       .mobile-proof-grid,
       .monitor-panel,
-      .fit-flow {
+      .fit-flow,
+      .buy-meaning-layout,
+      .buy-flow-grid {
         grid-template-columns:1fr;
+      }
+      .buy-copy-panel,
+      .buy-flow-panel {
+        padding:22px;
+        border-radius:24px;
+      }
+      .buy-flow-title {
+        display:grid;
       }
       .product-stage { min-height:440px; }
       .mock-device { position:relative; inset:auto; margin-top:10px; }
@@ -1401,19 +1544,19 @@
     <section class="theme-hero">
       <div class="container hero-layout">
         <div>
-          <p class="eyebrow"><span class="dual-badge">🤖 AI検索最適化</span><span class="dual-badge">🔍 SEO最適化</span><span class="dual-badge dual-badge-light">— 両対応の軽量WordPressテーマ</span></p>
-          <h1>AIに聞かれる時代に、<strong>あなたの記事が“ちゃんと伝わる場所”を作る。</strong></h1>
-          <p class="hero-lead">文標（ぶんしるべ）は、AI検索時代に「読み取られる記事構造」を、迷わず書き始められる軽量WordPressテーマ。短い答え・根拠・FAQ・比較表・出典・CTAを、迷いにくい順番で置けるようにします。</p>
-          <p class="hero-lead" style="font-size:15px;line-height:1.8;margin-top:-10px;">ChatGPT・Claude・Gemini・Perplexity・Google AI OverviewsがWebの根拠を読む場面を意識して、FAQPage / Article / BreadcrumbList 等の構造化データと、本文の見える内容をそろえやすくします。SEOとAI検索時代の記事構造、両方を同時に育てるテーマです。<br /><small style="color:var(--lp-muted);">※AI検索や検索結果での表示・引用・順位は保証しません。文標は「読み取られやすい記事構造」を作りやすくするテーマです。</small></p>
+          <p class="eyebrow"><span class="dual-badge">🤖 AI検索時代の記事構造</span><span class="dual-badge">🔍 SEOの土台</span><span class="dual-badge dual-badge-light">— 記事を積み上げるWordPressテーマ</span></p>
+          <h1>記事をただ投稿して終わらせない。<strong>「読まれる土台」から作る。</strong></h1>
+          <p class="hero-lead">文標（ぶんしるべ）は、比較・レビュー・FAQ記事を、答え・根拠・比較表・出典・CTAまで迷わず並べるための軽量WordPressテーマ。見た目だけではなく、記事を積み上げる順番まで用意します。</p>
+          <p class="hero-lead" style="font-size:15px;line-height:1.8;margin-top:-10px;">SEOの基本に加えて、ChatGPT・Claude・Gemini・Perplexity・Google AI OverviewsのようなAI回答面で、ページ内容が参照される時代の記事構造を意識。FAQPage / Article / BreadcrumbList 等の構造化データと、本文の見える内容をそろえやすくします。<br /><small style="color:var(--lp-muted);">※AI検索や検索結果での表示・引用・順位は保証しません。文標は「読み取られやすい記事構造」を作りやすくするテーマです。</small></p>
           <div class="hero-actions">
-            <a class="btn btn-primary btn-xl" href="/api/checkout?product=wordpress-theme">文標を購入してZIPを受け取る（30日返金保証つき） →</a>
-            <a class="btn btn-outline btn-xl" href="/lp/bunsirube/install/">インストール方法を見る</a>
+            <a class="btn btn-primary btn-xl" href="/api/checkout?product=wordpress-theme">発売記念価格で文標を手に入れる →</a>
+            <a class="btn btn-outline btn-xl" href="/lp/bunsirube/demo/">デモで中身を見る</a>
           </div>
           <div class="refund-banner">30日返金保証つき。理由を問わず全額返金。Stripe経由で5〜10営業日が目安です。</div>
           <div class="price-push" aria-label="発売記念価格">
             <div class="price-push-row"><span>2026年6月30日までの発売記念価格</span><s>7月1日から ¥8,800</s></div>
             <div class="price-push-row"><strong>¥5,500（税込）</strong><em>6月30日 23:59まで ¥3,300 OFF（37%）</em></div>
-            <p>2026年6月30日までに購入した人も、今後のアップデートを追加料金なしで受け取れます。表示価格はすべて税込です。</p>
+            <p>買い切り・月額なし。2026年6月30日までに購入した人も、今後のアップデートを追加料金なしで受け取れます。表示価格はすべて税込です。</p>
           </div>
           <div class="hero-mini">
             <a href="/api/checkout?product=wordpress-theme" style="background:rgba(13,143,114,.10);color:#075c4c;border:1px solid rgba(13,143,114,.28);font-weight:900;">30日返金保証</a>
@@ -1471,12 +1614,56 @@
 
     <div class="value-strip">
       <div class="container value-grid">
-        <div class="value-item"><strong>7種</strong><span>記事テンプレート</span></div>
-        <div class="value-item"><strong>FAQ</strong><span>構造化データ対応</span></div>
-        <div class="value-item"><strong>解析</strong><span>内部 / 外部を選択</span></div>
-        <div class="value-item"><strong>6/30まで¥5,500税込</strong><span>7/1から¥8,800税込 買い切り</span></div>
+        <div class="value-item"><strong>白紙で止まらない</strong><span>7種の記事テンプレート</span></div>
+        <div class="value-item"><strong>AI検索時代の記事構造</strong><span>FAQ / Article / llms.txt</span></div>
+        <div class="value-item"><strong>導線まで見る</strong><span>CTA・広告リンクのクリック確認</span></div>
+        <div class="value-item"><strong>6/30まで¥5,500税込</strong><span>7/1から¥8,800税込 / 買い切り</span></div>
       </div>
     </div>
+
+    <section class="lp-section buy-meaning" id="buy-reason">
+      <div class="container buy-meaning-layout">
+        <article class="buy-copy-panel">
+          <span class="section-label">Why buy</span>
+          <h2>買う意味は、<br /><strong>「テーマ」より先に記事の勝ち筋を持つこと。</strong></h2>
+          <p>文標は、きれいな見た目だけを売るテーマではありません。記事を書くたびに迷いやすい「何から書くか」「根拠をどこに置くか」「FAQとCTAをどうつなげるか」を、最初から型にしておくための道具です。</p>
+          <p>AI検索時代は、ページの中身が質問への答えとして読まれる場面が増えています。だからこそ、本文そのものを読者にもAIにも意味が伝わりやすい順番へ寄せておく価値があります。</p>
+          <ul class="buy-promise-list">
+            <li><b>1</b><span>白紙の投稿画面で止まる時間を減らし、比較・レビュー・FAQ記事をすぐ組み始める。</span></li>
+            <li><b>2</b><span>答え、根拠、出典、FAQ、CTAをバラバラにせず、読まれる順番で積み上げる。</span></li>
+            <li><b>3</b><span>CTAや広告リンクのクリックを確認し、記事を「書いて終わり」にしない。</span></li>
+          </ul>
+          <div class="buy-actions">
+            <a class="btn btn-primary btn-lg" href="/api/checkout?product=wordpress-theme">30日返金保証つきで購入する →</a>
+            <a class="btn btn-outline btn-lg" href="/lp/bunsirube/demo/">デモを確認する</a>
+          </div>
+        </article>
+
+        <article class="buy-flow-panel">
+          <div class="buy-flow-title">
+            <h3>同じ1記事でも、始まり方が変わる。</h3>
+          </div>
+          <div class="buy-flow-grid">
+            <div class="buy-flow-box">
+              <small>Before</small>
+              <ul>
+                <li>見出し構成を毎回ゼロから考える</li>
+                <li>FAQ、比較表、CTAをあとから探して足す</li>
+                <li>公開後、どの導線が押されたか見えにくい</li>
+              </ul>
+            </div>
+            <div class="buy-flow-box is-after">
+              <small>After</small>
+              <ul>
+                <li>記事テンプレートを選んで書き始める</li>
+                <li>答え → 根拠 → 比較 → FAQ → CTAの流れを作る</li>
+                <li>クリック確認で次の記事改善につなげる</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
 
     <section class="lp-section" id="ai-engines" style="padding-top:36px;padding-bottom:36px;background:#0a1f1a;color:#fff;">
       <div class="container">
@@ -1540,12 +1727,13 @@
           <article class="judge-board">
             <span class="section-label">60 seconds</span>
             <h2>文標で何が変わるか、先に見る。</h2>
-            <p>長い説明を読む前に、買う理由だけを短くまとめます。文標は、記事を書く前の迷いを減らすためのテーマです。</p>
+            <p>買う理由はシンプルです。記事を書く前の迷いを減らし、読者に届く順番で本文を積み上げやすくすること。見た目のテーマではなく、記事づくりの土台です。</p>
             <div class="judge-points">
-              <div class="judge-point"><strong>1</strong><span>比較・レビュー・FAQなど7種類の型から書き始められる。</span></div>
-              <div class="judge-point"><strong>2</strong><span>結論、根拠、比較、FAQ、CTAを本文に置く順番を作りやすい。</span></div>
-              <div class="judge-point"><strong>3</strong><span>CTA、比較表、広告リンクのクリックをWordPress内で小さく確認できる。</span></div>
-              <div class="judge-point"><strong>4</strong><span>2026年6月30日までは¥5,500（税込）。7月1日から通常価格¥8,800（税込）。</span></div>
+              <div class="judge-point"><strong>1</strong><span>比較・レビュー・FAQなど、収益記事に使いやすい7種類の型から書き始められる。</span></div>
+              <div class="judge-point"><strong>2</strong><span>結論、根拠、比較、FAQ、CTAを「読まれる順番」で本文に置きやすい。</span></div>
+              <div class="judge-point"><strong>3</strong><span>AI検索時代の記事構造を意識しつつ、SEOの基本設定もテーマ側でまとめられる。</span></div>
+              <div class="judge-point"><strong>4</strong><span>CTA、比較表、広告リンクのクリックをWordPress内で確認し、次の記事改善につなげられる。</span></div>
+              <div class="judge-point"><strong>5</strong><span>2026年6月30日までは¥5,500（税込）。7月1日から通常価格¥8,800（税込）。</span></div>
             </div>
             <div class="flow-strip" aria-label="文標で作りやすい記事構造">
               <span>答え</span><span>根拠</span><span>比較</span><span>FAQ</span><span>CTA</span>
@@ -1554,7 +1742,7 @@
           <article class="deliver-board">
             <span class="section-label">What you get</span>
             <h2>購入後に届くもの。</h2>
-            <p>決済後、ZIPとシリアルを受け取ってWordPressに入れます。月額ではなく買い切りです。</p>
+            <p>決済後、ZIPとシリアルを受け取ってWordPressに入れます。月額ではなく買い切り。届いたその日から、1本目の記事の型を選んで書き始められます。</p>
             <table class="deliver-table">
               <tbody>
                 <tr><th>親テーマZIP</th><td>文標本体。WordPressの「外観 → テーマ」からアップロードして使います。</td></tr>
@@ -1675,23 +1863,23 @@
       <div class="container">
         <div class="section-head">
           <span class="section-label">For whom</span>
-          <h2>こういう人に向いています。</h2>
-          <p>「何を書けばいいか分からない」「プラグインが増えすぎる」「AI検索時代の記事構造が不安」を減らすためのテーマ。</p>
+          <h2>これは、記事サイトを本気で積み上げる人向けです。</h2>
+          <p>「何を書けばいいか分からない」「プラグインが増えすぎる」「AI検索時代の記事構造が不安」。その迷いを減らして、記事を公開する手を止めないためのテーマです。</p>
         </div>
         <div class="problem-grid">
           <article class="problem-card">
             <div class="icon-bubble">✍️</div>
-            <h3>記事の型で迷う人</h3>
+            <h3>記事の型で止まりたくない人</h3>
             <p>比較、レビュー、FAQ、商品紹介など、よく使う記事の骨組みをテンプレートから選べる。</p>
           </article>
           <article class="problem-card">
             <div class="icon-bubble">🧩</div>
-            <h3>プラグインを減らしたい人</h3>
+            <h3>あと付けで散らかしたくない人</h3>
             <p>FAQ、目次、構造化データ、llms.txt、解析設定をテーマ側にまとめる。</p>
           </article>
           <article class="problem-card">
             <div class="icon-bubble">📈</div>
-            <h3>記事サイトを育てたい人</h3>
+            <h3>記事から収益導線を作りたい人</h3>
             <p>見出し、短い答え、根拠、出典、FAQ、CTAを置きやすくして、読者に伝わるページを作る。</p>
           </article>
         </div>
@@ -1932,25 +2120,19 @@
                 </linearGradient>
               </defs>
               <g font-family="ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif" font-size="12" fill="#0b1b13">
-                <!-- baseline -->
                 <line x1="120" y1="20" x2="120" y2="216" stroke="#dce7e1" stroke-width="1" />
-                <!-- Cocoon: free -->
                 <text x="112" y="44" text-anchor="end" font-weight="700">Cocoon</text>
                 <rect x="120" y="30" width="14" height="22" rx="6" fill="#a9b8b3" />
                 <text x="142" y="46" fill="#536174">¥0（無料）</text>
-                <!-- Bunsirube: 5500 -->
                 <text x="112" y="92" text-anchor="end" font-weight="900" fill="#075c4c">文標（発売記念）</text>
                 <rect x="120" y="78" width="98" height="22" rx="6" fill="url(#bar-bun)" />
                 <text x="226" y="94" fill="#075c4c" font-weight="900">¥5,500</text>
-                <!-- Bunsirube formal -->
                 <text x="112" y="140" text-anchor="end" font-weight="700">文標（7/1から通常）</text>
                 <rect x="120" y="126" width="158" height="22" rx="6" fill="#0d8f72" opacity=".55" />
                 <text x="286" y="142" fill="#075c4c" font-weight="900">¥8,800</text>
-                <!-- AFFINGER6 -->
                 <text x="112" y="188" text-anchor="end" font-weight="700">AFFINGER6</text>
                 <rect x="120" y="174" width="266" height="22" rx="6" fill="#cbd6d2" />
                 <text x="394" y="190" fill="#536174">¥14,800</text>
-                <!-- SWELL -->
                 <text x="112" y="226" text-anchor="end" font-weight="700">SWELL</text>
                 <rect x="120" y="212" width="316" height="20" rx="6" fill="#cbd6d2" />
                 <text x="444" y="227" fill="#536174">¥17,600</text>
@@ -2284,7 +2466,7 @@
     <section class="final-cta final-cta-dramatic">
       <div class="container">
         <div class="final-cta-badge">🎉 LAUNCH SPECIAL — 2026/6/30 まで</div>
-        <h2>AI検索時代の発信を、<br /><strong>今日、いちばん安い価格で始める。</strong></h2>
+        <h2>テーマ探しを終わらせて、<br /><strong>記事を積み上げる側へ進む。</strong></h2>
         <div class="final-cta-price">
           <div class="final-price-now">¥5,500<small>（税込）</small></div>
           <div class="final-price-meta">
@@ -2292,8 +2474,8 @@
             <span class="final-save">¥3,300 OFF（37%）</span>
           </div>
         </div>
-        <p>買い切り・月額なし・30日返金保証つき。発売記念期間に購入した方も、今後のアップデートを追加料金なしで受け取れます。今すぐ始めて、AI検索時代に「伝わる土台」を作りましょう。</p>
-        <a class="btn btn-white btn-xl final-cta-btn" href="/api/checkout?product=wordpress-theme">発売記念価格で文標を始める →</a>
+        <p>買い切り・月額なし・30日返金保証つき。発売記念期間に購入した方も、今後のアップデートを追加料金なしで受け取れます。比較・レビュー・FAQ記事を、AI検索時代の記事構造とSEOの土台から作り始めましょう。</p>
+        <a class="btn btn-white btn-xl final-cta-btn" href="/api/checkout?product=wordpress-theme">発売記念価格で文標を手に入れる →</a>
         <div class="final-cta-trust">
           <span>🛡 30日返金保証</span>
           <span>💳 Stripe決済</span>
@@ -2311,7 +2493,7 @@
         <span>6/30まで ¥5,500（税込） / 7/1から ¥8,800（税込）</span>
         <small>30日返金保証つき。合わなければ全額返金。</small>
       </div>
-      <a class="btn btn-primary" href="/api/checkout?product=wordpress-theme">文標を試す →</a>
+      <a class="btn btn-primary" href="/api/checkout?product=wordpress-theme">文標を購入する →</a>
     </div>
   </aside>
 
