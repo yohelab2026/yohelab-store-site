@@ -2232,3 +2232,67 @@ td:first-child, th:first-child { font-weight: 700; }
   .hub-card-tools { display: none; }
   .top-sub-grid { grid-template-columns: 1fr; }
 }
+
+/* Mobile overflow guards for long CTAs and related article cards. */
+@media (max-width: 640px) {
+  main .btn,
+  .sticky-cta .btn,
+  .sticky-cta-bar .btn,
+  .sticky-cta-inner .btn,
+  .lp-sticky .btn,
+  .lp-sticky-inner .btn {
+    max-width: 100%;
+    min-width: 0;
+    height: auto;
+    min-height: 48px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    line-height: 1.45;
+    white-space: normal;
+    text-align: center;
+    overflow-wrap: anywhere;
+  }
+
+  main .btn-lg,
+  main .btn-xl {
+    min-height: 58px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 16px;
+  }
+
+  .related-article-cards {
+    max-width: 100%;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding: 16px !important;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+
+  .related-article-cards .blog-link-card {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+    max-width: 100%;
+    min-width: 0;
+    padding: 14px !important;
+    box-sizing: border-box;
+  }
+
+  .related-article-cards .blog-link-card-main,
+  .related-article-cards .blog-link-card-title,
+  .related-article-cards .blog-link-card-desc,
+  .related-article-cards .blog-link-card-url {
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .related-article-cards .blog-link-card-url {
+    white-space: normal !important;
+  }
+
+  .related-article-cards .blog-link-card-thumb {
+    min-height: 136px !important;
+  }
+}

@@ -149,6 +149,14 @@
       gap:14px;
       margin:30px 0 18px;
     }
+    .hero-actions .btn,
+    .final-cta .btn,
+    .sticky-cta-inner .btn {
+      max-width:100%;
+      min-width:0;
+      box-sizing:border-box;
+      text-align:center;
+    }
     .hero-mini {
       display:flex;
       flex-wrap:wrap;
@@ -1332,7 +1340,24 @@
         max-width:320px;
         margin:0 auto;
       }
-      .hero-actions .btn { width:100%; justify-content:center; }
+      .hero-actions { width:100%; }
+      .hero-actions .btn,
+      .final-cta .btn,
+      .sticky-cta-inner .btn {
+        width:100%;
+        height:auto;
+        min-height:60px;
+        justify-content:center;
+        padding:13px 18px;
+        line-height:1.45;
+        white-space:normal;
+        overflow-wrap:anywhere;
+      }
+      .hero-actions .btn-xl,
+      .final-cta .btn-xl {
+        font-size:16px;
+        letter-spacing:-.025em;
+      }
       .nav-links { display:flex; gap:14px; overflow:auto; white-space:nowrap; }
       body { padding-bottom:104px; }
       .sticky-cta-inner {
