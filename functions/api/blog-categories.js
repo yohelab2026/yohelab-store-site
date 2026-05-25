@@ -16,57 +16,27 @@ const DEFAULT_CATEGORIES = [
       { key: "perplexity", label: "Perplexity", color: "#1fb6cf", order: 50 },
       { key: "genspark", label: "Genspark", color: "#7c3aed", order: 60 },
       { key: "grok", label: "Grok", color: "#222222", order: 70 },
-      { key: "copilot", label: "Copilot", color: "#2563eb", order: 80 },
-      { key: "midjourney", label: "Midjourney", color: "#8b5cf6", order: 90 },
+      { key: "deepseek", label: "DeepSeek", color: "#1d4ed8", order: 80 },
+      { key: "codex", label: "Codex", color: "#111827", order: 90 },
+      { key: "cursor", label: "Cursor", color: "#334155", order: 100 },
+      { key: "copilot", label: "Copilot", color: "#2563eb", order: 110 },
+      { key: "midjourney", label: "Midjourney", color: "#8b5cf6", order: 120 },
     ],
   },
   {
-    key: "ai-rumor",
-    label: "AIの噂",
-    color: "#0e7490",
-    order: 15,
-    children: [
-      { key: "rumor-chatgpt", label: "ChatGPT", color: "#10a37f", order: 10 },
-      { key: "rumor-claude", label: "Claude", color: "#cc785c", order: 20 },
-      { key: "rumor-gemini", label: "Gemini", color: "#4285f4", order: 30 },
-      { key: "rumor-perplexity", label: "Perplexity", color: "#1fb6cf", order: 40 },
-      { key: "rumor-genspark", label: "Genspark", color: "#7c3aed", order: 50 },
-      { key: "rumor-grok", label: "Grok", color: "#222222", order: 60 },
-      { key: "rumor-copilot", label: "Copilot", color: "#2563eb", order: 70 },
-      { key: "rumor-midjourney", label: "Midjourney", color: "#8b5cf6", order: 80 },
-      { key: "rumor-other", label: "その他", color: "#64748b", order: 90 },
-    ],
-  },
-  {
-    key: "earn",
-    label: "副業ブログ",
-    color: "#f97316",
+    key: "ai-tools",
+    label: "AIツール",
+    color: "#087a63",
     order: 20,
     children: [
-      { key: "earn", label: "収益化ネタ", color: "#f97316", order: 10 },
-      { key: "article", label: "記事づくり", color: "#087a63", order: 20 },
-    ],
-  },
-  {
-    key: "wordpress",
-    label: "ツール・商品",
-    color: "#087a63",
-    order: 30,
-    children: [
-      { key: "wordpress", label: "WordPress・文標", color: "#087a63", order: 10 },
-      { key: "template", label: "記事テンプレ", color: "#087a63", order: 20 },
-    ],
-  },
-  {
-    key: "home-work",
-    label: "在宅ヒント",
-    color: "#2b8a7e",
-    order: 40,
-    children: [
-      { key: "home-work", label: "在宅ワーク習慣", color: "#2b8a7e", order: 10 },
+      { key: "ai-tools", label: "AIツール", color: "#087a63", order: 10 },
+      { key: "bunsirube", label: "文標", color: "#087a63", order: 20 },
+      { key: "wordpress", label: "文標・WordPress", color: "#087a63", order: 30 },
+      { key: "template", label: "記事テンプレ", color: "#087a63", order: 40 },
     ],
   },
 ];
+const DEFAULT_PARENT_KEYS = new Set(DEFAULT_CATEGORIES.map((item) => item.key));
 
 export async function onRequestGet(context) {
   const categories = await readCategories(context.env);
@@ -110,7 +80,8 @@ async function readCategories(env) {
 }
 
 function normalizeCategories(value) {
-  const source = mergeDefaultCategories(Array.isArray(value) && value.length ? value : DEFAULT_CATEGORIES);
+  const source = mergeDefaultCategories(Array.isArray(value) && value.length ? value : DEFAULT_CATEGORIES)
+    .filter((parent) => DEFAULT_PARENT_KEYS.has(sanitizeSlug(parent?.key)));
   const parents = source.map((parent, parentIndex) => {
     const rawKey = sanitizeSlug(parent?.key);
     const fallback = DEFAULT_CATEGORIES.find((item) => item.key === rawKey) || DEFAULT_CATEGORIES[parentIndex] || {};
@@ -155,11 +126,6 @@ function mergeDefaultCategories(value) {
         ...defaultParent,
         children: defaultParent.children.map((child) => ({ ...child })),
       });
-      return;
-    }
-
-    if (defaultParentKey === "ai-rumor") {
-      parent.children = defaultParent.children.map((child) => ({ ...child }));
       return;
     }
 

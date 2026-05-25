@@ -26,29 +26,22 @@ const DEFAULT_CATEGORY_TREE = [
     { key: "perplexity", label: "Perplexity" },
     { key: "genspark", label: "Genspark" },
     { key: "grok", label: "Grok" },
+    { key: "deepseek", label: "DeepSeek" },
+    { key: "codex", label: "Codex" },
+    { key: "cursor", label: "Cursor" },
     { key: "copilot", label: "Copilot" },
     { key: "midjourney", label: "Midjourney" },
   ] },
-  { key: "ai-rumor", label: "AIの噂・予測", children: [
-    { key: "ai-rumor", label: "AIの噂" },
-    { key: "ai-leak", label: "リーク・未発表" },
-    { key: "ai-prediction", label: "今後の予測" },
-  ] },
-  { key: "earn", label: "副業ブログ", children: [
-    { key: "earn", label: "収益化ネタ" },
-    { key: "article", label: "記事づくり" },
-  ] },
-  { key: "wordpress", label: "ツール・商品", children: [
-    { key: "wordpress", label: "WordPress・文標" },
+  { key: "ai-tools", label: "AIツール", children: [
+    { key: "ai-tools", label: "AIツール" },
+    { key: "bunsirube", label: "文標" },
+    { key: "wordpress", label: "文標・WordPress" },
     { key: "template", label: "記事テンプレ" },
   ] },
-  { key: "home-work", label: "在宅ヒント", children: [
-    { key: "home-work", label: "在宅ワーク習慣" },
-  ] },
 ];
+const DEFAULT_PARENT_KEYS = new Set(DEFAULT_CATEGORY_TREE.map((item) => item.key));
 const STATIC_POST_REDIRECTS = new Map([
   ["ai-news-selling-ideas", "/blog/ai-news-selling-ideas/"],
-  ["home-work-rhythm", "/blog/home-work-rhythm/"],
   ["bunsirube-version-history", "/blog/bunsirube-version-history/"],
   ["comparison-article-template", "/blog/comparison-article-template/"],
   ["free-theme-vs-bunsirube", "/blog/free-theme-vs-bunsirube/"],
@@ -147,7 +140,8 @@ async function readCategoryMap(kv) {
 
 function buildCategoryMap(categories) {
   const map = new Map();
-  const source = mergeDefaultCategoryTree(Array.isArray(categories) && categories.length ? categories : DEFAULT_CATEGORY_TREE);
+  const source = mergeDefaultCategoryTree(Array.isArray(categories) && categories.length ? categories : DEFAULT_CATEGORY_TREE)
+    .filter((parent) => DEFAULT_PARENT_KEYS.has(sanitizeCategoryKey(parent?.key)));
   source.forEach((parent) => {
     const parentKey = sanitizeCategoryKey(parent?.key);
     const parentLabel = sanitizeCategoryLabel(parent?.label);

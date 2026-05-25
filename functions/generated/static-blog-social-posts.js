@@ -31,11 +31,6 @@ export const staticBlogSocialPosts = [
     "socialImage": "/assets/blog/page-review-sample/eyecatch.png"
   },
   {
-    "slug": "home-work-rhythm",
-    "eyecatch": "/assets/og/bunsirube-og.png",
-    "socialImage": "/assets/og/bunsirube-og.png"
-  },
-  {
     "slug": "ai-news-selling-ideas",
     "eyecatch": "/assets/og/bunsirube-og.png",
     "socialImage": "/assets/og/bunsirube-og.png"

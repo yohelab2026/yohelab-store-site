@@ -22,6 +22,12 @@ const RETIRED_REDIRECTS = new Map([
   ["/blog/starter-kit/", "/blog/"],
   ["/blog/theme-note", "/blog/"],
   ["/blog/theme-note/", "/blog/"],
+  ["/blog/home-work-rhythm", "/blog/"],
+  ["/blog/home-work-rhythm/", "/blog/"],
+  ["/blog/category/home-work", "/blog/"],
+  ["/blog/category/home-work/", "/blog/"],
+  ["/blog/tag/home-work", "/blog/"],
+  ["/blog/tag/home-work/", "/blog/"],
 ]);
 
 const PROTECTED_THEME_ZIP = /^\/bunsirube(?:-child)?(?:-[0-9][0-9.]+)?\.zip$/i;
@@ -79,5 +85,18 @@ export async function onRequest(context) {
     return Response.redirect(new URL(target, url.origin), 301);
   }
 
+  const taxonomyTarget = blogTaxonomyRedirect(url);
+  if (taxonomyTarget) {
+    return Response.redirect(taxonomyTarget, 301);
+  }
+
   return context.next();
+}
+
+function blogTaxonomyRedirect(url) {
+  const match = url.pathname.match(/^\/blog\/(category|tag)\/([^/]+)\/?$/);
+  if (!match) return null;
+  const nextUrl = new URL("/blog/", url.origin);
+  nextUrl.searchParams.set(match[1] === "tag" ? "tag" : "category", decodeURIComponent(match[2]));
+  return nextUrl;
 }

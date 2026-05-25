@@ -299,7 +299,6 @@ export default defineConfig({
         blogGeminiUpdate2026: "blog/gemini-update-2026/index.html",
         blogGensparkHowToEarn: "blog/genspark-how-to-earn/index.html",
         blogGrokUpdate2026: "blog/grok-update-2026/index.html",
-        blogHomeWorkRhythm: "blog/home-work-rhythm/index.html",
         blogProjectGlasswing10000Bugs: "blog/project-glasswing-10000-bugs/index.html",
         blogPerplexityHowToEarn: "blog/perplexity-how-to-earn/index.html",
         blogComparisonArticleTemplate: "blog/comparison-article-template/index.html",

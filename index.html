@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>よへラボ | 家で働く人のためのAI・副業情報サイト</title>
-  <meta name="description" content="よへラボは、家で働く人・副業をする人のための情報サイト。AIニュース、ブログ・note収益化、WordPressテーマ（文標）、在宅ワーク習慣など、家でできる仕事に関するすべてを発信。" />
+  <title>よへラボ | AIニュースとAIツール</title>
+  <meta name="description" content="よへラボは、AIニュースとAIツールを見やすく整理するサイトです。文標など、実際に使える道具もここから確認できます。" />
   <meta name="author" content="よへラボ" />
-  <meta property="og:title" content="よへラボ | 家で働く人のためのAI・副業情報サイト" />
-  <meta property="og:description" content="AIニュース、副業ブログ、WordPressテーマ（文標）、在宅ワーク習慣。家で稼ぐための道しるべ。" />
+  <meta property="og:title" content="よへラボ | AIニュースとAIツール" />
+  <meta property="og:description" content="AIニュースとAIツールを見やすく整理。文標など、実際に使える道具も確認できます。" />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="ja_JP" />
   <meta property="og:url" content="https://yohelab.com/" />
@@ -15,8 +15,8 @@
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="よへラボ | 家で働く人のためのAI・副業情報サイト" />
-  <meta name="twitter:description" content="AIニュース、副業ブログ、WordPressテーマ（文標）、在宅ワーク習慣。家で稼ぐための道しるべ。" />
+  <meta name="twitter:title" content="よへラボ | AIニュースとAIツール" />
+  <meta name="twitter:description" content="AIニュースとAIツールを見やすく整理。文標など、実際に使える道具も確認できます。" />
   <meta name="twitter:image" content="https://yohelab.com/assets/og/bunsirube-og.png" />
   <meta name="twitter:site" content="@yohe_lab" />
   <meta name="twitter:creator" content="@yohe_lab" />
@@ -30,7 +30,7 @@
   <link rel="manifest" href="/site.webmanifest?v=mascot-v2-20260518" />
   <link rel="icon" type="image/png" href="/yohelab-mascot-v2-20260518-32.png" />
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://yohelab.com/#organization","name":"よへラボ","alternateName":["Yohe Lab","yohelab"],"url":"https://yohelab.com/","logo":{"@type":"ImageObject","url":"https://yohelab.com/yohelab-mascot-v2-20260518.png","width":1024,"height":1024},"sameAs":["https://x.com/yohe_lab","https://note.com/yohelab"]},{"@type":"WebSite","@id":"https://yohelab.com/#website","name":"よへラボ","alternateName":["Yohe Lab","yohelab"],"url":"https://yohelab.com/","description":"家で働く人・副業をする人向けに、AIニュース、ブログ、WordPress、在宅ワーク習慣を整理する情報サイト。","publisher":{"@id":"https://yohelab.com/#organization"},"inLanguage":"ja-JP","potentialAction":{"@type":"SearchAction","target":"https://yohelab.com/blog/?q={search_term_string}","query-input":"required name=search_term_string"}},{"@type":"BreadcrumbList","@id":"https://yohelab.com/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"ホーム","item":"https://yohelab.com/"}]}]}
+  {"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://yohelab.com/#organization","name":"よへラボ","alternateName":["Yohe Lab","yohelab"],"url":"https://yohelab.com/","logo":{"@type":"ImageObject","url":"https://yohelab.com/yohelab-mascot-v2-20260518.png","width":1024,"height":1024},"sameAs":["https://x.com/yohe_lab","https://note.com/yohelab"]},{"@type":"WebSite","@id":"https://yohelab.com/#website","name":"よへラボ","alternateName":["Yohe Lab","yohelab"],"url":"https://yohelab.com/","description":"AIニュースとAIツールを見やすく整理するサイト。","publisher":{"@id":"https://yohelab.com/#organization"},"inLanguage":"ja-JP","potentialAction":{"@type":"SearchAction","target":"https://yohelab.com/blog/?q={search_term_string}","query-input":"required name=search_term_string"}},{"@type":"BreadcrumbList","@id":"https://yohelab.com/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"ホーム","item":"https://yohelab.com/"}]}]}
   </script>
 
   <style>
@@ -367,7 +367,7 @@
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* ── ツール・商品パネル ── */
+    /* ── AIツールパネル ── */
     .product-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -405,7 +405,7 @@
     }
     .product-card-price.paid { color: var(--accent); }
 
-    /* ── 在宅ヒント ── */
+    /* ── 補助カード ── */
     .tip-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -545,8 +545,6 @@
       .news-item { padding: 12px 12px; }
       .section-head { padding: 10px 12px; }
       .mobile-priority-widgets { grid-template-columns: 1fr; }
-      #panel-workout .section-card { margin-bottom: 12px; }
-      #panel-workout .tip-grid { padding-top: 12px; }
     }
     @media (max-width: 400px) {
       .tab-btn { padding: 9px 2px; }
@@ -590,17 +588,8 @@
     <button class="tab-btn active" type="button" role="tab" id="tab-ai-news" aria-label="AIニュース" aria-selected="true" aria-controls="panel-ai-news" data-tab="ai-news">
       <span class="tab-icon">🤖</span><span class="tab-label">AIニュース</span>
     </button>
-    <button class="tab-btn" type="button" role="tab" id="tab-ai-rumor" aria-label="AIの噂" aria-selected="false" aria-controls="panel-ai-rumor" data-tab="ai-rumor">
-      <span class="tab-icon">🔮</span><span class="tab-label">AIの噂</span>
-    </button>
-    <button class="tab-btn" type="button" role="tab" id="tab-blog" aria-label="副業ブログ" aria-selected="false" aria-controls="panel-blog" data-tab="blog">
-      <span class="tab-icon">✍️</span><span class="tab-label">副業ブログ</span>
-    </button>
-    <button class="tab-btn" type="button" role="tab" id="tab-tools" aria-label="ツール・商品" aria-selected="false" aria-controls="panel-tools" data-tab="tools">
-      <span class="tab-icon">📦</span><span class="tab-label">ツール・商品</span>
-    </button>
-    <button class="tab-btn" type="button" role="tab" id="tab-workout" aria-label="在宅ヒント" aria-selected="false" aria-controls="panel-workout" data-tab="workout">
-      <span class="tab-icon">💪</span><span class="tab-label">在宅ヒント</span>
+    <button class="tab-btn" type="button" role="tab" id="tab-tools" aria-label="AIツール" aria-selected="false" aria-controls="panel-tools" data-tab="tools">
+      <span class="tab-icon">📦</span><span class="tab-label">AIツール</span>
     </button>
   </div>
 </div>
@@ -610,7 +599,7 @@
 
   <!-- ===== 左カラム（タブパネル） ===== -->
   <div class="main-col">
-    <h1 id="home-title" class="sr-only">家で働く人・副業をしたい人のためのAI・副業情報サイト</h1>
+    <h1 id="home-title" class="sr-only">AIニュースとAIツールを整理するよへラボ</h1>
 
     <section class="home-bunsirube-strip" aria-labelledby="home-bunsirube-title">
       <div>
@@ -734,84 +723,13 @@
 
     </div>
 
-    <!-- [タブ2] AIの噂 -->
-    <div class="tab-panel" id="panel-ai-rumor" role="tabpanel" aria-labelledby="tab-ai-rumor">
-      <section class="section-card">
-        <div class="section-head">
-          <h2><span>🔮</span>AIの噂</h2>
-        </div>
-        <p style="padding:12px 14px 0;color:var(--muted);font-size:13px;line-height:1.7;">まだ確定していない話、リーク、今後出そうな動きは、AIニュースとは分けて置きます。あとから確定情報に変わったものだけ、AIニュース側へ移します。</p>
-        <div id="aiRumorContainer"></div>
-        <p id="aiRumorEmpty" style="margin:12px;padding:12px 14px;border-radius:14px;background:#f7fbff;color:#52645f;font-size:13px;font-weight:700;">AIの噂の記事は、公開したらここに並びます。</p>
-      </section>
-    </div>
-
-    <!-- [タブ2] 副業ブログ -->
-    <div class="tab-panel" id="panel-blog" role="tabpanel" aria-labelledby="tab-blog">
-      <section class="section-card">
-        <div class="section-head">
-          <h2><span>✍️</span>最新ブログ記事</h2>
-        </div>
-        <div>
-          <a class="news-item" href="/blog/ai-news-selling-ideas/">
-            <span class="news-tag tag-ai" data-category-label="ai-news">AIニュース</span>
-            <div class="news-body">
-              <div class="news-title">AIニュースを記事ネタに変える方法</div>
-              <div class="news-meta">2026-05-18 · 副業ブログ</div>
-            </div>
-          </a>
-          <a class="news-item" href="/blog/home-work-rhythm/">
-            <span class="news-tag tag-home" data-category-label="home-work">在宅ワーク</span>
-            <div class="news-body">
-              <div class="news-title">在宅作業の運動不足対策</div>
-              <div class="news-meta">2026-05-18 · 在宅ヒント</div>
-            </div>
-          </a>
-          <a class="news-item" href="/blog/comparison-article-template/">
-            <span class="news-tag tag-template" data-category-label="template">記事テンプレ</span>
-            <div class="news-body">
-              <div class="news-title">比較記事の書き方</div>
-              <div class="news-meta">2026-05-04 · 副業ブログ</div>
-            </div>
-          </a>
-          <a class="news-item" href="/blog/free-theme-vs-bunsirube/">
-            <span class="news-tag tag-wp" data-category-label="wordpress">WordPress</span>
-            <div class="news-body">
-              <div class="news-title">無料テーマと文標の違い｜どちらを選ぶべきか</div>
-              <div class="news-meta">2026-05-04 · 副業ブログ</div>
-            </div>
-          </a>
-          <a class="news-item" href="/blog/faq-source-ai-search/">
-            <span class="news-tag tag-ai" data-category-label="ai-news">AIニュース</span>
-            <div class="news-body">
-              <div class="news-title">AI検索向けにFAQと出典を置く理由</div>
-              <div class="news-meta">2026-05-02 · 副業ブログ</div>
-            </div>
-          </a>
-          <a class="news-item" href="/blog/sales-page-common-mistakes/">
-            <span class="news-tag tag-earn" data-category-label="earn">収益化ネタ</span>
-            <div class="news-body">
-              <div class="news-title">売り場ページのよくある失敗とチェックリスト</div>
-              <div class="news-meta">2026-04-28 · 副業ブログ</div>
-            </div>
-          </a>
-          <a class="news-item" href="/blog/bunsirube-version-history/">
-            <span class="news-tag tag-wp" data-category-label="wordpress">WordPress</span>
-            <div class="news-body">
-              <div class="news-title">文標のバージョンアップ履歴</div>
-              <div class="news-meta">2026-05-12 · 副業ブログ</div>
-            </div>
-          </a>
-        </div>
-      </section>
-    </div>
-
-    <!-- [タブ3] ツール・商品 -->
+    <!-- [タブ2] AIツール -->
     <div class="tab-panel" id="panel-tools" role="tabpanel" aria-labelledby="tab-tools">
       <section class="section-card">
         <div class="section-head">
-          <h2><span>📦</span>ツール・商品一覧</h2>
+          <h2><span>📦</span>AIツール一覧</h2>
         </div>
+        <p style="padding:0 14px 12px;color:var(--muted);font-size:13px;line-height:1.7;">今は文標が中心です。これからAIまわりの道具を増やしたときも、ここにまとめます。</p>
         <div class="product-grid">
           <a class="product-card" href="/lp/bunsirube/">
             <div class="product-card-icon">文</div>
@@ -853,92 +771,6 @@
       </section>
     </div>
 
-    <!-- [タブ4] 在宅ヒント -->
-    <div class="tab-panel" id="panel-workout" role="tabpanel" aria-labelledby="tab-workout">
-      <section class="section-card">
-        <div class="section-head">
-          <h2><span>🏠</span>在宅作業を続ける入口</h2>
-        </div>
-        <p style="padding:12px 14px 0;color:var(--muted);font-size:13px;line-height:1.7;">在宅ヒントは、記事数を増やすより先に「家で作業を続ける土台」をまとめています。AIニュースを記事やテンプレに変える前の、体力とリズムの置き場所です。</p>
-        <a class="news-item" href="/blog/home-work-rhythm/">
-          <span class="news-tag tag-home" data-category-label="home-work">在宅ワーク</span>
-          <div class="news-body">
-            <div class="news-title">在宅作業の運動不足対策</div>
-            <div class="news-meta">2026-05-18 · 在宅ヒント</div>
-          </div>
-        </a>
-        <a class="news-item" href="/blog/ai-news-selling-ideas/">
-          <span class="news-tag tag-ai" data-category-label="ai-news">AIニュース</span>
-          <div class="news-body">
-            <div class="news-title">家で調べたAIニュースを、記事ネタに変える流れ</div>
-            <div class="news-meta">2026-05-18 · 作業メモ</div>
-          </div>
-        </a>
-        <a class="news-item" href="/blog/comparison-article-template/">
-          <span class="news-tag tag-template" data-category-label="template">記事テンプレ</span>
-          <div class="news-body">
-            <div class="news-title">在宅作業で迷わないための比較記事テンプレ</div>
-            <div class="news-meta">2026-05-04 · 作業メモ</div>
-          </div>
-        </a>
-      </section>
-      <section class="section-card">
-        <div class="section-head">
-          <h2><span>💪</span>在宅ワーカーのためのヒント</h2>
-        </div>
-        <div class="tip-grid">
-          <div class="tip-item">
-            <div class="tip-icon">⏱️</div>
-            <div class="tip-label">25分サイクル</div>
-            <div class="tip-text">25分作業→5分休憩。集中力と腰痛を同時に対策できる。</div>
-          </div>
-          <div class="tip-item">
-            <div class="tip-icon">🤸</div>
-            <div class="tip-label">家トレ習慣</div>
-            <div class="tip-text">スクワット・腕立て・腹筋。道具なしで今日から始められる。</div>
-          </div>
-          <div class="tip-item">
-            <div class="tip-icon">☀️</div>
-            <div class="tip-label">朝のルーティン</div>
-            <div class="tip-text">起床→水→軽いストレッチ→作業。リズムが生産性を作る。</div>
-          </div>
-          <div class="tip-item">
-            <div class="tip-icon">📵</div>
-            <div class="tip-label">SNS断ち</div>
-            <div class="tip-text">集中タイム中はスマホを別の部屋に置く。生産性が変わる。</div>
-          </div>
-          <div class="tip-item">
-            <div class="tip-icon">🪟</div>
-            <div class="tip-label">自然光を使う</div>
-            <div class="tip-text">窓際に机を移すだけで気分と目の疲れが大きく変わる。</div>
-          </div>
-          <div class="tip-item">
-            <div class="tip-icon">📋</div>
-            <div class="tip-label">今日の3タスク</div>
-            <div class="tip-text">毎朝「今日やる3つ」だけ決める。それで十分な日がほとんど。</div>
-          </div>
-          <div class="tip-item">
-            <div class="tip-icon">🚶</div>
-            <div class="tip-label">外出タイム</div>
-            <div class="tip-text">1日1回は外に出る。コンビニでもOK。気分転換に効果大。</div>
-          </div>
-          <div class="tip-item">
-            <div class="tip-icon">💧</div>
-            <div class="tip-label">水を手元に</div>
-            <div class="tip-text">机の上に水を置くだけで集中が続く。コーヒーより水が先。</div>
-          </div>
-          <div class="tip-item">
-            <div class="tip-icon">🎵</div>
-            <div class="tip-label">BGM活用</div>
-            <div class="tip-text">歌詞なし音楽やホワイトノイズが集中力を高める。</div>
-          </div>
-        </div>
-        <div style="padding:0 14px 14px;">
-          <a href="/blog/home-work-rhythm/" style="display:inline-block;padding:10px 20px;background:var(--brand);color:#fff;border-radius:6px;font-size:13px;font-weight:700;">在宅ワーク習慣の記事を読む →</a>
-        </div>
-      </section>
-    </div>
-
   </div><!-- /main-col -->
 
   <!-- ===== サイドバー（常時表示） ===== -->
@@ -973,7 +805,7 @@
       </div>
     </section>
 
-    <!-- ツール・商品（サイドバー） -->
+    <!-- AIツール（サイドバー） -->
     <section class="section-card">
       <div class="section-head">
         <h2><span>🧰</span>注目ツール</h2>
@@ -1026,21 +858,18 @@
       <div class="footer-logo">
         <img src="/yohelab-mascot-v2-20260518-64.png" alt="よへラボ" width="28" height="28" loading="lazy" decoding="async" />よへラボ
       </div>
-      <p class="footer-tagline">家で働く人のための<br>AI・副業情報サイト</p>
+      <p class="footer-tagline">AIニュースとAIツールを<br>見やすく整理するサイト</p>
     </div>
     <div class="footer-col">
       <h3>カテゴリ</h3>
       <ul>
         <li><a href="/blog/">ブログ記事一覧</a></li>
         <li><a href="/blog/?category=group:ai-news">AIニュース</a></li>
-        <li><a href="/blog/?category=group:ai-rumor">AIの噂</a></li>
-        <li><a href="/blog/?category=group:earn">副業ブログ</a></li>
-        <li><a href="/blog/category/wordpress/">ツール・商品</a></li>
-        <li><a href="/blog/?category=group:home-work">在宅ヒント</a></li>
+        <li><a href="/blog/?category=group:ai-tools">AIツール</a></li>
       </ul>
     </div>
     <div class="footer-col">
-      <h3>ツール・商品</h3>
+      <h3>AIツール</h3>
       <ul>
         <li><a href="/lp/bunsirube/">文標（WPテーマ）</a></li>
         <li><a href="/lp/bunsirube/demo/">文標デモ</a></li>
@@ -1158,7 +987,7 @@
 
   const homeCategoryLabels = {
     'ai-news': 'AIニュース',
-    'ai-rumor': 'AIの噂',
+    'ai-tools': 'AIツール',
     'rumor-chatgpt': 'ChatGPT',
     'rumor-claude': 'Claude',
     'rumor-gemini': 'Gemini',
@@ -1174,12 +1003,14 @@
     perplexity: 'Perplexity',
     genspark: 'Genspark',
     grok: 'Grok',
+    deepseek: 'DeepSeek',
+    codex: 'Codex',
+    cursor: 'Cursor',
     copilot: 'Copilot',
+    bunsirube: '文標',
     wordpress: 'WordPress',
     template: '記事テンプレ',
-    earn: '収益化ネタ',
     article: '記事づくり',
-    'home-work': '在宅ワーク',
   };
 
   async function loadHomeCategorySettings() {
@@ -1203,9 +1034,7 @@
   // ── 管理画面から公開した記事をトップへ反映 ──
   async function loadPublishedPostsForHome() {
     const newsContainer = document.getElementById('aiNewsContainer');
-    const rumorContainer = document.getElementById('aiRumorContainer');
-    const latestBlogList = document.querySelector('#panel-blog .section-card .section-head + div');
-    if (!newsContainer && !rumorContainer && !latestBlogList) return;
+    if (!newsContainer) return;
 
     try {
       const res = await fetch('/api/blog-posts?page=1', { cache: 'no-store' });
@@ -1221,34 +1050,11 @@
       if (newsContainer) {
         const existingNews = new Set([...newsContainer.querySelectorAll('a[href]')].map(a => a.getAttribute('href')));
         const newsHtml = dynamicPosts
-          .filter(post => isAiNewsHomePost(post) && !isAiRumorHomePost(post))
+          .filter(isAiNewsHomePost)
           .filter(post => !existingNews.has(dynamicPostUrl(post)))
           .map(renderDynamicNewsItem)
           .join('');
         if (newsHtml) newsContainer.insertAdjacentHTML('afterbegin', newsHtml);
-      }
-
-      if (rumorContainer) {
-        const existingRumors = new Set([...rumorContainer.querySelectorAll('a[href]')].map(a => a.getAttribute('href')));
-        const rumorHtml = dynamicPosts
-          .filter(isAiRumorHomePost)
-          .filter(post => !existingRumors.has(dynamicPostUrl(post)))
-          .map(renderDynamicNewsItem)
-          .join('');
-        if (rumorHtml) {
-          rumorContainer.insertAdjacentHTML('afterbegin', rumorHtml);
-          const empty = document.getElementById('aiRumorEmpty');
-          if (empty) empty.style.display = 'none';
-        }
-      }
-
-      if (latestBlogList) {
-        const existingArticles = new Set([...latestBlogList.querySelectorAll('a[href]')].map(a => a.getAttribute('href')));
-        const articleHtml = dynamicPosts
-          .filter(post => !existingArticles.has(dynamicPostUrl(post)))
-          .map(renderDynamicArticleItem)
-          .join('');
-        if (articleHtml) latestBlogList.insertAdjacentHTML('afterbegin', articleHtml);
       }
     } catch (_) {
       // トップページ本体は静的に表示できるので、通信失敗時は静かにそのままにする。
@@ -1261,24 +1067,11 @@
 
   function renderDynamicNewsItem(post) {
     const tags = normalizeHomeTags(post.tags);
-    const aiTags = tags.filter(tag => ['chatgpt','claude','gemini','perplexity','genspark','grok','copilot'].includes(tag));
+    const aiTags = tags.filter(tag => ['chatgpt','claude','gemini','perplexity','genspark','grok','deepseek','codex','cursor','copilot'].includes(normalizeLegacyHomeTag(tag)));
     const dataAi = aiTags.length ? aiTags.join(' ') : 'all';
     const label = homeCategoryLabel(tags);
     return `
           <a class="news-item" href="${dynamicPostUrl(post)}" data-ai="${escapeHtml(dataAi)}" data-dynamic="server">
-            <span class="news-tag ${homeCategoryClass(tags)}">${escapeHtml(label)}</span>
-            <div class="news-body">
-              <div class="news-title">${escapeHtml(post.title || '無題の記事')}</div>
-              <div class="news-meta">${escapeHtml(formatHomeDateText(post.date || ''))} · ${escapeHtml(label)}</div>
-            </div>
-          </a>`;
-  }
-
-  function renderDynamicArticleItem(post) {
-    const tags = normalizeHomeTags(post.tags);
-    const label = homeCategoryLabel(tags);
-    return `
-          <a class="news-item" href="${dynamicPostUrl(post)}" data-dynamic="server">
             <span class="news-tag ${homeCategoryClass(tags)}">${escapeHtml(label)}</span>
             <div class="news-body">
               <div class="news-title">${escapeHtml(post.title || '無題の記事')}</div>
@@ -1298,42 +1091,35 @@
   function isAiNewsHomePost(post) {
     const tags = normalizeHomeTags(post.tags);
     const title = String(post?.title || '').toLowerCase();
-    const aiKeys = ['chatgpt','claude','gemini','perplexity','genspark','grok','copilot','ai-news'];
+    const aiKeys = ['chatgpt','claude','gemini','perplexity','genspark','grok','deepseek','codex','cursor','copilot','ai-news'];
     if (aiKeys.some(tag => tags.includes(tag))) return true;
     return aiKeys.some(key => title.includes(key));
   }
 
-  function isAiRumorHomePost(post) {
-    const tags = normalizeHomeTags(post.tags);
-    const title = String(post?.title || '').toLowerCase();
-    const rumorKeys = ['ai-rumor','ai-leak','ai-prediction','rumor-chatgpt','rumor-claude','rumor-gemini','rumor-perplexity','rumor-genspark','rumor-grok','rumor-copilot','rumor-midjourney','rumor-other'];
-    if (rumorKeys.some(tag => tags.includes(tag))) return true;
-    return title.includes('噂') || title.includes('リーク') || title.includes('未発表') || title.includes('予測');
-  }
-
   function normalizeHomeTags(tags) {
     return (Array.isArray(tags) ? tags : String(tags || '').split(/[\n,、]/))
-      .map(tag => String(tag || '').trim().toLowerCase())
+      .map(normalizeLegacyHomeTag)
       .filter(Boolean);
   }
 
+  function normalizeLegacyHomeTag(tag) {
+    const key = String(tag || '').trim().toLowerCase();
+    if (key === 'ai-rumor' || key === 'ai-leak' || key === 'ai-prediction') return 'ai-news';
+    if (key.startsWith('rumor-')) return key.replace(/^rumor-/, '') || 'ai-news';
+    if (key === 'earn') return 'ai-tools';
+    return key;
+  }
+
   function homeCategoryLabel(tags) {
-    const rumorTag = tags.find(tag => tag.startsWith('rumor-'));
-    if (rumorTag) return homeCategoryLabels[rumorTag] || 'AIの噂';
-    if (tags.includes('ai-leak') || tags.includes('ai-prediction')) return homeCategoryLabels['rumor-other'] || 'その他';
-    if (tags.includes('ai-rumor')) return homeCategoryLabels['ai-rumor'] || 'AIの噂';
+    if (tags.includes('ai-tools')) return homeCategoryLabels['ai-tools'] || 'AIツール';
+    if (tags.includes('bunsirube')) return homeCategoryLabels.bunsirube || '文標';
     if (tags.includes('wordpress')) return homeCategoryLabels.wordpress || 'WordPress';
     if (tags.includes('template')) return homeCategoryLabels.template || '記事テンプレ';
-    if (tags.includes('home-work')) return homeCategoryLabels['home-work'] || '在宅ワーク';
-    if (tags.includes('earn')) return homeCategoryLabels.earn || '収益化ネタ';
     return homeCategoryLabels['ai-news'] || 'AIニュース';
   }
 
   function homeCategoryClass(tags) {
-    if (tags.includes('ai-rumor') || tags.includes('ai-leak') || tags.includes('ai-prediction') || tags.some(tag => tag.startsWith('rumor-'))) return 'tag-rumor';
-    if (tags.includes('home-work')) return 'tag-home';
-    if (tags.includes('earn')) return 'tag-earn';
-    if (tags.includes('wordpress') || tags.includes('template')) return 'tag-wp';
+    if (tags.includes('ai-tools') || tags.includes('bunsirube') || tags.includes('wordpress') || tags.includes('template')) return 'tag-wp';
     return 'tag-ai';
   }
 

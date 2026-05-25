@@ -2474,57 +2474,27 @@
         { key: 'perplexity', label: 'Perplexity', color: '#1fb6cf', order: 50 },
         { key: 'genspark', label: 'Genspark', color: '#7c3aed', order: 60 },
         { key: 'grok', label: 'Grok', color: '#222222', order: 70 },
-        { key: 'copilot', label: 'Copilot', color: '#2563eb', order: 80 },
-        { key: 'midjourney', label: 'Midjourney', color: '#8b5cf6', order: 90 },
+        { key: 'deepseek', label: 'DeepSeek', color: '#1d4ed8', order: 80 },
+        { key: 'codex', label: 'Codex', color: '#111827', order: 90 },
+        { key: 'cursor', label: 'Cursor', color: '#334155', order: 100 },
+        { key: 'copilot', label: 'Copilot', color: '#2563eb', order: 110 },
+        { key: 'midjourney', label: 'Midjourney', color: '#8b5cf6', order: 120 },
       ],
     },
     {
-      key: 'ai-rumor',
-      label: 'AIの噂',
-      color: '#0e7490',
-      order: 15,
-      children: [
-        { key: 'rumor-chatgpt', label: 'ChatGPT', color: '#10a37f', order: 10 },
-        { key: 'rumor-claude', label: 'Claude', color: '#cc785c', order: 20 },
-        { key: 'rumor-gemini', label: 'Gemini', color: '#4285f4', order: 30 },
-        { key: 'rumor-perplexity', label: 'Perplexity', color: '#1fb6cf', order: 40 },
-        { key: 'rumor-genspark', label: 'Genspark', color: '#7c3aed', order: 50 },
-        { key: 'rumor-grok', label: 'Grok', color: '#222222', order: 60 },
-        { key: 'rumor-copilot', label: 'Copilot', color: '#2563eb', order: 70 },
-        { key: 'rumor-midjourney', label: 'Midjourney', color: '#8b5cf6', order: 80 },
-        { key: 'rumor-other', label: 'その他', color: '#64748b', order: 90 },
-      ],
-    },
-    {
-      key: 'earn',
-      label: '副業ブログ',
-      color: '#f97316',
+      key: 'ai-tools',
+      label: 'AIツール',
+      color: '#087a63',
       order: 20,
       children: [
-        { key: 'earn', label: '収益化ネタ', color: '#f97316', order: 10 },
-        { key: 'article', label: '記事づくり', color: '#087a63', order: 20 },
-      ],
-    },
-    {
-      key: 'wordpress',
-      label: 'ツール・商品',
-      color: '#087a63',
-      order: 30,
-      children: [
-        { key: 'wordpress', label: 'WordPress・文標', color: '#087a63', order: 10 },
-        { key: 'template', label: '記事テンプレ', color: '#087a63', order: 20 },
-      ],
-    },
-    {
-      key: 'home-work',
-      label: '在宅ヒント',
-      color: '#2b8a7e',
-      order: 40,
-      children: [
-        { key: 'home-work', label: '在宅ワーク習慣', color: '#2b8a7e', order: 10 },
+        { key: 'ai-tools', label: 'AIツール', color: '#087a63', order: 10 },
+        { key: 'bunsirube', label: '文標', color: '#087a63', order: 20 },
+        { key: 'wordpress', label: '文標・WordPress', color: '#087a63', order: 30 },
+        { key: 'template', label: '記事テンプレ', color: '#087a63', order: 40 },
       ],
     },
   ];
+  const DEFAULT_PARENT_KEYS = new Set(DEFAULT_CATEGORY_TREE.map(item => item.key));
   let categoryTree = normalizeCategoryTree(DEFAULT_CATEGORY_TREE);
   let categoryGroups = {};
   let categoryLookup = new Map();
@@ -2538,7 +2508,8 @@
   }
 
   function normalizeCategoryTree(value) {
-    const source = mergeDefaultCategoryTree(Array.isArray(value) && value.length ? value : DEFAULT_CATEGORY_TREE);
+    const source = mergeDefaultCategoryTree(Array.isArray(value) && value.length ? value : DEFAULT_CATEGORY_TREE)
+      .filter(parent => DEFAULT_PARENT_KEYS.has(sanitizeCategoryKey(parent?.key)));
     return source.map((parent, parentIndex) => {
       const rawKey = sanitizeCategoryKey(parent?.key);
       const fallback = DEFAULT_CATEGORY_TREE.find(item => item.key === rawKey) || DEFAULT_CATEGORY_TREE[parentIndex] || {};
@@ -2581,11 +2552,6 @@
         return;
       }
 
-      if (defaultParentKey === 'ai-rumor') {
-        parent.children = defaultParent.children.map(child => ({ ...child }));
-        return;
-      }
-
       if (!Array.isArray(parent.children)) parent.children = [];
       const childKeys = new Set(parent.children.map(child => sanitizeCategoryKey(child?.key)).filter(Boolean));
       defaultParent.children.forEach(defaultChild => {
@@ -2624,11 +2590,8 @@
   }
 
   function categoryKeysFromTags(tags) {
-    const normalized = parseTagList(tags).map(tag => sanitizeCategoryKey(tag)).filter(Boolean);
+    const normalized = parseTagList(tags).map(normalizeLegacyCategoryKey).filter(Boolean);
     const keys = categoryOrder.filter(key => normalized.includes(key));
-    if (!keys.some(key => key.startsWith('rumor-')) && normalized.some(key => ['ai-rumor', 'ai-leak', 'ai-prediction'].includes(key))) {
-      keys.push('rumor-other');
-    }
     return keys;
   }
 
@@ -3357,12 +3320,17 @@
   }
 
   function explicitCategoryKeys(post) {
-    const normalized = parseTagList(post.tags).map(tag => sanitizeCategoryKey(tag)).filter(Boolean);
+    const normalized = parseTagList(post.tags).map(normalizeLegacyCategoryKey).filter(Boolean);
     const keys = categoryOrder.filter(key => normalized.includes(key));
-    if (!keys.some(key => key.startsWith('rumor-')) && normalized.some(key => ['ai-rumor', 'ai-leak', 'ai-prediction'].includes(key))) {
-      keys.push('rumor-other');
-    }
     return keys;
+  }
+
+  function normalizeLegacyCategoryKey(value) {
+    const key = sanitizeCategoryKey(value);
+    if (key === 'ai-rumor' || key === 'ai-leak' || key === 'ai-prediction') return 'ai-news';
+    if (key.startsWith('rumor-')) return key.replace(/^rumor-/, '') || 'ai-news';
+    if (key === 'earn') return 'ai-tools';
+    return key;
   }
 
   function primaryCategoryKey(post) {
@@ -3382,23 +3350,13 @@
     if (raw.includes('genspark')) tags.add('genspark');
     if (raw.includes('grok')) tags.add('grok');
     if (raw.includes('copilot') || raw.includes('microsoft')) tags.add('copilot');
-    const rumorCue = raw.includes('噂') || raw.includes('うわさ') || raw.includes('リーク') || raw.includes('未発表') || raw.includes('予測') || raw.includes('今後') || tags.has('ai-rumor') || tags.has('ai-leak') || tags.has('ai-prediction');
-    if (rumorCue) {
-      let matchedRumorTool = false;
-      if (raw.includes('chatgpt') || raw.includes('openai')) { tags.add('rumor-chatgpt'); matchedRumorTool = true; }
-      if (raw.includes('claude') || raw.includes('anthropic')) { tags.add('rumor-claude'); matchedRumorTool = true; }
-      if (raw.includes('gemini') || raw.includes('google')) { tags.add('rumor-gemini'); matchedRumorTool = true; }
-      if (raw.includes('perplexity')) { tags.add('rumor-perplexity'); matchedRumorTool = true; }
-      if (raw.includes('genspark')) { tags.add('rumor-genspark'); matchedRumorTool = true; }
-      if (raw.includes('grok')) { tags.add('rumor-grok'); matchedRumorTool = true; }
-      if (raw.includes('copilot') || raw.includes('microsoft')) { tags.add('rumor-copilot'); matchedRumorTool = true; }
-      if (raw.includes('midjourney')) { tags.add('rumor-midjourney'); matchedRumorTool = true; }
-      if (!matchedRumorTool) tags.add('rumor-other');
-    }
+    if (raw.includes('deepseek')) tags.add('deepseek');
+    if (raw.includes('codex')) tags.add('codex');
+    if (raw.includes('cursor')) tags.add('cursor');
     if (raw.includes('wordpress') || raw.includes('文標')) tags.add('wordpress');
-    if (raw.includes('副業') || raw.includes('稼')) tags.add('earn');
+    if (raw.includes('文標')) tags.add('bunsirube');
+    if (raw.includes('wordpress') || raw.includes('文標') || raw.includes('テンプレ') || raw.includes('比較記事')) tags.add('ai-tools');
     if (raw.includes('テンプレ') || raw.includes('比較記事')) tags.add('template');
-    if (raw.includes('在宅') || raw.includes('家で作業')) tags.add('home-work');
     if (raw.includes('aiニュース') || raw.includes('ai検索')) tags.add('ai-news');
     return [...tags];
   }

@@ -6,14 +6,12 @@ let categoryChildEls = Array.from(document.querySelectorAll('.category-child'));
 const categoryPanelEls = Array.from(document.querySelectorAll('.child-category-panel'));
 let activeFilter = 'all';
 let activeParent = 'ai-news';
-let aiToolTags = ['ai-news','chatgpt','claude','gemini','perplexity','genspark','grok','copilot','midjourney'];
-const aiRumorTags = ['rumor-chatgpt','rumor-claude','rumor-gemini','rumor-perplexity','rumor-genspark','rumor-grok','rumor-copilot','rumor-midjourney','rumor-other'];
+let aiNewsTags = ['ai-news','chatgpt','claude','gemini','perplexity','genspark','grok','deepseek','codex','cursor','copilot','midjourney','faq'];
+const legacyRumorTags = ['rumor-chatgpt','rumor-claude','rumor-gemini','rumor-perplexity','rumor-genspark','rumor-grok','rumor-copilot','rumor-midjourney','rumor-other'];
+let aiToolTags = ['ai-tools','bunsirube','wordpress','template'];
 let categoryGroups = {
-  'group:ai-news': aiToolTags,
-  'group:ai-rumor': aiRumorTags,
-  'group:earn': ['earn','article'],
-  'group:wordpress': ['wordpress','template'],
-  'group:home-work': ['home-work'],
+  'group:ai-news': [...aiNewsTags, ...legacyRumorTags],
+  'group:ai-tools': aiToolTags,
 };
 let categoryParentByKey = {
   'ai-news': 'ai-news',
@@ -23,35 +21,33 @@ let categoryParentByKey = {
   perplexity: 'ai-news',
   genspark: 'ai-news',
   grok: 'ai-news',
+  deepseek: 'ai-news',
+  codex: 'ai-news',
+  cursor: 'ai-news',
   copilot: 'ai-news',
   midjourney: 'ai-news',
   faq: 'ai-news',
-  'ai-rumor': 'ai-rumor',
-  'rumor-chatgpt': 'ai-rumor',
-  'rumor-claude': 'ai-rumor',
-  'rumor-gemini': 'ai-rumor',
-  'rumor-perplexity': 'ai-rumor',
-  'rumor-genspark': 'ai-rumor',
-  'rumor-grok': 'ai-rumor',
-  'rumor-copilot': 'ai-rumor',
-  'rumor-midjourney': 'ai-rumor',
-  'rumor-other': 'ai-rumor',
-  earn: 'earn',
-  article: 'earn',
-  wordpress: 'wordpress',
-  template: 'wordpress',
-  'home-work': 'home-work',
+  'rumor-chatgpt': 'ai-news',
+  'rumor-claude': 'ai-news',
+  'rumor-gemini': 'ai-news',
+  'rumor-perplexity': 'ai-news',
+  'rumor-genspark': 'ai-news',
+  'rumor-grok': 'ai-news',
+  'rumor-copilot': 'ai-news',
+  'rumor-midjourney': 'ai-news',
+  'rumor-other': 'ai-news',
+  'ai-tools': 'ai-tools',
+  bunsirube: 'ai-tools',
+  wordpress: 'ai-tools',
+  template: 'ai-tools',
+  article: 'ai-tools',
 };
-let categoryOrder = ['ai-news','chatgpt','claude','gemini','perplexity','genspark','grok','copilot','midjourney','faq','rumor-chatgpt','rumor-claude','rumor-gemini','rumor-perplexity','rumor-genspark','rumor-grok','rumor-copilot','rumor-midjourney','rumor-other','earn','template','article','wordpress','home-work'];
+let categoryOrder = ['ai-news','chatgpt','claude','gemini','perplexity','genspark','grok','deepseek','codex','cursor','copilot','midjourney','faq','ai-tools','bunsirube','wordpress','template','article', ...legacyRumorTags];
 let categoryLabels = {
   all: 'すべて',
   'group:ai-news': 'AIニュース全部',
-  'group:ai-rumor': 'AIの噂全部',
-  'group:earn': '副業ネタ全部',
-  'group:wordpress': 'ツール全部',
-  'group:home-work': '在宅ヒント全部',
+  'group:ai-tools': 'AIツール全部',
   'ai-news': 'AIニュース',
-  'ai-rumor': 'AIの噂',
   'rumor-chatgpt': 'ChatGPT',
   'rumor-claude': 'Claude',
   'rumor-gemini': 'Gemini',
@@ -67,30 +63,30 @@ let categoryLabels = {
   perplexity: 'Perplexity',
   genspark: 'Genspark',
   grok: 'Grok',
+  deepseek: 'DeepSeek',
+  codex: 'Codex',
+  cursor: 'Cursor',
   copilot: 'Copilot',
   midjourney: 'Midjourney',
   faq: 'FAQ',
-  earn: '収益化ネタ',
-  wordpress: 'WordPress・文標',
+  'ai-tools': 'AIツール',
+  bunsirube: '文標',
+  wordpress: '文標・WordPress',
   article: '記事づくり',
-  'home-work': '在宅ワーク習慣',
   template: '記事テンプレ',
 };
 let categoryColors = {};
-const queryOnlyCategoryFilters = new Set(['group:ai-rumor', 'ai-rumor', 'ai-leak', 'ai-prediction', ...aiRumorTags]);
 const postCategoryOverrides = {
   'ai-news-selling-ideas': ['ai-news', 'chatgpt', 'claude', 'gemini'],
   'faq-source-ai-search': ['ai-news', 'faq'],
-  'home-work-rhythm': ['home-work'],
-  'sales-page-common-mistakes': ['earn', 'article'],
-  'comparison-article-template': ['template', 'article'],
-  'free-theme-vs-bunsirube': ['wordpress'],
-  'bunsirube-version-history': ['wordpress'],
-  'bunsirube-before-install': ['wordpress'],
+  'sales-page-common-mistakes': ['ai-tools', 'template'],
+  'comparison-article-template': ['ai-tools', 'template'],
+  'free-theme-vs-bunsirube': ['ai-tools', 'bunsirube'],
+  'bunsirube-version-history': ['ai-tools', 'bunsirube'],
+  'bunsirube-before-install': ['ai-tools', 'bunsirube'],
 };
 const staticBlogSlugs = new Set([
   'ai-news-selling-ideas',
-  'home-work-rhythm',
   'bunsirube-version-history',
   'free-theme-vs-bunsirube',
   'comparison-article-template',
@@ -146,20 +142,12 @@ const searchAliasGroups = [
 let staticManifestPosts = [];
 const fallbackPosts = [
   {
-    title: '家で作業すると運動不足になるので、先に動く仕組みを作る',
-    slug: 'home-work-rhythm',
-    date: '2026-05-18',
-    excerpt: 'AIニュースを調べる、WordPressを触る、ブログを書く。家で続ける人向けに、座りっぱなしを避ける小さい仕組みをまとめました。',
-    body: '家で作業できることは増えています。ただ、移動がない日は体を動かすきっかけも減ります。25分作業したら立つ、飲み物を少し遠くに置く、昼に短く外へ出る。まずはそのくらい小さく作業の流れに混ぜるのが現実的です。',
-    tags: ['在宅作業', '続け方', 'home-work', 'article'],
-  },
-  {
     title: 'AIニュースを記事ネタに変える方法。よへラボでこれからやること',
     slug: 'ai-news-selling-ideas',
     date: '2026-05-17',
     excerpt: 'ChatGPT、Claude、GeminiなどのAIニュースを、ブログ記事、note、X投稿、テンプレ、商品案に分けて使う考え方です。',
     body: 'AIニュースは、読んで終わりにすると流れていきます。よへラボでは、ChatGPT、Claude、Geminiなどのニュースを、記事ネタ、投稿ネタ、テンプレ、小さな商品案に変える前提で整理します。',
-    tags: ['AIニュース', 'ChatGPT', 'Claude', 'Gemini', 'ai-news', 'chatgpt', 'claude', 'gemini', 'earn', 'article', 'template'],
+    tags: ['AIニュース', 'ChatGPT', 'Claude', 'Gemini', 'ai-news', 'chatgpt', 'claude', 'gemini', 'article', 'template'],
   },
   {
     title: '文標のバージョンアップ履歴：初期版から今までに良くしたこと',
@@ -167,7 +155,7 @@ const fallbackPosts = [
     date: '2026-05-12',
     excerpt: '文標を初期版からどう育ててきたか。追加したもの、良くしたところ、不安を減らしたところをまとめました。',
     body: '文標は、いきなり完成品として置いたテーマではありません。初期版から、記事を書く前の迷い、公開前の不安、購入後の分かりにくさを一つずつ減らしてきました。\n\nv0.1系ではCTA、FAQ、SEO出力、更新確認の土台を作りました。v0.2系では比較表、導線解析、投稿前チェックを強くしました。v0.3系では.htaccess、子テーマ、対応範囲、配色を整理しました。\n\n派手な機能より、書く人と買う人の不安を減らす方向で更新しています。',
-    tags: ['文標', '更新履歴', 'wordpress', 'article', 'template'],
+    tags: ['文標', '更新履歴', 'ai-tools', 'bunsirube', 'wordpress', 'article', 'template'],
     eyecatch: '/assets/blog/bunsirube-version-history/eyecatch.webp',
   },
   {
@@ -176,7 +164,7 @@ const fallbackPosts = [
     date: '2026-05-02',
     excerpt: 'WordPressテーマを変える前に、最低限ここだけは見ておきたいという確認リストです。',
     body: 'テーマ変更で投稿本文そのものが消えることは通常ありません。ただし、見た目、ショートコード、ウィジェット、テーマ固有の装飾は変わることがあります。\n\n変更前にバックアップを取り、対応環境を確認し、役割が重なるプラグインを見直してください。\n\n文標は比較記事、レビュー記事、FAQ記事の見え方をデモページで確認できます。',
-    tags: ['文標', 'WordPress', 'wordpress', 'article'],
+    tags: ['文標', 'WordPress', 'ai-tools', 'bunsirube', 'wordpress', 'article'],
     eyecatch: '/assets/blog/bunsirube-before-install/eyecatch.webp',
   },
   {
@@ -185,7 +173,7 @@ const fallbackPosts = [
     date: '2026-05-02',
     excerpt: 'Google AI Overviews等での表示保証はありません。だからこそ、読者にも検索にも読み取りやすい構造を作ります。',
     body: 'AI検索向けに大事なのは、特別な裏技ではありません。結論、理由、根拠、FAQ、出典を分かりやすく置くことです。\n\nFAQは購入前や問い合わせ前の不安を減らす場所です。出典は数字や制度の確認場所になります。\n\n「表示を約束する」のではなく、「AIにも読み取られやすい構造にする」と考えるほうが安全です。',
-    tags: ['AI検索', 'FAQ', 'ai-news', 'article', 'wordpress'],
+    tags: ['AI検索', 'FAQ', 'ai-news', 'article', 'ai-tools', 'bunsirube', 'wordpress'],
     eyecatch: '/assets/blog/faq-source-ai-search/eyecatch.webp',
   },
   {
@@ -194,7 +182,7 @@ const fallbackPosts = [
     date: '2026-05-02',
     excerpt: '商品は悪くないのに、ページの順番で損していることがあります。',
     body: '商品ページで大事なのは、かっこいい文章より「買う前の迷いが減る順番」です。\n\nよくある失敗は、誰向けかが遅い、届くものが見えない、不安への答えがない、CTAが弱い、の4つです。\n\n1ページだけでも、見出し、説明文、FAQ、購入ボタン周りを直すと印象は変わります。',
-    tags: ['販売ページ', '改善', 'earn', 'article', 'template'],
+    tags: ['販売ページ', '改善', 'ai-tools', 'article', 'template'],
     eyecatch: '/assets/blog/sales-page-common-mistakes/eyecatch.webp',
   },
 ];
@@ -300,7 +288,8 @@ function applyCategorySettings(categories) {
     ? [...order, ...categoryOrder.filter(key => !order.includes(key))]
     : categoryOrder;
   categoryParentByKey = { ...categoryParentByKey, ...parents };
-  aiToolTags = categoryGroups['group:ai-news'] || aiToolTags;
+  aiNewsTags = categoryGroups['group:ai-news'] || aiNewsTags;
+  aiToolTags = categoryGroups['group:ai-tools'] || aiToolTags;
   categoryLabels = labels;
   categoryColors = colors;
   applyCategoryLabelsToNav();
@@ -343,15 +332,14 @@ function postUrl(slug) {
 
 function categoryUrl(filter) {
   const value = normalizeFilter(filter);
-  if (queryOnlyCategoryFilters.has(value)) return `/blog/?category=${encodeURIComponent(value)}`;
-  if (value.startsWith('group:')) return `/blog/category/${encodeURIComponent(value.replace('group:', ''))}/`;
-  return `/blog/category/${encodeURIComponent(value)}/`;
+  if (value === 'all') return '/blog/';
+  return `/blog/?category=${encodeURIComponent(value)}`;
 }
 
 function tagUrl(tag) {
   const value = normalizeFilter(tag);
-  if (queryOnlyCategoryFilters.has(value)) return `/blog/?category=${encodeURIComponent(value)}`;
-  return `/blog/tag/${encodeURIComponent(value)}/`;
+  if (value === 'all') return '/blog/';
+  return `/blog/?category=${encodeURIComponent(value)}`;
 }
 
 async function loadPosts(page = 1) {
@@ -435,23 +423,13 @@ function normalizePostTags(post) {
   if (raw.includes('grok')) tags.add('grok');
   if (raw.includes('copilot') || raw.includes('microsoft')) tags.add('copilot');
   if (raw.includes('midjourney')) tags.add('midjourney');
-  const rumorCue = raw.includes('噂') || raw.includes('うわさ') || raw.includes('リーク') || raw.includes('未発表') || raw.includes('予測') || raw.includes('今後') || tags.has('ai-rumor') || tags.has('ai-leak') || tags.has('ai-prediction');
-  if (rumorCue) {
-    let matchedRumorTool = false;
-    if (raw.includes('chatgpt') || raw.includes('openai')) { tags.add('rumor-chatgpt'); matchedRumorTool = true; }
-    if (raw.includes('claude') || raw.includes('anthropic')) { tags.add('rumor-claude'); matchedRumorTool = true; }
-    if (raw.includes('gemini') || raw.includes('google')) { tags.add('rumor-gemini'); matchedRumorTool = true; }
-    if (raw.includes('perplexity')) { tags.add('rumor-perplexity'); matchedRumorTool = true; }
-    if (raw.includes('genspark')) { tags.add('rumor-genspark'); matchedRumorTool = true; }
-    if (raw.includes('grok')) { tags.add('rumor-grok'); matchedRumorTool = true; }
-    if (raw.includes('copilot') || raw.includes('microsoft')) { tags.add('rumor-copilot'); matchedRumorTool = true; }
-    if (raw.includes('midjourney')) { tags.add('rumor-midjourney'); matchedRumorTool = true; }
-    if (!matchedRumorTool) tags.add('rumor-other');
-  }
+  if (raw.includes('deepseek')) tags.add('deepseek');
+  if (raw.includes('codex')) tags.add('codex');
+  if (raw.includes('cursor')) tags.add('cursor');
   if (raw.includes('wordpress') || raw.includes('文標')) tags.add('wordpress');
-  if (raw.includes('副業') || raw.includes('稼')) tags.add('earn');
+  if (raw.includes('文標')) tags.add('bunsirube');
+  if (raw.includes('wordpress') || raw.includes('文標') || raw.includes('テンプレ') || raw.includes('比較記事')) tags.add('ai-tools');
   if (raw.includes('テンプレ') || raw.includes('比較記事')) tags.add('template');
-  if (raw.includes('在宅') || raw.includes('家で作業')) tags.add('home-work');
   if (raw.includes('aiニュース') || raw.includes('ai検索')) tags.add('ai-news');
   if (raw.includes('faq')) tags.add('faq');
   return [...tags];
@@ -459,6 +437,8 @@ function normalizePostTags(post) {
 
 function categoryKeyFromTag(value) {
   const key = normalizeFilter(value);
+  if (legacyRumorTags.includes(key)) return key.replace('rumor-', '');
+  if (['ai-rumor', 'ai-leak', 'ai-prediction'].includes(key)) return 'ai-news';
   return key.startsWith('group:') ? key.replace('group:', '') : key;
 }
 
@@ -467,13 +447,10 @@ function categoryKeysFromTags(tags) {
   const normalized = parseTagValues(tags).map(categoryKeyFromTag);
   const keys = normalized
     .filter(key => {
-      if (!key || ['ai-rumor', 'ai-leak', 'ai-prediction'].includes(key) || !categoryParentByKey[key] || seen.has(key)) return false;
+      if (!key || !categoryParentByKey[key] || seen.has(key)) return false;
       seen.add(key);
       return true;
     });
-  if (!keys.some(key => key.startsWith('rumor-')) && normalized.some(key => ['ai-rumor', 'ai-leak', 'ai-prediction'].includes(key))) {
-    keys.push('rumor-other');
-  }
   return keys;
 }
 
@@ -620,33 +597,35 @@ function normalizeFilter(value) {
   if (v.startsWith('group:')) return v;
   if (['ai', 'aiニュース', 'ai-news'].includes(v)) return 'ai-news';
   if (['ai-news-all', 'aiニュースすべて', 'aiニュース全部'].includes(v)) return 'group:ai-news';
-  if (['ai-rumor-all', 'aiの噂すべて', 'aiの噂全部', 'aiの噂・予測全部', 'ai-rumor'].includes(v)) return 'group:ai-rumor';
-  if (['aiの噂', 'ai噂', 'うわさ'].includes(v)) return 'group:ai-rumor';
-  if (['リーク', '未発表', 'リーク・未発表', 'ai-leak', '今後の予測', '予測', 'ai-prediction'].includes(v)) return 'rumor-other';
-  if (['rumor-chatgpt', 'chatgptの噂', 'chatgpt噂'].includes(v)) return 'rumor-chatgpt';
-  if (['rumor-claude', 'claudeの噂', 'claude噂'].includes(v)) return 'rumor-claude';
-  if (['rumor-gemini', 'geminiの噂', 'gemini噂'].includes(v)) return 'rumor-gemini';
-  if (['rumor-perplexity', 'perplexityの噂', 'perplexity噂'].includes(v)) return 'rumor-perplexity';
-  if (['rumor-genspark', 'gensparkの噂', 'genspark噂'].includes(v)) return 'rumor-genspark';
-  if (['rumor-grok', 'grokの噂', 'grok噂'].includes(v)) return 'rumor-grok';
-  if (['rumor-copilot', 'copilotの噂', 'copilot噂'].includes(v)) return 'rumor-copilot';
-  if (['rumor-midjourney', 'midjourneyの噂', 'midjourney噂'].includes(v)) return 'rumor-midjourney';
-  if (['rumor-other', 'その他の噂'].includes(v)) return 'rumor-other';
-  if (['副業すべて', '副業ネタ全部', 'earn-all'].includes(v)) return 'group:earn';
-  if (['wordpressすべて', 'ツール全部', 'wordpress-all'].includes(v)) return 'group:wordpress';
-  if (['在宅すべて', '在宅ヒント全部', 'home-work-all'].includes(v)) return 'group:home-work';
+  if (['ai-rumor-all', 'ai-rumor', 'ai-leak', 'ai-prediction'].includes(v)) return 'group:ai-news';
+  if (['rumor-chatgpt'].includes(v)) return 'chatgpt';
+  if (['rumor-claude'].includes(v)) return 'claude';
+  if (['rumor-gemini'].includes(v)) return 'gemini';
+  if (['rumor-perplexity'].includes(v)) return 'perplexity';
+  if (['rumor-genspark'].includes(v)) return 'genspark';
+  if (['rumor-grok'].includes(v)) return 'grok';
+  if (['rumor-copilot'].includes(v)) return 'copilot';
+  if (['rumor-midjourney'].includes(v)) return 'midjourney';
+  if (['rumor-other'].includes(v)) return 'ai-news';
+  if (['earn-all'].includes(v)) return 'group:ai-tools';
+  if (['wordpressすべて', 'ツール全部', 'wordpress-all', 'ai-tools-all', 'aiツール全部'].includes(v)) return 'group:ai-tools';
   if (['chatgpt', 'openai', 'gpt', 'chatgptニュース', 'チャットgpt', 'チャットジーピーティー', 'チャットジーピーティ', 'オープンai', 'オープンエーアイ'].includes(v)) return 'chatgpt';
   if (['claude', 'anthropic', 'claudeニュース', 'クロード', 'くろーど', 'アンソロピック', 'アンスロピック'].includes(v)) return 'claude';
   if (['gemini', 'google-ai', 'googleai', 'geminiニュース', 'ジェミニ', 'ジェミナイ', 'グーグルai', 'グーグルエーアイ'].includes(v)) return 'gemini';
   if (['perplexity', 'パープレキシティ', 'パープレキシティー', 'パープレ'].includes(v)) return 'perplexity';
   if (['genspark', 'ジェンスパーク', 'ジェンスパ'].includes(v)) return 'genspark';
   if (['grok', 'グロック', 'グローク'].includes(v)) return 'grok';
+  if (['deepseek', 'ディープシーク'].includes(v)) return 'deepseek';
+  if (['codex', 'コーデックス'].includes(v)) return 'codex';
+  if (['cursor', 'カーソル', 'カーサー'].includes(v)) return 'cursor';
   if (['copilot', 'コパイロット', 'コーパイロット', 'マイクロソフトコパイロット'].includes(v)) return 'copilot';
   if (['midjourney', 'mid journey', 'ミッドジャーニー'].includes(v)) return 'midjourney';
-  if (['稼ぎ方', '収益化ネタ', '商品案', 'earn', 'money'].includes(v)) return 'earn';
-  if (['wp', 'wordpress', 'wordPress'.toLowerCase(), 'ワードプレス', '文標', 'ぶんしるべ', 'ブンシルベ'].includes(v)) return 'wordpress';
+  if (['稼ぎ方', '収益化ネタ', '商品案', 'earn', 'money'].includes(v)) return 'ai-tools';
+  if (['ai-tools', 'aiツール', 'ツール'].includes(v)) return 'ai-tools';
+  if (['bunsirube', '文標', 'ぶんしるべ', 'ブンシルベ'].includes(v)) return 'bunsirube';
+  if (['wp', 'wordpress', 'wordPress'.toLowerCase(), 'ワードプレス'].includes(v)) return 'wordpress';
   if (['記事', '記事づくり', 'article', 'writing'].includes(v)) return 'article';
-  if (['在宅', '在宅ワーク習慣', 'home', 'home-work'].includes(v)) return 'home-work';
+  if (['在宅', '在宅ワーク習慣', 'home'].includes(v)) return 'all';
   if (['テンプレ', '記事テンプレ', 'テンプレ販売', 'template'].includes(v)) return 'template';
   return v;
 }

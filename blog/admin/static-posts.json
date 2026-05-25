@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-25T07:13:57.984Z",
+  "generatedAt": "2026-05-25T08:55:08.475Z",
   "posts": [
     {
       "slug": "codex-limit-reset-external-agents",
@@ -112,7 +112,7 @@
       "slug": "claude-update-2026",
       "url": "/blog/claude-update-2026/",
       "title": "【下書き】Claude 最新アップデートまとめ 2026年版",
-      "excerpt": "AnthropicのClaudeの最新アップデートを追いかけ、副業ブログへの活用方法をまとめる記事。準備中。",
+      "excerpt": "AnthropicのClaudeの最新アップデートを追いかけ、AIニュースとして見るポイントをまとめる記事。準備中。",
       "status": "draft",
       "date": "",
       "tags": [],
@@ -124,7 +124,7 @@
       "slug": "gemini-update-2026",
       "url": "/blog/gemini-update-2026/",
       "title": "【下書き】Gemini 最新アップデートまとめ 2026年版",
-      "excerpt": "GoogleのGeminiのアップデート動向から副業ブログのネタを見つける方法をまとめる記事。準備中。",
+      "excerpt": "GoogleのGeminiのアップデート動向からAIニュースのネタを見つける方法をまとめる記事。準備中。",
       "status": "draft",
       "date": "",
       "tags": [],
@@ -136,7 +136,7 @@
       "slug": "genspark-how-to-earn",
       "url": "/blog/genspark-how-to-earn/",
       "title": "【下書き】Gensparkで稼ぐ：使い方と副業への応用",
-      "excerpt": "Gensparkの特徴を活かして副業ブログやテンプレ制作に活用する方法をまとめる記事。準備中。",
+      "excerpt": "Gensparkの特徴を活かしてAIニュース記事やテンプレ制作に活用する方法をまとめる記事。準備中。",
       "status": "draft",
       "date": "",
       "tags": [],
@@ -160,7 +160,7 @@
       "slug": "copilot-how-to-use",
       "url": "/blog/copilot-how-to-use/",
       "title": "【下書き】Microsoft Copilotを副業に活かす使い方まとめ",
-      "excerpt": "Microsoft製品に統合されたCopilotを副業ブログに活かす方法をまとめる記事。準備中。",
+      "excerpt": "Microsoft製品に統合されたCopilotをAIニュースとして見るポイントをまとめる記事。準備中。",
       "status": "draft",
       "date": "",
       "tags": [],
@@ -181,18 +181,6 @@
       "bodyHtml": "<h2 style=\"font-size:20px;font-weight:900;margin:28px 0 10px;padding-bottom:8px;border-bottom:2px solid #e8e8e8;\">Perplexityとは</h2>\r\n        <p style=\"color:#555;line-height:1.8;margin-bottom:16px;\">AI検索エンジンとして注目されるPerplexityの特徴。出典付きで情報をまとめてくれる。</p>\r\n        <div style=\"padding:16px;background:#f7f7f7;border-radius:8px;border:1px solid #e8e8e8;color:#5f6b7a;font-size:13px;margin-bottom:16px;\">\r\n          ✏️ この項目は現在執筆中です。近日公開予定。\r\n        </div>\r\n        <h2 style=\"font-size:20px;font-weight:900;margin:28px 0 10px;padding-bottom:8px;border-bottom:2px solid #e8e8e8;\">副業への活かし方</h2>\r\n        <p style=\"color:#555;line-height:1.8;margin-bottom:16px;\">ブログ記事のリサーチ、比較記事の根拠集め、FAQ作成への応用。</p>\r\n        <div style=\"padding:16px;background:#f7f7f7;border-radius:8px;border:1px solid #e8e8e8;color:#5f6b7a;font-size:13px;margin-bottom:16px;\">\r\n          ✏️ この項目は現在執筆中です。近日公開予定。\r\n        </div>\r\n        <h2 style=\"font-size:20px;font-weight:900;margin:28px 0 10px;padding-bottom:8px;border-bottom:2px solid #e8e8e8;\">他のAIツールとの比較</h2>\r\n        <p style=\"color:#555;line-height:1.8;margin-bottom:16px;\">ChatGPT・Claude・Geminiとの違い、調査目的では特に強い。</p>\r\n        <div style=\"padding:16px;background:#f7f7f7;border-radius:8px;border:1px solid #e8e8e8;color:#5f6b7a;font-size:13px;margin-bottom:16px;\">\r\n          ✏️ この項目は現在執筆中です。近日公開予定。\r\n        </div>"
     },
     {
-      "slug": "home-work-rhythm",
-      "url": "/blog/home-work-rhythm/",
-      "title": "家で作業すると運動不足になるので、先に動く仕組みを作る",
-      "excerpt": "ブログ、AIニュース調査、WordPress作業を家で続ける人向けに、運動不足になりにくい作業リズムをまとめました。",
-      "status": "published",
-      "date": "2026-05-18",
-      "tags": [],
-      "eyecatch": "/assets/og/bunsirube-og.png",
-      "socialImage": "/assets/og/bunsirube-og.png",
-      "bodyHtml": "<div class=\"summary-box\">\r\n        <strong>短い答え:</strong>\r\n        家で作業するなら、運動を「気合い」ではなく「作業の一部」にしたほうが続きます。25分作業したら立つ、飲み物を遠くに置く、昼に短く歩く。このくらい小さくていいです。\r\n      </div>\r\n\r\n      <h2>家でできる仕事ほど、体を動かす予定が消えやすい</h2>\r\n      <p>家でできることは増えています。AIで調べる、記事を書く、WordPressでサイトを作る、テンプレを販売する。移動時間がないぶん効率はいいです。</p>\r\n      <p>ただ、通勤や外出がない日は、体を動かすきっかけも減ります。だから「運動しなきゃ」と思うより、作業の流れに小さな動きを混ぜたほうが現実的です。</p>\r\n\r\n      <h2>まずは3つだけでいい</h2>\r\n      <h3>1. 25分ごとに立つ</h3>\r\n      <p>記事を書いていると、一区切りが来るまで立たなくなります。なので一区切りを先に作ります。25分作業、5分立つ。これだけでも座りっぱなしを避けやすくなります。</p>\r\n\r\n      <h3>2. 飲み物を少し遠くに置く</h3>\r\n      <p>手元に全部置くと、本当に動きません。飲み物、充電器、メモ帳のどれかを少し遠くに置くだけで、自然に立つ回数が増えます。</p>\r\n\r\n      <h3>3. 昼に短く外へ出る</h3>\r\n      <p>長い散歩じゃなくていいです。5分でも外に出ると、目と頭がリセットされます。AIニュースを見る作業や記事構成を考える作業は、座っている時間が長いので特に効きます。</p>\r\n\r\n      <h2>よへラボで扱う「家でできること」</h2>\r\n      <p>よへラボでは、家でできる稼ぎ方や作業だけでなく、それを続けるための習慣も一緒に扱います。</p>\r\n      <ul>\r\n        <li>AIニュースを読んで、記事や投稿のネタにする</li>\r\n        <li>WordPressでブログや商品棚を作る</li>\r\n        <li>比較記事、FAQ、テンプレを使って迷わず書く</li>\r\n        <li>作業時間、姿勢、休憩を整えて続ける</li>\r\n      </ul>\r\n\r\n      <h2>まとめ</h2>\r\n      <p>家でできることは、自由なぶん自分で流れを作る必要があります。最初から完璧な運動習慣を作るより、作業の間に立つ、少し歩く、目を休める。そのくらいから始めるのが現実的です。</p>"
-    },
-    {
       "slug": "ai-news-selling-ideas",
       "url": "/blog/ai-news-selling-ideas/",
       "title": "AIニュースを記事ネタに変える方法。",
@@ -205,7 +193,7 @@
       ],
       "eyecatch": "/assets/og/bunsirube-og.png",
       "socialImage": "/assets/og/bunsirube-og.png",
-      "bodyHtml": "<p>AIニュースは毎日のように流れてきます。ChatGPTの新機能、画像生成、Perplexity、AI検索、動画生成、エージェント系の話。見ていると面白いけど、そのままだと「へえ」で終わります。</p>\r\n      <p>よへラボでやりたいのは、ニュースの紹介だけではありません。そのニュースを見て、家で何を作れるか、何を小さく試せるかまで考えることです。</p>\r\n\r\n      <div class=\"idea-box\">\r\n        <strong>よへラボの看板:</strong><br />\r\n        AIニュースを、記事ネタに変える。\r\n      </div>\r\n\r\n      <h2>文標は、その中のひとつ</h2>\r\n      <p>これまでのよへラボは、WordPressテーマ「文標」が中心に見える作りでした。それは間違いではないけど、少し狭いです。</p>\r\n      <p>文標は、AIニュースから見つけたネタを、比較記事・レビュー記事・FAQ記事として整理するための道具です。だから、よへラボ全体の中では「記事化のための道具」のひとつとして置きます。</p>\r\n\r\n      <table class=\"post-table\">\r\n        <thead><tr><th>場所</th><th>役割</th></tr></thead>\r\n        <tbody>\r\n          <tr><td>X</td><td>AIニュースや気づきを短く出して、人に見つけてもらう</td></tr>\r\n          <tr><td>note</td><td>無料記事と有料部分で、どのテーマが反応されるか試す</td></tr>\r\n          <tr><td>よへラボ</td><td>反応が良かったネタを、記事・テンプレ・ツール・商品として置く</td></tr>\r\n          <tr><td>文標</td><td>反応があったネタを、WordPressの記事構造に整えるテーマ</td></tr>\r\n        </tbody>\r\n      </table>\r\n\r\n      <h2>扱うテーマは広げる。でも軸はひとつ</h2>\r\n      <p>note副業、AI画像、YouTube、ブログ、テンプレ販売。最初からひとつに絞りすぎると、どれが反応されるか分かりません。</p>\r\n      <p>ただ、バラバラに紹介すると弱くなります。だから軸はひとつにします。</p>\r\n      <div class=\"idea-box\">\r\n        <strong>このAIニュースは、個人なら何に使えるか？</strong><br />\r\n        これで作れる記事、投稿、画像、テンプレ、商品は何か。実際にやるなら、最初に何から始めるか。\r\n      </div>\r\n\r\n      <h2>たとえば、こう変換する</h2>\r\n      <table class=\"post-table\">\r\n        <thead><tr><th>AIニュース</th><th>個人が作れそうなもの</th></tr></thead>\r\n        <tbody>\r\n          <tr><td>画像生成が進化した</td><td>note見出し画像、Xヘッダー、商品サムネ、告知画像テンプレ</td></tr>\r\n          <tr><td>Perplexityが便利になった</td><td>市場調査メモ、比較記事、有料noteネタ、週刊AIニュース</td></tr>\r\n          <tr><td>ChatGPTに新機能が出た</td><td>記事構成、投稿案、プロンプト集、作業テンプレ</td></tr>\r\n          <tr><td>AI検索が広がった</td><td>FAQ記事、比較記事、出典つき記事、文標の活用記事</td></tr>\r\n        </tbody>\r\n      </table>\r\n\r\n      <h2>無料記事では広げる。有料商品では絞る</h2>\r\n      <p>無料記事では、いろいろ試します。AI画像、note、X、ブログ、YouTube、テンプレ販売、小さなWebツール。どれが読まれるか、どれが保存されるか、どれが買われるかを見るためです。</p>\r\n      <p>反応が出たテーマだけ、有料note、テンプレ、よへラボの商品にします。最初から大きな商品を作るより、小さく出して、反応を見て、伸びたものだけ育てる方が合っています。</p>\r\n\r\n      <h2>よへラボに置いていくもの</h2>\r\n      <ul>\r\n        <li>AIニュースを小さな商品ネタに変える実験メモ</li>\r\n        <li>note記事タイトル案、X投稿案、記事構成テンプレ</li>\r\n        <li>AI画像やサムネ用のプロンプト</li>\r\n        <li>無料で試せる小さなツール</li>\r\n        <li>反応が良かった有料テンプレや商品</li>\r\n        <li>記事構造を整えるWordPressテーマ「文標」</li>\r\n      </ul>\r\n\r\n      <h2>怪しくしないために決めておくこと</h2>\r\n      <p>「AIで簡単に稼げます」みたいな言い方はしません。そこに寄せると、たぶん短期的には目立つけど、よへラボの信用は弱くなります。</p>\r\n      <p>代わりに、実際にニュースを読んで、使い道を考えて、試したことや悩んだことも書きます。売れそうなものは売れそうと書くし、無理そうなものは無理そうと書きます。</p>\r\n\r\n      <div class=\"post-cta\">\r\n        <h2 style=\"margin-top:0;color:#fff;\">文標は、反応があったネタを記事に残すための道具です。</h2>\r\n        <p>AIニュースから見つけたネタを、比較・レビュー・FAQ・CTAのあるWordPress記事に整えるなら、文標がその役割を持ちます。</p>\r\n        <p><a href=\"/lp/bunsirube/\">文標を見る</a> / <a href=\"/blog/comparison-article-template/\">比較記事の型を見る</a></p>\r\n      </div>"
+      "bodyHtml": "<p>AIニュースは毎日のように流れてきます。ChatGPTの新機能、画像生成、Perplexity、AI検索、動画生成、エージェント系の話。見ていると面白いけど、そのままだと「へえ」で終わります。</p>\r\n      <p>よへラボでやりたいのは、ニュースの紹介だけではありません。そのニュースを見て、家で何を作れるか、何を小さく試せるかまで考えることです。</p>\r\n\r\n      <div class=\"idea-box\">\r\n        <strong>よへラボの看板:</strong><br />\r\n        AIニュースを、記事ネタに変える。\r\n      </div>\r\n\r\n      <h2>文標は、その中のひとつ</h2>\r\n      <p>これまでのよへラボは、WordPressテーマ「文標」が中心に見える作りでした。それは間違いではないけど、少し狭いです。</p>\r\n      <p>文標は、AIニュースから見つけたネタを、比較記事・レビュー記事・FAQ記事として整理するための道具です。だから、よへラボ全体の中では「記事化のための道具」のひとつとして置きます。</p>\r\n\r\n      <table class=\"post-table\">\r\n        <thead><tr><th>場所</th><th>役割</th></tr></thead>\r\n        <tbody>\r\n          <tr><td>X</td><td>AIニュースや気づきを短く出して、人に見つけてもらう</td></tr>\r\n          <tr><td>note</td><td>無料記事と有料部分で、どのテーマが反応されるか試す</td></tr>\r\n          <tr><td>よへラボ</td><td>反応が良かったネタを、記事・テンプレ・AIツールとして置く</td></tr>\r\n          <tr><td>文標</td><td>反応があったネタを、WordPressの記事構造に整えるテーマ</td></tr>\r\n        </tbody>\r\n      </table>\r\n\r\n      <h2>扱うテーマは広げる。でも軸はひとつ</h2>\r\n      <p>note副業、AI画像、YouTube、ブログ、テンプレ販売。最初からひとつに絞りすぎると、どれが反応されるか分かりません。</p>\r\n      <p>ただ、バラバラに紹介すると弱くなります。だから軸はひとつにします。</p>\r\n      <div class=\"idea-box\">\r\n        <strong>このAIニュースは、個人なら何に使えるか？</strong><br />\r\n        これで作れる記事、投稿、画像、テンプレ、商品は何か。実際にやるなら、最初に何から始めるか。\r\n      </div>\r\n\r\n      <h2>たとえば、こう変換する</h2>\r\n      <table class=\"post-table\">\r\n        <thead><tr><th>AIニュース</th><th>個人が作れそうなもの</th></tr></thead>\r\n        <tbody>\r\n          <tr><td>画像生成が進化した</td><td>note見出し画像、Xヘッダー、商品サムネ、告知画像テンプレ</td></tr>\r\n          <tr><td>Perplexityが便利になった</td><td>市場調査メモ、比較記事、有料noteネタ、週刊AIニュース</td></tr>\r\n          <tr><td>ChatGPTに新機能が出た</td><td>記事構成、投稿案、プロンプト集、作業テンプレ</td></tr>\r\n          <tr><td>AI検索が広がった</td><td>FAQ記事、比較記事、出典つき記事、文標の活用記事</td></tr>\r\n        </tbody>\r\n      </table>\r\n\r\n      <h2>無料記事では広げる。有料商品では絞る</h2>\r\n      <p>無料記事では、いろいろ試します。AI画像、note、X、ブログ、YouTube、テンプレ販売、小さなWebツール。どれが読まれるか、どれが保存されるか、どれが買われるかを見るためです。</p>\r\n      <p>反応が出たテーマだけ、有料note、テンプレ、よへラボの商品にします。最初から大きな商品を作るより、小さく出して、反応を見て、伸びたものだけ育てる方が合っています。</p>\r\n\r\n      <h2>よへラボに置いていくもの</h2>\r\n      <ul>\r\n        <li>AIニュースを小さな商品ネタに変える実験メモ</li>\r\n        <li>note記事タイトル案、X投稿案、記事構成テンプレ</li>\r\n        <li>AI画像やサムネ用のプロンプト</li>\r\n        <li>無料で試せる小さなツール</li>\r\n        <li>反応が良かった有料テンプレや商品</li>\r\n        <li>記事構造を整えるWordPressテーマ「文標」</li>\r\n      </ul>\r\n\r\n      <h2>怪しくしないために決めておくこと</h2>\r\n      <p>「AIで簡単に稼げます」みたいな言い方はしません。そこに寄せると、たぶん短期的には目立つけど、よへラボの信用は弱くなります。</p>\r\n      <p>代わりに、実際にニュースを読んで、使い道を考えて、試したことや悩んだことも書きます。売れそうなものは売れそうと書くし、無理そうなものは無理そうと書きます。</p>\r\n\r\n      <div class=\"post-cta\">\r\n        <h2 style=\"margin-top:0;color:#fff;\">文標は、反応があったネタを記事に残すための道具です。</h2>\r\n        <p>AIニュースから見つけたネタを、比較・レビュー・FAQ・CTAのあるWordPress記事に整えるなら、文標がその役割を持ちます。</p>\r\n        <p><a href=\"/lp/bunsirube/\">文標を見る</a> / <a href=\"/blog/comparison-article-template/\">比較記事の型を見る</a></p>\r\n      </div>"
     },
     {
       "slug": "bunsirube-version-history",
