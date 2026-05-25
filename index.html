@@ -404,6 +404,108 @@
       margin-top: auto;
     }
     .product-card-price.paid { color: var(--accent); }
+    .product-card-coming { background: repeating-linear-gradient(45deg, #fcfcfa, #fcfcfa 8px, #f5f4ee 8px, #f5f4ee 16px); border-style: dashed; }
+    .product-card-coming .product-card-icon { background: #fff; color: var(--muted); border-color: var(--border); }
+    .product-card-coming .product-card-price { color: var(--muted); }
+
+    /* ── ハイライト：有料ツール（文標） ── */
+    .featured-tool {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 0;
+      padding: 0;
+      background: linear-gradient(135deg, rgba(8,122,99,.05) 0%, rgba(8,122,99,.01) 100%);
+      border-top: 1px solid var(--border);
+    }
+    .featured-tool-visual {
+      background: linear-gradient(160deg, var(--brand) 0%, var(--brand-dark) 100%);
+      color: #fff;
+      padding: 22px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: center;
+      justify-content: center;
+    }
+    .featured-tool-mark {
+      width: 96px; height: 96px;
+      border-radius: 22px;
+      background: rgba(255,255,255,.18);
+      border: 2px solid rgba(255,255,255,.36);
+      display: grid; place-items: center;
+      font-size: 52px; font-weight: 900; letter-spacing: -.04em;
+      color: #fff;
+    }
+    .featured-tool-chips {
+      display: flex; flex-wrap: wrap; gap: 5px; justify-content: center;
+    }
+    .featured-tool-chips span {
+      font-size: 10.5px; font-weight: 700; padding: 3px 9px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.16); color: #fff;
+      border: 1px solid rgba(255,255,255,.28);
+    }
+    .featured-tool-body { padding: 20px 22px 22px; }
+    .featured-tool-eyebrow {
+      display: inline-block; font-size: 10.5px; font-weight: 900;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--brand); background: var(--brand-light);
+      padding: 3px 9px; border-radius: 4px;
+    }
+    .featured-tool-body h3 {
+      font-size: 18px; font-weight: 900; margin: 10px 0 4px;
+      color: var(--text); line-height: 1.45;
+    }
+    .featured-tool-body h3 small {
+      display: block; font-size: 13px; font-weight: 600; color: var(--text-sub);
+      margin-top: 4px; line-height: 1.6;
+    }
+    .featured-tool-points {
+      list-style: none; padding: 0; margin: 12px 0;
+      display: grid; gap: 6px;
+    }
+    .featured-tool-points li {
+      font-size: 13px; color: var(--text-sub); line-height: 1.7;
+      padding-left: 22px; position: relative;
+    }
+    .featured-tool-points li::before {
+      content: "✓"; position: absolute; left: 0; top: 0;
+      color: var(--brand); font-weight: 900;
+    }
+    .featured-tool-points li strong { color: var(--text); font-weight: 900; }
+    .featured-tool-price {
+      display: flex; align-items: center; gap: 16px;
+      padding: 12px 14px; margin: 12px 0;
+      background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
+      flex-wrap: wrap;
+    }
+    .featured-tool-price > div:first-child { flex: 1 1 auto; min-width: 160px; }
+    .price-label { font-size: 11px; font-weight: 700; color: var(--muted); }
+    .price-now {
+      font-size: 26px; font-weight: 900; color: var(--accent);
+      letter-spacing: -.02em; line-height: 1.1;
+    }
+    .price-now small { font-size: 13px; font-weight: 700; color: var(--text-sub); margin-left: 2px; }
+    .price-strike { font-size: 11.5px; color: var(--muted); font-weight: 700; }
+    .price-strike s { color: var(--text-sub); }
+    .featured-tool-actions { display: flex; flex-direction: column; gap: 8px; min-width: 220px; }
+    .btn-buy {
+      background: var(--accent); color: #fff;
+      padding: 11px 18px; border-radius: 6px;
+      font-size: 13.5px; font-weight: 900; text-align: center;
+      transition: background .15s, transform .15s;
+    }
+    .btn-buy:hover { background: #e85a1f; transform: translateY(-1px); }
+    .btn-demo {
+      background: #fff; color: var(--brand);
+      padding: 9px 18px; border-radius: 6px;
+      font-size: 12.5px; font-weight: 800; text-align: center;
+      border: 1px solid var(--brand);
+    }
+    .btn-demo:hover { background: var(--brand-light); }
+    .featured-tool-foot {
+      font-size: 11.5px; color: var(--muted); line-height: 1.7; margin: 8px 0 0;
+    }
 
     /* ── 補助カード ── */
     .tip-grid {
@@ -534,6 +636,11 @@
       .home-bunsirube-strip { grid-template-columns: 1fr; }
       .home-bunsirube-actions { justify-content: flex-start; }
       .product-grid { grid-template-columns: 1fr; }
+      .featured-tool { grid-template-columns: 1fr; }
+      .featured-tool-visual { padding: 18px; flex-direction: row; gap: 14px; }
+      .featured-tool-mark { width: 64px; height: 64px; font-size: 32px; border-radius: 14px; flex-shrink: 0; }
+      .featured-tool-chips { justify-content: flex-start; }
+      .featured-tool-actions { min-width: 0; width: 100%; }
       .tip-grid { grid-template-columns: 1fr 1fr; }
       .footer-inner { grid-template-columns: 1fr 1fr; gap: 16px; }
     }
@@ -725,18 +832,56 @@
 
     <!-- [タブ2] AIツール -->
     <div class="tab-panel" id="panel-tools" role="tabpanel" aria-labelledby="tab-tools">
+
+      <!-- 売れる商品（プライマリ） -->
       <section class="section-card">
         <div class="section-head">
-          <h2><span>📦</span>AIツール一覧</h2>
+          <h2><span>🏷️</span>有料ツール</h2>
+          <a class="more" href="/lp/bunsirube/">文標を詳しく見る →</a>
         </div>
-        <p style="padding:0 14px 12px;color:var(--muted);font-size:13px;line-height:1.7;">今は文標が中心です。これからAIまわりの道具を増やしたときも、ここにまとめます。</p>
+        <article class="featured-tool">
+          <div class="featured-tool-visual" aria-hidden="true">
+            <div class="featured-tool-mark">文</div>
+            <div class="featured-tool-chips">
+              <span>WordPress 6.5+</span>
+              <span>PHP 8.0+</span>
+              <span>買い切り</span>
+              <span>子テーマ同梱</span>
+              <span>30日返金保証</span>
+            </div>
+          </div>
+          <div class="featured-tool-body">
+            <span class="featured-tool-eyebrow">よへラボ 主力プロダクト</span>
+            <h3>文標（ぶんしるべ）<small>｜ AI検索時代の比較・レビュー・FAQ記事を、迷わず書き始める軽量WordPressテーマ</small></h3>
+            <ul class="featured-tool-points">
+              <li><strong>7種類の記事テンプレート</strong>（比較・レビュー・ランキング・FAQ・商品紹介・案件紹介・基本）から書き始められる</li>
+              <li><strong>FAQ／JSON-LD／比較表カード／CTA／導線確認</strong>をテーマ側にまとめてプラグインを減らせる</li>
+              <li><strong>軽量設計</strong>でLighthouseのPerformance/SEO/Accessibility/Best Practices すべて100点（よへラボサイト計測）</li>
+              <li>v0.3.4 で<strong>自動更新ZIPのSHA-256整合性検証</strong>を追加。配布元改ざんから守る正式版水準</li>
+            </ul>
+            <div class="featured-tool-price">
+              <div>
+                <div class="price-label">2026/6/30まで 先行提供価格</div>
+                <div class="price-now">¥5,500<small>（税込）</small></div>
+                <div class="price-strike">7/1から正式版 <s>¥8,800（税込）</s></div>
+              </div>
+              <div class="featured-tool-actions">
+                <a class="btn-buy" href="/api/checkout?product=wordpress-theme">文標を購入してZIPを受け取る →</a>
+                <a class="btn-demo" href="/lp/bunsirube/demo/">先にデモを見る</a>
+              </div>
+            </div>
+            <p class="featured-tool-foot">買い切り・月額なし。決済はStripe保護画面、30日以内なら理由を問わず全額返金。先行提供期間に購入した人は正式版アップデートも追加料金なし。</p>
+          </div>
+        </article>
+      </section>
+
+      <!-- 無料テンプレ・ガイド（セカンダリ） -->
+      <section class="section-card">
+        <div class="section-head">
+          <h2><span>📚</span>無料テンプレ・ガイド</h2>
+        </div>
+        <p style="padding:0 14px 12px;color:var(--muted);font-size:13px;line-height:1.7;">文標と相性のいい記事の型・チェックリストを無料で公開しています。先に試してから文標を入れるか決めても大丈夫です。</p>
         <div class="product-grid">
-          <a class="product-card" href="/lp/bunsirube/">
-            <div class="product-card-icon">文</div>
-            <div class="product-card-name">文標（ぶんしるべ）</div>
-            <div class="product-card-desc">WordPress用軽量テーマ。比較・FAQ・レビュー記事向け。買い切りで更新無料。</div>
-            <div class="product-card-price paid">6/30まで¥5,500税込 / 7/1から¥8,800税込</div>
-          </a>
           <a class="product-card" href="/blog/comparison-article-template/">
             <div class="product-card-icon">比</div>
             <div class="product-card-name">比較記事テンプレ</div>
@@ -766,6 +911,12 @@
             <div class="product-card-name">売り場チェックリスト</div>
             <div class="product-card-desc">販売ページに必要な要素をチェックできる無料リスト。</div>
             <div class="product-card-price">無料</div>
+          </a>
+          <a class="product-card product-card-coming" href="/contact/">
+            <div class="product-card-icon">＋</div>
+            <div class="product-card-name">近日追加予定</div>
+            <div class="product-card-desc">AIニュースを売れるネタに変える小さな道具を順次追加します。「こういう道具が欲しい」要望は問い合わせから。</div>
+            <div class="product-card-price">準備中</div>
           </a>
         </div>
       </section>
