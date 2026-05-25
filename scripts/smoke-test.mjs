@@ -55,10 +55,12 @@ const legacyLabels = [
 ];
 checks.push(["home does not promote old research writer app", !home.includes('/apps/research-writer/') && !home.includes('/lp/research-writer/')]);
 checks.push(["home no legacy tool links", legacyPaths.every((path) => !home.includes(path))]);
-checks.push(["home focuses bunsirube conversion", home.includes("比較記事もレビューも") && home.includes("7種類のテンプレ") && home.includes("文標の詳細を見る") && home.includes("文標の詳細・特徴を見る") && home.includes("購入前に読める確認メモ") && !home.includes("文標で、記事の型を整える。") && !home.includes("無料で遊べるミニゲーム")]);
-checks.push(["home uses safer AI search wording", home.includes("記事を書く前に止まる時間") && !home.includes("AI検索にも読まれやすい") && !home.includes("AI検索に出るテーマ") && !home.includes("AI検索最適化済み")]);
-checks.push(["home surfaces buyer guide and tax-included prices", home.includes("購入前に読める確認メモ") && home.includes("/blog/bunsirube-before-install/") && home.includes("/lp/bunsirube/updates/") && home.includes("/lp/bunsirube/#fit-check") && home.includes("2026年6月30日までは先行提供 ¥5,500（税込）") && home.includes("2026年7月1日から正式版 ¥8,800（税込）") && home.includes("表示価格はすべて税込です。")]);
-checks.push(["home uses current market proof without guarantee", home.includes("42.2") && home.includes("CMS市場シェアは59.6") && home.includes("200") && home.includes("+国・地域") && home.includes("検索順位やAI表示を保証する数字ではありません")]);
+checks.push(["home focuses bunsirube conversion", home.includes("AI検索にも見つけられる側") && home.includes("先行提供") && home.includes("文標の詳細を見る") && home.includes("文標の全機能を見る") && home.includes("購入前に読める確認メモ") && home.includes("AI検索最適化") && home.includes("SEO最適化") && !home.includes("文標で、記事の型を整える。") && !home.includes("無料で遊べるミニゲーム")]);
+checks.push(["lp emphasises dual AI search and SEO optimization", read(dist("lp/bunsirube/index.html")).includes("AI検索 × SEO") && read(dist("lp/bunsirube/index.html")).includes("dual-card dual-ai") && read(dist("lp/bunsirube/index.html")).includes("dual-card dual-seo") && read(dist("lp/bunsirube/index.html")).includes("AI検索や検索結果での表示順位・採用は保証しません")]);
+checks.push(["lp shows day-by-day transformation timeline", read(dist("lp/bunsirube/index.html")).includes("change-timeline") && read(dist("lp/bunsirube/index.html")).includes("Day 1") && read(dist("lp/bunsirube/index.html")).includes("Day 30") && read(dist("lp/bunsirube/index.html")).includes("引用される側")]);
+checks.push(["home uses safer AI search wording", home.includes("保証しません") && !home.includes("AI検索に必ず") && !home.includes("AI検索に絶対") && !home.includes("AI検索1位確定") && !home.includes("確実にAI検索") && !home.includes("AI検索で必ず出ます") && !home.includes("AI Overviewsに保証")]);
+checks.push(["home surfaces buyer guide and tax-included prices", home.includes("購入前に読める確認メモ") && home.includes("/blog/bunsirube-before-install/") && home.includes("/lp/bunsirube/updates/") && home.includes("/lp/bunsirube/#fit-check") && home.includes("¥5,500（税込") && home.includes("正式版 ¥8,800（税込）") && home.includes("買い切り") && home.includes("30日返金保証")]);
+checks.push(["home uses current market proof without guarantee", home.includes("AI検索や検索結果での表示・順位は保証しません") && !home.includes("AI検索1位確定") && !home.includes("絶対に売れる")]);
 checks.push(["home avoids overstated claims", !home.includes("AIに引用される") && !home.includes("引用されないブログ") && !home.includes("5,377億") && !home.includes("3.6兆")]);
 
 const footerLinks = [

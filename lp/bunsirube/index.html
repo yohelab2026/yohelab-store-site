@@ -123,6 +123,20 @@
       background:var(--lp-cyan);
       box-shadow:0 0 0 5px rgba(34,199,213,.14);
     }
+    .dual-badge {
+      display:inline-flex; align-items:center; gap:4px;
+      padding:5px 12px; border-radius:999px;
+      background:linear-gradient(135deg,#0d8f72,#1fb6cf);
+      color:#fff; font-size:11px; font-weight:900;
+      letter-spacing:.08em; text-transform:none;
+      box-shadow:0 6px 14px rgba(13,143,114,.22);
+      margin-right:4px;
+    }
+    .dual-badge-light {
+      background:transparent; color:var(--lp-muted);
+      box-shadow:none; font-size:12px; letter-spacing:0;
+      padding:5px 0;
+    }
     .theme-hero h1 {
       font-size:clamp(38px,5.8vw,72px);
       line-height:1.06;
@@ -1398,10 +1412,10 @@
     <section class="theme-hero">
       <div class="container hero-layout">
         <div>
-          <p class="eyebrow">WordPress theme for comparison articles</p>
-          <h1>比較記事もレビューも、<strong>7種類のテンプレから書き始めるWordPressテーマ。</strong></h1>
-          <p class="hero-lead">文標（ぶんしるべ）は、記事を書く前に止まる時間を減らすためのテーマ。短い答え、根拠、出典、FAQ、比較表、CTAまで、記事の順番から整えます。</p>
-          <p class="hero-lead" style="font-size:15px;line-height:1.8;margin-top:-10px;">よへラボは「AIニュースを、個人でも売れるネタに変える」実験場です。文標は、そのネタをWordPressの記事として残すための道具のひとつです。</p>
+          <p class="eyebrow"><span class="dual-badge">🤖 AI検索最適化</span><span class="dual-badge">🔍 SEO最適化</span><span class="dual-badge dual-badge-light">— 両対応の軽量WordPressテーマ</span></p>
+          <h1>あなたの記事を、<strong>AI検索にも、Google検索にも、<br />見つけてもらえる側に。</strong></h1>
+          <p class="hero-lead">文標（ぶんしるべ）は、AI検索時代に「読み取られる記事」を、迷わず書き始められる軽量WordPressテーマ。短い答え・根拠・FAQ・比較表・出典・CTAを、最初から正しい順番で置く構造を持っています。</p>
+          <p class="hero-lead" style="font-size:15px;line-height:1.8;margin-top:-10px;">ChatGPT・Claude・Gemini・Perplexity・Google AI Overviewsが参照しやすい本文構造（FAQPage / Article / BreadcrumbList 等の構造化データ標準対応）を、書きながら自然に作れる。SEOとAI検索、両方のために設計した次世代テーマです。<br /><small style="color:var(--lp-muted);">※特定のAI検索結果での表示順位や採用は保証しません。「最適化された記事構造を提供する」テーマです。</small></p>
           <div class="hero-actions">
             <a class="btn btn-primary btn-xl" href="/api/checkout?product=wordpress-theme">文標を購入してZIPを受け取る（30日返金保証つき） →</a>
             <a class="btn btn-outline btn-xl" href="/lp/bunsirube/install/">インストール方法を見る</a>
@@ -1474,6 +1488,61 @@
         <div class="value-item"><strong>6/30まで¥5,500税込</strong><span>7/1から¥8,800税込 買い切り</span></div>
       </div>
     </div>
+
+    <section class="lp-section" id="dual-optimization" style="padding-top:56px;padding-bottom:56px;background:linear-gradient(180deg,#f5fbf9 0%,#ffffff 100%);">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-label" style="background:linear-gradient(135deg,#0d8f72,#1fb6cf);color:#fff;padding:4px 12px;border-radius:999px;">🚀 New Era of Search</span>
+          <h2 style="margin-top:14px;">「SEOテーマ」じゃない。<br /><strong style="color:#0a8559;">AI検索 × SEO、両方のために設計された</strong>テーマです。</h2>
+          <p>2024年から、Googleは検索結果の上にAIによる回答（AI Overviews）を出すようになりました。ChatGPT・Claude・Gemini・Perplexity も、ユーザーが質問すると、Webから根拠を引いて答えを返します。<br />これからの記事は、人だけでなく <strong>AIに「読み取られる」構造</strong> を持っているかが、勝敗を分けます。</p>
+        </div>
+        <div class="dual-grid">
+          <article class="dual-card dual-ai">
+            <div class="dual-card-icon">🤖</div>
+            <span class="dual-card-tag">AI検索最適化</span>
+            <h3>AIが回答に使いやすい本文構造</h3>
+            <p>「短い答え → 根拠 → 比較 → FAQ → 出典」の順番を、テンプレートが最初から強制します。AIは長文より<strong>「明確な答え＋出典」</strong>を引用するので、この順番で書くだけで参照されやすくなります。</p>
+            <ul class="dual-card-list">
+              <li><strong>FAQPage JSON-LD</strong>を自動生成（質問→回答のペアをAIが取り出しやすい）</li>
+              <li><strong>Article / Person / BreadcrumbList</strong>の構造化データ標準対応</li>
+              <li><strong>llms.txt</strong> をテーマ側で自動生成（AIクローラー向け案内）</li>
+              <li><strong>出典・引用ブロック</strong>を本文に置きやすい</li>
+            </ul>
+          </article>
+          <article class="dual-card dual-seo">
+            <div class="dual-card-icon">🔍</div>
+            <span class="dual-card-tag">SEO最適化</span>
+            <h3>Google検索でも、これまで通り強い</h3>
+            <p>従来のSEOで効くテクニカル要素も、すべて押さえています。<strong>Lighthouse 100/100/100/100</strong>（Performance / Accessibility / Best Practices / SEO）。重いプラグインを足さなくても、テーマ単体で土台が整います。</p>
+            <ul class="dual-card-list">
+              <li><strong>Core Web Vitals</strong>を考慮した軽量設計（余計なCSS/JSなし）</li>
+              <li><strong>セマンティックHTML</strong>と適切な見出し階層</li>
+              <li><strong>OG・Twitter Cards・canonical</strong> 自動出力</li>
+              <li><strong>サイトマップ・breadcrumb</strong> 自動対応</li>
+            </ul>
+          </article>
+        </div>
+        <p class="dual-foot">※ 特定のAI検索や検索結果での表示順位・採用は保証しません。文標は「AIにも人にも読み取られやすい記事構造」を提供するテーマです。最後に評価するのは記事の中身です。</p>
+      </div>
+    </section>
+    <style>
+      .dual-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:20px; margin-top:8px; }
+      .dual-card { background:#fff; border:1px solid #dce7e1; border-radius:22px; padding:28px 26px; box-shadow:0 16px 40px rgba(11,32,68,.06); position:relative; overflow:hidden; }
+      .dual-card::before { content:""; position:absolute; top:0; left:0; right:0; height:4px; background:linear-gradient(90deg,transparent,currentColor,transparent); opacity:.7; }
+      .dual-card.dual-ai { color:#0d8f72; }
+      .dual-card.dual-seo { color:#2f7df6; }
+      .dual-card-icon { font-size:36px; line-height:1; margin-bottom:8px; }
+      .dual-card-tag { display:inline-block; font-size:11px; font-weight:900; letter-spacing:.1em; text-transform:uppercase; color:currentColor; background:rgba(0,0,0,.04); padding:3px 9px; border-radius:4px; }
+      .dual-card h3 { color:var(--lp-ink); font-size:20px; font-weight:900; margin:12px 0 10px; line-height:1.45; }
+      .dual-card > p { color:var(--lp-muted); font-size:14px; line-height:1.85; margin:0 0 14px; }
+      .dual-card-list { list-style:none; padding:0; margin:0; display:grid; gap:8px; }
+      .dual-card-list li { font-size:13.5px; color:var(--lp-ink); line-height:1.7; padding-left:22px; position:relative; }
+      .dual-card-list li::before { content:"✓"; position:absolute; left:0; top:0; color:currentColor; font-weight:900; color:#0d8f72; }
+      .dual-card.dual-seo .dual-card-list li::before { color:#2f7df6; }
+      .dual-card-list li strong { font-weight:900; }
+      .dual-foot { text-align:center; color:var(--lp-muted); font-size:12px; line-height:1.8; margin:20px 0 0; }
+      @media (max-width:780px) { .dual-grid { grid-template-columns:1fr; } }
+    </style>
 
     <section class="lp-section" id="quick-judge">
       <div class="container">
@@ -1638,6 +1707,56 @@
         </div>
       </div>
     </section>
+
+    <section class="lp-section" id="your-change" style="background:linear-gradient(180deg,#ffffff 0%,#f5fbf9 100%);">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-label">Your transformation</span>
+          <h2>文標を入れた1ヶ月で、<br /><strong style="color:#0a8559;">あなたの発信は、ここまで変わります。</strong></h2>
+          <p>機能ではなく、あなた自身の変化です。書く時間、書ける記事の質、検索からの流入、AIに引用されるかどうか — そのすべてが少しずつ動き出します。</p>
+        </div>
+        <div class="change-timeline">
+          <article class="change-step">
+            <div class="change-day">Day 1</div>
+            <h3>「何を書こう」で止まらなくなる。</h3>
+            <p>ZIP導入後、すぐに7種類の記事テンプレ（比較・レビュー・ランキング・FAQ・商品紹介・案件紹介・基本）から、書きたい型を選んで開ける。白紙のエディタを見つめて止まる時間が消えます。</p>
+          </article>
+          <article class="change-step">
+            <div class="change-day">Day 3</div>
+            <h3>1記事の執筆時間が、半分以下に。</h3>
+            <p>結論・根拠・比較表・FAQ・CTAの<strong>置き場所が最初から決まっている</strong>ので、構成で悩む時間が消える。今まで3〜4時間かけていた比較記事が、1〜1.5時間で公開できる感覚に変わります。</p>
+          </article>
+          <article class="change-step">
+            <div class="change-day">Day 7</div>
+            <h3>「これ自分のサイト？」と思う完成度。</h3>
+            <p>FAQブロック、比較表カード、CTAボタン、ブログカード — 無料テーマでは外注やプラグインで足していた要素が、最初から馴染んでいる。<strong>記事の見た目が、有料サイトの水準に</strong>引き上がります。</p>
+          </article>
+          <article class="change-step">
+            <div class="change-day">Day 14</div>
+            <h3>SearchConsoleに「変化」が見え始める。</h3>
+            <p>FAQ JSON-LD と構造化データが効き、検索結果でリッチリザルト（FAQが折りたたみ表示される等）の対象になりやすい。<strong>クリック率が動く</strong>のが、検索パフォーマンスのグラフから読めるようになります。</p>
+          </article>
+          <article class="change-step change-final">
+            <div class="change-day">Day 30</div>
+            <h3>AIに、自分の記事が引用される側に立つ。</h3>
+            <p>ChatGPT・Claude・Perplexity・Gemini・AI Overviews が「答え」を返すとき、その<strong>根拠ソースとして自分の記事が引かれる</strong>位置に立つ準備が整います。これは検索順位とは別の、新しい「見つけられ方」です。<br /><small style="color:var(--lp-muted);">※ 特定のAIに引用されることは保証しません。記事内容と権威性が引用の最終判断要素です。</small></p>
+          </article>
+        </div>
+        <p class="change-foot">この変化は「テーマだけ」では完成しません。<strong>記事を書く側の意志</strong>と、<strong>道具がそれを助ける</strong>こと、両方で起こります。文標は、その「助ける側」を担当します。</p>
+      </div>
+    </section>
+    <style>
+      .change-timeline { display:grid; gap:14px; margin-top:8px; }
+      .change-step { background:#fff; border:1px solid #dce7e1; border-left:4px solid #0d8f72; border-radius:14px; padding:22px 26px; box-shadow:0 8px 24px rgba(11,32,68,.04); position:relative; }
+      .change-step.change-final { border-left-color:#1fb6cf; background:linear-gradient(135deg,#fff,#f5fbf9); }
+      .change-day { display:inline-block; font-size:11px; font-weight:900; letter-spacing:.14em; color:#0d8f72; background:#e6f8f2; padding:4px 10px; border-radius:4px; margin-bottom:8px; }
+      .change-step.change-final .change-day { color:#1fb6cf; background:#e8f9fc; }
+      .change-step h3 { font-size:18px; font-weight:900; color:var(--lp-ink); margin:6px 0 10px; line-height:1.5; }
+      .change-step p { color:var(--lp-muted); font-size:14px; line-height:1.85; margin:0; }
+      .change-step p strong { color:var(--lp-ink); font-weight:900; }
+      .change-foot { text-align:center; color:var(--lp-muted); font-size:13.5px; line-height:1.85; margin:24px 0 0; max-width:680px; margin-left:auto; margin-right:auto; }
+      .change-foot strong { color:var(--lp-ink); }
+    </style>
 
     <section class="lp-section">
       <div class="container">
