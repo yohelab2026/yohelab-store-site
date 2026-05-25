@@ -55,7 +55,7 @@ const legacyLabels = [
 ];
 checks.push(["home does not promote old research writer app", !home.includes('/apps/research-writer/') && !home.includes('/lp/research-writer/')]);
 checks.push(["home no legacy tool links", legacyPaths.every((path) => !home.includes(path))]);
-checks.push(["home focuses bunsirube conversion", home.includes("比較記事もレビューも") && home.includes("7種類のテンプレ") && home.includes("文標の詳細を見る") && home.includes("文標を購入してZIPを受け取る") && home.includes("購入前に読める確認メモ") && !home.includes("文標で、記事の型を整える。") && !home.includes("無料で遊べるミニゲーム")]);
+checks.push(["home focuses bunsirube conversion", home.includes("比較記事もレビューも") && home.includes("7種類のテンプレ") && home.includes("文標の詳細を見る") && home.includes("文標の詳細・特徴を見る") && home.includes("購入前に読める確認メモ") && !home.includes("文標で、記事の型を整える。") && !home.includes("無料で遊べるミニゲーム")]);
 checks.push(["home uses safer AI search wording", home.includes("記事を書く前に止まる時間") && !home.includes("AI検索にも読まれやすい") && !home.includes("AI検索に出るテーマ") && !home.includes("AI検索最適化済み")]);
 checks.push(["home surfaces buyer guide and tax-included prices", home.includes("購入前に読める確認メモ") && home.includes("/blog/bunsirube-before-install/") && home.includes("/lp/bunsirube/updates/") && home.includes("/lp/bunsirube/#fit-check") && home.includes("2026年6月30日までは先行提供 ¥5,500（税込）") && home.includes("2026年7月1日から正式版 ¥8,800（税込）") && home.includes("表示価格はすべて税込です。")]);
 checks.push(["home uses current market proof without guarantee", home.includes("42.2") && home.includes("CMS市場シェアは59.6") && home.includes("200") && home.includes("+国・地域") && home.includes("検索順位やAI表示を保証する数字ではありません")]);
@@ -379,6 +379,7 @@ const htmlFilesWithIndexLinks = distFiles.filter((p) => p.endsWith(".html") && r
 checks.push(["public html does not link to /index.html", htmlFilesWithIndexLinks.length === 0]);
 checks.push(["sitemap does not include /index.html", !sitemap.includes("/index.html")]);
 checks.push(["redirect rules canonicalize /index.html", read(dist("_redirects")).includes("/index.html / 301")]);
+checks.push(["home routes purchase intent through LP not direct checkout", !read(dist("index.html")).includes('href="/api/checkout?product=wordpress-theme"') && read(dist("index.html")).includes('href="/lp/bunsirube/"')]);
 
 for (const [name, ok] of checks) {
   assert(ok, `Check failed: ${name}`);
