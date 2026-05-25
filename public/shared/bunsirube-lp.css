@@ -1,19 +1,5 @@
 /* Bunsirube LP — extracted from inline <style> blocks for HTML-size budget. */
 
-/* AI engines wall */
-.engines-head{text-align:center;max-width:680px;margin:0 auto 22px}
-.engines-eyebrow{display:inline-block;font-size:11px;font-weight:900;letter-spacing:.18em;color:#1fb6cf;background:rgba(31,182,207,.12);padding:5px 12px;border-radius:999px;margin-bottom:10px}
-.engines-head p{color:rgba(255,255,255,.78);font-size:14px;line-height:1.85;margin:0}
-.engines-wall{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;max-width:980px;margin:0 auto}
-.engine-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:18px 12px;text-align:center;transition:background .2s,border-color .2s,transform .2s}
-.engine-card:hover{background:rgba(255,255,255,.08);border-color:rgba(31,182,207,.4);transform:translateY(-2px)}
-.engine-logo{display:grid;place-items:center;margin-bottom:10px;width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.08);border:1.5px solid currentColor;font-size:20px;line-height:1;margin-left:auto;margin-right:auto}
-.engine-name{font-size:14px;font-weight:900;color:#fff;letter-spacing:.02em}
-.engine-sub{font-size:11px;color:rgba(255,255,255,.55);margin-top:2px}
-.engines-foot{color:rgba(255,255,255,.5);font-size:11px;line-height:1.7;text-align:center;margin:22px auto 0;max-width:740px}
-@media (max-width:720px){.engines-wall{grid-template-columns:repeat(3,1fr)}}
-@media (max-width:420px){.engines-wall{grid-template-columns:repeat(2,1fr)}}
-
 /* Dual AI×SEO cards */
 .dual-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:8px}
 .dual-card{background:#fff;border:1px solid #dce7e1;border-radius:22px;padding:28px 26px;box-shadow:0 16px 40px rgba(11,32,68,.06);position:relative;overflow:hidden}
