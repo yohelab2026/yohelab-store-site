@@ -66,6 +66,9 @@ export async function onRequestPost(context) {
     const socialImage = sanitizeUrl(body?.socialImage) || eyecatch;
     const cover = normalizeCoverSettings(body?.cover);
     const slug = sanitizeSlug(body?.slug);
+    const sourceSlug = sanitizeSlug(body?.sourceSlug || body?.staticSlug || body?.importedFrom);
+    const staticSlug = sanitizeSlug(body?.staticSlug);
+    const importedFrom = sanitizeSlug(body?.importedFrom || sourceSlug);
     const tags = normalizeTags(body?.tags);
     const draft = {
       draftId,
@@ -78,6 +81,9 @@ export async function onRequestPost(context) {
       eyecatch,
       socialImage,
       cover,
+      sourceSlug,
+      staticSlug,
+      importedFrom,
       imageUrls: collectImageUrls(bodyHtml, eyecatch, socialImage),
       updatedAt: now,
     };
@@ -91,6 +97,9 @@ export async function onRequestPost(context) {
         eyecatch: eyecatch || "",
         socialImage: socialImage || "",
         tags: tags.join(","),
+        sourceSlug: sourceSlug || "",
+        staticSlug: staticSlug || "",
+        importedFrom: importedFrom || "",
         updatedAt: now,
       },
     });
@@ -164,12 +173,18 @@ function sanitizeUrl(value) {
   const url = String(value || "").trim();
   if (!url) return "";
   if (/^\/api\/blog-image\?key=[\w.-]+$/.test(url)) return url;
+  if (isStaticAssetImageUrl(url)) return url;
   try {
     const parsed = new URL(url);
     return parsed.protocol === "https:" ? parsed.href : "";
   } catch {
     return "";
   }
+}
+
+function isStaticAssetImageUrl(url) {
+  if (url.includes("..") || url.includes("\\") || url.includes("//")) return false;
+  return /^\/assets\/(?:blog|og)\/[\w./-]+\.(?:png|jpe?g|webp)$/i.test(url);
 }
 
 function normalizeCoverSettings(value) {

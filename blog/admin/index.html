@@ -2117,6 +2117,8 @@
       eyecatch: eyecatchEl.value.trim() || undefined,
       socialImage: coverSocialImageUrl() || undefined,
       cover: eyecatchEl.value.trim() ? coverSettings() : undefined,
+      sourceSlug: activeStaticSlug || undefined,
+      staticSlug: activeStaticSlug || undefined,
     };
   }
 
@@ -2270,6 +2272,8 @@
       eyecatch: eyecatchEl.value.trim() || undefined,
       socialImage: coverSocialImageUrl() || undefined,
       cover: eyecatchEl.value.trim() ? coverSettings() : undefined,
+      sourceSlug: activeStaticSlug || undefined,
+      staticSlug: activeStaticSlug || undefined,
       originalPostSlug: activePostSlug || undefined,
     };
     const res = await fetch('/api/blog-post', {
@@ -2313,6 +2317,43 @@
 
   function staticImportSlug(post) {
     return String(post?.sourceSlug || post?.staticSlug || post?.slug || '').replace(/^\d{4}-\d{2}-\d{2}-/, '');
+  }
+
+  function normalizedStaticSlug(value) {
+    return sanitizeSlugInput(String(value || '')
+      .replace(/^\/?blog\//, '')
+      .replace(/\/$/, '')
+      .replace(/^\d{4}-\d{2}-\d{2}-/, ''));
+  }
+
+  function findStaticPostForMedia(item = {}) {
+    const candidates = [
+      item.staticSlug,
+      item.importedFrom,
+      item.sourceSlug,
+      item.slug,
+      item.originalPostSlug,
+      item.postSlug,
+    ].map(normalizedStaticSlug).filter(Boolean);
+
+    for (const slug of candidates) {
+      const found = staticPostBySlug(slug);
+      if (found) return found;
+    }
+    return null;
+  }
+
+  function applyStaticMediaFallback(item = {}) {
+    const staticPost = findStaticPostForMedia(item);
+    if (!staticPost) return item;
+    const eyecatch = item.eyecatch || staticPost.eyecatch || '';
+    const socialImage = item.socialImage || staticPost.socialImage || eyecatch || '';
+    return {
+      ...item,
+      eyecatch,
+      socialImage,
+      cover: item.cover || item.coverSettings || (eyecatch ? { fit: 'cover', x: 50, y: 50, zoom: 100 } : undefined),
+    };
   }
 
   async function importStaticPosts(options = {}) {
@@ -2374,20 +2415,24 @@
     const importedDraftSlugs = new Set(drafts.map(staticImportSlug).filter(Boolean));
     const staticDrafts = staticPosts.filter(p => p.status === 'draft' && !importedDraftSlugs.has(staticImportSlug(p)));
     draftItems = [
-      ...drafts.map(d => ({
-        kind: 'draft',
-        source: 'server',
-        id: d.draftId,
-        title: d.title || '無題の下書き',
-        slug: d.slug || d.sourceSlug || '',
-        sourceSlug: d.sourceSlug || d.slug || '',
-        date: d.updatedAt || '',
-        actionAt: d.updatedAt || '',
-        excerpt: d.excerpt || '',
-        tags: parseTagList(d.tags),
-        eyecatch: d.eyecatch || '',
-        importedFrom: d.importedFrom || '',
-      })),
+      ...drafts.map(rawDraft => {
+        const d = applyStaticMediaFallback(rawDraft);
+        return {
+          kind: 'draft',
+          source: 'server',
+          id: d.draftId,
+          title: d.title || '無題の下書き',
+          slug: d.slug || d.sourceSlug || '',
+          sourceSlug: d.sourceSlug || d.slug || '',
+          date: d.updatedAt || '',
+          actionAt: d.updatedAt || '',
+          excerpt: d.excerpt || '',
+          tags: parseTagList(d.tags),
+          eyecatch: d.eyecatch || '',
+          socialImage: d.socialImage || d.eyecatch || '',
+          importedFrom: d.importedFrom || '',
+        };
+      }),
       ...staticDrafts.map(p => ({
         kind: 'draft',
         source: 'static',
@@ -3138,13 +3183,15 @@
     const pin = currentPin();
     if (!pin || !draftId) return;
     statusEl.textContent = '下書きを開いています...';
+    await loadStaticPosts(true);
     const res = await fetch(`/api/blog-draft?id=${encodeURIComponent(draftId)}`, { headers: { 'X-Yohelab-Pin': pin } });
     const data = await res.json().catch(()=>({}));
     if (!res.ok || !data.draft) {
       statusEl.textContent = data.error || '下書きを開けませんでした。';
       return;
     }
-    fillEditor(data.draft, { draftId });
+    const draft = applyStaticMediaFallback(data.draft);
+    fillEditor(draft, { draftId, staticSlug: staticImportSlug(draft) });
     statusEl.textContent = '下書きを開いた ✓';
     setTimeout(() => statusEl.textContent='下書き中', 2000);
     setAdminView('editor', { scroll: false });
@@ -3213,6 +3260,7 @@
   }
 
   function fillEditor(post, options = {}) {
+    post = applyStaticMediaFallback(post);
     activeDraftId = options.draftId || post.draftId || '';
     activePostSlug = options.postSlug || '';
     activeStaticSlug = options.staticSlug || '';
@@ -3292,7 +3340,8 @@
   }
 
   function staticPostBySlug(slug) {
-    return staticPosts.find(p => p.slug === slug) || null;
+    const normalized = normalizedStaticSlug(slug);
+    return staticPosts.find(p => normalizedStaticSlug(p.slug) === normalized) || null;
   }
 
   function compareByCategory(a, b) {
@@ -3402,6 +3451,8 @@
         eyecatch: post.eyecatch || undefined,
         socialImage: post.socialImage || post.eyecatch || undefined,
         cover: post.eyecatch ? { fit: 'cover', x: 50, y: 50, zoom: 100 } : undefined,
+        sourceSlug: post.slug,
+        staticSlug: post.slug,
       }),
     });
     if (res.ok) {

@@ -32,6 +32,8 @@ export async function onRequestPost(context) {
     const eyecatch = sanitizeUrl(body?.eyecatch);
     const socialImage = sanitizeUrl(body?.socialImage) || eyecatch;
     const cover = normalizeCoverSettings(body?.cover);
+    const sourceSlug = sanitizeOptionalSlug(body?.sourceSlug || body?.staticSlug);
+    const staticSlug = sanitizeOptionalSlug(body?.staticSlug);
 
     // タイトルがなくてもアイキャッチ画像があればOK（画像がタイトル代わり）
     if (!title && !eyecatch) {
@@ -48,9 +50,11 @@ export async function onRequestPost(context) {
     if (eyecatch) post.eyecatch = eyecatch;
     if (socialImage) post.socialImage = socialImage;
     if (eyecatch) post.cover = cover;
+    if (sourceSlug) post.sourceSlug = sourceSlug;
+    if (staticSlug) post.staticSlug = staticSlug;
 
     await kv.put(`post:${slug}`, JSON.stringify(post), {
-      metadata: { title: effectiveTitle, date, updatedAt, excerpt, slug: effectiveSlugRaw, eyecatch: eyecatch || "", socialImage: socialImage || "", tags: tags.join(",") },
+      metadata: { title: effectiveTitle, date, updatedAt, excerpt, slug: effectiveSlugRaw, eyecatch: eyecatch || "", socialImage: socialImage || "", tags: tags.join(","), sourceSlug: sourceSlug || "" },
     });
 
     if (originalPostSlug && originalPostSlug !== slug) {
@@ -156,6 +160,11 @@ function sanitizeSlug(value) {
   );
 }
 
+function sanitizeOptionalSlug(value) {
+  const text = String(value || "").trim();
+  return text ? sanitizeSlug(text) : "";
+}
+
 function sanitizeStoredSlug(value) {
   const text = String(value || "").trim();
   return /^[a-z0-9ぁ-んァ-ヶ一-龠ー._-]{1,140}$/i.test(text) ? text : "";
@@ -176,12 +185,18 @@ function sanitizeUrl(value) {
   if (!url) return "";
   // 自サイトの画像API（/api/blog-image?key=...）も許可
   if (/^\/api\/blog-image\?key=[\w.-]+$/.test(url)) return url;
+  if (isStaticAssetImageUrl(url)) return url;
   try {
     const parsed = new URL(url);
     return parsed.protocol === "https:" ? parsed.href : "";
   } catch {
     return "";
   }
+}
+
+function isStaticAssetImageUrl(url) {
+  if (url.includes("..") || url.includes("\\") || url.includes("//")) return false;
+  return /^\/assets\/(?:blog|og)\/[\w./-]+\.(?:png|jpe?g|webp)$/i.test(url);
 }
 
 function normalizeCoverSettings(value) {
