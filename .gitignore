@@ -24,3 +24,9 @@ functions/generated/*
 # Generated from static blog HTML for the admin screen.
 # The root copy is published directly by Cloudflare Pages when no build step runs.
 public/blog/admin/static-posts.json
+
+# Local cache and large media projects (not for git)
+.wrangler/
+exports/
+hyperframes-bunsirube-promo/
+hyperframes-bunsirube-promo-long/

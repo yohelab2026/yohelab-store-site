@@ -24,7 +24,8 @@ export async function onRequestGet(context) {
           url: `/blog/${encodeURIComponent(slug)}/`,
           title: key.metadata?.title || "",
           date: key.metadata?.date || "",
-          actionAt: key.metadata?.updatedAt || key.metadata?.date || "",
+          publishedAt: key.metadata?.publishedAt || "",
+          actionAt: key.metadata?.publishedAt || key.metadata?.updatedAt || key.metadata?.date || "",
           updatedAt: key.metadata?.updatedAt || key.metadata?.date || "",
           excerpt: key.metadata?.excerpt || "",
           eyecatch,
@@ -34,7 +35,7 @@ export async function onRequestGet(context) {
           importedFrom: key.metadata?.importedFrom || "",
         };
       })
-      .sort((a, b) => String(b.actionAt || b.updatedAt || b.date).localeCompare(String(a.actionAt || a.updatedAt || a.date)));
+      .sort(compareByPublishedOrder);
 
     const total = allPosts.length;
     const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
@@ -64,6 +65,20 @@ function parseTags(value) {
     .map((tag) => tag.trim())
     .filter(Boolean)
     .slice(0, 12);
+}
+
+function compareByPublishedOrder(a, b) {
+  const diff = sortTime(b) - sortTime(a);
+  if (diff) return diff;
+  return String(a.title || "").localeCompare(String(b.title || ""), "ja");
+}
+
+function sortTime(post = {}) {
+  const value = String(post.publishedAt || post.actionAt || post.updatedAt || post.date || "").trim();
+  if (!value) return 0;
+  if (/^\d{4}-\d{2}-\d{2}$/.test(value)) return new Date(`${value}T00:00:00+09:00`).getTime();
+  const time = new Date(value).getTime();
+  return Number.isNaN(time) ? 0 : time;
 }
 
 function staticPostMetaFor(post = {}) {

@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "prebuild": "node scripts/generate-lp-pages.mjs && node scripts/generate-games.mjs && node scripts/copy-game-assets.mjs && node scripts/generate-yohelab-icon.mjs && node scripts/generate-blog-admin-manifest.mjs",
+    "prebuild": "node scripts/generate-lp-pages.mjs && node scripts/generate-games.mjs && node scripts/copy-game-assets.mjs && node scripts/generate-yohelab-icon.mjs && node scripts/convert-blog-images-to-webp.mjs && node scripts/generate-blog-admin-manifest.mjs",
     "build": "vite build",
     "postbuild": "node scripts/copy-proof.mjs",
     "preview": "vite preview",
@@ -17,10 +17,12 @@
     "line:rich-menu:dry": "node scripts/setup-line-rich-menu.mjs --dry-run",
     "sales:draft": "node scripts/create-sales-draft.mjs",
     "sales:draft:dry": "node scripts/create-sales-draft.mjs --dry-run",
+    "seo:notify": "node scripts/notify-search-discovery.mjs",
     "package-theme": "node scripts/package-theme.mjs",
     "package-child-theme": "node scripts/package-theme.mjs bunsirube-child"
   },
   "devDependencies": {
+    "sharp": "^0.34.5",
     "vite": "^8.0.3"
   }
 }

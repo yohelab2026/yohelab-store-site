@@ -16,6 +16,7 @@ const URLS = [
   { loc: "/lp/bunsirube/install/", lastmod: "2026-05-12", changefreq: "monthly", priority: "0.7" },
   { loc: "/lp/bunsirube/demo/", lastmod: "2026-05-12", changefreq: "monthly", priority: "0.7" },
   { loc: "/lp/bunsirube/updates/", lastmod: "2026-05-12", changefreq: "weekly", priority: "0.6" },
+  { loc: "/products/bunsirube/", lastmod: "2026-05-19", changefreq: "weekly", priority: "0.8" },
   { loc: "/contact/", lastmod: "2026-05-12", changefreq: "monthly", priority: "0.4" },
   { loc: "/legal/commerce/", lastmod: "2026-05-12", changefreq: "monthly", priority: "0.3" },
   { loc: "/legal/privacy/", lastmod: "2026-05-12", changefreq: "monthly", priority: "0.3" },
@@ -41,7 +42,7 @@ export async function onRequestGet(context) {
   return new Response(xml, {
     headers: {
       "Content-Type": "application/xml; charset=utf-8",
-      "Cache-Control": "public, max-age=300, s-maxage=600",
+      "Cache-Control": "public, max-age=60, s-maxage=120",
       "X-Robots-Tag": "index,follow",
     },
   });
@@ -79,7 +80,7 @@ async function dynamicBlogUrls(env) {
         if (STATIC_CANONICAL_SLUGS.has(canonicalSlug)) return null;
         return {
           loc: `/blog/${encodeURIComponent(slug)}/`,
-          lastmod: normalizeDate(key.metadata?.date),
+          lastmod: normalizeDate(key.metadata?.updatedAt || key.metadata?.publishedAt || key.metadata?.date),
           changefreq: "monthly",
           priority: "0.6",
         };

@@ -401,9 +401,18 @@ function mergePosts(posts) {
 }
 
 function compareByCategory(a, b) {
-  return categoryRank(a) - categoryRank(b)
-    || String(b.date || '').localeCompare(String(a.date || ''))
+  const diff = postOrderValue(b) - postOrderValue(a);
+  return diff
+    || categoryRank(a) - categoryRank(b)
     || String(a.title || '').localeCompare(String(b.title || ''), 'ja');
+}
+
+function postOrderValue(post) {
+  const value = String(post?.publishedAt || post?.actionAt || post?.updatedAt || post?.date || '').trim();
+  if (!value) return 0;
+  if (/^\d{4}-\d{2}-\d{2}$/.test(value)) return new Date(`${value}T00:00:00+09:00`).getTime();
+  const time = new Date(value).getTime();
+  return Number.isNaN(time) ? 0 : time;
 }
 
 function categoryRank(post) {

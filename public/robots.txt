@@ -1,3 +1,4 @@
+# Public pages are open. Admin/API/private paths are blocked for every crawler.
 User-agent: *
 Allow: /
 Disallow: /blog/admin/
@@ -6,17 +7,69 @@ Disallow: /pro/
 Disallow: /affiliate/dashboard/
 Disallow: /games/
 
-# AI crawlers (explicitly allowed for AI search visibility)
 User-agent: GPTBot
 Allow: /
+Disallow: /blog/admin/
+Disallow: /api/
+Disallow: /pro/
+Disallow: /affiliate/dashboard/
+Disallow: /games/
 
 User-agent: Claude-Web
 Allow: /
+Disallow: /blog/admin/
+Disallow: /api/
+Disallow: /pro/
+Disallow: /affiliate/dashboard/
+Disallow: /games/
 
 User-agent: PerplexityBot
 Allow: /
+Disallow: /blog/admin/
+Disallow: /api/
+Disallow: /pro/
+Disallow: /affiliate/dashboard/
+Disallow: /games/
 
 User-agent: Googlebot
 Allow: /
+Disallow: /blog/admin/
+Disallow: /api/
+Disallow: /pro/
+Disallow: /affiliate/dashboard/
+Disallow: /games/
+
+User-agent: Bingbot
+Allow: /
+Disallow: /blog/admin/
+Disallow: /api/
+Disallow: /pro/
+Disallow: /affiliate/dashboard/
+Disallow: /games/
+
+User-agent: DuckDuckBot
+Allow: /
+Disallow: /blog/admin/
+Disallow: /api/
+Disallow: /pro/
+Disallow: /affiliate/dashboard/
+Disallow: /games/
+
+User-agent: Applebot
+Allow: /
+Disallow: /blog/admin/
+Disallow: /api/
+Disallow: /pro/
+Disallow: /affiliate/dashboard/
+Disallow: /games/
+
+User-agent: YandexBot
+Allow: /
+Disallow: /blog/admin/
+Disallow: /api/
+Disallow: /pro/
+Disallow: /affiliate/dashboard/
+Disallow: /games/
 
 Sitemap: https://yohelab.com/sitemap.xml
+Sitemap: https://yohelab.com/feed.xml

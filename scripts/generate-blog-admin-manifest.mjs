@@ -204,6 +204,8 @@ function buildStaticBlogPostsModule(posts) {
       slug: post.slug,
       url: post.url,
       date: normalizeDate(post.date),
+      title: post.title,
+      excerpt: post.excerpt,
     }))
     .filter((post) => post.slug && /^\/blog\/[^/]+\/$/.test(post.url));
 

@@ -223,6 +223,33 @@ function escJsonString(value) {
     .replace(/<\/script/gi, "<\\/script");
 }
 
+const SEO_TITLE_MAX_CHARS = 60;
+
+function seoCharLength(value) {
+  return Array.from(String(value || "")).length;
+}
+
+function cleanSeoTitle(value) {
+  return String(value || "")
+    .replace(/\s+/g, " ")
+    .replace(/^\s*(?:よへラボブログ|よへラボ記事一覧|よへラボ)\s*(?:[|｜\-–—:：]\s*)?/i, "")
+    .replace(/\s*(?:[|｜\-–—:：]\s*)?(?:よへラボブログ|よへラボ記事一覧|よへラボ)\s*$/i, "")
+    .trim();
+}
+
+function truncateSeoPart(value, maxChars) {
+  const clean = String(value || "").replace(/\s+/g, " ").trim();
+  const chars = Array.from(clean);
+  if (chars.length <= maxChars) return clean;
+  return `${chars.slice(0, Math.max(1, maxChars - 1)).join("").replace(/[、。・|｜\-–—:：\s]+$/g, "")}…`;
+}
+
+function postSeoTitle(title) {
+  const delimiter = " | ";
+  const main = cleanSeoTitle(title) || "記事";
+  return `${BLOG_NAME}${delimiter}${truncateSeoPart(main, SEO_TITLE_MAX_CHARS - seoCharLength(BLOG_NAME) - seoCharLength(delimiter))}`;
+}
+
 function sanitizeBodyHtml(html, post = {}) {
   // 管理画面からの投稿でも、公開HTMLに出す前に危険なタグと属性は落とす。
   return enhanceArticleImages(String(html || "")
@@ -304,7 +331,7 @@ function buildJsonLd(post, slug, fullUrl) {
   const title = post.title || "記事";
   const description = plainExcerpt(post, 200);
   const datePublished = post.date || new Date().toISOString().slice(0, 10);
-  const dateModified = post.updatedAt || post.modifiedAt || post.date || datePublished;
+  const dateModified = visibleUpdatedAt(post, datePublished);
   const eyecatch = socialImageUrl(post);
 
   const article = {
@@ -314,7 +341,6 @@ function buildJsonLd(post, slug, fullUrl) {
     description,
     image: eyecatch,
     datePublished,
-    dateModified,
     author: { "@type": "Organization", name: SITE_NAME, url: SITE_ORIGIN },
     publisher: {
       "@type": "Organization",
@@ -326,6 +352,7 @@ function buildJsonLd(post, slug, fullUrl) {
     url: fullUrl,
     inLanguage: "ja-JP",
   };
+  if (dateModified) article.dateModified = dateModified;
 
   const breadcrumb = {
     "@context": "https://schema.org",
@@ -355,6 +382,30 @@ function dateTimeAttr(value) {
   if (/^\d{4}-\d{2}-\d{2}$/.test(raw)) return raw;
   const date = new Date(raw);
   return Number.isNaN(date.getTime()) ? raw : date.toISOString();
+}
+
+function dateOnly(value) {
+  const raw = String(value || "").trim();
+  if (!raw) return "";
+  if (/^\d{4}-\d{2}-\d{2}$/.test(raw)) return raw;
+  const date = new Date(raw);
+  if (Number.isNaN(date.getTime())) return "";
+  const parts = new Intl.DateTimeFormat("ja-JP-u-ca-gregory", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    timeZone: "Asia/Tokyo",
+  }).formatToParts(date);
+  const part = (type) => parts.find((item) => item.type === type)?.value || "";
+  return [part("year"), part("month"), part("day")].filter(Boolean).join("-");
+}
+
+function visibleUpdatedAt(post = {}, publishedDate = "") {
+  const updated = post.updatedAt || post.modifiedAt || "";
+  if (!updated) return "";
+  const publishedDay = dateOnly(publishedDate);
+  const updatedDay = dateOnly(updated);
+  return publishedDay && updatedDay && publishedDay !== updatedDay ? updated : "";
 }
 
 function absoluteUrl(value) {
@@ -401,7 +452,7 @@ function cardImageUrl(value) {
 }
 
 function socialImageUrl(post = {}) {
-  return absoluteUrl(post.socialImage || post.eyecatch || FALLBACK_IMAGE);
+  return cardImageUrl(post.socialImage || post.eyecatch || FALLBACK_IMAGE);
 }
 
 function imageMimeForUrl(value) {
@@ -485,12 +536,14 @@ function renderBlogHeader() {
 
 function renderPostHTML(post, slug, categoryMap = buildCategoryMap(DEFAULT_CATEGORY_TREE)) {
   const title = post.title || "無題の記事";
+  const seoTitle = postSeoTitle(title);
   const description = plainExcerpt(post, 160);
   const date = post.date || new Date().toISOString().slice(0, 10);
-  const updatedAt = post.updatedAt || post.modifiedAt || date;
+  const updatedAt = visibleUpdatedAt(post, date);
   const publishedLabel = formatPostDate(date);
   const updatedLabel = formatPostDate(updatedAt);
-  const dateMetaHtml = `<div class="post-date-line"><time datetime="${escAttr(dateTimeAttr(date))}">投稿日 ${escHtml(publishedLabel)}</time><span>/</span><time datetime="${escAttr(dateTimeAttr(updatedAt))}">最終更新日 ${escHtml(updatedLabel || publishedLabel)}</time></div>`;
+  const updateMetaHtml = updatedAt && updatedLabel ? `<span>/</span><time datetime="${escAttr(dateTimeAttr(updatedAt))}">最終更新日 ${escHtml(updatedLabel)}</time>` : "";
+  const dateMetaHtml = `<div class="post-date-line"><time datetime="${escAttr(dateTimeAttr(date))}">投稿日 ${escHtml(publishedLabel)}</time>${updateMetaHtml}</div>`;
   const eyecatchAbs = socialImageUrl(post);
   const displayEyecatch = post.eyecatch || FALLBACK_IMAGE;
   const eyecatchAttr = post.eyecatch ? escAttr(post.eyecatch) : "";
@@ -524,7 +577,7 @@ function renderPostHTML(post, slug, categoryMap = buildCategoryMap(DEFAULT_CATEG
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>${escHtml(title)} | ${escHtml(BLOG_NAME)}</title>
+  <title>${escHtml(seoTitle)}</title>
   <meta name="description" content="${escAttr(description)}" />
   <meta name="author" content="${escAttr(SITE_NAME)}" />
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1" />
@@ -533,7 +586,7 @@ function renderPostHTML(post, slug, categoryMap = buildCategoryMap(DEFAULT_CATEG
   <link rel="alternate" hreflang="x-default" href="${escAttr(fullUrl)}" />
   <link rel="alternate" type="application/rss+xml" title="よへラボ RSS" href="${SITE_ORIGIN}/feed.xml" />
   <link rel="preload" as="image" href="${escAttr(displayEyecatch)}" fetchpriority="high" />
-  <meta property="og:title" content="${escAttr(title)} | ${escAttr(BLOG_NAME)}" />
+  <meta property="og:title" content="${escAttr(seoTitle)}" />
   <meta property="og:description" content="${escAttr(description)}" />
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="${escAttr(SITE_NAME)}" />
@@ -547,10 +600,10 @@ function renderPostHTML(post, slug, categoryMap = buildCategoryMap(DEFAULT_CATEG
   <meta property="og:image:height" content="675" />
   <meta property="og:image:alt" content="${escAttr(imageAltText(post, post.eyecatch, "cover"))}" />
   <meta property="article:published_time" content="${escAttr(date)}T00:00:00+09:00" />
-  <meta property="article:modified_time" content="${escAttr(dateTimeAttr(updatedAt))}" />
+  ${updatedAt ? `<meta property="article:modified_time" content="${escAttr(dateTimeAttr(updatedAt))}" />` : ""}
   <meta property="article:author" content="${SITE_ORIGIN}/about/" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="${escAttr(title)}" />
+  <meta name="twitter:title" content="${escAttr(seoTitle)}" />
   <meta name="twitter:description" content="${escAttr(description)}" />
   <meta name="twitter:image" content="${escAttr(eyecatchAbs)}" />
   <meta name="twitter:image:src" content="${escAttr(eyecatchAbs)}" />

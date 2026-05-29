@@ -23,12 +23,20 @@ export async function onRequestPost(context) {
       skippedPosts: 0,
       total: posts.length,
     };
+    const publishedSlugs = await readPublishedSlugs(kv);
+    const hiddenStaticDraftSlugs = await readHiddenStaticDraftSlugs(kv);
 
     for (const rawPost of posts) {
       const normalized = normalizeStaticPost(rawPost, now);
       if (!normalized.title && !normalized.bodyHtml) continue;
 
       if (normalized.status === "draft") {
+        const staticSlug = comparableSlug(normalized.slug);
+        if (publishedSlugs.has(staticSlug) || hiddenStaticDraftSlugs.has(staticSlug)) {
+          result.skippedDrafts += 1;
+          continue;
+        }
+
         const draftId = `static-${normalized.slug}`.slice(0, 80);
         const key = `draft:${draftId}`;
         const exists = await kv.get(key);
@@ -75,6 +83,7 @@ export async function onRequestPost(context) {
       const exists = await kv.get(key);
       if (exists) {
         result.skippedPosts += 1;
+        await deleteStaticDraftForSlug(kv, normalized.slug);
         continue;
       }
 
@@ -82,6 +91,7 @@ export async function onRequestPost(context) {
         title: normalized.title,
         slug: normalized.slug,
         date: normalized.date,
+        publishedAt: normalized.publishedAt,
         excerpt: normalized.excerpt,
         bodyHtml: normalized.bodyHtml,
         body: normalized.body,
@@ -96,6 +106,7 @@ export async function onRequestPost(context) {
         metadata: {
           title: post.title,
           date: post.date,
+          publishedAt: post.publishedAt,
           excerpt: post.excerpt,
           slug: post.slug,
           sourceSlug: post.sourceSlug,
@@ -105,6 +116,8 @@ export async function onRequestPost(context) {
           importedFrom: post.importedFrom,
         },
       });
+      await deleteStaticDraftForSlug(kv, normalized.slug);
+      publishedSlugs.add(comparableSlug(normalized.slug));
       result.importedPosts += 1;
     }
 
@@ -121,7 +134,9 @@ export async function onRequestOptions(context) {
 function normalizeStaticPost(rawPost, now) {
   const title = sanitizeText(rawPost?.title).replace(/^【下書き】\s*/, "") || "無題の記事";
   const slug = sanitizeSlug(rawPost?.slug || rawPost?.title || title);
-  const date = sanitizeDate(rawPost?.date) || now.slice(0, 10);
+  const sourceUpdatedAt = sanitizeDateTime(rawPost?.updatedAt);
+  const sourcePublishedAt = sanitizeDateTime(rawPost?.publishedAt);
+  const date = sanitizeDate(rawPost?.date) || (sourcePublishedAt || sourceUpdatedAt || now).slice(0, 10);
   const bodyHtml = String(rawPost?.bodyHtml || "").trim();
   const body = sanitizeText(rawPost?.body || stripHtml(bodyHtml));
   const excerpt = sanitizeText(rawPost?.excerpt) || autoExcerpt(bodyHtml || body, title);
@@ -138,8 +153,79 @@ function normalizeStaticPost(rawPost, now) {
     eyecatch,
     socialImage,
     status: String(rawPost?.status || "").trim() === "draft" ? "draft" : "published",
-    updatedAt: rawPost?.updatedAt || now,
+    publishedAt: sourcePublishedAt || sourceUpdatedAt || publishedAtFromDate(date) || now,
+    updatedAt: sourceUpdatedAt,
   };
+}
+
+async function readPublishedSlugs(kv) {
+  const slugs = new Set();
+  let cursor;
+  do {
+    const list = await kv.list({ prefix: "post:", cursor });
+    for (const key of list.keys || []) {
+      const meta = key.metadata || {};
+      [
+        key.name.replace(/^post:/, ""),
+        meta.slug,
+        meta.sourceSlug,
+        meta.staticSlug,
+        meta.importedFrom,
+      ].forEach((value) => {
+        const slug = comparableSlug(value);
+        if (slug) slugs.add(slug);
+      });
+    }
+    cursor = list.list_complete ? undefined : list.cursor;
+  } while (cursor);
+  return slugs;
+}
+
+async function readHiddenStaticDraftSlugs(kv) {
+  const slugs = new Set();
+  let cursor;
+  do {
+    const list = await kv.list({ prefix: "draft-hidden:", cursor, limit: 100 });
+    for (const key of list.keys || []) {
+      const slug = comparableSlug(key.metadata?.slug || key.name.replace(/^draft-hidden:/, ""));
+      if (slug) slugs.add(slug);
+    }
+    cursor = list.list_complete ? undefined : list.cursor;
+  } while (cursor);
+  return slugs;
+}
+
+async function deleteStaticDraftForSlug(kv, slug) {
+  const target = comparableSlug(slug);
+  if (!target) return;
+
+  let cursor;
+  do {
+    const list = await kv.list({ prefix: "draft:", cursor });
+    for (const key of list.keys || []) {
+      const meta = key.metadata || {};
+      const candidates = [
+        key.name.replace(/^draft:/, ""),
+        meta.slug,
+        meta.sourceSlug,
+        meta.staticSlug,
+        meta.importedFrom,
+      ].map(comparableSlug);
+      if (candidates.includes(target)) await kv.delete(key.name);
+    }
+    cursor = list.list_complete ? undefined : list.cursor;
+  } while (cursor);
+}
+
+function comparableSlug(value) {
+  return String(value || "")
+    .trim()
+    .toLowerCase()
+    .replace(/^draft:/, "")
+    .replace(/^static-/, "")
+    .replace(/^\/?blog\//, "")
+    .replace(/\/$/, "")
+    .replace(/^\d{4}-\d{2}-\d{2}-/, "");
 }
 
 function authorize(context) {
@@ -171,6 +257,18 @@ function sanitizeSlug(value) {
 function sanitizeDate(value) {
   const text = String(value || "").trim();
   return /^\d{4}-\d{2}-\d{2}$/.test(text) ? text : "";
+}
+
+function sanitizeDateTime(value) {
+  const text = String(value || "").trim();
+  if (!text) return "";
+  const time = new Date(text).getTime();
+  return Number.isNaN(time) ? "" : new Date(time).toISOString();
+}
+
+function publishedAtFromDate(value) {
+  const date = sanitizeDate(value);
+  return date ? new Date(`${date}T00:00:00+09:00`).toISOString() : "";
 }
 
 function sanitizeUrl(value) {

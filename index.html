@@ -420,21 +420,20 @@
     .featured-tool-visual {
       background: linear-gradient(160deg, var(--brand) 0%, var(--brand-dark) 100%);
       color: #fff;
-      padding: 22px 18px;
+      padding: 22px 16px;
       display: flex;
       flex-direction: column;
       gap: 12px;
       align-items: center;
       justify-content: center;
+      overflow: hidden;
     }
-    .featured-tool-mark {
-      width: 96px; height: 96px;
-      border-radius: 22px;
-      background: rgba(255,255,255,.18);
-      border: 2px solid rgba(255,255,255,.36);
-      display: grid; place-items: center;
-      font-size: 52px; font-weight: 900; letter-spacing: -.04em;
-      color: #fff;
+    .featured-tool-image {
+      width: min(174px, 100%);
+      height: auto;
+      max-height: 360px;
+      object-fit: contain;
+      filter: drop-shadow(0 22px 28px rgba(0,0,0,.22));
     }
     .featured-tool-chips {
       display: flex; flex-wrap: wrap; gap: 5px; justify-content: center;
@@ -637,8 +636,9 @@
       .home-bunsirube-actions { justify-content: flex-start; }
       .product-grid { grid-template-columns: 1fr; }
       .featured-tool { grid-template-columns: 1fr; }
-      .featured-tool-visual { padding: 18px; flex-direction: row; gap: 14px; }
-      .featured-tool-mark { width: 64px; height: 64px; font-size: 32px; border-radius: 14px; flex-shrink: 0; }
+      .featured-tool-visual { padding: 18px; flex-direction: row; gap: 14px; justify-content: flex-start; }
+      .featured-tool-image { width: 96px; max-height: 152px; flex-shrink: 0; }
+      .featured-tool-chips { justify-content: flex-start; }
       .featured-tool-chips { justify-content: flex-start; }
       .featured-tool-actions { min-width: 0; width: 100%; }
       .tip-grid { grid-template-columns: 1fr 1fr; }
@@ -841,7 +841,7 @@
         </div>
         <article class="featured-tool">
           <div class="featured-tool-visual" aria-hidden="true">
-            <div class="featured-tool-mark">文</div>
+            <img class="featured-tool-image" src="/assets/bunsirube/bunsirube-feature-visual.svg" alt="" loading="lazy" width="480" height="760" />
             <div class="featured-tool-chips">
               <span>🤖 AI検索最適化</span>
               <span>🔍 SEO最適化</span>

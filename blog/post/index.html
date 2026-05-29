@@ -150,7 +150,9 @@
 
   <script>
   const SITE_ORIGIN = 'https://yohelab.com';
+  const BLOG_NAME = 'よへラボブログ';
   const FALLBACK_IMAGE = `${SITE_ORIGIN}/yohelab-mascot-v2-20260518.png`;
+  const SEO_TITLE_MAX_CHARS = 60;
   const slug = slugFromLocation();
   const fallbackPosts = [];
   const DEFAULT_CATEGORY_TREE = [
@@ -218,7 +220,7 @@
   }
 
   function socialImageUrl(post = {}) {
-    return absoluteUrl(post.socialImage || post.eyecatch || FALLBACK_IMAGE);
+    return cardImageUrl(post.socialImage || post.eyecatch || FALLBACK_IMAGE);
   }
 
   function imageMimeForUrl(value) {
@@ -230,6 +232,31 @@
 
   function esc(str) {
     return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function seoCharLength(value) {
+    return Array.from(String(value || '')).length;
+  }
+
+  function cleanSeoTitle(value) {
+    return String(value || '')
+      .replace(/\s+/g, ' ')
+      .replace(/^\s*(?:よへラボブログ|よへラボ記事一覧|よへラボ)\s*(?:[|｜\-–—:：]\s*)?/i, '')
+      .replace(/\s*(?:[|｜\-–—:：]\s*)?(?:よへラボブログ|よへラボ記事一覧|よへラボ)\s*$/i, '')
+      .trim();
+  }
+
+  function truncateSeoPart(value, maxChars) {
+    const clean = String(value || '').replace(/\s+/g, ' ').trim();
+    const chars = Array.from(clean);
+    if (chars.length <= maxChars) return clean;
+    return `${chars.slice(0, Math.max(1, maxChars - 1)).join('').replace(/[、。・|｜\-–—:：\s]+$/g, '')}…`;
+  }
+
+  function postSeoTitle(title) {
+    const delimiter = ' | ';
+    const main = cleanSeoTitle(title) || '記事';
+    return `${BLOG_NAME}${delimiter}${truncateSeoPart(main, SEO_TITLE_MAX_CHARS - seoCharLength(BLOG_NAME) - seoCharLength(delimiter))}`;
   }
 
   function buildCategoryLabelMap(categories) {
@@ -300,6 +327,30 @@
     if (/^\d{4}-\d{2}-\d{2}$/.test(raw)) return raw;
     const date = new Date(raw);
     return Number.isNaN(date.getTime()) ? raw : date.toISOString();
+  }
+
+  function dateOnly(value) {
+    const raw = String(value || '').trim();
+    if (!raw) return '';
+    if (/^\d{4}-\d{2}-\d{2}$/.test(raw)) return raw;
+    const date = new Date(raw);
+    if (Number.isNaN(date.getTime())) return '';
+    const parts = new Intl.DateTimeFormat('ja-JP-u-ca-gregory', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      timeZone: 'Asia/Tokyo',
+    }).formatToParts(date);
+    const part = (type) => parts.find((item) => item.type === type)?.value || '';
+    return [part('year'), part('month'), part('day')].filter(Boolean).join('-');
+  }
+
+  function visibleUpdatedAt(post = {}, publishedDate = '') {
+    const updated = post.updatedAt || post.modifiedAt || '';
+    if (!updated) return '';
+    const publishedDay = dateOnly(publishedDate);
+    const updatedDay = dateOnly(updated);
+    return publishedDay && updatedDay && publishedDay !== updatedDay ? updated : '';
   }
 
   function clampNumber(value, min, max, fallback) {
@@ -400,22 +451,23 @@
     const pageUrl = postUrl(postSlug);
     const pagePath = postPath(postSlug);
     const title = post.title || '記事';
+    const seoTitle = postSeoTitle(title);
     const description = post.excerpt || title;
     const imageUrl = socialImageUrl(post);
     const date = post.date || new Date().toISOString().slice(0, 10);
-    const updatedAt = post.updatedAt || post.modifiedAt || date;
+    const updatedAt = visibleUpdatedAt(post, date);
     const publishedLabel = formatPostDate(date);
-    const updatedLabel = formatPostDate(updatedAt) || publishedLabel;
+    const updatedLabel = formatPostDate(updatedAt);
 
     if (postSlug && location.pathname.replace(/\/+$/, '') === '/blog/post') {
       history.replaceState(null, '', pagePath);
     }
 
-    document.title = `${title} | よへラボブログ`;
+    document.title = seoTitle;
     setCanonical(pageUrl);
     setMeta('description', description);
     setMeta('robots', 'index,follow,max-image-preview:large,max-snippet:-1');
-    setMeta('og:title', `${title} | よへラボブログ`);
+    setMeta('og:title', seoTitle);
     setMeta('og:description', description);
     setMeta('og:type', 'article');
     setMeta('og:site_name', 'よへラボ');
@@ -429,22 +481,21 @@
     setMeta('og:image:height', '675');
     setMeta('og:image:alt', imageAltText(post, 'cover'));
     setMeta('article:published_time', `${date}T00:00:00+09:00`);
-    setMeta('article:modified_time', dateTimeAttr(updatedAt));
+    if (updatedAt) setMeta('article:modified_time', dateTimeAttr(updatedAt));
     setMeta('article:author', `${SITE_ORIGIN}/about/`);
     setMeta('twitter:card', 'summary_large_image');
-    setMeta('twitter:title', title);
+    setMeta('twitter:title', seoTitle);
     setMeta('twitter:description', description);
     setMeta('twitter:image', imageUrl);
     setMeta('twitter:image:src', imageUrl);
     setMeta('twitter:image:alt', imageAltText(post, 'cover'));
-    upsertJsonLd('post-jsonld', {
+    const jsonLd = {
       '@context': 'https://schema.org',
       '@type': 'BlogPosting',
       headline: title,
       description,
       image: imageUrl,
       datePublished: date,
-      dateModified: updatedAt,
       author: { '@type': 'Organization', name: 'よへラボ', url: SITE_ORIGIN },
       publisher: {
         '@type': 'Organization',
@@ -455,7 +506,9 @@
       mainEntityOfPage: { '@type': 'WebPage', '@id': pageUrl },
       url: pageUrl,
       inLanguage: 'ja-JP',
-    });
+    };
+    if (updatedAt) jsonLd.dateModified = updatedAt;
+    upsertJsonLd('post-jsonld', jsonLd);
 
     // カバー画像（フルワイド）
     if (post.eyecatch) {
@@ -475,8 +528,7 @@
     const postDateMeta = `
       <div class="post-meta" style="margin-top:-10px;">
         <time datetime="${esc(dateTimeAttr(date))}">投稿日 ${esc(publishedLabel)}</time>
-        <span>/</span>
-        <time datetime="${esc(dateTimeAttr(updatedAt))}">最終更新日 ${esc(updatedLabel)}</time>
+        ${updatedAt && updatedLabel ? `<span>/</span><time datetime="${esc(dateTimeAttr(updatedAt))}">最終更新日 ${esc(updatedLabel)}</time>` : ''}
       </div>
     `;
 

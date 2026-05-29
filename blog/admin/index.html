@@ -368,7 +368,7 @@
         <button class="btn btn-outline" id="show-posts" type="button">公開済み一覧</button>
         <button class="btn btn-outline" id="new-post" type="button">新規</button>
         <button class="btn btn-outline" id="save-draft" type="button">下書き保存</button>
-        <button class="btn btn-primary" id="post-btn" type="button">公開する</button>
+        <button class="btn btn-primary" id="post-btn" type="button" data-publish-post>公開する</button>
         <button class="btn btn-outline" id="logout-admin" type="button" style="color:var(--muted);">ログアウト</button>
       </div>
     </div>
@@ -630,7 +630,7 @@
   const SESSION_KEY = 'yohelab.blog.sess';
   const SESSION_PIN_KEY = 'yohelab.blog.pin.session';
   const SAVED_PIN_KEY = 'yohelab.blog.pin.saved';
-  const IMPORT_STATIC_SESSION_KEY = 'yohelab.blog.staticImport.tried.v3';
+  const IMPORT_STATIC_SESSION_KEY = 'yohelab.blog.staticImport.tried.v4';
   const CONTENT_PAGE_SIZE = 10;
 
   const titleEl    = document.getElementById('title');
@@ -688,11 +688,13 @@
   let activeCoverSocialImage = '';
   let staticPosts = [];
   let staticPostsLoaded = false;
+  let hiddenStaticDraftSlugs = new Set();
   let draftItems = [];
   let postItems = [];
   let trashItems = [];
   let contentCurrentPage = 1;
   let contentDateSortDirection = 'desc';
+  let contentListLoadId = 0;
   let suppressAdminHistory = false;
   let autosaveTimer = null;
   let autosaveInFlight = false;
@@ -1778,7 +1780,41 @@
   }
 
   function coverSocialImageUrl() {
-    return activeCoverSocialImage || eyecatchEl.value.trim() || '';
+    return safeEditorImageUrl(activeCoverSocialImage) || effectiveEyecatchUrl() || '';
+  }
+
+  function safeEditorImageUrl(value) {
+    const raw = String(value || '').trim();
+    if (!raw || /^(?:blob:|data:|about:|javascript:|vbscript:)/i.test(raw)) return '';
+    return raw;
+  }
+
+  function firstImageUrlFromHtml(html) {
+    const template = document.createElement('template');
+    template.innerHTML = String(html || '');
+    const img = template.content.querySelector('img[src]');
+    return safeEditorImageUrl(img?.getAttribute('src') || '');
+  }
+
+  function visibleCoverImageUrl() {
+    if (!coverPreview || coverPreview.style.display === 'none') return '';
+    return safeEditorImageUrl(coverImg?.getAttribute('src') || coverImg?.currentSrc || coverImg?.src || '');
+  }
+
+  function effectiveEyecatchUrl() {
+    return safeEditorImageUrl(eyecatchEl.value) || visibleCoverImageUrl() || firstImageUrlFromHtml(currentBodyHtml()) || '';
+  }
+
+  function ensureEyecatchFromVisibleCover() {
+    const url = effectiveEyecatchUrl();
+    if (url && !eyecatchEl.value.trim()) {
+      eyecatchEl.value = url;
+      if (!coverImg.getAttribute('src')) {
+        coverImg.src = url;
+        coverImg.alt = imageAltForEditor({ url }, 'cover');
+      }
+    }
+    return url;
   }
 
   function suggestedCoverFit(width, height) {
@@ -1878,7 +1914,7 @@
     const webpFile = await convertToSingleWebp(file);
     if (!webpFile) return null;
     const fd = new FormData(); fd.append('file', webpFile);
-    const socialFile = options.includeSocial ? await convertToSocialJpeg(file) : null;
+    const socialFile = options.includeSocial ? await convertToSocialWebp(file) : null;
     if (socialFile) fd.append('socialFile', socialFile);
     try {
       const res = await fetch('/api/blog-image', {
@@ -1934,7 +1970,7 @@
     return converted;
   }
 
-  async function convertToSocialJpeg(file) {
+  async function convertToSocialWebp(file) {
     const bitmap = await createImageBitmap(file).catch(() => null);
     if (!bitmap) return null;
     const width = 1200;
@@ -1958,10 +1994,10 @@
     ctx.drawImage(bitmap, sx, sy, sw, sh, 0, 0, width, height);
     bitmap.close?.();
 
-    const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', 0.86));
+    const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/webp', 0.86));
     if (!blob) return null;
     const baseName = (file.name || 'blog-card').replace(/\.[^.]+$/, '').replace(/[^\w-]+/g, '-').replace(/^-+|-+$/g, '') || 'blog-card';
-    return new File([blob], `${baseName}-card.jpg`, { type: 'image/jpeg' });
+    return new File([blob], `${baseName}-card.webp`, { type: 'image/webp' });
   }
 
   // ── スラッグ自動生成 ──────────────────────────────────────
@@ -2019,7 +2055,7 @@
   }
 
   function hasDraftableContent() {
-    return Boolean(titleEl.value.trim() || currentBodyText() || eyecatchEl.value.trim());
+    return Boolean(titleEl.value.trim() || currentBodyText() || effectiveEyecatchUrl());
   }
 
   function cancelAutosave() {
@@ -2038,6 +2074,7 @@
   // ── 下書き（localStorage + サーバー自動保存） ──────────────
   function saveDraftLocal(options = {}) {
     const { schedule = true, history = true } = options;
+    const eyecatch = ensureEyecatchFromVisibleCover();
     localStorage.setItem('yohelab.blog.draft', JSON.stringify({
       draftId: activeDraftId,
       postSlug: activePostSlug,
@@ -2048,9 +2085,9 @@
       excerpt: excerptEl.value,
       tags: editorTags().join(', '),
       slug: sanitizeSlugInput(slugEl.value),
-      eyecatch: eyecatchEl.value,
+      eyecatch,
       socialImage: coverSocialImageUrl(),
-      cover: coverSettings(),
+      cover: eyecatch ? coverSettings() : undefined,
     }));
     if (history) pushEditorHistory();
     if (schedule) scheduleServerAutosave();
@@ -2106,6 +2143,7 @@
   resetEditorHistory();
 
   function editorPayload() {
+    const eyecatch = ensureEyecatchFromVisibleCover();
     return {
       draftId: activeDraftId || undefined,
       title: titleEl.value.trim(),
@@ -2114,9 +2152,9 @@
       bodyHtml: currentBodyHtml(),
       body: currentBodyText(),
       tags: editorTags(),
-      eyecatch: eyecatchEl.value.trim() || undefined,
+      eyecatch: eyecatch || undefined,
       socialImage: coverSocialImageUrl() || undefined,
-      cover: eyecatchEl.value.trim() ? coverSettings() : undefined,
+      cover: eyecatch ? coverSettings() : undefined,
       sourceSlug: activeStaticSlug || undefined,
       staticSlug: activeStaticSlug || undefined,
     };
@@ -2234,7 +2272,7 @@
 
   document.getElementById('save-draft').addEventListener('click', saveDraftServer);
   document.getElementById('new-post').addEventListener('click', () => {
-    if (titleEl.value.trim() || currentBodyText() || eyecatchEl.value.trim()) {
+    if (titleEl.value.trim() || currentBodyText() || effectiveEyecatchUrl()) {
       if (!confirm('今の編集内容を閉じて、新規記事を作りますか？未保存の内容は消えます。')) return;
     }
     clearEditor();
@@ -2247,58 +2285,76 @@
     return sanitizeSlugInput(text) || fallback;
   }
 
-  async function publish() {
-    cancelAutosave();
-    const pin = currentPin();
-    if (!pin) { sessionStorage.removeItem(SESSION_KEY); showLock(); return; }
-    const title = titleEl.value.trim();
-    if (!title) { statusEl.textContent='タイトルを入れてください。'; titleEl.focus(); return; }
-    if (!eyecatchEl.value.trim()) {
-      statusEl.textContent = 'アイキャッチ画像を設定してください。';
-      coverDrop.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      return;
+  let publishInFlight = false;
+
+  async function publish(event) {
+    event?.preventDefault?.();
+    event?.stopPropagation?.();
+    if (publishInFlight) return;
+    publishInFlight = true;
+    if (postBtnEl) postBtnEl.disabled = true;
+    try {
+      cancelAutosave();
+      const pin = currentPin();
+      if (!pin) { sessionStorage.removeItem(SESSION_KEY); showLock(); return; }
+      const title = titleEl.value.trim();
+      if (!title) { statusEl.textContent='タイトルを入れてください。'; titleEl.focus(); return; }
+      const eyecatch = ensureEyecatchFromVisibleCover();
+      if (!eyecatch) {
+        statusEl.textContent = 'アイキャッチ画像を設定してください。';
+        coverDrop.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+      const isOverwritePublish = Boolean(activePostSlug);
+      statusEl.textContent = isOverwritePublish ? '上書き公開中...' : '公開中...';
+      const post = {
+        draftId: activeDraftId || undefined,
+        title,
+        slug: sanitizeSlugInput(slugEl.value) || makeSlug(title),
+        date: activePostDate || new Date().toISOString().slice(0,10),
+        excerpt: excerptEl.value.trim(),
+        bodyHtml: currentBodyHtml(),
+        body: currentBodyText(),
+        tags: editorTags(),
+        eyecatch: eyecatch || undefined,
+        socialImage: coverSocialImageUrl() || undefined,
+        cover: eyecatch ? coverSettings() : undefined,
+        sourceSlug: activeStaticSlug || undefined,
+        staticSlug: activeStaticSlug || undefined,
+        originalPostSlug: activePostSlug || undefined,
+      };
+      const res = await fetch('/api/blog-post', {
+        method: 'POST',
+        headers: { 'Content-Type':'application/json','X-Yohelab-Pin': pin },
+        body: JSON.stringify(post),
+      });
+      const data = await res.json().catch(()=>({}));
+      if (!res.ok) {
+        const msgs = { 'BLOG_KV is not configured':'CloudflareのKV設定が必要です。', unauthorized:'パスワードが違う。', title_required:'タイトルを入れて。' };
+        statusEl.textContent = msgs[data.error] || data.error || '投稿に失敗した。';
+        return;
+      }
+      // フォームリセット
+      clearEditor();
+      localStorage.removeItem('yohelab.blog.draft');
+      statusEl.textContent = isOverwritePublish ? '上書き公開した ✓' : '公開した ✓';
+      setServerSaveState('サーバー保存：公開済み', isOverwritePublish ? '公開済みの記事を更新しました。' : '公開済み一覧に記事を残しました。', 'saved');
+      if (contentStatusFilterEl) contentStatusFilterEl.value = 'published';
+      resetContentPage();
+      setTimeout(()=>statusEl.textContent='下書き中', 3000);
+      loadAllLists();
+    } finally {
+      publishInFlight = false;
+      if (postBtnEl) postBtnEl.disabled = false;
     }
-    const isOverwritePublish = Boolean(activePostSlug);
-    statusEl.textContent = isOverwritePublish ? '上書き公開中...' : '公開中...';
-    const post = {
-      draftId: activeDraftId || undefined,
-      title,
-      slug: sanitizeSlugInput(slugEl.value) || makeSlug(title),
-      date: activePostDate || new Date().toISOString().slice(0,10),
-      excerpt: excerptEl.value.trim(),
-      bodyHtml: currentBodyHtml(),
-      body: currentBodyText(),
-      tags: editorTags(),
-      eyecatch: eyecatchEl.value.trim() || undefined,
-      socialImage: coverSocialImageUrl() || undefined,
-      cover: eyecatchEl.value.trim() ? coverSettings() : undefined,
-      sourceSlug: activeStaticSlug || undefined,
-      staticSlug: activeStaticSlug || undefined,
-      originalPostSlug: activePostSlug || undefined,
-    };
-    const res = await fetch('/api/blog-post', {
-      method: 'POST',
-      headers: { 'Content-Type':'application/json','X-Yohelab-Pin': pin },
-      body: JSON.stringify(post),
-    });
-    const data = await res.json().catch(()=>({}));
-    if (!res.ok) {
-      const msgs = { 'BLOG_KV is not configured':'CloudflareのKV設定が必要です。', unauthorized:'パスワードが違う。', title_required:'タイトルを入れて。' };
-      statusEl.textContent = msgs[data.error] || data.error || '投稿に失敗した。';
-      return;
-    }
-    // フォームリセット
-    clearEditor();
-    localStorage.removeItem('yohelab.blog.draft');
-    statusEl.textContent = isOverwritePublish ? '上書き公開した ✓' : '公開した ✓';
-    setServerSaveState('サーバー保存：公開済み', isOverwritePublish ? '公開済みの記事を更新しました。' : '公開済み一覧に記事を残しました。', 'saved');
-    if (contentStatusFilterEl) contentStatusFilterEl.value = 'published';
-    resetContentPage();
-    setTimeout(()=>statusEl.textContent='下書き中', 3000);
-    loadAllLists();
   }
 
-  postBtnEl?.addEventListener('click', publish);
+  window.yohelabPublish = publish;
+  document.addEventListener('click', (event) => {
+    const publishButton = event.target?.closest?.('[data-publish-post],#post-btn');
+    if (!publishButton) return;
+    publish(event);
+  }, true);
 
   // ── サーバー下書き一覧 ───────────────────────────────────
   async function loadStaticPosts(force = false) {
@@ -2326,6 +2382,42 @@
       .replace(/^\d{4}-\d{2}-\d{2}-/, ''));
   }
 
+  async function fetchAllPublishedPosts() {
+    const posts = [];
+    let page = 1;
+    let totalPages = 1;
+    do {
+      try {
+        const res = await fetch(`/api/blog-posts?page=${page}`);
+        const data = await res.json().catch(()=>({}));
+        if (!res.ok) break;
+        posts.push(...(data.posts || []));
+        totalPages = Math.max(1, Number(data.totalPages || 1));
+        page += 1;
+      } catch {
+        break;
+      }
+    } while (page <= totalPages && page <= 20);
+    return posts;
+  }
+
+  async function publishedSlugSet() {
+    const posts = await fetchAllPublishedPosts();
+    const set = new Set();
+    const add = value => {
+      const slug = normalizedStaticSlug(value);
+      if (slug) set.add(slug);
+    };
+    posts.forEach(post => {
+      add(post.slug);
+      add(post.sourceSlug);
+      add(post.staticSlug);
+      add(post.importedFrom);
+    });
+    staticPosts.filter(post => post.status !== 'draft').forEach(post => add(staticImportSlug(post)));
+    return set;
+  }
+
   function findStaticPostForMedia(item = {}) {
     const candidates = [
       item.staticSlug,
@@ -2345,8 +2437,12 @@
 
   function applyStaticMediaFallback(item = {}) {
     const staticPost = findStaticPostForMedia(item);
-    if (!staticPost) return item;
-    const eyecatch = item.eyecatch || staticPost.eyecatch || '';
+    const bodyImage = firstImageUrlFromHtml(item.bodyHtml);
+    if (!staticPost) {
+      const eyecatch = item.eyecatch || item.socialImage || bodyImage || '';
+      return eyecatch ? { ...item, eyecatch, socialImage: item.socialImage || eyecatch } : item;
+    }
+    const eyecatch = item.eyecatch || item.socialImage || staticPost.eyecatch || staticPost.socialImage || bodyImage || '';
     const socialImage = item.socialImage || staticPost.socialImage || eyecatch || '';
     return {
       ...item,
@@ -2404,19 +2500,26 @@
     if (!contentListEl) return;
     const pin = currentPin();
     if (!pin) return;
-    await loadStaticPosts(true);
+    await loadStaticPosts();
     let drafts = [];
     try {
       const res = await fetch('/api/blog-draft', { headers: { 'X-Yohelab-Pin': pin } });
       const data = await res.json().catch(()=>({}));
       drafts = data.drafts || [];
+      hiddenStaticDraftSlugs = new Set((data.hiddenStaticDrafts || []).map(normalizedStaticSlug).filter(Boolean));
     } catch {}
 
-    const importedDraftSlugs = new Set(drafts.map(staticImportSlug).filter(Boolean));
-    const staticDrafts = staticPosts.filter(p => p.status === 'draft' && !importedDraftSlugs.has(staticImportSlug(p)));
+    const publishedSlugs = await publishedSlugSet();
+    const importedDraftSlugs = new Set(drafts.map(draft => normalizedStaticSlug(staticImportSlug(draft))).filter(Boolean));
+    const visibleDrafts = drafts.filter(draft => !publishedSlugs.has(normalizedStaticSlug(staticImportSlug(draft))));
+    const staticDrafts = staticPosts.filter(p => {
+      const slug = normalizedStaticSlug(staticImportSlug(p));
+      return p.status === 'draft' && !publishedSlugs.has(slug) && !importedDraftSlugs.has(slug) && !hiddenStaticDraftSlugs.has(slug);
+    });
     draftItems = [
-      ...drafts.map(rawDraft => {
+      ...visibleDrafts.map(rawDraft => {
         const d = applyStaticMediaFallback(rawDraft);
+        const actionAt = reliableDraftActionAt(d);
         return {
           kind: 'draft',
           source: 'server',
@@ -2424,8 +2527,10 @@
           title: d.title || '無題の下書き',
           slug: d.slug || d.sourceSlug || '',
           sourceSlug: d.sourceSlug || d.slug || '',
-          date: d.updatedAt || '',
-          actionAt: d.updatedAt || '',
+          staticSlug: d.staticSlug || '',
+          date: actionAt,
+          actionAt,
+          updatedAt: d.updatedAt || '',
           excerpt: d.excerpt || '',
           tags: parseTagList(d.tags),
           eyecatch: d.eyecatch || '',
@@ -2440,11 +2545,13 @@
         slug: p.slug,
         url: p.url,
         title: String(p.title || '無題').replace(/^【下書き】\s*/, ''),
-        date: p.date || '',
-        actionAt: p.updatedAt || p.date || '',
+        date: '',
+        actionAt: '',
+        sourceDate: p.date || '',
         excerpt: p.excerpt || '',
         tags: parseTagList(p.tags),
         eyecatch: p.eyecatch || '',
+        socialImage: p.socialImage || p.eyecatch || '',
       })),
     ].sort(compareByDate);
     updateManagerCounts(draftItems.length, null);
@@ -2489,8 +2596,9 @@
   // 下書き＋公開済み＋ゴミ箱を同時に読み込んで一度だけ描画する
   async function loadAllLists(options = {}) {
     if (!contentListEl) return;
+    const loadId = ++contentListLoadId;
     contentListEl.innerHTML = '<p style="color:var(--muted);font-size:14px;padding:14px;">読み込み中...</p>';
-    await loadStaticPosts(true);
+    await loadStaticPosts(options.forceStatic === true || options.importStatic === true);
     if (options.importStatic && !sessionStorage.getItem(IMPORT_STATIC_SESSION_KEY)) {
       sessionStorage.setItem(IMPORT_STATIC_SESSION_KEY, '1');
       await importStaticPosts({ silent: true });
@@ -2500,6 +2608,7 @@
       loadPostList(true),
       loadTrashList(true),
     ]);
+    if (loadId !== contentListLoadId) return;
     populateCategoryFilter();
     populateDateFilter();
     renderContentList();
@@ -2917,6 +3026,15 @@
     }).replace(/\//g, '-');
   }
 
+  function reliableDraftActionAt(draft = {}) {
+    const value = String(draft.updatedAt || draft.actionAt || '').trim();
+    if (!value) return '';
+    if (String(draft.importedFrom || '').trim() === 'static-posts') return '';
+    const isStaticImport = Boolean(draft.sourceSlug || draft.staticSlug || String(draft.importedFrom || '').includes('static'));
+    if (isStaticImport && /^\d{4}-\d{2}-\d{2}$/.test(value)) return '';
+    return value;
+  }
+
   function dateColumnLabel(status) {
     if (status === 'published') return '公開日時';
     if (status === 'draft') return '下書き日時';
@@ -3047,7 +3165,7 @@
       : item.source === 'dynamic'
         ? `data-post-slug="${escHtml(item.slug)}"`
         : `data-static-slug="${escHtml(item.staticSlug || item.slug)}"`;
-    const dateText = item.actionAt || item.date ? formatItemDate(item.actionAt || item.date) : '-';
+    const dateText = contentDateText(item);
     const selectable = isBulkSelectable(item);
     const bulkSource = bulkSourceForItem(item);
     const bulkId = bulkIdForItem(item);
@@ -3069,6 +3187,7 @@
   }
 
   function isBulkSelectable(item) {
+    if (item.source === 'static' && item.kind === 'draft') return Boolean(bulkIdForItem(item));
     return ['server', 'dynamic', 'trash'].includes(item.source) && Boolean(bulkIdForItem(item));
   }
 
@@ -3076,6 +3195,7 @@
     if (item.source === 'server') return 'draft';
     if (item.source === 'dynamic') return 'post';
     if (item.source === 'trash') return 'trash';
+    if (item.source === 'static' && item.kind === 'draft') return 'static-draft';
     return '';
   }
 
@@ -3083,6 +3203,7 @@
     if (item.source === 'server') return item.id || '';
     if (item.source === 'dynamic') return item.slug || '';
     if (item.source === 'trash') return item.trashId || item.id || '';
+    if (item.source === 'static' && item.kind === 'draft') return item.staticSlug || item.slug || '';
     return '';
   }
 
@@ -3152,20 +3273,32 @@
       `;
     }
     const slug = item.staticSlug || item.slug;
-    const draftButton = item.kind === 'draft'
-      ? `<button class="btn-draft" type="button" onclick="saveStaticPostAsDraft('${escHtml(slug)}',this)">保存</button>`
-      : `<button class="btn-draft" type="button" onclick="saveStaticPostAsDraft('${escHtml(slug)}',this)">下書き</button>`;
+    if (item.kind === 'draft') {
+      return `
+        <button class="btn-open-draft" type="button" onclick="openStaticPost('${escHtml(slug)}')">開く</button>
+        <button class="btn-edit" type="button" onclick="openStaticPost('${escHtml(slug)}')">編集</button>
+        <button class="btn-draft" type="button" onclick="saveStaticPostAsDraft('${escHtml(slug)}',this)">保存</button>
+        <button class="btn-del" type="button" onclick="deleteStaticDraft('${escHtml(slug)}',this)">削除</button>
+      `;
+    }
     return `
       <a class="btn-view" href="${escHtml(item.url)}" target="_blank">表示</a>
       <button class="btn-edit" type="button" onclick="openStaticPost('${escHtml(slug)}')">編集</button>
-      ${draftButton}
+      <button class="btn-draft" type="button" onclick="saveStaticPostAsDraft('${escHtml(slug)}',this)">下書き</button>
     `;
+  }
+
+  function contentDateText(item) {
+    const value = item.actionAt || item.date || '';
+    if (value) return formatItemDate(value);
+    if (item.kind === 'draft') return '保存日時なし';
+    return '-';
   }
 
   function formatItemDate(value) {
     if (!value) return '-';
     if (/^\d{4}-\d{2}-\d{2}$/.test(String(value))) {
-      return String(value).replace(/^(\d{4})-(\d{2})-(\d{2})$/, '$1年$2月$3日 00:00');
+      return String(value).replace(/^(\d{4})-(\d{2})-(\d{2})$/, '$1年$2月$3日');
     }
     const date = new Date(value);
     return Number.isNaN(date.getTime()) ? String(value) : date.toLocaleString('ja-JP', {
@@ -3183,7 +3316,7 @@
     const pin = currentPin();
     if (!pin || !draftId) return;
     statusEl.textContent = '下書きを開いています...';
-    await loadStaticPosts(true);
+    await loadStaticPosts();
     const res = await fetch(`/api/blog-draft?id=${encodeURIComponent(draftId)}`, { headers: { 'X-Yohelab-Pin': pin } });
     const data = await res.json().catch(()=>({}));
     if (!res.ok || !data.draft) {
@@ -3202,7 +3335,7 @@
     if (!confirm('この下書きをゴミ箱へ移動しますか？')) return;
     if (btn) { btn.textContent='移動中...'; btn.disabled=true; }
     try {
-      await deleteDraftRecord(draftId);
+      const result = await deleteDraftRecord(draftId);
       if (activeDraftId === draftId) {
         activeDraftId = '';
         saveDraftLocal({ schedule: false });
@@ -3210,8 +3343,8 @@
       }
       statusEl.textContent = 'ゴミ箱へ移動した ✓';
       if (contentStatusFilterEl) contentStatusFilterEl.value = 'trash';
-      resetContentPage();
-      await loadAllLists();
+      applyMutationToLocalLists({ source: 'draft', id: draftId }, result);
+      refreshContentListFromLocal({ resetPage: true });
     } catch (error) {
       if (btn) { btn.textContent='失敗'; btn.disabled=false; }
       statusEl.textContent = 'ゴミ箱への移動に失敗した。';
@@ -3224,13 +3357,73 @@
     const getRes = await fetch(`/api/blog-draft?id=${encodeURIComponent(draftId)}`, { headers: { 'X-Yohelab-Pin': pin } });
     const getData = await getRes.json().catch(()=>({}));
     if (!getRes.ok || !getData.draft) throw new Error(getData.error || 'draft_not_found');
-    await moveItemToTrash({ type: 'draft', originalId: draftId, item: getData.draft });
-    const res = await fetch(`/api/blog-draft?id=${encodeURIComponent(draftId)}`, {
+    const trashEntry = await moveItemToTrash({ type: 'draft', originalId: draftId, item: getData.draft });
+    const draftStaticSlug = getData.draft.sourceSlug || getData.draft.staticSlug || (String(getData.draft.importedFrom || '').includes('static') ? getData.draft.slug : '') || (String(draftId).startsWith('static-') ? String(draftId).replace(/^static-/, '') : '');
+    const staticSlug = normalizedStaticSlug(draftStaticSlug);
+    const url = `/api/blog-draft?id=${encodeURIComponent(draftId)}${staticSlug ? `&staticSlug=${encodeURIComponent(staticSlug)}` : ''}`;
+    const res = await fetch(url, {
       method:'DELETE',
       headers:{'X-Yohelab-Pin':pin},
     });
     if (!res.ok) throw new Error('draft_delete_failed');
-    return true;
+    return { trashEntry };
+  }
+
+  async function deleteStaticDraft(slug, btn) {
+    if (!confirm('この固定下書きをゴミ箱へ移動しますか？')) return;
+    if (btn) { btn.textContent='移動中...'; btn.disabled=true; }
+    try {
+      const result = await deleteStaticDraftRecord(slug);
+      statusEl.textContent = 'ゴミ箱へ移動した ✓';
+      if (contentStatusFilterEl) contentStatusFilterEl.value = 'trash';
+      applyMutationToLocalLists({ source: 'static-draft', id: normalizedStaticSlug(slug) }, result);
+      refreshContentListFromLocal({ resetPage: true });
+    } catch (error) {
+      if (btn) { btn.textContent='失敗'; btn.disabled=false; }
+      statusEl.textContent = 'ゴミ箱への移動に失敗した。';
+    }
+  }
+
+  async function deleteStaticDraftRecord(slug) {
+    const pin = currentPin();
+    const staticSlug = normalizedStaticSlug(slug);
+    if (!pin || !staticSlug) throw new Error('static_draft_slug_required');
+    const post = staticPostBySlug(staticSlug);
+    if (!post) throw new Error('static_draft_not_found');
+    const trashEntry = await moveItemToTrash({
+      type: 'draft',
+      originalId: `static-${staticSlug}`.slice(0, 80),
+      originalSlug: staticSlug,
+      item: staticDraftTrashItem(post),
+    });
+    const res = await fetch(`/api/blog-draft?staticSlug=${encodeURIComponent(staticSlug)}`, {
+      method:'DELETE',
+      headers:{'X-Yohelab-Pin':pin},
+    });
+    const data = await res.json().catch(()=>({}));
+    if (!res.ok) throw new Error(data.error || 'static_draft_hide_failed');
+    hiddenStaticDraftSlugs.add(staticSlug);
+    return { trashEntry };
+  }
+
+  function staticDraftTrashItem(post) {
+    const title = String(post.title || '無題').replace(/^【下書き】\s*/, '');
+    const slug = normalizedStaticSlug(staticImportSlug(post)) || sanitizeSlugInput(post.slug) || makeSlug(title);
+    return {
+      draftId: `static-${slug}`.slice(0, 80),
+      title,
+      slug,
+      date: post.date || '',
+      excerpt: post.excerpt || '',
+      bodyHtml: post.bodyHtml || '',
+      body: stripHtml(post.bodyHtml || ''),
+      tags: parseTagList(post.tags),
+      eyecatch: post.eyecatch || '',
+      socialImage: post.socialImage || post.eyecatch || '',
+      sourceSlug: slug,
+      staticSlug: slug,
+      importedFrom: 'static-posts',
+    };
   }
 
   async function moveItemToTrash({ type, originalId = '', originalSlug = '', item }) {
@@ -3317,8 +3510,9 @@
         source: 'dynamic',
         url: p.url || `/blog/${encodeURIComponent(p.slug)}/`,
         sourceSlug: p.sourceSlug || staticImportSlug(p),
-        date: p.actionAt || p.updatedAt || p.date || '',
-        actionAt: p.actionAt || p.updatedAt || p.date || '',
+        date: p.publishedAt || p.actionAt || p.updatedAt || p.date || '',
+        actionAt: p.publishedAt || p.actionAt || p.updatedAt || p.date || '',
+        publishedAt: p.publishedAt || '',
         publishedDate: p.date || '',
         tags: parseTagList(p.tags),
       })),
@@ -3327,7 +3521,7 @@
         kind: 'published',
         source: 'static',
         staticSlug: p.slug,
-        actionAt: p.updatedAt || p.date || '',
+        actionAt: p.publishedAt || p.updatedAt || p.date || '',
         tags: parseTagList(p.tags),
       })),
     ].sort(compareByDate);
@@ -3350,7 +3544,8 @@
       const found = foundKey ? categoryOrder.indexOf(foundKey) : -1;
       return found === -1 ? 999 : found;
     };
-    return rank(a) - rank(b) || String(b.actionAt || b.date || '').localeCompare(String(a.actionAt || a.date || '')) || String(a.title || '').localeCompare(String(b.title || ''), 'ja');
+    const dateDiff = itemDateValue(b) - itemDateValue(a);
+    return rank(a) - rank(b) || dateDiff || String(a.title || '').localeCompare(String(b.title || ''), 'ja');
   }
 
   function compareByDate(a, b) {
@@ -3530,12 +3725,12 @@
     const slug = kvKey.replace(/^post:/,'');
     if (btn) { btn.textContent='移動中...'; btn.disabled=true; }
     try {
-      await deletePostRecord(slug);
+      const result = await deletePostRecord(slug);
       if (activePostSlug === slug) clearEditor();
       statusEl.textContent = 'ゴミ箱へ移動した ✓';
       if (contentStatusFilterEl) contentStatusFilterEl.value = 'trash';
-      resetContentPage();
-      await loadAllLists();
+      applyMutationToLocalLists({ source: 'post', id: slug }, result);
+      refreshContentListFromLocal({ resetPage: true });
     } catch (error) {
       if (btn) { btn.textContent='失敗'; btn.disabled=false; }
       statusEl.textContent = 'ゴミ箱への移動に失敗した。';
@@ -3548,13 +3743,13 @@
     const getRes = await fetch(`/api/blog-post-get?slug=${encodeURIComponent(slug)}`);
     const getData = await getRes.json().catch(()=>({}));
     if (!getRes.ok || !getData.post) throw new Error(getData.error || 'post_not_found');
-    await moveItemToTrash({ type: 'post', originalSlug: slug, item: getData.post });
+    const trashEntry = await moveItemToTrash({ type: 'post', originalSlug: slug, item: getData.post });
     const res = await fetch(`/api/blog-post?slug=${encodeURIComponent(slug)}&keepImages=1`, {
       method:'DELETE',
       headers:{'X-Yohelab-Pin':pin},
     });
     if (!res.ok) throw new Error('post_delete_failed');
-    return true;
+    return { trashEntry };
   }
 
   async function restoreTrashItem(trashId, btn = null) {
@@ -3602,8 +3797,8 @@
     try {
       await deleteTrashRecord(trashId);
       statusEl.textContent = '完全に削除した ✓';
-      resetContentPage();
-      await loadAllLists();
+      applyMutationToLocalLists({ source: 'trash', id: trashId }, {});
+      refreshContentListFromLocal({ resetPage: true });
     } catch (error) {
       if (btn) { btn.textContent = '失敗'; btn.disabled = false; }
       statusEl.textContent = '完全削除に失敗した。';
@@ -3613,7 +3808,69 @@
   async function deleteTrashRecord(trashId) {
     if (!trashId) throw new Error('trash_id_required');
     await removeTrashEntry(trashId, { purgeImages: true });
-    return true;
+    return { trashId };
+  }
+
+  async function runLimited(items, limit, worker) {
+    const queue = [...items];
+    const results = [];
+    const workerCount = Math.max(1, Math.min(limit, queue.length));
+    await Promise.all(Array.from({ length: workerCount }, async () => {
+      while (queue.length) {
+        const item = queue.shift();
+        results.push(await worker(item));
+      }
+    }));
+    return results;
+  }
+
+  function applyMutationToLocalLists(target, result = {}) {
+    if (!target?.source || !target?.id) return;
+    if (target.source === 'draft') {
+      draftItems = draftItems.filter(item => !(item.source === 'server' && item.id === target.id));
+      addTrashEntryToLocal(result.trashEntry);
+    } else if (target.source === 'static-draft') {
+      const slug = normalizedStaticSlug(target.id);
+      draftItems = draftItems.filter(item => !(item.source === 'static' && normalizedStaticSlug(item.staticSlug || item.slug) === slug));
+      addTrashEntryToLocal(result.trashEntry);
+    } else if (target.source === 'post') {
+      postItems = postItems.filter(item => !(item.source === 'dynamic' && item.slug === target.id));
+      addTrashEntryToLocal(result.trashEntry);
+    } else if (target.source === 'trash') {
+      trashItems = trashItems.filter(item => (item.trashId || item.id) !== target.id);
+    }
+    updateManagerCounts(draftItems.length, postItems.length, trashItems.length);
+  }
+
+  function addTrashEntryToLocal(entry) {
+    const item = trashItemFromEntry(entry);
+    if (!item) return;
+    trashItems = [item, ...trashItems.filter(existing => (existing.trashId || existing.id) !== item.trashId)].sort(compareByDate);
+  }
+
+  function trashItemFromEntry(entry) {
+    if (!entry?.trashId) return null;
+    const item = entry.item || {};
+    return {
+      ...entry,
+      kind: 'trash',
+      source: 'trash',
+      id: entry.trashId,
+      title: item.title || '無題',
+      slug: item.slug || entry.originalSlug || entry.originalId || '',
+      date: entry.deletedAt || item.date || '',
+      actionAt: entry.deletedAt || item.date || '',
+      excerpt: item.excerpt || '',
+      tags: parseTagList(item.tags),
+      eyecatch: item.eyecatch || '',
+    };
+  }
+
+  function refreshContentListFromLocal(options = {}) {
+    if (options.resetPage) resetContentPage();
+    populateCategoryFilter();
+    populateDateFilter();
+    renderContentList();
   }
 
   async function bulkDeleteSelected() {
@@ -3628,19 +3885,25 @@
       contentBulkDeleteEl.disabled = true;
       contentBulkDeleteEl.textContent = '処理中...';
     }
-    let success = 0;
-    const failures = [];
-    for (const target of targets) {
+    let completed = 0;
+    const results = await runLimited(targets, 4, async (target) => {
       try {
-        if (target.source === 'draft') await deleteDraftRecord(target.id);
-        else if (target.source === 'post') await deletePostRecord(target.id);
-        else if (target.source === 'trash') await deleteTrashRecord(target.id);
+        let result = {};
+        if (target.source === 'draft') result = await deleteDraftRecord(target.id);
+        else if (target.source === 'static-draft') result = await deleteStaticDraftRecord(target.id);
+        else if (target.source === 'post') result = await deletePostRecord(target.id);
+        else if (target.source === 'trash') result = await deleteTrashRecord(target.id);
         else throw new Error('unsupported_item');
-        success += 1;
+        return { target, result };
       } catch (error) {
-        failures.push(target);
+        return { target, error };
+      } finally {
+        completed += 1;
+        if (statusEl) statusEl.textContent = `処理中... ${completed}/${targets.length}`;
       }
-    }
+    });
+    const successes = results.filter(item => !item.error);
+    const failures = results.filter(item => item.error).map(item => item.target);
     if (activeDraftId && targets.some(item => item.source === 'draft' && item.id === activeDraftId)) {
       activeDraftId = '';
       saveDraftLocal({ schedule: false });
@@ -3648,13 +3911,13 @@
     }
     if (activePostSlug && targets.some(item => item.source === 'post' && item.id === activePostSlug)) clearEditor();
     statusEl.textContent = failures.length
-      ? `${success}件削除、${failures.length}件失敗。`
+      ? `${successes.length}件削除、${failures.length}件失敗。`
       : trashOnly
-        ? `${success}件を完全に削除した ✓`
-        : `${success}件をゴミ箱へ移動した ✓`;
+        ? `${successes.length}件を完全に削除した ✓`
+        : `${successes.length}件をゴミ箱へ移動した ✓`;
     if (!failures.length && contentStatusFilterEl) contentStatusFilterEl.value = trashOnly ? 'trash' : 'trash';
-    resetContentPage();
-    await loadAllLists();
+    successes.forEach(({ target, result }) => applyMutationToLocalLists(target, result));
+    refreshContentListFromLocal({ resetPage: true });
   }
 
   async function refreshContentLists() {
@@ -3748,6 +4011,7 @@
   Object.assign(window, {
     openDraft,
     deleteDraft,
+    deleteStaticDraft,
     openPost,
     movePostToDraft,
     deletePost,

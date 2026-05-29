@@ -1,4 +1,7 @@
 import { getBlogPin, isValidPin, timingSafeEqual } from "../lib/blog-auth.js";
+import { notifyIndexNow } from "../lib/indexnow.js";
+
+const SEARCH_DISCOVERY_URLS = ["/blog/", "/", "/sitemap.xml", "/feed.xml"];
 
 export async function onRequestPost(context) {
   try {
@@ -23,21 +26,28 @@ export async function onRequestPost(context) {
     const originalPostSlug = sanitizeStoredSlug(body?.originalPostSlug);
     const slugRaw = sanitizeSlug(body?.slug || body?.title);
     const excerptInput = sanitizeText(body?.excerpt);
-    const bodyHtml = String(body?.bodyHtml || "").trim();
+    const bodyHtml = normalizeBlogImageFormats(String(body?.bodyHtml || "").trim());
     const bodyText = sanitizeText(body?.body);
     const excerpt = excerptInput || autoExcerpt(bodyHtml || bodyText, title);
+    const now = new Date().toISOString();
+    const existingPost = originalPostSlug ? await readExistingPost(kv, originalPostSlug) : null;
     const date = sanitizeDate(body?.date) || new Date().toISOString().slice(0, 10);
-    const updatedAt = new Date().toISOString();
+    const publishedAt = originalPostSlug
+      ? sanitizeDateTime(existingPost?.publishedAt) || publishedAtFromDate(existingPost?.date || date) || now
+      : now;
+    const updatedAt = originalPostSlug ? now : "";
     const tags = normalizeTags(body?.tags);
-    const eyecatch = sanitizeUrl(body?.eyecatch);
-    const socialImage = sanitizeUrl(body?.socialImage) || eyecatch;
+    const requestedEyecatch = sanitizeUrl(body?.eyecatch);
+    const requestedSocialImage = sanitizeUrl(body?.socialImage);
+    const firstBodyImage = firstImageUrl(bodyHtml);
+    const eyecatch = requestedEyecatch || requestedSocialImage || firstBodyImage;
+    const socialImage = requestedSocialImage || eyecatch;
     const cover = normalizeCoverSettings(body?.cover);
     const sourceSlug = sanitizeOptionalSlug(body?.sourceSlug || body?.staticSlug);
     const staticSlug = sanitizeOptionalSlug(body?.staticSlug);
 
-    // タイトルがなくてもアイキャッチ画像があればOK（画像がタイトル代わり）
-    if (!title && !eyecatch) {
-      return json({ error: "title_required" }, 400, context.request);
+    if (!eyecatch) {
+      return json({ error: "eyecatch_required" }, 400, context.request);
     }
 
     // slug に日付プレフィックスを付けてユニークにする
@@ -46,7 +56,8 @@ export async function onRequestPost(context) {
     const effectiveSlugRaw = slugRaw || sanitizeSlug(effectiveTitle);
     const slug = `${date}-${effectiveSlugRaw}`;
 
-    const post = { title: effectiveTitle, slug: effectiveSlugRaw, date, updatedAt, excerpt, bodyHtml, tags };
+    const post = { title: effectiveTitle, slug: effectiveSlugRaw, date, publishedAt, excerpt, bodyHtml, tags };
+    if (updatedAt) post.updatedAt = updatedAt;
     if (eyecatch) post.eyecatch = eyecatch;
     if (socialImage) post.socialImage = socialImage;
     if (eyecatch) post.cover = cover;
@@ -54,19 +65,28 @@ export async function onRequestPost(context) {
     if (staticSlug) post.staticSlug = staticSlug;
 
     await kv.put(`post:${slug}`, JSON.stringify(post), {
-      metadata: { title: effectiveTitle, date, updatedAt, excerpt, slug: effectiveSlugRaw, eyecatch: eyecatch || "", socialImage: socialImage || "", tags: tags.join(","), sourceSlug: sourceSlug || "" },
+      metadata: { title: effectiveTitle, date, publishedAt, updatedAt, excerpt, slug: effectiveSlugRaw, eyecatch: eyecatch || "", socialImage: socialImage || "", tags: tags.join(","), sourceSlug: sourceSlug || "" },
     });
+
+    const draftId = sanitizeDraftId(body?.draftId);
 
     if (originalPostSlug && originalPostSlug !== slug) {
       await kv.delete(`post:${originalPostSlug}`);
     }
 
-    const draftId = sanitizeDraftId(body?.draftId);
-    if (draftId) {
-      await kv.delete(`draft:${draftId}`);
-    }
+    await deletePublishedDrafts(kv, {
+      draftId,
+      postSlug: slug,
+      slug: effectiveSlugRaw,
+      sourceSlug,
+      staticSlug,
+    });
 
     const url = `/blog/${encodeURIComponent(slug)}/`;
+    notifyIndexNow(context, searchDiscoveryUrls(
+      url,
+      originalPostSlug && originalPostSlug !== slug ? `/blog/${encodeURIComponent(originalPostSlug)}/` : "",
+    ));
     return json({ ok: true, slug, url, post: { ...post, url } }, 200, context.request);
   } catch (error) {
     return json({ error: error?.message || "unexpected_error" }, 500, context.request);
@@ -110,6 +130,7 @@ export async function onRequestDelete(context) {
     }
 
     await kv.delete(`post:${slug}`);
+    notifyIndexNow(context, searchDiscoveryUrls(`/blog/${encodeURIComponent(slug)}/`));
     return json({ ok: true, slug }, 200, context.request);
   } catch (error) {
     return json({ error: error?.message || "unexpected_error" }, 500, context.request);
@@ -131,6 +152,10 @@ function extractR2Key(url) {
     }
   } catch { /* ignore */ }
   return null;
+}
+
+function searchDiscoveryUrls(...urls) {
+  return [...new Set([...urls, ...SEARCH_DISCOVERY_URLS].map((url) => String(url || "").trim()).filter(Boolean))];
 }
 
 function sanitizeText(value) {
@@ -175,13 +200,88 @@ function sanitizeDraftId(value) {
   return /^[a-z0-9._-]{6,80}$/i.test(text) ? text : "";
 }
 
+async function deletePublishedDrafts(kv, published = {}) {
+  const targets = new Set(
+    [
+      published.draftId,
+      published.postSlug,
+      published.slug,
+      published.sourceSlug,
+      published.staticSlug,
+    ]
+      .map(comparableSlug)
+      .filter(Boolean),
+  );
+  if (!targets.size) return;
+
+  const deleted = new Set();
+  if (published.draftId) {
+    await kv.delete(`draft:${published.draftId}`);
+    deleted.add(`draft:${published.draftId}`);
+  }
+
+  let cursor;
+  do {
+    const list = await kv.list({ prefix: "draft:", cursor });
+    for (const key of list.keys || []) {
+      if (deleted.has(key.name)) continue;
+      const meta = key.metadata || {};
+      const candidates = [
+        key.name.replace(/^draft:/, ""),
+        meta.slug,
+        meta.sourceSlug,
+        meta.staticSlug,
+        meta.importedFrom,
+      ].map(comparableSlug);
+      if (candidates.some((candidate) => candidate && targets.has(candidate))) {
+        await kv.delete(key.name);
+        deleted.add(key.name);
+      }
+    }
+    cursor = list.list_complete ? undefined : list.cursor;
+  } while (cursor);
+}
+
+function comparableSlug(value) {
+  return String(value || "")
+    .trim()
+    .toLowerCase()
+    .replace(/^draft:/, "")
+    .replace(/^static-/, "")
+    .replace(/^\/?blog\//, "")
+    .replace(/\/$/, "")
+    .replace(/^\d{4}-\d{2}-\d{2}-/, "");
+}
+
 function sanitizeDate(value) {
   const text = String(value || "").trim();
   return /^\d{4}-\d{2}-\d{2}$/.test(text) ? text : "";
 }
 
+function sanitizeDateTime(value) {
+  const text = String(value || "").trim();
+  if (!text) return "";
+  const time = new Date(text).getTime();
+  return Number.isNaN(time) ? "" : new Date(time).toISOString();
+}
+
+function publishedAtFromDate(value) {
+  const date = sanitizeDate(value);
+  if (!date) return "";
+  return new Date(`${date}T00:00:00+09:00`).toISOString();
+}
+
+async function readExistingPost(kv, slug) {
+  try {
+    const raw = await kv.get(`post:${slug}`);
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
+  }
+}
+
 function sanitizeUrl(value) {
-  const url = String(value || "").trim();
+  const url = normalizeBlogImageUrl(String(value || "").trim());
   if (!url) return "";
   // 自サイトの画像API（/api/blog-image?key=...）も許可
   if (/^\/api\/blog-image\?key=[\w.-]+$/.test(url)) return url;
@@ -194,9 +294,25 @@ function sanitizeUrl(value) {
   }
 }
 
+function firstImageUrl(html) {
+  for (const match of String(html || "").matchAll(/<img\b[^>]*\bsrc=(["'])(.*?)\1/gi)) {
+    const safe = sanitizeUrl(match[2]);
+    if (safe) return safe;
+  }
+  return "";
+}
+
 function isStaticAssetImageUrl(url) {
   if (url.includes("..") || url.includes("\\") || url.includes("//")) return false;
-  return /^\/assets\/(?:blog|og)\/[\w./-]+\.(?:png|jpe?g|webp)$/i.test(url);
+  return /^(?:\/assets\/blog\/[\w./-]+\.webp|\/assets\/og\/[\w./-]+\.(?:png|jpe?g|webp)|\/blog-images\/[\w.-]+\.webp)$/i.test(url);
+}
+
+function normalizeBlogImageUrl(value) {
+  return String(value || "").replace(/(\/assets\/blog\/[\w./-]+)\.(?:png|jpe?g)(?=($|[?#]))/gi, "$1.webp");
+}
+
+function normalizeBlogImageFormats(html) {
+  return String(html || "").replace(/((?:src|href)\s*=\s*["'])(https:\/\/yohelab\.com)?(\/assets\/blog\/[\w./-]+)\.(?:png|jpe?g)(["'? #>])/gi, "$1$2$3.webp$4");
 }
 
 function normalizeCoverSettings(value) {

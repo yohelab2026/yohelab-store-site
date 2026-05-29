@@ -6,11 +6,19 @@
 import { getBlogPin, isValidPin, timingSafeEqual } from "../lib/blog-auth.js";
 
 const ALLOWED_TYPES = ["image/webp"];
-const ALLOWED_SOCIAL_TYPES = ["image/jpeg"];
+const ALLOWED_SOCIAL_TYPES = ["image/webp"];
 const MAX_BYTES = 25 * 1024 * 1024; // 25MB
 const DEFAULT_PUBLIC_IMAGE_BASE = "https://images.yohelab.com";
 
+export async function onRequestHead(context) {
+  return serveImage(context, { headOnly: true });
+}
+
 export async function onRequestGet(context) {
+  return serveImage(context, { headOnly: false });
+}
+
+async function serveImage(context, { headOnly = false } = {}) {
   const storage = getImageStorage(context.env);
   if (!storage) return new Response("Not configured", { status: 500 });
 
@@ -21,7 +29,7 @@ export async function onRequestGet(context) {
   if (!entry) return new Response("Not found", { status: 404 });
 
   const contentType = entry.contentType || "image/jpeg";
-  return new Response(entry.body, {
+  return new Response(headOnly ? null : entry.body, {
     headers: {
       "Content-Type": contentType,
       "Cache-Control": "public, max-age=31536000, immutable",
@@ -70,7 +78,7 @@ export async function onRequestPost(context) {
       if (!ALLOWED_SOCIAL_TYPES.includes(socialFile.type)) return json({ error: "unsupported_social_image_type", type: socialFile.type || "" }, 400, context.request);
       const socialBuffer = await socialFile.arrayBuffer();
       if (socialBuffer.byteLength > MAX_BYTES) return json({ error: "social image too large (max 25MB)" }, 400, context.request);
-      const socialKey = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}-card.${extensionForType(socialFile.type)}`;
+      const socialKey = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}-card.webp`;
       await writeImage(storage, socialKey, socialBuffer, socialFile);
       response.socialUrl = publicImageUrl(context.env, socialKey, storage);
       response.socialKey = socialKey;
@@ -151,12 +159,6 @@ function publicImageUrl(env, key, storage) {
   if (!isR2Storage(storage)) return `/api/blog-image?key=${key}`;
   const base = String(env.BLOG_IMAGES_PUBLIC_URL || DEFAULT_PUBLIC_IMAGE_BASE).replace(/\/+$/, "");
   return `${base}/${key}`;
-}
-
-function extensionForType(type) {
-  if (type === "image/jpeg") return "jpg";
-  if (type === "image/png") return "png";
-  return "webp";
 }
 
 function isAllowedOrigin(request) {

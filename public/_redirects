@@ -1,4 +1,7 @@
 /index.html / 301
+/assets/blog/:folder/:file.png /assets/blog/:folder/:file.webp 301
+/assets/blog/:folder/:file.jpg /assets/blog/:folder/:file.webp 301
+/assets/blog/:folder/:file.jpeg /assets/blog/:folder/:file.webp 301
 /apps/wordpress-theme/* /lp/bunsirube/ 301
 /apps/wordpress-theme/ /lp/bunsirube/ 301
 /apps/wordpress-theme /lp/bunsirube/ 301

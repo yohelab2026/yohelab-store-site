@@ -1,6 +1,7 @@
 import { getBlogPin, isValidPin, timingSafeEqual } from "../lib/blog-auth.js";
 
 const DRAFT_TTL_SECONDS = 60 * 60 * 24 * 30;
+const HIDDEN_STATIC_DRAFT_PREFIX = "draft-hidden:";
 
 export async function onRequestGet(context) {
   try {
@@ -22,23 +23,17 @@ export async function onRequestGet(context) {
       return json({ draft }, 200, context.request);
     }
 
-    const list = await kv.list({ prefix: "draft:", limit: 50 });
-    const drafts = list.keys
-      .map((key) => ({
-        draftId: key.name.replace(/^draft:/, ""),
-        title: key.metadata?.title || "",
-        slug: key.metadata?.slug || "",
-        updatedAt: key.metadata?.updatedAt || "",
-        excerpt: key.metadata?.excerpt || "",
-        eyecatch: key.metadata?.eyecatch || "",
-        socialImage: key.metadata?.socialImage || "",
-        tags: parseTags(key.metadata?.tags),
-        sourceSlug: key.metadata?.sourceSlug || key.metadata?.slug || "",
-        importedFrom: key.metadata?.importedFrom || "",
-      }))
-      .sort((a, b) => String(b.updatedAt).localeCompare(String(a.updatedAt)));
+    const drafts = [];
+    let cursor;
+    do {
+      const list = await kv.list({ prefix: "draft:", cursor, limit: 100 });
+      drafts.push(...(list.keys || []).map(draftListItem));
+      cursor = list.list_complete ? undefined : list.cursor;
+    } while (cursor);
 
-    return json({ drafts }, 200, context.request);
+    drafts.sort((a, b) => String(b.updatedAt).localeCompare(String(a.updatedAt)));
+
+    return json({ drafts, hiddenStaticDrafts: await listHiddenStaticDrafts(kv) }, 200, context.request);
   } catch (error) {
     return json({ error: error?.message || "unexpected_error" }, 500, context.request);
   }
@@ -60,10 +55,13 @@ export async function onRequestPost(context) {
     const now = new Date().toISOString();
     const draftId = sanitizeDraftId(body?.draftId) || makeDraftId();
     const title = sanitizeText(body?.title) || "無題の下書き";
-    const bodyHtml = String(body?.bodyHtml || "");
+    const bodyHtml = normalizeBlogImageFormats(String(body?.bodyHtml || ""));
     const excerpt = sanitizeText(body?.excerpt);
-    const eyecatch = sanitizeUrl(body?.eyecatch);
-    const socialImage = sanitizeUrl(body?.socialImage) || eyecatch;
+    const requestedEyecatch = sanitizeUrl(body?.eyecatch);
+    const requestedSocialImage = sanitizeUrl(body?.socialImage);
+    const firstBodyImage = firstImageUrl(bodyHtml);
+    const eyecatch = requestedEyecatch || requestedSocialImage || firstBodyImage;
+    const socialImage = requestedSocialImage || eyecatch;
     const cover = normalizeCoverSettings(body?.cover);
     const slug = sanitizeSlug(body?.slug);
     const sourceSlug = sanitizeSlug(body?.sourceSlug || body?.staticSlug || body?.importedFrom);
@@ -122,12 +120,15 @@ export async function onRequestDelete(context) {
     const authError = authorize(context);
     if (authError) return authError;
 
+    const url = new URL(context.request.url);
     const body = await readJsonBody(context.request);
-    const draftId = sanitizeDraftId(body?.draftId || new URL(context.request.url).searchParams.get("id"));
-    if (!draftId) return json({ error: "draft_id_required" }, 400, context.request);
+    const draftId = sanitizeDraftId(body?.draftId || url.searchParams.get("id"));
+    const staticSlug = comparableSlug(body?.staticSlug || body?.sourceSlug || url.searchParams.get("staticSlug"));
+    if (!draftId && !staticSlug) return json({ error: "draft_id_required" }, 400, context.request);
 
-    await kv.delete(`draft:${draftId}`);
-    return json({ ok: true, draftId }, 200, context.request);
+    if (draftId) await kv.delete(`draft:${draftId}`);
+    if (staticSlug) await hideStaticDraft(kv, staticSlug);
+    return json({ ok: true, draftId, staticSlug }, 200, context.request);
   } catch (error) {
     return json({ error: error?.message || "unexpected_error" }, 500, context.request);
   }
@@ -169,8 +170,39 @@ function sanitizeSlug(value) {
     .slice(0, 80);
 }
 
+function comparableSlug(value) {
+  return sanitizeSlug(
+    String(value || "")
+      .replace(/^draft:/, "")
+      .replace(/^static-/, "")
+      .replace(/^\/?blog\//, "")
+      .replace(/\/$/, "")
+      .replace(/^\d{4}-\d{2}-\d{2}-/, ""),
+  );
+}
+
+async function hideStaticDraft(kv, slug) {
+  const staticSlug = comparableSlug(slug);
+  if (!staticSlug) return;
+  const hiddenAt = new Date().toISOString();
+  await kv.put(`${HIDDEN_STATIC_DRAFT_PREFIX}${staticSlug}`, JSON.stringify({ slug: staticSlug, hiddenAt }), {
+    metadata: { slug: staticSlug, hiddenAt },
+  });
+}
+
+async function listHiddenStaticDrafts(kv) {
+  const hidden = [];
+  let cursor;
+  do {
+    const list = await kv.list({ prefix: HIDDEN_STATIC_DRAFT_PREFIX, cursor, limit: 100 });
+    hidden.push(...(list.keys || []).map((key) => comparableSlug(key.metadata?.slug || key.name.replace(HIDDEN_STATIC_DRAFT_PREFIX, ""))).filter(Boolean));
+    cursor = list.list_complete ? undefined : list.cursor;
+  } while (cursor);
+  return [...new Set(hidden)];
+}
+
 function sanitizeUrl(value) {
-  const url = String(value || "").trim();
+  const url = normalizeBlogImageUrl(String(value || "").trim());
   if (!url) return "";
   if (/^\/api\/blog-image\?key=[\w.-]+$/.test(url)) return url;
   if (isStaticAssetImageUrl(url)) return url;
@@ -182,9 +214,25 @@ function sanitizeUrl(value) {
   }
 }
 
+function firstImageUrl(html) {
+  for (const match of String(html || "").matchAll(/<img\b[^>]*\bsrc=(["'])(.*?)\1/gi)) {
+    const safe = sanitizeUrl(match[2]);
+    if (safe) return safe;
+  }
+  return "";
+}
+
 function isStaticAssetImageUrl(url) {
   if (url.includes("..") || url.includes("\\") || url.includes("//")) return false;
-  return /^\/assets\/(?:blog|og)\/[\w./-]+\.(?:png|jpe?g|webp)$/i.test(url);
+  return /^(?:\/assets\/blog\/[\w./-]+\.webp|\/assets\/og\/[\w./-]+\.(?:png|jpe?g|webp)|\/blog-images\/[\w.-]+\.webp)$/i.test(url);
+}
+
+function normalizeBlogImageUrl(value) {
+  return String(value || "").replace(/(\/assets\/blog\/[\w./-]+)\.(?:png|jpe?g)(?=($|[?#]))/gi, "$1.webp");
+}
+
+function normalizeBlogImageFormats(html) {
+  return String(html || "").replace(/((?:src|href)\s*=\s*["'])(https:\/\/yohelab\.com)?(\/assets\/blog\/[\w./-]+)\.(?:png|jpe?g)(["'? #>])/gi, "$1$2$3.webp$4");
 }
 
 function normalizeCoverSettings(value) {
@@ -219,6 +267,30 @@ function parseTags(value) {
     .map((tag) => tag.trim())
     .filter(Boolean)
     .slice(0, 12);
+}
+
+function draftListItem(key) {
+  const meta = key.metadata || {};
+  return {
+    draftId: key.name.replace(/^draft:/, ""),
+    title: meta.title || "",
+    slug: meta.slug || "",
+    updatedAt: metadataDraftUpdatedAt(meta),
+    excerpt: meta.excerpt || "",
+    eyecatch: meta.eyecatch || "",
+    socialImage: meta.socialImage || "",
+    tags: parseTags(meta.tags),
+    sourceSlug: meta.sourceSlug || meta.slug || "",
+    staticSlug: meta.staticSlug || "",
+    importedFrom: meta.importedFrom || "",
+  };
+}
+
+function metadataDraftUpdatedAt(meta = {}) {
+  const updatedAt = String(meta.updatedAt || "").trim();
+  if (!updatedAt) return "";
+  if (String(meta.importedFrom || "").trim() === "static-posts") return "";
+  return updatedAt;
 }
 
 function collectImageUrls(html, eyecatch, socialImage) {

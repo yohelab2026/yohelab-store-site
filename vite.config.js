@@ -103,6 +103,92 @@ function hreflangPlugin() {
   };
 }
 
+const SEO_TITLE_MAX_CHARS = 60;
+
+function seoCharLength(value) {
+  return Array.from(String(value || "")).length;
+}
+
+function decodeHtmlEntities(value) {
+  return String(value || "")
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'");
+}
+
+function escHtml(value) {
+  return String(value || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+
+function escAttr(value) {
+  return escHtml(value).replace(/"/g, "&quot;");
+}
+
+function cleanSeoTitle(value) {
+  return String(value || "")
+    .replace(/\s+/g, " ")
+    .replace(/^\s*(?:よへラボブログ|よへラボゲーム|よへラボ記事一覧|よへラボ)\s*(?:[|｜\-–—:：]\s*)?/i, "")
+    .replace(/\s*(?:[|｜\-–—:：]\s*)?(?:よへラボブログ|よへラボゲーム|よへラボ記事一覧|よへラボ)\s*$/i, "")
+    .trim();
+}
+
+function truncateSeoPart(value, maxChars) {
+  const clean = String(value || "").replace(/\s+/g, " ").trim();
+  const chars = Array.from(clean);
+  if (chars.length <= maxChars) return clean;
+  return `${chars.slice(0, Math.max(1, maxChars - 1)).join("").replace(/[、。・|｜\-–—:：\s]+$/g, "")}…`;
+}
+
+function seoBrandForPath(pathname = "") {
+  if (pathname.startsWith("/blog/")) return "よへラボブログ";
+  if (pathname.startsWith("/games/")) return "よへラボゲーム";
+  return "よへラボ";
+}
+
+function formatSeoTitle(rawTitle, pathname = "") {
+  const title = decodeHtmlEntities(rawTitle).replace(/\s+/g, " ").trim();
+  const brand = seoBrandForPath(pathname);
+  const main = cleanSeoTitle(title) || brand;
+  const delimiter = " | ";
+
+  if (pathname.startsWith("/blog/")) {
+    return `${brand}${delimiter}${truncateSeoPart(main, SEO_TITLE_MAX_CHARS - seoCharLength(brand) - seoCharLength(delimiter))}`;
+  }
+
+  if (title.includes("よへラボ") && seoCharLength(title) <= SEO_TITLE_MAX_CHARS) {
+    return title;
+  }
+
+  if (seoCharLength(title) > SEO_TITLE_MAX_CHARS) {
+    return `${brand}${delimiter}${truncateSeoPart(main, SEO_TITLE_MAX_CHARS - seoCharLength(brand) - seoCharLength(delimiter))}`;
+  }
+
+  return `${main}${delimiter}${brand}`;
+}
+
+function upsertTitleMeta(html, attrName, attrValue, content) {
+  const escaped = escAttr(content);
+  const attr = `${attrName}="${attrValue}"`;
+  const re = new RegExp(`<meta\\s+${attrName}="${attrValue}"\\s+content="[^"]*"\\s*\\/?>`, "i");
+  if (re.test(html)) return html.replace(re, `<meta ${attr} content="${escaped}" />`);
+  return html.replace("</head>", `  <meta ${attr} content="${escaped}" />\n</head>`);
+}
+
+function applySeoTitlePolicy(html, pathname = "") {
+  const match = html.match(/<title>([\s\S]*?)<\/title>/i);
+  if (!match) return html;
+  const seoTitle = formatSeoTitle(match[1], pathname);
+  let out = html.replace(match[0], `<title>${escHtml(seoTitle)}</title>`);
+  out = upsertTitleMeta(out, "property", "og:title", seoTitle);
+  out = upsertTitleMeta(out, "name", "twitter:title", seoTitle);
+  return out;
+}
+
 function headHardeningPlugin() {
   const ogImage = "https://yohelab.com/assets/og/bunsirube-og.png";
   const turnstileSiteKey = process.env.VITE_TURNSTILE_SITE_KEY || process.env.TURNSTILE_SITE_KEY || "";
@@ -234,6 +320,8 @@ function headHardeningPlugin() {
         };
         out = out.replace("</head>", `  <script type="application/ld+json">${JSON.stringify(breadcrumb)}</script>\n</head>`);
       }
+
+      out = applySeoTitlePolicy(out, ctx.path);
 
       return out;
     },
