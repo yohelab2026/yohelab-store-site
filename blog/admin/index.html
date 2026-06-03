@@ -2460,7 +2460,7 @@
     if (base && base.bodyHtml) return base;
     if (normalizedSlug !== 'gpt-56-this-week') return base;
     try {
-      const res = await fetch(`/blog/${normalizedSlug}/index.html`, { cache: 'no-store' });
+      const res = await fetch(`/blog/${normalizedSlug}/`, { cache: 'no-store' });
       if (!res.ok) return base;
       const html = await res.text();
       const doc = new DOMParser().parseFromString(html, 'text/html');
