@@ -526,7 +526,7 @@
             </label>
           </div>
         </div>
-        <input id="cover-file" type="file" accept="image/jpeg,image/png,image/webp" style="display:none;" />
+        <input id="cover-file" type="file" accept="image/*" style="display:none;" />
         <input id="eyecatch" type="hidden" />
       </div>
 
@@ -569,7 +569,7 @@
           <input id="text-color" type="color" value="#087a63" title="文字色" />
           <input id="bg-color" type="color" value="#fff3bf" title="マーカー色" />
           <button id="clear-style" type="button">スタイル解除</button>
-          <input id="insert-img-file" type="file" accept="image/jpeg,image/png,image/webp" style="display:none;" />
+          <input id="insert-img-file" type="file" accept="image/*" style="display:none;" />
         </div>
       </div>
 
@@ -689,6 +689,7 @@
   let staticPosts = [];
   let staticPostsLoaded = false;
   let hiddenStaticDraftSlugs = new Set();
+  const alwaysVisibleStaticDraftSlugs = new Set(['gpt-56-this-week']);
   let draftItems = [];
   let postItems = [];
   let trashItems = [];
@@ -1726,13 +1727,55 @@
     const action = event.target.closest?.('[data-editor-context-action]')?.dataset.editorContextAction;
     if (action === 'media') openEditorMediaPicker({ keepContextRange: true });
   });
-  bodyEl.addEventListener('paste', event => {
+  bodyEl.addEventListener('dragover', event => {
+    if (hasImageFile(event.dataTransfer?.files)) event.preventDefault();
+  });
+  bodySourceEl.addEventListener('dragover', event => {
+    if (hasImageFile(event.dataTransfer?.files)) event.preventDefault();
+  });
+  bodyEl.addEventListener('drop', async event => {
+    const file = getFirstImageFile(event.dataTransfer?.files);
+    if (!file) return;
+    event.preventDefault();
+    const image = await uploadImage(file);
+    if (!image?.url) return;
+    insertHtmlIntoEditor(mediaBlockHtml(image));
+    upgradeMediaBlocks();
+  });
+  bodySourceEl.addEventListener('drop', async event => {
+    const file = getFirstImageFile(event.dataTransfer?.files);
+    if (!file) return;
+    event.preventDefault();
+    const image = await uploadImage(file);
+    if (!image?.url) return;
+    insertHtmlIntoEditor(mediaBlockHtml(image));
+    upgradeMediaBlocks();
+  });
+  bodyEl.addEventListener('paste', async event => {
+    const file = getFirstImageFile(event.clipboardData?.files);
+    if (file) {
+      event.preventDefault();
+      const image = await uploadImage(file);
+      if (!image?.url) return;
+      insertHtmlIntoEditor(mediaBlockHtml(image));
+      upgradeMediaBlocks();
+      return;
+    }
     const url = safeBlogCardUrl(event.clipboardData?.getData('text/plain') || '');
     if (!url) return;
     event.preventDefault();
     insertBlogCardFromUrl(url);
   });
   bodySourceEl.addEventListener('paste', async event => {
+    const file = getFirstImageFile(event.clipboardData?.files);
+    if (file) {
+      event.preventDefault();
+      const image = await uploadImage(file);
+      if (!image?.url) return;
+      insertHtmlIntoEditor(mediaBlockHtml(image));
+      upgradeMediaBlocks();
+      return;
+    }
     const url = safeBlogCardUrl(event.clipboardData?.getData('text/plain') || '');
     if (!url) return;
     event.preventDefault();
@@ -1780,7 +1823,7 @@
   }
 
   function coverSocialImageUrl() {
-    return safeEditorImageUrl(activeCoverSocialImage) || effectiveEyecatchUrl() || '';
+    return visibleCoverImageUrl() || safeEditorImageUrl(eyecatchEl.value) || '';
   }
 
   function safeEditorImageUrl(value) {
@@ -1935,8 +1978,8 @@
   }
 
   async function convertToSingleWebp(file) {
-    if (!/^image\/(jpeg|png|webp)$/.test(file.type)) {
-      statusEl.textContent = 'JPG / PNG / WebP の画像だけ使えます。';
+    if (!isSupportedImageFile(file)) {
+      statusEl.textContent = '画像ファイルだけ使えます。';
       return null;
     }
 
@@ -1971,6 +2014,7 @@
   }
 
   async function convertToSocialWebp(file) {
+    if (!isSupportedImageFile(file)) return null;
     const bitmap = await createImageBitmap(file).catch(() => null);
     if (!bitmap) return null;
     const width = 1200;
@@ -1998,6 +2042,24 @@
     if (!blob) return null;
     const baseName = (file.name || 'blog-card').replace(/\.[^.]+$/, '').replace(/[^\w-]+/g, '-').replace(/^-+|-+$/g, '') || 'blog-card';
     return new File([blob], `${baseName}-card.webp`, { type: 'image/webp' });
+  }
+
+  function isSupportedImageFile(file) {
+    if (!file) return false;
+    if (typeof file.type === 'string' && file.type.startsWith('image/')) return true;
+    return /\.(?:avif|gif|heic|heif|jpg|jpeg|png|webp|bmp|tif|tiff|svg)$/i.test(file.name || '');
+  }
+
+  function hasImageFile(list) {
+    return Boolean(getFirstImageFile(list));
+  }
+
+  function getFirstImageFile(list) {
+    if (!list) return null;
+    for (const file of Array.from(list)) {
+      if (isSupportedImageFile(file)) return file;
+    }
+    return null;
   }
 
   // ── スラッグ自動生成 ──────────────────────────────────────
@@ -2086,7 +2148,7 @@
       tags: editorTags().join(', '),
       slug: sanitizeSlugInput(slugEl.value),
       eyecatch,
-      socialImage: coverSocialImageUrl(),
+      socialImage: eyecatch,
       cover: eyecatch ? coverSettings() : undefined,
     }));
     if (history) pushEditorHistory();
@@ -2119,7 +2181,7 @@
       activePostSlug = d.postSlug || '';
       activePostDate = d.postDate || '';
       activeStaticSlug = d.staticSlug || '';
-    activeCoverSocialImage = d.socialImage || d.eyecatch || '';
+    activeCoverSocialImage = d.eyecatch || '';
       titleEl.value = d.title || '';
       bodyEl.innerHTML = d.bodyHtml || '';
       bodySourceEl.value = d.bodyHtml || '';
@@ -2153,7 +2215,7 @@
       body: currentBodyText(),
       tags: editorTags(),
       eyecatch: eyecatch || undefined,
-      socialImage: coverSocialImageUrl() || undefined,
+      socialImage: eyecatch || undefined,
       cover: eyecatch ? coverSettings() : undefined,
       sourceSlug: activeStaticSlug || undefined,
       staticSlug: activeStaticSlug || undefined,
@@ -2317,8 +2379,8 @@
         body: currentBodyText(),
         tags: editorTags(),
         eyecatch: eyecatch || undefined,
-        socialImage: coverSocialImageUrl() || undefined,
-        cover: eyecatch ? coverSettings() : undefined,
+      socialImage: eyecatch || undefined,
+      cover: eyecatch ? coverSettings() : undefined,
         sourceSlug: activeStaticSlug || undefined,
         staticSlug: activeStaticSlug || undefined,
         originalPostSlug: activePostSlug || undefined,
@@ -2363,12 +2425,65 @@
       const res = await fetch('/blog/admin/static-posts.json', { cache: 'no-store' });
       const data = await res.json().catch(()=>({}));
       staticPosts = Array.isArray(data.posts) ? data.posts : [];
+      ensureAlwaysVisibleStaticDrafts();
       staticPostsLoaded = true;
     } catch {
       staticPosts = [];
+      ensureAlwaysVisibleStaticDrafts();
       staticPostsLoaded = true;
     }
     return staticPosts;
+  }
+
+  function ensureAlwaysVisibleStaticDrafts() {
+    for (const slug of alwaysVisibleStaticDraftSlugs) {
+      if (staticPosts.some(post => normalizedStaticSlug(staticImportSlug(post)) === slug)) continue;
+      if (slug === 'gpt-56-this-week') {
+        staticPosts.unshift({
+          slug,
+          url: `/blog/${slug}/`,
+          title: 'GPT-5.6は今週くる？ ログ、予測市場、Xの熱狂を整理する',
+          excerpt: 'Codexログ、Polymarket、Xのざわつき。GPT-5.6の噂を、何が見えていて何がまだ空気なのかに分けて読む記事です。',
+          status: 'draft',
+          date: '2026-06-03',
+          tags: ['AIニュース', 'OpenAI', 'Codex'],
+          eyecatch: '/assets/blog/gpt-56-this-week/eyecatch.webp',
+          socialImage: '/assets/blog/gpt-56-this-week/eyecatch.webp',
+        });
+      }
+    }
+  }
+
+  async function resolveStaticDraftPost(slug) {
+    const normalizedSlug = normalizedStaticSlug(slug);
+    const base = staticPostBySlug(slug) || staticPosts.find(post => normalizedStaticSlug(staticImportSlug(post)) === normalizedSlug) || null;
+    if (base && base.bodyHtml) return base;
+    if (normalizedSlug !== 'gpt-56-this-week') return base;
+    try {
+      const res = await fetch(`/blog/${normalizedSlug}/index.html`, { cache: 'no-store' });
+      if (!res.ok) return base;
+      const html = await res.text();
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      const body = doc.querySelector('.post-body');
+      const title = doc.querySelector('h1.post-title')?.textContent?.trim() || base?.title || '';
+      const excerpt = doc.querySelector('.post-excerpt')?.textContent?.trim() || base?.excerpt || '';
+      const tags = [...doc.querySelectorAll('.post-tag')].map(tag => tag.textContent.trim()).filter(Boolean);
+      return {
+        ...(base || {}),
+        slug: normalizedSlug,
+        url: `/blog/${normalizedSlug}/`,
+        title,
+        excerpt,
+        status: 'draft',
+        date: '2026-06-03',
+        tags: tags.length ? tags : (base?.tags || []),
+        eyecatch: '/assets/blog/gpt-56-this-week/eyecatch.webp',
+        socialImage: '/assets/blog/gpt-56-this-week/eyecatch.webp',
+        bodyHtml: body?.innerHTML || base?.bodyHtml || '',
+      };
+    } catch {
+      return base;
+    }
   }
 
   function staticImportSlug(post) {
@@ -2440,10 +2555,10 @@
     const bodyImage = firstImageUrlFromHtml(item.bodyHtml);
     if (!staticPost) {
       const eyecatch = item.eyecatch || item.socialImage || bodyImage || '';
-      return eyecatch ? { ...item, eyecatch, socialImage: item.socialImage || eyecatch } : item;
+      return eyecatch ? { ...item, eyecatch, socialImage: eyecatch } : item;
     }
     const eyecatch = item.eyecatch || item.socialImage || staticPost.eyecatch || staticPost.socialImage || bodyImage || '';
-    const socialImage = item.socialImage || staticPost.socialImage || eyecatch || '';
+    const socialImage = eyecatch;
     return {
       ...item,
       eyecatch,
@@ -2534,7 +2649,7 @@
           excerpt: d.excerpt || '',
           tags: parseTagList(d.tags),
           eyecatch: d.eyecatch || '',
-          socialImage: d.socialImage || d.eyecatch || '',
+          socialImage: d.eyecatch || '',
           importedFrom: d.importedFrom || '',
         };
       }),
@@ -2551,7 +2666,7 @@
         excerpt: p.excerpt || '',
         tags: parseTagList(p.tags),
         eyecatch: p.eyecatch || '',
-        socialImage: p.socialImage || p.eyecatch || '',
+          socialImage: p.eyecatch || '',
       })),
     ].sort(compareByDate);
     updateManagerCounts(draftItems.length, null);
@@ -3419,7 +3534,7 @@
       body: stripHtml(post.bodyHtml || ''),
       tags: parseTagList(post.tags),
       eyecatch: post.eyecatch || '',
-      socialImage: post.socialImage || post.eyecatch || '',
+      socialImage: post.eyecatch || '',
       sourceSlug: slug,
       staticSlug: slug,
       importedFrom: 'static-posts',
@@ -3458,7 +3573,7 @@
     activePostSlug = options.postSlug || '';
     activeStaticSlug = options.staticSlug || '';
     activePostDate = post.date || '';
-    activeCoverSocialImage = post.socialImage || post.eyecatch || '';
+    activeCoverSocialImage = post.eyecatch || '';
     titleEl.value = post.title || '';
     bodyEl.innerHTML = post.bodyHtml || '';
     bodySourceEl.value = post.bodyHtml || '';
@@ -3605,8 +3720,8 @@
     return [...tags];
   }
 
-  function openStaticPost(slug) {
-    const post = staticPostBySlug(slug);
+  async function openStaticPost(slug) {
+    const post = await resolveStaticDraftPost(slug);
     if (!post) { statusEl.textContent = 'サイト内記事が見つかりません。'; return; }
     const title = String(post.title || '').replace(/^【下書き】\s*/, '');
     fillEditor({
@@ -3617,7 +3732,7 @@
       bodyHtml: post.bodyHtml || '',
       tags: post.tags || [],
       eyecatch: post.eyecatch || '',
-      socialImage: post.socialImage || post.eyecatch || '',
+      socialImage: post.eyecatch || '',
     }, { staticSlug: slug });
     activeDraftId = '';
     activePostSlug = '';
@@ -3628,7 +3743,7 @@
   }
 
   async function saveStaticPostAsDraft(slug, btn) {
-    const post = staticPostBySlug(slug);
+    const post = await resolveStaticDraftPost(slug);
     const pin = currentPin();
     if (!post || !pin) return;
     btn.textContent = '保存中...';
@@ -3644,7 +3759,7 @@
         body: stripHtml(post.bodyHtml || ''),
         tags: post.tags || [],
         eyecatch: post.eyecatch || undefined,
-        socialImage: post.socialImage || post.eyecatch || undefined,
+        socialImage: post.eyecatch || undefined,
         cover: post.eyecatch ? { fit: 'cover', x: 50, y: 50, zoom: 100 } : undefined,
         sourceSlug: post.slug,
         staticSlug: post.slug,
