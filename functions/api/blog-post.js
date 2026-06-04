@@ -1,7 +1,14 @@
 import { getBlogPin, isValidPin, timingSafeEqual } from "../lib/blog-auth.js";
 import { notifyIndexNow } from "../lib/indexnow.js";
+import { SITE } from "../lib/site-seo.js";
+import {
+  collectVerifiedImageUrls,
+  normalizeBlogImageFormats,
+  sanitizeVerifiedImageUrl,
+} from "../lib/image-url-guard.js";
 
-const SEARCH_DISCOVERY_URLS = ["/blog/", "/", "/sitemap.xml", "/feed.xml"];
+const SEARCH_DISCOVERY_URLS = SITE.discoveryUrls;
+const FALLBACK_IMAGE = "/yohelab-mascot-v2-20260518.png";
 
 export async function onRequestPost(context) {
   try {
@@ -37,18 +44,16 @@ export async function onRequestPost(context) {
       : now;
     const updatedAt = originalPostSlug ? now : "";
     const tags = normalizeTags(body?.tags);
-    const requestedEyecatch = sanitizeUrl(body?.eyecatch);
-    const requestedSocialImage = sanitizeUrl(body?.socialImage);
-    const firstBodyImage = firstImageUrl(bodyHtml);
-    const eyecatch = requestedEyecatch || requestedSocialImage || firstBodyImage;
-    const socialImage = requestedSocialImage || eyecatch;
+    const requestedEyecatchRaw = String(body?.eyecatch || "").trim();
+    const requestedEyecatch = await sanitizeVerifiedImageUrl(context, requestedEyecatchRaw);
+    if (requestedEyecatchRaw && !requestedEyecatch) return json({ error: "invalid_eyecatch_image_url" }, 400, context.request);
+    const bodyImageUrls = await collectVerifiedImageUrls(context, bodyHtml);
+    const firstBodyImage = bodyImageUrls[0] || "";
+    const eyecatch = requestedEyecatch || firstBodyImage || FALLBACK_IMAGE;
+    const socialImage = eyecatch;
     const cover = normalizeCoverSettings(body?.cover);
     const sourceSlug = sanitizeOptionalSlug(body?.sourceSlug || body?.staticSlug);
     const staticSlug = sanitizeOptionalSlug(body?.staticSlug);
-
-    if (!eyecatch) {
-      return json({ error: "eyecatch_required" }, 400, context.request);
-    }
 
     // slug に日付プレフィックスを付けてユニークにする
     // タイトルなし（画像のみ）の場合はスラッグとタイトルをフォールバック
@@ -89,6 +94,9 @@ export async function onRequestPost(context) {
     ));
     return json({ ok: true, slug, url, post: { ...post, url } }, 200, context.request);
   } catch (error) {
+    if (String(error?.message || "") === "invalid_image_url") {
+      return json({ error: "invalid_image_url" }, 400, context.request);
+    }
     return json({ error: error?.message || "unexpected_error" }, 500, context.request);
   }
 }
@@ -278,41 +286,6 @@ async function readExistingPost(kv, slug) {
   } catch {
     return null;
   }
-}
-
-function sanitizeUrl(value) {
-  const url = normalizeBlogImageUrl(String(value || "").trim());
-  if (!url) return "";
-  // 自サイトの画像API（/api/blog-image?key=...）も許可
-  if (/^\/api\/blog-image\?key=[\w.-]+$/.test(url)) return url;
-  if (isStaticAssetImageUrl(url)) return url;
-  try {
-    const parsed = new URL(url);
-    return parsed.protocol === "https:" ? parsed.href : "";
-  } catch {
-    return "";
-  }
-}
-
-function firstImageUrl(html) {
-  for (const match of String(html || "").matchAll(/<img\b[^>]*\bsrc=(["'])(.*?)\1/gi)) {
-    const safe = sanitizeUrl(match[2]);
-    if (safe) return safe;
-  }
-  return "";
-}
-
-function isStaticAssetImageUrl(url) {
-  if (url.includes("..") || url.includes("\\") || url.includes("//")) return false;
-  return /^(?:\/assets\/blog\/[\w./-]+\.webp|\/assets\/og\/[\w./-]+\.(?:png|jpe?g|webp)|\/blog-images\/[\w.-]+\.webp)$/i.test(url);
-}
-
-function normalizeBlogImageUrl(value) {
-  return String(value || "").replace(/(\/assets\/blog\/[\w./-]+)\.(?:png|jpe?g)(?=($|[?#]))/gi, "$1.webp");
-}
-
-function normalizeBlogImageFormats(html) {
-  return String(html || "").replace(/((?:src|href)\s*=\s*["'])(https:\/\/yohelab\.com)?(\/assets\/blog\/[\w./-]+)\.(?:png|jpe?g)(["'? #>])/gi, "$1$2$3.webp$4");
 }
 
 function normalizeCoverSettings(value) {
