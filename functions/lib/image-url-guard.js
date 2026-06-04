@@ -47,7 +47,7 @@ export function isStaticAssetImageUrl(url) {
 
 function isPermittedImageUrl(url) {
   if (!url) return false;
-  if (url.startsWith("/api/blog-image?key=")) return /^\/api\/blog-image\?key=[\w.-]+$/.test(url);
+  if (url.startsWith("/api/blog-image?key=")) return isPermittedBlogImageApiUrl(url);
   if (url.startsWith("/assets/") || url.startsWith("/blog-images/")) return isStaticAssetImageUrl(url);
 
   try {
@@ -55,9 +55,21 @@ function isPermittedImageUrl(url) {
     if (parsed.protocol !== "https:") return false;
     if (!isAllowedHostname(parsed.hostname)) return false;
     const sameOriginPath = `${parsed.pathname}${parsed.search}`;
-    if (sameOriginPath.startsWith("/api/blog-image?key=")) return /^\/api\/blog-image\?key=[\w.-]+$/.test(sameOriginPath);
+    if (sameOriginPath.startsWith("/api/blog-image?key=")) return isPermittedBlogImageApiUrl(sameOriginPath);
     if (sameOriginPath.startsWith("/assets/") || sameOriginPath.startsWith("/blog-images/")) return isStaticAssetImageUrl(sameOriginPath);
     return /^\/[\w./-]+\.webp$/i.test(parsed.pathname);
+  } catch {
+    return false;
+  }
+}
+
+function isPermittedBlogImageApiUrl(url) {
+  try {
+    const parsed = new URL(url, "https://yohelab.com");
+    if (parsed.pathname !== "/api/blog-image") return false;
+    const key = parsed.searchParams.get("key") || "";
+    if (!key || key.includes("..") || key.includes("\\")) return false;
+    return /^(?:blog-images\/)?[\w./-]+\.webp$/i.test(key);
   } catch {
     return false;
   }
