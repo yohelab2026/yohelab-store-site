@@ -93,9 +93,6 @@ export async function onRequestPost(context) {
     ));
     return json({ ok: true, slug, url, post: { ...post, url } }, 200, context.request);
   } catch (error) {
-    if (String(error?.message || "") === "invalid_image_url") {
-      return json({ error: "invalid_image_url" }, 400, context.request);
-    }
     return json({ error: error?.message || "unexpected_error" }, 500, context.request);
   }
 }

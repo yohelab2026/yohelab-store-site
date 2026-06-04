@@ -2387,7 +2387,7 @@
       });
       const data = await res.json().catch(()=>({}));
       if (!res.ok) {
-        const msgs = { 'BLOG_KV is not configured':'CloudflareのKV設定が必要です。', unauthorized:'パスワードが違う。', title_required:'タイトルを入れて。', eyecatch_required:'カバー画像（アイキャッチ）を設定してください。' };
+        const msgs = { 'BLOG_KV is not configured':'CloudflareのKV設定が必要です。', unauthorized:'パスワードが違う。', title_required:'タイトルを入れて。' };
         statusEl.textContent = msgs[data.error] || data.error || '投稿に失敗した。';
         return;
       }
