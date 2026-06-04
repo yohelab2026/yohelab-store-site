@@ -46,7 +46,6 @@ export async function onRequestPost(context) {
     const tags = normalizeTags(body?.tags);
     const requestedEyecatchRaw = String(body?.eyecatch || "").trim();
     const requestedEyecatch = await sanitizeVerifiedImageUrl(context, requestedEyecatchRaw);
-    if (requestedEyecatchRaw && !requestedEyecatch) return json({ error: "invalid_eyecatch_image_url" }, 400, context.request);
     const bodyImageUrls = await collectVerifiedImageUrls(context, bodyHtml);
     const firstBodyImage = bodyImageUrls[0] || "";
     const eyecatch = requestedEyecatch || firstBodyImage || FALLBACK_IMAGE;

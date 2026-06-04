@@ -1,7 +1,13 @@
 import { getBlogPin, isValidPin, timingSafeEqual } from "../lib/blog-auth.js";
+import {
+  collectVerifiedImageUrls,
+  normalizeBlogImageFormats,
+  sanitizeVerifiedImageUrl,
+} from "../lib/image-url-guard.js";
 
 const DRAFT_TTL_SECONDS = 60 * 60 * 24 * 30;
 const HIDDEN_STATIC_DRAFT_PREFIX = "draft-hidden:";
+const FALLBACK_IMAGE = "/yohelab-mascot-v2-20260518.png";
 
 export async function onRequestGet(context) {
   try {
@@ -57,11 +63,12 @@ export async function onRequestPost(context) {
     const title = sanitizeText(body?.title) || "無題の下書き";
     const bodyHtml = normalizeBlogImageFormats(String(body?.bodyHtml || ""));
     const excerpt = sanitizeText(body?.excerpt);
-    const requestedEyecatch = sanitizeUrl(body?.eyecatch);
-    const requestedSocialImage = sanitizeUrl(body?.socialImage);
-    const firstBodyImage = firstImageUrl(bodyHtml);
-    const eyecatch = requestedEyecatch || requestedSocialImage || firstBodyImage;
-    const socialImage = requestedSocialImage || eyecatch;
+    const requestedEyecatchRaw = String(body?.eyecatch || "").trim();
+    const requestedEyecatch = await sanitizeVerifiedImageUrl(context, requestedEyecatchRaw);
+    const bodyImageUrls = await collectVerifiedImageUrls(context, bodyHtml);
+    const firstBodyImage = bodyImageUrls[0] || "";
+    const eyecatch = requestedEyecatch || firstBodyImage || FALLBACK_IMAGE;
+    const socialImage = eyecatch;
     const cover = normalizeCoverSettings(body?.cover);
     const slug = sanitizeSlug(body?.slug);
     const sourceSlug = sanitizeSlug(body?.sourceSlug || body?.staticSlug || body?.importedFrom);
@@ -82,7 +89,7 @@ export async function onRequestPost(context) {
       sourceSlug,
       staticSlug,
       importedFrom,
-      imageUrls: collectImageUrls(bodyHtml, eyecatch, socialImage),
+      imageUrls: [...new Set([...bodyImageUrls, ...[eyecatch, socialImage].filter(Boolean)])].slice(0, 30),
       updatedAt: now,
     };
 
@@ -104,6 +111,9 @@ export async function onRequestPost(context) {
 
     return json({ ok: true, draftId, draft }, 200, context.request);
   } catch (error) {
+    if (String(error?.message || "") === "invalid_image_url") {
+      return json({ error: "invalid_image_url" }, 400, context.request);
+    }
     return json({ error: error?.message || "unexpected_error" }, 500, context.request);
   }
 }
@@ -201,40 +211,6 @@ async function listHiddenStaticDrafts(kv) {
   return [...new Set(hidden)];
 }
 
-function sanitizeUrl(value) {
-  const url = normalizeBlogImageUrl(String(value || "").trim());
-  if (!url) return "";
-  if (/^\/api\/blog-image\?key=[\w.-]+$/.test(url)) return url;
-  if (isStaticAssetImageUrl(url)) return url;
-  try {
-    const parsed = new URL(url);
-    return parsed.protocol === "https:" ? parsed.href : "";
-  } catch {
-    return "";
-  }
-}
-
-function firstImageUrl(html) {
-  for (const match of String(html || "").matchAll(/<img\b[^>]*\bsrc=(["'])(.*?)\1/gi)) {
-    const safe = sanitizeUrl(match[2]);
-    if (safe) return safe;
-  }
-  return "";
-}
-
-function isStaticAssetImageUrl(url) {
-  if (url.includes("..") || url.includes("\\") || url.includes("//")) return false;
-  return /^(?:\/assets\/blog\/[\w./-]+\.webp|\/assets\/og\/[\w./-]+\.(?:png|jpe?g|webp)|\/blog-images\/[\w.-]+\.webp)$/i.test(url);
-}
-
-function normalizeBlogImageUrl(value) {
-  return String(value || "").replace(/(\/assets\/blog\/[\w./-]+)\.(?:png|jpe?g)(?=($|[?#]))/gi, "$1.webp");
-}
-
-function normalizeBlogImageFormats(html) {
-  return String(html || "").replace(/((?:src|href)\s*=\s*["'])(https:\/\/yohelab\.com)?(\/assets\/blog\/[\w./-]+)\.(?:png|jpe?g)(["'? #>])/gi, "$1$2$3.webp$4");
-}
-
 function normalizeCoverSettings(value) {
   const input = typeof value === "object" && value ? value : {};
   return {
@@ -291,17 +267,6 @@ function metadataDraftUpdatedAt(meta = {}) {
   if (!updatedAt) return "";
   if (String(meta.importedFrom || "").trim() === "static-posts") return "";
   return updatedAt;
-}
-
-function collectImageUrls(html, eyecatch, socialImage) {
-  const urls = new Set();
-  if (eyecatch) urls.add(eyecatch);
-  if (socialImage) urls.add(socialImage);
-  for (const match of String(html || "").matchAll(/<img\b[^>]*\bsrc=(["'])(.*?)\1/gi)) {
-    const safe = sanitizeUrl(match[2]);
-    if (safe) urls.add(safe);
-  }
-  return [...urls].slice(0, 30);
 }
 
 async function readJsonBody(request) {
