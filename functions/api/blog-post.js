@@ -4,6 +4,7 @@ import { SITE } from "../lib/site-seo.js";
 import {
   collectVerifiedImageUrls,
   normalizeBlogImageFormats,
+  normalizePermittedImageUrl,
   sanitizeVerifiedImageUrl,
 } from "../lib/image-url-guard.js";
 
@@ -45,10 +46,11 @@ export async function onRequestPost(context) {
     const updatedAt = originalPostSlug ? now : "";
     const tags = normalizeTags(body?.tags);
     const requestedEyecatchRaw = String(body?.eyecatch || "").trim();
+    const requestedEyecatchCandidate = normalizePermittedImageUrl(requestedEyecatchRaw);
     const requestedEyecatch = await sanitizeVerifiedImageUrl(context, requestedEyecatchRaw);
     const bodyImageUrls = await collectVerifiedImageUrls(context, bodyHtml);
     const firstBodyImage = bodyImageUrls[0] || "";
-    const eyecatch = requestedEyecatch || firstBodyImage || FALLBACK_IMAGE;
+    const eyecatch = requestedEyecatch || requestedEyecatchCandidate || firstBodyImage || FALLBACK_IMAGE;
     const socialImage = eyecatch;
     const cover = normalizeCoverSettings(body?.cover);
     const sourceSlug = sanitizeOptionalSlug(body?.sourceSlug || body?.staticSlug);

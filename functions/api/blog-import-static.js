@@ -1,4 +1,10 @@
 import { getBlogPin, isValidPin, timingSafeEqual } from "../lib/blog-auth.js";
+import {
+  collectVerifiedImageUrls,
+  normalizeBlogImageFormats,
+  normalizePermittedImageUrl,
+  sanitizeVerifiedImageUrl,
+} from "../lib/image-url-guard.js";
 
 export async function onRequestPost(context) {
   try {
@@ -27,7 +33,12 @@ export async function onRequestPost(context) {
     const hiddenStaticDraftSlugs = await readHiddenStaticDraftSlugs(kv);
 
     for (const rawPost of posts) {
-      const normalized = normalizeStaticPost(rawPost, now);
+      const normalized = await normalizeStaticPost(context, rawPost, now);
+      if (!normalized) {
+        if (String(rawPost?.status || "").trim() === "draft") result.skippedDrafts += 1;
+        else result.skippedPosts += 1;
+        continue;
+      }
       if (!normalized.title && !normalized.bodyHtml) continue;
 
       if (normalized.status === "draft") {
@@ -44,6 +55,7 @@ export async function onRequestPost(context) {
           result.skippedDrafts += 1;
           continue;
         }
+        const eyecatch = normalized.eyecatch;
 
         const draft = {
           draftId,
@@ -53,9 +65,9 @@ export async function onRequestPost(context) {
           bodyHtml: normalized.bodyHtml,
           body: normalized.body,
           tags: normalized.tags,
-          eyecatch: normalized.eyecatch,
-          socialImage: normalized.socialImage,
-          imageUrls: collectImageUrls(normalized.bodyHtml, normalized.eyecatch, normalized.socialImage),
+          eyecatch,
+          socialImage: eyecatch,
+          imageUrls: normalized.imageUrls,
           updatedAt: normalized.updatedAt,
           importedFrom: "static-posts",
           sourceSlug: normalized.slug,
@@ -87,6 +99,7 @@ export async function onRequestPost(context) {
         continue;
       }
 
+      const eyecatch = normalized.eyecatch;
       const post = {
         title: normalized.title,
         slug: normalized.slug,
@@ -96,8 +109,8 @@ export async function onRequestPost(context) {
         bodyHtml: normalized.bodyHtml,
         body: normalized.body,
         tags: normalized.tags,
-        eyecatch: normalized.eyecatch,
-        socialImage: normalized.socialImage,
+        eyecatch,
+        socialImage: eyecatch,
         importedFrom: "static-posts",
         sourceSlug: normalized.slug,
       };
@@ -131,17 +144,21 @@ export async function onRequestOptions(context) {
   return new Response(null, { status: 204, headers: corsHeaders(context.request) });
 }
 
-function normalizeStaticPost(rawPost, now) {
+async function normalizeStaticPost(context, rawPost, now) {
   const title = sanitizeText(rawPost?.title).replace(/^【下書き】\s*/, "") || "無題の記事";
   const slug = sanitizeSlug(rawPost?.slug || rawPost?.title || title);
   const sourceUpdatedAt = sanitizeDateTime(rawPost?.updatedAt);
   const sourcePublishedAt = sanitizeDateTime(rawPost?.publishedAt);
   const date = sanitizeDate(rawPost?.date) || (sourcePublishedAt || sourceUpdatedAt || now).slice(0, 10);
-  const bodyHtml = String(rawPost?.bodyHtml || "").trim();
+  const bodyHtml = normalizeBlogImageFormats(String(rawPost?.bodyHtml || "").trim());
   const body = sanitizeText(rawPost?.body || stripHtml(bodyHtml));
   const excerpt = sanitizeText(rawPost?.excerpt) || autoExcerpt(bodyHtml || body, title);
-  const eyecatch = sanitizeUrl(rawPost?.eyecatch);
-  const socialImage = sanitizeUrl(rawPost?.socialImage) || eyecatch;
+  const requestedEyecatchRaw = String(rawPost?.eyecatch || "").trim();
+  const requestedEyecatchCandidate = normalizePermittedImageUrl(requestedEyecatchRaw);
+  const requestedEyecatch = await sanitizeVerifiedImageUrl(context, requestedEyecatchRaw);
+  const bodyImageUrls = await collectVerifiedImageUrls(context, bodyHtml);
+  const eyecatch = requestedEyecatch || requestedEyecatchCandidate || bodyImageUrls[0] || "";
+  const socialImage = eyecatch;
   return {
     title,
     slug,
@@ -152,6 +169,7 @@ function normalizeStaticPost(rawPost, now) {
     tags: normalizeTags(rawPost?.tags),
     eyecatch,
     socialImage,
+    imageUrls: [...new Set([...bodyImageUrls, ...[eyecatch, socialImage].filter(Boolean)])].slice(0, 30),
     status: String(rawPost?.status || "").trim() === "draft" ? "draft" : "published",
     publishedAt: sourcePublishedAt || sourceUpdatedAt || publishedAtFromDate(date) || now,
     updatedAt: sourceUpdatedAt,
@@ -271,19 +289,6 @@ function publishedAtFromDate(value) {
   return date ? new Date(`${date}T00:00:00+09:00`).toISOString() : "";
 }
 
-function sanitizeUrl(value) {
-  const url = String(value || "").trim();
-  if (!url) return "";
-  if (/^\/api\/blog-image\?key=[\w.-]+$/.test(url)) return url;
-  if (/^\/(?:assets|blog|images)\//.test(url)) return url;
-  try {
-    const parsed = new URL(url);
-    return parsed.protocol === "https:" ? parsed.href : "";
-  } catch {
-    return "";
-  }
-}
-
 function normalizeTags(value) {
   return Array.isArray(value)
     ? value.map((t) => sanitizeText(t)).filter(Boolean).slice(0, 16)
@@ -306,17 +311,6 @@ function stripHtml(value) {
     .replace(/<style[\s\S]*?<\/style>/gi, " ")
     .replace(/<[^>]+>/g, " ")
     .replace(/&nbsp;/g, " ");
-}
-
-function collectImageUrls(html, eyecatch, socialImage) {
-  const urls = new Set();
-  if (eyecatch) urls.add(eyecatch);
-  if (socialImage) urls.add(socialImage);
-  for (const match of String(html || "").matchAll(/<img\b[^>]*\bsrc=(["'])(.*?)\1/gi)) {
-    const safe = sanitizeUrl(match[2]);
-    if (safe) urls.add(safe);
-  }
-  return [...urls].slice(0, 30);
 }
 
 async function readJsonBody(request) {

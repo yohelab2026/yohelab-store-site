@@ -2,6 +2,7 @@ import { getBlogPin, isValidPin, timingSafeEqual } from "../lib/blog-auth.js";
 import {
   collectVerifiedImageUrls,
   normalizeBlogImageFormats,
+  normalizePermittedImageUrl,
   sanitizeVerifiedImageUrl,
 } from "../lib/image-url-guard.js";
 
@@ -64,10 +65,11 @@ export async function onRequestPost(context) {
     const bodyHtml = normalizeBlogImageFormats(String(body?.bodyHtml || ""));
     const excerpt = sanitizeText(body?.excerpt);
     const requestedEyecatchRaw = String(body?.eyecatch || "").trim();
+    const requestedEyecatchCandidate = normalizePermittedImageUrl(requestedEyecatchRaw);
     const requestedEyecatch = await sanitizeVerifiedImageUrl(context, requestedEyecatchRaw);
     const bodyImageUrls = await collectVerifiedImageUrls(context, bodyHtml);
     const firstBodyImage = bodyImageUrls[0] || "";
-    const eyecatch = requestedEyecatch || firstBodyImage || FALLBACK_IMAGE;
+    const eyecatch = requestedEyecatch || requestedEyecatchCandidate || firstBodyImage || FALLBACK_IMAGE;
     const socialImage = eyecatch;
     const cover = normalizeCoverSettings(body?.cover);
     const slug = sanitizeSlug(body?.slug);

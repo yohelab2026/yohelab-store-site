@@ -8,10 +8,14 @@ export function normalizeBlogImageFormats(html) {
   return String(html || "").replace(/((?:src|href)\s*=\s*["'])(https:\/\/yohelab\.com)?(\/assets\/blog\/[\w./-]+)\.(?:png|jpe?g)(["'? #>])/gi, "$1$2$3.webp$4");
 }
 
-export async function sanitizeVerifiedImageUrl(context, value) {
+export function normalizePermittedImageUrl(value) {
   const normalized = normalizeBlogImageUrl(String(value || "").trim());
+  return normalized && isPermittedImageUrl(normalized) ? normalized : "";
+}
+
+export async function sanitizeVerifiedImageUrl(context, value) {
+  const normalized = normalizePermittedImageUrl(value);
   if (!normalized) return "";
-  if (!isPermittedImageUrl(normalized)) return "";
 
   const cache = getVerifiedImageUrlCache(context);
   if (cache.has(normalized)) return cache.get(normalized);
