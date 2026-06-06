@@ -37,6 +37,7 @@ const homeSource = read(src("index.html"));
 checks.push(["large og image and app icons are injected", home.includes('/assets/og/bunsirube-og.png') && home.includes('summary_large_image') && home.includes('og:image:width') && home.includes('1200') && home.includes('apple-touch-icon') && home.includes('/site.webmanifest')]);
 checks.push(["home article links navigate normally", !homeSource.includes("inlinePagePanel") && !homeSource.includes("inlinePageFrame") && !homeSource.includes("showInlinePage") && homeSource.includes("return post.url || `/blog/${encodeURIComponent(post.slug || '')}/`;")]);
 checks.push(["home news list paginates all public posts", homeSource.includes("const HOME_NEWS_PER_PAGE = 12") && homeSource.includes("fetchAllHomePostPages") && homeSource.includes("homeNewsPager") && homeSource.includes("renderHomeNewsPage") && homeSource.includes("visibleHomePageNumbers") && homeSource.includes('id="homeNewsSection"') && homeSource.includes("scrollToHomeNewsSection")]);
+checks.push(["home recognizes Japanese AI category tags", homeSource.includes("tag === 'aiニュース'") && homeSource.includes("tag === 'aiエージェント'") && homeSource.includes("tag === 'aiツール'")]);
 const oldPropToken = `${"pro"}${"posal"}`;
 const oldOptimizer = `${"opti"}${"mizer"}`;
 const oldBlogPin = `${"10"}${"30"}`;
