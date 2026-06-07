@@ -2620,8 +2620,12 @@
     } catch {}
 
     const publishedSlugs = await publishedSlugSet();
-    const importedDraftSlugs = new Set(drafts.map(draft => normalizedStaticSlug(staticImportSlug(draft))).filter(Boolean));
-    const visibleDrafts = drafts.filter(draft => !publishedSlugs.has(normalizedStaticSlug(staticImportSlug(draft))));
+    const draftImportSlug = draft => normalizedStaticSlug(draft.sourceSlug || draft.staticSlug || draft.importedFrom || '');
+    const importedDraftSlugs = new Set(drafts.map(draftImportSlug).filter(Boolean));
+    const visibleDrafts = drafts.filter(draft => {
+      const importedSlug = draftImportSlug(draft);
+      return !importedSlug || !publishedSlugs.has(importedSlug);
+    });
     const staticDrafts = staticPosts.filter(p => {
       const slug = normalizedStaticSlug(staticImportSlug(p));
       return p.status === 'draft' && !publishedSlugs.has(slug) && !importedDraftSlugs.has(slug) && !hiddenStaticDraftSlugs.has(slug);
@@ -2636,7 +2640,7 @@
           id: d.draftId,
           title: d.title || '無題の下書き',
           slug: d.slug || d.sourceSlug || '',
-          sourceSlug: d.sourceSlug || d.slug || '',
+          sourceSlug: d.sourceSlug || '',
           staticSlug: d.staticSlug || '',
           date: actionAt,
           actionAt,

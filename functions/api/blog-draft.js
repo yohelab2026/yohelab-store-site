@@ -255,7 +255,7 @@ function draftListItem(key) {
     eyecatch: meta.eyecatch || "",
     socialImage: meta.socialImage || "",
     tags: parseTags(meta.tags),
-    sourceSlug: meta.sourceSlug || meta.slug || "",
+    sourceSlug: meta.sourceSlug || "",
     staticSlug: meta.staticSlug || "",
     importedFrom: meta.importedFrom || "",
   };
