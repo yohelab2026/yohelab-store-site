@@ -133,8 +133,8 @@ function escAttr(value) {
 function cleanSeoTitle(value) {
   return String(value || "")
     .replace(/\s+/g, " ")
-    .replace(/^\s*(?:よへラボブログ|よへラボゲーム|よへラボ記事一覧|よへラボ|Yohe Lab)\s*(?:[|｜\-–—:：]\s*)?/i, "")
-    .replace(/\s*(?:[|｜\-–—:：]\s*)?(?:よへラボブログ|よへラボゲーム|よへラボ記事一覧|よへラボ|Yohe Lab)\s*$/i, "")
+    .replace(/^\s*(?:よへラボブログ|よへラボゲーム|よへラボ記事一覧|よへラボ)\s*(?:[|｜\-–—:：]\s*)?/i, "")
+    .replace(/\s*(?:[|｜\-–—:：]\s*)?(?:よへラボブログ|よへラボゲーム|よへラボ記事一覧|よへラボ)\s*$/i, "")
     .trim();
 }
 
@@ -146,7 +146,6 @@ function truncateSeoPart(value, maxChars) {
 }
 
 function seoBrandForPath(pathname = "") {
-  if (pathname.startsWith("/en/")) return "Yohe Lab";
   if (pathname.startsWith("/blog/")) return SITE.blogName;
   if (pathname.startsWith("/games/")) return "よへラボゲーム";
   return SITE.name;
@@ -162,7 +161,7 @@ function formatSeoTitle(rawTitle, pathname = "") {
     return `${brand}${delimiter}${truncateSeoPart(main, SEO_TITLE_MAX_CHARS - seoCharLength(brand) - seoCharLength(delimiter))}`;
   }
 
-  if ((title.includes("よへラボ") || title.includes("Yohe Lab")) && seoCharLength(title) <= SEO_TITLE_MAX_CHARS) {
+  if (title.includes("よへラボ") && seoCharLength(title) <= SEO_TITLE_MAX_CHARS) {
     return title;
   }
 
@@ -206,9 +205,8 @@ function headHardeningPlugin() {
     name: "head-hardening",
     transformIndexHtml(html, ctx) {
       if (!ctx?.path || ctx.path === "/google0009e82266fc5714.html") return html;
-      const isEnglish = ctx.path.startsWith("/en/");
-      const pageBrand = isEnglish ? "Yohe Lab" : SITE.name;
-      const pageLocale = isEnglish ? "en_US" : "ja_JP";
+      const pageBrand = SITE.name;
+      const pageLocale = "ja_JP";
 
       let out = html
         .replace(/<meta property="og:image" content="https:\/\/yohelab\.com\/yohelab-(?:cat-)?icon\.png" \/>/g, `<meta property="og:image" content="${ogImage}" />`)
@@ -291,10 +289,10 @@ function headHardeningPlugin() {
         out = out.replace("</head>", `  ${claritySnippet}\n</head>`);
       }
 
-      const title = out.match(/<title>([^<]+)<\/title>/i)?.[1]?.replace(/\s*\|\s*(?:よへラボ|Yohe Lab).*$/, "").trim();
+      const title = out.match(/<title>([^<]+)<\/title>/i)?.[1]?.replace(/\s*\|\s*よへラボ.*$/, "").trim();
       if (canonical && canonical !== `${SITE.origin}/` && title && !out.includes('"@type":"BreadcrumbList"')) {
         out = out.replace("</head>", `  <script type="application/ld+json">${buildBreadcrumbJsonLd([
-          { name: isEnglish ? "Home" : "トップ", item: isEnglish ? `${SITE.origin}/en/` : `${SITE.origin}/` },
+          { name: "トップ", item: `${SITE.origin}/` },
           { name: title, item: canonical },
         ])}</script>\n</head>`);
       }
@@ -355,16 +353,10 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: "index.html",
-        englishHome: "en/index.html",
-        englishBlog: "en/blog/index.html",
         about: "about/index.html",
         games: "games/index.html",
         contact: "contact/index.html",
-        contactBug: "contact/bug/index.html",
         blog: "blog/index.html",
-        blogBunsirubeBeforeInstall: "blog/bunsirube-before-install/index.html",
-        blogFreeThemeVsBunsirube: "blog/free-theme-vs-bunsirube/index.html",
-        blogBunsirubeVersionHistory: "blog/bunsirube-version-history/index.html",
         blogAiNewsSellingIdeas: "blog/ai-news-selling-ideas/index.html",
         blogGpt56ThisWeek: "blog/gpt-56-this-week/index.html",
         blogComparisonArticleTemplate: "blog/comparison-article-template/index.html",
@@ -380,14 +372,6 @@ export default defineConfig({
         pageReview: "products/page-review/index.html",
         activatePending: "pro/activate-pending/index.html",
         lpResearchWriter: "lp/research-writer/index.html",
-        bunsirubeProduct: "products/bunsirube/index.html",
-        lpWordpressTheme: "lp/bunsirube/index.html",
-        lpWordpressThemeInstall: "lp/bunsirube/install/index.html",
-        lpWordpressThemeDemo: "lp/bunsirube/demo/index.html",
-        lpWordpressThemeUpdates: "lp/bunsirube/updates/index.html",
-        lpWordpressThemeAffiliate: "lp/bunsirube/affiliate/index.html",
-        affiliateDashboard: "affiliate/dashboard/index.html",
-        affiliateTerms: "legal/affiliate-terms/index.html",
         ...collectBlogTaxonomyInputs(),
         ...collectGameInputs(),
       },

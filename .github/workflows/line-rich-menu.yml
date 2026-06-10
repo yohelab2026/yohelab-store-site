@@ -6,7 +6,7 @@ on:
     branches:
       - main
     paths:
-      - assets/line/rich-menu-bunsirube.png
+      - assets/line/rich-menu.png
       - scripts/setup-line-rich-menu.mjs
       - .github/workflows/line-rich-menu.yml
 

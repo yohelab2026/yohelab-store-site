@@ -2,22 +2,42 @@ import { buildRobotsTxt } from "./lib/site-seo.js";
 
 const RETIRED_REDIRECTS = new Map([
   ["/index.html", "/"],
-  ["/apps/wordpress-theme", "/lp/bunsirube/"],
-  ["/apps/wordpress-theme/", "/lp/bunsirube/"],
-  ["/apps/bunsirube", "/lp/bunsirube/"],
-  ["/apps/bunsirube/", "/lp/bunsirube/"],
-  ["/lp/wordpress-theme", "/lp/bunsirube/"],
-  ["/lp/wordpress-theme/", "/lp/bunsirube/"],
-  ["/products/wordpress-theme-beta", "/products/bunsirube/"],
-  ["/products/wordpress-theme-beta/", "/products/bunsirube/"],
-  ["/products/radar-beta", "/lp/bunsirube/"],
-  ["/products/radar-beta/", "/lp/bunsirube/"],
-  ["/products/article-starter-kit", "/lp/research-writer/"],
-  ["/products/article-starter-kit/", "/lp/research-writer/"],
-  ["/tools", "/lp/bunsirube/"],
-  ["/tools/", "/lp/bunsirube/"],
-  ["/services", "/lp/bunsirube/demo/"],
-  ["/services/", "/lp/bunsirube/demo/"],
+  ["/apps/wordpress-theme", "/"],
+  ["/apps/wordpress-theme/", "/"],
+  ["/apps/bunsirube", "/"],
+  ["/apps/bunsirube/", "/"],
+  ["/lp/wordpress-theme", "/"],
+  ["/lp/wordpress-theme/", "/"],
+  ["/lp/bunsirube", "/"],
+  ["/lp/bunsirube/", "/"],
+  ["/products/bunsirube", "/"],
+  ["/products/bunsirube/", "/"],
+  ["/products/wordpress-theme-beta", "/"],
+  ["/products/wordpress-theme-beta/", "/"],
+  ["/products/radar-beta", "/"],
+  ["/products/radar-beta/", "/"],
+  ["/products/article-starter-kit", "/apps/research-writer/"],
+  ["/products/article-starter-kit/", "/apps/research-writer/"],
+  ["/tools", "/blog/"],
+  ["/tools/", "/blog/"],
+  ["/services", "/contact/"],
+  ["/services/", "/contact/"],
+  ["/contact/bug", "/contact/"],
+  ["/contact/bug/", "/contact/"],
+  ["/affiliate/dashboard", "/contact/"],
+  ["/affiliate/dashboard/", "/contact/"],
+  ["/legal/affiliate-terms", "/legal/terms/"],
+  ["/legal/affiliate-terms/", "/legal/terms/"],
+  ["/en", "/"],
+  ["/en/", "/"],
+  ["/en/blog", "/blog/"],
+  ["/en/blog/", "/blog/"],
+  ["/blog/bunsirube-before-install", "/blog/"],
+  ["/blog/bunsirube-before-install/", "/blog/"],
+  ["/blog/free-theme-vs-bunsirube", "/blog/"],
+  ["/blog/free-theme-vs-bunsirube/", "/blog/"],
+  ["/blog/bunsirube-version-history", "/blog/"],
+  ["/blog/bunsirube-version-history/", "/blog/"],
   ["/blog/yohelab-blog-start", "/blog/"],
   ["/blog/yohelab-blog-start/", "/blog/"],
   ["/blog/starter-kit", "/blog/"],
@@ -32,8 +52,6 @@ const RETIRED_REDIRECTS = new Map([
   ["/blog/tag/home-work/", "/blog/"],
 ]);
 
-const PROTECTED_THEME_ZIP = /^\/bunsirube(?:-child)?(?:-[0-9][0-9.]+)?\.zip$/i;
-
 export async function onRequest(context) {
   const url = new URL(context.request.url);
 
@@ -42,17 +60,6 @@ export async function onRequest(context) {
       headers: {
         "Content-Type": "text/plain; charset=utf-8",
         "Cache-Control": "public, max-age=300, s-maxage=300",
-      },
-    });
-  }
-
-  if (PROTECTED_THEME_ZIP.test(url.pathname)) {
-    return new Response("not found", {
-      status: 404,
-      headers: {
-        "Content-Type": "text/plain; charset=utf-8",
-        "Cache-Control": "no-store",
-        "X-Robots-Tag": "noindex, nofollow",
       },
     });
   }

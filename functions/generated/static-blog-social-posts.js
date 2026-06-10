@@ -2,33 +2,13 @@
 export const staticBlogSocialPosts = [
   {
     "slug": "gpt-56-this-week",
-    "eyecatch": "/assets/blog/gpt-56-this-week/eyecatch.webp",
-    "socialImage": "/assets/blog/gpt-56-this-week/eyecatch.webp"
+    "eyecatch": "/yohelab-mascot-v2-20260518.png",
+    "socialImage": "/yohelab-mascot-v2-20260518.png"
   },
   {
     "slug": "ai-news-selling-ideas",
-    "eyecatch": "/assets/og/bunsirube-og.png",
-    "socialImage": "/assets/og/bunsirube-og.png"
-  },
-  {
-    "slug": "bunsirube-version-history",
-    "eyecatch": "/assets/blog/bunsirube-version-history/eyecatch.webp",
-    "socialImage": "/assets/blog/bunsirube-version-history/eyecatch.png"
-  },
-  {
-    "slug": "comparison-article-template",
-    "eyecatch": "/assets/blog/comparison-article-template/eyecatch.webp",
-    "socialImage": "/assets/blog/comparison-article-template/eyecatch.png"
-  },
-  {
-    "slug": "free-theme-vs-bunsirube",
-    "eyecatch": "/assets/blog/free-theme-vs-bunsirube/eyecatch.webp",
-    "socialImage": "/assets/blog/free-theme-vs-bunsirube/eyecatch.png"
-  },
-  {
-    "slug": "faq-source-ai-search",
-    "eyecatch": "/assets/blog/faq-source-ai-search/eyecatch.webp",
-    "socialImage": "/assets/blog/faq-source-ai-search/eyecatch.png"
+    "eyecatch": "/yohelab-mascot-v2-20260518.png",
+    "socialImage": "/yohelab-mascot-v2-20260518.png"
   },
   {
     "slug": "sales-page-common-mistakes",
@@ -36,8 +16,13 @@ export const staticBlogSocialPosts = [
     "socialImage": "/assets/blog/sales-page-common-mistakes/eyecatch.png"
   },
   {
-    "slug": "bunsirube-before-install",
-    "eyecatch": "/assets/blog/bunsirube-before-install/eyecatch.webp",
-    "socialImage": "/assets/blog/bunsirube-before-install/eyecatch.png"
+    "slug": "comparison-article-template",
+    "eyecatch": "/assets/blog/comparison-article-template/eyecatch.webp",
+    "socialImage": "/assets/blog/comparison-article-template/eyecatch.png"
+  },
+  {
+    "slug": "faq-source-ai-search",
+    "eyecatch": "/assets/blog/faq-source-ai-search/eyecatch.webp",
+    "socialImage": "/assets/blog/faq-source-ai-search/eyecatch.png"
   }
 ];

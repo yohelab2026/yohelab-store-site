@@ -191,7 +191,7 @@ function sanitizeStoredSlug(value) {
 }
 
 function normalizeLocale(value) {
-  return String(value || "").trim().toLowerCase().startsWith("en") ? "en" : "ja";
+  return "ja";
 }
 
 function comparableSlug(value) {

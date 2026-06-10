@@ -3,210 +3,40 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI検索向けにFAQと出典を置く理由 | よへラボブログ</title>
-  <meta name="description" content="AI検索や通常検索で読み取りやすい記事にするために、FAQ、見出し、出典を置く理由を短く整理します。" />
-  <meta property="og:title" content="AI検索向けにFAQと出典を置く理由 | よへラボブログ" />
-  <meta property="og:description" content="AI検索に保証はありません。だからこそ、読者にも検索にも読み取りやすい構造を作ります。" />
+  <title>AI検索時代の記事構造でFAQと出典を置く理由 | よへラボブログ</title>
+  <meta name="description" content="AI検索時代の記事構造で、FAQ、見出し、出典、更新日をなぜ置くのか。読み手にも管理者にも分かりやすい形で整理します。" />
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1" />
+  <meta property="og:title" content="AI検索時代の記事構造でFAQと出典を置く理由 | よへラボブログ" />
+  <meta property="og:description" content="FAQ、見出し、出典、更新日を置く理由を整理します。" />
   <meta property="og:type" content="article" />
-  <meta property="og:locale" content="ja_JP" />
   <meta property="og:url" content="https://yohelab.com/blog/faq-source-ai-search/" />
   <meta property="og:image" content="https://yohelab.com/assets/blog/faq-source-ai-search/eyecatch.png" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1" />
   <link rel="canonical" href="https://yohelab.com/blog/faq-source-ai-search/" />
   <link rel="icon" type="image/png" href="/yohelab-mascot-v2-20260518-32.png" />
   <link rel="stylesheet" href="/shared/site.min.css" />
-  <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"BlogPosting","headline":"AI検索向けにFAQと出典を置く理由","datePublished":"2026-05-02","dateModified":"2026-05-13","url":"https://yohelab.com/blog/faq-source-ai-search/","image":"https://yohelab.com/assets/blog/faq-source-ai-search/eyecatch.png","author":{"@type":"Organization","name":"よへラボ"},"publisher":{"@type":"Organization","name":"よへラボ","logo":{"@type":"ImageObject","url":"https://yohelab.com/yohelab-mascot-v2-20260518.png"}},"description":"AI検索に保証はありません。だからこそ、読者にも検索にも読み取りやすい構造を作ります。","inLanguage":"ja-JP"}
-  </script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"AI検索時代の記事構造でFAQと出典を置く理由","datePublished":"2026-05-03","dateModified":"2026-06-11","url":"https://yohelab.com/blog/faq-source-ai-search/","image":"https://yohelab.com/assets/blog/faq-source-ai-search/eyecatch.png","author":{"@type":"Organization","name":"よへラボ"},"publisher":{"@type":"Organization","name":"よへラボ","logo":{"@type":"ImageObject","url":"https://yohelab.com/yohelab-mascot-v2-20260518.png"}},"description":"AI検索時代の記事構造で、FAQ、見出し、出典、更新日をなぜ置くのかを整理します。","inLanguage":"ja-JP"}</script>
   <style>
-    body { background:#fff;color:var(--text); }
-    .post-cover { width:100%;height:auto;object-fit:contain;border-radius:24px;margin-bottom:28px;border:1px solid var(--border);box-shadow:var(--shadow-sm);display:block;background:#061f1b; }
-    .post-outer { max-width:760px;margin:0 auto;padding:48px 24px 100px; }
-    .post-meta { display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-bottom:20px; }
-    .post-tag { background:#f0f8f4;color:var(--green-dark,#075c4c);border-radius:999px;padding:3px 12px;font-size:12px;font-weight:700;text-decoration:none; }
-    .post-tag:hover { background:#e0f4ec;color:var(--green); }
-    
-    .post-title { font-size:clamp(28px,5.5vw,52px);font-weight:900;line-height:1.12;margin-bottom:24px;color:var(--text); }
-    .post-excerpt { font-size:19px;color:var(--muted);line-height:1.85;margin-bottom:40px;padding-bottom:32px;border-bottom:1px solid var(--border); }
-    .post-body { font-size:17px;line-height:2;color:var(--text); }
-    .post-body h2 { font-size:28px;line-height:1.35;margin:36px 0 14px;letter-spacing:-.04em; }
-    .post-body p, .post-body li { margin-bottom:16px; }
-    .note-box { border-left:5px solid #087a63;background:#f0fbf6;border-radius:16px;padding:18px;margin:18px 0; }
-    .source-list { background:#fbfcff;border:1px solid #dce7fb;border-radius:18px;padding:18px;margin:18px 0; }
-    .source-list strong { display:block;margin-bottom:8px;color:#075c4c; }
-    .back-link { display:inline-flex;align-items:center;gap:6px;color:var(--muted);font-size:14px;font-weight:700;text-decoration:none;margin-top:40px; }
+    body{background:#fff;color:#10202a}.post-outer{max-width:760px;margin:0 auto;padding:48px 22px 96px}.post-cover{width:100%;border-radius:18px;margin:0 0 24px}.post-title{font-size:clamp(30px,5vw,48px);line-height:1.18;font-weight:900;letter-spacing:0;margin:18px 0}.post-meta{display:flex;gap:10px;flex-wrap:wrap;color:#60706b;font-size:13px}.post-tag{background:#e8f7f1;color:#087a63;border-radius:999px;padding:4px 11px;font-weight:800;text-decoration:none}.post-body{font-size:17px;line-height:2}.post-body h2{font-size:24px;margin:42px 0 12px;border-bottom:2px solid #dfe8e3;padding-bottom:8px}.note{background:#f7fbf9;border:1px solid #dfe8e3;border-radius:16px;padding:18px;margin:24px 0}.site-header{background:#fff;border-bottom:3px solid #087a63}.header-inner{max-width:1100px;margin:0 auto;padding:0 16px;height:56px;display:flex;align-items:center;gap:18px}.header-inner a{text-decoration:none;color:#10202a;font-weight:800}.brand{display:flex;align-items:center;gap:10px;color:#087a63!important;font-size:20px}.brand img{border-radius:8px}.footer{border-top:1px solid #dfe8e3}.footer-inner{max-width:1100px;margin:0 auto;padding:24px 16px;display:flex;gap:14px;justify-content:space-between;flex-wrap:wrap;color:#60706b;font-size:13px}.footer-links{display:flex;gap:12px;flex-wrap:wrap}.footer a{color:#60706b;text-decoration:none}
   </style>
 </head>
 <body>
-
-  <header class="site-header" style="background:#fff;border-bottom:3px solid #087a63;position:sticky;top:0;z-index:100;">
-    <div class="header-inner" style="max-width:1100px;margin:0 auto;padding:0 16px;display:flex;align-items:center;gap:20px;height:56px;">
-      <a href="/" style="display:flex;align-items:center;gap:10px;font-size:20px;font-weight:900;color:#087a63;letter-spacing:-0.03em;flex-shrink:0;text-decoration:none;">
-        <img src="/yohelab-mascot-v2-20260518-64.png" alt="よへラボ" style="width:36px;height:36px;border-radius:8px;" />
-        よへラボ
-      </a>
-      <nav style="display:flex;align-items:center;gap:4px;flex-wrap:wrap;">
-        <a href="/blog/" style="padding:5px 11px;border-radius:4px;font-size:13px;font-weight:700;color:#444;text-decoration:none;">ブログ</a>
-        <a href="/lp/bunsirube/" style="padding:5px 11px;border-radius:4px;font-size:13px;font-weight:700;color:#444;text-decoration:none;">文標</a>
-        <a href="/about/" style="padding:5px 11px;border-radius:4px;font-size:13px;font-weight:700;color:#444;text-decoration:none;">サイトについて</a>
-      </nav>
-    </div>
-  </header>
-<main class="post-outer">
-    <img class="post-cover" src="/assets/blog/faq-source-ai-search/eyecatch.webp" alt="AI検索時代の記事構造でFAQと出典を置く理由、WordPress記事の書き方" loading="eager" decoding="async" width="1600" height="900" />
-    <div class="post-meta"><span>2026-05-02</span><a class="post-tag" href="/blog/?category=ai-news">AI検索</a><a class="post-tag" href="/blog/?category=faq">FAQ</a></div>
-    <h1 class="post-title">AI検索向けにFAQと出典を置く理由</h1>
-    <p class="post-excerpt">Google AI Overviews等での表示保証はありません。だからこそ、読者にも検索にも読み取りやすい構造を作ります。</p>
+  <header class="site-header"><div class="header-inner"><a class="brand" href="/"><img src="/yohelab-mascot-v2-20260518-64.png" width="36" height="36" alt="" />よへラボ</a><a href="/blog/">ブログ</a><a href="/about/">このサイトについて</a></div></header>
+  <main class="post-outer">
+    <img class="post-cover" src="/assets/blog/faq-source-ai-search/eyecatch.webp" width="1600" height="900" alt="FAQと出典を記事に置く理由の図解" loading="eager" decoding="async" />
+    <div class="post-meta"><time datetime="2026-05-03">2026年5月3日</time><a class="post-tag" href="/blog/?category=faq">FAQ</a><a class="post-tag" href="/blog/?category=article">記事構造</a></div>
+    <h1 class="post-title">AI検索時代の記事構造でFAQと出典を置く理由</h1>
     <div class="post-body">
-      <p>AI検索向けに大事なのは、特別な裏技ではありません。結論、理由、根拠、FAQ、出典を分かりやすく置くことです。</p>
-      <h2>FAQは読者の不安を先に消す</h2>
-      <p>FAQは検索対策だけではなく、購入前や問い合わせ前の不安を減らす場所です。「料金は？」「返金は？」「初心者でも使える？」のような疑問を先に置くと、読み手が次の行動を取りやすくなります。</p>
-      <h2>出典は信頼の確認場所になる</h2>
-      <p>数字や制度の話は、出典がないと信頼されにくくなります。公式情報、公的統計、一次情報に近いページを残すと、読者も確認しやすくなります。</p>
-      <h2>FAQに向いている質問</h2>
-      <p>FAQには、本文で何度も説明すると流れが止まる質問を置きます。料金、返金、対応環境、初心者向けかどうか、デメリット、他サービスとの違い、導入前の注意点などです。</p>
-      <p>逆に、本文でしっかり説明すべき重要な内容をFAQだけに逃がすのはよくありません。FAQは補助です。読者が最後に不安を消す場所として使うほうが自然です。</p>
-      <div class="source-list">
-        <strong>FAQに入れやすい項目</strong>
-        <ul>
-          <li>購入前に確認すること</li>
-          <li>返金やキャンセルの条件</li>
-          <li>対応環境や使えないケース</li>
-          <li>無料版や競合との違い</li>
-          <li>サポート範囲と対象外のこと</li>
-        </ul>
-      </div>
-      <h2>出典は「権威づけ」ではなく確認用</h2>
-      <p>出典を置く理由は、ページを偉そうに見せるためではありません。読者があとで確認できるようにするためです。市場規模、制度、料金、仕様、統計の話は、できるだけ公式ページや一次情報に寄せます。</p>
-      <p>たとえばWordPressテーマの記事なら、WordPressの公式ドキュメント、テーマ公式ページ、決済サービスのヘルプ、消費者庁や公的機関の情報などが候補になります。第三者ブログを使う場合も、元情報がどこかを確認してから引用します。</p>
-      <h2>AI検索で読まれやすい構造とは何か</h2>
-      <p>ここは言い切れません。Google AI Overviewsや各AI検索の採用基準は公開されていない部分が多いので、「こうすれば必ず引用される」とは言えません。</p>
-      <p>ただ、読者にとって分かりやすい構造は作れます。結論を先に置く。理由を分ける。比較表で違いをそろえる。FAQで不安を拾う。数字には出典を置く。このあたりはAIのためというより、人が読んでも分かりやすい形です。</p>
-      <div class="note-box">
-        <strong>言い切りすぎない</strong>
-        <p>「表示を約束する」のではなく、「AIにも読み取られやすい構造にする」と考えるほうが安全です。</p>
-      </div>
-      <h2>FAQを増やすだけでは足りない</h2>
-      <p>FAQは多ければいいわけではありません。本文に書いてあることを言い換えただけのFAQを10個並べても、読者の不安は減りません。FAQに入れるべきなのは、購入前や行動前に止まりやすい質問です。</p>
-      <p>たとえば「これは初心者でも使えますか」より、「初期設定代行は含まれますか」「返金後にシリアルはどうなりますか」「既存記事は消えますか」のほうが具体的です。読者が本当に気にしているのは、抽象的な安心ではなく、自分が損しないか、失敗しないか、あとで困らないかです。</p>
-      <h2>出典を置く場所</h2>
-      <p>出典は本文の最後にまとめるだけでも使えますが、数字や制度の近くに置くほうが親切です。市場規模、クリック率、価格、対応環境、法務の話は、読者が「その数字はどこから？」と思いやすい部分です。</p>
-      <p>また、出典リンクの置きすぎにも注意します。外部リンクだらけになると本文が読みにくくなります。重要な数字、購入判断に関係する情報、法務や仕様のように間違えると困る情報に絞ると、読者の確認コストが下がります。</p>
-      <table class="post-table">
-        <thead><tr><th>情報の種類</th><th>出典を置く優先度</th><th>理由</th></tr></thead>
-        <tbody>
-          <tr><td>価格・料金</td><td>高い</td><td>変更されやすく、購入判断に直結する</td></tr>
-          <tr><td>市場規模・統計</td><td>高い</td><td>数字の根拠がないと信頼しにくい</td></tr>
-          <tr><td>法律・返金・個人情報</td><td>高い</td><td>誤解があるとトラブルになりやすい</td></tr>
-          <tr><td>個人の感想</td><td>中</td><td>出典よりも体験の条件を明記するほうが大事</td></tr>
-          <tr><td>一般的な説明</td><td>低い</td><td>すべてに出典を付けると読みにくくなる</td></tr>
-        </tbody>
-      </table>
-      <h2>FAQは本文の代わりではない</h2>
-      <p>FAQだけで記事を作ると、読みやすい反面、情報が細切れになります。先に本文で考え方や選び方を説明し、最後にFAQで迷いを回収するほうが自然です。FAQは本文の補助であって、本文の代わりではありません。</p>
-      <p>AI検索を意識する場合も同じです。短い質問と短い答えだけでは、背景や条件が伝わりにくくなります。「どういう場合に当てはまるか」「例外は何か」「どこで確認できるか」まで本文に置くと、人間にも読みやすくなります。</p>
-      <h2>更新日も信頼材料になる</h2>
-      <p>価格、仕様、法務、AI検索の状況は変わります。記事内に出典を置いていても、更新日が古いと不安になります。重要な記事は、更新日を見せ、古くなった数字やリンクを見直すだけで信用が変わります。</p>
-      <p>文標のブログでも、この記事のように更新日を明示しています。完璧な予測より、古くなった情報を直す姿勢のほうが長く信用されます。</p>
-      <h2>短い答えと長い説明を分ける</h2>
-      <p>FAQでは、最初に短い答えを置き、そのあとに条件や例外を書きます。最初から長く説明すると、質問に対する答えが見えにくくなります。逆に短すぎると、誤解が残ります。</p>
-      <p>たとえば「返金できますか？」なら、最初に「購入から30日以内なら返金できます」と書き、そのあとに申請方法、返金後のシリアル、自動更新停止、着金目安を書きます。短い答えと詳しい説明を分けるだけで、読み手は判断しやすくなります。これはAI検索のためだけではなく、スマホで流し読みする読者にも効きます。結局、AIに向けた構造は、人にも読みやすい構造です。だからFAQは後付けの飾りではなく、記事設計の一部として考えます。ここを雑にしないだけで、記事全体の信頼感が変わります。</p>
-      <h2>文標でできること</h2>
-      <p>文標では、FAQブロック、FAQPage JSON-LD、比較表カード、出典を置きやすい記事テンプレート、CTA、導線確認をまとめています。AI検索での表示は保証しませんが、記事の中身と構造をそろえやすくします。</p>
-      <p><a class="btn btn-primary" href="/lp/bunsirube/">文標を見る</a> <a class="btn btn-outline" href="/blog/comparison-article-template/">比較記事の書き方も読む</a></p>
-
-        <section class="related-article-cards" aria-label="関連記事" style="margin:36px 0;padding:22px;border:1px solid #dfe8e3;border-radius:22px;background:#f7fbf9;">
-          <h2 style="margin:0 0 10px;font-size:22px;font-weight:900;letter-spacing:-.03em;border:0;padding:0;color:#10202a;">関連記事</h2>
-          <p style="margin:0 0 14px;color:#5f6b7a;font-size:14px;line-height:1.8;">このテーマと一緒に読むと流れがつながる記事です。</p>
-          <a class="blog-link-card" href="/blog/ai-news-selling-ideas/" style="display:grid;grid-template-columns:minmax(0,1fr) 148px;gap:16px;align-items:stretch;margin:16px 0;padding:16px;border:1px solid #dfe8e3;border-radius:18px;background:#fff;color:#10202a;text-decoration:none;box-shadow:0 12px 30px rgba(14,55,42,.07);">
-          <span class="blog-link-card-main" style="min-width:0;display:grid;gap:7px;align-content:center;">
-            <span class="blog-link-card-site" style="color:#087a63;font-size:12px;font-weight:900;line-height:1.4;">よへラボ 関連記事</span>
-            <span class="blog-link-card-title" style="color:#10202a;font-size:16px;font-weight:900;line-height:1.55;">AIニュースを記事ネタに変える方法。</span>
-            <span class="blog-link-card-desc" style="color:#5f6b7a;font-size:13px;line-height:1.65;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">よへラボを文標だけのサイトにせず、AIニュースからnote・X・ブログ・テンプレ・小さなツールや商品を作る場所に変えていくための方針です。</span>
-            <span class="blog-link-card-url" style="color:#78908a;font-size:12px;line-height:1.4;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">/blog/ai-news-selling-ideas/</span>
-          </span>
-          <span class="blog-link-card-thumb" style="border-radius:14px;overflow:hidden;background:#e8f7f1;min-height:104px;display:grid;place-items:center;color:#087a63;font-size:24px;font-weight:900;"><img src="/assets/og/bunsirube-og.png" alt="" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;margin:0;border-radius:0;" /></span>
-        </a>
-          <a class="blog-link-card" href="/blog/comparison-article-template/" style="display:grid;grid-template-columns:minmax(0,1fr) 148px;gap:16px;align-items:stretch;margin:16px 0;padding:16px;border:1px solid #dfe8e3;border-radius:18px;background:#fff;color:#10202a;text-decoration:none;box-shadow:0 12px 30px rgba(14,55,42,.07);">
-          <span class="blog-link-card-main" style="min-width:0;display:grid;gap:7px;align-content:center;">
-            <span class="blog-link-card-site" style="color:#087a63;font-size:12px;font-weight:900;line-height:1.4;">よへラボ 関連記事</span>
-            <span class="blog-link-card-title" style="color:#10202a;font-size:16px;font-weight:900;line-height:1.55;">比較記事の書き方：結論・比較表・FAQ・CTAの順で迷いを減らす</span>
-            <span class="blog-link-card-desc" style="color:#5f6b7a;font-size:13px;line-height:1.65;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">比較記事を書くときの基本構成。結論、選び方、比較表、向いている人、FAQ、CTAの順に置くと読み手が迷いにくくなります。</span>
-            <span class="blog-link-card-url" style="color:#78908a;font-size:12px;line-height:1.4;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">/blog/comparison-article-template/</span>
-          </span>
-          <span class="blog-link-card-thumb" style="border-radius:14px;overflow:hidden;background:#e8f7f1;min-height:104px;display:grid;place-items:center;color:#087a63;font-size:24px;font-weight:900;"><img src="/assets/blog/comparison-article-template/eyecatch.webp" alt="" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;margin:0;border-radius:0;" /></span>
-        </a>
-          <a class="blog-link-card" href="/blog/chatgpt-update-2026/" style="display:grid;grid-template-columns:minmax(0,1fr) 148px;gap:16px;align-items:stretch;margin:16px 0;padding:16px;border:1px solid #dfe8e3;border-radius:18px;background:#fff;color:#10202a;text-decoration:none;box-shadow:0 12px 30px rgba(14,55,42,.07);">
-          <span class="blog-link-card-main" style="min-width:0;display:grid;gap:7px;align-content:center;">
-            <span class="blog-link-card-site" style="color:#087a63;font-size:12px;font-weight:900;line-height:1.4;">よへラボ 関連記事</span>
-            <span class="blog-link-card-title" style="color:#10202a;font-size:16px;font-weight:900;line-height:1.55;">【下書き】ChatGPT 最新アップデートまとめ 2026年版</span>
-            <span class="blog-link-card-desc" style="color:#5f6b7a;font-size:13px;line-height:1.65;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">ChatGPTの最新アップデートを追いかけ、どう副業・ブログ収益に活かせるかを整理する記事。準備中。</span>
-            <span class="blog-link-card-url" style="color:#78908a;font-size:12px;line-height:1.4;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">/blog/chatgpt-update-2026/</span>
-          </span>
-          <span class="blog-link-card-thumb" style="border-radius:14px;background:#e8f7f1;min-height:104px;display:grid;place-items:center;color:#087a63;font-size:24px;font-weight:900;">↗</span>
-        </a>
-        </section>
+      <p>FAQや出典は、検索のためだけに置くものではありません。読者が「ここだけ確認したい」と思ったときに戻れる場所を作るためのものです。</p>
+      <h2>FAQは迷いの棚卸し</h2>
+      <p>本文を読んでも残りやすい疑問を、最後に短くまとめます。質問文は読者が実際に聞きそうな言葉にすると、読み返しやすくなります。</p>
+      <h2>出典は信頼の足場</h2>
+      <p>変化が早い話題ほど、どの情報をもとに書いたのかが大事です。公式情報、一次情報、発表日、確認日を残すだけで、あとから更新しやすくなります。</p>
+      <h2>更新日は古さのサインになる</h2>
+      <p>AI関連の記事は数週間で前提が変わることがあります。公開日と更新日を分けておくと、読者にも運営者にも「今読むべきか」が伝わります。</p>
+      <div class="note">AI検索時代の記事構造は、表示や順位を保証するものではありません。本文を読みやすく、確認しやすくするための整理方法として扱います。</div>
     </div>
-    <a class="back-link" href="/">← トップページに戻る</a>
-  
-<!-- yohelab-tags -->
-<div style="margin:24px 0;padding:16px;background:#fff;border:1px solid #e8e8e8;border-radius:8px;">
-  <div style="font-size:12px;font-weight:700;color:#5f6b7a;margin-bottom:8px;">タグ</div>
-  <a href="/blog/?category=ai-news" style="display:inline-block;padding:3px 10px;border-radius:999px;background:#e8f7f3;color:#087a63;font-size:12px;font-weight:700;text-decoration:none;margin:2px 4px 2px 0;">AIニュース</a> <a href="/blog/?category=chatgpt" style="display:inline-block;padding:3px 10px;border-radius:999px;background:#e8f7f3;color:#087a63;font-size:12px;font-weight:700;text-decoration:none;margin:2px 4px 2px 0;">ChatGPT</a> <a href="/blog/?category=claude" style="display:inline-block;padding:3px 10px;border-radius:999px;background:#e8f7f3;color:#087a63;font-size:12px;font-weight:700;text-decoration:none;margin:2px 4px 2px 0;">Claude</a> <a href="/blog/?category=gemini" style="display:inline-block;padding:3px 10px;border-radius:999px;background:#e8f7f3;color:#087a63;font-size:12px;font-weight:700;text-decoration:none;margin:2px 4px 2px 0;">Gemini</a> <a href="/blog/?category=grok" style="display:inline-block;padding:3px 10px;border-radius:999px;background:#e8f7f3;color:#087a63;font-size:12px;font-weight:700;text-decoration:none;margin:2px 4px 2px 0;">Grok</a> <a href="/blog/?category=wordpress" style="display:inline-block;padding:3px 10px;border-radius:999px;background:#e8f7f3;color:#087a63;font-size:12px;font-weight:700;text-decoration:none;margin:2px 4px 2px 0;">AI検索</a>
-</div>
-<a href="/blog/ai-news-selling-ideas/" style="display:block;padding:10px 0;border-bottom:1px solid #f0f0f0;font-size:13px;font-weight:700;color:#087a63;text-decoration:none;">→ AIニュースを記事ネタに変える方法</a>
-<a href="/blog/comparison-article-template/" style="display:block;padding:10px 0;border-bottom:1px solid #f0f0f0;font-size:13px;font-weight:700;color:#087a63;text-decoration:none;">→ 比較記事の書き方：AIツール比較にも使える型</a>
-<a href="/blog/chatgpt-update-2026/" rel="nofollow" style="display:block;padding:10px 0;border-bottom:1px solid #f0f0f0;font-size:13px;font-weight:700;color:#087a63;text-decoration:none;">→ 【下書き】ChatGPT最新アップデートまとめ</a>
-
-  <a href="/blog/" style="display:block;padding:10px 0;font-size:13px;font-weight:700;color:#087a63;text-decoration:none;">→ ブログ記事一覧をすべて見る</a>
-</div>
-</main>
-  <footer style="background:#fff;border-top:1px solid #e8e8e8;margin-top:40px;padding:28px 16px 16px;">
-    <div style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:24px;">
-      <div>
-        <a href="/" style="display:flex;align-items:center;gap:8px;font-size:16px;font-weight:900;color:#087a63;text-decoration:none;margin-bottom:8px;">
-          <img src="/yohelab-mascot-v2-20260518-64.png" alt="よへラボ" style="width:28px;height:28px;border-radius:6px;" />よへラボ
-        </a>
-        <p style="font-size:12px;color:#5f6b7a;line-height:1.7;">家で働く人のための<br>AI・副業情報サイト</p>
-      </div>
-      <div>
-        <h3 style="font-size:12px;font-weight:900;color:#1a1a2e;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #e8e8e8;">コンテンツ</h3>
-        <ul style="list-style:none;display:grid;gap:5px;padding:0;margin:0;">
-          <li><a href="/blog/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">ブログ記事一覧</a></li>
-          <li><a href="/blog/?category=ai-news" style="font-size:12px;color:#5f6b7a;text-decoration:none;">AIニュース活用</a></li>
-          <li><a href="/blog/?category=wordpress" style="font-size:12px;color:#5f6b7a;text-decoration:none;">WordPress</a></li>
-          </ul>
-      </div>
-      <div>
-        <h3 style="font-size:12px;font-weight:900;color:#1a1a2e;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #e8e8e8;">AIツール</h3>
-        <ul style="list-style:none;display:grid;gap:5px;padding:0;margin:0;">
-          <li><a href="/lp/bunsirube/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">文標（WPテーマ）</a></li>
-          <li><a href="/lp/bunsirube/demo/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">文標デモ</a></li>
-          <li><a href="/blog/comparison-article-template/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">比較記事テンプレ（無料）</a></li>
-          <li><a href="/apps/research-writer/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">Research Writer</a></li>
-        </ul>
-      </div>
-      <div>
-        <h3 style="font-size:12px;font-weight:900;color:#1a1a2e;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #e8e8e8;">その他</h3>
-        <ul style="list-style:none;display:grid;gap:5px;padding:0;margin:0;">
-          <li><a href="/about/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">サイトについて</a></li>
-          <li><a href="/contact/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">お問い合わせ</a></li>
-          <li><a href="https://x.com/yohe_lab" target="_blank" rel="noopener" style="font-size:12px;color:#5f6b7a;text-decoration:none;">X（旧Twitter）</a></li>
-          <li><a href="https://note.com/yohelab" target="_blank" rel="noopener" style="font-size:12px;color:#5f6b7a;text-decoration:none;">note</a></li>
-          <li><a href="/legal/privacy/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">プライバシーポリシー</a></li>
-          <li><a href="/legal/terms/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">利用規約</a></li>
-        </ul>
-      </div>
-    </div>
-    <div style="max-width:1100px;margin:16px auto 0;padding-top:12px;border-top:1px solid #e8e8e8;font-size:11px;color:#5f6b7a;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
-      <span>© 2026 よへラボ</span>
-      <div style="display:flex;gap:12px;">
-        <a href="/legal/privacy/" style="color:#5f6b7a;font-size:11px;text-decoration:none;">プライバシーポリシー</a>
-        <a href="/legal/terms/" style="color:#5f6b7a;font-size:11px;text-decoration:none;">利用規約</a>
-        <a href="/contact/" style="color:#5f6b7a;font-size:11px;text-decoration:none;">お問い合わせ</a>
-      </div>
-    </div>
-  </footer>
+  </main>
+  <footer class="footer"><div class="footer-inner"><div>© よへラボ / yohelab.com</div><div class="footer-links"><a href="/">トップ</a><a href="/blog/">ブログ</a><a href="/contact/">問い合わせ</a><a href="/legal/privacy/">プライバシー</a></div></div></footer>
 </body>
 </html>

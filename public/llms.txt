@@ -1,40 +1,23 @@
 # よへラボ
 
-> よへラボは、AIニュースを個人でも売れるネタに変えるための実験場です。ChatGPT、Perplexity、画像生成、AI検索などの変化を、note、X、ブログ、テンプレ販売、小さなツール、WordPress記事にどう使えるかへ変換します。WordPressテーマ「文標（ぶんしるべ）」は、その中のひとつで、ネタを比較記事・レビュー記事・FAQ記事として整理するための軽量WordPressテーマです。Google AI Overviews等への表示を保証するものではありません。
+> よへラボは、AIニュース、AI検索時代の記事構造、ブログ運営、売り場づくりのメモを日本語で整理する個人運営サイトです。公開しているテンプレートは日本語向けです。
 
-## 主な入口
+## 主要ページ
 
-- [よへラボ実験メモ](https://yohelab.com/blog/): AIニュースを、個人でも売れるネタに変えるための実験メモ。note、X、ブログ、テンプレ、小さな商品化の視点で扱う。
-- [AIニュースを、個人でも売れるネタに変える](https://yohelab.com/blog/ai-news-selling-ideas/): よへラボを文標だけのサイトにせず、総合的な道具箱にする方針。
-- [文標（ぶんしるべ）](https://yohelab.com/lp/bunsirube/): AIニュースから見つけたネタを、比較記事・レビュー記事・FAQ記事として整理しやすくする軽量WordPressテーマ。FAQ、JSON-LD、ブログカード、比較表カード、CTA、導線確認、事故防止チェック、任意のllms.txt出力を内蔵。2026年6月30日まで発売記念価格¥5,500（税込）・買い切り・月額なし。2026年7月1日から通常価格¥8,800（税込）。
+- [トップ](https://yohelab.com/)
+- [記事一覧](https://yohelab.com/blog/)
+- [よへラボについて](https://yohelab.com/about/)
+- [問い合わせ](https://yohelab.com/contact/)
 
-## 購入前に見るページ
+## 公開記事
 
-- [文標 LP](https://yohelab.com/lp/bunsirube/): 機能一覧、購入後に届くもの、スマホ表示、価格、返金保証、対応環境、サポート範囲、購入方法、Stripe決済の説明。
-- [文標 デモ](https://yohelab.com/lp/bunsirube/demo/): 比較記事、レビュー記事、FAQ記事、管理画面、スマホ幅、操作動画の見本。
-- [文標 インストール方法](https://yohelab.com/lp/bunsirube/install/): ZIPアップロード、有効化、初期設定、SEOプラグイン併用、子テーマの使い方。
-- [文標 更新履歴](https://yohelab.com/lp/bunsirube/updates/): バージョンごとの変更内容。
-
-## ブログ
-
-- [よへラボ実験メモ](https://yohelab.com/blog/): AIニュース、note/X、WordPressテーマ、AI検索時代の記事構造、比較記事の作り方に関する公開メモ。
-- [AIニュースを個人でも売れるネタに変える方針](https://yohelab.com/blog/ai-news-selling-ideas/)
-- [無料テーマと文標の違い](https://yohelab.com/blog/free-theme-vs-bunsirube/)
+- [AIニュースを記事ネタに変える方法](https://yohelab.com/blog/ai-news-selling-ideas/)
 - [比較記事の書き方](https://yohelab.com/blog/comparison-article-template/)
-- [文標を入れる前に確認すること](https://yohelab.com/blog/bunsirube-before-install/)
+- [AI検索向けにFAQと出典を置く理由](https://yohelab.com/blog/faq-source-ai-search/)
+- [BASE・note・自サイトの商品ページでよくある失敗](https://yohelab.com/blog/sales-page-common-mistakes/)
 
-## よくある質問
+## 注意
 
-- 文標の料金: 2026年6月30日まで発売記念価格¥5,500（税込）・買い切り・月額なし。2026年7月1日から通常価格¥8,800（税込）。発売記念期間中に購入した人も、今後のアップデートを追加料金なしで受け取れる。30日返金保証つき。
-- 文標のライセンス表記: 文標本体と子テーマは GNU GPL v2 or later。購入者向けのZIP配布、シリアル、自動更新、不具合対応は購入者本人向け。
-- 返金保証: 購入から30日以内であれば理由を問わず全額返金。Stripe経由で決済元へ返金される。返金後はシリアルが無効化され、自動更新は停止。
-- サポート範囲: 文標本体で再現できる不具合、広告リンク・CTAの明らかな表示不具合、配布ZIPの破損、ダウンロード不備、シリアル認証、自動更新の不備、30日返金希望、決済・個人情報に関する事務連絡を確認。導入代行、初期設定代行、使い方相談、個別デザイン改造、外部プラグイン衝突調査、既存サイト移行、記事制作代行、SEO相談、広告運用相談は対象外。
-- AI検索について: 文標はGoogle AI Overviews等での表示を保証しません。本文、FAQ、出典、構造化データを見える内容と一致させやすくするテーマです。
-
-## 問い合わせ・法務
-
-- [お問い合わせ](https://yohelab.com/contact/)
-- [バグ報告](https://yohelab.com/contact/bug/)
-- [特定商取引法に基づく表記](https://yohelab.com/legal/commerce/)
-- [プライバシーポリシー](https://yohelab.com/legal/privacy/)
-- [利用規約](https://yohelab.com/legal/terms/)
+- 検索順位、AI回答での表示、売上、アクセス増加などの結果は保証しません。
+- 英語版ページは公開していません。
+- 公開販売中の商品ページは現在ありません。

@@ -1,7 +1,7 @@
 import { getBlogPin, isValidPin, timingSafeEqual } from "../lib/blog-auth.js";
 import { submitIndexNow } from "../lib/indexnow.js";
 import { SITE } from "../lib/site-seo.js";
-import { rateLimitOk, getClientIp } from "../lib/affiliate.js";
+import { rateLimitOk, getClientIp } from "../lib/rate-limit.js";
 
 const DEFAULT_URLS = SITE.discoveryUrls;
 

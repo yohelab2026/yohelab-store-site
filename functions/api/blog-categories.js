@@ -30,9 +30,8 @@ const DEFAULT_CATEGORIES = [
     order: 20,
     children: [
       { key: "ai-tools", label: "AIツール", color: "#087a63", order: 10 },
-      { key: "bunsirube", label: "文標", color: "#087a63", order: 20 },
-      { key: "wordpress", label: "文標・WordPress", color: "#087a63", order: 30 },
-      { key: "template", label: "記事テンプレ", color: "#087a63", order: 40 },
+      { key: "template", label: "記事テンプレ", color: "#087a63", order: 20 },
+      { key: "sales", label: "売り場づくり", color: "#087a63", order: 30 },
     ],
   },
 ];

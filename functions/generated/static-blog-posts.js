@@ -3,23 +3,23 @@ export const staticBlogSitemapPosts = [
   {
     "slug": "gpt-56-this-week",
     "url": "/blog/gpt-56-this-week/",
-    "date": "2026-06-03",
-    "title": "GPT-5.6は今週くる？ ログ、予測市場、Xの熱狂を整理する",
-    "excerpt": "Codexログ、Polymarketの温度、Xのざわつき。GPT-5.6の噂を、何が見えていて何がまだ空気なのかに分けて読む記事です。"
+    "date": "2026-06-10",
+    "title": "GPT-5.6を待つ前に、AI作業の回し方を整える",
+    "excerpt": "新しいAIモデルの噂や更新を追いながら、記事作成、確認、修正、公開までの流れをどう整えるかをまとめたメモです。"
   },
   {
     "slug": "ai-news-selling-ideas",
     "url": "/blog/ai-news-selling-ideas/",
     "date": "2026-05-17",
-    "title": "AIニュースを記事ネタに変える方法。",
-    "excerpt": "よへラボを文標だけのサイトにせず、AIニュースからnote・X・ブログ・テンプレ・小さなツールや商品を作る場所に変えていくための方針です。"
+    "title": "AIニュースを記事ネタに変える方法",
+    "excerpt": "AIニュースをそのまま流さず、ブログ、note、X、テンプレート、売り場づくりの小さなネタへ変えるための考え方を整理します。"
   },
   {
-    "slug": "bunsirube-version-history",
-    "url": "/blog/bunsirube-version-history/",
-    "date": "2026-05-12",
-    "title": "文標のバージョンアップ履歴：初期版から今までに良くしたこと",
-    "excerpt": "WordPressテーマ「文標」の初期版からv0.3.3までの更新履歴。何を追加し、何を良くし、どんな不安を減らしてきたかを読みやすくまとめました。"
+    "slug": "sales-page-common-mistakes",
+    "url": "/blog/sales-page-common-mistakes/",
+    "date": "2026-05-06",
+    "title": "販売ページでよくある失敗：不安を消す順番で書く",
+    "excerpt": "販売ページでよくある失敗を、価格、対象者、注意点、問い合わせ導線の順に整理します。売り込む前に不安を減らすためのメモです。"
   },
   {
     "slug": "comparison-article-template",
@@ -29,31 +29,10 @@ export const staticBlogSitemapPosts = [
     "excerpt": "比較記事を書くときの基本構成。結論、選び方、比較表、向いている人、FAQ、CTAの順に置くと読み手が迷いにくくなります。"
   },
   {
-    "slug": "free-theme-vs-bunsirube",
-    "url": "/blog/free-theme-vs-bunsirube/",
-    "date": "2026-05-04",
-    "title": "無料テーマと文標の違い：何でもできるより、記事の型で選ぶ",
-    "excerpt": "無料WordPressテーマと文標の違い。文標は総合テーマではなく、比較記事・レビュー記事・FAQ記事を書き始めやすくするための軽量テーマです。"
-  },
-  {
     "slug": "faq-source-ai-search",
     "url": "/blog/faq-source-ai-search/",
-    "date": "2026-05-02",
-    "title": "AI検索向けにFAQと出典を置く理由",
-    "excerpt": "AI検索や通常検索で読み取りやすい記事にするために、FAQ、見出し、出典を置く理由を短く整理します。"
-  },
-  {
-    "slug": "sales-page-common-mistakes",
-    "url": "/blog/sales-page-common-mistakes/",
-    "date": "2026-05-02",
-    "title": "BASE・note・自サイトの商品ページでよくある失敗",
-    "excerpt": "BASE、note、自サイトの商品ページでよくある失敗。誰向けか、何が届くか、不安への回答、購入ボタン周りを見直します。"
-  },
-  {
-    "slug": "bunsirube-before-install",
-    "url": "/blog/bunsirube-before-install/",
-    "date": "2026-05-02",
-    "title": "文標を入れる前に確認すること：既存記事・バックアップ・環境",
-    "excerpt": "WordPressテーマ「文標」を入れる前に確認したい既存記事、バックアップ、WordPressとPHP環境、プラグインの見直し。"
+    "date": "2026-05-03",
+    "title": "AI検索時代の記事構造でFAQと出典を置く理由",
+    "excerpt": "AI検索時代の記事構造で、FAQ、見出し、出典、更新日をなぜ置くのか。読み手にも管理者にも分かりやすい形で整理します。"
   }
 ];

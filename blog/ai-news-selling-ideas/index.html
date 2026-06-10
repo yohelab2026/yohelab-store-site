@@ -3,230 +3,42 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AIニュースを記事ネタに変える方法。よへラボでこれからやること | よへラボ記事一覧</title>
-  <meta name="description" content="よへラボを文標だけのサイトにせず、AIニュースからnote・X・ブログ・テンプレ・小さなツールや商品を作る場所に変えていくための方針です。" />
-  <meta property="og:title" content="AIニュースを記事ネタに変える方法。よへラボでこれからやること" />
-  <meta property="og:description" content="AIニュースを見て終わりにせず、note・X・ブログ・テンプレ・商品に変えるためのよへラボの方針。" />
-  <meta property="og:type" content="article" />
-  <meta property="og:locale" content="ja_JP" />
-  <meta property="og:url" content="https://yohelab.com/blog/ai-news-selling-ideas/" />
-  <meta property="og:image" content="https://yohelab.com/assets/og/bunsirube-og.png" />
-  <meta name="twitter:card" content="summary_large_image" />
+  <title>AIニュースを記事ネタに変える方法 | よへラボブログ</title>
+  <meta name="description" content="AIニュースをそのまま流さず、ブログ、note、X、テンプレート、売り場づくりの小さなネタへ変えるための考え方を整理します。" />
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1" />
+  <meta property="og:title" content="AIニュースを記事ネタに変える方法 | よへラボブログ" />
+  <meta property="og:description" content="AIニュースを記事、投稿、テンプレート、売り場づくりのネタへ変えるための実験メモ。" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://yohelab.com/blog/ai-news-selling-ideas/" />
+  <meta property="og:image" content="https://yohelab.com/yohelab-mascot-v2-20260518.png" />
+  <meta name="twitter:card" content="summary_large_image" />
   <link rel="canonical" href="https://yohelab.com/blog/ai-news-selling-ideas/" />
   <link rel="icon" type="image/png" href="/yohelab-mascot-v2-20260518-32.png" />
   <link rel="stylesheet" href="/shared/site.min.css" />
-  <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"BlogPosting","headline":"AIニュースを記事ネタに変える方法。よへラボでこれからやること","datePublished":"2026-05-17","dateModified":"2026-05-18","url":"https://yohelab.com/blog/ai-news-selling-ideas/","image":"https://yohelab.com/assets/og/bunsirube-og.png","author":{"@type":"Organization","name":"よへラボ"},"publisher":{"@type":"Organization","name":"よへラボ","logo":{"@type":"ImageObject","url":"https://yohelab.com/yohelab-mascot-v2-20260518.png"}},"description":"よへラボを文標だけのサイトにせず、AIニュースからnote・X・ブログ・テンプレ・小さなツールや商品を作る場所に変えていくための方針です。","inLanguage":"ja-JP"}
-  </script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"AIニュースを記事ネタに変える方法","datePublished":"2026-05-17","dateModified":"2026-06-11","url":"https://yohelab.com/blog/ai-news-selling-ideas/","image":"https://yohelab.com/yohelab-mascot-v2-20260518.png","author":{"@type":"Organization","name":"よへラボ"},"publisher":{"@type":"Organization","name":"よへラボ","logo":{"@type":"ImageObject","url":"https://yohelab.com/yohelab-mascot-v2-20260518.png"}},"description":"AIニュースをそのまま流さず、ブログ、note、X、テンプレート、売り場づくりの小さなネタへ変えるための考え方を整理します。","inLanguage":"ja-JP"}</script>
   <style>
-    body { background:#fff;color:var(--text); }
-    .post-outer { max-width:760px;margin:0 auto;padding:48px 24px 100px; }
-    .post-hero { border-radius:28px;padding:32px;margin-bottom:30px;background:linear-gradient(135deg,#ecfdf5,#eef6ff);border:1px solid #dce7fb;box-shadow:var(--shadow-sm); }
-    .post-hero-kicker { display:inline-flex;padding:7px 12px;border-radius:999px;background:#087a63;color:#fff;font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;margin-bottom:18px; }
-    .post-meta { display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-bottom:18px; }
-    .post-tag { background:#f0f8f4;color:var(--green-dark,#075c4c);border-radius:999px;padding:3px 12px;font-size:12px;font-weight:700;text-decoration:none; }
-    .post-tag:hover { background:#e0f4ec;color:var(--green); }
-    
-    .post-title { font-size:clamp(30px,5.6vw,54px);font-weight:900;line-height:1.12;margin:0;color:var(--text);letter-spacing:-.055em; }
-    .post-excerpt { font-size:18px;color:var(--muted);line-height:1.85;margin:22px 0 0; }
-    .post-body { font-size:17px;line-height:2;color:var(--text); }
-    .post-body h2 { font-size:28px;line-height:1.35;margin:38px 0 14px;letter-spacing:-.04em; }
-    .post-body p, .post-body li { margin-bottom:16px; }
-    .post-body ul { padding-left:1.3em; }
-    .idea-box { background:#f8fbff;border:1px solid #dce7fb;border-radius:18px;padding:18px 20px;margin:18px 0; }
-    .idea-box strong { color:#075c4c; }
-    .post-table { width:100%;border-collapse:separate;border-spacing:0;margin:18px 0;border:1px solid var(--border);border-radius:18px;overflow:hidden;font-size:15px; }
-    .post-table th,.post-table td { padding:12px 14px;border-bottom:1px solid var(--border);vertical-align:top;text-align:left; }
-    .post-table th { background:#f0fbf6;color:#075c4c;font-weight:900; }
-    .post-table tr:last-child td { border-bottom:0; }
-    .post-cta { margin:34px 0 0;padding:24px;border-radius:22px;background:#0d2a23;color:#fff; }
-    .post-cta p { color:rgba(255,255,255,.78); }
-    .post-cta a { color:#9df3df;font-weight:900;text-decoration:underline;text-underline-offset:3px; }
-    .back-link { display:inline-flex;align-items:center;gap:6px;color:var(--muted);font-size:14px;font-weight:700;text-decoration:none;margin-top:40px; }
+    body{background:#fff;color:#10202a}.post-outer{max-width:760px;margin:0 auto;padding:48px 22px 96px}.post-title{font-size:clamp(30px,5vw,48px);line-height:1.18;font-weight:900;letter-spacing:0;margin:18px 0}.post-meta{display:flex;gap:10px;flex-wrap:wrap;color:#60706b;font-size:13px}.post-tag{background:#e8f7f1;color:#087a63;border-radius:999px;padding:4px 11px;font-weight:800;text-decoration:none}.post-body{font-size:17px;line-height:2}.post-body h2{font-size:24px;margin:42px 0 12px;border-bottom:2px solid #dfe8e3;padding-bottom:8px}.post-body table{width:100%;border-collapse:collapse;margin:20px 0}.post-body th,.post-body td{border:1px solid #dfe8e3;padding:12px;text-align:left;vertical-align:top}.note{background:#f7fbf9;border:1px solid #dfe8e3;border-radius:16px;padding:18px;margin:24px 0}.site-header{background:#fff;border-bottom:3px solid #087a63}.header-inner{max-width:1100px;margin:0 auto;padding:0 16px;height:56px;display:flex;align-items:center;gap:18px}.header-inner a{text-decoration:none;color:#10202a;font-weight:800}.brand{display:flex;align-items:center;gap:10px;color:#087a63!important;font-size:20px}.brand img{border-radius:8px}.footer{border-top:1px solid #dfe8e3}.footer-inner{max-width:1100px;margin:0 auto;padding:24px 16px;display:flex;gap:14px;justify-content:space-between;flex-wrap:wrap;color:#60706b;font-size:13px}.footer-links{display:flex;gap:12px;flex-wrap:wrap}.footer a{color:#60706b;text-decoration:none}
   </style>
 </head>
 <body>
-
-  <header class="site-header" style="background:#fff;border-bottom:3px solid #087a63;position:sticky;top:0;z-index:100;">
-    <div class="header-inner" style="max-width:1100px;margin:0 auto;padding:0 16px;display:flex;align-items:center;gap:20px;height:56px;">
-      <a href="/" style="display:flex;align-items:center;gap:10px;font-size:20px;font-weight:900;color:#087a63;letter-spacing:-0.03em;flex-shrink:0;text-decoration:none;">
-        <img src="/yohelab-mascot-v2-20260518-64.png" alt="よへラボ" style="width:36px;height:36px;border-radius:8px;" />
-        よへラボ
-      </a>
-      <nav style="display:flex;align-items:center;gap:4px;flex-wrap:wrap;">
-        <a href="/blog/" style="padding:5px 11px;border-radius:4px;font-size:13px;font-weight:700;color:#444;text-decoration:none;">ブログ</a>
-        <a href="/lp/bunsirube/" style="padding:5px 11px;border-radius:4px;font-size:13px;font-weight:700;color:#444;text-decoration:none;">文標</a>
-        <a href="/about/" style="padding:5px 11px;border-radius:4px;font-size:13px;font-weight:700;color:#444;text-decoration:none;">サイトについて</a>
-      </nav>
-    </div>
-  </header>
-<main class="post-outer">
-    <section class="post-hero">
-      <span class="post-hero-kicker">Direction</span>
-      <div class="post-meta"><span>2026-05-17</span><a class="post-tag" href="/blog/?category=ai-news">よへラボ</a><a class="post-tag" href="/blog/?category=ai-news">AIニュース</a></div>
-      <h1 class="post-title">AIニュースを記事ネタに変える方法。</h1>
-      <p class="post-excerpt">よへラボは、文標だけを置くサイトではなく、AIニュースから記事・テンプレ・AIツールを作るための実験場にしていきます。</p>
-    </section>
-
+  <header class="site-header"><div class="header-inner"><a class="brand" href="/"><img src="/yohelab-mascot-v2-20260518-64.png" width="36" height="36" alt="" />よへラボ</a><a href="/blog/">ブログ</a><a href="/about/">このサイトについて</a></div></header>
+  <main class="post-outer">
+    <div class="post-meta"><time datetime="2026-05-17">2026年5月17日</time><a class="post-tag" href="/blog/?category=ai-news">AIニュース</a><a class="post-tag" href="/blog/?category=template">記事ネタ</a></div>
+    <h1 class="post-title">AIニュースを記事ネタに変える方法</h1>
     <div class="post-body">
-      <p>AIニュースは毎日のように流れてきます。ChatGPTの新機能、画像生成、Perplexity、AI検索、動画生成、エージェント系の話。見ていると面白いですが、そのままだと「へえ」で終わります。</p>
-      <p>よへラボでやりたいのは、ニュースの紹介だけではありません。そのニュースを見て、家で何を作れるか、何を小さく試せるかまで考えることです。</p>
-
-      <div class="idea-box">
-        <strong>よへラボの看板:</strong><br />
-        AIニュースを、記事ネタに変える。
-      </div>
-
-      <h2>文標は、その中のひとつ</h2>
-      <p>これまでのよへラボは、WordPressテーマ「文標」が中心に見える作りでした。それは間違いではないですが、少し狭いです。</p>
-      <p>文標は、AIニュースから見つけたネタを、比較記事・レビュー記事・FAQ記事として整理するための道具です。だから、よへラボ全体の中では「記事化のための道具」のひとつとして置きます。</p>
-
-      <table class="post-table">
-        <thead><tr><th>場所</th><th>役割</th></tr></thead>
-        <tbody>
-          <tr><td>X</td><td>AIニュースや気づきを短く出して、人に見つけてもらう</td></tr>
-          <tr><td>note</td><td>無料記事と有料部分で、どのテーマが反応されるか試す</td></tr>
-          <tr><td>よへラボ</td><td>反応が良かったネタを、記事・テンプレ・AIツールとして置く</td></tr>
-          <tr><td>文標</td><td>反応があったネタを、WordPressの記事構造に整えるテーマ</td></tr>
-        </tbody>
-      </table>
-
-      <h2>扱うテーマは広げる。でも軸はひとつ</h2>
-      <p>note副業、AI画像、YouTube、ブログ、テンプレ販売。最初からひとつに絞りすぎると、どれが反応されるか分かりません。</p>
-      <p>ただ、バラバラに紹介すると弱くなります。そこで軸はひとつにします。</p>
-      <div class="idea-box">
-        <strong>このAIニュースは、個人なら何に使えるか？</strong><br />
-        これで作れる記事、投稿、画像、テンプレ、商品は何か。実際にやるなら、最初に何から始めるか。
-      </div>
-
-      <h2>たとえば、こう変換する</h2>
-      <table class="post-table">
-        <thead><tr><th>AIニュース</th><th>個人が作れそうなもの</th></tr></thead>
-        <tbody>
-          <tr><td>画像生成が進化した</td><td>note見出し画像、Xヘッダー、商品サムネ、告知画像テンプレ</td></tr>
-          <tr><td>Perplexityが便利になった</td><td>市場調査メモ、比較記事、有料noteネタ、週刊AIニュース</td></tr>
-          <tr><td>ChatGPTに新機能が出た</td><td>記事構成、投稿案、プロンプト集、作業テンプレ</td></tr>
-          <tr><td>AI検索が広がった</td><td>FAQ記事、比較記事、出典つき記事、文標の活用記事</td></tr>
-        </tbody>
-      </table>
-
-      <h2>無料記事では広げる。有料商品では絞る</h2>
-      <p>無料記事では、いろいろ試します。AI画像、note、X、ブログ、YouTube、テンプレ販売、小さなWebツール。どれが読まれるか、どれが保存されるか、どれが買われるかを見るためです。</p>
-      <p>反応が出たテーマだけ、有料note、テンプレ、よへラボの商品にします。最初から大きな商品を作るより、小さく出して、反応を見て、伸びたものだけ育てる方が合っています。</p>
-
-      <h2>よへラボに置いていくもの</h2>
-      <ul>
-        <li>AIニュースを小さな商品ネタに変える実験メモ</li>
-        <li>note記事タイトル案、X投稿案、記事構成テンプレ</li>
-        <li>AI画像やサムネ用のプロンプト</li>
-        <li>無料で試せる小さなツール</li>
-        <li>反応が良かった有料テンプレや商品</li>
-        <li>記事構造を整えるWordPressテーマ「文標」</li>
-      </ul>
-
+      <p>AIニュースは毎日のように流れてきます。新機能、モデル更新、検索体験の変化、画像や動画の生成ツール。眺めるだけだと「便利そう」で終わりますが、少し分解すると記事や投稿の材料になります。</p>
+      <div class="note"><strong>よへラボの使い方:</strong><br />ニュースをそのまま紹介するより、「個人や小さなサイトなら何に使えるか」まで落とし込んでメモします。</div>
+      <h2>まず、読者の行動に置き換える</h2>
+      <p>ニュースの説明だけでは検索にもSNSにも残りにくいので、読者が次に試せる行動へ変換します。たとえば「新しい検索機能が出た」なら、調べ方、比較表の作り方、FAQの見直し方に変えられます。</p>
+      <table><thead><tr><th>ニュース</th><th>記事ネタへの変換</th></tr></thead><tbody><tr><td>AI検索の仕様が変わった</td><td>FAQ、出典、更新日の見直しチェック</td></tr><tr><td>画像生成が進化した</td><td>ブログ画像、商品サムネ、告知画像の作り方</td></tr><tr><td>エージェント機能が増えた</td><td>作業手順、確認リスト、依頼文テンプレート</td></tr></tbody></table>
+      <h2>無料記事では広げる</h2>
+      <p>最初から売るものを決めすぎると、反応が見えにくくなります。まずは無料記事や短い投稿で、保存されるテーマ、読まれる見出し、問い合わせにつながる悩みを見ます。</p>
+      <h2>テンプレートは日本語向けにする</h2>
+      <p>公開しているテンプレートやメモは日本語向けです。英語版を無理に増やすより、まず日本語で読みやすく、更新しやすい構造を優先します。</p>
       <h2>怪しくしないために決めておくこと</h2>
-      <p>「AIで簡単に稼げます」のような言い方はしません。そこに寄せると、たぶん短期的には目立ちますが、よへラボの信用は弱くなります。</p>
-      <p>代わりに、実際にニュースを読んで、使い道を考えて、試したことや悩んだことも書きます。売れそうなものは売れそうと書くし、無理そうなものは無理そうと書きます。</p>
-
-      <div class="post-cta">
-        <h2 style="margin-top:0;color:#fff;">文標は、反応があったネタを記事に残すための道具です。</h2>
-        <p>AIニュースから見つけたネタを、比較・レビュー・FAQ・CTAのあるWordPress記事に整えるなら、文標がその役割を持ちます。</p>
-        <p><a href="/lp/bunsirube/">文標を見る</a> / <a href="/blog/comparison-article-template/">比較記事の型を見る</a></p>
-      </div>
-
-        <section class="related-article-cards" aria-label="関連記事" style="margin:36px 0;padding:22px;border:1px solid #dfe8e3;border-radius:22px;background:#f7fbf9;">
-          <h2 style="margin:0 0 10px;font-size:22px;font-weight:900;letter-spacing:-.03em;border:0;padding:0;color:#10202a;">関連記事</h2>
-          <p style="margin:0 0 14px;color:#5f6b7a;font-size:14px;line-height:1.8;">このテーマと一緒に読むと流れがつながる記事です。</p>
-          <a class="blog-link-card" href="/blog/comparison-article-template/" style="display:grid;grid-template-columns:minmax(0,1fr) 148px;gap:16px;align-items:stretch;margin:16px 0;padding:16px;border:1px solid #dfe8e3;border-radius:18px;background:#fff;color:#10202a;text-decoration:none;box-shadow:0 12px 30px rgba(14,55,42,.07);">
-          <span class="blog-link-card-main" style="min-width:0;display:grid;gap:7px;align-content:center;">
-            <span class="blog-link-card-site" style="color:#087a63;font-size:12px;font-weight:900;line-height:1.4;">よへラボ 関連記事</span>
-            <span class="blog-link-card-title" style="color:#10202a;font-size:16px;font-weight:900;line-height:1.55;">比較記事の書き方：結論・比較表・FAQ・CTAの順で迷いを減らす</span>
-            <span class="blog-link-card-desc" style="color:#5f6b7a;font-size:13px;line-height:1.65;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">比較記事を書くときの基本構成。結論、選び方、比較表、向いている人、FAQ、CTAの順に置くと読み手が迷いにくくなります。</span>
-            <span class="blog-link-card-url" style="color:#78908a;font-size:12px;line-height:1.4;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">/blog/comparison-article-template/</span>
-          </span>
-          <span class="blog-link-card-thumb" style="border-radius:14px;overflow:hidden;background:#e8f7f1;min-height:104px;display:grid;place-items:center;color:#087a63;font-size:24px;font-weight:900;"><img src="/assets/blog/comparison-article-template/eyecatch.webp" alt="" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;margin:0;border-radius:0;" /></span>
-        </a>
-          <a class="blog-link-card" href="/blog/faq-source-ai-search/" style="display:grid;grid-template-columns:minmax(0,1fr) 148px;gap:16px;align-items:stretch;margin:16px 0;padding:16px;border:1px solid #dfe8e3;border-radius:18px;background:#fff;color:#10202a;text-decoration:none;box-shadow:0 12px 30px rgba(14,55,42,.07);">
-          <span class="blog-link-card-main" style="min-width:0;display:grid;gap:7px;align-content:center;">
-            <span class="blog-link-card-site" style="color:#087a63;font-size:12px;font-weight:900;line-height:1.4;">よへラボ 関連記事</span>
-            <span class="blog-link-card-title" style="color:#10202a;font-size:16px;font-weight:900;line-height:1.55;">AI検索向けにFAQと出典を置く理由</span>
-            <span class="blog-link-card-desc" style="color:#5f6b7a;font-size:13px;line-height:1.65;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">AI検索や通常検索で読み取りやすい記事にするために、FAQ、見出し、出典を置く理由を短く整理します。</span>
-            <span class="blog-link-card-url" style="color:#78908a;font-size:12px;line-height:1.4;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">/blog/faq-source-ai-search/</span>
-          </span>
-          <span class="blog-link-card-thumb" style="border-radius:14px;overflow:hidden;background:#e8f7f1;min-height:104px;display:grid;place-items:center;color:#087a63;font-size:24px;font-weight:900;"><img src="/assets/blog/faq-source-ai-search/eyecatch.webp" alt="" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;margin:0;border-radius:0;" /></span>
-        </a>
-          <a class="blog-link-card" href="/blog/perplexity-how-to-earn/" style="display:grid;grid-template-columns:minmax(0,1fr) 148px;gap:16px;align-items:stretch;margin:16px 0;padding:16px;border:1px solid #dfe8e3;border-radius:18px;background:#fff;color:#10202a;text-decoration:none;box-shadow:0 12px 30px rgba(14,55,42,.07);">
-          <span class="blog-link-card-main" style="min-width:0;display:grid;gap:7px;align-content:center;">
-            <span class="blog-link-card-site" style="color:#087a63;font-size:12px;font-weight:900;line-height:1.4;">よへラボ 関連記事</span>
-            <span class="blog-link-card-title" style="color:#10202a;font-size:16px;font-weight:900;line-height:1.55;">【下書き】Perplexityを使って副業収益を上げる方法</span>
-            <span class="blog-link-card-desc" style="color:#5f6b7a;font-size:13px;line-height:1.65;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">Perplexityで調査→記事化→収益化する流れをまとめる予定の記事。準備中。</span>
-            <span class="blog-link-card-url" style="color:#78908a;font-size:12px;line-height:1.4;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">/blog/perplexity-how-to-earn/</span>
-          </span>
-          <span class="blog-link-card-thumb" style="border-radius:14px;background:#e8f7f1;min-height:104px;display:grid;place-items:center;color:#087a63;font-size:24px;font-weight:900;">↗</span>
-        </a>
-        </section>
+      <p>「AIで簡単に稼げます」のような言い方はしません。実際に試したこと、まだ分からないこと、注意が必要なことを分けて書くほうが、長く読まれる記事になります。</p>
     </div>
-
-    <a class="back-link" href="/">← トップページに戻る</a>
-  
-<!-- yohelab-tags -->
-<div style="margin:24px 0;padding:16px;background:#fff;border:1px solid #e8e8e8;border-radius:8px;">
-  <div style="font-size:12px;font-weight:700;color:#5f6b7a;margin-bottom:8px;">タグ</div>
-  <a href="/blog/?category=ai-news" style="display:inline-block;padding:3px 10px;border-radius:999px;background:#e8f7f3;color:#087a63;font-size:12px;font-weight:700;text-decoration:none;margin:2px 4px 2px 0;">AIニュース</a> <a href="/blog/?category=chatgpt" style="display:inline-block;padding:3px 10px;border-radius:999px;background:#e8f7f3;color:#087a63;font-size:12px;font-weight:700;text-decoration:none;margin:2px 4px 2px 0;">ChatGPT</a> <a href="/blog/?category=claude" style="display:inline-block;padding:3px 10px;border-radius:999px;background:#e8f7f3;color:#087a63;font-size:12px;font-weight:700;text-decoration:none;margin:2px 4px 2px 0;">Claude</a> <a href="/blog/?category=gemini" style="display:inline-block;padding:3px 10px;border-radius:999px;background:#e8f7f3;color:#087a63;font-size:12px;font-weight:700;text-decoration:none;margin:2px 4px 2px 0;">Gemini</a> <a href="/blog/?category=earn" style="display:inline-block;padding:3px 10px;border-radius:999px;background:#e8f7f3;color:#087a63;font-size:12px;font-weight:700;text-decoration:none;margin:2px 4px 2px 0;">副業・稼ぎ方</a> <a href="/blog/?category=template" style="display:inline-block;padding:3px 10px;border-radius:999px;background:#e8f7f3;color:#087a63;font-size:12px;font-weight:700;text-decoration:none;margin:2px 4px 2px 0;">テンプレ</a>
-</div>
-<a href="/blog/faq-source-ai-search/" style="display:block;padding:10px 0;border-bottom:1px solid #f0f0f0;font-size:13px;font-weight:700;color:#087a63;text-decoration:none;">→ AI検索向けにFAQと出典を置く理由</a>
-<a href="/blog/comparison-article-template/" style="display:block;padding:10px 0;border-bottom:1px solid #f0f0f0;font-size:13px;font-weight:700;color:#087a63;text-decoration:none;">→ 比較記事の書き方：AIツール比較にも使える型</a>
-<a href="/blog/chatgpt-update-2026/" rel="nofollow" style="display:block;padding:10px 0;border-bottom:1px solid #f0f0f0;font-size:13px;font-weight:700;color:#087a63;text-decoration:none;">→ 【下書き】ChatGPT最新アップデートまとめ</a>
-
-  <a href="/blog/" style="display:block;padding:10px 0;font-size:13px;font-weight:700;color:#087a63;text-decoration:none;">→ ブログ記事一覧をすべて見る</a>
-</div>
-</main>
-  <footer style="background:#fff;border-top:1px solid #e8e8e8;margin-top:40px;padding:28px 16px 16px;">
-    <div style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:24px;">
-      <div>
-        <a href="/" style="display:flex;align-items:center;gap:8px;font-size:16px;font-weight:900;color:#087a63;text-decoration:none;margin-bottom:8px;">
-          <img src="/yohelab-mascot-v2-20260518-64.png" alt="よへラボ" style="width:28px;height:28px;border-radius:6px;" />よへラボ
-        </a>
-        <p style="font-size:12px;color:#5f6b7a;line-height:1.7;">家で働く人のための<br>AI・副業情報サイト</p>
-      </div>
-      <div>
-        <h3 style="font-size:12px;font-weight:900;color:#1a1a2e;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #e8e8e8;">コンテンツ</h3>
-        <ul style="list-style:none;display:grid;gap:5px;padding:0;margin:0;">
-          <li><a href="/blog/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">ブログ記事一覧</a></li>
-          <li><a href="/blog/?category=ai-news" style="font-size:12px;color:#5f6b7a;text-decoration:none;">AIニュース活用</a></li>
-          <li><a href="/blog/?category=wordpress" style="font-size:12px;color:#5f6b7a;text-decoration:none;">WordPress</a></li>
-          </ul>
-      </div>
-      <div>
-        <h3 style="font-size:12px;font-weight:900;color:#1a1a2e;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #e8e8e8;">AIツール</h3>
-        <ul style="list-style:none;display:grid;gap:5px;padding:0;margin:0;">
-          <li><a href="/lp/bunsirube/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">文標（WPテーマ）</a></li>
-          <li><a href="/lp/bunsirube/demo/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">文標デモ</a></li>
-          <li><a href="/blog/comparison-article-template/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">比較記事テンプレ（無料）</a></li>
-          <li><a href="/apps/research-writer/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">Research Writer</a></li>
-        </ul>
-      </div>
-      <div>
-        <h3 style="font-size:12px;font-weight:900;color:#1a1a2e;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #e8e8e8;">その他</h3>
-        <ul style="list-style:none;display:grid;gap:5px;padding:0;margin:0;">
-          <li><a href="/about/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">サイトについて</a></li>
-          <li><a href="/contact/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">お問い合わせ</a></li>
-          <li><a href="https://x.com/yohe_lab" target="_blank" rel="noopener" style="font-size:12px;color:#5f6b7a;text-decoration:none;">X（旧Twitter）</a></li>
-          <li><a href="https://note.com/yohelab" target="_blank" rel="noopener" style="font-size:12px;color:#5f6b7a;text-decoration:none;">note</a></li>
-          <li><a href="/legal/privacy/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">プライバシーポリシー</a></li>
-          <li><a href="/legal/terms/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">利用規約</a></li>
-        </ul>
-      </div>
-    </div>
-    <div style="max-width:1100px;margin:16px auto 0;padding-top:12px;border-top:1px solid #e8e8e8;font-size:11px;color:#5f6b7a;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
-      <span>© 2026 よへラボ</span>
-      <div style="display:flex;gap:12px;">
-        <a href="/legal/privacy/" style="color:#5f6b7a;font-size:11px;text-decoration:none;">プライバシーポリシー</a>
-        <a href="/legal/terms/" style="color:#5f6b7a;font-size:11px;text-decoration:none;">利用規約</a>
-        <a href="/contact/" style="color:#5f6b7a;font-size:11px;text-decoration:none;">お問い合わせ</a>
-      </div>
-    </div>
-  </footer>
+  </main>
+  <footer class="footer"><div class="footer-inner"><div>© よへラボ / yohelab.com</div><div class="footer-links"><a href="/">トップ</a><a href="/blog/">ブログ</a><a href="/contact/">問い合わせ</a><a href="/legal/privacy/">プライバシー</a></div></div></footer>
 </body>
 </html>

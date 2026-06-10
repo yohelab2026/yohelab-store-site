@@ -3,567 +3,149 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>よへラボ記事一覧 | AIニュースとAIツール</title>
-  <meta name="description" content="AIニュースと、よへラボのAIツール・文標を探せる記事一覧。AIの動きと実際に使う道具をまとめます。" />
-  <meta property="og:title" content="よへラボ記事一覧 | AIニュースとAIツール" />
-  <meta property="og:description" content="AIニュースと、よへラボのAIツール・文標を探せる記事一覧。" />
+  <title>よへラボ記事一覧 | AIニュースと記事づくり</title>
+  <meta name="description" content="よへラボの記事一覧。AIニュース、AI検索時代の記事構造、比較記事テンプレ、売り場づくりのメモを日本語でまとめています。" />
+  <meta property="og:title" content="よへラボ記事一覧 | AIニュースと記事づくり" />
+  <meta property="og:description" content="AIニュース、記事構造、比較記事テンプレ、売り場づくりのメモをまとめています。" />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="ja_JP" />
   <meta property="og:url" content="https://yohelab.com/blog/" />
-  <meta property="og:image" content="https://yohelab.com/assets/og/bunsirube-og.png" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
+  <meta property="og:image" content="https://yohelab.com/yohelab-mascot-v2-20260518.png" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="よへラボ記事一覧 | AIニュースとAIツール" />
-  <meta name="twitter:description" content="AIニュースと、よへラボのAIツール・文標を探せる記事一覧。" />
-  <meta name="twitter:image" content="https://yohelab.com/assets/og/bunsirube-og.png" />
+  <meta name="twitter:title" content="よへラボ記事一覧 | AIニュースと記事づくり" />
+  <meta name="twitter:description" content="AIニュース、記事構造、比較記事テンプレ、売り場づくりのメモをまとめています。" />
+  <meta name="twitter:image" content="https://yohelab.com/yohelab-mascot-v2-20260518.png" />
   <meta name="twitter:site" content="@yohe_lab" />
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1" />
   <link rel="canonical" href="https://yohelab.com/blog/" />
   <link rel="alternate" hreflang="ja" href="https://yohelab.com/blog/" />
-  <link rel="alternate" hreflang="en" href="https://yohelab.com/en/blog/" />
   <link rel="alternate" hreflang="x-default" href="https://yohelab.com/blog/" />
-  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1" />
-  <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"Blog","name":"よへラボ記事一覧","url":"https://yohelab.com/blog/","description":"AIニュースと、よへラボのAIツール・文標を探せる記事一覧。","publisher":{"@type":"Organization","name":"よへラボ","url":"https://yohelab.com/","logo":{"@type":"ImageObject","url":"https://yohelab.com/yohelab-mascot-v2-20260518.png"}},"inLanguage":"ja-JP"}
-  </script>
   <link rel="icon" type="image/png" href="/yohelab-mascot-v2-20260518-32.png" />
-  <link rel="stylesheet" href="/shared/site.min.css" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Blog","name":"よへラボ記事一覧","url":"https://yohelab.com/blog/","description":"AIニュース、記事構造、比較記事テンプレ、売り場づくりのメモをまとめています。","publisher":{"@type":"Organization","name":"よへラボ","url":"https://yohelab.com/","logo":{"@type":"ImageObject","url":"https://yohelab.com/yohelab-mascot-v2-20260518.png"}},"inLanguage":"ja-JP"}</script>
   <style>
-    body { background:#f8fbf9; }
-
-    .blog-intro {
-      max-width:760px;
-      margin:18px auto 0;
-      color:var(--muted);
-      font-size:15px;
-      line-height:1.85;
-    }
-    .featured-guides {
-      max-width:960px;
-      margin:26px auto 18px;
-      padding:22px;
-      border:1px solid #dce7fb;
-      border-radius:26px;
-      background:linear-gradient(135deg,#ffffff,#eef8f4);
-      box-shadow:var(--shadow-sm);
-    }
-    .featured-guides h2 {
-      font-size:clamp(24px,3.6vw,36px);
-      letter-spacing:-.05em;
-      margin:0 0 8px;
-    }
-    .featured-guides p {
-      color:var(--muted);
-      line-height:1.8;
-      margin:0 0 18px;
-      font-size:14px;
-    }
-    .featured-guide-grid {
-      display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:14px;
-    }
-    .featured-guide-card {
-      display:grid;
-      gap:8px;
-      padding:18px;
-      border-radius:20px;
-      background:#fff;
-      border:1px solid #dce7fb;
-      color:inherit;
-      text-decoration:none;
-      min-height:150px;
-    }
-    .featured-guide-card span {
-      color:#075c4c;
-      font-size:12px;
-      font-weight:900;
-      letter-spacing:.08em;
-      text-transform:uppercase;
-    }
-    .featured-guide-card strong {
-      font-size:18px;
-      line-height:1.45;
-      letter-spacing:-.03em;
-    }
-    .featured-guide-card small {
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.75;
-    }
-
-    .blog-tools {
-      max-width:960px;
-      margin:22px auto 20px;
-      padding:20px;
-      border:1px solid #dce7fb;
-      border-radius:24px;
-      background:#fff;
-      box-shadow:var(--shadow-sm);
-    }
-    .blog-search-row {
-      display:grid;
-      grid-template-columns:minmax(0,1fr) auto;
-      gap:10px;
-      margin-bottom:14px;
-    }
-    .blog-search-row input {
-      min-height:46px;
-      padding:0 16px;
-      border-radius:14px;
-      border:1px solid #dce7fb;
-      font-size:15px;
-      font-weight:700;
-      color:var(--text);
-      min-width:0;
-    }
-    .blog-search-row a {
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      min-height:46px;
-      padding:0 16px;
-      border-radius:14px;
-      background:#087a63;
-      color:#fff;
-      font-size:13px;
-      font-weight:900;
-      text-decoration:none;
-      white-space:nowrap;
-    }
-    .category-tabs {
-      display:grid;
-      grid-template-columns:repeat(2,minmax(0,1fr));
-      overflow:hidden;
-      border:1px solid #dce7fb;
-      border-radius:18px;
-      background:#fff;
-    }
-    .category-tab {
-      min-height:88px;
-      padding:14px 10px 12px;
-      border:0;
-      border-right:1px solid #e8f1ee;
-      background:#fff;
-      color:#21324c;
-      font:inherit;
-      font-weight:900;
-      cursor:pointer;
-      display:grid;
-      place-items:center;
-      gap:7px;
-      box-shadow:inset 0 0 0 0 #087a63;
-      transition:background .15s ease,color .15s ease,box-shadow .15s ease;
-    }
-    .category-tab:last-child {
-      border-right:0;
-    }
-    .category-tab.is-active {
-      background:#e8f7f1;
-      color:#087a63;
-      box-shadow:inset 0 -4px 0 #087a63;
-    }
-    .category-tab-icon {
-      font-size:24px;
-      line-height:1;
-    }
-    .category-tab-label {
-      font-size:15px;
-      letter-spacing:-.02em;
-    }
-    .child-category-panels {
-      margin-top:14px;
-      padding:14px;
-      border:1px solid #dce7fb;
-      border-radius:16px;
-      background:#fbfffd;
-    }
-    .child-category-panel {
-      display:none;
-    }
-    .child-category-panel.is-active {
-      display:block;
-    }
-    .child-category-title {
-      color:#52645f;
-      font-size:12px;
-      font-weight:900;
-      margin-bottom:10px;
-    }
-    .child-category-list {
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-    }
-    .category-child {
-      border:1px solid #dce7fb;
-      background:#fff;
-      color:#21324c;
-      border-radius:999px;
-      min-height:34px;
-      padding:0 12px;
-      font:inherit;
-      font-size:12.5px;
-      font-weight:900;
-      cursor:pointer;
-    }
-    .category-child.is-active {
-      background:#087a63;
-      border-color:#087a63;
-      color:#fff;
-    }
-    .child-category-panel[data-parent-panel="ai-news"] .child-category-list {
-      display:grid;
-      grid-template-columns:repeat(5,minmax(0,1fr));
-    }
-    .child-category-panel[data-parent-panel="ai-news"] .category-child {
-      width:100%;
-      text-align:center;
-      padding:0 8px;
-    }
-    .filter-status {
-      max-width:760px;
-      margin:10px auto 0;
-      color:var(--muted);
-      font-size:13px;
-      font-weight:700;
-    }
-
-    /* グリッド */
-    .posts-grid {
-      display:grid;
-      grid-template-columns:1fr;
-      gap:18px;
-      margin-top:16px;
-      max-width:760px;
-      margin-left:auto;
-      margin-right:auto;
-    }
-
-    /* カード */
-    .post-card {
-      background:#fff;border-radius:22px;
-      border:1px solid var(--border);
-      box-shadow:var(--shadow-sm);
-      overflow:hidden;
-      text-decoration:none;color:inherit;
-      display:flex;flex-direction:column;
-      transition:box-shadow .2s,transform .2s;
-      cursor:pointer;
-    }
-    .post-card:hover {
-      box-shadow:0 8px 32px rgba(0,0,0,.10);
-      transform:translateY(-2px);
-    }
-    .post-card:focus-visible {
-      outline:3px solid rgba(6,122,95,.35);
-      outline-offset:4px;
-    }
-    .post-card-head {
-      padding:20px 20px 0;
-    }
-    .post-card-img {
-      width:100%;height:auto;aspect-ratio:16/9;object-fit:contain;display:block;
-      background:#061f1b;
-    }
-    .post-card-img-placeholder {
-      width:100%;height:200px;background:linear-gradient(135deg,#e8f4ef,#d0ecdf);
-      display:flex;align-items:center;justify-content:center;
-      font-size:40px;color:rgba(0,0,0,.15);
-    }
-    .post-card-body { padding:18px 20px 20px;flex:1;display:flex;flex-direction:column; }
-    .post-card-meta { font-size:12px;color:var(--muted);margin-bottom:8px;display:flex;gap:8px;flex-wrap:wrap;align-items:center; }
-    .post-card-tag { background:#f0f8f4;color:#075c4c;border-radius:999px;padding:2px 9px;font-size:11px;font-weight:700;text-decoration:none; }
-    .post-card-tag:hover { background:#e0f4ec;color:#087a63; }
-    .post-card-title { font-size:24px;font-weight:900;line-height:1.35;margin-bottom:12px;letter-spacing:-.04em;flex:1; }
-    .post-card-excerpt {
-      font-size:15px;color:var(--muted);line-height:1.9;
-      display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;
-    }
-    .post-card-excerpt.is-open {
-      display:block;
-      -webkit-line-clamp:initial;
-    }
-    .post-card-preview {
-      margin-top:14px;
-      padding:14px 16px;
-      border-radius:16px;
-      background:#f7fbff;
-      border:1px solid #dce7fb;
-      color:var(--text);
-      font-size:14px;
-      line-height:1.85;
-      display:none;
-    }
-    .post-card-preview.is-open { display:block; }
-    .post-card-footer {
-      margin-top:16px;
-      display:flex;
-      justify-content:space-between;
-      gap:12px;
-      align-items:center;
-      flex-wrap:wrap;
-    }
-    .read-more {
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      color:var(--green);
-      font-weight:800;
-      font-size:13px;
-      background:none;
-      border:none;
-      padding:0;
-      cursor:pointer;
-      text-decoration:none;
-    }
-    .read-more:hover { text-decoration:underline; }
-    .open-link {
-      color:var(--muted);
-      font-size:13px;
-      font-weight:700;
-      text-decoration:none;
-    }
-
-    .empty { padding:48px 24px;text-align:center;color:var(--muted);font-size:16px; }
-
-    @media (max-width:860px) {
-      .featured-guide-grid { grid-template-columns:1fr; }
-    }
-    @media (max-width:560px) {
-      .post-card-title { font-size:21px; }
-      .blog-search-row { grid-template-columns:1fr; }
-      .category-tabs { grid-template-columns:repeat(2,minmax(0,1fr)); }
-      .category-tab { min-height:76px;border-bottom:1px solid #e8f1ee; }
-      .category-tab:nth-child(even) { border-right:0; }
-      .category-tab:last-child { border-bottom:0; }
-      .child-category-panel[data-parent-panel="ai-news"] .child-category-list {
-        display:flex;
-      }
-      .child-category-panel[data-parent-panel="ai-news"] .category-child {
-        width:auto;
-      }
+    :root { --green:#087a63; --green-dark:#075c4c; --ink:#18231f; --muted:#596862; --line:#dce7e2; --soft:#f4faf7; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic UI","Noto Sans JP",sans-serif; color:var(--ink); background:#f8fbf9; line-height:1.8; }
+    a { color:inherit; }
+    img { max-width:100%; height:auto; display:block; }
+    .wrap { width:min(1040px,100% - 32px); margin:0 auto; }
+    .header { background:#fff; border-bottom:3px solid var(--green); position:sticky; top:0; z-index:10; }
+    .header-inner { min-height:58px; display:flex; align-items:center; justify-content:space-between; gap:18px; }
+    .brand { display:flex; align-items:center; gap:10px; color:var(--green); text-decoration:none; font-size:20px; font-weight:900; }
+    .brand img { width:36px; height:36px; border-radius:8px; }
+    .nav { display:flex; gap:4px; flex-wrap:wrap; }
+    .nav a { padding:6px 11px; border-radius:6px; color:#33423d; text-decoration:none; font-size:13px; font-weight:800; }
+    .nav a:hover { background:var(--soft); color:var(--green-dark); }
+    .hero { padding:48px 0 24px; text-align:center; }
+    .label { display:inline-flex; padding:3px 11px; border-radius:999px; background:#e8f7f1; color:var(--green-dark); font-size:12px; font-weight:900; }
+    h1 { margin:14px 0 10px; font-size:clamp(32px,5vw,54px); line-height:1.15; letter-spacing:0; }
+    .intro { max-width:720px; margin:0 auto; color:var(--muted); font-size:16px; }
+    .tools { margin:26px auto 18px; padding:18px; border:1px solid var(--line); border-radius:8px; background:#fff; display:grid; gap:12px; }
+    .filters { display:flex; gap:8px; flex-wrap:wrap; }
+    .filter { display:inline-flex; min-height:34px; align-items:center; padding:0 12px; border:1px solid var(--line); border-radius:999px; background:#fff; color:#33423d; text-decoration:none; font-size:13px; font-weight:900; }
+    .filter.primary { background:var(--green); color:#fff; border-color:var(--green); }
+    .posts { display:grid; gap:16px; margin:22px 0 58px; }
+    .post { display:grid; grid-template-columns:160px minmax(0,1fr); gap:18px; padding:18px; border:1px solid var(--line); border-radius:8px; background:#fff; color:inherit; text-decoration:none; box-shadow:0 10px 28px rgba(8,45,36,.05); }
+    .thumb { width:100%; aspect-ratio:16/10; border-radius:7px; object-fit:cover; background:#e8f7f1; }
+    .meta { display:flex; align-items:center; gap:8px; flex-wrap:wrap; color:var(--muted); font-size:12px; font-weight:800; }
+    .chip { padding:2px 8px; border-radius:999px; background:#eef8f4; color:var(--green-dark); }
+    .post h2 { margin:8px 0; font-size:23px; line-height:1.35; letter-spacing:0; }
+    .post p { margin:0; color:var(--muted); }
+    .footer { border-top:1px solid var(--line); background:#fff; padding:24px 0; color:var(--muted); font-size:13px; }
+    .footer-inner { display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+    .footer-links { display:flex; gap:14px; flex-wrap:wrap; }
+    .footer-links a { color:var(--muted); text-decoration:none; font-weight:700; }
+    @media (max-width:700px) {
+      .header-inner { align-items:flex-start; flex-direction:column; padding:10px 0; }
+      .post { grid-template-columns:1fr; }
+      .thumb { max-height:220px; }
     }
   </style>
 </head>
 <body>
-    <header class="site-header" style="background:#fff;border-bottom:3px solid #087a63;position:sticky;top:0;z-index:100;">
-    <div class="header-inner" style="max-width:1100px;margin:0 auto;padding:0 16px;display:flex;align-items:center;gap:20px;height:56px;">
-      <a href="/" style="display:flex;align-items:center;gap:10px;font-size:20px;font-weight:900;color:#087a63;letter-spacing:-0.03em;flex-shrink:0;text-decoration:none;">
-        <img src="/yohelab-mascot-v2-20260518-64.png" alt="よへラボ" style="width:36px;height:36px;border-radius:8px;" />
+  <header class="header">
+    <div class="wrap header-inner">
+      <a class="brand" href="/">
+        <img src="/yohelab-mascot-v2-20260518-64.png" alt="よへラボ" width="36" height="36" decoding="async" />
         よへラボ
       </a>
-      <nav style="display:flex;align-items:center;gap:4px;">
-        <a href="/" style="padding:5px 11px;border-radius:4px;font-size:13px;font-weight:700;color:#444;text-decoration:none;">トップ</a>
-        <a href="/blog/" style="padding:5px 11px;border-radius:4px;font-size:13px;font-weight:700;color:#444;text-decoration:none;">ブログ</a>
-        <a href="/lp/bunsirube/" style="padding:5px 11px;border-radius:4px;font-size:13px;font-weight:700;color:#444;text-decoration:none;">文標</a>
-        <a href="/about/" style="padding:5px 11px;border-radius:4px;font-size:13px;font-weight:700;color:#444;text-decoration:none;">サイトについて</a>
-        <a href="/en/blog/" hreflang="en" lang="en" style="padding:5px 11px;border:1px solid #e8e8e8;border-radius:4px;font-size:12px;font-weight:800;color:#444;text-decoration:none;">EN</a>
+      <nav class="nav" aria-label="主要ナビゲーション">
+        <a href="/">トップ</a>
+        <a href="/blog/">ブログ</a>
+        <a href="/games/">ゲーム</a>
+        <a href="/about/">サイトについて</a>
+        <a href="/contact/">問い合わせ</a>
       </nav>
-      <div style="margin-left:auto;">
-        <a href="/lp/bunsirube/" style="background:#087a63;color:#fff;padding:7px 16px;border-radius:4px;font-size:13px;font-weight:700;text-decoration:none;">文標を見る →</a>
-      </div>
     </div>
   </header>
 
-  <main>
-  <section class="section">
-    <div class="container">
-      <div class="sec-head" style="text-align:center;margin-bottom:22px;">
-        <p class="sec-label">Blog</p>
-        <h1>よへラボ記事一覧</h1>
-        <p class="blog-intro">AIニュースを追いながら、実際に使えるAIツールへつなげるための記事一覧です。ここではAIの動きと文標を中心にまとめます。</p>
+  <main class="wrap">
+    <section class="hero">
+      <span class="label">Blog</span>
+      <h1>よへラボ記事一覧</h1>
+      <p class="intro">AIニュース、AI検索時代の記事構造、比較記事テンプレ、売り場づくりのメモをまとめています。公開しているテンプレートは日本語向けです。</p>
+    </section>
+
+    <section class="tools" aria-label="記事カテゴリ">
+      <div class="filters">
+        <a class="filter primary" href="/blog/">すべて</a>
+        <a class="filter" href="/blog/?category=ai-news">AIニュース</a>
+        <a class="filter" href="/blog/?category=template">記事テンプレ</a>
+        <a class="filter" href="/blog/?category=sales">売り場づくり</a>
       </div>
-      <section class="featured-guides" aria-labelledby="bunsirube-guides-title">
-        <h2 id="bunsirube-guides-title">文標を買う前に読む3本</h2>
-        <p>よへラボの方向性、記事の型、文標の位置づけを先に確認できます。</p>
-        <div class="featured-guide-grid">
-          <a class="featured-guide-card" href="/blog/ai-news-selling-ideas/">
-            <span>Direction</span>
-            <strong>AIニュースを記事ネタに変える方法</strong>
-            <small>ニュースを読んで終わりにしないための考え方。</small>
-          </a>
-          <a class="featured-guide-card" href="/blog/comparison-article-template/">
-            <span>Article</span>
-            <strong>比較記事の書き方</strong>
-            <small>ネタを記事として残すときの基本構造。</small>
-          </a>
-          <a class="featured-guide-card" href="/blog/bunsirube-before-install/">
-            <span>Tool</span>
-            <strong>文標を入れる前に確認すること</strong>
-            <small>よへラボの道具のひとつとして、文標を見る。</small>
-          </a>
+    </section>
+
+    <section class="posts" aria-label="公開記事">
+      <a class="post" href="/blog/ai-news-selling-ideas/">
+        <img class="thumb" src="/assets/blog/faq-source-ai-search/eyecatch.webp" alt="" loading="lazy" width="320" height="200" />
+        <div>
+          <div class="meta"><span>2026-05-18</span><span class="chip">AIニュース</span></div>
+          <h2>AIニュースを記事ネタに変える方法｜ChatGPT・Claude・Gemini活用</h2>
+          <p>AIニュースを読んで終わらせず、ブログ記事やテンプレに変えるための考え方。</p>
         </div>
-      </section>
-      <section class="blog-tools" aria-label="記事検索とカテゴリ">
-        <div class="blog-search-row">
-          <input id="blog-search" type="search" placeholder="キーワードで探す。例: ChatGPT / Claude / 文標 / AI検索" autocomplete="off" />
-          <a href="/about/">よへラボについて</a>
+      </a>
+
+      <a class="post" href="/blog/comparison-article-template/">
+        <img class="thumb" src="/assets/blog/comparison-article-template/eyecatch.webp" alt="" loading="lazy" width="320" height="200" />
+        <div>
+          <div class="meta"><span>2026-05-04</span><span class="chip">記事テンプレ</span></div>
+          <h2>比較記事の書き方：AIツール比較にも使える結論・比較表・FAQ・CTA型</h2>
+          <p>ChatGPT vs Claude vs Geminiなど、AIツール比較記事にも使える記事構成テンプレ。</p>
         </div>
-        <div class="category-tabs" role="tablist" aria-label="親カテゴリ">
-          <a class="category-tab is-active" role="tab" aria-selected="true" data-parent="ai-news" data-filter="group:ai-news" href="/blog/?category=group:ai-news">
-            <span class="category-tab-icon">🤖</span>
-            <span class="category-tab-label">AIニュース</span>
-          </a>
-          <a class="category-tab" role="tab" aria-selected="false" data-parent="ai-tools" data-filter="group:ai-tools" href="/blog/?category=group:ai-tools">
-            <span class="category-tab-icon">📦</span>
-            <span class="category-tab-label">AIツール</span>
-          </a>
+      </a>
+
+      <a class="post" href="/blog/faq-source-ai-search/">
+        <img class="thumb" src="/assets/blog/faq-source-ai-search/eyecatch.webp" alt="" loading="lazy" width="320" height="200" />
+        <div>
+          <div class="meta"><span>2026-05-02</span><span class="chip">記事構造</span></div>
+          <h2>AI検索向けにFAQと出典を置く理由</h2>
+          <p>FAQと出典を置く意味を、読み手が確認しやすい記事づくりの視点で整理。</p>
         </div>
-        <div class="child-category-panels" aria-label="子カテゴリ">
-          <div class="child-category-panel is-active" data-parent-panel="ai-news">
-            <div class="child-category-title">AIニュースの子カテゴリ</div>
-            <div class="child-category-list">
-              <a class="category-child is-active" data-parent="ai-news" data-filter="all" href="/blog/">すべて</a>
-              <a class="category-child" data-parent="ai-news" data-filter="chatgpt" href="/blog/?category=chatgpt">ChatGPT</a>
-              <a class="category-child" data-parent="ai-news" data-filter="claude" href="/blog/?category=claude">Claude</a>
-              <a class="category-child" data-parent="ai-news" data-filter="gemini" href="/blog/?category=gemini">Gemini</a>
-              <a class="category-child" data-parent="ai-news" data-filter="perplexity" href="/blog/?category=perplexity">Perplexity</a>
-              <a class="category-child" data-parent="ai-news" data-filter="genspark" href="/blog/?category=genspark">Genspark</a>
-              <a class="category-child" data-parent="ai-news" data-filter="grok" href="/blog/?category=grok">Grok</a>
-              <a class="category-child" data-parent="ai-news" data-filter="deepseek" href="/blog/?category=deepseek">DeepSeek</a>
-              <a class="category-child" data-parent="ai-news" data-filter="codex" href="/blog/?category=codex">Codex</a>
-              <a class="category-child" data-parent="ai-news" data-filter="cursor" href="/blog/?category=cursor">Cursor</a>
-              <a class="category-child" data-parent="ai-news" data-filter="copilot" href="/blog/?category=copilot">Copilot</a>
-              <a class="category-child" data-parent="ai-news" data-filter="midjourney" href="/blog/?category=midjourney">Midjourney</a>
-            </div>
-          </div>
-          <div class="child-category-panel" data-parent-panel="ai-tools">
-            <div class="child-category-title">AIツールの子カテゴリ</div>
-            <div class="child-category-list">
-              <a class="category-child" data-parent="ai-tools" data-filter="group:ai-tools" href="/blog/?category=group:ai-tools">すべて</a>
-              <a class="category-child" data-parent="ai-tools" data-filter="bunsirube" href="/blog/?category=bunsirube">文標の記事</a>
-              <a class="category-child" data-parent="ai-tools" data-filter="template" href="/blog/?category=template">記事テンプレ</a>
-              <a class="category-child" data-parent="ai-tools" data-filter="bunsirube" href="/lp/bunsirube/">文標LPへ</a>
-            </div>
-          </div>
+      </a>
+
+      <a class="post" href="/blog/sales-page-common-mistakes/">
+        <img class="thumb" src="/assets/blog/sales-page-common-mistakes/eyecatch.webp" alt="" loading="lazy" width="320" height="200" />
+        <div>
+          <div class="meta"><span>2026-05-02</span><span class="chip">売り場づくり</span></div>
+          <h2>BASE・note・自サイトの商品ページでよくある失敗</h2>
+          <p>商品は悪くないのに伝わらないとき、ページの順番と説明を見直すメモ。</p>
         </div>
-      </section>
-      <div class="filter-status" id="filter-status">カテゴリやキーワードで記事を絞り込めます。</div>
-      <div id="posts" class="posts-grid">
-
-        <!-- ===== 公開記事 ===== -->
-        <article class="post-card" data-slug="ai-news-selling-ideas" data-tags="ai-news chatgpt claude gemini perplexity genspark article template" data-search="AIニュース ChatGPT Claude Gemini Perplexity Genspark 記事ネタ note X ブログ テンプレ 商品案">
-          <img class="post-card-img" src="/assets/blog/faq-source-ai-search/eyecatch.webp" alt="AIニュースを記事ネタに変える方法" loading="lazy" />
-          <div class="post-card-body">
-            <div class="post-card-meta"><span>2026-05-18</span><a class="post-card-tag" href="/blog/?category=ai-news">AIニュース</a><a class="post-card-tag" href="/blog/?category=chatgpt">ChatGPT</a><a class="post-card-tag" href="/blog/?category=claude">Claude</a><a class="post-card-tag" href="/blog/?category=gemini">Gemini</a></div>
-            <div class="post-card-title">AIニュースを記事ネタに変える方法｜ChatGPT・Claude・Gemini活用</div>
-            <div class="post-card-excerpt">よへラボでAIニュースから記事・テンプレ・AIツールへつなげるための方針。ChatGPT・Claude・Geminiどのニュースでも使える手順。</div>
-            <div class="post-card-footer"><a class="open-link" href="/blog/ai-news-selling-ideas/">記事を読む →</a></div>
-          </div>
-        </article>
-
-        <article class="post-card" data-slug="faq-source-ai-search" data-tags="ai-news chatgpt claude gemini perplexity genspark grok article ai-tools bunsirube wordpress" data-search="AI検索 ChatGPT Claude Gemini Perplexity FAQ 出典 Google AI Overviews Grok">
-          <img class="post-card-img" src="/assets/blog/faq-source-ai-search/eyecatch.webp" alt="AI検索向けにFAQと出典を置く理由" loading="lazy" />
-          <div class="post-card-body">
-            <div class="post-card-meta"><span>2026-05-02</span><a class="post-card-tag" href="/blog/?category=ai-news">AI検索</a><a class="post-card-tag" href="/blog/?category=chatgpt">ChatGPT</a><a class="post-card-tag" href="/blog/?category=claude">Claude</a><a class="post-card-tag" href="/blog/?category=gemini">Gemini</a></div>
-            <div class="post-card-title">AI検索向けにFAQと出典を置く理由｜ChatGPT・Claude・Gemini・Grok対応</div>
-            <div class="post-card-excerpt">Google AI Overviews、ChatGPT、Claudeなど各AIに読み取られやすいFAQ構造の作り方。</div>
-            <div class="post-card-footer"><a class="open-link" href="/blog/faq-source-ai-search/">記事を読む →</a></div>
-          </div>
-        </article>
-
-        <article class="post-card" data-slug="comparison-article-template" data-tags="chatgpt claude gemini perplexity genspark grok ai-news ai-tools article template bunsirube wordpress" data-search="比較記事 書き方 テンプレ FAQ CTA ChatGPT Claude Gemini 比較">
-          <img class="post-card-img" src="/assets/blog/comparison-article-template/eyecatch.webp" alt="比較記事の書き方" loading="lazy" />
-          <div class="post-card-body">
-            <div class="post-card-meta"><span>2026-05-04</span><a class="post-card-tag" href="/blog/?category=template">記事テンプレ</a><a class="post-card-tag" href="/blog/?category=template">比較記事</a><a class="post-card-tag" href="/blog/?category=ai-news">AI比較</a></div>
-            <div class="post-card-title">比較記事の書き方：AIツール比較にも使える結論・比較表・FAQ・CTA型</div>
-            <div class="post-card-excerpt">ChatGPT vs Claude vs Geminiなど、AIツール比較記事にそのまま使える記事構成テンプレ。</div>
-            <div class="post-card-footer"><a class="open-link" href="/blog/comparison-article-template/">記事を読む →</a></div>
-          </div>
-        </article>
-
-        <article class="post-card" data-slug="free-theme-vs-bunsirube" data-tags="ai-tools bunsirube wordpress article template" data-search="無料テーマ 文標 WordPress 比較">
-          <img class="post-card-img" src="/assets/blog/free-theme-vs-bunsirube/eyecatch.webp" alt="無料テーマと文標の違い" loading="lazy" />
-          <div class="post-card-body">
-            <div class="post-card-meta"><span>2026-05-04</span><a class="post-card-tag" href="/blog/?category=wordpress">WordPress</a><a class="post-card-tag" href="/blog/?category=bunsirube">文標</a></div>
-            <div class="post-card-title">無料テーマと文標の違い：記事の型で選ぶWordPressテーマ</div>
-            <div class="post-card-excerpt">文標は無料テーマと機能数で正面勝負せず、記事の型・FAQ・比較表・CTA・導線確認に絞ったテーマです。</div>
-            <div class="post-card-footer"><a class="open-link" href="/blog/free-theme-vs-bunsirube/">記事を読む →</a></div>
-          </div>
-        </article>
-
-        <article class="post-card" data-slug="bunsirube-version-history" data-tags="ai-tools bunsirube wordpress article template" data-search="文標 WordPress 更新履歴 テーマ">
-          <img class="post-card-img" src="/assets/blog/bunsirube-version-history/eyecatch.webp" alt="文標のバージョンアップ履歴" loading="lazy" />
-          <div class="post-card-body">
-            <div class="post-card-meta"><span>2026-05-12</span><a class="post-card-tag" href="/blog/?category=wordpress">WordPress</a><a class="post-card-tag" href="/blog/?category=bunsirube">文標</a></div>
-            <div class="post-card-title">文標のバージョンアップ履歴：初期版から今までに良くしたこと</div>
-            <div class="post-card-excerpt">文標を初期版からどう育ててきたか。追加したもの、良くしたところをまとめました。</div>
-            <div class="post-card-footer"><a class="open-link" href="/blog/bunsirube-version-history/">記事を読む →</a></div>
-          </div>
-        </article>
-
-        <article class="post-card" data-slug="bunsirube-before-install" data-tags="ai-tools bunsirube wordpress article" data-search="文標 導入前 バックアップ WordPress">
-          <img class="post-card-img" src="/assets/blog/bunsirube-before-install/eyecatch.webp" alt="文標を入れる前に確認すること" loading="lazy" />
-          <div class="post-card-body">
-            <div class="post-card-meta"><span>2026-05-02</span><a class="post-card-tag" href="/blog/?category=wordpress">WordPress</a><a class="post-card-tag" href="/blog/?category=bunsirube">文標</a></div>
-            <div class="post-card-title">文標を入れる前に確認すること：既存記事・バックアップ・環境</div>
-            <div class="post-card-excerpt">WordPressテーマを変える前に確認しておきたい最低限のチェックリスト。</div>
-            <div class="post-card-footer"><a class="open-link" href="/blog/bunsirube-before-install/">記事を読む →</a></div>
-          </div>
-        </article>
-
-        <article class="post-card" data-slug="sales-page-common-mistakes" data-tags="ai-tools article template" data-search="商品ページ note BASE 販売ページ 改善">
-          <img class="post-card-img" src="/assets/blog/sales-page-common-mistakes/eyecatch.webp" alt="商品ページでよくある失敗" loading="lazy" />
-          <div class="post-card-body">
-            <div class="post-card-meta"><span>2026-05-02</span><a class="post-card-tag" href="/blog/?category=group:ai-tools">AIツール</a><a class="post-card-tag" href="/blog/?category=template">売り場改善</a></div>
-            <div class="post-card-title">BASE・note・自サイトの商品ページでよくある失敗</div>
-            <div class="post-card-excerpt">商品は悪くないのに、ページの順番で損していることがあります。</div>
-            <div class="post-card-footer"><a class="open-link" href="/blog/sales-page-common-mistakes/">記事を読む →</a></div>
-          </div>
-        </article>
-
-        <!-- 下書き記事は公開ブログ一覧には出さず、管理画面の下書き欄で扱う。 -->
-
-      </div>
-    </div>
-  </section>
+      </a>
+    </section>
   </main>
 
-    <footer style="background:#fff;border-top:1px solid #e8e8e8;margin-top:24px;padding:28px 16px 16px;">
-    <div style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:24px;">
-      <div>
-        <a href="/" style="display:flex;align-items:center;gap:8px;font-size:16px;font-weight:900;color:#087a63;text-decoration:none;margin-bottom:8px;">
-          <img src="/yohelab-mascot-v2-20260518-64.png" alt="よへラボ" style="width:28px;height:28px;border-radius:6px;" />よへラボ
-        </a>
-        <p style="font-size:12px;color:#5f6b7a;line-height:1.7;">AIニュースとAIツールを<br>見やすく整理するサイト</p>
-      </div>
-      <div>
-        <h3 style="font-size:12px;font-weight:900;color:#1a1a2e;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #e8e8e8;">コンテンツ</h3>
-        <ul style="list-style:none;display:grid;gap:5px;padding:0;margin:0;">
-          <li><a href="/blog/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">ブログ記事一覧</a></li>
-          <li><a href="/blog/?category=group:ai-news" style="font-size:12px;color:#5f6b7a;text-decoration:none;">AIニュース活用</a></li>
-          <li><a href="/blog/?category=group:ai-tools" style="font-size:12px;color:#5f6b7a;text-decoration:none;">AIツール</a></li>
-          <li><a href="/lp/bunsirube/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">文標</a></li>
-        </ul>
-      </div>
-      <div>
-        <h3 style="font-size:12px;font-weight:900;color:#1a1a2e;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #e8e8e8;">AIツール</h3>
-        <ul style="list-style:none;display:grid;gap:5px;padding:0;margin:0;">
-          <li><a href="/lp/bunsirube/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">文標（WPテーマ）</a></li>
-          <li><a href="/lp/bunsirube/demo/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">文標デモ</a></li>
-          <li><a href="/blog/comparison-article-template/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">比較記事テンプレ（無料）</a></li>
-          <li><a href="/apps/research-writer/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">Research Writer</a></li>
-        </ul>
-      </div>
-      <div>
-        <h3 style="font-size:12px;font-weight:900;color:#1a1a2e;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #e8e8e8;">その他</h3>
-        <ul style="list-style:none;display:grid;gap:5px;padding:0;margin:0;">
-          <li><a href="/about/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">サイトについて</a></li>
-          <li><a href="/contact/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">お問い合わせ</a></li>
-          <li><a href="https://x.com/yohe_lab" target="_blank" rel="noopener" style="font-size:12px;color:#5f6b7a;text-decoration:none;">X（旧Twitter）</a></li>
-          <li><a href="https://note.com/yohelab" target="_blank" rel="noopener" style="font-size:12px;color:#5f6b7a;text-decoration:none;">note</a></li>
-          <li><a href="/legal/commerce/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">特定商取引法に基づく表記</a></li>
-          <li><a href="/legal/privacy/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">プライバシーポリシー</a></li>
-          <li><a href="/legal/terms/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">利用規約</a></li>
-        </ul>
-      </div>
-    </div>
-    <div style="max-width:1100px;margin:16px auto 0;padding-top:12px;border-top:1px solid #e8e8e8;font-size:11px;color:#5f6b7a;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+  <footer class="footer">
+    <div class="wrap footer-inner">
       <span>© よへラボ / yohelab.com</span>
+      <nav class="footer-links" aria-label="フッター">
+        <a href="/">トップ</a>
+        <a href="/about/">サイトについて</a>
+        <a href="/contact/">問い合わせ</a>
+        <a href="/legal/commerce/">特商法表記</a>
+        <a href="/legal/privacy/">プライバシー</a>
+        <a href="/legal/terms/">利用規約</a>
+      </nav>
     </div>
   </footer>
-
-  <script type="module" src="/blog/main.js"></script>
 </body>
 </html>

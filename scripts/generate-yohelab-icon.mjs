@@ -20,10 +20,3 @@ await writeModule(
   "researchWriterAppSvg",
   proofSvg,
 );
-
-const themeUpdate = await readFile(resolve("public/api/theme-update/bunsirube.json"), "utf8");
-await writeModule(
-  resolve("functions/generated/theme-update.js"),
-  "themeUpdateJson",
-  themeUpdate,
-);

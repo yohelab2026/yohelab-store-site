@@ -1,107 +1,59 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>記事メーカー（準備中） | よへラボ</title>
-  <meta name="description" content="記事メーカーは現在準備中です。よへラボでは、まずWordPressテーマ「文標（ぶんしるべ）」を提供しています。" />
+  <title>記事メーカー 準備中 | よへラボ</title>
+  <meta name="description" content="記事メーカーは現在準備中です。よへラボでは、AIニュース、記事構造、ブログ運営、売り場づくりのメモを日本語で整理しています。" />
   <meta name="robots" content="noindex,nofollow" />
   <link rel="canonical" href="https://yohelab.com/lp/research-writer/" />
-  <link rel="icon" href="/yohelab-mascot-v2-20260518-64.png" type="image/webp" />
+  <link rel="icon" type="image/png" href="/yohelab-mascot-v2-20260518-32.png" />
   <style>
     *,*::before,*::after{box-sizing:border-box}
-    html,body{margin:0;padding:0}
-    body{
-      font-family:"Hiragino Kaku Gothic ProN","Yu Gothic UI",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
-      background:linear-gradient(180deg,#f7faf8 0%,#eef5f1 100%);
-      color:#0b1f1a;
-      min-height:100vh;
-      display:flex;
-      flex-direction:column;
-      line-height:1.7;
-      -webkit-font-smoothing:antialiased;
-    }
+    body{margin:0;font-family:"Hiragino Sans","Yu Gothic","Meiryo",system-ui,sans-serif;background:#f7faf8;color:#10202a;line-height:1.8}
     a{color:#087a63;text-decoration:none}
     a:hover{text-decoration:underline}
-    .nav{padding:18px 24px;border-bottom:1px solid rgba(11,143,114,.1);background:#fff}
-    .nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:18px}
-    .brand{display:flex;align-items:center;gap:10px;color:#0b1f1a;font-weight:900}
-    .brand img{width:30px;height:30px;border-radius:8px}
-    .nav-links{margin-left:auto;display:flex;gap:18px;font-size:14px}
-    .nav-links a{color:#445}
-    main{flex:1;display:grid;place-items:center;padding:64px 24px}
-    .card{
-      max-width:560px;
-      width:100%;
-      background:#fff;
-      border-radius:24px;
-      padding:48px 36px;
-      box-shadow:0 24px 60px rgba(11,143,114,.10);
-      text-align:center;
-      border:1px solid rgba(11,143,114,.08);
-    }
-    .badge{
-      display:inline-block;
-      font-size:12px;
-      font-weight:900;
-      letter-spacing:.14em;
-      padding:6px 14px;
-      border-radius:999px;
-      background:rgba(11,143,114,.10);
-      color:#087a63;
-      margin-bottom:18px;
-    }
-    h1{font-size:clamp(24px,5vw,32px);font-weight:900;letter-spacing:-.02em;margin:0 0 14px;line-height:1.4}
-    .lead{color:#536174;font-size:15px;margin:0 0 28px}
-    .actions{display:flex;flex-direction:column;gap:12px;align-items:stretch;margin-top:24px}
-    .btn{
-      display:inline-flex;align-items:center;justify-content:center;gap:8px;
-      padding:14px 22px;
-      font-weight:900;
-      border-radius:14px;
-      font-size:15px;
-      text-decoration:none;
-      transition:transform .15s ease,box-shadow .15s ease;
-    }
-    .btn-primary{background:#087a63;color:#fff;box-shadow:0 12px 28px rgba(11,143,114,.28)}
-    .btn-primary:hover{transform:translateY(-1px);text-decoration:none}
-    .btn-ghost{background:#fff;color:#087a63;border:1.5px solid rgba(11,143,114,.25)}
-    .btn-ghost:hover{background:rgba(11,143,114,.05);text-decoration:none}
-    .meta{font-size:12px;color:#7a8b9a;margin-top:24px}
-    footer{padding:24px;text-align:center;font-size:12px;color:#7a8b9a}
-    footer a{color:#7a8b9a;margin:0 8px}
+    .nav{background:#fff;border-bottom:1px solid #dfe8e3}
+    .nav-inner{max-width:980px;margin:0 auto;padding:16px 20px;display:flex;gap:18px;align-items:center}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:900;color:#10202a}
+    .brand img{width:32px;height:32px;border-radius:8px}
+    .links{margin-left:auto;display:flex;gap:14px;font-size:14px;font-weight:700}
+    main{min-height:calc(100vh - 145px);display:grid;place-items:center;padding:56px 20px}
+    .panel{width:min(620px,100%);background:#fff;border:1px solid #dfe8e3;border-radius:22px;padding:42px 30px;text-align:center;box-shadow:0 20px 50px rgba(14,55,42,.08)}
+    .badge{display:inline-flex;padding:5px 12px;border-radius:999px;background:#e8f7f1;color:#087a63;font-size:12px;font-weight:900;letter-spacing:.12em}
+    h1{margin:18px 0 12px;font-size:clamp(26px,5vw,36px);line-height:1.35;letter-spacing:0;font-weight:900}
+    p{margin:0;color:#536174}
+    .actions{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:26px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 18px;border-radius:12px;font-weight:900}
+    .primary{background:#087a63;color:#fff}
+    .ghost{border:1px solid #cfe0da;background:#fff;color:#087a63}
+    footer{padding:22px 20px;text-align:center;color:#78908a;font-size:12px}
+    footer a{color:#78908a;margin:0 7px}
   </style>
 </head>
 <body>
   <header class="nav">
     <div class="nav-inner">
-      <a class="brand" href="/"><img src="/yohelab-mascot-v2-20260518-64.png" alt="" /><span>よへラボ</span></a>
-      <nav class="nav-links">
-        <a href="/lp/bunsirube/">文標</a>
+      <a class="brand" href="/"><img src="/yohelab-mascot-v2-20260518-64.png" width="32" height="32" alt="" />よへラボ</a>
+      <nav class="links">
         <a href="/blog/">ブログ</a>
         <a href="/contact/">問い合わせ</a>
       </nav>
     </div>
   </header>
-
   <main>
-    <div class="card">
+    <section class="panel">
       <span class="badge">PREPARING</span>
-      <h1>記事メーカーは<br />現在準備中です。</h1>
-      <p class="lead">よへラボでは、いまは WordPress テーマ「文標（ぶんしるべ）」を中心に提供しています。記事メーカーは整い次第、こちらでお知らせします。</p>
-
+      <h1>記事メーカーは準備中です</h1>
+      <p>公開前のため、このページは検索対象にしていません。準備が整うまでは、ブログで記事づくりやAIニュースのメモを更新します。</p>
       <div class="actions">
-        <a class="btn btn-primary" href="/lp/bunsirube/">文標（WordPressテーマ）を見る →</a>
-        <a class="btn btn-ghost" href="/">トップに戻る</a>
+        <a class="btn primary" href="/blog/">ブログを見る</a>
+        <a class="btn ghost" href="/">トップへ戻る</a>
       </div>
-
-      <p class="meta">公開時期：未定／お知らせは <a href="/blog/">ブログ</a> で更新します。</p>
-    </div>
+    </section>
   </main>
-
   <footer>
-    <p>© よへラボ / yohelab.com</p>
-    <a href="/">トップ</a>・<a href="/blog/">ブログ</a>・<a href="/contact/">問い合わせ</a>・<a href="/legal/commerce/">特定商取引法</a>・<a href="/legal/privacy/">プライバシーポリシー</a>・<a href="/legal/terms/">利用規約</a>
+    <a href="/">トップ</a><a href="/blog/">ブログ</a><a href="/contact/">問い合わせ</a><a href="/legal/terms/">利用規約</a>
   </footer>
 </body>
 </html>

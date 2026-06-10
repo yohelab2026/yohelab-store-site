@@ -1,16 +1,13 @@
-import { getClientIp, rateLimitOk } from "../lib/affiliate.js";
+import { getClientIp, rateLimitOk } from "../lib/rate-limit.js";
 
 const DEFAULT_ADMIN_EMAIL = "yohelab2026@gmail.com";
 
 const ALLOWED_PURPOSES = new Set([
-  "文標本体の不具合",
-  "広告リンク・CTAの表示不具合",
-  "ダウンロード・シリアル・自動更新の不備",
-  "30日返金希望",
-  "決済・個人情報に関する連絡",
+  "サイトの誤字・リンク切れ",
+  "公開内容について",
+  "過去の購入に関する連絡",
   "販売者情報請求",
-  "更新通知希望",
-  "バグ報告",
+  "その他",
 ]);
 
 export async function onRequestPost(context) {

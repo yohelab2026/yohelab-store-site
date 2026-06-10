@@ -3,8 +3,8 @@ import { resolve } from "node:path";
 
 const token = process.env.LINE_CHANNEL_ACCESS_TOKEN || "";
 const dryRun = process.argv.includes("--dry-run") || process.env.LINE_RICH_MENU_DRY_RUN === "1";
-const imagePath = resolve(process.env.LINE_RICH_MENU_IMAGE || "assets/line/rich-menu-bunsirube.png");
-const richMenuName = process.env.LINE_RICH_MENU_NAME || "文標メニュー";
+const imagePath = resolve(process.env.LINE_RICH_MENU_IMAGE || "assets/line/rich-menu.png");
+const richMenuName = process.env.LINE_RICH_MENU_NAME || "よへラボメニュー";
 
 const areas = [
   area(0, 0, 1250, 843, message("1 ブログ", "1")),
@@ -17,7 +17,7 @@ const richMenuPayload = {
   size: { width: 2500, height: 1686 },
   selected: true,
   name: richMenuName,
-  chatBarText: "文標メニュー",
+  chatBarText: "よへラボメニュー",
   areas,
 };
 

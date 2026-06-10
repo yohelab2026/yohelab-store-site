@@ -3,254 +3,39 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GPT-5.6は今週くる？ ログ、予測市場、Xの熱狂を整理する | よへラボ記事一覧</title>
-  <meta name="description" content="Codexログ、Polymarketの温度、Xのざわつき。GPT-5.6の噂を、何が見えていて何がまだ空気なのかに分けて読む記事です。" />
-  <meta property="og:title" content="GPT-5.6は今週くる？ ログ、予測市場、Xの熱狂を整理する" />
-  <meta property="og:description" content="Codexログ、Polymarketの温度、Xのざわつき。GPT-5.6の噂を、何が見えていて何がまだ空気なのかに分けて読む記事です。" />
-  <meta property="og:type" content="article" />
-  <meta property="og:locale" content="ja_JP" />
-  <meta property="og:url" content="https://yohelab.com/blog/gpt-56-this-week/" />
-  <meta property="og:image" content="https://yohelab.com/assets/blog/gpt-56-this-week/eyecatch.webp" />
-  <meta name="twitter:card" content="summary_large_image" />
+  <title>GPT-5.6を待つ前に、AI作業の回し方を整える | よへラボブログ</title>
+  <meta name="description" content="新しいAIモデルの噂や更新を追いながら、記事作成、確認、修正、公開までの流れをどう整えるかをまとめたメモです。" />
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1" />
+  <meta property="og:title" content="GPT-5.6を待つ前に、AI作業の回し方を整える | よへラボブログ" />
+  <meta property="og:description" content="新しいAIモデルを待つだけでなく、記事作成と確認の流れを整えるためのメモ。" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://yohelab.com/blog/gpt-56-this-week/" />
+  <meta property="og:image" content="https://yohelab.com/yohelab-mascot-v2-20260518.png" />
+  <meta name="twitter:card" content="summary_large_image" />
   <link rel="canonical" href="https://yohelab.com/blog/gpt-56-this-week/" />
   <link rel="icon" type="image/png" href="/yohelab-mascot-v2-20260518-32.png" />
   <link rel="stylesheet" href="/shared/site.min.css" />
-  <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"BlogPosting","headline":"GPT-5.6は今週くる？ ログ、予測市場、Xの熱狂を整理する","datePublished":"2026-06-03","dateModified":"2026-06-03","url":"https://yohelab.com/blog/gpt-56-this-week/","image":"https://yohelab.com/assets/blog/gpt-56-this-week/eyecatch.webp","author":{"@type":"Organization","name":"よへラボ"},"publisher":{"@type":"Organization","name":"よへラボ","logo":{"@type":"ImageObject","url":"https://yohelab.com/yohelab-mascot-v2-20260518.png"}},"description":"Codexログ、Polymarketの温度、Xのざわつき。GPT-5.6の噂を、何が見えていて何がまだ空気なのかに分けて読む記事です。","inLanguage":"ja-JP"}
-  </script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"GPT-5.6を待つ前に、AI作業の回し方を整える","datePublished":"2026-06-10","dateModified":"2026-06-11","url":"https://yohelab.com/blog/gpt-56-this-week/","image":"https://yohelab.com/yohelab-mascot-v2-20260518.png","author":{"@type":"Organization","name":"よへラボ"},"publisher":{"@type":"Organization","name":"よへラボ","logo":{"@type":"ImageObject","url":"https://yohelab.com/yohelab-mascot-v2-20260518.png"}},"description":"新しいAIモデルの噂や更新を追いながら、記事作成、確認、修正、公開までの流れをどう整えるかをまとめたメモです。","inLanguage":"ja-JP"}</script>
   <style>
-    body { background:#fff;color:var(--text); }
-    .post-outer { max-width:860px;margin:0 auto;padding:48px 24px 100px; }
-    .post-hero {
-      border-radius:28px;padding:30px 30px 26px;margin-bottom:30px;
-      background:linear-gradient(135deg,#150d2d 0%,#101828 45%,#3a1026 100%);
-      color:#fff;border:1px solid rgba(255,255,255,.08);box-shadow:0 24px 70px rgba(9,14,30,.18);
-    }
-    .post-hero-kicker { display:inline-flex;padding:7px 12px;border-radius:999px;background:#ff5c7a;color:#fff;font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;margin-bottom:18px; }
-    .post-meta { display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:13px;color:rgba(255,255,255,.72);margin-bottom:18px; }
-    .post-tag { background:rgba(255,255,255,.1);color:#fff;border-radius:999px;padding:3px 12px;font-size:12px;font-weight:700;text-decoration:none;border:1px solid rgba(255,255,255,.14); }
-    .post-tag:hover { background:rgba(255,255,255,.16); }
-    .post-title { font-size:clamp(32px,5.8vw,58px);font-weight:900;line-height:1.08;margin:0;letter-spacing:-.06em; }
-    .post-excerpt { font-size:18px;color:rgba(255,255,255,.82);line-height:1.85;margin:18px 0 0;max-width:46em; }
-    .hero-pills { display:flex;flex-wrap:wrap;gap:10px;margin-top:22px; }
-    .hero-pill { display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);font-size:12px;font-weight:800;letter-spacing:.02em; }
-    .hero-pill strong { color:#ffd56c; }
-    .post-body { font-size:17px;line-height:2;color:var(--text); }
-    .post-body h2 { font-size:28px;line-height:1.35;margin:40px 0 14px;letter-spacing:-.04em; }
-    .post-body p, .post-body li { margin-bottom:16px; }
-    .post-body ul { padding-left:1.3em; }
-    .lead-box {
-      background:#fff6f8;border:1px solid #ffd6df;border-radius:20px;padding:18px 20px;margin:20px 0 28px;
-    }
-    .lead-box strong { color:#ba1748; }
-    .evidence-grid {
-      display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:18px 0 28px;
-    }
-    .evidence-card {
-      background:#fff;border:1px solid var(--border);border-radius:18px;padding:16px 16px 14px;box-shadow:0 12px 30px rgba(14,55,42,.06);
-    }
-    .evidence-card .label { font-size:12px;font-weight:900;color:#087a63;letter-spacing:.08em;text-transform:uppercase; }
-    .evidence-card h3 { margin:8px 0 8px;font-size:18px;line-height:1.45;letter-spacing:-.03em; }
-    .evidence-card p { margin:0;color:var(--muted);font-size:14px;line-height:1.8; }
-    .post-table { width:100%;border-collapse:separate;border-spacing:0;margin:18px 0;border:1px solid var(--border);border-radius:18px;overflow:hidden;font-size:15px; }
-    .post-table th,.post-table td { padding:12px 14px;border-bottom:1px solid var(--border);vertical-align:top;text-align:left; }
-    .post-table th { background:#f0fbf6;color:#075c4c;font-weight:900; }
-    .post-table tr:last-child td { border-bottom:0; }
-    .body-img { width:100%;height:auto;border-radius:24px;border:1px solid #dfe8e3;box-shadow:0 20px 50px rgba(14,55,42,.09);margin:18px 0 24px;display:block; }
-    .quote-box { background:#f8fbff;border:1px solid #dce7fb;border-radius:18px;padding:18px 20px;margin:18px 0; }
-    .quote-box strong { color:#2544a6; }
-    .timeline-list { display:grid;gap:12px;margin:18px 0 8px;padding:0;list-style:none; }
-    .timeline-list li { display:grid;grid-template-columns:128px minmax(0,1fr);gap:12px;padding:14px 16px;border-radius:16px;background:#fff;border:1px solid var(--border);box-shadow:0 10px 20px rgba(14,55,42,.05); }
-    .timeline-date { font-size:13px;font-weight:900;color:#087a63; }
-    .timeline-copy { font-size:15px;line-height:1.8;color:var(--text); }
-    .callout-cta { margin:36px 0 0;padding:24px;border-radius:22px;background:linear-gradient(135deg,#0d2a23,#0b1620);color:#fff;box-shadow:0 20px 50px rgba(9,14,30,.16); }
-    .callout-cta p { color:rgba(255,255,255,.8); }
-    .callout-cta a { color:#9df3df;font-weight:900;text-decoration:underline;text-underline-offset:3px; }
-    .related-article-cards { margin:36px 0 0;padding:22px;border:1px solid #dfe8e3;border-radius:22px;background:#f7fbf9; }
-    .related-article-cards h2 { margin:0 0 10px;font-size:22px;font-weight:900;letter-spacing:-.03em;border:0;padding:0;color:#10202a; }
-    .related-article-cards p { margin:0 0 14px;color:#5f6b7a;font-size:14px;line-height:1.8; }
-    .back-link { display:inline-flex;align-items:center;gap:6px;color:var(--muted);font-size:14px;font-weight:700;text-decoration:none;margin-top:40px; }
-    @media (max-width: 760px) {
-      .post-outer { padding:20px 16px 76px; }
-      .post-hero { padding:24px 20px 22px; border-radius:22px; }
-      .post-title { font-size:clamp(28px,9vw,44px); }
-      .post-excerpt { font-size:16px; }
-      .evidence-grid { grid-template-columns:1fr; }
-      .timeline-list li { grid-template-columns:1fr; gap:6px; }
-      .post-body { font-size:16px; line-height:1.95; }
-    }
+    body{background:#fff;color:#10202a}.post-outer{max-width:760px;margin:0 auto;padding:48px 22px 96px}.post-title{font-size:clamp(30px,5vw,48px);line-height:1.18;font-weight:900;letter-spacing:0;margin:18px 0}.post-meta{display:flex;gap:10px;flex-wrap:wrap;color:#60706b;font-size:13px}.post-tag{background:#e8f7f1;color:#087a63;border-radius:999px;padding:4px 11px;font-weight:800;text-decoration:none}.post-body{font-size:17px;line-height:2}.post-body h2{font-size:24px;margin:42px 0 12px;border-bottom:2px solid #dfe8e3;padding-bottom:8px}.note{background:#f7fbf9;border:1px solid #dfe8e3;border-radius:16px;padding:18px;margin:24px 0}.site-header{background:#fff;border-bottom:3px solid #087a63}.header-inner{max-width:1100px;margin:0 auto;padding:0 16px;height:56px;display:flex;align-items:center;gap:18px}.header-inner a{text-decoration:none;color:#10202a;font-weight:800}.brand{display:flex;align-items:center;gap:10px;color:#087a63!important;font-size:20px}.brand img{border-radius:8px}.footer{border-top:1px solid #dfe8e3}.footer-inner{max-width:1100px;margin:0 auto;padding:24px 16px;display:flex;gap:14px;justify-content:space-between;flex-wrap:wrap;color:#60706b;font-size:13px}.footer-links{display:flex;gap:12px;flex-wrap:wrap}.footer a{color:#60706b;text-decoration:none}
   </style>
 </head>
 <body>
-
-  <header class="site-header" style="background:#fff;border-bottom:3px solid #087a63;position:sticky;top:0;z-index:100;">
-    <div class="header-inner" style="max-width:1100px;margin:0 auto;padding:0 16px;display:flex;align-items:center;gap:20px;height:56px;">
-      <a href="/" style="display:flex;align-items:center;gap:10px;font-size:20px;font-weight:900;color:#087a63;letter-spacing:-0.03em;flex-shrink:0;text-decoration:none;">
-        <img src="/yohelab-mascot-v2-20260518-64.png" alt="よへラボ" style="width:36px;height:36px;border-radius:8px;" />
-        よへラボ
-      </a>
-      <nav style="display:flex;align-items:center;gap:4px;flex-wrap:wrap;">
-        <a href="/blog/" style="padding:5px 11px;border-radius:4px;font-size:13px;font-weight:700;color:#444;text-decoration:none;">ブログ</a>
-        <a href="/lp/bunsirube/" style="padding:5px 11px;border-radius:4px;font-size:13px;font-weight:700;color:#444;text-decoration:none;">文標</a>
-        <a href="/about/" style="padding:5px 11px;border-radius:4px;font-size:13px;font-weight:700;color:#444;text-decoration:none;">サイトについて</a>
-      </nav>
-    </div>
-  </header>
-
+  <header class="site-header"><div class="header-inner"><a class="brand" href="/"><img src="/yohelab-mascot-v2-20260518-64.png" width="36" height="36" alt="" />よへラボ</a><a href="/blog/">ブログ</a><a href="/about/">このサイトについて</a></div></header>
   <main class="post-outer">
-    <section class="post-hero">
-      <span class="post-hero-kicker">Rumor Watch</span>
-      <div class="post-meta">
-        <span>2026-06-03</span>
-        <a class="post-tag" href="/blog/?category=ai-news">AIニュース</a>
-        <a class="post-tag" href="/blog/?category=chatgpt">ChatGPT</a>
-        <a class="post-tag" href="/blog/?category=ai-tools">OpenAI</a>
-      </div>
-      <h1 class="post-title">GPT-5.6は今週くる？ ログ、予測市場、Xの熱狂を整理する</h1>
-      <p class="post-excerpt">Codexのログに一瞬だけ見えた名前。6月末を厚く織り込む市場。Xに流れる「今週説」。空気だけで走っている話に見えて、近くで見ると案外、重さのある材料がそろっている。</p>
-      <div class="hero-pills">
-        <span class="hero-pill"><strong>log</strong> gpt-5.6 が一瞬見えた</span>
-        <span class="hero-pill"><strong>market</strong> 6月末に強い賭け</span>
-        <span class="hero-pill"><strong>x</strong> 今週くる説が拡散</span>
-      </div>
-    </section>
-
+    <div class="post-meta"><time datetime="2026-06-10">2026年6月10日</time><a class="post-tag" href="/blog/?category=ai-news">AIニュース</a><a class="post-tag" href="/blog/?category=codex">Codex</a></div>
+    <h1 class="post-title">GPT-5.6を待つ前に、AI作業の回し方を整える</h1>
     <div class="post-body">
-      <p>6月2日から3日にかけてのXの空気は、いつもの「次のモデル来る？」より少し熱かったです。はっきり言うと、話の芯はたった3つです。<strong>ログで見えた痕跡</strong>、<strong>お金が乗った予測市場</strong>、<strong>人が先に沸くタイムライン</strong>。この3つが同じ方向を向くと、ただの噂でも妙に重く見えます。</p>
-
-      <div class="lead-box">
-        <strong>先に結論。</strong><br />
-        今週中の断定はできません。でも「6月中に何か来る」空気は、かなり強いです。しかも、その空気はXの盛り上がりだけでできているわけではありません。
-      </div>
-
-      <div class="evidence-grid">
-        <div class="evidence-card">
-          <div class="label">Signal 01</div>
-          <h3>Codexのログに、gpt-5.6 が見えた</h3>
-          <p>2026-05-13ごろ、OpenAIのCodex関連ログに gpt-5.6 のルーティング痕跡が出たと広まった。消えたならなおさら、ただの見間違いよりはテストっぽく見えます。</p>
-        </div>
-        <div class="evidence-card">
-          <div class="label">Signal 02</div>
-          <h3>市場は6月末に重く賭けている</h3>
-          <p>Polymarket の「GPT-5.6 released by...?」は、2026-05-19に開いた。公開ページでは6月末と7月末に向けて、かなり厚い資金が入っている。</p>
-        </div>
-        <div class="evidence-card">
-          <div class="label">Signal 03</div>
-          <h3>Xは期待と疲れが同居している</h3>
-          <p>「今週来る説」に乗る人と、「また新モデルか、クォータが足りない」と言う人が同時にいます。盛り上がりというより、半分は消耗戦に近いです。</p>
-        </div>
-      </div>
-
-      <h2>まずは、何が確認できるのか</h2>
-      <p>いちばん強いのは、感想じゃなくてログです。WaveSpeed が2026-05-14にまとめた内容では、OpenAIのCodexロールアウトログに GPT-5.6 の一行が出て、その後のセッションでは見えなくなりました。こういう「出たけど消えた」は、普通の公開文よりずっと生々しいです。</p>
-      <p>しかも、前提になる動きはかなり速いです。OpenAIは GPT-5.5 を 2026-04-23 に出し、GPT-5.5 Instant を 2026-05-05 に更新しました。つまり、ひとつ前の層が落ち着く前に、次の層の試験が始まってもおかしくない流れです。</p>
-
-      <img class="body-img" src="/assets/blog/gpt-56-this-week/evidence-map.webp" alt="GPT-5.6の噂をログ、市場、Xの3層で整理した比較図" width="1600" height="1100" loading="lazy" decoding="async" />
-
-      <h2>市場は「出るか」より「いつ出るか」を見ている</h2>
-      <p>予測市場は、噂をそのまま信じる場所じゃありません。みんながどれだけ本気で賭けるかを見られる場所です。Polymarket の GPT-5.6 市場は 2026-05-19 に始まり、総出来高は 42万ドル超まで積み上がっている。これだけ動くなら、見物客の雑談ではもうありません。</p>
-      <p>市場の読み方は単純でよいです。6月中に何か来る、少なくとも市場参加者はそう読んでいます。しかも、その「何か」は完全公開の大イベントでなくてもよいです。限定展開でも、段階的ロールアウトでも、名前違いでも、期待は先に走ります。</p>
-
-      <table class="post-table">
-        <thead><tr><th>見るもの</th><th>どう読むか</th><th>今の温度</th></tr></thead>
-        <tbody>
-          <tr><td>Codexのログ</td><td>実際のテスト痕跡に近い</td><td>かなり強い</td></tr>
-          <tr><td>Polymarket</td><td>6月末に寄せる人が多い</td><td>強い</td></tr>
-          <tr><td>Xのタイムライン</td><td>期待が先に広がっている</td><td>高いが雑音も多い</td></tr>
-        </tbody>
-      </table>
-
-      <h2>Xの熱狂は、だいたい2種類に割れる</h2>
-      <ul class="timeline-list">
-        <li>
-          <div class="timeline-date">期待派</div>
-          <div class="timeline-copy">「GPT-5.6で Codex がまた化ける」「5.5より長いコードベースを見られるなら本気で使う」みたいに、機能面の伸びを先に買っている人たち。ここはかなり素直です。</div>
-        </li>
-        <li>
-          <div class="timeline-date">疲弊派</div>
-          <div class="timeline-copy">「また新モデルか」「クォータが先に死ぬ」「5.5 の使用感がまだ落ち着かない」と言う人たち。これも自然で、むしろ現場感はこっちのほうが強いです。</div>
-        </li>
-      </ul>
-
-      <p>この2つが同じタイムラインでぶつかると、空気は一気に加速します。つまり、Xの熱は「証拠」ではないけれど、証拠に寄りかかる形で膨らんでいきます。</p>
-
-      <h2>もし本当に来るなら、最初に動くのはどこか</h2>
-      <p>いきなり全員公開というより、まずは Codex ユーザーや Pro 系の利用者から触れる形が自然だと思います。理由は単純で、ログ痕跡が出た場所がコーディング系だからです。そこが先に触るなら、次に来るのは「長いコードベース」「エージェントの継続性」「UI生成の安定感」あたりになります。</p>
-      <p>名前も、そのまま GPT-5.6 とは限らありません。Instant、Thinking、Pro みたいな分岐で見せることもあるし、表に出るラベルはもっと地味かもしれません。だからこそ、名前だけを追うより「何ができるようになるか」を見たほうが早い。</p>
-
-      <div class="quote-box">
-        <strong>この話の本体</strong><br />
-        「GPT-5.6 という名前が今週出るか」より、「OpenAI が次のモデル群をもう動かしているか」のほうが大事です。今見えている材料は、その方向をかなり強く指している。
-      </div>
-
-      <h2>6月の見取り図</h2>
-      <p>今のところの読みはこうです。</p>
-      <table class="post-table">
-        <thead><tr><th>タイミング</th><th>ありそうなこと</th></tr></thead>
-        <tbody>
-          <tr><td>6月上旬</td><td>限定的な露出、あるいはCodexまわりの更新</td></tr>
-          <tr><td>6月中旬</td><td>市場が一段と盛り上がるか、逆にいったん落ち着く</td></tr>
-          <tr><td>6月下旬</td><td>名前つきで出るなら本命。遅れるなら7月にずれるだけ</td></tr>
-        </tbody>
-      </table>
-
-      <p>つまり、今週に限って言えば「来ても驚かない」ではなく「来たらやっぱりか、となる準備をしておく」が正しいです。噂が本物かどうかは、結局のところ出るまで分からありません。でも、ここまで材料が揃うと、タイムラインだけ見て笑って済ませるのも少し雑です。</p>
-
-      <div class="callout-cta">
-        <h2 style="margin-top:0;color:#fff;">GPT-5.6が来るなら、次に問うべきは性能より使い方です。</h2>
-        <p>長いコード、長い作業、長い検証。エージェントをどう回すかで、体感はかなり変わります。文標や比較記事の型みたいに、記事もツールも「長く動くか」で見たほうが強いです。</p>
-        <p><a href="/blog/comparison-article-template/">比較記事の型を見る</a> / <a href="/blog/ai-news-selling-ideas/">AIニュースを記事ネタに変える方法</a></p>
-      </div>
-
-      <a class="back-link" href="/">← トップページに戻る</a>
+      <p>新しいモデルの話題は楽しいですが、実際の成果はモデル名だけでは決まりません。依頼の出し方、途中確認、公開前チェックの流れが整っているかで、使いやすさは大きく変わります。</p>
+      <h2>最初にゴールを小さくする</h2>
+      <p>「いい感じの記事を作る」ではなく、「導入を書き直す」「FAQを5つ作る」「タイトル候補を比較する」のように、作業単位を小さくします。</p>
+      <h2>途中で確認するものを決める</h2>
+      <p>文章なら見出し、事実関係、リンク、禁止表現。サイトならタブ名、メタ説明、スマホ表示、リンク切れ。確認項目を先に決めると、後戻りが減ります。</p>
+      <h2>公開前のチェックを残す</h2>
+      <p>AIに任せるほど、最後の人間確認は大事になります。価格、法務、決済、個人情報、過剰な表現は、必ず別枠で確認します。</p>
+      <div class="note">よへラボでは、AIニュースを日本語の記事メモとして残すことを優先します。英語版の増設より、日本語ページの品質と運用しやすさを重視します。</div>
     </div>
   </main>
-  <footer style="background:#fff;border-top:1px solid #e8e8e8;margin-top:40px;padding:28px 16px 16px;">
-    <div style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:24px;">
-      <div>
-        <a href="/" style="display:flex;align-items:center;gap:8px;font-size:16px;font-weight:900;color:#087a63;text-decoration:none;margin-bottom:8px;">
-          <img src="/yohelab-mascot-v2-20260518-64.png" alt="よへラボ" style="width:28px;height:28px;border-radius:6px;" />よへラボ
-        </a>
-        <p style="font-size:12px;color:#5f6b7a;line-height:1.7;">家で働く人のための<br>AI・副業情報サイト</p>
-      </div>
-      <div>
-        <h3 style="font-size:12px;font-weight:900;color:#1a1a2e;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #e8e8e8;">コンテンツ</h3>
-        <ul style="list-style:none;display:grid;gap:5px;padding:0;margin:0;">
-          <li><a href="/blog/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">ブログ記事一覧</a></li>
-          <li><a href="/blog/?category=ai-news" style="font-size:12px;color:#5f6b7a;text-decoration:none;">AIニュース活用</a></li>
-          <li><a href="/blog/?category=wordpress" style="font-size:12px;color:#5f6b7a;text-decoration:none;">WordPress</a></li>
-        </ul>
-      </div>
-      <div>
-        <h3 style="font-size:12px;font-weight:900;color:#1a1a2e;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #e8e8e8;">AIツール</h3>
-        <ul style="list-style:none;display:grid;gap:5px;padding:0;margin:0;">
-          <li><a href="/lp/bunsirube/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">文標（WPテーマ）</a></li>
-          <li><a href="/lp/bunsirube/demo/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">文標デモ</a></li>
-          <li><a href="/blog/comparison-article-template/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">比較記事テンプレ（無料）</a></li>
-          <li><a href="/apps/research-writer/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">Research Writer</a></li>
-        </ul>
-      </div>
-      <div>
-        <h3 style="font-size:12px;font-weight:900;color:#1a1a2e;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #e8e8e8;">その他</h3>
-        <ul style="list-style:none;display:grid;gap:5px;padding:0;margin:0;">
-          <li><a href="/about/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">サイトについて</a></li>
-          <li><a href="/contact/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">お問い合わせ</a></li>
-          <li><a href="https://x.com/yohe_lab" target="_blank" rel="noopener" style="font-size:12px;color:#5f6b7a;text-decoration:none;">X（旧Twitter）</a></li>
-          <li><a href="https://note.com/yohelab" target="_blank" rel="noopener" style="font-size:12px;color:#5f6b7a;text-decoration:none;">note</a></li>
-          <li><a href="/legal/privacy/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">プライバシーポリシー</a></li>
-          <li><a href="/legal/terms/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">利用規約</a></li>
-        </ul>
-      </div>
-    </div>
-    <div style="max-width:1100px;margin:16px auto 0;padding-top:12px;border-top:1px solid #e8e8e8;font-size:11px;color:#5f6b7a;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
-      <span>© 2026 よへラボ</span>
-      <div style="display:flex;gap:12px;">
-        <a href="/legal/privacy/" style="color:#5f6b7a;font-size:11px;text-decoration:none;">プライバシーポリシー</a>
-        <a href="/legal/terms/" style="color:#5f6b7a;font-size:11px;text-decoration:none;">利用規約</a>
-        <a href="/contact/" style="color:#5f6b7a;font-size:11px;text-decoration:none;">お問い合わせ</a>
-      </div>
-    </div>
-  </footer>
+  <footer class="footer"><div class="footer-inner"><div>© よへラボ / yohelab.com</div><div class="footer-links"><a href="/">トップ</a><a href="/blog/">ブログ</a><a href="/contact/">問い合わせ</a><a href="/legal/privacy/">プライバシー</a></div></div></footer>
 </body>
 </html>

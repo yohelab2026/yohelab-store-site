@@ -3,44 +3,24 @@
   <url>
     <loc>https://yohelab.com/</loc>
     <xhtml:link rel="alternate" hreflang="ja" href="https://yohelab.com/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://yohelab.com/en/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://yohelab.com/" />
-    <lastmod>2026-06-10</lastmod>
+    <lastmod>2026-06-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://yohelab.com/en/</loc>
-    <xhtml:link rel="alternate" hreflang="ja" href="https://yohelab.com/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://yohelab.com/en/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://yohelab.com/" />
-    <lastmod>2026-06-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://yohelab.com/en/blog/</loc>
-    <xhtml:link rel="alternate" hreflang="ja" href="https://yohelab.com/blog/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://yohelab.com/en/blog/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://yohelab.com/blog/" />
-    <lastmod>2026-06-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://yohelab.com/about/</loc>
-    <lastmod>2026-05-18</lastmod>
+    <lastmod>2026-06-11</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://yohelab.com/blog/</loc>
     <xhtml:link rel="alternate" hreflang="ja" href="https://yohelab.com/blog/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://yohelab.com/en/blog/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://yohelab.com/blog/" />
-    <lastmod>2026-05-19</lastmod>
+    <lastmod>2026-06-11</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://yohelab.com/blog/ai-news-selling-ideas/</loc>
@@ -49,19 +29,7 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://yohelab.com/blog/bunsirube-version-history/</loc>
-    <lastmod>2026-05-12</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
     <loc>https://yohelab.com/blog/comparison-article-template/</loc>
-    <lastmod>2026-05-04</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://yohelab.com/blog/free-theme-vs-bunsirube/</loc>
     <lastmod>2026-05-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -79,56 +47,26 @@
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://yohelab.com/blog/bunsirube-before-install/</loc>
-    <lastmod>2026-05-02</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://yohelab.com/lp/bunsirube/</loc>
-    <lastmod>2026-05-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://yohelab.com/lp/bunsirube/install/</loc>
-    <lastmod>2026-05-12</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://yohelab.com/lp/bunsirube/demo/</loc>
-    <lastmod>2026-05-12</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://yohelab.com/lp/bunsirube/updates/</loc>
-    <lastmod>2026-05-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://yohelab.com/contact/</loc>
-    <lastmod>2026-05-12</lastmod>
+    <lastmod>2026-06-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://yohelab.com/legal/commerce/</loc>
-    <lastmod>2026-05-12</lastmod>
+    <lastmod>2026-06-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://yohelab.com/legal/privacy/</loc>
-    <lastmod>2026-05-12</lastmod>
+    <lastmod>2026-06-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://yohelab.com/legal/terms/</loc>
-    <lastmod>2026-05-12</lastmod>
+    <lastmod>2026-06-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>

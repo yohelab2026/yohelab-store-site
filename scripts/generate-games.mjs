@@ -240,7 +240,7 @@ function pageTemplate(game) {
   <meta property="og:title" content="${game.name} | よへラボゲーム" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://yohelab.com/games/${game.slug}/" />
-  <meta property="og:image" content="https://yohelab.com/assets/og/bunsirube-og.png" />
+  <meta property="og:image" content="https://yohelab.com/yohelab-mascot-v2-20260518.png" />
   <meta name="robots" content="noindex,nofollow" />
   <meta name="theme-color" content="#f5fbff" />
   <link rel="canonical" href="https://yohelab.com/games/${game.slug}/" />
@@ -256,7 +256,6 @@ function pageTemplate(game) {
         <span>よへラボ</span>
       </a>
       <nav class="nav-links">
-        <a href="/lp/bunsirube/">文標</a>
         <a href="/blog/">ブログ</a>
         <a href="/contact/">問い合わせ</a>
       </nav>

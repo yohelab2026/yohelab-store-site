@@ -1,1 +1,0 @@
-export const themeUpdateJson = "{\n  \"version\": \"0.3.5\",\n  \"details_url\": \"https://yohelab.com/lp/bunsirube/updates/\",\n  \"package\": \"https://yohelab.com/api/theme-download\",\n  \"package_sha256\": \"5c2cecd6f53a9bbc2dfe5da8efbbf1259eff67ce1e299b35e200e4588ec9e3a9\",\n  \"last_updated\": \"2026-06-10\"\n}\n";

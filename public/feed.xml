@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>よへラボ</title>
+    <link>https://yohelab.com/</link>
+    <description>AIニュース、記事構造、ブログ運営、売り場づくりのメモを日本語で整理するサイトです。</description>
+    <language>ja</language>
+    <lastBuildDate>Thu, 11 Jun 2026 00:00:00 +0900</lastBuildDate>
+    <atom:link href="https://yohelab.com/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AIニュースを記事ネタに変える方法</title>
+      <link>https://yohelab.com/blog/ai-news-selling-ideas/</link>
+      <guid isPermaLink="true">https://yohelab.com/blog/ai-news-selling-ideas/</guid>
+      <pubDate>Sun, 17 May 2026 00:00:00 +0900</pubDate>
+      <description>AIニュースをそのまま流さず、ブログ、note、X、テンプレート、売り場づくりの小さなネタへ変えるための考え方を整理します。</description>
+    </item>
+    <item>
+      <title>比較記事の書き方：結論・比較表・FAQ・CTAの順で迷いを減らす</title>
+      <link>https://yohelab.com/blog/comparison-article-template/</link>
+      <guid isPermaLink="true">https://yohelab.com/blog/comparison-article-template/</guid>
+      <pubDate>Mon, 04 May 2026 00:00:00 +0900</pubDate>
+      <description>比較記事を書くときの基本構成。結論、選び方、比較表、向いている人、FAQ、CTAの順に置くと読み手が迷いにくくなります。</description>
+    </item>
+    <item>
+      <title>AI検索時代の記事構造でFAQと出典を置く理由</title>
+      <link>https://yohelab.com/blog/faq-source-ai-search/</link>
+      <guid isPermaLink="true">https://yohelab.com/blog/faq-source-ai-search/</guid>
+      <pubDate>Sun, 03 May 2026 00:00:00 +0900</pubDate>
+      <description>FAQ、見出し、出典、更新日をなぜ置くのか。読み手にも管理者にも分かりやすい形で整理します。</description>
+    </item>
+    <item>
+      <title>販売ページでよくある失敗：不安を消す順番で書く</title>
+      <link>https://yohelab.com/blog/sales-page-common-mistakes/</link>
+      <guid isPermaLink="true">https://yohelab.com/blog/sales-page-common-mistakes/</guid>
+      <pubDate>Wed, 06 May 2026 00:00:00 +0900</pubDate>
+      <description>販売ページでよくある失敗を、価格、対象者、注意点、問い合わせ導線の順に整理します。</description>
+    </item>
+  </channel>
+</rss>

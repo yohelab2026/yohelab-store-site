@@ -4,273 +4,111 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>問い合わせ | よへラボ</title>
-  <meta name="description" content="よへラボへの問い合わせ窓口。文標本体の不具合、広告リンク・CTAの表示不具合、購入後のダウンロード・シリアル・自動更新、30日返金希望、販売者情報請求を受け付けます。" />
+  <meta name="description" content="よへラボへの問い合わせ窓口。サイトの誤字、リンク切れ、公開内容、過去の購入に関する事務連絡を受け付けます。" />
   <meta property="og:title" content="問い合わせ | よへラボ" />
-  <meta property="og:description" content="文標本体の不具合、広告リンク・CTAの表示不具合、購入後のダウンロード・シリアル・自動更新、30日返金希望、販売者情報請求の問い合わせページ。" />
+  <meta property="og:description" content="サイトの誤字、リンク切れ、公開内容、過去の購入に関する事務連絡を受け付けます。" />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="ja_JP" />
   <meta property="og:url" content="https://yohelab.com/contact/" />
-  <meta property="og:image" content="https://yohelab.com/assets/og/bunsirube-og.png" />
+  <meta property="og:image" content="https://yohelab.com/yohelab-mascot-v2-20260518.png" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="robots" content="index,follow" />
-  <meta name="theme-color" content="#f5fbff" />
-  <meta name="turnstile-site-key" content="" />
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1" />
   <link rel="canonical" href="https://yohelab.com/contact/" />
-  <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"ContactPage","name":"問い合わせ | よへラボ","url":"https://yohelab.com/contact/","description":"文標本体の不具合、広告リンク・CTAの表示不具合、購入後のダウンロード・シリアル・自動更新、30日返金希望を受け付ける問い合わせ窓口","mainEntity":{"@type":"Organization","name":"よへラボ","url":"https://yohelab.com/","contactPoint":{"@type":"ContactPoint","contactType":"customer support","availableLanguage":"Japanese","url":"https://yohelab.com/contact/"}}}
-  </script>
   <link rel="icon" type="image/png" href="/yohelab-mascot-v2-20260518-32.png" />
   <link rel="stylesheet" href="/shared/site.min.css" />
-  <link rel="stylesheet" href="/shared/lp.min.css" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"ContactPage","name":"問い合わせ | よへラボ","url":"https://yohelab.com/contact/","description":"よへラボへの問い合わせ窓口","mainEntity":{"@type":"Organization","name":"よへラボ","url":"https://yohelab.com/","contactPoint":{"@type":"ContactPoint","contactType":"customer support","availableLanguage":"Japanese","url":"https://yohelab.com/contact/"}}}</script>
   <style>
-    .contact-hero {
-      padding: 76px 0 56px;
-      background: linear-gradient(180deg, #f8fbff 0%, #eef5ff 100%);
-      color: var(--text); text-align: center; position: relative; overflow: hidden;
-    }
-    .contact-hero-grid {
-      position: absolute; inset: 0; pointer-events: none;
-      background-image:
-        linear-gradient(rgba(11,143,114,.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(11,143,114,.04) 1px, transparent 1px);
-      background-size: 56px 56px;
-      mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 0%, transparent 78%);
-      -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 0%, transparent 78%);
-    }
-    .contact-hero h1 { font-size: clamp(34px,5vw,56px); font-weight:900; letter-spacing:-0.05em; line-height:1.1; margin-bottom:16px; }
-    .contact-hero p  { font-size:16px; color:var(--muted); max-width:640px; margin:0 auto; line-height:1.88; }
-    .contact-body { background:#fff; border-radius:28px 28px 0 0; margin-top:-28px; position:relative; z-index:2; }
-    .contact-grid { display:block; max-width:760px; margin:0 auto; }
-    .contact-form-box {
-      padding:40px 38px; border-radius:24px;
-      border:1.5px solid var(--green-mid);
-      background:linear-gradient(175deg,#fff 0%,#f4fbf8 100%);
-      box-shadow: 0 4px 18px rgba(11,143,114,.10);
-    }
-    .contact-form-box h2 { font-size:22px; font-weight:900; letter-spacing:-0.03em; margin-bottom:22px; }
-    .contact-form-box label { display:grid; gap:6px; font-size:14px; font-weight:700; color:var(--text); margin-bottom:14px; }
-    .contact-form-box input,
-    .contact-form-box textarea,
-    .contact-form-box select { font-size:15px; }
-    .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
-    .contact-notice {
-      padding:14px 18px; border-radius:14px;
-      background:#eff6ff; border:1px solid #bfdbfe;
-      color:#1e40af; font-size:14px; line-height:1.7; margin-bottom:18px;
-    }
-    .contact-notice strong { display:block; margin-bottom:4px; font-size:15px; }
-    .thanks-box { display:none; padding:24px; border-radius:16px; background:var(--green-light); border:1.5px solid var(--green-mid); margin-bottom:20px; }
-    .thanks-box.show { display:block; }
-    .thanks-box h3 { font-size:18px; font-weight:900; color:var(--green-dark); margin-bottom:8px; }
-    .thanks-box p { font-size:14px; color:var(--green-dark); margin:0; line-height:1.75; }
-    .turnstile-slot { min-height:0; margin:4px 0 8px; }
-    @media(max-width:780px){ .contact-body{border-radius:20px 20px 0 0;} }
-    @media(max-width:700px){
-      .site-header .header-inner{
-        height:auto!important;
-        min-height:56px;
-        padding:8px 12px 10px!important;
-        gap:8px!important;
-        flex-wrap:wrap!important;
-      }
-      .site-header nav{
-        order:2;
-        width:100%;
-        overflow-x:auto;
-        padding-bottom:2px;
-        scrollbar-width:none;
-      }
-      .site-header nav::-webkit-scrollbar{display:none;}
-      .site-header nav a{flex:0 0 auto;padding:4px 9px!important;}
-      .site-header .header-inner>div{display:none!important;}
-    }
-    @media(max-width:580px){ .contact-form-box{padding:24px 20px;} }
+    body { background:#f8fbf9; }
+    .header { background:#fff;border-bottom:3px solid #087a63;position:sticky;top:0;z-index:100; }
+    .header-inner { max-width:1100px;margin:0 auto;padding:0 16px;display:flex;align-items:center;gap:20px;min-height:56px; }
+    .brand { display:flex;align-items:center;gap:10px;font-size:20px;font-weight:900;color:#087a63;text-decoration:none; }
+    .brand img { width:36px;height:36px;border-radius:8px; }
+    .nav { display:flex;align-items:center;gap:4px;flex-wrap:wrap; }
+    .nav a { padding:5px 11px;border-radius:4px;font-size:13px;font-weight:700;color:#444;text-decoration:none; }
+    .shell { width:min(820px,100% - 36px); margin:0 auto; padding:54px 0 80px; }
+    .hero { text-align:center;margin-bottom:26px; }
+    .hero h1 { font-size:clamp(34px,6vw,56px);line-height:1.12;letter-spacing:0;margin:0 0 12px; }
+    .hero p { color:var(--muted);font-size:16px;line-height:1.9;margin:0 auto;max-width:680px; }
+    .box { background:#fff;border:1px solid var(--border);border-radius:8px;padding:26px;box-shadow:var(--shadow-sm); }
+    .notice { padding:14px 16px;border-radius:8px;background:#f0f8f4;border:1px solid #cfe9df;color:#314942;font-size:14px;line-height:1.8;margin-bottom:16px; }
+    .notice strong { display:block;color:#075c4c;margin-bottom:3px; }
+    .grid { display:grid;grid-template-columns:1fr 1fr;gap:12px; }
+    label { display:grid;gap:6px;font-size:13px;font-weight:800;color:#314942; }
+    input, select, textarea { width:100%;border:1px solid var(--border);border-radius:8px;padding:11px 12px;font:inherit;background:#fff; }
+    textarea { min-height:150px;resize:vertical; }
+    button { width:100%;min-height:52px;border:0;border-radius:8px;background:#087a63;color:#fff;font:inherit;font-weight:900;cursor:pointer; }
+    .thanks-box { display:none;margin-bottom:16px;padding:16px;border-radius:8px;background:#fff7ed;border:1px solid #ffd7ad;color:#6b3a10; }
+    .sr-only { position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0; }
+    @media(max-width:720px){ .header-inner{align-items:flex-start;flex-direction:column;padding:10px 16px;} .grid{grid-template-columns:1fr;} .box{padding:20px;} }
   </style>
 </head>
 <body>
-    <header class="site-header" style="background:#fff;border-bottom:3px solid #087a63;position:sticky;top:0;z-index:100;">
-    <div class="header-inner" style="max-width:1100px;margin:0 auto;padding:0 16px;display:flex;align-items:center;gap:20px;height:56px;">
-      <a href="/" style="display:flex;align-items:center;gap:10px;font-size:20px;font-weight:900;color:#087a63;letter-spacing:-0.03em;flex-shrink:0;text-decoration:none;">
-        <img src="/yohelab-mascot-v2-20260518-64.png" alt="よへラボ" style="width:36px;height:36px;border-radius:8px;" />
-        よへラボ
-      </a>
-      <nav style="display:flex;align-items:center;gap:4px;">
-        <a href="/" style="padding:5px 11px;border-radius:4px;font-size:13px;font-weight:700;color:#444;text-decoration:none;">トップ</a>
-        <a href="/blog/" style="padding:5px 11px;border-radius:4px;font-size:13px;font-weight:700;color:#444;text-decoration:none;">ブログ</a>
-        <a href="/lp/bunsirube/" style="padding:5px 11px;border-radius:4px;font-size:13px;font-weight:700;color:#444;text-decoration:none;">文標</a>
-        <a href="/about/" style="padding:5px 11px;border-radius:4px;font-size:13px;font-weight:700;color:#444;text-decoration:none;">サイトについて</a>
+  <header class="header">
+    <div class="header-inner">
+      <a class="brand" href="/"><img src="/yohelab-mascot-v2-20260518-64.png" alt="よへラボ" width="36" height="36" decoding="async" />よへラボ</a>
+      <nav class="nav" aria-label="主要ナビゲーション">
+        <a href="/">トップ</a>
+        <a href="/blog/">ブログ</a>
+        <a href="/games/">ゲーム</a>
+        <a href="/about/">サイトについて</a>
       </nav>
-      <div style="margin-left:auto;">
-        <a href="/lp/bunsirube/" style="background:#087a63;color:#fff;padding:7px 16px;border-radius:4px;font-size:13px;font-weight:700;text-decoration:none;">文標を見る →</a>
-      </div>
     </div>
   </header>
 
-  <main>
-    <section class="contact-hero">
-      <div class="contact-hero-grid" aria-hidden="true"></div>
-      <div class="container" style="position:relative;z-index:1;">
-        <p class="lp-eyebrow reveal" style="justify-content:center;display:inline-flex;">💬 問い合わせ</p>
-        <h1 class="reveal reveal-d1">文標の不具合と<br>購入後の連絡窓口</h1>
-        <p class="reveal reveal-d2">WordPressテーマ「文標（ぶんしるべ）」の低価格を保つため、受け付ける内容を絞っています。使い方相談、設定代行、個別カスタマイズ、SEO相談、広告運用相談は対象外です。</p>
-      </div>
+  <main class="shell">
+    <section class="hero">
+      <h1>問い合わせ</h1>
+      <p>サイトの誤字、リンク切れ、公開内容への問い合わせ、過去の購入に関する事務連絡はこちらから送れます。</p>
     </section>
 
-    <div class="contact-body">
-      <section style="padding:64px 0 80px;">
-        <div class="container">
-          <div class="contact-grid">
-            <!-- フォーム -->
-            <div class="contact-form-box reveal">
-<div id="page-review"></div>
-<h2 id="starter-kit">問い合わせフォーム</h2>
-              <div class="contact-notice">
-                <strong>受け付ける内容</strong>
-                文標本体の不具合、広告リンク・CTAの明らかな表示不具合、購入後のダウンロード・シリアル・自動更新の不備、30日返金希望、決済・個人情報に関する事務連絡、販売者情報請求だけ受け付けます。
-              </div>
-              <div class="contact-notice">
-                <strong>書くと確認が早い例</strong>
-                「どのページで」「どのボタンや広告リンクが」「どの操作のあとに」「どんな表示になったか」を書いてください。対象範囲の内容は48時間以内に1次返信します。
-              </div>
-              <div class="thanks-box" id="thanks-box">
-                <h3>ありがとう。内容を受け取った。</h3>
-                <p>対象範囲の内容は48時間以内に1次返信します。対象外の相談は個別返信できない場合があります。</p>
-              </div>
-              <form id="contact-form" class="stack" action="/api/contact" method="post">
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-                  <label>名前<input id="name" name="name" autocomplete="name" required /></label>
-                  <label>返信先メール<input id="email" name="email" type="email" autocomplete="email" required /></label>
-                </div>
-                <label>問い合わせ内容
-                  <select id="purpose" name="purpose" required>
-                    <option value="文標本体の不具合">文標本体の不具合</option>
-                    <option value="広告リンク・CTAの表示不具合">広告リンク・CTAの表示不具合</option>
-                    <option value="ダウンロード・シリアル・自動更新の不備">ダウンロード・シリアル・自動更新の不備</option>
-                    <option value="30日返金希望">30日返金希望</option>
-                    <option value="決済・個人情報に関する連絡">決済・個人情報に関する連絡</option>
-                    <option value="販売者情報請求">販売者情報請求</option>
-                  </select>
-                </label>
-                <label>ひとこと
-                  <textarea id="message" name="message" placeholder="発生した手順、URL、エラーメッセージ、文標のバージョン、購入時メールアドレスなど。"></textarea>
-                </label>
-                <label class="sr-only" for="website">入力しないでください</label>
-                <input id="website" class="sr-only" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
-                <input id="turnstile-token" type="hidden" name="turnstile_token" />
-                <div id="turnstile-widget" class="turnstile-slot" aria-label="スパム対策"></div>
-                <button class="btn btn-primary" type="submit" style="width:100%;height:52px;font-size:16px;">問い合わせを送る</button>
-                <p style="font-size:12.5px;color:var(--muted);margin-top:4px;">送信内容は問い合わせ対応のためだけに使う。送信はよへラボのAPIで受け付けます。</p>
-              </form>
-            </div>
-          </div>
+    <section class="box">
+      <div class="notice">
+        <strong>送る前に</strong>
+        URL、見ていたページ、起きたことを添えると確認が早くなります。返信が必要な内容は、内容を確認してから順次対応します。
+      </div>
+      <div class="thanks-box" id="thanks-box">
+        <h2>受け取りました</h2>
+        <p>内容を確認します。返信が必要なものは順次対応します。</p>
+      </div>
+      <form id="contact-form" class="stack" action="/api/contact" method="post">
+        <div class="grid">
+          <label>名前<input id="name" name="name" autocomplete="name" required /></label>
+          <label>返信先メール<input id="email" name="email" type="email" autocomplete="email" required /></label>
         </div>
-      </section>
-    </div>
+        <label>問い合わせ内容
+          <select id="purpose" name="purpose" required>
+            <option value="サイトの誤字・リンク切れ">サイトの誤字・リンク切れ</option>
+            <option value="公開内容について">公開内容について</option>
+            <option value="過去の購入に関する連絡">過去の購入に関する連絡</option>
+            <option value="販売者情報請求">販売者情報請求</option>
+            <option value="その他">その他</option>
+          </select>
+        </label>
+        <label>本文
+          <textarea id="message" name="message" placeholder="URL、確認したい内容、発生した状況などを書いてください。"></textarea>
+        </label>
+        <label class="sr-only" for="website">入力しないでください</label>
+        <input id="website" class="sr-only" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <input id="turnstile-token" type="hidden" name="turnstile_token" />
+        <div id="turnstile-widget" class="turnstile-slot" aria-label="スパム対策"></div>
+        <button type="submit">問い合わせを送る</button>
+        <p style="font-size:12.5px;color:var(--muted);margin-top:4px;">送信内容は問い合わせ対応のためだけに使います。</p>
+      </form>
+    </section>
   </main>
 
-    <footer style="background:#fff;border-top:1px solid #e8e8e8;margin-top:24px;padding:28px 16px 16px;">
-    <div style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:24px;">
-      <div>
-        <a href="/" style="display:flex;align-items:center;gap:8px;font-size:16px;font-weight:900;color:#087a63;text-decoration:none;margin-bottom:8px;">
-          <img src="/yohelab-mascot-v2-20260518-64.png" alt="よへラボ" style="width:28px;height:28px;border-radius:6px;" />よへラボ
-        </a>
-        <p style="font-size:12px;color:#5f6b7a;line-height:1.7;">家で働く人のための<br>AI・副業情報サイト</p>
-      </div>
-      <div>
-        <h3 style="font-size:12px;font-weight:900;color:#1a1a2e;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #e8e8e8;">コンテンツ</h3>
-        <ul style="list-style:none;display:grid;gap:5px;padding:0;margin:0;">
-          <li><a href="/blog/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">ブログ記事一覧</a></li>
-          <li><a href="/blog/?tag=ai-news" style="font-size:12px;color:#5f6b7a;text-decoration:none;">AIニュース活用</a></li>
-          <li><a href="/blog/?tag=wordpress" style="font-size:12px;color:#5f6b7a;text-decoration:none;">WordPress</a></li>
-          </ul>
-      </div>
-      <div>
-        <h3 style="font-size:12px;font-weight:900;color:#1a1a2e;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #e8e8e8;">AIツール</h3>
-        <ul style="list-style:none;display:grid;gap:5px;padding:0;margin:0;">
-          <li><a href="/lp/bunsirube/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">文標（WPテーマ）</a></li>
-          <li><a href="/lp/bunsirube/demo/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">文標デモ</a></li>
-          <li><a href="/blog/comparison-article-template/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">比較記事テンプレ（無料）</a></li>
-          <li><a href="/apps/research-writer/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">Research Writer</a></li>
-        </ul>
-      </div>
-      <div>
-        <h3 style="font-size:12px;font-weight:900;color:#1a1a2e;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #e8e8e8;">その他</h3>
-        <ul style="list-style:none;display:grid;gap:5px;padding:0;margin:0;">
-          <li><a href="/about/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">サイトについて</a></li>
-          <li><a href="/contact/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">お問い合わせ</a></li>
-          <li><a href="https://x.com/yohe_lab" target="_blank" rel="noopener" style="font-size:12px;color:#5f6b7a;text-decoration:none;">X（旧Twitter）</a></li>
-          <li><a href="https://note.com/yohelab" target="_blank" rel="noopener" style="font-size:12px;color:#5f6b7a;text-decoration:none;">note</a></li>
-          <li><a href="/legal/commerce/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">特定商取引法に基づく表記</a></li>
-          <li><a href="/legal/privacy/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">プライバシーポリシー</a></li>
-          <li><a href="/legal/terms/" style="font-size:12px;color:#5f6b7a;text-decoration:none;">利用規約</a></li>
-        </ul>
-      </div>
-    </div>
-    <div style="max-width:1100px;margin:16px auto 0;padding-top:12px;border-top:1px solid #e8e8e8;font-size:11px;color:#5f6b7a;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
-      <span>© よへラボ / yohelab.com</span>
-      <div style="display:flex;gap:12px;">
-        <a href="/legal/privacy/" style="color:#5f6b7a;font-size:11px;text-decoration:none;">プライバシーポリシー</a>
-        <a href="/legal/terms/" style="color:#5f6b7a;font-size:11px;text-decoration:none;">利用規約</a>
-        <a href="/contact/" style="color:#5f6b7a;font-size:11px;text-decoration:none;">お問い合わせ</a>
-      </div>
-    </div>
-  </footer>
-
   <script>
-    const obs = new IntersectionObserver(e => e.forEach(el => { if(el.isIntersecting){el.target.classList.add('visible');obs.unobserve(el.target);} }), {threshold:.08,rootMargin:'0px 0px -40px 0px'});
-    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-    setTimeout(()=>document.querySelectorAll('.reveal:not(.visible)').forEach(el=>el.classList.add('visible')),800);
-
-    const form = document.getElementById('contact-form');
-    const purposeSel = document.getElementById('purpose');
-    const thanksBox = document.getElementById('thanks-box');
-    const hiddenField = form.querySelector('input[name="website"]');
-    const query = new URLSearchParams(location.search);
-    const turnstileSiteKey = (document.querySelector('meta[name="turnstile-site-key"]')?.content || '').trim();
-    if (turnstileSiteKey) {
-      const script = document.createElement('script');
-      script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
-      script.async = true;
-      script.defer = true;
-      script.onload = () => {
-        if (!window.turnstile) return;
-        window.turnstile.render('#turnstile-widget', {
-          sitekey: turnstileSiteKey,
-          callback: token => { document.getElementById('turnstile-token').value = token; },
-          'expired-callback': () => { document.getElementById('turnstile-token').value = ''; }
-        });
-      };
-      document.head.appendChild(script);
-    }
-
-    form.addEventListener('submit', async e => {
-      e.preventDefault();
-      if (hiddenField.value.trim() !== '') return;
-      const btn = form.querySelector('button[type="submit"]');
-      btn.disabled = true; btn.textContent = '送信中...';
-      const payload = {
-        name: document.getElementById('name').value.trim(),
-        email: document.getElementById('email').value.trim(),
-        purpose: purposeSel.value,
-        message: document.getElementById('message').value.trim() || 'なし',
-        website: hiddenField.value.trim(),
-        page_url: location.href,
-        turnstile_token: document.getElementById('turnstile-token').value
-      };
-      try {
-        const res = await fetch('/api/contact', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-          body: JSON.stringify(payload)
-        });
-        if (!res.ok) throw new Error('failed');
+    const form = document.getElementById("contact-form");
+    const thanks = document.getElementById("thanks-box");
+    form?.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const response = await fetch(form.action, { method: "POST", body: new FormData(form) });
+      if (response.ok) {
         form.reset();
-        thanksBox.classList.add('show');
-        thanksBox.scrollIntoView({ block: 'nearest' });
-      } catch {
-        alert('送信できなかった。時間を置いてもう一度試して。');
-      } finally {
-        btn.disabled = false; btn.textContent = '問い合わせを送る';
+        thanks.style.display = "block";
+        thanks.scrollIntoView({ behavior: "smooth", block: "center" });
+      } else {
+        alert("送信できませんでした。時間を置いて再度お試しください。");
       }
     });
   </script>

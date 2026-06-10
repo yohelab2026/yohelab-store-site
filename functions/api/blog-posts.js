@@ -73,11 +73,11 @@ function parseTags(value) {
 }
 
 function normalizeLocale(value) {
-  return String(value || "").trim().toLowerCase().startsWith("en") ? "en" : "ja";
+  return "ja";
 }
 
 function postPath(slug, locale = "ja") {
-  return `${normalizeLocale(locale) === "en" ? "/en/blog/" : "/blog/"}${encodeURIComponent(slug)}/`;
+  return `/blog/${encodeURIComponent(slug)}/`;
 }
 
 function compareByPublishedOrder(a, b) {

@@ -3,17 +3,6 @@ dist/
 *.zip
 .netlify/
 
-# Embedded git repo (theme source is in separate private repo)
-wordpress-themes/bunsirube
-
-
-# Theme source は wordpress-themes/bunsirube で管理
-# ZIP は手元で生成して R2 へアップロード
-bunsirube.zip
-bunsirube-*.zip
-downloads/bunsirube.zip
-public/downloads/bunsirube.zip
-
 .aidesigner/*
 !.aidesigner/.gitkeep
 
@@ -28,8 +17,6 @@ public/blog/admin/static-posts.json
 # Local cache and large media projects (not for git)
 .wrangler/
 exports/
-hyperframes-bunsirube-promo/
-hyperframes-bunsirube-promo-long/
 .tmp-*/
 .tmp-*.json
 tmp/

@@ -179,12 +179,11 @@ function searchDiscoveryUrls(...urls) {
 }
 
 function postPath(slug, locale = "ja") {
-  const prefix = normalizeLocale(locale) === "en" ? "/en/blog/" : "/blog/";
-  return `${prefix}${encodeURIComponent(String(slug || "").trim())}/`;
+  return `/blog/${encodeURIComponent(String(slug || "").trim())}/`;
 }
 
 function normalizeLocale(value) {
-  return String(value || "").trim().toLowerCase().startsWith("en") ? "en" : "ja";
+  return "ja";
 }
 
 function sanitizeText(value) {

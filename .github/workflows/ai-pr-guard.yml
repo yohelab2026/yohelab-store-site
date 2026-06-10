@@ -30,15 +30,10 @@ jobs:
 
             const protectedPathPatterns = [
               /^legal\//,
-              /^functions\/api\/(checkout|stripe-webhook|theme-download|theme-license|license)\.js$/,
-              /^functions\/api\/theme-update\//,
-              /^functions\/lib\/(entitlements|stripe-purchase)\.js$/,
+              /^functions\/api\/(checkout|stripe-webhook|license)\.js$/,
+              /^functions\/lib\/entitlements\.js$/,
               /^\.github\//,
-              /^wordpress-themes\//,
-              /^bunsirube.*\.zip$/,
-              /^scripts\/package-theme\.mjs$/,
               /^AGENTS\.md$/,
-              /^AI-HANDOVER\.md$/,
             ];
 
             const sensitiveTextPatterns = [

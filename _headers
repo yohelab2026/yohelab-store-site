@@ -10,29 +10,8 @@
 /blog/*
   X-Robots-Tag: index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1
 
-/lp/bunsirube/
-  X-Robots-Tag: index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1
-
-/lp/bunsirube/install/
-  X-Robots-Tag: index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1
-
-/lp/bunsirube/demo/
-  X-Robots-Tag: index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1
-
-/lp/bunsirube/updates/
-  X-Robots-Tag: index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1
-
-/products/bunsirube/
-  X-Robots-Tag: index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1
-
 /contact/
   X-Robots-Tag: index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1
-
-/tools/
-  X-Robots-Tag: index, follow, max-image-preview:large
-
-/tools/*
-  X-Robots-Tag: index, follow, max-image-preview:large
 
 /blog/admin/
   X-Robots-Tag: noindex, nofollow, noarchive
@@ -56,24 +35,6 @@
 /site.webmanifest
   Content-Type: application/manifest+json; charset=utf-8
   Cache-Control: public, max-age=86400
-
-/lp/bunsirube/affiliate/
-  X-Robots-Tag: noindex, nofollow, noarchive
-
-/lp/bunsirube/affiliate/*
-  X-Robots-Tag: noindex, nofollow, noarchive
-
-/affiliate/dashboard/
-  X-Robots-Tag: noindex, nofollow, noarchive
-
-/affiliate/dashboard/*
-  X-Robots-Tag: noindex, nofollow, noarchive
-
-/legal/affiliate-terms/
-  X-Robots-Tag: noindex, nofollow, noarchive
-
-/legal/affiliate-terms/*
-  X-Robots-Tag: noindex, nofollow, noarchive
 
 /assets/*
   Cache-Control: public, max-age=31536000, immutable

@@ -1,7 +1,7 @@
 {
   "name": "よへラボ",
   "short_name": "よへラボ",
-  "description": "AIニュースを個人でも売れるネタに変える、よへラボの公式サイト。WordPressテーマ「文標」も提供します。",
+  "description": "AIニュース、記事構造、ブログ運営、売り場づくりのメモを日本語で整理するサイトです。",
   "lang": "ja",
   "start_url": "/",
   "scope": "/",

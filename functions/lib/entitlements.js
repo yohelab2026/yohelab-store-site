@@ -1,21 +1,10 @@
 const COOKIE_NAME = "yohelab_access";
-const AUTHOR_THEME_LICENSE = {
-  product: "wordpress-theme",
-  email: "author@yohelab.com",
-  purchaseId: "AUTHOR-YOHELAB-2026",
-  serialSha256: "Jy-o0wfP6SPra6WMoLqyhS4I0kPdZs-Q6UT7qH0-fEo",
-};
 
 const PRODUCT_CONFIG = {
   "research-writer": {
     label: "3キーワードの記事メーカー",
     nextPath: "/apps/research-writer/",
     activatePath: "/apps/research-writer/",
-  },
-  "wordpress-theme": {
-    label: "文標（ぶんしるべ）",
-    nextPath: "/lp/bunsirube/",      // 決済キャンセル時に戻る先
-    activatePath: "/products/bunsirube/", // 購入完了後の遷移先
   },
   "page-review": {
     label: "商品ページ改善レビュー",
@@ -55,14 +44,6 @@ export async function hmacBase64Url(secret, message) {
   );
   const signature = await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(message));
   const bytes = new Uint8Array(signature);
-  let binary = "";
-  for (const byte of bytes) binary += String.fromCharCode(byte);
-  return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
-}
-
-async function sha256Base64Url(message) {
-  const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(message));
-  const bytes = new Uint8Array(digest);
   let binary = "";
   for (const byte of bytes) binary += String.fromCharCode(byte);
   return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
@@ -134,7 +115,7 @@ export async function mergeAccessCookie(existingToken, grantToken, env) {
   const secret = getAccessSecret(env);
   const existing = existingToken ? await verifyPayload(existingToken, secret) : null;
   const grant = await verifyPayload(grantToken, secret);
-  if (!grant || grant.kind !== "grant") return null;
+  if (!grant || grant.kind !== "grant" || !getProductConfig(grant.product)) return null;
 
   const merged = {
     v: 1,
@@ -188,37 +169,4 @@ export function getGrantNextPath(product) {
 
 export function getGrantLabel(product) {
   return getProductConfig(product)?.label || product;
-}
-
-export async function makeSerial({ product, email, subscriptionId }, env) {
-  const secret = getAccessSecret(env);
-  const normalizedEmail = String(email || "").trim().toLowerCase();
-  const source = `${product}|${normalizedEmail}|${subscriptionId || ""}`;
-  const digest = await hmacBase64Url(secret, source);
-  const body = digest.replace(/[^A-Z0-9]/gi, "").toUpperCase().slice(0, 16);
-  return `BUN-${body.slice(0, 4)}-${body.slice(4, 8)}-${body.slice(8, 12)}-${body.slice(12, 16)}`;
-}
-
-export async function verifySerial({ serial, product, email, subscriptionId }, env) {
-  if (!serial || !product || !email || !subscriptionId) return false;
-  const expected = await makeSerial({ product, email, subscriptionId }, env);
-  return serial.trim().toUpperCase() === expected;
-}
-
-export async function verifyAuthorThemeLicense({ serial, product, email, purchaseId }) {
-  const normalizedSerial = String(serial || "").trim().toUpperCase();
-  const normalizedEmail = String(email || "").trim().toLowerCase();
-  const normalizedPurchaseId = String(purchaseId || "").trim();
-
-  if (
-    !normalizedSerial ||
-    product !== AUTHOR_THEME_LICENSE.product ||
-    normalizedEmail !== AUTHOR_THEME_LICENSE.email ||
-    normalizedPurchaseId !== AUTHOR_THEME_LICENSE.purchaseId
-  ) {
-    return false;
-  }
-
-  const actualHash = await sha256Base64Url(normalizedSerial);
-  return timingSafeEqual(actualHash, AUTHOR_THEME_LICENSE.serialSha256);
 }
