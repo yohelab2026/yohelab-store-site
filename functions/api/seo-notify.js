@@ -1,24 +1,17 @@
 import { getBlogPin, isValidPin, timingSafeEqual } from "../lib/blog-auth.js";
 import { submitIndexNow } from "../lib/indexnow.js";
+import { SITE } from "../lib/site-seo.js";
+import { rateLimitOk, getClientIp } from "../lib/affiliate.js";
 
-const DEFAULT_URLS = [
-  "/",
-  "/about/",
-  "/blog/",
-  "/lp/bunsirube/",
-  "/lp/bunsirube/install/",
-  "/lp/bunsirube/demo/",
-  "/lp/bunsirube/updates/",
-  "/products/bunsirube/",
-  "/contact/",
-  "/sitemap.xml",
-  "/feed.xml",
-  "/robots.txt",
-];
+const DEFAULT_URLS = SITE.discoveryUrls;
 
 export async function onRequestPost(context) {
   try {
     if (!isAllowedOrigin(context.request)) return json({ error: "forbidden_origin" }, 403, context.request);
+    // Origin checks don't stop curl; rate-limit per IP so the PIN cannot
+    // be brute-forced and IndexNow quota cannot be burned by a bot.
+    const within = await rateLimitOk(context.env, "seo-notify", getClientIp(context.request), { limit: 10, windowSec: 600 });
+    if (!within) return json({ error: "rate_limited" }, 429, context.request);
     const authError = authorize(context);
     if (authError) return authError;
 

@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>文標 更新履歴 | よへラボ</title>
-  <meta name="description" content="WordPressテーマ「文標（ぶんしるべ）」の更新履歴。v0.3.4から初期版までの変更内容を確認できます。" />
+  <meta name="description" content="WordPressテーマ「文標（ぶんしるべ）」の更新履歴。v0.3.5から初期版までの変更内容を確認できます。" />
   <meta property="og:title" content="文標 更新履歴 | よへラボ" />
   <meta property="og:description" content="文標のバージョンごとの変更内容、追加機能、事故防止の改善内容をまとめた更新履歴ページです。" />
   <meta property="og:type" content="website" />
@@ -71,6 +71,11 @@
       <div class="container updates-layout">
         <div class="timeline" aria-label="文標の更新履歴一覧">
           <article class="release-card latest">
+            <time datetime="2026-06-10">2026.06.10</time>
+            <h2>v0.3.5 ｜ 出力の安全性と目次リンクの修正</h2>
+            <p>構造化データ（JSON-LD）の出力に <code>JSON_HEX_TAG</code> を追加し、記事タイトル等に特殊文字が含まれてもスクリプトタグが壊れないようにしました。目次（TOC）が日本語IDの見出しでもリンク切れしないようID処理を統一。著者ボックスのXアカウント属性を英数字のみに正規化し、意図しないリンク生成を防ぎました。</p>
+          </article>
+          <article class="release-card">
             <time datetime="2026-05-24">2026.05.24</time>
             <h2>v0.3.4 ｜ 販売中テーマのセキュリティ強化</h2>
             <p>テーマ自動更新のSHA-256整合性検証を追加（配布元が万一改ざんされても、ハッシュが合わなければ更新を中止）、内部解析のクリック計測APIにIP単位レート制限を追加、軽量キャッシュのキー正規化で任意クエリによるキャッシュ汚染を防ぎました。自動更新マニフェストに <code>package_sha256</code> と <code>last_updated</code> を追加しています。発売記念価格¥5,500（税込）は2026年6月30日までです。</p>

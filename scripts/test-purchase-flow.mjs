@@ -19,11 +19,11 @@ function env() {
     SITE_URL: "https://yohelab.com",
     THEME_BUCKET: {
       async get(key) {
-        if (!["bunsirube-0.3.4.zip", "bunsirube-child-0.1.1.zip"].includes(key)) return null;
+        if (!["bunsirube-0.3.5.zip", "bunsirube-child-0.1.1.zip"].includes(key)) return null;
         return {
           body: new Uint8Array([80, 75, 3, 4]),
           httpMetadata: { contentType: "application/zip" },
-          customMetadata: { version: key === "bunsirube-child-0.1.1.zip" ? "0.1.1" : "0.3.4" },
+          customMetadata: { version: key === "bunsirube-child-0.1.1.zip" ? "0.1.1" : "0.3.5" },
         };
       },
     },
@@ -155,7 +155,7 @@ try {
     env: env(),
   });
   assert(tokenDownload.status === 200, `expected token download 200, got ${tokenDownload.status}`);
-  assert(tokenDownload.headers.get("Content-Disposition")?.includes("bunsirube-0.3.4.zip"), "expected latest parent zip");
+  assert(tokenDownload.headers.get("Content-Disposition")?.includes("bunsirube-0.3.5.zip"), "expected latest parent zip");
 
   stripeRefunded = true;
   const refundedLicense = await onThemeLicensePost({

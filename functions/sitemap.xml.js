@@ -5,8 +5,7 @@
  * 公開済み記事は /blog/{slug}/ の個別URLだけを検索エンジンに渡す。
  */
 import { staticBlogSitemapPosts } from "./generated/static-blog-posts.js";
-
-const SITE_ORIGIN = "https://yohelab.com";
+import { SITE } from "./lib/site-seo.js";
 
 const URLS = [
   { loc: "/", lastmod: "2026-05-19", changefreq: "weekly", priority: "1.0" },
@@ -16,7 +15,6 @@ const URLS = [
   { loc: "/lp/bunsirube/install/", lastmod: "2026-05-12", changefreq: "monthly", priority: "0.7" },
   { loc: "/lp/bunsirube/demo/", lastmod: "2026-05-12", changefreq: "monthly", priority: "0.7" },
   { loc: "/lp/bunsirube/updates/", lastmod: "2026-05-12", changefreq: "weekly", priority: "0.6" },
-  { loc: "/products/bunsirube/", lastmod: "2026-05-19", changefreq: "weekly", priority: "0.8" },
   { loc: "/contact/", lastmod: "2026-05-12", changefreq: "monthly", priority: "0.4" },
   { loc: "/legal/commerce/", lastmod: "2026-05-12", changefreq: "monthly", priority: "0.3" },
   { loc: "/legal/privacy/", lastmod: "2026-05-12", changefreq: "monthly", priority: "0.3" },
@@ -31,7 +29,7 @@ export async function onRequestGet(context) {
     `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
     urls.map((u) =>
       `  <url>\n` +
-      `    <loc>${xmlEscape(SITE_ORIGIN + u.loc)}</loc>\n` +
+      `    <loc>${xmlEscape(SITE.origin + u.loc)}</loc>\n` +
       `    <lastmod>${xmlEscape(u.lastmod)}</lastmod>\n` +
       `    <changefreq>${xmlEscape(u.changefreq)}</changefreq>\n` +
       `    <priority>${xmlEscape(u.priority)}</priority>\n` +
