@@ -1,5 +1,5 @@
 export function getBlogPin(env) {
-  return String(env.BLOG_PIN || "").trim();
+  return String(env.BLOG_PIN || env.ADMIN_KEY || "").trim();
 }
 
 export function getRequestPin(request) {
