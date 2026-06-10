@@ -220,7 +220,7 @@
   }
 
   function socialImageUrl(post = {}) {
-    return cardImageUrl(post.socialImage || post.eyecatch || FALLBACK_IMAGE);
+    return cardImageUrl(post.eyecatch || post.socialImage || FALLBACK_IMAGE);
   }
 
   function imageMimeForUrl(value) {

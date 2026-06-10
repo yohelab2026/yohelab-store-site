@@ -1,0 +1,11 @@
+name = "yohelab-store-site"
+compatibility_date = "2025-06-01"
+pages_build_output_dir = "dist"
+
+[[kv_namespaces]]
+binding = "BLOG_KV"
+id = "017abfaf800c483181be930ab0cd1803"
+
+[[r2_buckets]]
+binding = "BLOG_IMAGES"
+bucket_name = "yohelab-blog-images"

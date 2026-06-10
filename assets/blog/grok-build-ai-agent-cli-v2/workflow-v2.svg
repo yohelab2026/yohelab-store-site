@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f7fbff"/>
+      <stop offset="100%" stop-color="#edf4ff"/>
+    </linearGradient>
+    <linearGradient id="arrow" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2c7cff"/>
+      <stop offset="100%" stop-color="#19b37a"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#113055" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <circle cx="128" cy="126" r="120" fill="#dfeaff"/>
+  <circle cx="1490" cy="130" r="150" fill="#dff5ea"/>
+  <circle cx="1380" cy="780" r="180" fill="#eef1ff"/>
+
+  <text x="800" y="98" text-anchor="middle" font-family="Arial, 'Yu Gothic', 'Meiryo', sans-serif" font-size="54" font-weight="900" fill="#10202a">Grok Buildの作業フロー</text>
+  <text x="800" y="144" text-anchor="middle" font-family="Arial, 'Yu Gothic', 'Meiryo', sans-serif" font-size="24" font-weight="800" fill="#5b7085">自然言語で頼む → 計画 → 実装 → 確認 → 完成</text>
+
+  <g filter="url(#shadow)">
+    <rect x="92" y="220" width="240" height="300" rx="28" fill="#ffffff"/>
+    <rect x="374" y="220" width="240" height="300" rx="28" fill="#ffffff"/>
+    <rect x="656" y="220" width="240" height="300" rx="28" fill="#ffffff"/>
+    <rect x="938" y="220" width="240" height="300" rx="28" fill="#ffffff"/>
+    <rect x="1220" y="220" width="240" height="300" rx="28" fill="#ffffff"/>
+  </g>
+
+  <g filter="url(#shadow)">
+    <path d="M334 370H366" stroke="url(#arrow)" stroke-width="10" stroke-linecap="round"/>
+    <path d="M616 370H648" stroke="url(#arrow)" stroke-width="10" stroke-linecap="round"/>
+    <path d="M898 370H930" stroke="url(#arrow)" stroke-width="10" stroke-linecap="round"/>
+    <path d="M1180 370H1212" stroke="url(#arrow)" stroke-width="10" stroke-linecap="round"/>
+    <path d="M350 370l-24-15 3 30z" fill="#2c7cff"/>
+    <path d="M632 370l-24-15 3 30z" fill="#1fa96f"/>
+    <path d="M914 370l-24-15 3 30z" fill="#2c7cff"/>
+    <path d="M1196 370l-24-15 3 30z" fill="#1fa96f"/>
+  </g>
+
+  <g font-family="Arial, 'Yu Gothic', 'Meiryo', sans-serif" fill="#10202a" font-weight="900">
+    <circle cx="212" cy="288" r="34" fill="#eaf2ff"/>
+    <text x="212" y="297" text-anchor="middle" font-size="28">1</text>
+    <text x="212" y="360" text-anchor="middle" font-size="32">自然言語</text>
+    <text x="212" y="410" text-anchor="middle" font-size="20" fill="#5b7085" font-weight="700">やりたいことをそのまま伝える</text>
+
+    <circle cx="494" cy="288" r="34" fill="#e8faf1"/>
+    <text x="494" y="297" text-anchor="middle" font-size="28">2</text>
+    <text x="494" y="360" text-anchor="middle" font-size="32">計画</text>
+    <text x="494" y="410" text-anchor="middle" font-size="20" fill="#5b7085" font-weight="700">先に方針を見てから進める</text>
+
+    <circle cx="776" cy="288" r="34" fill="#eaf2ff"/>
+    <text x="776" y="297" text-anchor="middle" font-size="28">3</text>
+    <text x="776" y="360" text-anchor="middle" font-size="32">実装</text>
+    <text x="776" y="410" text-anchor="middle" font-size="20" fill="#5b7085" font-weight="700">ファイルを編集して形にする</text>
+
+    <circle cx="1058" cy="288" r="34" fill="#e8faf1"/>
+    <text x="1058" y="297" text-anchor="middle" font-size="28">4</text>
+    <text x="1058" y="360" text-anchor="middle" font-size="32">確認</text>
+    <text x="1058" y="410" text-anchor="middle" font-size="20" fill="#5b7085" font-weight="700">差分・テスト・レビューを見る</text>
+
+    <circle cx="1340" cy="288" r="34" fill="#fff0d8"/>
+    <text x="1340" y="297" text-anchor="middle" font-size="28">5</text>
+    <text x="1340" y="360" text-anchor="middle" font-size="32">完成</text>
+    <text x="1340" y="410" text-anchor="middle" font-size="20" fill="#5b7085" font-weight="700">公開しやすい状態まで持っていく</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="186" y="566" width="1228" height="160" rx="30" fill="#0f1730"/>
+    <text x="226" y="618" font-family="Arial, 'Yu Gothic', 'Meiryo', sans-serif" font-size="28" font-weight="900" fill="#ffffff">本文で見せたいポイント</text>
+    <g font-family="Arial, 'Yu Gothic', 'Meiryo', sans-serif" font-size="24" font-weight="800">
+      <rect x="226" y="642" width="192" height="42" rx="21" fill="#2c7cff"/>
+      <text x="322" y="670" text-anchor="middle" fill="#ffffff">Plan Mode</text>
+      <rect x="436" y="642" width="192" height="42" rx="21" fill="#18b36d"/>
+      <text x="532" y="670" text-anchor="middle" fill="#ffffff">Subagents</text>
+      <rect x="646" y="642" width="168" height="42" rx="21" fill="#7e62ff"/>
+      <text x="730" y="670" text-anchor="middle" fill="#ffffff">Git</text>
+      <rect x="832" y="642" width="192" height="42" rx="21" fill="#ffb13c"/>
+      <text x="928" y="670" text-anchor="middle" fill="#ffffff">確認しやすい</text>
+      <rect x="1042" y="642" width="250" height="42" rx="21" fill="#ffffff"/>
+      <text x="1167" y="670" text-anchor="middle" fill="#0f1730">副業ツールにもつなげやすい</text>
+    </g>
+  </g>
+</svg>

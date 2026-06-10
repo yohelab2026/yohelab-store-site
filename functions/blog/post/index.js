@@ -1,4 +1,5 @@
 import { staticBlogSocialPosts } from "../../generated/static-blog-social-posts.js";
+import { SITE, buildBreadcrumbJsonLd } from "../../lib/site-seo.js";
 
 /**
  * /blog/post/?slug=xxx を個別記事URLへリダイレクトする Cloudflare Pages Function
@@ -10,9 +11,9 @@ import { staticBlogSocialPosts } from "../../generated/static-blog-social-posts.
  * 失敗時は context.next() で従来の静的HTMLにフォールバック。
  */
 
-const SITE_ORIGIN = "https://yohelab.com";
-const SITE_NAME = "よへラボ";
-const BLOG_NAME = "よへラボブログ";
+const SITE_ORIGIN = SITE.origin;
+const SITE_NAME = SITE.name;
+const BLOG_NAME = SITE.blogName;
 const FALLBACK_IMAGE = `${SITE_ORIGIN}/yohelab-mascot-v2-20260518.png`;
 const GA4_MEASUREMENT_ID = "G-ZK7SP3RVSB";
 const CATEGORY_KEY = "settings:blog-categories";
@@ -354,17 +355,13 @@ function buildJsonLd(post, slug, fullUrl) {
   };
   if (dateModified) article.dateModified = dateModified;
 
-  const breadcrumb = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "ホーム", item: `${SITE_ORIGIN}/` },
-      { "@type": "ListItem", position: 2, name: "ブログ", item: `${SITE_ORIGIN}/blog/` },
-      { "@type": "ListItem", position: 3, name: title, item: fullUrl },
-    ],
-  };
+  const breadcrumb = buildBreadcrumbJsonLd([
+    { name: "ホーム", item: `${SITE_ORIGIN}/` },
+    { name: "ブログ", item: `${SITE_ORIGIN}/blog/` },
+    { name: title, item: fullUrl },
+  ]);
 
-  return [JSON.stringify(article), JSON.stringify(breadcrumb)];
+  return [JSON.stringify(article), breadcrumb];
 }
 
 function formatPostDate(value) {
@@ -429,7 +426,7 @@ function hydrateStaticPostImages(post = {}) {
   const meta = staticPostMetaFor(post);
   if (!meta) return post;
   const eyecatch = post.eyecatch || meta.eyecatch || "";
-  const socialImage = post.socialImage || meta.socialImage || eyecatch || "";
+  const socialImage = eyecatch;
   return { ...post, eyecatch, socialImage };
 }
 
@@ -452,7 +449,7 @@ function cardImageUrl(value) {
 }
 
 function socialImageUrl(post = {}) {
-  return cardImageUrl(post.socialImage || post.eyecatch || FALLBACK_IMAGE);
+  return cardImageUrl(post.eyecatch || post.socialImage || FALLBACK_IMAGE);
 }
 
 function imageMimeForUrl(value) {

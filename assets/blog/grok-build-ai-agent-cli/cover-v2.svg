@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#090912"/>
+      <stop offset="48%" stop-color="#111833"/>
+      <stop offset="100%" stop-color="#061a16"/>
+    </linearGradient>
+    <linearGradient id="leftGlow" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#9d6bff" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#3d9cff" stop-opacity="0.18"/>
+    </linearGradient>
+    <linearGradient id="rightGlow" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#23d18b" stop-opacity="0.92"/>
+      <stop offset="100%" stop-color="#f6d54a" stop-opacity="0.2"/>
+    </linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000" flood-opacity="0.55"/>
+    </filter>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="8" result="b"/>
+      <feMerge>
+        <feMergeNode in="b"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <circle cx="350" cy="140" r="340" fill="url(#leftGlow)" opacity="0.55"/>
+  <circle cx="1270" cy="130" r="380" fill="url(#rightGlow)" opacity="0.45"/>
+
+  <g opacity="0.35">
+    <path d="M80 760L260 560L390 670L540 430L710 560L860 330L1020 520L1210 250L1505 470" fill="none" stroke="#6ce4ff" stroke-width="3"/>
+    <path d="M70 210L240 280L410 165L580 310L730 220L900 360L1090 210L1300 320L1505 190" fill="none" stroke="#ff8ec7" stroke-width="2.4"/>
+    <path d="M135 670L260 520L360 610L470 480L630 610L770 470L920 590L1070 440L1235 560L1410 410" fill="none" stroke="#2cff7f" stroke-width="2.4"/>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="70" y="54" width="1460" height="790" rx="34" fill="rgba(4,8,18,0.42)" stroke="rgba(255,255,255,0.08)"/>
+  </g>
+
+  <g filter="url(#glow)">
+    <rect x="92" y="90" width="560" height="630" rx="28" fill="rgba(101,63,179,0.18)" stroke="rgba(173,110,255,0.65)" stroke-width="3"/>
+    <rect x="944" y="90" width="560" height="630" rx="28" fill="rgba(16,95,70,0.18)" stroke="rgba(55,255,158,0.65)" stroke-width="3"/>
+  </g>
+
+  <g filter="url(#shadow)">
+    <circle cx="800" cy="432" r="110" fill="#0c1024" stroke="#ffffff" stroke-opacity="0.12" stroke-width="2"/>
+    <circle cx="800" cy="432" r="72" fill="#ffffff" fill-opacity="0.06"/>
+    <text x="800" y="444" text-anchor="middle" font-family="Arial, 'Yu Gothic', sans-serif" font-size="84" font-weight="900" fill="#ffffff" letter-spacing="-3">VS</text>
+    <path d="M722 430L760 392L786 414L825 366L848 390L877 378L841 438L868 456L822 502L787 478L750 520L733 494L760 448Z" fill="#ffcd38" fill-opacity="0.92"/>
+  </g>
+
+  <g filter="url(#shadow)">
+    <text x="800" y="126" text-anchor="middle" font-family="Arial, 'Yu Gothic', 'Meiryo', sans-serif" font-size="58" font-weight="900" fill="#f5f7ff" stroke="#060816" stroke-width="10" paint-order="stroke">
+      Grok Build vs Claude Code
+    </text>
+    <text x="800" y="194" text-anchor="middle" font-family="Arial, 'Yu Gothic', 'Meiryo', sans-serif" font-size="48" font-weight="900" fill="#ff8f3d" stroke="#060816" stroke-width="8" paint-order="stroke">
+      xAIの新CLIはどこまで来た？
+    </text>
+    <text x="800" y="258" text-anchor="middle" font-family="Arial, 'Yu Gothic', 'Meiryo', sans-serif" font-size="38" font-weight="800" fill="#9fffe1" stroke="#05211b" stroke-width="6" paint-order="stroke">
+      よへラボ
+    </text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <text x="175" y="180" font-family="Arial, 'Yu Gothic', 'Meiryo', sans-serif" font-size="74" font-weight="900" fill="#d8c7ff" stroke="#05040b" stroke-width="9" paint-order="stroke">Claude</text>
+    <text x="175" y="238" font-family="Arial, 'Yu Gothic', 'Meiryo', sans-serif" font-size="34" font-weight="800" fill="#e7ecff">安定・深掘り・レビュー</text>
+    <text x="175" y="318" font-family="Consolas, monospace" font-size="28" fill="#93a5ff">plan();</text>
+    <text x="175" y="360" font-family="Consolas, monospace" font-size="28" fill="#93a5ff">review();</text>
+    <text x="175" y="402" font-family="Consolas, monospace" font-size="28" fill="#93a5ff">refine();</text>
+    <text x="175" y="444" font-family="Consolas, monospace" font-size="28" fill="#93a5ff">test();</text>
+    <circle cx="265" cy="556" r="110" fill="#7f65ff" opacity="0.9"/>
+    <circle cx="228" cy="532" r="16" fill="#0a0a0d"/>
+    <circle cx="302" cy="532" r="16" fill="#0a0a0d"/>
+    <path d="M225 595 Q265 625 305 595" fill="none" stroke="#0a0a0d" stroke-width="10" stroke-linecap="round"/>
+    <rect x="213" y="651" width="106" height="36" rx="18" fill="#191f3b"/>
+    <text x="266" y="676" text-anchor="middle" font-family="Arial, 'Yu Gothic', sans-serif" font-size="18" font-weight="900" fill="#ffffff">Claude Code</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <text x="1105" y="180" font-family="Arial, 'Yu Gothic', 'Meiryo', sans-serif" font-size="74" font-weight="900" fill="#c6ffe0" stroke="#04110e" stroke-width="9" paint-order="stroke">Grok Build</text>
+    <text x="1105" y="238" font-family="Arial, 'Yu Gothic', 'Meiryo', sans-serif" font-size="34" font-weight="800" fill="#dffcee">速い・見せ方強い・入口が軽い</text>
+    <text x="1105" y="318" font-family="Consolas, monospace" font-size="28" fill="#8bffb7">build --plan</text>
+    <text x="1105" y="360" font-family="Consolas, monospace" font-size="28" fill="#8bffb7">agent --subagents</text>
+    <text x="1105" y="402" font-family="Consolas, monospace" font-size="28" fill="#8bffb7">imagine --attach</text>
+    <text x="1105" y="444" font-family="Consolas, monospace" font-size="28" fill="#8bffb7">git --diff</text>
+    <rect x="1187" y="498" width="170" height="170" rx="42" fill="#18b36d" opacity="0.92"/>
+    <path d="M1275 518L1236 586H1278L1245 660L1322 566H1283L1310 518Z" fill="#fff7d6"/>
+    <rect x="1218" y="651" width="112" height="36" rx="18" fill="#114233"/>
+    <text x="1274" y="676" text-anchor="middle" font-family="Arial, 'Yu Gothic', sans-serif" font-size="18" font-weight="900" fill="#ffffff">Grok Build</text>
+  </g>
+
+  <g opacity="0.9">
+    <rect x="92" y="740" width="1458" height="2" fill="#ffffff" fill-opacity="0.12"/>
+    <text x="118" y="776" font-family="Arial, 'Yu Gothic', 'Meiryo', sans-serif" font-size="26" font-weight="800" fill="#d9e5ff">比較の見どころは「性能」だけじゃなく、「作り始めやすさ」と「見せ方」</text>
+  </g>
+</svg>

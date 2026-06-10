@@ -30,3 +30,6 @@ public/blog/admin/static-posts.json
 exports/
 hyperframes-bunsirube-promo/
 hyperframes-bunsirube-promo-long/
+.tmp-*/
+.tmp-*.json
+tmp/

@@ -18,7 +18,7 @@ export async function onRequestGet(context) {
         const sourceSlug = key.metadata?.sourceSlug || key.metadata?.slug || "";
         const meta = staticPostMetaFor({ slug, sourceSlug });
         const eyecatch = key.metadata?.eyecatch || meta?.eyecatch || "";
-        const socialImage = key.metadata?.socialImage || meta?.socialImage || eyecatch || "";
+        const socialImage = eyecatch;
         return {
           slug,
           url: `/blog/${encodeURIComponent(slug)}/`,

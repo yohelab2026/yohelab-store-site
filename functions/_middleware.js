@@ -1,3 +1,5 @@
+import { buildRobotsTxt } from "./lib/site-seo.js";
+
 const RETIRED_REDIRECTS = new Map([
   ["/index.html", "/"],
   ["/apps/wordpress-theme", "/lp/bunsirube/"],
@@ -32,88 +34,11 @@ const RETIRED_REDIRECTS = new Map([
 
 const PROTECTED_THEME_ZIP = /^\/bunsirube(?:-child)?(?:-[0-9][0-9.]+)?\.zip$/i;
 
-const ROBOTS_TXT = `# Public pages are open. Admin/API/private paths are blocked for every crawler.
-User-agent: *
-Allow: /
-Disallow: /blog/admin/
-Disallow: /api/
-Disallow: /pro/
-Disallow: /affiliate/dashboard/
-Disallow: /games/
-
-User-agent: GPTBot
-Allow: /
-Disallow: /blog/admin/
-Disallow: /api/
-Disallow: /pro/
-Disallow: /affiliate/dashboard/
-Disallow: /games/
-
-User-agent: Claude-Web
-Allow: /
-Disallow: /blog/admin/
-Disallow: /api/
-Disallow: /pro/
-Disallow: /affiliate/dashboard/
-Disallow: /games/
-
-User-agent: PerplexityBot
-Allow: /
-Disallow: /blog/admin/
-Disallow: /api/
-Disallow: /pro/
-Disallow: /affiliate/dashboard/
-Disallow: /games/
-
-User-agent: Googlebot
-Allow: /
-Disallow: /blog/admin/
-Disallow: /api/
-Disallow: /pro/
-Disallow: /affiliate/dashboard/
-Disallow: /games/
-
-User-agent: Bingbot
-Allow: /
-Disallow: /blog/admin/
-Disallow: /api/
-Disallow: /pro/
-Disallow: /affiliate/dashboard/
-Disallow: /games/
-
-User-agent: DuckDuckBot
-Allow: /
-Disallow: /blog/admin/
-Disallow: /api/
-Disallow: /pro/
-Disallow: /affiliate/dashboard/
-Disallow: /games/
-
-User-agent: Applebot
-Allow: /
-Disallow: /blog/admin/
-Disallow: /api/
-Disallow: /pro/
-Disallow: /affiliate/dashboard/
-Disallow: /games/
-
-User-agent: YandexBot
-Allow: /
-Disallow: /blog/admin/
-Disallow: /api/
-Disallow: /pro/
-Disallow: /affiliate/dashboard/
-Disallow: /games/
-
-Sitemap: https://yohelab.com/sitemap.xml
-Sitemap: https://yohelab.com/feed.xml
-`;
-
 export async function onRequest(context) {
   const url = new URL(context.request.url);
 
   if (url.pathname === "/robots.txt") {
-    return new Response(ROBOTS_TXT, {
+    return new Response(buildRobotsTxt(), {
       headers: {
         "Content-Type": "text/plain; charset=utf-8",
         "Cache-Control": "public, max-age=300, s-maxage=300",

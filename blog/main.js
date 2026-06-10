@@ -140,6 +140,8 @@ const searchAliasGroups = [
   ['llms', 'llm', 'エルエルエム', 'エルエルエムズ'],
 ];
 let staticManifestPosts = [];
+const POSTS_PER_PAGE = 12;
+let allPublishedPosts = [];
 const fallbackPosts = [
   {
     title: 'AIニュースを記事ネタに変える方法。よへラボでこれからやること',
@@ -344,21 +346,30 @@ function tagUrl(tag) {
 
 async function loadPosts(page = 1) {
   const staticPublished = await loadStaticPublishedPosts();
-  let dynamicPosts = [];
+  const dynamicPosts = await loadAllDynamicPosts();
+  allPublishedPosts = mergePosts([...dynamicPosts, ...staticPublished]);
+  currentPage = page;
+  renderPagedPosts();
+}
+
+async function loadAllDynamicPosts() {
   try {
-    const res = await fetch(`/api/blog-posts?page=${page}`);
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const data = await res.json();
-    dynamicPosts = (data.posts || []).filter(isVisiblePublicPost);
-    currentPage = data.page || 1;
-    totalPages = data.totalPages || 1;
+    const firstPage = await fetchBlogPostPage(1);
+    const pages = [firstPage];
+    const pageCount = Math.max(1, Number(firstPage.totalPages || 1));
+    for (let page = 2; page <= pageCount; page += 1) {
+      pages.push(await fetchBlogPostPage(page));
+    }
+    return pages.flatMap(data => data.posts || []).filter(isVisiblePublicPost);
   } catch(e) {
-    currentPage = 1;
-    totalPages = 1;
+    return [];
   }
-  const merged = mergePosts([...dynamicPosts, ...staticPublished]);
-  render(merged.length ? merged : fallbackPosts, true);
-  renderPagination();
+}
+
+async function fetchBlogPostPage(page) {
+  const res = await fetch(`/api/blog-posts?page=${page}`, { cache: 'no-store' });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
 }
 
 function isVisiblePublicPost(post) {
@@ -504,35 +515,107 @@ function renderPagination() {
   if (!pager) {
     pager = document.createElement('div');
     pager.id = 'pager';
-    pager.style.cssText = 'display:flex;justify-content:center;align-items:center;gap:12px;margin:40px 0 20px;';
+    pager.style.cssText = 'display:flex;justify-content:center;align-items:center;gap:12px;margin:40px 0 20px;flex-wrap:wrap;';
     postsEl.after(pager);
   }
   if (totalPages <= 1) { pager.innerHTML = ''; return; }
 
   const prevDisabled = currentPage <= 1;
   const nextDisabled = currentPage >= totalPages;
+  const pageButtons = visiblePageNumbers(currentPage, totalPages)
+    .map(page => page === 'gap'
+      ? `<span style="font-size:14px;color:var(--muted);font-weight:900;">…</span>`
+      : `<button class="btn-page" data-page="${page}" ${page === currentPage ? 'aria-current="page"' : ''} style="min-width:38px;height:38px;border-radius:999px;border:1.5px solid ${page === currentPage ? 'var(--green)' : 'var(--border)'};background:${page === currentPage ? 'var(--green)' : '#fff'};color:${page === currentPage ? '#fff' : 'var(--text)'};font-weight:900;cursor:${page === currentPage ? 'default' : 'pointer'};font-size:14px;">${page}</button>`)
+    .join('');
   pager.innerHTML = `
     <button id="btn-prev" ${prevDisabled ? 'disabled' : ''} style="padding:8px 20px;border-radius:999px;border:1.5px solid var(--border);background:${prevDisabled?'#f5f5f5':'#fff'};color:${prevDisabled?'#aaa':'var(--text)'};font-weight:700;cursor:${prevDisabled?'default':'pointer'};font-size:14px;">← 前へ</button>
-    <span style="font-size:14px;color:var(--muted);font-weight:700;">${currentPage} / ${totalPages}</span>
+    <div style="display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;">${pageButtons}</div>
     <button id="btn-next" ${nextDisabled ? 'disabled' : ''} style="padding:8px 20px;border-radius:999px;border:1.5px solid var(--border);background:${nextDisabled?'#f5f5f5':'var(--green)'};color:${nextDisabled?'#aaa':'#fff'};font-weight:700;cursor:${nextDisabled?'default':'pointer'};font-size:14px;">次へ →</button>
   `;
   if (!prevDisabled) {
     document.getElementById('btn-prev').addEventListener('click', () => {
-      loadPosts(currentPage - 1);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      goToPage(currentPage - 1);
     });
   }
   if (!nextDisabled) {
     document.getElementById('btn-next').addEventListener('click', () => {
-      loadPosts(currentPage + 1);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      goToPage(currentPage + 1);
     });
   }
+  pager.querySelectorAll('.btn-page').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const page = Number(btn.dataset.page || 1);
+      if (page !== currentPage) goToPage(page);
+    });
+  });
+}
+
+function visiblePageNumbers(page, pageCount) {
+  if (pageCount <= 7) return Array.from({ length: pageCount }, (_, index) => index + 1);
+  const pages = new Set([1, 2, page - 1, page, page + 1, pageCount - 1, pageCount]);
+  const sorted = [...pages].filter(value => value >= 1 && value <= pageCount).sort((a, b) => a - b);
+  return sorted.flatMap((value, index) => {
+    if (index === 0) return [value];
+    return value - sorted[index - 1] > 1 ? ['gap', value] : [value];
+  });
+}
+
+function goToPage(page) {
+  currentPage = Math.min(Math.max(1, Number(page || 1)), totalPages);
+  renderPagedPosts();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function renderPagedPosts() {
+  const source = allPublishedPosts.length ? allPublishedPosts : fallbackPosts;
+  const filtered = source.filter(post => postMatchesCurrentFilters(post));
+  totalPages = Math.max(1, Math.ceil(filtered.length / POSTS_PER_PAGE));
+  currentPage = Math.min(Math.max(1, currentPage), totalPages);
+  const start = (currentPage - 1) * POSTS_PER_PAGE;
+  render(filtered.slice(start, start + POSTS_PER_PAGE), true);
+  updateFilterStatus(filtered.length);
+  renderPagination();
+}
+
+function postMatchesCurrentFilters(post) {
+  const q = (blogSearchEl?.value || '').trim().toLowerCase();
+  const categoryOk = postMatchesFilter(activeFilter, post);
+  const searchText = [
+    post.title,
+    post.excerpt,
+    post.body,
+    ...(post.tags || []),
+    ...normalizePostTags(post),
+  ].join(' ').toLowerCase();
+  const queryOk = !q || searchText.includes(q) || queryMatchesText(q, searchText);
+  return categoryOk && queryOk;
+}
+
+function postMatchesFilter(filter, post) {
+  const normalized = normalizeFilter(filter);
+  if (normalized === 'all') return true;
+  const keys = categoryKeysForPost(post);
+  if (normalized.startsWith('group:')) {
+    const parent = normalized.replace('group:', '');
+    return keys.some(key => categoryParentByKey[key] === parent);
+  }
+  const requiredParent = categoryParentByKey[normalized] || '';
+  if (requiredParent) return keys.includes(normalized);
+  return normalizePostTags(post).join(' ').toLowerCase().includes(normalized);
+}
+
+function updateFilterStatus(totalVisible) {
+  if (!filterStatusEl) return;
+  const filterLabel = getFilterLabel(activeFilter);
+  filterStatusEl.textContent = totalVisible
+    ? `${filterLabel}の記事を${totalVisible}件中 ${currentPage} / ${totalPages}ページ目で表示中`
+    : `${filterLabel}の記事は見つかりませんでした。`;
 }
 
 function render(posts, hasLink = true) {
   if (!posts.length) {
     postsEl.innerHTML = '<div class="empty">まだ記事がありません。</div>';
+    renderPagination();
     return;
   }
   postsEl.innerHTML = posts.map(post => {
@@ -568,7 +651,6 @@ function render(posts, hasLink = true) {
   }).join('');
 
   prepareCardLinks();
-  applyFilters();
 }
 
 function prepareCardLinks() {
@@ -640,6 +722,11 @@ function normalizeFilter(value) {
 }
 
 function applyFilters() {
+  if (allPublishedPosts.length) {
+    currentPage = 1;
+    renderPagedPosts();
+    return;
+  }
   const q = (blogSearchEl?.value || '').trim().toLowerCase();
   let visible = 0;
   const cards = Array.from(postsEl.querySelectorAll('.post-card'));

@@ -1,8 +1,5 @@
 import { staticBlogSitemapPosts } from "./generated/static-blog-posts.js";
-
-const SITE_ORIGIN = "https://yohelab.com";
-const SITE_TITLE = "よへラボ";
-const SITE_DESCRIPTION = "AIニュースとAIツールを見やすく整理する情報サイト。";
+import { SITE } from "./lib/site-seo.js";
 const FEED_LIMIT = 50;
 
 export async function onRequestGet(context) {
@@ -12,12 +9,12 @@ export async function onRequestGet(context) {
     `<?xml version="1.0" encoding="UTF-8"?>\n` +
     `<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">\n` +
     `  <channel>\n` +
-    `    <title>${xmlEscape(SITE_TITLE)}</title>\n` +
-    `    <link>${SITE_ORIGIN}/</link>\n` +
-    `    <description>${xmlEscape(SITE_DESCRIPTION)}</description>\n` +
+    `    <title>${xmlEscape(SITE.name)}</title>\n` +
+    `    <link>${SITE.origin}/</link>\n` +
+    `    <description>${xmlEscape(SITE.description)}</description>\n` +
     `    <language>ja</language>\n` +
     `    <lastBuildDate>${xmlEscape(lastBuildDate)}</lastBuildDate>\n` +
-    `    <atom:link href="${SITE_ORIGIN}/feed.xml" rel="self" type="application/rss+xml" />\n` +
+    `    <atom:link href="${SITE.feedUrl}" rel="self" type="application/rss+xml" />\n` +
     posts.slice(0, FEED_LIMIT).map(feedItemXml).join("") +
     `  </channel>\n` +
     `</rss>\n`;
@@ -39,7 +36,7 @@ async function feedPosts(env) {
     .map((post) => ({
       slug: post.slug,
       title: post.title || "よへラボの記事",
-      excerpt: post.excerpt || SITE_DESCRIPTION,
+      excerpt: post.excerpt || SITE.description,
       url: post.url,
       date: post.date,
       publishedAt: `${post.date}T00:00:00+09:00`,
@@ -67,7 +64,7 @@ async function dynamicPosts(env) {
       slug,
       url: `/blog/${encodeURIComponent(slug)}/`,
       title: key.metadata?.title || "よへラボの記事",
-      excerpt: key.metadata?.excerpt || SITE_DESCRIPTION,
+      excerpt: key.metadata?.excerpt || SITE.description,
       date: key.metadata?.date || "",
       publishedAt: key.metadata?.publishedAt || key.metadata?.date || "",
       updatedAt: key.metadata?.updatedAt || "",
@@ -93,9 +90,9 @@ function feedItemXml(post) {
 
 function absoluteUrl(pathOrUrl) {
   try {
-    return new URL(pathOrUrl, SITE_ORIGIN).href;
+    return new URL(pathOrUrl, SITE.origin).href;
   } catch {
-    return `${SITE_ORIGIN}/`;
+    return `${SITE.origin}/`;
   }
 }
 

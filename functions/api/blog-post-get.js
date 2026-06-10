@@ -27,7 +27,7 @@ function hydrateStaticPostImages(post = {}) {
   const meta = staticPostMetaFor(post);
   if (!meta) return post;
   const eyecatch = post.eyecatch || meta.eyecatch || "";
-  const socialImage = post.socialImage || meta.socialImage || eyecatch || "";
+  const socialImage = eyecatch;
   return { ...post, eyecatch, socialImage };
 }
 

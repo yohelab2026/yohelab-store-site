@@ -1,23 +1,8 @@
 import { submitIndexNow } from "../functions/lib/indexnow.js";
-
-const SITE_ORIGIN = "https://yohelab.com";
-const CORE_URLS = [
-  "/",
-  "/about/",
-  "/blog/",
-  "/lp/bunsirube/",
-  "/lp/bunsirube/install/",
-  "/lp/bunsirube/demo/",
-  "/lp/bunsirube/updates/",
-  "/products/bunsirube/",
-  "/contact/",
-  "/sitemap.xml",
-  "/feed.xml",
-  "/robots.txt",
-];
+import { SITE } from "../functions/lib/site-seo.js";
 
 const urls = unique([
-  ...CORE_URLS.map((path) => new URL(path, SITE_ORIGIN).href),
+  ...SITE.discoveryUrls.map((path) => new URL(path, SITE.origin).href),
   ...(await liveSitemapUrls()),
 ]);
 
@@ -34,7 +19,7 @@ if (!ok) process.exitCode = 1;
 
 async function liveSitemapUrls() {
   try {
-    const response = await fetch(`${SITE_ORIGIN}/sitemap.xml?notify=${Date.now()}`, {
+    const response = await fetch(`${SITE.origin}/sitemap.xml?notify=${Date.now()}`, {
       headers: { "User-Agent": "yohelab-search-discovery-notifier/1.0" },
     });
     if (!response.ok) return [];
@@ -51,8 +36,8 @@ function unique(values) {
 
 function canonicalUrl(value) {
   try {
-    const url = new URL(String(value || ""), SITE_ORIGIN);
-    if (url.hostname !== "yohelab.com") return "";
+    const url = new URL(String(value || ""), SITE.origin);
+    if (url.hostname !== SITE.host) return "";
     url.hash = "";
     return url.href;
   } catch {

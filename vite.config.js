@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import { existsSync, readdirSync } from "node:fs";
 import { resolve } from "node:path";
+import { SITE, buildBreadcrumbJsonLd, buildHomeJsonLd } from "./functions/lib/site-seo.js";
 
 function collectGameInputs() {
   const input = {};
@@ -145,9 +146,9 @@ function truncateSeoPart(value, maxChars) {
 }
 
 function seoBrandForPath(pathname = "") {
-  if (pathname.startsWith("/blog/")) return "よへラボブログ";
+  if (pathname.startsWith("/blog/")) return SITE.blogName;
   if (pathname.startsWith("/games/")) return "よへラボゲーム";
-  return "よへラボ";
+  return SITE.name;
 }
 
 function formatSeoTitle(rawTitle, pathname = "") {
@@ -190,7 +191,7 @@ function applySeoTitlePolicy(html, pathname = "") {
 }
 
 function headHardeningPlugin() {
-  const ogImage = "https://yohelab.com/assets/og/bunsirube-og.png";
+  const ogImage = SITE.ogImage;
   const turnstileSiteKey = process.env.VITE_TURNSTILE_SITE_KEY || process.env.TURNSTILE_SITE_KEY || "";
   const clarityId = process.env.VITE_CLARITY_ID || process.env.CLARITY_ID || "";
   const iconLinks = [
@@ -231,16 +232,16 @@ function headHardeningPlugin() {
         }
       }
       if (!out.includes('name="author"')) {
-        out = out.replace("</head>", `  <meta name="author" content="よへラボ" />\n</head>`);
+        out = out.replace("</head>", `  <meta name="author" content="${SITE.name}" />\n</head>`);
       }
       if (!out.includes('property="og:site_name"')) {
-        out = out.replace("</head>", `  <meta property="og:site_name" content="よへラボ" />\n</head>`);
+        out = out.replace("</head>", `  <meta property="og:site_name" content="${SITE.name}" />\n</head>`);
       }
       if (!out.includes('property="og:locale"')) {
         out = out.replace("</head>", `  <meta property="og:locale" content="ja_JP" />\n</head>`);
       }
       if (!out.includes('name="twitter:site"')) {
-        out = out.replace("</head>", `  <meta name="twitter:site" content="@yohe_lab" />\n  <meta name="twitter:creator" content="@yohe_lab" />\n</head>`);
+        out = out.replace("</head>", `  <meta name="twitter:site" content="${SITE.twitterHandle}" />\n  <meta name="twitter:creator" content="${SITE.twitterHandle}" />\n</head>`);
       }
       const canonical = out.match(/<link\s+rel="canonical"\s+href="([^"]+)"\s*\/?>/i)?.[1];
       if (canonical && !out.includes('property="og:url"')) {
@@ -250,7 +251,7 @@ function headHardeningPlugin() {
         out = out.replace("</head>", `  <meta name="format-detection" content="telephone=no,address=no,email=no" />\n</head>`);
       }
       if (!out.includes('type="application/rss+xml"')) {
-        out = out.replace("</head>", `  <link rel="alternate" type="application/rss+xml" title="よへラボ RSS" href="https://yohelab.com/feed.xml" />\n</head>`);
+        out = out.replace("</head>", `  <link rel="alternate" type="application/rss+xml" title="${SITE.name} RSS" href="${SITE.feedUrl}" />\n</head>`);
       }
 
       out = out.replace(/<img([^>]+src="\/yohelab-mascot-v2-20260518\.webp"[^>]*)>/g, (match, attrs) => {
@@ -279,20 +280,7 @@ function headHardeningPlugin() {
         });
 
       if (ctx.path === "/index.html" && !out.includes('"@type":"WebSite"')) {
-        const website = {
-          "@context": "https://schema.org",
-          "@type": "WebSite",
-          name: "よへラボ",
-          url: "https://yohelab.com/",
-          description: "家で働く人・副業をする人向けに、AIニュース、ブログ、WordPress、在宅ワーク習慣を整理する情報サイト。",
-          publisher: {
-            "@type": "Organization",
-            name: "よへラボ",
-            logo: { "@type": "ImageObject", url: "https://yohelab.com/yohelab-mascot-v2-20260518.png" },
-          },
-          inLanguage: "ja-JP",
-        };
-        out = out.replace("</head>", `  <script type="application/ld+json">${JSON.stringify(website)}</script>\n</head>`);
+        out = out.replace("</head>", `  <script type="application/ld+json">${buildHomeJsonLd()}</script>\n</head>`);
       }
 
       if (!out.includes('rel="apple-touch-icon"')) {
@@ -309,16 +297,11 @@ function headHardeningPlugin() {
       }
 
       const title = out.match(/<title>([^<]+)<\/title>/i)?.[1]?.replace(/\s*\|\s*よへラボ.*$/, "").trim();
-      if (canonical && canonical !== "https://yohelab.com/" && title && !out.includes('"@type":"BreadcrumbList"')) {
-        const breadcrumb = {
-          "@context": "https://schema.org",
-          "@type": "BreadcrumbList",
-          itemListElement: [
-            { "@type": "ListItem", position: 1, name: "トップ", item: "https://yohelab.com/" },
-            { "@type": "ListItem", position: 2, name: title, item: canonical },
-          ],
-        };
-        out = out.replace("</head>", `  <script type="application/ld+json">${JSON.stringify(breadcrumb)}</script>\n</head>`);
+      if (canonical && canonical !== `${SITE.origin}/` && title && !out.includes('"@type":"BreadcrumbList"')) {
+        out = out.replace("</head>", `  <script type="application/ld+json">${buildBreadcrumbJsonLd([
+          { name: "トップ", item: `${SITE.origin}/` },
+          { name: title, item: canonical },
+        ])}</script>\n</head>`);
       }
 
       out = applySeoTitlePolicy(out, ctx.path);
@@ -373,24 +356,11 @@ export default defineConfig({
         contact: "contact/index.html",
         contactBug: "contact/bug/index.html",
         blog: "blog/index.html",
-        blogPageReviewSample: "blog/page-review-sample/index.html",
-        blogResearchWriterFreeFlow: "blog/research-writer-free-flow/index.html",
         blogBunsirubeBeforeInstall: "blog/bunsirube-before-install/index.html",
         blogFreeThemeVsBunsirube: "blog/free-theme-vs-bunsirube/index.html",
         blogBunsirubeVersionHistory: "blog/bunsirube-version-history/index.html",
         blogAiNewsSellingIdeas: "blog/ai-news-selling-ideas/index.html",
-        blogChatgptUpdate2026: "blog/chatgpt-update-2026/index.html",
-        blogClaudeMythosPreview: "blog/claude-mythos-preview/index.html",
-        blogClaudeMythosExploitgym22x: "blog/claude-mythos-exploitgym-22x/index.html",
-        blogClaudeUpdate2026: "blog/claude-update-2026/index.html",
-        blogDeepseekV4ProPricing: "blog/deepseek-v4-pro-pricing/index.html",
-        blogCopilotHowToUse: "blog/copilot-how-to-use/index.html",
-        blogGeminiUpdate2026: "blog/gemini-update-2026/index.html",
-        blogGensparkHowToEarn: "blog/genspark-how-to-earn/index.html",
-        blogGrokBuildAiAgentCli: "blog/grok-build-ai-agent-cli/index.html",
-        blogGrokUpdate2026: "blog/grok-update-2026/index.html",
-        blogProjectGlasswing10000Bugs: "blog/project-glasswing-10000-bugs/index.html",
-        blogPerplexityHowToEarn: "blog/perplexity-how-to-earn/index.html",
+        blogGpt56ThisWeek: "blog/gpt-56-this-week/index.html",
         blogComparisonArticleTemplate: "blog/comparison-article-template/index.html",
         blogFaqSourceAiSearch: "blog/faq-source-ai-search/index.html",
         blogSalesPageCommonMistakes: "blog/sales-page-common-mistakes/index.html",
