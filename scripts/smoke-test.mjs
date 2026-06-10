@@ -153,6 +153,7 @@ checks.push(["contact mail falls back to yohelab Gmail inbox", contactApi.includ
 
 const sitemap = read(dist("sitemap.xml"));
 const englishHome = read(dist("en/index.html"));
+const englishBlog = read(dist("en/blog/index.html"));
 const feed = read(src("feed.xml"));
 checks.push(["sitemap excludes preparing research writer", !sitemap.includes('https://yohelab.com/lp/research-writer/') && !sitemap.includes('https://yohelab.com/apps/research-writer/')]);
 checks.push(["sitemap excludes legacy apps", legacyPaths.every((path) => !sitemap.includes(path))]);
@@ -163,6 +164,9 @@ checks.push(["sitemap includes bunsirube demo and updates", sitemap.includes('ht
 checks.push(["sitemap includes bunsirube install guide", sitemap.includes('https://yohelab.com/lp/bunsirube/install/')]);
 checks.push(["sitemap includes static blog guide posts", ["bunsirube-before-install", "bunsirube-version-history", "faq-source-ai-search", "sales-page-common-mistakes"].every((slug) => sitemap.includes(`https://yohelab.com/blog/${slug}/`)) && !sitemap.includes("https://yohelab.com/blog/page-review-sample/") && !sitemap.includes("https://yohelab.com/blog/research-writer-free-flow/")]);
 checks.push(["English home has complete multilingual SEO", englishHome.includes('<html lang="en"') && englishHome.includes('href="https://yohelab.com/en/"') && englishHome.includes('hreflang="ja"') && englishHome.includes('hreflang="en"') && englishHome.includes('hreflang="x-default"') && englishHome.includes('content="en_US"') && sitemap.includes("https://yohelab.com/en/")]);
+checks.push(["English blog has complete multilingual SEO", englishBlog.includes('<html lang="en"') && englishBlog.includes('href="https://yohelab.com/en/blog/"') && englishBlog.includes('hreflang="ja"') && englishBlog.includes('hreflang="en"') && englishBlog.includes('hreflang="x-default"') && englishBlog.includes('content="en_US"') && englishBlog.includes('"@type":"CollectionPage"') && englishBlog.includes('"@type":"BreadcrumbList"') && englishBlog.includes('name="twitter:image"') && englishBlog.includes('property="og:image:width"') && sitemap.includes("https://yohelab.com/en/blog/")]);
+checks.push(["English pages disclose Japanese-only templates", englishHome.includes("templates currently support Japanese only") && englishBlog.includes("templates currently support Japanese only")]);
+checks.push(["static sitemap includes multilingual alternates", sitemap.includes('xmlns:xhtml="http://www.w3.org/1999/xhtml"') && sitemap.includes('hreflang="ja" href="https://yohelab.com/"') && sitemap.includes('hreflang="en" href="https://yohelab.com/en/"') && sitemap.includes('hreflang="en" href="https://yohelab.com/en/blog/"')]);
 checks.push(["sitemap excludes games pages", !sitemap.includes("https://yohelab.com/games/")]);
 
 const gameScript = read(dist("shared/arcade-game.js"));

@@ -3,21 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Yohe Lab | AI-ready publishing tools and practical guides</title>
-  <meta name="description" content="Yohe Lab organizes practical AI news, publishing guides, lightweight browser games, and Bunsirube, a WordPress theme built for people and AI search." />
+  <title>Yohe Lab | Bunsirube WordPress Theme & AI Publishing</title>
+  <meta name="description" content="Yohe Lab publishes English guides to Bunsirube, a lightweight WordPress theme, AI-ready article structure, FAQ, citations, and practical publishing workflows." />
   <meta name="author" content="Yohe Lab" />
-  <meta property="og:title" content="Yohe Lab | AI-ready publishing tools and practical guides" />
-  <meta property="og:description" content="Practical AI publishing guides, lightweight tools, games, and Bunsirube, a WordPress theme designed for clear, structured articles." />
+  <meta property="og:title" content="Yohe Lab | Bunsirube WordPress Theme & AI Publishing" />
+  <meta property="og:description" content="English overview of Bunsirube, AI-ready article structure, FAQ, citations, comparison tables, and practical publishing workflows." />
   <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Yohe Lab" />
   <meta property="og:locale" content="en_US" />
+  <meta property="og:locale:alternate" content="ja_JP" />
   <meta property="og:url" content="https://yohelab.com/en/" />
   <meta property="og:image" content="https://yohelab.com/assets/og/bunsirube-og.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Yohe Lab | AI-ready publishing tools and practical guides" />
-  <meta name="twitter:description" content="Practical AI publishing guides, lightweight tools, games, and a WordPress theme for clear, structured articles." />
+  <meta name="twitter:title" content="Yohe Lab | Bunsirube WordPress Theme & AI Publishing" />
+  <meta name="twitter:description" content="English overview of Bunsirube, AI-ready article structure, FAQ, citations, comparison tables, and practical publishing workflows." />
   <meta name="twitter:image" content="https://yohelab.com/assets/og/bunsirube-og.png" />
+  <meta name="twitter:image:alt" content="Yohe Lab and Bunsirube article structure preview" />
   <meta name="twitter:site" content="@yohe_lab" />
   <meta name="twitter:creator" content="@yohe_lab" />
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
@@ -30,7 +33,7 @@
   <link rel="manifest" href="/site.webmanifest?v=mascot-v2-20260518" />
   <link rel="icon" type="image/png" href="/yohelab-mascot-v2-20260518-32.png" />
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://yohelab.com/#organization","name":"Yohe Lab","alternateName":["よへラボ","yohelab"],"url":"https://yohelab.com/","logo":{"@type":"ImageObject","url":"https://yohelab.com/yohelab-mascot-v2-20260518.png","width":1024,"height":1024},"sameAs":["https://x.com/yohe_lab","https://note.com/yohelab"]},{"@type":"WebSite","@id":"https://yohelab.com/en/#website","name":"Yohe Lab","url":"https://yohelab.com/en/","description":"Practical AI publishing guides, tools, and lightweight browser games.","publisher":{"@id":"https://yohelab.com/#organization"},"inLanguage":"en"}]}
+  {"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://yohelab.com/#organization","name":"Yohe Lab","alternateName":["よへラボ","yohelab"],"url":"https://yohelab.com/","logo":{"@type":"ImageObject","url":"https://yohelab.com/yohelab-mascot-v2-20260518.png","width":1024,"height":1024},"sameAs":["https://x.com/yohe_lab","https://note.com/yohelab"]},{"@type":"WebSite","@id":"https://yohelab.com/en/#website","name":"Yohe Lab","url":"https://yohelab.com/en/","description":"English guides for Bunsirube, AI-ready article structure, and practical publishing workflows.","publisher":{"@id":"https://yohelab.com/#organization"},"inLanguage":"en"},{"@type":"WebPage","@id":"https://yohelab.com/en/#webpage","url":"https://yohelab.com/en/","name":"Yohe Lab | Bunsirube WordPress Theme & AI Publishing","description":"English overview of Bunsirube, a lightweight WordPress theme for structured articles, FAQ, citations, comparison tables, and clear calls to action. Bundled article templates currently support Japanese only.","isPartOf":{"@id":"https://yohelab.com/en/#website"},"about":[{"@type":"SoftwareApplication","name":"Bunsirube","applicationCategory":"WordPressTheme","operatingSystem":"WordPress"},{"@type":"Thing","name":"AI-ready article structure"}],"inLanguage":"en","primaryImageOfPage":{"@type":"ImageObject","url":"https://yohelab.com/assets/og/bunsirube-og.png","width":1200,"height":630}},{"@type":"BreadcrumbList","@id":"https://yohelab.com/en/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://yohelab.com/en/"}]}]}
   </script>
   <style>
     :root {
@@ -177,6 +180,16 @@
       color: #653522;
       font-size: 13px;
     }
+    .mini-note {
+      max-width: 650px;
+      margin-top: 16px;
+      padding: 12px 14px;
+      border: 1px solid #cce7df;
+      border-radius: var(--radius);
+      background: #f3fbf8;
+      color: var(--text-sub);
+      font-size: 13px;
+    }
     .site-footer { background: #17212b; color: #dce4e8; }
     .footer-inner {
       width: min(1100px, calc(100% - 32px));
@@ -229,6 +242,7 @@
             <a class="button primary" href="/lp/bunsirube/">Explore Bunsirube</a>
             <a class="button" href="/en/blog/">Read the blog</a>
           </div>
+          <p class="mini-note">Bunsirube helps organize article structure for readers and search engines. The bundled article templates currently support Japanese only. Rankings, citations, traffic, and sales results are not guaranteed.</p>
         </div>
         <div class="hero-visual">
           <img src="/assets/bunsirube/bunsirube-feature-visual.svg" alt="Bunsirube WordPress theme article layout preview" width="480" height="760" />
@@ -246,7 +260,7 @@
         <a class="item" href="/lp/bunsirube/">
           <span class="item-mark">WordPress theme</span>
           <h3>Bunsirube</h3>
-          <p>A lightweight, one-time-purchase WordPress theme built for structured articles, FAQ, citations, comparison tables, and clear calls to action.</p>
+          <p>A lightweight, one-time-purchase WordPress theme built for structured articles, FAQ, citations, comparison tables, and clear calls to action. Bundled article templates currently support Japanese only.</p>
           <span class="item-link">View product page in Japanese →</span>
         </a>
         <a class="item" href="/en/blog/">
