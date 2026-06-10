@@ -71,6 +71,7 @@ export async function onRequestPost(context) {
           updatedAt: normalized.updatedAt,
           importedFrom: "static-posts",
           sourceSlug: normalized.slug,
+          locale: "ja",
         };
 
         await kv.put(key, JSON.stringify(draft), {
@@ -78,6 +79,7 @@ export async function onRequestPost(context) {
             title: draft.title,
             slug: draft.slug,
             sourceSlug: draft.sourceSlug,
+            locale: "ja",
             excerpt: draft.excerpt,
             eyecatch: draft.eyecatch || "",
             socialImage: draft.socialImage || "",
@@ -113,6 +115,7 @@ export async function onRequestPost(context) {
         socialImage: eyecatch,
         importedFrom: "static-posts",
         sourceSlug: normalized.slug,
+        locale: "ja",
       };
 
       await kv.put(key, JSON.stringify(post), {
@@ -123,6 +126,7 @@ export async function onRequestPost(context) {
           excerpt: post.excerpt,
           slug: post.slug,
           sourceSlug: post.sourceSlug,
+          locale: "ja",
           eyecatch: post.eyecatch || "",
           socialImage: post.socialImage || "",
           tags: post.tags.join(","),

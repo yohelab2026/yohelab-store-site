@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yohe Lab | AI-ready publishing tools and practical guides</title>
+  <meta name="description" content="Yohe Lab organizes practical AI news, publishing guides, lightweight browser games, and Bunsirube, a WordPress theme built for people and AI search." />
+  <meta name="author" content="Yohe Lab" />
+  <meta property="og:title" content="Yohe Lab | AI-ready publishing tools and practical guides" />
+  <meta property="og:description" content="Practical AI publishing guides, lightweight tools, games, and Bunsirube, a WordPress theme designed for clear, structured articles." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:url" content="https://yohelab.com/en/" />
+  <meta property="og:image" content="https://yohelab.com/assets/og/bunsirube-og.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Yohe Lab | AI-ready publishing tools and practical guides" />
+  <meta name="twitter:description" content="Practical AI publishing guides, lightweight tools, games, and a WordPress theme for clear, structured articles." />
+  <meta name="twitter:image" content="https://yohelab.com/assets/og/bunsirube-og.png" />
+  <meta name="twitter:site" content="@yohe_lab" />
+  <meta name="twitter:creator" content="@yohe_lab" />
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
+  <meta name="theme-color" content="#087a63" />
+  <link rel="canonical" href="https://yohelab.com/en/" />
+  <link rel="alternate" hreflang="ja" href="https://yohelab.com/" />
+  <link rel="alternate" hreflang="en" href="https://yohelab.com/en/" />
+  <link rel="alternate" hreflang="x-default" href="https://yohelab.com/" />
+  <link rel="apple-touch-icon" href="/yohelab-mascot-v2-20260518-180.png" />
+  <link rel="manifest" href="/site.webmanifest?v=mascot-v2-20260518" />
+  <link rel="icon" type="image/png" href="/yohelab-mascot-v2-20260518-32.png" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://yohelab.com/#organization","name":"Yohe Lab","alternateName":["よへラボ","yohelab"],"url":"https://yohelab.com/","logo":{"@type":"ImageObject","url":"https://yohelab.com/yohelab-mascot-v2-20260518.png","width":1024,"height":1024},"sameAs":["https://x.com/yohe_lab","https://note.com/yohelab"]},{"@type":"WebSite","@id":"https://yohelab.com/en/#website","name":"Yohe Lab","url":"https://yohelab.com/en/","description":"Practical AI publishing guides, tools, and lightweight browser games.","publisher":{"@id":"https://yohelab.com/#organization"},"inLanguage":"en"}]}
+  </script>
+  <style>
+    :root {
+      --brand: #087a63;
+      --brand-dark: #065f4d;
+      --brand-light: #e8f7f3;
+      --accent: #ff6b2b;
+      --text: #17212b;
+      --text-sub: #3e4b57;
+      --muted: #66727f;
+      --border: #dfe5e8;
+      --bg: #f4f7f6;
+      --white: #fff;
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Aptos", "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+    :focus-visible { outline: 3px solid #ffb703; outline-offset: 3px; }
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 3px solid var(--brand);
+      background: rgba(255,255,255,.96);
+      backdrop-filter: blur(12px);
+    }
+    .header-inner {
+      width: min(1100px, calc(100% - 32px));
+      min-height: 58px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+    .logo { display: flex; align-items: center; gap: 9px; color: var(--brand); font-size: 19px; font-weight: 900; }
+    .logo img { width: 36px; height: 36px; border-radius: 8px; }
+    .nav { display: flex; gap: 4px; margin-left: auto; align-items: center; }
+    .nav a { padding: 7px 10px; border-radius: 4px; color: var(--text-sub); font-size: 13px; font-weight: 750; }
+    .nav a:hover { background: var(--brand-light); color: var(--brand); }
+    .language-link { border: 1px solid var(--border); }
+    .primary-link { background: var(--brand); color: #fff !important; }
+    .primary-link:hover { background: var(--brand-dark) !important; }
+    .hero {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-inner {
+      width: min(1100px, calc(100% - 32px));
+      min-height: 480px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(300px, .85fr);
+      align-items: center;
+      gap: 48px;
+      padding: 64px 0;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      margin-bottom: 14px;
+      color: var(--brand);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    h1 { max-width: 720px; font-size: clamp(38px, 6vw, 66px); line-height: 1.03; letter-spacing: 0; }
+    .hero-copy p { max-width: 650px; margin-top: 20px; color: var(--text-sub); font-size: 18px; }
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 10px 16px;
+      border: 1px solid var(--brand);
+      border-radius: 5px;
+      color: var(--brand);
+      font-size: 14px;
+      font-weight: 850;
+    }
+    .button.primary { background: var(--brand); color: #fff; }
+    .button:hover { background: var(--brand-light); }
+    .button.primary:hover { background: var(--brand-dark); }
+    .hero-visual {
+      position: relative;
+      min-height: 350px;
+      display: grid;
+      place-items: center;
+      background: #edf8f5;
+      border: 1px solid #cce7df;
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .hero-visual img { width: min(80%, 360px); filter: drop-shadow(0 18px 20px rgba(6,95,77,.18)); }
+    .hero-visual span {
+      position: absolute;
+      right: 14px;
+      bottom: 14px;
+      padding: 5px 8px;
+      border-radius: 4px;
+      background: var(--white);
+      color: var(--brand-dark);
+      font-size: 11px;
+      font-weight: 850;
+    }
+    .section {
+      width: min(1100px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 52px 0;
+    }
+    .section + .section { border-top: 1px solid var(--border); }
+    .section-heading { max-width: 680px; margin-bottom: 24px; }
+    .section-heading h2 { font-size: 27px; line-height: 1.2; }
+    .section-heading p { margin-top: 7px; color: var(--muted); }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .item {
+      display: flex;
+      flex-direction: column;
+      min-height: 210px;
+      padding: 20px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--white);
+      transition: transform .15s, border-color .15s;
+    }
+    .item:hover { transform: translateY(-2px); border-color: var(--brand); }
+    .item-mark { color: var(--brand); font-size: 13px; font-weight: 900; text-transform: uppercase; }
+    .item h3 { margin-top: 12px; font-size: 19px; line-height: 1.25; }
+    .item p { margin-top: 8px; color: var(--muted); font-size: 14px; }
+    .item-link { margin-top: auto; padding-top: 18px; color: var(--brand); font-size: 13px; font-weight: 850; }
+    .notice {
+      padding: 13px 16px;
+      border-left: 4px solid var(--accent);
+      background: #fff5ef;
+      color: #653522;
+      font-size: 13px;
+    }
+    .site-footer { background: #17212b; color: #dce4e8; }
+    .footer-inner {
+      width: min(1100px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0;
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      align-items: center;
+    }
+    .footer-inner p { color: #afbac1; font-size: 12px; }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 12px; font-size: 12px; font-weight: 750; }
+    @media (max-width: 760px) {
+      .header-inner { width: calc(100% - 20px); gap: 8px; }
+      .nav a:not(.language-link) { display: none; }
+      .hero-inner { grid-template-columns: 1fr; min-height: 0; gap: 28px; padding: 42px 0; }
+      h1 { font-size: 42px; }
+      .hero-copy p { font-size: 16px; }
+      .hero-visual { min-height: 270px; }
+      .grid { grid-template-columns: 1fr; }
+      .item { min-height: 0; }
+      .footer-inner { align-items: flex-start; flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="logo" href="/en/">
+        <img src="/yohelab-mascot-v2-20260518-64.png" alt="" width="36" height="36" />
+        Yohe Lab
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <a href="/en/blog/">Blog</a>
+        <a href="/games/">Games</a>
+        <a class="language-link" href="/" hreflang="ja" lang="ja" aria-label="日本語で表示">日本語</a>
+        <a class="primary-link" href="/lp/bunsirube/">Bunsirube</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <div class="eyebrow">AI publishing, made practical</div>
+          <h1>Clearer articles for people and AI search.</h1>
+          <p>Yohe Lab turns AI news into practical publishing guides, small tools, and playful browser games. It is also home to Bunsirube, a lightweight WordPress theme designed around clear article structure.</p>
+          <div class="actions">
+            <a class="button primary" href="/lp/bunsirube/">Explore Bunsirube</a>
+            <a class="button" href="/en/blog/">Read the blog</a>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <img src="/assets/bunsirube/bunsirube-feature-visual.svg" alt="Bunsirube WordPress theme article layout preview" width="480" height="760" />
+          <span>WordPress 6.5+</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-heading">
+        <h2>Start with what you need</h2>
+        <p>Guides and products currently open in Japanese. This English page provides a reliable overview while more translations are prepared.</p>
+      </div>
+      <div class="grid">
+        <a class="item" href="/lp/bunsirube/">
+          <span class="item-mark">WordPress theme</span>
+          <h3>Bunsirube</h3>
+          <p>A lightweight, one-time-purchase WordPress theme built for structured articles, FAQ, citations, comparison tables, and clear calls to action.</p>
+          <span class="item-link">View product page in Japanese →</span>
+        </a>
+        <a class="item" href="/en/blog/">
+          <span class="item-mark">Publishing guides</span>
+          <h3>AI news and article structure</h3>
+          <p>Practical notes on turning AI news into useful content and writing pages that remain understandable to readers and AI systems.</p>
+          <span class="item-link">Browse English articles →</span>
+        </a>
+        <a class="item" href="/games/">
+          <span class="item-mark">Browser games</span>
+          <h3>Quick, playful breaks</h3>
+          <p>Small browser games that load quickly and work without installation or registration.</p>
+          <span class="item-link">Browse games →</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-heading">
+        <h2>Popular practical guides</h2>
+        <p>These articles are written in Japanese and can be translated with your browser.</p>
+      </div>
+      <div class="grid">
+        <a class="item" href="/blog/comparison-article-template/">
+          <span class="item-mark">Free template</span>
+          <h3>Comparison article template</h3>
+          <p>A reusable structure for conclusions, comparison tables, FAQ, and calls to action.</p>
+          <span class="item-link">Read in Japanese →</span>
+        </a>
+        <a class="item" href="/blog/faq-source-ai-search/">
+          <span class="item-mark">AI search</span>
+          <h3>Why FAQ and sources matter</h3>
+          <p>A practical guide to making answers, evidence, and citations easier to understand.</p>
+          <span class="item-link">Read in Japanese →</span>
+        </a>
+        <a class="item" href="/blog/bunsirube-before-install/">
+          <span class="item-mark">Before purchase</span>
+          <h3>Bunsirube compatibility notes</h3>
+          <p>What to check before installing or purchasing the WordPress theme.</p>
+          <span class="item-link">Read in Japanese →</span>
+        </a>
+      </div>
+      <p class="notice" style="margin-top:20px;">Purchases, legal terms, support, and product specifications are governed by the original Japanese pages.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div>
+        <strong>Yohe Lab</strong>
+        <p>Practical AI publishing guides, tools, and games.</p>
+      </div>
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="/" hreflang="ja" lang="ja">日本語</a>
+        <a href="/about/">About</a>
+        <a href="/contact/">Contact</a>
+        <a href="https://x.com/yohe_lab" target="_blank" rel="noopener me">X</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>

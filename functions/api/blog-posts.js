@@ -9,6 +9,8 @@ export async function onRequestGet(context) {
 
     const url = new URL(context.request.url);
     const page = Math.max(1, parseInt(url.searchParams.get("page") || "1", 10));
+    const localeParam = String(url.searchParams.get("locale") || "").trim().toLowerCase();
+    const locale = normalizeLocale(localeParam);
 
     const keys = await listPostKeys(kv);
 
@@ -21,7 +23,7 @@ export async function onRequestGet(context) {
         const socialImage = eyecatch;
         return {
           slug,
-          url: `/blog/${encodeURIComponent(slug)}/`,
+          url: postPath(slug, key.metadata?.locale),
           title: key.metadata?.title || "",
           date: key.metadata?.date || "",
           publishedAt: key.metadata?.publishedAt || "",
@@ -33,8 +35,11 @@ export async function onRequestGet(context) {
           tags: parseTags(key.metadata?.tags),
           sourceSlug,
           importedFrom: key.metadata?.importedFrom || "",
+          locale: normalizeLocale(key.metadata?.locale),
+          translationSlug: key.metadata?.translationSlug || "",
         };
       })
+      .filter((post) => localeParam === "all" || post.locale === locale)
       .sort(compareByPublishedOrder);
 
     const total = allPosts.length;
@@ -65,6 +70,14 @@ function parseTags(value) {
     .map((tag) => tag.trim())
     .filter(Boolean)
     .slice(0, 12);
+}
+
+function normalizeLocale(value) {
+  return String(value || "").trim().toLowerCase().startsWith("en") ? "en" : "ja";
+}
+
+function postPath(slug, locale = "ja") {
+  return `${normalizeLocale(locale) === "en" ? "/en/blog/" : "/blog/"}${encodeURIComponent(slug)}/`;
 }
 
 function compareByPublishedOrder(a, b) {

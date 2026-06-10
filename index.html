@@ -24,6 +24,7 @@
   <meta name="theme-color" content="#087a63" />
   <link rel="canonical" href="https://yohelab.com/" />
   <link rel="alternate" hreflang="ja" href="https://yohelab.com/" />
+  <link rel="alternate" hreflang="en" href="https://yohelab.com/en/" />
   <link rel="alternate" hreflang="x-default" href="https://yohelab.com/" />
   <link rel="alternate" type="application/rss+xml" title="よへラボ RSS" href="https://yohelab.com/feed.xml" />
   <link rel="apple-touch-icon" href="/yohelab-mascot-v2-20260518-180.png" />
@@ -114,7 +115,27 @@
       transition: background .15s, color .15s;
     }
     .header-nav a:hover { background: var(--brand-light); color: var(--brand); }
-    .header-right { margin-left: auto; }
+    .header-right {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .language-link {
+      border: 1px solid var(--border);
+      color: var(--text-sub);
+      padding: 6px 10px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 1;
+      transition: border-color .15s, color .15s, background .15s;
+    }
+    .language-link:hover {
+      border-color: var(--brand);
+      background: var(--brand-light);
+      color: var(--brand);
+    }
     .btn-primary-sm {
       background: var(--brand);
       color: #fff;
@@ -721,6 +742,7 @@
       <a href="/about/">サイトについて</a>
     </nav>
     <div class="header-right">
+      <a class="language-link" href="/en/" hreflang="en" lang="en" aria-label="View this site in English">EN</a>
       <a class="btn-primary-sm" href="/lp/bunsirube/">文標を見る →</a>
     </div>
     <button class="mobile-hamburger" id="menuBtn" aria-label="メニューを開く">☰</button>
@@ -732,6 +754,7 @@
     <a href="https://x.com/yohe_lab" target="_blank" rel="noopener">X（旧Twitter）</a>
     <a href="https://note.com/yohelab" target="_blank" rel="noopener">note</a>
     <a href="/contact/">お問い合わせ</a>
+    <a href="/en/" hreflang="en" lang="en">English</a>
   </nav>
 </header>
 

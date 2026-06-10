@@ -152,6 +152,7 @@ checks.push(["contact uses first-party api and optional turnstile", contact.incl
 checks.push(["contact mail falls back to yohelab Gmail inbox", contactApi.includes('DEFAULT_ADMIN_EMAIL = "yohelab2026@gmail.com"') && contactApi.includes('env.ADMIN_EMAIL || DEFAULT_ADMIN_EMAIL')]);
 
 const sitemap = read(dist("sitemap.xml"));
+const englishHome = read(dist("en/index.html"));
 const feed = read(src("feed.xml"));
 checks.push(["sitemap excludes preparing research writer", !sitemap.includes('https://yohelab.com/lp/research-writer/') && !sitemap.includes('https://yohelab.com/apps/research-writer/')]);
 checks.push(["sitemap excludes legacy apps", legacyPaths.every((path) => !sitemap.includes(path))]);
@@ -161,6 +162,7 @@ checks.push(["sitemap focuses live bunsirube pages", sitemap.includes('https://y
 checks.push(["sitemap includes bunsirube demo and updates", sitemap.includes('https://yohelab.com/lp/bunsirube/demo/') && sitemap.includes('https://yohelab.com/lp/bunsirube/updates/')]);
 checks.push(["sitemap includes bunsirube install guide", sitemap.includes('https://yohelab.com/lp/bunsirube/install/')]);
 checks.push(["sitemap includes static blog guide posts", ["bunsirube-before-install", "bunsirube-version-history", "faq-source-ai-search", "sales-page-common-mistakes"].every((slug) => sitemap.includes(`https://yohelab.com/blog/${slug}/`)) && !sitemap.includes("https://yohelab.com/blog/page-review-sample/") && !sitemap.includes("https://yohelab.com/blog/research-writer-free-flow/")]);
+checks.push(["English home has complete multilingual SEO", englishHome.includes('<html lang="en"') && englishHome.includes('href="https://yohelab.com/en/"') && englishHome.includes('hreflang="ja"') && englishHome.includes('hreflang="en"') && englishHome.includes('hreflang="x-default"') && englishHome.includes('content="en_US"') && sitemap.includes("https://yohelab.com/en/")]);
 checks.push(["sitemap excludes games pages", !sitemap.includes("https://yohelab.com/games/")]);
 
 const gameScript = read(dist("shared/arcade-game.js"));
@@ -189,6 +191,7 @@ const blogCardApi = read(src("functions/api/blog-card.js"));
 const blogPostFunction = read(src("functions/blog/post/index.js"));
 const blogCardImageFunction = read(src("functions/blog-images/[key].js"));
 const blogPrettyPostFunction = read(src("functions/blog/[slug].js"));
+const englishBlogPrettyPostFunction = read(src("functions/en/blog/[slug].js"));
 const blogPostPageSource = read(src("blog/post/index.html"));
 const blogPostPage = read(dist("blog/post/index.html"));
 const blogPostApi = read(src("functions/api/blog-post.js"));
@@ -256,6 +259,7 @@ checks.push(["blog editor supports right click media add", blogAdminSource.inclu
 checks.push(["blog editor auto converts pasted urls to blog cards", blogAdminSource.includes("insertBlogCardFromUrl") && blogAdminSource.includes("replacePlainUrlBlocksWithCards") && blogAdminSource.includes("bodyEl.addEventListener('paste'") && blogAdminSource.includes("data-blog-card") && blogAdminSource.includes("/api/blog-card?url=")]);
 checks.push(["blog card metadata api is authenticated and guarded", blogCardApi.includes("getRequestPin") && blogCardApi.includes("timingSafeEqual") && blogCardApi.includes("isBlockedHost") && blogCardApi.includes("localhost") && blogCardApi.includes("192.168.") && blogCardApi.includes("og:title") && blogCardApi.includes("twitter:image")]);
 checks.push(["blog posts render blog card styling", blogPostFunction.includes(".blog-link-card") && blogPostPageSource.includes(".blog-link-card") && blogPostFunction.includes("blog-link-card-thumb") && blogPostPageSource.includes("blog-link-card-thumb")]);
+checks.push(["blog publishing supports multilingual SEO", blogPostApi.includes("translationSlug") && blogPostApi.includes("locale") && blogPostApi.includes('"/en/blog/"') && blogPostFunction.includes("findTranslation") && blogPostFunction.includes("og:locale:alternate") && blogPostFunction.includes("hreflang") && englishBlogPrettyPostFunction.includes('locale: "en"') && blogAdminSource.includes('id="post-locale"') && blogAdminSource.includes('id="translation-slug"') && sitemapFunction.includes("xmlns:xhtml") && sitemapFunction.includes("findTranslationSlug")]);
 checks.push(["blog editor media controls support delete and autoscroll", blogAdminSource.includes("data-media-action=\"delete\"") && blogAdminSource.includes("deleteSelectedMediaBlock") && blogAdminSource.includes("event.key === 'Delete'") && blogAdminSource.includes("autoScrollDuringMediaDrag") && blogAdminSource.includes("window.scrollBy")]);
 checks.push(["blog editor media selection does not drag on click", blogAdminSource.includes("mode: isMediaResizePoint(block, event) ? 'resize' : 'pending'") && blogAdminSource.includes("distance < 8") && blogAdminSource.includes("selectMediaBlock(clickedBlock)") && blogAdminSource.includes("clearEditorSelection")]);
 checks.push(["blog editor media supports line controls and keyboard", blogAdminSource.includes("data-media-action=\"up\"") && blogAdminSource.includes("data-media-action=\"down\"") && blogAdminSource.includes("moveMediaBlock") && blogAdminSource.includes("insertParagraphAfterSelectedMedia") && blogAdminSource.includes("event.key === 'Enter'") && blogAdminSource.includes("event.key === 'Backspace' ? 'before' : 'after'")]);
@@ -277,9 +281,9 @@ checks.push(["test blog posts are removed from public index and sitemap", !read(
 checks.push(["middleware redirects removed test blog pages", middleware.includes('"/blog/yohelab-blog-start/"') && middleware.includes('"/blog/starter-kit/"') && middleware.includes('"/blog/theme-note/"')]);
 checks.push(["blog post sanitizes dangerous html server side", blogPostFunction.includes("sanitizeBodyHtml") && blogPostFunction.includes("iframe|object|embed") && blogPostFunction.includes("javascript:") && blogPostFunction.includes("data:text") && blogPostFunction.includes("vbscript:")]);
 checks.push(["blog post sanitizes dangerous html client fallback", blogPostPage.includes("sanitizeBodyHtml") && blogPostPage.includes("iframe|object|embed") && blogPostPage.includes("javascript:") && blogPostPage.includes("data:text") && blogPostPage.includes("vbscript:")]);
-checks.push(["dynamic blog posts use pretty indexable urls", blogPrettyPostFunction.includes("renderBlogPost") && blogPostFunction.includes("prettyPostPath") && blogPostFunction.includes("prettyPostUrl") && blogPostFunction.includes('"X-Robots-Tag": "index,follow') && blogPostFunction.includes('<meta name="robots" content="index,follow') && blogPostsApi.includes("url: `/blog/${encodeURIComponent(slug)}/`") && blogPostApi.includes("const url = `/blog/${encodeURIComponent(slug)}/`;") && blogAdminSource.includes("p.url || `/blog/${encodeURIComponent(p.slug)}/`")]);
-checks.push(["dynamic blog posts use unified article layout", blogPostFunction.includes("renderBlogHeader()") && blogPostFunction.includes('<main class="post-outer"') && blogPostFunction.includes('class="post-hero"') && !blogPostFunction.includes("renderBlogCategoryNav") && !blogPostFunction.includes("BLOG_CATEGORY_TREE") && !blogPostFunction.includes("category-tabs") && !blogPostFunction.includes("cover-hero") && !blogPostFunction.includes('href="/tools/"') && !blogPostFunction.includes('href="/services/"') && !blogPostFunction.includes("文標を見る →")]);
-checks.push(["blog post footer returns home without tool list", blogPostFunction.includes('href="/">← トップページに戻る') && blogPostPageSource.includes('href="/">← トップページに戻る') && !blogPostFunction.includes("よへラボのツール") && !blogPostPageSource.includes("よへラボのツール") && !blogPostFunction.includes("related-links") && !blogPostPageSource.includes("related-links")]);
+checks.push(["dynamic blog posts use pretty indexable urls", blogPrettyPostFunction.includes("renderBlogPost") && englishBlogPrettyPostFunction.includes("renderBlogPost") && blogPostFunction.includes("prettyPostPath") && blogPostFunction.includes("prettyPostUrl") && blogPostFunction.includes('"X-Robots-Tag": "index,follow') && blogPostFunction.includes('<meta name="robots" content="index,follow') && blogPostsApi.includes('"/en/blog/"') && blogPostsApi.includes('"/blog/"') && blogPostApi.includes("postPath(slug, locale)") && blogAdminSource.includes("p.url || `/blog/${encodeURIComponent(p.slug)}/`")]);
+checks.push(["dynamic blog posts use unified article layout", blogPostFunction.includes("renderBlogHeader(locale)") && blogPostFunction.includes('<main class="post-outer"') && blogPostFunction.includes('class="post-hero"') && !blogPostFunction.includes("renderBlogCategoryNav") && !blogPostFunction.includes("BLOG_CATEGORY_TREE") && !blogPostFunction.includes("category-tabs") && !blogPostFunction.includes("cover-hero") && !blogPostFunction.includes('href="/tools/"') && !blogPostFunction.includes('href="/services/"') && !blogPostFunction.includes("文標を見る →")]);
+checks.push(["blog post footer returns home without tool list", blogPostFunction.includes("トップページに戻る") && blogPostFunction.includes("Back to home") && blogPostPageSource.includes('href="/">← トップページに戻る') && !blogPostFunction.includes("よへラボのツール") && !blogPostPageSource.includes("よへラボのツール") && !blogPostFunction.includes("related-links") && !blogPostPageSource.includes("related-links")]);
 checks.push(["blog post title area does not duplicate excerpt", !blogPostFunction.includes("post-excerpt") && !blogPostPageSource.includes("post-excerpt")]);
 checks.push(["dynamic blog posts render featured cover image", blogPostFunction.includes('class="post-cover"') && blogPostFunction.includes("const coverHtml = post.eyecatch") && blogPostFunction.includes("coverImageStyle(post)") && blogPostFunction.includes('fetchpriority="high"') && blogPostPageSource.includes('fetchpriority="high"')]);
 checks.push(["dynamic blog posts keep only one h1 when cover exists", blogPostFunction.includes("const titleHtml = post.eyecatch") && blogPostFunction.includes('<h1 class="sr-only">${escHtml(title)}</h1>') && blogPostFunction.includes("removeLeadingH1") && blogPostPageSource.includes("const titleBlock = post.eyecatch") && blogPostPageSource.includes('class="sr-only"') && blogPostPageSource.includes("removeLeadingH1")]);
@@ -289,9 +293,9 @@ checks.push(["blog api stores publish click time", blogPostApi.includes("const p
 checks.push(["blog publish and overwrite notify search engines and feeds dynamically", blogPostApi.includes("notifyIndexNow(context") && blogPostApi.includes("searchDiscoveryUrls") && blogPostApi.includes("SITE.discoveryUrls") && blogPostApi.includes("originalPostSlug && originalPostSlug !== slug") && indexNowLib.includes("api.indexnow.org/indexnow") && indexNowLib.includes("keyLocation") && existsSync(src("public/6d3c0f4a4e99441ab8e58f8ce6a8c5d9.txt")) && feedFunction.includes("BLOG_KV") && feedFunction.includes("staticBlogSitemapPosts") && feedFunction.includes("Cache-Control") && feedFunction.includes("application/rss+xml") && seoNotifyApi.includes("submitIndexNow") && sitemapFunction.includes("max-age=60")]);
 checks.push(["static deploys can notify search discovery automatically", searchDiscoveryScript.includes("submitIndexNow") && searchDiscoveryScript.includes("/sitemap.xml") && searchDiscoveryScript.includes("liveSitemapUrls") && searchDiscoveryScript.includes("yohelab-search-discovery-notifier") && searchDiscoveryWorkflow.includes("Search discovery notify") && searchDiscoveryWorkflow.includes("branches: [main]") && searchDiscoveryWorkflow.includes("sleep 150") && searchDiscoveryWorkflow.includes("npm run seo:notify")]);
 checks.push(["site SEO and mobile head polish is injected", viteConfig.includes("applySeoTitlePolicy") && viteConfig.includes("formatSeoTitle") && viteConfig.includes("og:site_name") && viteConfig.includes("og:url") && viteConfig.includes("format-detection") && viteConfig.includes("text-size-adjust") && viteConfig.includes("touch-action: manipulation") && viteConfig.includes("min-height: 44px") && blogPostFunction.includes("isPartOf") && blogPostFunction.includes("og:image:width") && blogPostFunction.includes("article:author")]);
-checks.push(["dynamic blog post social titles include yohelab brand", blogPostFunction.includes("const seoTitle = postSeoTitle(title)") && blogPostFunction.includes("<title>${escHtml(seoTitle)}</title>") && blogPostFunction.includes('content="${escAttr(seoTitle)}"') && blogPostPageSource.includes("const seoTitle = postSeoTitle(title)") && blogPostPageSource.includes("document.title = seoTitle") && blogPostPageSource.includes("setMeta('twitter:title', seoTitle)")]);
+checks.push(["dynamic blog post social titles include yohelab brand", blogPostFunction.includes("const seoTitle = postSeoTitle(title, locale)") && blogPostFunction.includes('"Yohe Lab"') && blogPostFunction.includes("<title>${escHtml(seoTitle)}</title>") && blogPostFunction.includes('content="${escAttr(seoTitle)}"') && blogPostPageSource.includes("const seoTitle = postSeoTitle(title)") && blogPostPageSource.includes("document.title = seoTitle") && blogPostPageSource.includes("setMeta('twitter:title', seoTitle)")]);
 checks.push(["blog post fallback rewrites canonical and structured data", blogPostPageSource.includes("slugFromLocation") && blogPostPageSource.includes("history.replaceState") && blogPostPageSource.includes("setCanonical(pageUrl)") && blogPostPageSource.includes("'@type': 'BlogPosting'") && blogPostPageSource.includes("setMeta('og:url', pageUrl)") && blogPostPageSource.includes("setMeta('robots', 'index,follow")]);
-checks.push(["dynamic sitemap lists pretty blog post urls", sitemapFunction.includes("dynamicBlogUrls") && sitemapFunction.includes("BLOG_KV") && sitemapFunction.includes("/blog/${encodeURIComponent(slug)}/") && sitemapFunction.includes("mergeUrls(URLS, await dynamicBlogUrls")]);
+checks.push(["dynamic sitemap lists pretty blog post urls", sitemapFunction.includes("dynamicBlogUrls") && sitemapFunction.includes("BLOG_KV") && sitemapFunction.includes('"/en/blog/"') && sitemapFunction.includes('"/blog/"') && sitemapFunction.includes("postPath(slug, locale)") && sitemapFunction.includes("mergeUrls(URLS, await dynamicBlogUrls")]);
 checks.push(["bunsirube lp links to separate update history", bunsirubeLp.includes("最新の更新") && bunsirubeLp.includes("/lp/bunsirube/updates/") && !bunsirubeLp.includes("2026.05.03 / v0.2.0") && bunsirubeLp.includes("自動アップデート用シリアル")]);
 checks.push(["bunsirube updates page includes full history", bunsirubeUpdates.includes("文標の更新履歴") && bunsirubeUpdates.includes("v0.3.1") && bunsirubeUpdates.includes("v0.2.0") && bunsirubeUpdates.includes("初期版構成") && bunsirubeUpdates.includes("継続して見ること")]);
 checks.push(["bunsirube lp includes demo and support", bunsirubeLp.includes('/lp/bunsirube/demo/') && bunsirubeLp.includes("デモ画面を見る") && bunsirubeLp.includes("テーマ購入前の不安") && bunsirubeLp.includes("30日返金保証") && bunsirubeLp.includes("価格・提供範囲") && bunsirubeLp.includes("不具合対応の範囲") && bunsirubeLp.includes("購入前に判断材料を見られる") && !bunsirubeLp.includes("公開事例は準備中") && !bunsirubeLp.includes("公開モニター") && bunsirubeLp.includes("GNU GPL v2 or later") && bunsirubeDemo.includes("文標の見た目と使い方")]);
@@ -416,13 +420,16 @@ function decodeHtmlEntities(value) {
 function seoTitleLength(value) {
   return Array.from(String(value || "").replace(/\s+/g, " ").trim()).length;
 }
+function hasYoheBrand(value) {
+  return String(value || "").includes("よへラボ") || String(value || "").includes("Yohe Lab");
+}
 const htmlTitleProblems = distFiles
   .filter((p) => p.endsWith(".html") && !p.endsWith("/google0009e82266fc5714.html"))
   .flatMap((p) => {
     const html = read(p);
     const title = decodeHtmlEntities(html.match(/<title>([\s\S]*?)<\/title>/i)?.[1] || "").replace(/\s+/g, " ").trim();
     if (!title) return [{ path: p, title, reason: "missing title" }];
-    if (!title.includes("よへラボ")) return [{ path: p, title, reason: "missing brand" }];
+    if (!hasYoheBrand(title)) return [{ path: p, title, reason: "missing brand" }];
     if (seoTitleLength(title) > 64) return [{ path: p, title, reason: "too long" }];
     return [];
   });
@@ -436,7 +443,7 @@ const socialTitleProblems = distFiles
         : new RegExp(`<meta\\s+name="${name}"\\s+content="([^"]*)"\\s*\\/?>`, "i");
       const value = decodeHtmlEntities(html.match(re)?.[1] || "").replace(/\s+/g, " ").trim();
       if (!value) return [];
-      if (!value.includes("よへラボ")) return [{ path: p, name, value }];
+      if (!hasYoheBrand(value)) return [{ path: p, name, value }];
       return [];
     });
   });

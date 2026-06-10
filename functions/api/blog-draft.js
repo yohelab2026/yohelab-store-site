@@ -77,6 +77,8 @@ export async function onRequestPost(context) {
     const staticSlug = sanitizeSlug(body?.staticSlug);
     const importedFrom = sanitizeSlug(body?.importedFrom || sourceSlug);
     const tags = normalizeTags(body?.tags);
+    const locale = normalizeLocale(body?.locale);
+    const translationSlug = sanitizeStoredSlug(body?.translationSlug);
     const draft = {
       draftId,
       title,
@@ -91,6 +93,8 @@ export async function onRequestPost(context) {
       sourceSlug,
       staticSlug,
       importedFrom,
+      locale,
+      translationSlug,
       imageUrls: [...new Set([...bodyImageUrls, ...[eyecatch, socialImage].filter(Boolean)])].slice(0, 30),
       updatedAt: now,
     };
@@ -107,6 +111,8 @@ export async function onRequestPost(context) {
         sourceSlug: sourceSlug || "",
         staticSlug: staticSlug || "",
         importedFrom: importedFrom || "",
+        locale,
+        translationSlug: translationSlug || "",
         updatedAt: now,
       },
     });
@@ -177,6 +183,15 @@ function sanitizeSlug(value) {
     .replace(/-+/g, "-")
     .replace(/^-+|-+$/g, "")
     .slice(0, 80);
+}
+
+function sanitizeStoredSlug(value) {
+  const text = String(value || "").trim();
+  return /^[a-z0-9ぁ-んァ-ヶ一-龠ー._-]{1,140}$/i.test(text) ? text : "";
+}
+
+function normalizeLocale(value) {
+  return String(value || "").trim().toLowerCase().startsWith("en") ? "en" : "ja";
 }
 
 function comparableSlug(value) {
@@ -258,6 +273,8 @@ function draftListItem(key) {
     sourceSlug: meta.sourceSlug || "",
     staticSlug: meta.staticSlug || "",
     importedFrom: meta.importedFrom || "",
+    locale: normalizeLocale(meta.locale),
+    translationSlug: meta.translationSlug || "",
   };
 }
 

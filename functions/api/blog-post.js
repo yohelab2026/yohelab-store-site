@@ -39,6 +39,7 @@ export async function onRequestPost(context) {
     const excerpt = excerptInput || autoExcerpt(bodyHtml || bodyText, title);
     const now = new Date().toISOString();
     const existingPost = originalPostSlug ? await readExistingPost(kv, originalPostSlug) : null;
+    const existingLocale = normalizeLocale(existingPost?.locale);
     const date = sanitizeDate(body?.date) || new Date().toISOString().slice(0, 10);
     const publishedAt = originalPostSlug
       ? sanitizeDateTime(existingPost?.publishedAt) || publishedAtFromDate(existingPost?.date || date) || now
@@ -55,6 +56,8 @@ export async function onRequestPost(context) {
     const cover = normalizeCoverSettings(body?.cover);
     const sourceSlug = sanitizeOptionalSlug(body?.sourceSlug || body?.staticSlug);
     const staticSlug = sanitizeOptionalSlug(body?.staticSlug);
+    const locale = normalizeLocale(body?.locale);
+    const translationSlug = sanitizeStoredSlug(body?.translationSlug);
 
     // slug に日付プレフィックスを付けてユニークにする
     // タイトルなし（画像のみ）の場合はスラッグとタイトルをフォールバック
@@ -62,16 +65,17 @@ export async function onRequestPost(context) {
     const effectiveSlugRaw = slugRaw || sanitizeSlug(effectiveTitle);
     const slug = `${date}-${effectiveSlugRaw}`;
 
-    const post = { title: effectiveTitle, slug: effectiveSlugRaw, date, publishedAt, excerpt, bodyHtml, tags };
+    const post = { title: effectiveTitle, slug: effectiveSlugRaw, date, publishedAt, excerpt, bodyHtml, tags, locale };
     if (updatedAt) post.updatedAt = updatedAt;
     if (eyecatch) post.eyecatch = eyecatch;
     if (socialImage) post.socialImage = socialImage;
     if (eyecatch) post.cover = cover;
     if (sourceSlug) post.sourceSlug = sourceSlug;
     if (staticSlug) post.staticSlug = staticSlug;
+    if (translationSlug) post.translationSlug = translationSlug;
 
     await kv.put(`post:${slug}`, JSON.stringify(post), {
-      metadata: { title: effectiveTitle, date, publishedAt, updatedAt, excerpt, slug: effectiveSlugRaw, eyecatch: eyecatch || "", socialImage: socialImage || "", tags: tags.join(","), sourceSlug: sourceSlug || "" },
+      metadata: { title: effectiveTitle, date, publishedAt, updatedAt, excerpt, slug: effectiveSlugRaw, eyecatch: eyecatch || "", socialImage: socialImage || "", tags: tags.join(","), sourceSlug: sourceSlug || "", locale, translationSlug: translationSlug || "" },
     });
 
     const draftId = sanitizeDraftId(body?.draftId);
@@ -88,10 +92,14 @@ export async function onRequestPost(context) {
       staticSlug,
     });
 
-    const url = `/blog/${encodeURIComponent(slug)}/`;
+    const url = postPath(slug, locale);
+    const previousUrl = existingPost && (
+      originalPostSlug !== slug
+      || existingLocale !== locale
+    ) ? postPath(originalPostSlug, existingLocale) : "";
     notifyIndexNow(context, searchDiscoveryUrls(
       url,
-      originalPostSlug && originalPostSlug !== slug ? `/blog/${encodeURIComponent(originalPostSlug)}/` : "",
+      previousUrl,
     ));
     return json({ ok: true, slug, url, post: { ...post, url } }, 200, context.request);
   } catch (error) {
@@ -123,9 +131,11 @@ export async function onRequestDelete(context) {
 
     // 投稿を取得してアイキャッチ画像のキーを確認
     const raw = await kv.get(`post:${slug}`);
+    let deletedLocale = "ja";
     if (!keepImages && raw) {
       try {
         const post = JSON.parse(raw);
+        deletedLocale = normalizeLocale(post?.locale);
         const eyecatch = post?.eyecatch || "";
         // R2画像（images.yohelab.com または pub-xxx.r2.dev）なら削除
         if (eyecatch && context.env.BLOG_IMAGES) {
@@ -133,10 +143,14 @@ export async function onRequestDelete(context) {
           if (r2Key) await context.env.BLOG_IMAGES.delete(r2Key);
         }
       } catch { /* JSON parse失敗は無視 */ }
+    } else if (raw) {
+      try {
+        deletedLocale = normalizeLocale(JSON.parse(raw)?.locale);
+      } catch { /* ignore */ }
     }
 
     await kv.delete(`post:${slug}`);
-    notifyIndexNow(context, searchDiscoveryUrls(`/blog/${encodeURIComponent(slug)}/`));
+    notifyIndexNow(context, searchDiscoveryUrls(postPath(slug, deletedLocale)));
     return json({ ok: true, slug }, 200, context.request);
   } catch (error) {
     return json({ error: error?.message || "unexpected_error" }, 500, context.request);
@@ -162,6 +176,15 @@ function extractR2Key(url) {
 
 function searchDiscoveryUrls(...urls) {
   return [...new Set([...urls, ...SEARCH_DISCOVERY_URLS].map((url) => String(url || "").trim()).filter(Boolean))];
+}
+
+function postPath(slug, locale = "ja") {
+  const prefix = normalizeLocale(locale) === "en" ? "/en/blog/" : "/blog/";
+  return `${prefix}${encodeURIComponent(String(slug || "").trim())}/`;
+}
+
+function normalizeLocale(value) {
+  return String(value || "").trim().toLowerCase().startsWith("en") ? "en" : "ja";
 }
 
 function sanitizeText(value) {

@@ -65,11 +65,12 @@ export async function onRequest(context) {
 
 export async function renderBlogPost(context, slug, requestUrl = new URL(context.request.url), options = {}) {
   const cleanSlug = String(slug || "").trim();
+  const requestedLocale = normalizeLocale(options.locale || localeFromPath(requestUrl.pathname));
   if (!cleanSlug || isReservedBlogSlug(cleanSlug)) {
     return context.next();
   }
 
-  const cleanStaticPath = cleanStaticSlugPath(cleanSlug);
+  const cleanStaticPath = requestedLocale === "ja" ? cleanStaticSlugPath(cleanSlug) : "";
   if (cleanStaticPath) {
     const staticUrl = new URL(cleanStaticPath, requestUrl.origin);
     if (samePath(requestUrl.pathname, staticUrl.pathname)) {
@@ -97,12 +98,17 @@ export async function renderBlogPost(context, slug, requestUrl = new URL(context
   }
 
   if (options.redirectToPretty) {
-    return Response.redirect(new URL(prettyPostPath(cleanSlug), requestUrl.origin).toString(), 301);
+    return Response.redirect(new URL(prettyPostPath(cleanSlug, normalizeLocale(post.locale)), requestUrl.origin).toString(), 301);
   }
 
   post = hydrateStaticPostImages(post);
+  const locale = normalizeLocale(post.locale);
+  if (locale !== requestedLocale) {
+    return Response.redirect(new URL(prettyPostPath(cleanSlug, locale), requestUrl.origin).toString(), 301);
+  }
   const categoryMap = await readCategoryMap(kv);
-  const html = renderPostHTML(post, cleanSlug, categoryMap);
+  const translation = await findTranslation(kv, cleanSlug, post);
+  const html = renderPostHTML(post, cleanSlug, categoryMap, { locale, translation });
 
   return new Response(html, {
     headers: {
@@ -114,12 +120,12 @@ export async function renderBlogPost(context, slug, requestUrl = new URL(context
   });
 }
 
-export function prettyPostPath(slug) {
-  return `/blog/${encodeURIComponent(String(slug || "").trim())}/`;
+export function prettyPostPath(slug, locale = "ja") {
+  return `${normalizeLocale(locale) === "en" ? "/en/blog/" : "/blog/"}${encodeURIComponent(String(slug || "").trim())}/`;
 }
 
-export function prettyPostUrl(slug) {
-  return `${SITE_ORIGIN}${prettyPostPath(slug)}`;
+export function prettyPostUrl(slug, locale = "ja") {
+  return `${SITE_ORIGIN}${prettyPostPath(slug, locale)}`;
 }
 
 export function isReservedBlogSlug(slug) {
@@ -128,6 +134,43 @@ export function isReservedBlogSlug(slug) {
 
 function samePath(a, b) {
   return String(a || "").replace(/\/+$/, "") === String(b || "").replace(/\/+$/, "");
+}
+
+function normalizeLocale(value) {
+  return String(value || "").trim().toLowerCase().startsWith("en") ? "en" : "ja";
+}
+
+function localeFromPath(pathname) {
+  return String(pathname || "").startsWith("/en/") ? "en" : "ja";
+}
+
+async function findTranslation(kv, currentSlug, post = {}) {
+  const currentLocale = normalizeLocale(post.locale);
+  const directSlug = String(post.translationSlug || "").trim();
+  if (directSlug && directSlug !== currentSlug) {
+    const direct = await kv.get(`post:${directSlug}`, { type: "json" });
+    const directLocale = normalizeLocale(direct?.locale);
+    if (direct && directLocale !== currentLocale) return { slug: directSlug, locale: directLocale, title: direct.title || "" };
+  }
+
+  let cursor;
+  do {
+    const list = await kv.list({ prefix: "post:", cursor, limit: 100 });
+    const reverse = (list.keys || []).find((key) => (
+      key.name !== `post:${currentSlug}`
+      && normalizeLocale(key.metadata?.locale) !== currentLocale
+      && String(key.metadata?.translationSlug || "").trim() === currentSlug
+    ));
+    if (reverse) {
+      return {
+        slug: reverse.name.replace(/^post:/, ""),
+        locale: normalizeLocale(reverse.metadata?.locale),
+        title: reverse.metadata?.title || "",
+      };
+    }
+    cursor = list.list_complete ? undefined : list.cursor;
+  } while (cursor);
+  return null;
 }
 
 async function readCategoryMap(kv) {
@@ -245,10 +288,11 @@ function truncateSeoPart(value, maxChars) {
   return `${chars.slice(0, Math.max(1, maxChars - 1)).join("").replace(/[、。・|｜\-–—:：\s]+$/g, "")}…`;
 }
 
-function postSeoTitle(title) {
+function postSeoTitle(title, locale = "ja") {
   const delimiter = " | ";
-  const main = cleanSeoTitle(title) || "記事";
-  return `${BLOG_NAME}${delimiter}${truncateSeoPart(main, SEO_TITLE_MAX_CHARS - seoCharLength(BLOG_NAME) - seoCharLength(delimiter))}`;
+  const brand = locale === "en" ? "Yohe Lab" : BLOG_NAME;
+  const main = cleanSeoTitle(title) || (locale === "en" ? "Article" : "記事");
+  return `${brand}${delimiter}${truncateSeoPart(main, SEO_TITLE_MAX_CHARS - seoCharLength(brand) - seoCharLength(delimiter))}`;
 }
 
 function sanitizeBodyHtml(html, post = {}) {
@@ -301,7 +345,7 @@ function enhanceArticleImages(html, post = {}) {
   });
 }
 
-function bodyToHtml(post) {
+function bodyToHtml(post, locale = "ja") {
   if (post.bodyHtml && post.bodyHtml.trim()) {
     return removeLeadingH1(sanitizeBodyHtml(post.bodyHtml, post));
   }
@@ -311,7 +355,7 @@ function bodyToHtml(post) {
       .map((p) => `<p>${escHtml(p.trim())}</p>`)
       .join("");
   }
-  return "<p>本文がまだありません。</p>";
+  return `<p>${locale === "en" ? "This article does not have any content yet." : "本文がまだありません。"}</p>`;
 }
 
 function removeLeadingH1(html) {
@@ -328,7 +372,7 @@ function plainExcerpt(post, max = 160) {
   return `${post.title || "記事"} | ${BLOG_NAME}`;
 }
 
-function buildJsonLd(post, slug, fullUrl) {
+function buildJsonLd(post, slug, fullUrl, locale = "ja") {
   const title = post.title || "記事";
   const description = plainExcerpt(post, 200);
   const datePublished = post.date || new Date().toISOString().slice(0, 10);
@@ -348,29 +392,29 @@ function buildJsonLd(post, slug, fullUrl) {
       name: SITE_NAME,
       logo: { "@type": "ImageObject", url: FALLBACK_IMAGE },
     },
-    isPartOf: { "@type": "Blog", name: BLOG_NAME, url: `${SITE_ORIGIN}/blog/` },
+    isPartOf: { "@type": "Blog", name: locale === "en" ? "Yohe Lab Blog" : BLOG_NAME, url: locale === "en" ? `${SITE_ORIGIN}/en/blog/` : `${SITE_ORIGIN}/blog/` },
     mainEntityOfPage: { "@type": "WebPage", "@id": fullUrl },
     url: fullUrl,
-    inLanguage: "ja-JP",
+    inLanguage: locale === "en" ? "en" : "ja-JP",
   };
   if (dateModified) article.dateModified = dateModified;
 
   const breadcrumb = buildBreadcrumbJsonLd([
-    { name: "ホーム", item: `${SITE_ORIGIN}/` },
-    { name: "ブログ", item: `${SITE_ORIGIN}/blog/` },
+    { name: locale === "en" ? "Home" : "ホーム", item: locale === "en" ? `${SITE_ORIGIN}/en/` : `${SITE_ORIGIN}/` },
+    { name: locale === "en" ? "Blog" : "ブログ", item: locale === "en" ? `${SITE_ORIGIN}/en/blog/` : `${SITE_ORIGIN}/blog/` },
     { name: title, item: fullUrl },
   ]);
 
   return [JSON.stringify(article), breadcrumb];
 }
 
-function formatPostDate(value) {
+function formatPostDate(value, locale = "ja") {
   const raw = String(value || "").trim();
   if (!raw) return "";
   const normalized = /^\d{4}-\d{2}-\d{2}$/.test(raw) ? `${raw}T00:00:00+09:00` : raw;
   const date = new Date(normalized);
   if (Number.isNaN(date.getTime())) return raw;
-  return date.toLocaleDateString("ja-JP", { year: "numeric", month: "long", day: "numeric", timeZone: "Asia/Tokyo" });
+  return date.toLocaleDateString(locale === "en" ? "en-US" : "ja-JP", { year: "numeric", month: "long", day: "numeric", timeZone: "Asia/Tokyo" });
 }
 
 function dateTimeAttr(value) {
@@ -485,16 +529,31 @@ function coverImageStyle(post) {
   ].join(";");
 }
 
-function displayCategoryLabel(tag, categoryMap) {
+const EN_CATEGORY_LABELS = new Map([
+  ["ai-news", "AI News"],
+  ["ai-tools", "AI Tools"],
+  ["bunsirube", "Bunsirube"],
+  ["wordpress", "WordPress"],
+  ["template", "Article Templates"],
+  ["article", "Articles"],
+  ["chatgpt", "ChatGPT"],
+  ["claude", "Claude"],
+  ["gemini", "Gemini"],
+  ["copilot", "Copilot"],
+  ["openai", "OpenAI"],
+]);
+
+function displayCategoryLabel(tag, categoryMap, locale = "ja") {
   const raw = String(tag || "").trim();
+  if (locale === "en") return EN_CATEGORY_LABELS.get(raw.toLowerCase()) || raw;
   return categoryMap.get(raw.toLowerCase()) || raw;
 }
 
-function renderTags(tags, categoryMap) {
+function renderTags(tags, categoryMap, locale = "ja") {
   if (!Array.isArray(tags) || !tags.length) return "";
   const seen = new Set();
   return tags
-    .map((tag) => displayCategoryLabel(tag, categoryMap))
+    .map((tag) => displayCategoryLabel(tag, categoryMap, locale))
     .filter((label) => {
       if (!label || seen.has(label)) return false;
       seen.add(label);
@@ -515,36 +574,40 @@ function ga4Snippet() {
   </script>`;
 }
 
-function renderBlogHeader() {
+function renderBlogHeader(locale = "ja") {
+  const isEnglish = locale === "en";
   return `<header class="site-header" style="background:#fff;border-bottom:3px solid #087a63;position:sticky;top:0;z-index:100;">
     <div class="header-inner" style="max-width:1100px;margin:0 auto;padding:0 16px;display:flex;align-items:center;gap:20px;height:56px;">
-      <a href="/" style="display:flex;align-items:center;gap:10px;font-size:20px;font-weight:900;color:#087a63;letter-spacing:-0.03em;flex-shrink:0;text-decoration:none;">
-        <img src="/yohelab-mascot-v2-20260518-64.png" width="36" height="36" alt="よへラボ" decoding="async" style="width:36px;height:36px;border-radius:8px;" />
-        よへラボ
+      <a href="${isEnglish ? "/en/" : "/"}" style="display:flex;align-items:center;gap:10px;font-size:20px;font-weight:900;color:#087a63;letter-spacing:-0.03em;flex-shrink:0;text-decoration:none;">
+        <img src="/yohelab-mascot-v2-20260518-64.png" width="36" height="36" alt="" decoding="async" style="width:36px;height:36px;border-radius:8px;" />
+        ${isEnglish ? "Yohe Lab" : "よへラボ"}
       </a>
       <nav style="display:flex;align-items:center;gap:4px;flex-wrap:wrap;">
-        <a href="/blog/" style="padding:5px 11px;border-radius:4px;font-size:13px;font-weight:700;color:#444;text-decoration:none;">ブログ</a>
-        <a href="/lp/bunsirube/" style="padding:5px 11px;border-radius:4px;font-size:13px;font-weight:700;color:#444;text-decoration:none;">文標</a>
-        <a href="/about/" style="padding:5px 11px;border-radius:4px;font-size:13px;font-weight:700;color:#444;text-decoration:none;">サイトについて</a>
+        <a href="${isEnglish ? "/en/blog/" : "/blog/"}" style="padding:5px 11px;border-radius:4px;font-size:13px;font-weight:700;color:#444;text-decoration:none;">${isEnglish ? "Blog" : "ブログ"}</a>
+        <a href="/lp/bunsirube/" style="padding:5px 11px;border-radius:4px;font-size:13px;font-weight:700;color:#444;text-decoration:none;">${isEnglish ? "Bunsirube" : "文標"}</a>
+        <a href="${isEnglish ? "/en/" : "/about/"}" style="padding:5px 11px;border-radius:4px;font-size:13px;font-weight:700;color:#444;text-decoration:none;">${isEnglish ? "English home" : "サイトについて"}</a>
       </nav>
     </div>
   </header>`;
 }
 
-function renderPostHTML(post, slug, categoryMap = buildCategoryMap(DEFAULT_CATEGORY_TREE)) {
-  const title = post.title || "無題の記事";
-  const seoTitle = postSeoTitle(title);
+function renderPostHTML(post, slug, categoryMap = buildCategoryMap(DEFAULT_CATEGORY_TREE), options = {}) {
+  const locale = normalizeLocale(options.locale || post.locale);
+  const isEnglish = locale === "en";
+  const translation = options.translation || null;
+  const title = post.title || (isEnglish ? "Untitled article" : "無題の記事");
+  const seoTitle = postSeoTitle(title, locale);
   const description = plainExcerpt(post, 160);
   const date = post.date || new Date().toISOString().slice(0, 10);
   const updatedAt = visibleUpdatedAt(post, date);
-  const publishedLabel = formatPostDate(date);
-  const updatedLabel = formatPostDate(updatedAt);
-  const updateMetaHtml = updatedAt && updatedLabel ? `<span>/</span><time datetime="${escAttr(dateTimeAttr(updatedAt))}">最終更新日 ${escHtml(updatedLabel)}</time>` : "";
-  const dateMetaHtml = `<div class="post-date-line"><time datetime="${escAttr(dateTimeAttr(date))}">投稿日 ${escHtml(publishedLabel)}</time>${updateMetaHtml}</div>`;
+  const publishedLabel = formatPostDate(date, locale);
+  const updatedLabel = formatPostDate(updatedAt, locale);
+  const updateMetaHtml = updatedAt && updatedLabel ? `<span>/</span><time datetime="${escAttr(dateTimeAttr(updatedAt))}">${isEnglish ? "Updated" : "最終更新日"} ${escHtml(updatedLabel)}</time>` : "";
+  const dateMetaHtml = `<div class="post-date-line"><time datetime="${escAttr(dateTimeAttr(date))}">${isEnglish ? "Published" : "投稿日"} ${escHtml(publishedLabel)}</time>${updateMetaHtml}</div>`;
   const eyecatchAbs = socialImageUrl(post);
   const displayEyecatch = post.eyecatch || FALLBACK_IMAGE;
   const eyecatchAttr = post.eyecatch ? escAttr(post.eyecatch) : "";
-  const tagsHtml = renderTags(post.tags, categoryMap);
+  const tagsHtml = renderTags(post.tags, categoryMap, locale);
   const coverHtml = post.eyecatch
     ? `<figure class="post-cover"><img src="${eyecatchAttr}" alt="${escAttr(imageAltText(post, post.eyecatch, "cover"))}" style="${escAttr(coverImageStyle(post))}" loading="eager" decoding="async" fetchpriority="high" /></figure>`
     : "";
@@ -562,15 +625,16 @@ function renderPostHTML(post, slug, categoryMap = buildCategoryMap(DEFAULT_CATEG
         <h1 class="post-title">${escHtml(title)}</h1>
         ${dateMetaHtml}
       </section>`;
-  const bodyHtml = bodyToHtml(post);
-  const fullUrl = prettyPostUrl(slug);
-  const [articleLd, breadcrumbLd] = buildJsonLd(post, slug, fullUrl);
+  const bodyHtml = bodyToHtml(post, locale);
+  const fullUrl = prettyPostUrl(slug, locale);
+  const translationUrl = translation ? prettyPostUrl(translation.slug, translation.locale) : "";
+  const [articleLd, breadcrumbLd] = buildJsonLd(post, slug, fullUrl, locale);
   const twitterShare = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
     title,
   )}&url=${encodeURIComponent(fullUrl)}`;
 
   return `<!doctype html>
-<html lang="ja">
+<html lang="${locale}">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -579,15 +643,17 @@ function renderPostHTML(post, slug, categoryMap = buildCategoryMap(DEFAULT_CATEG
   <meta name="author" content="${escAttr(SITE_NAME)}" />
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1" />
   <link rel="canonical" href="${escAttr(fullUrl)}" />
-  <link rel="alternate" hreflang="ja" href="${escAttr(fullUrl)}" />
-  <link rel="alternate" hreflang="x-default" href="${escAttr(fullUrl)}" />
+  <link rel="alternate" hreflang="${locale}" href="${escAttr(fullUrl)}" />
+  ${translationUrl ? `<link rel="alternate" hreflang="${escAttr(translation.locale)}" href="${escAttr(translationUrl)}" />` : ""}
+  <link rel="alternate" hreflang="x-default" href="${escAttr(locale === "ja" ? fullUrl : translationUrl || fullUrl)}" />
   <link rel="alternate" type="application/rss+xml" title="よへラボ RSS" href="${SITE_ORIGIN}/feed.xml" />
   <link rel="preload" as="image" href="${escAttr(displayEyecatch)}" fetchpriority="high" />
   <meta property="og:title" content="${escAttr(seoTitle)}" />
   <meta property="og:description" content="${escAttr(description)}" />
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="${escAttr(SITE_NAME)}" />
-  <meta property="og:locale" content="ja_JP" />
+  <meta property="og:locale" content="${isEnglish ? "en_US" : "ja_JP"}" />
+  ${translationUrl ? `<meta property="og:locale:alternate" content="${translation.locale === "en" ? "en_US" : "ja_JP"}" />` : ""}
   <meta property="og:url" content="${escAttr(fullUrl)}" />
   <meta property="og:image" content="${escAttr(eyecatchAbs)}" />
   <meta property="og:image:url" content="${escAttr(eyecatchAbs)}" />
@@ -661,7 +727,7 @@ function renderPostHTML(post, slug, categoryMap = buildCategoryMap(DEFAULT_CATEG
   </style>
 </head>
 <body>
-  ${renderBlogHeader()}
+  ${renderBlogHeader(locale)}
 
   <main class="post-outer" id="post-outer">
     <article>
@@ -670,8 +736,9 @@ function renderPostHTML(post, slug, categoryMap = buildCategoryMap(DEFAULT_CATEG
       <div class="post-body">${bodyHtml}</div>
       <div class="post-footer">
         <div class="post-footer-inner">
-          <a class="back-link" href="/">← トップページに戻る</a>
-          <a class="share-btn" href="${escAttr(twitterShare)}" target="_blank" rel="noreferrer">𝕏 シェア</a>
+          <a class="back-link" href="${isEnglish ? "/en/" : "/"}">← ${isEnglish ? "Back to home" : "トップページに戻る"}</a>
+          ${translationUrl ? `<a class="back-link" href="${escAttr(translationUrl)}" hreflang="${escAttr(translation.locale)}">${translation.locale === "en" ? "Read in English" : "日本語で読む"} →</a>` : ""}
+          <a class="share-btn" href="${escAttr(twitterShare)}" target="_blank" rel="noreferrer">𝕏 ${isEnglish ? "Share" : "シェア"}</a>
         </div>
       </div>
     </article>
@@ -679,11 +746,11 @@ function renderPostHTML(post, slug, categoryMap = buildCategoryMap(DEFAULT_CATEG
 
   <footer class="footer">
     <div class="footer-inner">
-      <div>© よへラボ / よへラボブログ</div>
+      <div>© ${isEnglish ? "Yohe Lab" : "よへラボ / よへラボブログ"}</div>
       <div class="footer-links">
-        <a href="/blog/">記事一覧</a>
-        <a href="/lp/research-writer/">記事メーカー</a>
-        <a href="/lp/bunsirube/">WPテーマ</a>
+        <a href="${isEnglish ? "/en/blog/" : "/blog/"}">${isEnglish ? "Blog" : "記事一覧"}</a>
+        <a href="/lp/research-writer/">${isEnglish ? "Article maker" : "記事メーカー"}</a>
+        <a href="/lp/bunsirube/">${isEnglish ? "WordPress theme" : "WPテーマ"}</a>
       </div>
     </div>
   </footer>

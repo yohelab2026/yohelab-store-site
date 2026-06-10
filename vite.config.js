@@ -133,8 +133,8 @@ function escAttr(value) {
 function cleanSeoTitle(value) {
   return String(value || "")
     .replace(/\s+/g, " ")
-    .replace(/^\s*(?:よへラボブログ|よへラボゲーム|よへラボ記事一覧|よへラボ)\s*(?:[|｜\-–—:：]\s*)?/i, "")
-    .replace(/\s*(?:[|｜\-–—:：]\s*)?(?:よへラボブログ|よへラボゲーム|よへラボ記事一覧|よへラボ)\s*$/i, "")
+    .replace(/^\s*(?:よへラボブログ|よへラボゲーム|よへラボ記事一覧|よへラボ|Yohe Lab)\s*(?:[|｜\-–—:：]\s*)?/i, "")
+    .replace(/\s*(?:[|｜\-–—:：]\s*)?(?:よへラボブログ|よへラボゲーム|よへラボ記事一覧|よへラボ|Yohe Lab)\s*$/i, "")
     .trim();
 }
 
@@ -146,6 +146,7 @@ function truncateSeoPart(value, maxChars) {
 }
 
 function seoBrandForPath(pathname = "") {
+  if (pathname.startsWith("/en/")) return "Yohe Lab";
   if (pathname.startsWith("/blog/")) return SITE.blogName;
   if (pathname.startsWith("/games/")) return "よへラボゲーム";
   return SITE.name;
@@ -161,7 +162,7 @@ function formatSeoTitle(rawTitle, pathname = "") {
     return `${brand}${delimiter}${truncateSeoPart(main, SEO_TITLE_MAX_CHARS - seoCharLength(brand) - seoCharLength(delimiter))}`;
   }
 
-  if (title.includes("よへラボ") && seoCharLength(title) <= SEO_TITLE_MAX_CHARS) {
+  if ((title.includes("よへラボ") || title.includes("Yohe Lab")) && seoCharLength(title) <= SEO_TITLE_MAX_CHARS) {
     return title;
   }
 
@@ -205,6 +206,9 @@ function headHardeningPlugin() {
     name: "head-hardening",
     transformIndexHtml(html, ctx) {
       if (!ctx?.path || ctx.path === "/google0009e82266fc5714.html") return html;
+      const isEnglish = ctx.path.startsWith("/en/");
+      const pageBrand = isEnglish ? "Yohe Lab" : SITE.name;
+      const pageLocale = isEnglish ? "en_US" : "ja_JP";
 
       let out = html
         .replace(/<meta property="og:image" content="https:\/\/yohelab\.com\/yohelab-(?:cat-)?icon\.png" \/>/g, `<meta property="og:image" content="${ogImage}" />`)
@@ -232,13 +236,13 @@ function headHardeningPlugin() {
         }
       }
       if (!out.includes('name="author"')) {
-        out = out.replace("</head>", `  <meta name="author" content="${SITE.name}" />\n</head>`);
+        out = out.replace("</head>", `  <meta name="author" content="${pageBrand}" />\n</head>`);
       }
       if (!out.includes('property="og:site_name"')) {
-        out = out.replace("</head>", `  <meta property="og:site_name" content="${SITE.name}" />\n</head>`);
+        out = out.replace("</head>", `  <meta property="og:site_name" content="${pageBrand}" />\n</head>`);
       }
       if (!out.includes('property="og:locale"')) {
-        out = out.replace("</head>", `  <meta property="og:locale" content="ja_JP" />\n</head>`);
+        out = out.replace("</head>", `  <meta property="og:locale" content="${pageLocale}" />\n</head>`);
       }
       if (!out.includes('name="twitter:site"')) {
         out = out.replace("</head>", `  <meta name="twitter:site" content="${SITE.twitterHandle}" />\n  <meta name="twitter:creator" content="${SITE.twitterHandle}" />\n</head>`);
@@ -251,31 +255,22 @@ function headHardeningPlugin() {
         out = out.replace("</head>", `  <meta name="format-detection" content="telephone=no,address=no,email=no" />\n</head>`);
       }
       if (!out.includes('type="application/rss+xml"')) {
-        out = out.replace("</head>", `  <link rel="alternate" type="application/rss+xml" title="${SITE.name} RSS" href="${SITE.feedUrl}" />\n</head>`);
+        out = out.replace("</head>", `  <link rel="alternate" type="application/rss+xml" title="${pageBrand} RSS" href="${SITE.feedUrl}" />\n</head>`);
       }
 
       out = out.replace(/<img([^>]+src="\/yohelab-mascot-v2-20260518\.webp"[^>]*)>/g, (match, attrs) => {
-        let next = attrs.replace('src="/yohelab-mascot-v2-20260518.webp"', 'src="/yohelab-mascot-v2-20260518-64.png"');
-        if (!/\swidth=/.test(next)) next += ' width="36"';
-        if (!/\sheight=/.test(next)) next += ' height="36"';
-        if (!/\sdecoding=/.test(next)) next += ' decoding="async"';
+        const next = ensureImageAttrs(attrs.replace('src="/yohelab-mascot-v2-20260518.webp"', 'src="/yohelab-mascot-v2-20260518-64.png"'));
         return `<img${next}>`;
       });
       out = out
         .replace(/(<link[^>]+rel="icon"[^>]+href=")\/yohelab-mascot-v2-20260518\.png("[^>]*>)/g, `$1/yohelab-mascot-v2-20260518-32.png$2`)
         .replace(/(<link[^>]+rel="preload"[^>]+as="image"[^>]+href=")\/yohelab-mascot-v2-20260518\.png("[^>]*>)/g, `$1/yohelab-mascot-v2-20260518-64.png$2`)
         .replace(/<img([^>]+src="\/yohelab-mascot-v2-20260518\.png"[^>]*)>/g, (match, attrs) => {
-          let next = attrs.replace('src="/yohelab-mascot-v2-20260518.png"', 'src="/yohelab-mascot-v2-20260518-64.png"');
-          if (!/\swidth=/.test(next)) next += ' width="36"';
-          if (!/\sheight=/.test(next)) next += ' height="36"';
-          if (!/\sdecoding=/.test(next)) next += ' decoding="async"';
+          const next = ensureImageAttrs(attrs.replace('src="/yohelab-mascot-v2-20260518.png"', 'src="/yohelab-mascot-v2-20260518-64.png"'));
           return `<img${next}>`;
         })
         .replace(/<img([^>]+src="\/yohelab-mascot-v2-20260518-64\.png"[^>]*)>/g, (match, attrs) => {
-          let next = attrs;
-          if (!/\swidth=/.test(next)) next += ' width="36"';
-          if (!/\sheight=/.test(next)) next += ' height="36"';
-          if (!/\sdecoding=/.test(next)) next += ' decoding="async"';
+          const next = ensureImageAttrs(attrs);
           return `<img${next}>`;
         });
 
@@ -296,10 +291,10 @@ function headHardeningPlugin() {
         out = out.replace("</head>", `  ${claritySnippet}\n</head>`);
       }
 
-      const title = out.match(/<title>([^<]+)<\/title>/i)?.[1]?.replace(/\s*\|\s*よへラボ.*$/, "").trim();
+      const title = out.match(/<title>([^<]+)<\/title>/i)?.[1]?.replace(/\s*\|\s*(?:よへラボ|Yohe Lab).*$/, "").trim();
       if (canonical && canonical !== `${SITE.origin}/` && title && !out.includes('"@type":"BreadcrumbList"')) {
         out = out.replace("</head>", `  <script type="application/ld+json">${buildBreadcrumbJsonLd([
-          { name: "トップ", item: `${SITE.origin}/` },
+          { name: isEnglish ? "Home" : "トップ", item: isEnglish ? `${SITE.origin}/en/` : `${SITE.origin}/` },
           { name: title, item: canonical },
         ])}</script>\n</head>`);
       }
@@ -309,6 +304,15 @@ function headHardeningPlugin() {
       return out;
     },
   };
+}
+
+function ensureImageAttrs(attrs) {
+  const selfClosing = /\/\s*$/.test(attrs);
+  let next = String(attrs || "").replace(/\/\s*$/, "").trimEnd();
+  if (!/\swidth=/.test(next)) next += ' width="36"';
+  if (!/\sheight=/.test(next)) next += ' height="36"';
+  if (!/\sdecoding=/.test(next)) next += ' decoding="async"';
+  return `${next}${selfClosing ? " /" : ""}`;
 }
 
 function mobilePolishPlugin() {
@@ -351,6 +355,8 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: "index.html",
+        englishHome: "en/index.html",
+        englishBlog: "en/blog/index.html",
         about: "about/index.html",
         games: "games/index.html",
         contact: "contact/index.html",
