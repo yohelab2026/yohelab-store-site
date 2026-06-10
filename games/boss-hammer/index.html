@@ -1,0 +1,586 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>ピオピオハンマー｜ボスだけを倒す | よへラボ</title>
+  <meta name="description" content="ハンマーを持った猫が、ボスだけを次々に倒していくレトロ風ボスラッシュゲーム。ジャンプとしゃがみで攻撃をよけて、ハンマーでボスを叩く。無料・登録不要・ブラウザですぐ遊べる。" />
+  <meta name="robots" content="noindex,follow" />
+  <meta name="theme-color" content="#1a2a4a" />
+  <link rel="canonical" href="https://yohelab.com/games/boss-hammer/" />
+  <link rel="icon" type="image/png" href="/yohelab-mascot-v2-20260518-32.png" />
+  <style>
+    :root{
+      --sky:#5aa9e6; --ink:#10204a; --coin:#ffcf3f;
+      --hp:#ff4d5e; --hammer:#3fb8ff;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      background:#0b1430;
+      color:#fff;
+      font-family:"Hiragino Sans","Yu Gothic UI","Noto Sans JP",system-ui,sans-serif;
+      display:flex; flex-direction:column; align-items:center;
+      min-height:100dvh;
+      -webkit-user-select:none; user-select:none;
+      overflow:hidden;
+    }
+    .topbar{
+      width:100%; max-width:980px;
+      display:flex; align-items:center; gap:10px;
+      padding:8px 12px; font-size:13px;
+    }
+    .topbar a{color:#bcd3ff; text-decoration:none; font-weight:800}
+    .topbar .sp{margin-left:auto}
+    .stage-wrap{
+      position:relative; width:100%; max-width:980px;
+      aspect-ratio:16/9;
+      background:#000;
+    }
+    canvas{
+      display:block; width:100%; height:100%;
+      image-rendering:pixelated; image-rendering:crisp-edges;
+      touch-action:none;
+    }
+    /* overlay screens */
+    .screen{
+      position:absolute; inset:0; display:none;
+      flex-direction:column; align-items:center; justify-content:center;
+      text-align:center; gap:14px; padding:24px;
+      background:rgba(8,16,40,.82); backdrop-filter:blur(3px);
+      z-index:5;
+    }
+    .screen.show{display:flex}
+    .screen h1{font-size:clamp(26px,5vw,46px); letter-spacing:.04em; text-shadow:0 4px 0 rgba(0,0,0,.35)}
+    .screen h1 .em{color:#ffd54f}
+    .screen p{font-size:14px; line-height:1.8; color:#cfe0ff; max-width:460px}
+    .btn{
+      appearance:none; border:none; cursor:pointer;
+      font:inherit; font-weight:900; font-size:18px;
+      padding:14px 30px; border-radius:14px;
+      background:linear-gradient(180deg,#ffd54f,#ffab00); color:#3a2400;
+      box-shadow:0 8px 0 #b87400, 0 14px 24px rgba(255,171,0,.35);
+      transition:transform .06s, box-shadow .06s;
+    }
+    .btn:active{transform:translateY(5px); box-shadow:0 3px 0 #b87400,0 8px 16px rgba(255,171,0,.3)}
+    .btn.alt{background:linear-gradient(180deg,#67c1ff,#2b8fe0); color:#03203a; box-shadow:0 8px 0 #1c5e96,0 14px 24px rgba(43,143,224,.3)}
+    .btn.alt:active{box-shadow:0 3px 0 #1c5e96,0 8px 16px rgba(43,143,224,.3)}
+    .screen .row{display:flex; gap:12px; flex-wrap:wrap; justify-content:center}
+    .keyhint{font-size:12px; color:#9fb6e6; line-height:1.9}
+    .keyhint b{color:#fff}
+    /* touch controls */
+    .pad{
+      width:100%; max-width:980px;
+      display:flex; align-items:stretch; gap:10px;
+      padding:12px;
+    }
+    .pad .left,.pad .right{display:flex; gap:10px; flex:1}
+    .pad .right{justify-content:flex-end}
+    .pad button{
+      appearance:none; border:none; cursor:pointer;
+      font:inherit; font-weight:900; color:#fff;
+      border-radius:16px; min-width:74px; min-height:66px;
+      background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.16);
+      display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px;
+      font-size:12px;
+    }
+    .pad button .ic{font-size:22px; line-height:1}
+    .pad button:active{background:rgba(255,255,255,.2)}
+    .pad button.hammer{background:linear-gradient(180deg,#ff7a59,#e8472a); border-color:#ff9b7f}
+    .pad button.jump{background:linear-gradient(180deg,#67c1ff,#2b8fe0); border-color:#8fd0ff}
+    @media (min-width:760px){ .pad{display:none} }
+    .foot{font-size:11px; color:#6f86bb; padding:4px 0 16px; text-align:center; line-height:1.7}
+    .foot a{color:#9fb6e6}
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <a href="/games/">← ゲーム一覧</a>
+    <span class="sp"></span>
+    <a href="/lp/bunsirube/">文標とは？</a>
+  </div>
+
+  <div class="stage-wrap">
+    <canvas id="game" width="960" height="540" aria-label="ピオピオハンマー ボスラッシュ"></canvas>
+
+    <div class="screen show" id="titleScreen">
+      <h1>ピオ<span class="em">ピオ</span>ハンマー</h1>
+      <p>ハンマー猫が、ボスだけを倒していく。<br>攻撃を<b style="color:#fff">ジャンプ</b>と<b style="color:#fff">しゃがみ</b>でよけて、<b style="color:#fff">ハンマー</b>で叩く。ボスを全部倒せばクリア。</p>
+      <button class="btn" id="startBtn">スタート</button>
+      <div class="keyhint">
+        PC: <b>←→</b> 移動 ・ <b>↑ / Space</b> ジャンプ ・ <b>↓</b> しゃがむ ・ <b>Z / Enter</b> ハンマー<br>
+        スマホ: 下のボタンで操作
+      </div>
+    </div>
+
+    <div class="screen" id="overScreen">
+      <h1 id="overTitle">やられた…</h1>
+      <p id="overText"></p>
+      <div class="row">
+        <button class="btn" id="retryBtn">もう一回</button>
+        <button class="btn alt" id="shareBtn">Xでシェア</button>
+      </div>
+      <a href="/games/" style="color:#9fb6e6;font-size:13px;font-weight:800;text-decoration:none;margin-top:4px">ほかのゲームを見る →</a>
+    </div>
+  </div>
+
+  <div class="pad" id="pad">
+    <div class="left">
+      <button class="move" data-k="left"><span class="ic">◀</span>移動</button>
+      <button class="move" data-k="right"><span class="ic">▶</span>移動</button>
+      <button class="duck" data-k="down"><span class="ic">▼</span>しゃがむ</button>
+    </div>
+    <div class="right">
+      <button class="jump" data-k="up"><span class="ic">⤴</span>ジャンプ</button>
+      <button class="hammer" data-k="hit"><span class="ic">🔨</span>ハンマー</button>
+    </div>
+  </div>
+
+  <div class="foot">
+    よへラボの「可愛いクソゲー」シリーズ ・ 無料・登録不要<br>
+    <a href="/">よへラボ トップ</a> ・ <a href="/lp/bunsirube/">AI検索時代のWordPressテーマ「文標」</a>
+  </div>
+
+<script>
+(function(){
+  "use strict";
+  var cv = document.getElementById("game");
+  var ctx = cv.getContext("2d");
+  var W = 960, H = 540;
+  var GROUND = 470;            // ground top y
+  ctx.imageSmoothingEnabled = false;
+
+  // ---- input ----
+  var keys = { left:false, right:false, up:false, down:false, hit:false };
+  var hitQueued = false;
+  function setKey(k, v){
+    if(!(k in keys)) return;
+    if(k === "hit"){ if(v && !keys.hit) hitQueued = true; keys.hit = v; return; }
+    keys[k] = v;
+  }
+  var KEYMAP = {
+    ArrowLeft:"left", ArrowRight:"right", ArrowUp:"up", ArrowDown:"down",
+    " ":"up", Spacebar:"up", z:"hit", Z:"hit", Enter:"hit"
+  };
+  window.addEventListener("keydown", function(e){
+    var k = KEYMAP[e.key]; if(k){ e.preventDefault(); setKey(k,true); }
+  });
+  window.addEventListener("keyup", function(e){
+    var k = KEYMAP[e.key]; if(k){ e.preventDefault(); setKey(k,false); }
+  });
+  // touch pad
+  document.getElementById("pad").querySelectorAll("button").forEach(function(b){
+    var k = b.getAttribute("data-k");
+    var down = function(e){ e.preventDefault(); setKey(k,true); };
+    var up = function(e){ e.preventDefault(); setKey(k,false); };
+    b.addEventListener("touchstart", down, {passive:false});
+    b.addEventListener("touchend", up, {passive:false});
+    b.addEventListener("touchcancel", up, {passive:false});
+    b.addEventListener("mousedown", down);
+    b.addEventListener("mouseup", up);
+    b.addEventListener("mouseleave", up);
+  });
+
+  // ---- bosses ----
+  var BOSSES = [
+    { name:"巨大な埴輪",   hp:60,  color:"#b9764a", dark:"#7d4a26", fire:1.5, spd:1.0, face:"haniwa" },
+    { name:"ねむり地蔵",   hp:90,  color:"#9aa6b2", dark:"#5c6672", fire:1.2, spd:1.3, face:"jizo" },
+    { name:"だるま将軍",   hp:120, color:"#e2473b", dark:"#9c2a22", fire:1.0, spd:1.5, face:"daruma" },
+    { name:"ぬし狛犬",     hp:160, color:"#86d39a", dark:"#3f8a54", fire:0.8, spd:1.7, face:"komainu" }
+  ];
+
+  // ---- state ----
+  var S;
+  function reset(){
+    S = {
+      mode:"title",         // title | play | over | clear
+      t:0,
+      lives:3, coins:0, score:0,
+      bossIndex:0,
+      boss:null,
+      bossX:740, bossDir:1,
+      bossHP:0, bossMaxHP:0,
+      bossHitFlash:0,
+      hammerCharge:1,       // 0..1, fires when >=cost
+      cat:{ x:230, y:GROUND, vy:0, onGround:true, ducking:false, swing:0, face:1 },
+      hammers:[],           // player projectiles
+      shots:[],             // boss projectiles
+      coinsFx:[],
+      shake:0
+    };
+  }
+  function startBoss(i){
+    var b = BOSSES[i];
+    S.boss = b; S.bossMaxHP = b.hp; S.bossHP = b.hp;
+    S.bossX = 760; S.bossDir = 1;
+    S.shots = []; S.hammers = [];
+    S.fireTimer = 70;
+  }
+  reset();
+
+  // ---- screens ----
+  var titleScreen = document.getElementById("titleScreen");
+  var overScreen  = document.getElementById("overScreen");
+  var overTitle   = document.getElementById("overTitle");
+  var overText    = document.getElementById("overText");
+
+  function startGame(){
+    reset();
+    S.mode = "play";
+    S.bossIndex = 0;
+    startBoss(0);
+    titleScreen.classList.remove("show");
+    overScreen.classList.remove("show");
+  }
+  function endGame(won){
+    S.mode = won ? "clear" : "over";
+    var best = +(localStorage.getItem("piopio_best")||0);
+    if(S.score > best){ best = S.score; localStorage.setItem("piopio_best", best); }
+    overTitle.innerHTML = won ? "クリア！🎉" : "やられた…";
+    overText.innerHTML = (won
+      ? "全ボスを倒した！ハンマーの達人だ。"
+      : "ボス「"+(S.boss?S.boss.name:"")+"」にやられた。")
+      + "<br>スコア <b style='color:#ffd54f'>"+S.score+"</b> ／ ベスト <b style='color:#fff'>"+best+"</b>";
+    overScreen.classList.add("show");
+  }
+  document.getElementById("startBtn").onclick = startGame;
+  document.getElementById("retryBtn").onclick = startGame;
+  document.getElementById("shareBtn").onclick = function(){
+    var txt = "ピオピオハンマーでスコア "+S.score+"！ハンマー猫でボスをぶっ叩いた🔨🐱";
+    var url = "https://yohelab.com/games/boss-hammer/";
+    window.open("https://twitter.com/intent/tweet?text="+encodeURIComponent(txt)+"&url="+encodeURIComponent(url)+"&hashtags=可愛いクソゲー,よへラボ", "_blank", "noopener");
+  };
+
+  // ---- physics constants ----
+  var GRAV = 0.9, JUMP = -15;
+  var HAMMER_COST = 0.34;
+
+  function update(){
+    S.t++;
+    if(S.mode !== "play") return;
+    var c = S.cat;
+
+    // move
+    if(keys.left){ c.x -= 4; c.face = -1; }
+    if(keys.right){ c.x += 4; c.face = 1; }
+    c.x = Math.max(120, Math.min(560, c.x));
+    c.ducking = keys.down && c.onGround;
+
+    // jump
+    if(keys.up && c.onGround){ c.vy = JUMP; c.onGround = false; }
+    c.vy += GRAV; c.y += c.vy;
+    if(c.y >= GROUND){ c.y = GROUND; c.vy = 0; c.onGround = true; }
+
+    // hammer charge
+    S.hammerCharge = Math.min(1, S.hammerCharge + 0.02);
+    if(c.swing > 0) c.swing--;
+    if(hitQueued){
+      hitQueued = false;
+      if(S.hammerCharge >= HAMMER_COST){
+        S.hammerCharge -= HAMMER_COST;
+        c.swing = 10;
+        // launch hammer projectile from cat toward boss
+        S.hammers.push({ x:c.x+30, y:c.y-26, vx:11, spin:0, dead:false });
+      }
+    }
+
+    // player hammers
+    for(var i=S.hammers.length-1;i>=0;i--){
+      var h = S.hammers[i]; h.x += h.vx; h.spin += 0.4;
+      if(h.x > W+40){ S.hammers.splice(i,1); continue; }
+      // hit boss?
+      var bx = S.bossX, by = GROUND-60;
+      if(Math.abs(h.x-bx) < 70 && h.y > by-120 && h.y < GROUND){
+        S.bossHP -= 5; S.bossHitFlash = 8; S.shake = 6;
+        S.score += 10;
+        // coin burst
+        for(var k=0;k<3;k++) S.coinsFx.push({x:bx,y:by-40,vx:(Math.random()*2-1)*5,vy:-Math.random()*6-2,life:40});
+        S.coins++;
+        S.hammers.splice(i,1);
+        if(S.bossHP <= 0) defeatBoss();
+      }
+    }
+
+    // boss movement (hover left-right)
+    S.bossX += S.bossDir * (0.4 * (S.boss?S.boss.spd:1));
+    if(S.bossX > 800){ S.bossDir = -1; } if(S.bossX < 640){ S.bossDir = 1; }
+
+    // boss fire
+    S.fireTimer -= 1;
+    if(S.fireTimer <= 0 && S.boss){
+      S.fireTimer = Math.round(46 / S.boss.fire);
+      var high = Math.random() < 0.5;
+      S.shots.push({
+        x:S.bossX-60, y: high ? GROUND-130 : GROUND-30,
+        vx:-(4 + S.boss.spd*1.4), high:high, t:0
+      });
+    }
+    // boss shots move + collide with cat
+    for(var j=S.shots.length-1;j>=0;j--){
+      var sh = S.shots[j]; sh.x += sh.vx; sh.t++;
+      if(sh.x < -40){ S.shots.splice(j,1); continue; }
+      // cat hitbox: ducking lowers top; jumping raises bottom
+      var catTop = c.y - (c.ducking?26:54);
+      var catBot = c.y;
+      var catL = c.x-22, catR = c.x+22;
+      var shTop = sh.high ? sh.y-16 : sh.y-16;
+      var shBot = sh.y+16;
+      if(sh.x+16 > catL && sh.x-16 < catR && shBot > catTop && shTop < catBot){
+        // hit
+        S.shots.splice(j,1);
+        hurt();
+      }
+    }
+
+    // coin fx
+    for(var m=S.coinsFx.length-1;m>=0;m--){
+      var cf=S.coinsFx[m]; cf.x+=cf.vx; cf.y+=cf.vy; cf.vy+=0.4; cf.life--;
+      if(cf.life<=0) S.coinsFx.splice(m,1);
+    }
+    if(S.bossHitFlash>0) S.bossHitFlash--;
+    if(S.shake>0) S.shake--;
+  }
+
+  function hurt(){
+    S.lives--; S.shake = 10;
+    S.cat.vy = -8; S.cat.onGround = false;
+    if(S.lives <= 0){ endGame(false); }
+  }
+  function defeatBoss(){
+    S.score += 300;
+    for(var k=0;k<22;k++) S.coinsFx.push({x:S.bossX,y:GROUND-70,vx:(Math.random()*2-1)*8,vy:-Math.random()*9-2,life:60});
+    S.coins += 20;
+    S.bossIndex++;
+    if(S.bossIndex >= BOSSES.length){ endGame(true); return; }
+    startBoss(S.bossIndex);
+  }
+
+  // ================= RENDER =================
+  function render(){
+    var ox=0, oy=0;
+    if(S.shake>0){ ox=(Math.random()*2-1)*S.shake; oy=(Math.random()*2-1)*S.shake; }
+    ctx.save(); ctx.translate(ox,oy);
+
+    drawBG();
+    if(S.mode!=="title") drawBoss();
+    drawShots();
+    drawCat();
+    drawHammers();
+    drawCoinsFx();
+
+    ctx.restore();
+    if(S.mode!=="title") drawHUD();
+  }
+
+  function drawBG(){
+    // sky
+    var g = ctx.createLinearGradient(0,0,0,GROUND);
+    g.addColorStop(0,"#4fa3e3"); g.addColorStop(1,"#bfe3ff");
+    ctx.fillStyle=g; ctx.fillRect(-20,-20,W+40,GROUND+20);
+    // sun glow
+    ctx.fillStyle="rgba(255,255,255,.35)";
+    ctx.beginPath(); ctx.arc(150,110,70,0,7); ctx.fill();
+    // clouds (parallax)
+    var cx=(S.t*0.3)%(W+200)-100;
+    cloud(W-cx*0.6, 90); cloud(W-(cx*0.6+360)%(W+200), 150); cloud(W-(cx*0.6+700)%(W+200), 70);
+    // mountains
+    ctx.fillStyle="#7bbf7e";
+    tri(330,GROUND,180); tri(560,GROUND,150); tri(760,GROUND,210);
+    ctx.fillStyle="#69ad6c";
+    tri(450,GROUND,120); tri(660,GROUND,140);
+    // ground
+    ctx.fillStyle="#7ec850"; ctx.fillRect(-20,GROUND-14,W+40,18);
+    ctx.fillStyle="#9b6b3f"; ctx.fillRect(-20,GROUND+4,W+40,H-GROUND);
+    ctx.fillStyle="#84582f";
+    for(var x=-20;x<W+40;x+=44){ ctx.fillRect(x,GROUND+30,22,12); ctx.fillRect(x+22,GROUND+70,22,12); }
+  }
+  function cloud(x,y){ ctx.fillStyle="#ffffff";
+    ctx.beginPath(); ctx.arc(x,y,22,0,7); ctx.arc(x+24,y+4,18,0,7); ctx.arc(x-22,y+6,16,0,7); ctx.fill();
+    ctx.fillRect(x-22,y+4,48,16);
+  }
+  function tri(cx,by,h){ ctx.beginPath(); ctx.moveTo(cx,by-h); ctx.lineTo(cx-h*0.9,by); ctx.lineTo(cx+h*0.9,by); ctx.fill(); }
+
+  function drawCat(){
+    var c=S.cat;
+    var x=c.x, y=c.y;
+    var duck = c.ducking;
+    var bodyH = duck?28:46;
+    ctx.save(); ctx.translate(x,y);
+    if(c.face<0) ctx.scale(-1,1);
+    // shadow
+    ctx.fillStyle="rgba(0,0,0,.18)"; ctx.beginPath(); ctx.ellipse(0,4,26,8,0,0,7); ctx.fill();
+    // body (white)
+    ctx.fillStyle="#fdfdfd";
+    rr(-20,-bodyH,40,bodyH,9);
+    // tail
+    ctx.fillStyle="#fdfdfd"; rr(14,-bodyH+6,16,8,4);
+    // head
+    var hy=-bodyH-2;
+    ctx.fillStyle="#fdfdfd"; rr(-18,hy-26,36,30,10);
+    // ears
+    ctx.beginPath(); ctx.moveTo(-16,hy-22); ctx.lineTo(-6,hy-34); ctx.lineTo(-2,hy-22); ctx.fill();
+    ctx.beginPath(); ctx.moveTo(16,hy-22); ctx.lineTo(6,hy-34); ctx.lineTo(2,hy-22); ctx.fill();
+    // pink hair (bob)
+    ctx.fillStyle="#ff9ec4";
+    rr(-20,hy-30,40,16,8);
+    rr(-22,hy-22,8,18,4); rr(14,hy-22,8,18,4);
+    // bangs
+    ctx.fillStyle="#ff86b6"; rr(-18,hy-20,36,7,3);
+    // eyes
+    ctx.fillStyle="#22344f";
+    ctx.fillRect(-9,hy-12,4,5); ctx.fillRect(5,hy-12,4,5);
+    // blush
+    ctx.fillStyle="#ffc2d6"; ctx.fillRect(-13,hy-7,5,3); ctx.fillRect(8,hy-7,5,3);
+    // nose
+    ctx.fillStyle="#ff8aa0"; ctx.fillRect(-1,hy-8,3,2);
+
+    // hammer (in front hand)
+    var sw = c.swing>0 ? (10-c.swing)/10 : 0; // 0..1 swing progress
+    var ang = -0.5 + sw*1.3;
+    ctx.save();
+    ctx.translate(16,-bodyH+14); ctx.rotate(ang);
+    // handle
+    ctx.fillStyle="#caa26a"; rr(-3,-2,8,42,3);
+    // head (red with star)
+    ctx.fillStyle="#e8472a"; rr(-16,-20,34,22,6);
+    ctx.fillStyle="#ffd54f"; star(0,-9,5,7,3.2);
+    ctx.restore();
+
+    ctx.restore();
+  }
+
+  function drawBoss(){
+    var b=S.boss; if(!b) return;
+    var x=S.bossX, baseY=GROUND;
+    var flash = S.bossHitFlash>0 && (S.bossHitFlash%2===0);
+    ctx.save(); ctx.translate(x,baseY);
+    var bob = Math.sin(S.t*0.05)*5; ctx.translate(0,bob);
+    // shadow
+    ctx.fillStyle="rgba(0,0,0,.2)"; ctx.beginPath(); ctx.ellipse(0,2-bob,70,14,0,0,7); ctx.fill();
+    var col = flash ? "#ffffff" : b.color;
+    var dk  = flash ? "#ffd0d0" : b.dark;
+    // body — big rounded tower
+    ctx.fillStyle=col; rr(-64,-150,128,150,30);
+    // belt rings
+    ctx.fillStyle=dk; ctx.fillRect(-64,-96,128,10); ctx.fillRect(-64,-54,128,10);
+    // arms
+    ctx.fillStyle=col; rr(-86,-110,26,18,8); rr(60,-110,26,18,8);
+    // face holes (eyes + mouth) — vary slightly by boss
+    ctx.fillStyle="#1a1109";
+    ctx.beginPath(); ctx.ellipse(-22,-112,11,15,0,0,7); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(22,-112,11,15,0,0,7); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(0,-78,12,16,0,0,7); ctx.fill();
+    // little accents per boss
+    if(b.face==="daruma"){ ctx.fillStyle="#ffd54f"; rr(-40,-150,80,16,8); }
+    if(b.face==="komainu"){ ctx.fillStyle=dk; tri(-40,-150,22); tri(40,-150,22); }
+    if(b.face==="jizo"){ ctx.fillStyle="#d33"; rr(-30,-40,60,14,6); } // red bib
+    ctx.restore();
+  }
+
+  function drawHammers(){
+    ctx.save();
+    for(var i=0;i<S.hammers.length;i++){
+      var h=S.hammers[i];
+      ctx.save(); ctx.translate(h.x,h.y); ctx.rotate(h.spin);
+      ctx.fillStyle="#caa26a"; rr(-3,-2,8,30,3);
+      ctx.fillStyle="#e8472a"; rr(-14,-18,30,20,6);
+      ctx.fillStyle="#ffd54f"; star(0,-8,4,6,2.8);
+      ctx.restore();
+    }
+    ctx.restore();
+  }
+
+  function drawShots(){
+    for(var i=0;i<S.shots.length;i++){
+      var s=S.shots[i];
+      ctx.save(); ctx.translate(s.x,s.y); ctx.rotate(s.t*0.3);
+      // "pio" energy ball
+      ctx.fillStyle="#ffd54f"; ctx.beginPath(); ctx.arc(0,0,15,0,7); ctx.fill();
+      ctx.fillStyle="#ff8a3d"; ctx.beginPath(); ctx.arc(0,0,9,0,7); ctx.fill();
+      ctx.fillStyle="#fff"; ctx.beginPath(); ctx.arc(-4,-4,3,0,7); ctx.fill();
+      ctx.restore();
+    }
+  }
+
+  function drawCoinsFx(){
+    for(var i=0;i<S.coinsFx.length;i++){
+      var c=S.coinsFx[i];
+      ctx.fillStyle="#ffcf3f"; ctx.beginPath(); ctx.arc(c.x,c.y,6,0,7); ctx.fill();
+      ctx.fillStyle="#e0a020"; ctx.fillRect(c.x-1,c.y-3,2,6);
+    }
+  }
+
+  // ---- HUD (drawn in screen space, no shake) ----
+  function drawHUD(){
+    // top dark bar
+    ctx.fillStyle="rgba(16,28,64,.86)"; ctx.fillRect(0,0,W,54);
+    // cat face + lives count
+    ctx.fillStyle="#ff9ec4"; rr(14,12,28,28,7);
+    ctx.fillStyle="#22344f"; ctx.fillRect(22,24,4,4); ctx.fillRect(32,24,4,4);
+    hudText("×0"+S.lives, 50, 34, 18, "#fff");
+    // hearts
+    for(var i=0;i<3;i++){ heart(118+i*30, 26, i < S.lives ? "#ff5e7a" : "rgba(255,255,255,.18)"); }
+    // hammer meter
+    hudText("PIO PIO HAMMER", 300, 22, 13, "#ffd54f");
+    ctx.fillStyle="rgba(255,255,255,.18)"; rr(300,28,150,12,6);
+    ctx.fillStyle= S.hammerCharge>=HAMMER_COST ? "#3fb8ff" : "#7790b8";
+    rr(300,28,150*S.hammerCharge,12,6);
+    // coins
+    ctx.fillStyle="#ffcf3f"; ctx.beginPath(); ctx.arc(W-220,26,11,0,7); ctx.fill();
+    ctx.fillStyle="#e0a020"; ctx.fillRect(W-222,20,3,12);
+    hudText("×"+S.coins, W-200, 33, 18, "#fff");
+    // score
+    hudText("SCORE "+("00000"+S.score).slice(-6), W-150, 33, 18, "#fff");
+
+    // boss name + HP bar
+    if(S.boss && S.mode==="play"){
+      var bw=380, bx=W-bw-30, by=70;
+      hudText("BOSS", bx, by-2, 14, "#ff5e6e", "left");
+      hudText(S.boss.name, bx+54, by-2, 16, "#fff", "left");
+      ctx.fillStyle="rgba(0,0,0,.35)"; rr(bx,by+6,bw,14,7);
+      ctx.fillStyle="#ff4d5e"; rr(bx,by+6,bw*Math.max(0,S.bossHP/S.bossMaxHP),14,7);
+      ctx.strokeStyle="rgba(255,255,255,.5)"; ctx.lineWidth=2; rrStroke(bx,by+6,bw,14,7);
+    }
+  }
+  function hudText(t,x,y,size,col,align){
+    ctx.fillStyle=col; ctx.font="900 "+size+"px 'Hiragino Sans',system-ui,sans-serif";
+    ctx.textAlign=align||"left"; ctx.textBaseline="alphabetic";
+    ctx.fillText(t,x,y);
+    ctx.textAlign="left";
+  }
+  function heart(x,y,col){
+    ctx.fillStyle=col;
+    ctx.beginPath();
+    ctx.moveTo(x,y+4);
+    ctx.bezierCurveTo(x,y, x-9,y-2, x-9,y+5);
+    ctx.bezierCurveTo(x-9,y+11, x,y+14, x,y+18);
+    ctx.bezierCurveTo(x,y+14, x+9,y+11, x+9,y+5);
+    ctx.bezierCurveTo(x+9,y-2, x,y, x,y+4);
+    ctx.fill();
+  }
+
+  // ---- small draw helpers ----
+  function rr(x,y,w,h,r){ ctx.beginPath();
+    ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r);
+    ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath(); ctx.fill();
+  }
+  function rrStroke(x,y,w,h,r){ ctx.beginPath();
+    ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r);
+    ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath(); ctx.stroke();
+  }
+  function star(cx,cy,inner,outer,pts){
+    ctx.beginPath();
+    for(var i=0;i<pts*2;i++){
+      var rad=(i%2===0)?outer:inner, a=Math.PI/pts*i - Math.PI/2;
+      ctx.lineTo(cx+Math.cos(a)*rad, cy+Math.sin(a)*rad);
+    }
+    ctx.closePath(); ctx.fill();
+  }
+
+  // ---- loop ----
+  function frame(){ update(); render(); requestAnimationFrame(frame); }
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

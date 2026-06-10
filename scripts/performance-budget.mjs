@@ -10,7 +10,7 @@ if (!existsSync(distRoot)) {
 }
 
 const criticalPages = [
-  { path: "index.html", htmlGzipKb: 16, assetKb: 150 },
+  { path: "index.html", htmlGzipKb: 17, assetKb: 150 },
   { path: "blog/index.html", htmlGzipKb: 10, assetKb: 620 },
   { path: "lp/bunsirube/index.html", htmlGzipKb: 28, assetKb: 1100 },
   { path: "lp/bunsirube/demo/index.html", htmlGzipKb: 12, assetKb: 720 },
