@@ -1,0 +1,1040 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>港町ぽいぽい | よへラボゲーム</title>
+  <meta name="description" content="落ちている物を拾って、近づく相手に投げて押し返すブラウザアクションゲーム。港町を舞台にした、よへラボの無料ミニゲームです。" />
+  <meta name="robots" content="noindex,follow" />
+  <meta property="og:title" content="港町ぽいぽい | よへラボゲーム" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://yohelab.com/games/harbor-poipoi/" />
+  <meta property="og:image" content="https://yohelab.com/yohelab-mascot-v2-20260518.png" />
+  <meta name="theme-color" content="#0f766e" />
+  <link rel="canonical" href="https://yohelab.com/games/harbor-poipoi/" />
+  <link rel="icon" type="image/png" href="/yohelab-mascot-v2-20260518-32.png" />
+  <style>
+    :root {
+      --ink: #10202c;
+      --muted: #5d6b75;
+      --sea: #0f766e;
+      --sea-dark: #115e59;
+      --foam: #e9fbf7;
+      --sand: #f7dca3;
+      --line: rgba(16, 32, 44, .14);
+      --danger: #e5484d;
+      --gold: #f4b63f;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { min-height: 100%; }
+    body {
+      margin: 0;
+      background: #f2fbf8;
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic UI", "Noto Sans JP", sans-serif;
+      line-height: 1.7;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: min(1120px, 100% - 28px);
+      height: 62px;
+      margin: 0 auto;
+    }
+
+    .topbar a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 38px;
+      padding: 0 14px;
+      border-radius: 12px;
+      background: rgba(255,255,255,.74);
+      border: 1px solid rgba(15,118,110,.16);
+      color: var(--sea-dark);
+      font-size: 13px;
+      font-weight: 800;
+      backdrop-filter: blur(12px);
+    }
+
+    .topbar .spacer { flex: 1; }
+
+    main {
+      width: min(1120px, 100% - 28px);
+      margin: 0 auto 28px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, .9fr) minmax(320px, 1.35fr);
+      gap: 20px;
+      align-items: stretch;
+      padding: 18px 0 20px;
+    }
+
+    .intro {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 520px;
+      padding: 32px;
+      border: 1px solid rgba(15,118,110,.18);
+      border-radius: 8px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.88), rgba(255,255,255,.72)),
+        radial-gradient(circle at 20% 0%, rgba(244,182,63,.22), transparent 32%),
+        linear-gradient(140deg, #e7fbf6, #fff8e4);
+    }
+
+    .eyebrow {
+      width: fit-content;
+      margin: 0 0 18px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: #ffffff;
+      border: 1px solid rgba(15,118,110,.2);
+      color: var(--sea-dark);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    h1 {
+      margin: 0 0 16px;
+      font-size: clamp(36px, 6vw, 68px);
+      line-height: 1.04;
+      letter-spacing: 0;
+      font-weight: 900;
+    }
+
+    .lead {
+      margin: 0 0 24px;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 0 12px;
+      border-radius: 999px;
+      background: #fff;
+      border: 1px solid rgba(15,118,110,.18);
+      color: var(--sea-dark);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .game-shell {
+      position: relative;
+      overflow: hidden;
+      min-height: 520px;
+      border-radius: 8px;
+      border: 1px solid rgba(16,32,44,.18);
+      background: #153647;
+      box-shadow: 0 18px 44px rgba(15, 55, 70, .16);
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 520px;
+      background: #91d8d3;
+      touch-action: none;
+    }
+
+    .hud {
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      top: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      pointer-events: none;
+    }
+
+    .pill {
+      min-width: 76px;
+      padding: 8px 10px;
+      border-radius: 8px;
+      background: rgba(255,255,255,.92);
+      border: 1px solid rgba(16,32,44,.13);
+      box-shadow: 0 8px 22px rgba(16,32,44,.12);
+    }
+
+    .pill span {
+      display: block;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 800;
+      line-height: 1.1;
+    }
+
+    .pill strong {
+      display: block;
+      color: var(--ink);
+      font-size: 20px;
+      font-weight: 900;
+      line-height: 1.1;
+    }
+
+    .banner {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 22px;
+      background: rgba(9, 31, 43, .72);
+      backdrop-filter: blur(4px);
+    }
+
+    .banner[hidden] { display: none; }
+
+    .banner-box {
+      width: min(460px, 100%);
+      padding: 28px;
+      border-radius: 8px;
+      background: #fff;
+      border: 1px solid rgba(16,32,44,.16);
+      text-align: center;
+      box-shadow: 0 24px 70px rgba(0,0,0,.24);
+    }
+
+    .banner-box h2 {
+      margin: 0 0 10px;
+      font-size: clamp(26px, 4vw, 40px);
+      line-height: 1.12;
+      letter-spacing: 0;
+    }
+
+    .banner-box p {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .btn {
+      min-height: 48px;
+      padding: 0 20px;
+      border: 0;
+      border-radius: 8px;
+      background: linear-gradient(180deg, #15a894, #0f766e);
+      color: #fff;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 7px 0 #0b524c, 0 16px 28px rgba(15,118,110,.25);
+      transition: transform .08s ease, box-shadow .08s ease;
+    }
+
+    .btn:active {
+      transform: translateY(5px);
+      box-shadow: 0 2px 0 #0b524c, 0 10px 18px rgba(15,118,110,.2);
+    }
+
+    .btn.secondary {
+      background: linear-gradient(180deg, #f7c756, #d89218);
+      color: #331e00;
+      box-shadow: 0 7px 0 #9d6410, 0 16px 28px rgba(216,146,24,.22);
+    }
+
+    .help {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      padding: 0 0 28px;
+    }
+
+    .help div {
+      min-height: 96px;
+      padding: 18px;
+      border-radius: 8px;
+      background: #fff;
+      border: 1px solid rgba(15,118,110,.16);
+    }
+
+    .help b {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 14px;
+    }
+
+    .help p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .touch-pad {
+      display: none;
+      grid-template-columns: 1fr 1fr 1.1fr;
+      gap: 10px;
+      padding: 12px 0 0;
+    }
+
+    .touch-pad button {
+      min-height: 58px;
+      border: 1px solid rgba(15,118,110,.18);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--sea-dark);
+      font-size: 13px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .touch-pad button.action {
+      background: var(--sea);
+      color: #fff;
+    }
+
+    .foot {
+      padding: 0 0 28px;
+      color: #71808a;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; }
+      .intro { min-height: auto; padding: 28px 22px; }
+      .game-shell, canvas { min-height: 480px; }
+      .help { grid-template-columns: 1fr; }
+      .touch-pad { display: grid; }
+    }
+
+    @media (max-width: 520px) {
+      main, .topbar { width: min(100% - 20px, 1120px); }
+      .topbar { height: auto; min-height: 58px; padding: 8px 0; flex-wrap: wrap; }
+      .topbar .spacer { display: none; }
+      .topbar a { min-height: 36px; padding: 0 10px; font-size: 12px; }
+      .intro { padding: 24px 18px; }
+      .game-shell, canvas { min-height: 430px; }
+      .hud { left: 8px; right: 8px; top: 8px; flex-wrap: wrap; }
+      .pill { min-width: 66px; padding: 7px 8px; }
+      .pill strong { font-size: 17px; }
+      .banner-box { padding: 22px 18px; }
+      .touch-pad { grid-template-columns: 1fr 1fr; }
+      .touch-pad button.action { grid-column: 1 / -1; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a href="/games/">ゲーム一覧</a>
+    <span class="spacer"></span>
+    <a href="/">よへラボ</a>
+    <a href="/blog/">ブログ</a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="intro">
+        <p class="eyebrow">拾って、投げて、押し返す</p>
+        <h1>港町ぽいぽい</h1>
+        <p class="lead">港に散らばった木箱、魚、たるを拾って、押し寄せる相手にぽいっと投げるミニアクション。近づかれる前に当てるほど気持ちよく、まとめて吹き飛ばすほど点が伸びます。</p>
+        <div class="chips">
+          <span class="chip">ブラウザで遊べる</span>
+          <span class="chip">PC / スマホ対応</span>
+          <span class="chip">無料</span>
+          <span class="chip">登録不要</span>
+        </div>
+      </div>
+
+      <div class="game-shell" id="gameShell">
+        <canvas id="game" width="900" height="560" aria-label="港町ぽいぽい ゲーム画面"></canvas>
+        <div class="hud" aria-hidden="true">
+          <div class="pill"><span>スコア</span><strong id="scoreText">0</strong></div>
+          <div class="pill"><span>残り</span><strong id="timeText">75</strong></div>
+          <div class="pill"><span>体力</span><strong id="lifeText">3</strong></div>
+          <div class="pill"><span>ベスト</span><strong id="bestText">0</strong></div>
+        </div>
+        <div class="banner" id="startScreen">
+          <div class="banner-box">
+            <h2>物を拾って、ぽいっと投げる</h2>
+            <p>矢印キー/WASDで移動。Space または E で拾う/投げる。マウスや指の方向へ投げられます。</p>
+            <button class="btn" id="startBtn">スタート</button>
+          </div>
+        </div>
+        <div class="banner" id="resultScreen" hidden>
+          <div class="banner-box">
+            <h2 id="resultTitle">結果</h2>
+            <p id="resultText"></p>
+            <div class="actions">
+              <button class="btn" id="retryBtn">もう一回</button>
+              <button class="btn secondary" id="shareBtn">Xでシェア</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="touch-pad" id="touchPad" aria-label="スマホ用操作ボタン">
+      <button data-key="left">左へ</button>
+      <button data-key="right">右へ</button>
+      <button data-key="up">上へ</button>
+      <button data-key="down">下へ</button>
+      <button class="action" data-key="action">拾う / 投げる</button>
+    </div>
+
+    <section class="help" aria-label="遊び方">
+      <div>
+        <b>拾う</b>
+        <p>落ちている物の近くで Space / E。持っている間は少しだけ足が遅くなります。</p>
+      </div>
+      <div>
+        <b>投げる</b>
+        <p>もう一度 Space / E。カーソルや最後に動いた方向へ投げます。</p>
+      </div>
+      <div>
+        <b>押し返す</b>
+        <p>敵に当てると吹き飛びます。連続で当てると港を守りやすくなります。</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    よへラボの実験ミニゲーム。外部素材なしで作った軽いブラウザゲームです。
+  </footer>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const canvas = document.getElementById("game");
+      const ctx = canvas.getContext("2d");
+      const scoreText = document.getElementById("scoreText");
+      const timeText = document.getElementById("timeText");
+      const lifeText = document.getElementById("lifeText");
+      const bestText = document.getElementById("bestText");
+      const startScreen = document.getElementById("startScreen");
+      const resultScreen = document.getElementById("resultScreen");
+      const resultTitle = document.getElementById("resultTitle");
+      const resultText = document.getElementById("resultText");
+      const startBtn = document.getElementById("startBtn");
+      const retryBtn = document.getElementById("retryBtn");
+      const shareBtn = document.getElementById("shareBtn");
+      const touchPad = document.getElementById("touchPad");
+
+      const W = 900;
+      const H = 560;
+      const ARENA = { x: 48, y: 74, w: 804, h: 428 };
+      const bestKey = "yohelab-harbor-poipoi-best";
+      const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
+      const dist = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
+      const rand = (min, max) => Math.random() * (max - min) + min;
+      const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+
+      let keys = Object.create(null);
+      let pointer = { x: W / 2, y: H / 2, active: false };
+      let last = performance.now();
+      let state = null;
+
+      function freshState() {
+        const items = [];
+        const types = [
+          { label: "BOX", color: "#b87537", power: 1, r: 15 },
+          { label: "FISH", color: "#60a5fa", power: 1.25, r: 13 },
+          { label: "BARREL", color: "#8b5e34", power: 1.55, r: 17 },
+          { label: "NET", color: "#94a3b8", power: .8, r: 16, slow: true },
+        ];
+
+        for (let i = 0; i < 12; i++) {
+          const type = pick(types);
+          items.push({
+            id: `item-${i}`,
+            type,
+            x: rand(ARENA.x + 42, ARENA.x + ARENA.w - 42),
+            y: rand(ARENA.y + 54, ARENA.y + ARENA.h - 42),
+            vx: 0,
+            vy: 0,
+            held: false,
+            thrown: false,
+            age: 0,
+          });
+        }
+
+        return {
+          mode: "ready",
+          score: 0,
+          life: 3,
+          time: 75,
+          spawn: .8,
+          wave: 1,
+          hitPause: 0,
+          player: {
+            x: ARENA.x + ARENA.w / 2,
+            y: ARENA.y + ARENA.h / 2,
+            r: 18,
+            vx: 0,
+            vy: 0,
+            inv: 0,
+            dirX: 1,
+            dirY: 0,
+            carrying: null,
+            cooldown: 0,
+          },
+          items,
+          enemies: [],
+          particles: [],
+        };
+      }
+
+      function setHud() {
+        scoreText.textContent = state.score;
+        timeText.textContent = Math.max(0, Math.ceil(state.time));
+        lifeText.textContent = state.life;
+        bestText.textContent = localStorage.getItem(bestKey) || "0";
+      }
+
+      function startGame() {
+        state = freshState();
+        state.mode = "play";
+        startScreen.hidden = true;
+        resultScreen.hidden = true;
+        last = performance.now();
+        setHud();
+      }
+
+      function endGame(clear) {
+        state.mode = "over";
+        const best = Math.max(Number(localStorage.getItem(bestKey) || 0), state.score);
+        localStorage.setItem(bestKey, String(best));
+        resultTitle.textContent = clear ? "港を守り切りました" : "港が押し切られました";
+        resultText.innerHTML = `スコア <strong>${state.score}</strong> / ベスト <strong>${best}</strong><br>${clear ? "投げっぷり、かなり良いです。" : "もう一回、物の拾い場所を意識すると伸びます。"}`;
+        resultScreen.hidden = false;
+        setHud();
+      }
+
+      function spawnEnemy() {
+        const side = Math.floor(rand(0, 4));
+        let x, y;
+        if (side === 0) { x = ARENA.x - 28; y = rand(ARENA.y, ARENA.y + ARENA.h); }
+        else if (side === 1) { x = ARENA.x + ARENA.w + 28; y = rand(ARENA.y, ARENA.y + ARENA.h); }
+        else if (side === 2) { x = rand(ARENA.x, ARENA.x + ARENA.w); y = ARENA.y - 28; }
+        else { x = rand(ARENA.x, ARENA.x + ARENA.w); y = ARENA.y + ARENA.h + 28; }
+
+        const tough = Math.random() < Math.min(.28, .08 + state.wave * .025);
+        state.enemies.push({
+          x,
+          y,
+          r: tough ? 21 : 17,
+          hp: tough ? 2 : 1,
+          speed: (tough ? 54 : 72) + state.wave * 4,
+          vx: 0,
+          vy: 0,
+          stun: 0,
+          slow: 0,
+          tough,
+        });
+      }
+
+      function nearestGroundItem() {
+        let best = null;
+        let bestD = 9999;
+        for (const item of state.items) {
+          if (item.held || item.thrown) continue;
+          const d = dist(state.player, item);
+          if (d < 48 && d < bestD) {
+            best = item;
+            bestD = d;
+          }
+        }
+        return best;
+      }
+
+      function action() {
+        if (!state || state.mode !== "play") return;
+        const p = state.player;
+        if (p.cooldown > 0) return;
+        p.cooldown = .14;
+
+        if (!p.carrying) {
+          const item = nearestGroundItem();
+          if (!item) return burst(p.x, p.y - 18, "#f4b63f", 4);
+          item.held = true;
+          p.carrying = item;
+          burst(item.x, item.y, "#ffffff", 8);
+          return;
+        }
+
+        const item = p.carrying;
+        const dx = pointer.active ? pointer.x - p.x : p.dirX;
+        const dy = pointer.active ? pointer.y - p.y : p.dirY;
+        const len = Math.hypot(dx, dy) || 1;
+        item.held = false;
+        item.thrown = true;
+        item.x = p.x + (dx / len) * 24;
+        item.y = p.y + (dy / len) * 24;
+        item.vx = (dx / len) * 470;
+        item.vy = (dy / len) * 470;
+        item.age = 0;
+        p.carrying = null;
+        burst(p.x + (dx / len) * 24, p.y + (dy / len) * 24, item.type.color, 9);
+      }
+
+      function burst(x, y, color, count) {
+        for (let i = 0; i < count; i++) {
+          state.particles.push({
+            x,
+            y,
+            vx: rand(-110, 110),
+            vy: rand(-110, 110),
+            life: rand(.22, .52),
+            color,
+          });
+        }
+      }
+
+      function update(dt) {
+        if (!state || state.mode !== "play") return;
+        if (state.hitPause > 0) {
+          state.hitPause -= dt;
+          return;
+        }
+
+        state.time -= dt;
+        if (state.time <= 0) {
+          state.time = 0;
+          endGame(true);
+          return;
+        }
+        state.wave = 1 + Math.floor((75 - state.time) / 15);
+
+        const p = state.player;
+        let mx = 0;
+        let my = 0;
+        if (keys.ArrowLeft || keys.a || keys.A || keys.left) mx -= 1;
+        if (keys.ArrowRight || keys.d || keys.D || keys.right) mx += 1;
+        if (keys.ArrowUp || keys.w || keys.W || keys.up) my -= 1;
+        if (keys.ArrowDown || keys.s || keys.S || keys.down) my += 1;
+        const ml = Math.hypot(mx, my) || 1;
+        const speed = p.carrying ? 162 : 202;
+        p.vx = (mx / ml) * speed;
+        p.vy = (my / ml) * speed;
+        p.x = clamp(p.x + p.vx * dt, ARENA.x + p.r, ARENA.x + ARENA.w - p.r);
+        p.y = clamp(p.y + p.vy * dt, ARENA.y + p.r, ARENA.y + ARENA.h - p.r);
+        if (mx || my) {
+          p.dirX = mx / ml;
+          p.dirY = my / ml;
+        }
+        p.inv = Math.max(0, p.inv - dt);
+        p.cooldown = Math.max(0, p.cooldown - dt);
+
+        if (p.carrying) {
+          p.carrying.x = p.x + p.dirX * 20;
+          p.carrying.y = p.y - 24 + p.dirY * 10;
+        }
+
+        state.spawn -= dt;
+        if (state.spawn <= 0) {
+          spawnEnemy();
+          state.spawn = Math.max(.55, 1.45 - state.wave * .12);
+        }
+
+        for (const item of state.items) {
+          if (item.held) continue;
+          if (item.thrown) {
+            item.age += dt;
+            item.x += item.vx * dt;
+            item.y += item.vy * dt;
+            item.vx *= .985;
+            item.vy *= .985;
+            if (item.x < ARENA.x + 10 || item.x > ARENA.x + ARENA.w - 10) item.vx *= -.45;
+            if (item.y < ARENA.y + 10 || item.y > ARENA.y + ARENA.h - 10) item.vy *= -.45;
+            item.x = clamp(item.x, ARENA.x + 10, ARENA.x + ARENA.w - 10);
+            item.y = clamp(item.y, ARENA.y + 10, ARENA.y + ARENA.h - 10);
+            if (item.age > .9 || Math.hypot(item.vx, item.vy) < 42) {
+              item.thrown = false;
+              item.vx = 0;
+              item.vy = 0;
+            }
+          }
+        }
+
+        for (let i = state.enemies.length - 1; i >= 0; i--) {
+          const enemy = state.enemies[i];
+          const toP = Math.atan2(p.y - enemy.y, p.x - enemy.x);
+          const slowFactor = enemy.slow > 0 ? .45 : 1;
+          enemy.slow = Math.max(0, enemy.slow - dt);
+          enemy.stun = Math.max(0, enemy.stun - dt);
+          if (enemy.stun <= 0) {
+            enemy.vx += Math.cos(toP) * enemy.speed * slowFactor * dt * 3.6;
+            enemy.vy += Math.sin(toP) * enemy.speed * slowFactor * dt * 3.6;
+          }
+          enemy.vx *= .91;
+          enemy.vy *= .91;
+          enemy.x += enemy.vx * dt;
+          enemy.y += enemy.vy * dt;
+
+          for (const item of state.items) {
+            if (!item.thrown) continue;
+            const hitRange = enemy.r + item.type.r;
+            if (Math.hypot(enemy.x - item.x, enemy.y - item.y) < hitRange) {
+              const impact = Math.hypot(item.vx, item.vy);
+              if (impact < 90) continue;
+              const angle = Math.atan2(enemy.y - item.y, enemy.x - item.x);
+              enemy.hp -= item.type.power;
+              enemy.vx += Math.cos(angle) * (360 + impact * .34) * item.type.power;
+              enemy.vy += Math.sin(angle) * (360 + impact * .34) * item.type.power;
+              enemy.stun = .2 + item.type.power * .08;
+              if (item.type.slow) enemy.slow = 1.8;
+              item.thrown = false;
+              item.vx = 0;
+              item.vy = 0;
+              item.x = clamp(enemy.x - Math.cos(angle) * 26, ARENA.x + 20, ARENA.x + ARENA.w - 20);
+              item.y = clamp(enemy.y - Math.sin(angle) * 26, ARENA.y + 20, ARENA.y + ARENA.h - 20);
+              burst(enemy.x, enemy.y, item.type.color, 14);
+              state.hitPause = .025;
+              if (enemy.hp <= 0) {
+                state.enemies.splice(i, 1);
+                state.score += enemy.tough ? 170 : 100;
+                burst(enemy.x, enemy.y, "#f4b63f", 18);
+              } else {
+                state.score += 35;
+              }
+              break;
+            }
+          }
+
+          if (Math.hypot(enemy.x - p.x, enemy.y - p.y) < enemy.r + p.r && p.inv <= 0) {
+            p.inv = 1.15;
+            state.life -= 1;
+            const a = Math.atan2(p.y - enemy.y, p.x - enemy.x);
+            p.x = clamp(p.x + Math.cos(a) * 34, ARENA.x + p.r, ARENA.x + ARENA.w - p.r);
+            p.y = clamp(p.y + Math.sin(a) * 34, ARENA.y + p.r, ARENA.y + ARENA.h - p.r);
+            enemy.vx -= Math.cos(a) * 220;
+            enemy.vy -= Math.sin(a) * 220;
+            burst(p.x, p.y, "#e5484d", 16);
+            if (state.life <= 0) {
+              endGame(false);
+              return;
+            }
+          }
+        }
+
+        for (let i = state.particles.length - 1; i >= 0; i--) {
+          const fx = state.particles[i];
+          fx.life -= dt;
+          fx.x += fx.vx * dt;
+          fx.y += fx.vy * dt;
+          fx.vx *= .94;
+          fx.vy *= .94;
+          if (fx.life <= 0) state.particles.splice(i, 1);
+        }
+
+        setHud();
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, W, H);
+        drawBackground();
+        if (!state) state = freshState();
+        drawItems();
+        drawEnemies();
+        drawPlayer();
+        drawParticles();
+        drawAim();
+      }
+
+      function drawBackground() {
+        const sea = ctx.createLinearGradient(0, 0, 0, H);
+        sea.addColorStop(0, "#8bd9d3");
+        sea.addColorStop(.56, "#c6f0e8");
+        sea.addColorStop(.56, "#f7dca3");
+        sea.addColorStop(1, "#d7ab68");
+        ctx.fillStyle = sea;
+        ctx.fillRect(0, 0, W, H);
+
+        ctx.fillStyle = "rgba(255,255,255,.38)";
+        for (let x = 30; x < W; x += 74) {
+          wave(x, 52 + Math.sin((performance.now() / 600) + x) * 8);
+          wave(x + 18, 126 + Math.sin((performance.now() / 700) + x) * 7);
+        }
+
+        ctx.fillStyle = "#8b5e34";
+        roundRect(ARENA.x - 10, ARENA.y + ARENA.h - 50, ARENA.w + 20, 48, 8);
+        ctx.fillStyle = "#6b4423";
+        for (let x = ARENA.x; x < ARENA.x + ARENA.w; x += 54) {
+          ctx.fillRect(x, ARENA.y + ARENA.h - 50, 8, 48);
+        }
+
+        ctx.strokeStyle = "rgba(16,32,44,.16)";
+        ctx.lineWidth = 3;
+        roundStroke(ARENA.x, ARENA.y, ARENA.w, ARENA.h, 12);
+      }
+
+      function wave(x, y) {
+        ctx.beginPath();
+        ctx.arc(x, y, 16, 0, Math.PI);
+        ctx.arc(x + 32, y, 16, Math.PI, 0, true);
+        ctx.strokeStyle = "rgba(255,255,255,.55)";
+        ctx.lineWidth = 4;
+        ctx.stroke();
+      }
+
+      function drawItems() {
+        for (const item of state.items) {
+          ctx.save();
+          ctx.translate(item.x, item.y);
+          if (item.thrown) ctx.rotate(performance.now() / 95);
+          ctx.fillStyle = item.type.color;
+          ctx.strokeStyle = "rgba(16,32,44,.25)";
+          ctx.lineWidth = 2;
+          if (item.type.label === "FISH") {
+            ctx.beginPath();
+            ctx.ellipse(0, 0, 18, 10, 0, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(-16, 0);
+            ctx.lineTo(-28, -9);
+            ctx.lineTo(-28, 9);
+            ctx.closePath();
+            ctx.fill();
+          } else if (item.type.label === "BARREL") {
+            roundRect(-15, -19, 30, 38, 9);
+            ctx.stroke();
+            ctx.fillStyle = "rgba(255,255,255,.22)";
+            ctx.fillRect(-13, -6, 26, 5);
+          } else if (item.type.label === "NET") {
+            ctx.beginPath();
+            ctx.arc(0, 0, 17, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+            ctx.strokeStyle = "rgba(255,255,255,.75)";
+            ctx.lineWidth = 1;
+            for (let i = -10; i <= 10; i += 10) {
+              ctx.beginPath();
+              ctx.moveTo(i, -14);
+              ctx.lineTo(i, 14);
+              ctx.moveTo(-14, i);
+              ctx.lineTo(14, i);
+              ctx.stroke();
+            }
+          } else {
+            roundRect(-16, -16, 32, 32, 5);
+            ctx.stroke();
+            ctx.strokeStyle = "rgba(255,255,255,.28)";
+            ctx.beginPath();
+            ctx.moveTo(-14, -2);
+            ctx.lineTo(14, -2);
+            ctx.moveTo(0, -14);
+            ctx.lineTo(0, 14);
+            ctx.stroke();
+          }
+          ctx.restore();
+        }
+      }
+
+      function drawPlayer() {
+        const p = state.player;
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        const blink = p.inv > 0 && Math.floor(performance.now() / 90) % 2 === 0;
+        ctx.globalAlpha = blink ? .42 : 1;
+
+        ctx.fillStyle = "rgba(16,32,44,.18)";
+        ctx.beginPath();
+        ctx.ellipse(0, 17, 22, 8, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = "#2563eb";
+        roundRect(-15, -10, 30, 28, 9);
+        ctx.fillStyle = "#f7c08a";
+        ctx.beginPath();
+        ctx.arc(0, -22, 17, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = "#334155";
+        ctx.fillRect(-11, -38, 22, 10);
+        ctx.fillStyle = "#0f172a";
+        ctx.beginPath();
+        ctx.arc(-6, -23, 2.4, 0, Math.PI * 2);
+        ctx.arc(7, -23, 2.4, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.strokeStyle = "#f7c08a";
+        ctx.lineWidth = 8;
+        ctx.lineCap = "round";
+        ctx.beginPath();
+        ctx.moveTo(10, -4);
+        ctx.lineTo(22 * p.dirX, -4 + 20 * p.dirY);
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      function drawEnemies() {
+        for (const enemy of state.enemies) {
+          ctx.save();
+          ctx.translate(enemy.x, enemy.y);
+          ctx.fillStyle = "rgba(16,32,44,.18)";
+          ctx.beginPath();
+          ctx.ellipse(0, enemy.r + 3, enemy.r * 1.2, 6, 0, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = enemy.tough ? "#7c3aed" : "#dc2626";
+          ctx.strokeStyle = "rgba(16,32,44,.25)";
+          ctx.lineWidth = 2;
+          roundRect(-enemy.r, -enemy.r, enemy.r * 2, enemy.r * 2, 8);
+          ctx.stroke();
+          ctx.fillStyle = "#fff7ed";
+          ctx.beginPath();
+          ctx.arc(-6, -5, 3, 0, Math.PI * 2);
+          ctx.arc(7, -5, 3, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.strokeStyle = "#1f2937";
+          ctx.lineWidth = 3;
+          ctx.beginPath();
+          ctx.moveTo(-7, 8);
+          ctx.lineTo(8, 8);
+          ctx.stroke();
+          if (enemy.slow > 0) {
+            ctx.strokeStyle = "rgba(147,197,253,.85)";
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.arc(0, 0, enemy.r + 7, 0, Math.PI * 2);
+            ctx.stroke();
+          }
+          ctx.restore();
+        }
+      }
+
+      function drawParticles() {
+        for (const fx of state.particles) {
+          ctx.globalAlpha = clamp(fx.life * 2.2, 0, 1);
+          ctx.fillStyle = fx.color;
+          ctx.beginPath();
+          ctx.arc(fx.x, fx.y, 4, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.globalAlpha = 1;
+        }
+      }
+
+      function drawAim() {
+        const p = state.player;
+        if (!p.carrying || state.mode !== "play") return;
+        const dx = pointer.active ? pointer.x - p.x : p.dirX;
+        const dy = pointer.active ? pointer.y - p.y : p.dirY;
+        const len = Math.hypot(dx, dy) || 1;
+        ctx.strokeStyle = "rgba(15,118,110,.45)";
+        ctx.lineWidth = 4;
+        ctx.setLineDash([8, 8]);
+        ctx.beginPath();
+        ctx.moveTo(p.x, p.y);
+        ctx.lineTo(p.x + (dx / len) * 76, p.y + (dy / len) * 76);
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
+
+      function roundRect(x, y, w, h, r) {
+        ctx.beginPath();
+        ctx.moveTo(x + r, y);
+        ctx.arcTo(x + w, y, x + w, y + h, r);
+        ctx.arcTo(x + w, y + h, x, y + h, r);
+        ctx.arcTo(x, y + h, x, y, r);
+        ctx.arcTo(x, y, x + w, y, r);
+        ctx.closePath();
+        ctx.fill();
+      }
+
+      function roundStroke(x, y, w, h, r) {
+        ctx.beginPath();
+        ctx.moveTo(x + r, y);
+        ctx.arcTo(x + w, y, x + w, y + h, r);
+        ctx.arcTo(x + w, y + h, x, y + h, r);
+        ctx.arcTo(x, y + h, x, y, r);
+        ctx.arcTo(x, y, x + w, y, r);
+        ctx.closePath();
+        ctx.stroke();
+      }
+
+      function screenPoint(event) {
+        const rect = canvas.getBoundingClientRect();
+        pointer.x = ((event.clientX - rect.left) / rect.width) * W;
+        pointer.y = ((event.clientY - rect.top) / rect.height) * H;
+        pointer.active = true;
+      }
+
+      window.addEventListener("keydown", (event) => {
+        if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", " ", "Spacebar"].includes(event.key)) event.preventDefault();
+        if (event.key === " " || event.key === "Spacebar" || event.key === "e" || event.key === "E" || event.key === "Enter") {
+          event.preventDefault();
+          action();
+          return;
+        }
+        keys[event.key] = true;
+      }, { passive: false });
+
+      window.addEventListener("keyup", (event) => {
+        keys[event.key] = false;
+      });
+
+      canvas.addEventListener("pointermove", screenPoint);
+      canvas.addEventListener("pointerdown", (event) => {
+        screenPoint(event);
+        if (state && state.mode === "play") action();
+      });
+
+      touchPad.querySelectorAll("button").forEach((button) => {
+        const key = button.dataset.key;
+        const down = (event) => {
+          event.preventDefault();
+          if (key === "action") action();
+          else keys[key] = true;
+        };
+        const up = (event) => {
+          event.preventDefault();
+          if (key !== "action") keys[key] = false;
+        };
+        button.addEventListener("pointerdown", down);
+        button.addEventListener("pointerup", up);
+        button.addEventListener("pointercancel", up);
+        button.addEventListener("pointerleave", up);
+      });
+
+      startBtn.addEventListener("click", startGame);
+      retryBtn.addEventListener("click", startGame);
+      shareBtn.addEventListener("click", () => {
+        const text = `港町ぽいぽいでスコア${state.score}点。拾って投げて港を守りました。`;
+        const url = "https://yohelab.com/games/harbor-poipoi/";
+        window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, "_blank", "noopener");
+      });
+
+      function frame(now) {
+        const dt = Math.min(.033, (now - last) / 1000);
+        last = now;
+        update(dt);
+        draw();
+        requestAnimationFrame(frame);
+      }
+
+      state = freshState();
+      setHud();
+      requestAnimationFrame(frame);
+    })();
+  </script>
+</body>
+</html>
